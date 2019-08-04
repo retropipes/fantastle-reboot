@@ -28,8 +28,8 @@ public abstract class GenericMovableObject extends MazeObject {
     // Constructors
     protected GenericMovableObject(final boolean pushable,
             final boolean pullable) {
-        super(true, pushable, false, false, pullable, false, false, true,
-                false, 0);
+        super(true, pushable, false, false, pullable, false, false, true, false,
+                0);
     }
 
     @Override
@@ -37,8 +37,8 @@ public abstract class GenericMovableObject extends MazeObject {
             final int x, final int y, final int pushX, final int pushY) {
         final Application app = Fantastle5.getApplication();
         app.getGameManager().updatePushedPosition(x, y, pushX, pushY, this);
-        if (app.getPrefsManager().getSoundEnabled(
-                PreferencesManager.SOUNDS_GAME)) {
+        if (app.getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playPushSuccessSound();
         }
     }
@@ -48,8 +48,8 @@ public abstract class GenericMovableObject extends MazeObject {
             final int x, final int y, final int pullX, final int pullY) {
         final Application app = Fantastle5.getApplication();
         app.getGameManager().updatePulledPosition(x, y, pullX, pullY, this);
-        if (app.getPrefsManager().getSoundEnabled(
-                PreferencesManager.SOUNDS_GAME)) {
+        if (app.getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playPullSuccessSound();
         }
     }

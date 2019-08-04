@@ -51,14 +51,11 @@ public class ConfusionTrap extends GenericTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         Messager.showMessage("You are confused!");
-        Fantastle5
-                .getApplication()
-                .getGameManager()
-                .activateEffect(EffectConstants.EFFECT_CONFUSED,
-                        ConfusionTrap.EFFECT_DURATION);
+        Fantastle5.getApplication().getGameManager().activateEffect(
+                EffectConstants.EFFECT_CONFUSED, ConfusionTrap.EFFECT_DURATION);
         if (Fantastle5.getApplication().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playConfusedSound();

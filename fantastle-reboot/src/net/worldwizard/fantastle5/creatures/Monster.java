@@ -113,27 +113,29 @@ public class Monster extends Creature {
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
         final RandomRange r1 = new RandomRange(0,
                 playerCharacter.getPermanentAttack());
-        final RandomRange r2 = new RandomRange(0, this.getLevel()
-                + playerCharacter.getStrength());
-        return (int) (r1.generate() + r2.generate()
-                * this.adjustForLevelDifference());
+        final RandomRange r2 = new RandomRange(0,
+                this.getLevel() + playerCharacter.getStrength());
+        return (int) (r1.generate()
+                + r2.generate() * this.adjustForLevelDifference());
     }
 
     private int getInitialBlock() {
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
         final RandomRange r1 = new RandomRange(0,
                 playerCharacter.getPermanentDefense());
-        final RandomRange r2 = new RandomRange(0, this.getLevel()
-                + playerCharacter.getBlock());
-        return (int) (r1.generate() + r2.generate()
-                * this.adjustForLevelDifference());
+        final RandomRange r2 = new RandomRange(0,
+                this.getLevel() + playerCharacter.getBlock());
+        return (int) (r1.generate()
+                + r2.generate() * this.adjustForLevelDifference());
     }
 
     private long getInitialExperience() {
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
         int min, max;
-        min = (int) (playerCharacter.getLevel() * Monster.MINIMUM_EXPERIENCE_RANDOM_VARIANCE);
-        max = (int) (playerCharacter.getLevel() * Monster.MAXIMUM_EXPERIENCE_RANDOM_VARIANCE);
+        min = (int) (playerCharacter.getLevel()
+                * Monster.MINIMUM_EXPERIENCE_RANDOM_VARIANCE);
+        max = (int) (playerCharacter.getLevel()
+                * Monster.MAXIMUM_EXPERIENCE_RANDOM_VARIANCE);
         final RandomRange r = new RandomRange(min, max);
         final long toNext = playerCharacter.getExpToNextLevel(
                 playerCharacter.getLevel() + 1, playerCharacter.getKills());
@@ -141,8 +143,8 @@ public class Monster extends Creature {
                 playerCharacter.getLevel(), playerCharacter.getKills());
         final long needed = toNext - toCurrent;
         final long factor = Monster.getFightsPerLevel();
-        final long exp = (long) ((needed / factor + r.generate()) * this
-                .adjustForLevelDifference());
+        final long exp = (long) ((needed / factor + r.generate())
+                * this.adjustForLevelDifference());
         if (exp < 0L) {
             return 0L;
         } else {
@@ -152,8 +154,8 @@ public class Monster extends Creature {
 
     private int getInitialGold() {
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
-        final int needed = Shop
-                .getEquipmentCost(playerCharacter.getLevel() + 1) * 24;
+        final int needed = Shop.getEquipmentCost(playerCharacter.getLevel() + 1)
+                * 24;
         final int factor = Monster.getFightsPerLevel();
         final int averageHealingCost = Shop.getHealingCost(
                 playerCharacter.getLevel(),
@@ -170,8 +172,8 @@ public class Monster extends Creature {
 
     private int getInitialPerfectBonusGold() {
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
-        final int needed = Shop
-                .getEquipmentCost(playerCharacter.getLevel() + 1) * 24;
+        final int needed = Shop.getEquipmentCost(playerCharacter.getLevel() + 1)
+                * 24;
         final int factor = Monster.getFightsPerLevel();
         final int min = needed / factor / 4;
         final int max = needed / factor / 2;
@@ -220,8 +222,9 @@ public class Monster extends Creature {
 
     private static int getFightsPerLevel() {
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
-        return (int) (Monster.BASE_FIGHTS_PER_LEVEL + (playerCharacter
-                .getLevel() - 1) * Monster.FIGHTS_PER_LEVEL_INCREMENT);
+        return (int) (Monster.BASE_FIGHTS_PER_LEVEL
+                + (playerCharacter.getLevel() - 1)
+                        * Monster.FIGHTS_PER_LEVEL_INCREMENT);
     }
 
     @Override

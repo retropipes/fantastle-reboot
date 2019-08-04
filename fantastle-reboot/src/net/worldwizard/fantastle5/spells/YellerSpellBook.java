@@ -15,9 +15,8 @@ public class YellerSpellBook extends SpellBook {
     protected void defineSpells() {
         final DrainEffect spell0Effect = new DrainEffect("Mana Drain", 4, 1,
                 0.5, StatConstants.STAT_LEVEL, Effect.DEFAULT_DECAY_RATE);
-        spell0Effect
-                .setMessage(Effect.MESSAGE_INITIAL,
-                        "You spin your weapon, forming a vortex that engulfs the enemy!");
+        spell0Effect.setMessage(Effect.MESSAGE_INITIAL,
+                "You spin your weapon, forming a vortex that engulfs the enemy!");
         spell0Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "The enemy loses some MP!");
         final Spell spell0 = new Spell(spell0Effect, 1, 'E', "drain");
@@ -69,15 +68,13 @@ public class YellerSpellBook extends SpellBook {
                 "Your armor returns to normal!");
         final Spell spell4 = new Spell(spell4Effect, 10, 'P', "defense");
         this.spells[4] = spell4;
-        final DamageEffect spell5Effect = new DamageEffect("Weakness Strike",
-                1, 1, 0.8, StatConstants.STAT_CURRENT_HP,
+        final DamageEffect spell5Effect = new DamageEffect("Weakness Strike", 1,
+                1, 0.8, StatConstants.STAT_CURRENT_HP,
                 Effect.DEFAULT_DECAY_RATE);
-        spell5Effect
-                .setMessage(Effect.MESSAGE_INITIAL,
-                        "You wait for the right moment, then suddenly attack the enemy's weak point!");
-        spell5Effect
-                .setMessage(Effect.MESSAGE_SUBSEQUENT,
-                        "The enemy, caught off-guard by the attack, loses a LOT of health!");
+        spell5Effect.setMessage(Effect.MESSAGE_INITIAL,
+                "You wait for the right moment, then suddenly attack the enemy's weak point!");
+        spell5Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
+                "The enemy, caught off-guard by the attack, loses a LOT of health!");
         final Spell spell5 = new Spell(spell5Effect, 20, 'E', "weakness");
         this.spells[5] = spell5;
     }

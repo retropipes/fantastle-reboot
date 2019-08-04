@@ -24,8 +24,8 @@ public class HighLevelSpellBook extends SpellBook {
                 "You are no longer poisoned!");
         final Spell spell0 = new Spell(spell0Effect, 3, 'P');
         this.spells[0] = spell0;
-        final HealingEffect spell1Effect = new HealingEffect("Mega Recover",
-                50, 1, Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE,
+        final HealingEffect spell1Effect = new HealingEffect("Mega Recover", 50,
+                1, Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE,
                 Effect.DEFAULT_DECAY_RATE);
         spell1Effect.setMessage(Effect.MESSAGE_INITIAL,
                 "The enemy applies a large bandage to its wounds!");
@@ -37,9 +37,8 @@ public class HighLevelSpellBook extends SpellBook {
         spell2Effect.setAffectedStat(StatConstants.STAT_ATTACK);
         spell2Effect.setEffect(Effect.EFFECT_MULTIPLY, 0.6,
                 Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE);
-        spell2Effect
-                .setMessage(Effect.MESSAGE_INITIAL,
-                        "The enemy drains your weapon of a significant amount of its power!");
+        spell2Effect.setMessage(Effect.MESSAGE_INITIAL,
+                "The enemy drains your weapon of a significant amount of its power!");
         spell2Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "Your attack is significantly decreased!");
         spell2Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
@@ -50,9 +49,8 @@ public class HighLevelSpellBook extends SpellBook {
         spell3Effect.setAffectedStat(StatConstants.STAT_DEFENSE);
         spell3Effect.setEffect(Effect.EFFECT_MULTIPLY, 0.6,
                 Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE);
-        spell3Effect
-                .setMessage(Effect.MESSAGE_INITIAL,
-                        "The enemy drains your armor of a significant amount of its power!");
+        spell3Effect.setMessage(Effect.MESSAGE_INITIAL,
+                "The enemy drains your armor of a significant amount of its power!");
         spell3Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "Your defense is significantly decreased!");
         spell3Effect.setMessage(Effect.MESSAGE_WEAR_OFF,

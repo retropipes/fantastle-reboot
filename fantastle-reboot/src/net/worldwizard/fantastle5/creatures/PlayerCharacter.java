@@ -52,54 +52,49 @@ public class PlayerCharacter extends Creature {
         this.permanentHP = 0;
         this.permanentMP = 0;
         this.kills = 0;
-        final int STR = this.personality
-                .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_STRENGTH);
+        final int STR = this.personality.getAttribute(
+                PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_STRENGTH);
         this.rSTR = new RandomRange(-STR, STR);
-        final int BLK = this.personality
-                .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_BLOCK);
+        final int BLK = this.personality.getAttribute(
+                PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_BLOCK);
         this.rBLK = new RandomRange(-BLK, BLK);
-        final int AGI = this.personality
-                .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_AGILITY);
+        final int AGI = this.personality.getAttribute(
+                PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_AGILITY);
         this.rAGI = new RandomRange(-AGI, AGI);
-        final int VIT = this.personality
-                .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_VITALITY);
+        final int VIT = this.personality.getAttribute(
+                PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_VITALITY);
         this.rVIT = new RandomRange(-VIT, VIT);
-        final int INT = this.personality
-                .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_INTELLIGENCE);
+        final int INT = this.personality.getAttribute(
+                PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_INTELLIGENCE);
         this.rINT = new RandomRange(-INT, INT);
-        final int LUC = this.personality
-                .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_LUCK);
+        final int LUC = this.personality.getAttribute(
+                PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_LUCK);
         this.rLUC = new RandomRange(-LUC, LUC);
-        this.mSTR = this.gender
-                .getAttribute(GenderConstants.GENDER_ATTRIBUTE_STRENGTH_MODIFIER);
+        this.mSTR = this.gender.getAttribute(
+                GenderConstants.GENDER_ATTRIBUTE_STRENGTH_MODIFIER);
         this.mBLK = this.gender
                 .getAttribute(GenderConstants.GENDER_ATTRIBUTE_BLOCK_MODIFIER);
-        this.mAGI = this.gender
-                .getAttribute(GenderConstants.GENDER_ATTRIBUTE_AGILITY_MODIFIER);
-        this.mVIT = this.gender
-                .getAttribute(GenderConstants.GENDER_ATTRIBUTE_VITALITY_MODIFIER);
-        this.mINT = this.gender
-                .getAttribute(GenderConstants.GENDER_ATTRIBUTE_INTELLIGENCE_MODIFIER);
+        this.mAGI = this.gender.getAttribute(
+                GenderConstants.GENDER_ATTRIBUTE_AGILITY_MODIFIER);
+        this.mVIT = this.gender.getAttribute(
+                GenderConstants.GENDER_ATTRIBUTE_VITALITY_MODIFIER);
+        this.mINT = this.gender.getAttribute(
+                GenderConstants.GENDER_ATTRIBUTE_INTELLIGENCE_MODIFIER);
         this.mLUC = this.gender
                 .getAttribute(GenderConstants.GENDER_ATTRIBUTE_LUCK_MODIFIER);
-        this.setStrength(StatConstants.GAIN_STRENGTH
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_STRENGTH_PER_LEVEL));
-        this.setBlock(StatConstants.GAIN_BLOCK
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_BLOCK_PER_LEVEL));
-        this.setVitality(StatConstants.GAIN_VITALITY
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_VITALITY_PER_LEVEL));
-        this.setIntelligence(StatConstants.GAIN_INTELLIGENCE
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
-        this.setAgility(StatConstants.GAIN_AGILITY
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_AGILITY_PER_LEVEL));
-        this.setLuck(StatConstants.GAIN_LUCK
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_LUCK_PER_LEVEL));
+        this.setStrength(StatConstants.GAIN_STRENGTH + this.race
+                .getAttribute(RaceConstants.RACE_ATTRIBUTE_STRENGTH_PER_LEVEL));
+        this.setBlock(StatConstants.GAIN_BLOCK + this.race
+                .getAttribute(RaceConstants.RACE_ATTRIBUTE_BLOCK_PER_LEVEL));
+        this.setVitality(StatConstants.GAIN_VITALITY + this.race
+                .getAttribute(RaceConstants.RACE_ATTRIBUTE_VITALITY_PER_LEVEL));
+        this.setIntelligence(
+                StatConstants.GAIN_INTELLIGENCE + this.race.getAttribute(
+                        RaceConstants.RACE_ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
+        this.setAgility(StatConstants.GAIN_AGILITY + this.race
+                .getAttribute(RaceConstants.RACE_ATTRIBUTE_AGILITY_PER_LEVEL));
+        this.setLuck(StatConstants.GAIN_LUCK + this.race
+                .getAttribute(RaceConstants.RACE_ATTRIBUTE_LUCK_PER_LEVEL));
         this.healAndRegenerateFully();
         this.setGold(PlayerCharacter.START_GOLD);
         this.bank = 0;
@@ -107,13 +102,13 @@ public class PlayerCharacter extends Creature {
         this.toNextLevel = this.getExpToNextLevel(this.getLevel() + 1,
                 this.kills);
         this.monsterLevel = this.getLevel();
-        this.setSpellBook(SpellBookManager.getSpellBookByID(this.caste
-                .getCasteID()));
+        this.setSpellBook(
+                SpellBookManager.getSpellBookByID(this.caste.getCasteID()));
     }
 
     public PlayerCharacter(final Race r, final Caste c, final Faith f,
-            final Gender g, final Personality p, final int pAtk,
-            final int pDef, final int pHP, final int pMP, final int k) {
+            final Gender g, final Personality p, final int pAtk, final int pDef,
+            final int pHP, final int pMP, final int k) {
         super();
         this.race = r;
         this.caste = c;
@@ -126,59 +121,59 @@ public class PlayerCharacter extends Creature {
         this.permanentHP = pHP;
         this.permanentMP = pMP;
         this.kills = k;
-        final int STR = this.personality
-                .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_STRENGTH);
+        final int STR = this.personality.getAttribute(
+                PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_STRENGTH);
         this.rSTR = new RandomRange(-STR, STR);
-        final int BLK = this.personality
-                .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_BLOCK);
+        final int BLK = this.personality.getAttribute(
+                PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_BLOCK);
         this.rBLK = new RandomRange(-BLK, BLK);
-        final int AGI = this.personality
-                .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_AGILITY);
+        final int AGI = this.personality.getAttribute(
+                PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_AGILITY);
         this.rAGI = new RandomRange(-AGI, AGI);
-        final int VIT = this.personality
-                .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_VITALITY);
+        final int VIT = this.personality.getAttribute(
+                PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_VITALITY);
         this.rVIT = new RandomRange(-VIT, VIT);
-        final int INT = this.personality
-                .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_INTELLIGENCE);
+        final int INT = this.personality.getAttribute(
+                PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_INTELLIGENCE);
         this.rINT = new RandomRange(-INT, INT);
-        final int LUC = this.personality
-                .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_LUCK);
+        final int LUC = this.personality.getAttribute(
+                PersonalityConstants.PERSONALITY_ATTRIBUTE_RANDOM_LUCK);
         this.rLUC = new RandomRange(-LUC, LUC);
-        this.mSTR = this.gender
-                .getAttribute(GenderConstants.GENDER_ATTRIBUTE_STRENGTH_MODIFIER);
+        this.mSTR = this.gender.getAttribute(
+                GenderConstants.GENDER_ATTRIBUTE_STRENGTH_MODIFIER);
         this.mBLK = this.gender
                 .getAttribute(GenderConstants.GENDER_ATTRIBUTE_BLOCK_MODIFIER);
-        this.mAGI = this.gender
-                .getAttribute(GenderConstants.GENDER_ATTRIBUTE_AGILITY_MODIFIER);
-        this.mVIT = this.gender
-                .getAttribute(GenderConstants.GENDER_ATTRIBUTE_VITALITY_MODIFIER);
-        this.mINT = this.gender
-                .getAttribute(GenderConstants.GENDER_ATTRIBUTE_INTELLIGENCE_MODIFIER);
+        this.mAGI = this.gender.getAttribute(
+                GenderConstants.GENDER_ATTRIBUTE_AGILITY_MODIFIER);
+        this.mVIT = this.gender.getAttribute(
+                GenderConstants.GENDER_ATTRIBUTE_VITALITY_MODIFIER);
+        this.mINT = this.gender.getAttribute(
+                GenderConstants.GENDER_ATTRIBUTE_INTELLIGENCE_MODIFIER);
         this.mLUC = this.gender
                 .getAttribute(GenderConstants.GENDER_ATTRIBUTE_LUCK_MODIFIER);
         this.setStrength(StatConstants.GAIN_STRENGTH
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_STRENGTH_PER_LEVEL)
+                + this.race.getAttribute(
+                        RaceConstants.RACE_ATTRIBUTE_STRENGTH_PER_LEVEL)
                 + this.mSTR + Math.min(0, this.rSTR.generate()));
         this.setBlock(StatConstants.GAIN_BLOCK
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_BLOCK_PER_LEVEL)
+                + this.race.getAttribute(
+                        RaceConstants.RACE_ATTRIBUTE_BLOCK_PER_LEVEL)
                 + this.mBLK + Math.min(0, this.rBLK.generate()));
         this.setVitality(StatConstants.GAIN_VITALITY
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_VITALITY_PER_LEVEL)
+                + this.race.getAttribute(
+                        RaceConstants.RACE_ATTRIBUTE_VITALITY_PER_LEVEL)
                 + this.mVIT + Math.min(0, this.rVIT.generate()));
         this.setIntelligence(StatConstants.GAIN_INTELLIGENCE
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_INTELLIGENCE_PER_LEVEL)
+                + this.race.getAttribute(
+                        RaceConstants.RACE_ATTRIBUTE_INTELLIGENCE_PER_LEVEL)
                 + this.mINT + Math.min(0, this.rINT.generate()));
         this.setAgility(StatConstants.GAIN_AGILITY
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_AGILITY_PER_LEVEL)
+                + this.race.getAttribute(
+                        RaceConstants.RACE_ATTRIBUTE_AGILITY_PER_LEVEL)
                 + this.mAGI + Math.min(0, this.rAGI.generate()));
         this.setLuck(StatConstants.GAIN_LUCK
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_LUCK_PER_LEVEL)
+                + this.race.getAttribute(
+                        RaceConstants.RACE_ATTRIBUTE_LUCK_PER_LEVEL)
                 + this.mLUC + Math.min(0, this.rLUC.generate()));
         this.healAndRegenerateFully();
         this.setGold(PlayerCharacter.START_GOLD);
@@ -187,8 +182,8 @@ public class PlayerCharacter extends Creature {
         this.toNextLevel = this.getExpToNextLevel(this.getLevel() + 1,
                 this.kills);
         this.monsterLevel = this.getLevel();
-        this.setSpellBook(SpellBookManager.getSpellBookByID(this.caste
-                .getCasteID()));
+        this.setSpellBook(
+                SpellBookManager.getSpellBookByID(this.caste.getCasteID()));
     }
 
     // Methods
@@ -202,20 +197,16 @@ public class PlayerCharacter extends Creature {
 
     @Override
     public int getAttack() {
-        return super.getAttack()
-                + this.getWeaponPower()
-                + this.getPermanentAttack()
-                + this.caste
-                        .getAttribute(CasteConstants.CASTE_ATTRIBUTE_BONUS_ATTACK);
+        return super.getAttack() + this.getWeaponPower()
+                + this.getPermanentAttack() + this.caste.getAttribute(
+                        CasteConstants.CASTE_ATTRIBUTE_BONUS_ATTACK);
     }
 
     @Override
     public int getDefense() {
-        return super.getDefense()
-                + this.getArmorBlock()
-                + this.getPermanentDefense()
-                + this.caste
-                        .getAttribute(CasteConstants.CASTE_ATTRIBUTE_BONUS_DEFENSE);
+        return super.getDefense() + this.getArmorBlock()
+                + this.getPermanentDefense() + this.caste.getAttribute(
+                        CasteConstants.CASTE_ATTRIBUTE_BONUS_DEFENSE);
     }
 
     @Override
@@ -250,7 +241,8 @@ public class PlayerCharacter extends Creature {
     }
 
     public int getPermanentAttack() {
-        return (int) (this.permanentAttack * PlayerCharacter.FACTOR_PERMANENT_ATTACK_ATTACK);
+        return (int) (this.permanentAttack
+                * PlayerCharacter.FACTOR_PERMANENT_ATTACK_ATTACK);
     }
 
     public int getPermanentAttackPoints() {
@@ -258,7 +250,8 @@ public class PlayerCharacter extends Creature {
     }
 
     public int getPermanentDefense() {
-        return (int) (this.permanentDefense * PlayerCharacter.FACTOR_PERMANENT_DEFENSE_DEFENSE);
+        return (int) (this.permanentDefense
+                * PlayerCharacter.FACTOR_PERMANENT_DEFENSE_DEFENSE);
     }
 
     public int getPermanentDefensePoints() {
@@ -266,9 +259,8 @@ public class PlayerCharacter extends Creature {
     }
 
     public int getPermanentHP() {
-        return this.permanentHP
-                * this.caste
-                        .getAttribute(CasteConstants.CASTE_ATTRIBUTE_PERMANENT_HP_PER_POINT);
+        return this.permanentHP * this.caste.getAttribute(
+                CasteConstants.CASTE_ATTRIBUTE_PERMANENT_HP_PER_POINT);
     }
 
     public int getPermanentHPPoints() {
@@ -276,9 +268,8 @@ public class PlayerCharacter extends Creature {
     }
 
     public int getPermanentMP() {
-        return this.permanentMP
-                * this.caste
-                        .getAttribute(CasteConstants.CASTE_ATTRIBUTE_PERMANENT_MP_PER_POINT);
+        return this.permanentMP * this.caste.getAttribute(
+                CasteConstants.CASTE_ATTRIBUTE_PERMANENT_MP_PER_POINT);
     }
 
     public int getPermanentMPPoints() {
@@ -301,39 +292,39 @@ public class PlayerCharacter extends Creature {
     public void levelUp() {
         this.offsetLevel(1);
         this.offsetStrength(StatConstants.GAIN_STRENGTH
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_STRENGTH_PER_LEVEL)
+                + this.race.getAttribute(
+                        RaceConstants.RACE_ATTRIBUTE_STRENGTH_PER_LEVEL)
                 + Math.min(0, this.mSTR + this.rSTR.generate()));
         this.offsetBlock(StatConstants.GAIN_BLOCK
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_BLOCK_PER_LEVEL)
+                + this.race.getAttribute(
+                        RaceConstants.RACE_ATTRIBUTE_BLOCK_PER_LEVEL)
                 + Math.min(0, this.mBLK + this.rBLK.generate()));
         this.offsetVitality(StatConstants.GAIN_VITALITY
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_VITALITY_PER_LEVEL)
+                + this.race.getAttribute(
+                        RaceConstants.RACE_ATTRIBUTE_VITALITY_PER_LEVEL)
                 + Math.min(0, this.mVIT + this.rVIT.generate()));
         this.offsetIntelligence(StatConstants.GAIN_INTELLIGENCE
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_INTELLIGENCE_PER_LEVEL)
+                + this.race.getAttribute(
+                        RaceConstants.RACE_ATTRIBUTE_INTELLIGENCE_PER_LEVEL)
                 + Math.min(0, this.mINT + this.rINT.generate()));
         this.offsetAgility(StatConstants.GAIN_AGILITY
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_AGILITY_PER_LEVEL)
+                + this.race.getAttribute(
+                        RaceConstants.RACE_ATTRIBUTE_AGILITY_PER_LEVEL)
                 + Math.min(0, this.mAGI + this.rAGI.generate()));
         this.offsetLuck(StatConstants.GAIN_LUCK
-                + this.race
-                        .getAttribute(RaceConstants.RACE_ATTRIBUTE_LUCK_PER_LEVEL)
+                + this.race.getAttribute(
+                        RaceConstants.RACE_ATTRIBUTE_LUCK_PER_LEVEL)
                 + Math.min(0, this.mLUC + this.rLUC.generate()));
         this.healAndRegenerateFully();
         this.toNextLevel = this.getExpToNextLevel(this.getLevel() + 1,
                 this.kills);
     }
 
-    public void loadPlayer(final int pAttack, final int pDefense,
-            final int pHP, final int pMP, final int newKills,
-            final int newLevel, final int chp, final int cmp,
-            final int newGold, final int newBank, final long newExperience,
-            final int ml, final int bookID, final boolean[] known) {
+    public void loadPlayer(final int pAttack, final int pDefense, final int pHP,
+            final int pMP, final int newKills, final int newLevel,
+            final int chp, final int cmp, final int newGold, final int newBank,
+            final long newExperience, final int ml, final int bookID,
+            final boolean[] known) {
         this.permanentAttack = pAttack;
         this.permanentDefense = pDefense;
         this.permanentHP = pHP;

@@ -28,8 +28,8 @@ public class MinorRandomPotion extends GenericPotion {
 
     // Constructors
     public MinorRandomPotion() {
-        super(StatConstants.STAT_CURRENT_MP, true,
-                MinorRandomPotion.MIN_EFFECT, MinorRandomPotion.MAX_EFFECT);
+        super(StatConstants.STAT_CURRENT_MP, true, MinorRandomPotion.MIN_EFFECT,
+                MinorRandomPotion.MAX_EFFECT);
     }
 
     @Override

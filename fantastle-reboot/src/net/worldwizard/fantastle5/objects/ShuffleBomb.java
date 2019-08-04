@@ -58,8 +58,8 @@ public class ShuffleBomb extends GenericUsableObject {
             final int locZ, final int locW, final int dirX, final int dirY,
             final int arrowType, final ObjectInventory inv) {
         // Destroy bomb
-        Fantastle5.getApplication().getGameManager()
-                .morph(new Empty(), locX, locY, locZ, locW);
+        Fantastle5.getApplication().getGameManager().morph(new Empty(), locX,
+                locY, locZ, locW);
         // Act as if bomb was used
         this.useAction(null, locX, locY, locZ, locW);
         // Stop arrow
@@ -74,11 +74,9 @@ public class ShuffleBomb extends GenericUsableObject {
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playUseSound();
         }
-        Fantastle5
-                .getApplication()
-                .getMazeManager()
-                .getMaze()
-                .radialScanShuffleObjects(x, y, z, w, ShuffleBomb.EFFECT_RADIUS);
+        Fantastle5.getApplication().getMazeManager().getMaze()
+                .radialScanShuffleObjects(x, y, z, w,
+                        ShuffleBomb.EFFECT_RADIUS);
         // Player might have moved
         Fantastle5.getApplication().getGameManager().findPlayerAndAdjust();
     }

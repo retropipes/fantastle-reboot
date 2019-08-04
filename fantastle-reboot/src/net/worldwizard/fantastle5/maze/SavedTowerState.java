@@ -40,7 +40,8 @@ class SavedTowerState {
 
     @Override
     public SavedTowerState clone() {
-        final SavedTowerState copy = new SavedTowerState(this.r, this.c, this.f);
+        final SavedTowerState copy = new SavedTowerState(this.r, this.c,
+                this.f);
         int x, y, z, e;
         for (x = 0; x < this.c; x++) {
             for (y = 0; y < this.r; y++) {

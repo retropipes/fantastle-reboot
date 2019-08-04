@@ -54,8 +54,8 @@ public class DamageTrap extends GenericTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         this.maxDamage = PCManager.getPlayer().getMaximumHP() / 10;
         if (this.maxDamage < DamageTrap.MIN_DAMAGE) {
             this.maxDamage = DamageTrap.MIN_DAMAGE;

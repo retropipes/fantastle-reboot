@@ -96,20 +96,20 @@ public class Fantastle5 {
             Fantastle5.application.playLogoSound();
             Fantastle5.application.getGUIManager().showGUI();
             // OS Integration (FIXME: broken)
-//            NativeIntegration ni = new NativeIntegration();
-//            ni.setOpenFileHandler(Fantastle5.application.getMazeManager(),
-//                    Fantastle5.application.getMazeManager().getClass()
-//                            .getDeclaredMethod("loadFromOSHandler",
-//                                    String.class));
-//            ni.setQuitHandler(Fantastle5.application.getMazeManager(),
-//                    Fantastle5.application.getMazeManager().getClass()
-//                            .getDeclaredMethod("quitHandler"));
-//            ni.setPreferencesHandler(Fantastle5.application.getPrefsManager(),
-//                    Fantastle5.application.getPrefsManager().getClass()
-//                            .getDeclaredMethod("showPrefs"));
-//            ni.setAboutHandler(Fantastle5.application.getAboutDialog(),
-//                    Fantastle5.application.getAboutDialog().getClass()
-//                            .getDeclaredMethod("showAboutDialog"));
+            // NativeIntegration ni = new NativeIntegration();
+            // ni.setOpenFileHandler(Fantastle5.application.getMazeManager(),
+            // Fantastle5.application.getMazeManager().getClass()
+            // .getDeclaredMethod("loadFromOSHandler",
+            // String.class));
+            // ni.setQuitHandler(Fantastle5.application.getMazeManager(),
+            // Fantastle5.application.getMazeManager().getClass()
+            // .getDeclaredMethod("quitHandler"));
+            // ni.setPreferencesHandler(Fantastle5.application.getPrefsManager(),
+            // Fantastle5.application.getPrefsManager().getClass()
+            // .getDeclaredMethod("showPrefs"));
+            // ni.setAboutHandler(Fantastle5.application.getAboutDialog(),
+            // Fantastle5.application.getAboutDialog().getClass()
+            // .getDeclaredMethod("showAboutDialog"));
         } catch (final Throwable t) {
             Fantastle5.logError(t);
         }

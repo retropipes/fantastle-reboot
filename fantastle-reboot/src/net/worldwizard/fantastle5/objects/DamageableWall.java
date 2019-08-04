@@ -45,8 +45,8 @@ public class DamageableWall extends GenericWall {
                 .getPlayerManager().getPlayerLocationZ();
         final int pw = Fantastle5.getApplication().getGameManager()
                 .getPlayerManager().getPlayerLocationW();
-        Fantastle5.getApplication().getGameManager()
-                .morph(new CrackedWall(), dirX, dirY, pz, pw);
+        Fantastle5.getApplication().getGameManager().morph(new CrackedWall(),
+                dirX, dirY, pz, pw);
         // Play move failed sound, if it's enabled
         if (Fantastle5.getApplication().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

@@ -71,8 +71,7 @@ public abstract class GenericRandomTeleport extends MazeObject {
 
     @Override
     public GenericRandomTeleport clone() {
-        final GenericRandomTeleport copy = (GenericRandomTeleport) super
-                .clone();
+        final GenericRandomTeleport copy = (GenericRandomTeleport) super.clone();
         copy.randomRangeX = this.randomRangeX;
         copy.randomRangeY = this.randomRangeY;
         return copy;
@@ -130,8 +129,8 @@ public abstract class GenericRandomTeleport extends MazeObject {
 
     // Scriptability
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         final Application app = Fantastle5.getApplication();
         int dr, dc;
         do {
@@ -139,8 +138,8 @@ public abstract class GenericRandomTeleport extends MazeObject {
             dc = this.getDestinationColumn();
         } while (!app.getGameManager().tryUpdatePositionRelative(dr, dc));
         app.getGameManager().updatePositionRelative(dr, dc);
-        if (app.getPrefsManager().getSoundEnabled(
-                PreferencesManager.SOUNDS_GAME)) {
+        if (app.getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveSuccessSound();
         }
     }

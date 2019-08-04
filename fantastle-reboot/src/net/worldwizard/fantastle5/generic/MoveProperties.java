@@ -256,7 +256,8 @@ class MoveProperties implements DirectionConstants {
         }
     }
 
-    public void setDirectionallyPushableInto(final int dir, final boolean value) {
+    public void setDirectionallyPushableInto(final int dir,
+            final boolean value) {
         try {
             this.pushInto[dir] = value;
         } catch (final ArrayIndexOutOfBoundsException aioob) {
@@ -270,7 +271,8 @@ class MoveProperties implements DirectionConstants {
         }
     }
 
-    public void setDirectionallyPullableInto(final int dir, final boolean value) {
+    public void setDirectionallyPullableInto(final int dir,
+            final boolean value) {
         try {
             this.pullInto[dir] = value;
         } catch (final ArrayIndexOutOfBoundsException aioob) {
@@ -284,7 +286,8 @@ class MoveProperties implements DirectionConstants {
         }
     }
 
-    public void setDirectionallyPushableOut(final int dir, final boolean value) {
+    public void setDirectionallyPushableOut(final int dir,
+            final boolean value) {
         try {
             this.pushOut[dir] = value;
         } catch (final ArrayIndexOutOfBoundsException aioob) {
@@ -298,7 +301,8 @@ class MoveProperties implements DirectionConstants {
         }
     }
 
-    public void setDirectionallyPullableOut(final int dir, final boolean value) {
+    public void setDirectionallyPullableOut(final int dir,
+            final boolean value) {
         try {
             this.pullOut[dir] = value;
         } catch (final ArrayIndexOutOfBoundsException aioob) {

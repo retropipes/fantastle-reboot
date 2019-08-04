@@ -61,8 +61,8 @@ public class IceBomb extends GenericUsableObject {
         // Act as if bomb was used
         this.useAction(null, locX, locY, locZ, locW);
         // Destroy bomb
-        Fantastle5.getApplication().getGameManager()
-                .morph(new Empty(), locX, locY, locZ, locW);
+        Fantastle5.getApplication().getGameManager().morph(new Empty(), locX,
+                locY, locZ, locW);
         // Stop arrow
         return false;
     }
@@ -75,10 +75,7 @@ public class IceBomb extends GenericUsableObject {
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playUseSound();
         }
-        Fantastle5
-                .getApplication()
-                .getMazeManager()
-                .getMaze()
+        Fantastle5.getApplication().getMazeManager().getMaze()
                 .radialScanFreezeObjects(x, y, z, w, Maze.LAYER_OBJECT,
                         IceBomb.EFFECT_RADIUS);
     }

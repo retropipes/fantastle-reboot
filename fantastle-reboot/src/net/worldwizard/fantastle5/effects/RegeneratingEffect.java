@@ -16,7 +16,8 @@ public class RegeneratingEffect extends Effect {
 
     public RegeneratingEffect(final String buffName, final int MPAddition,
             final int newRounds, final double factor, final int scaleStat,
-            final double decay, final double rScaleFactor, final int rScaleStat) {
+            final double decay, final double rScaleFactor,
+            final int rScaleStat) {
         super(buffName, newRounds, rScaleFactor, rScaleStat);
         this.setAffectedStat(StatConstants.STAT_CURRENT_MP);
         this.setEffect(Effect.EFFECT_ADD, MPAddition, factor, scaleStat);

@@ -55,7 +55,8 @@ public class Boss extends Creature {
 
     private static int getInitialIntelligence() {
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
-        return (int) (playerCharacter.getIntelligence() * Boss.INTELLIGENCE_MULTIPLIER);
+        return (int) (playerCharacter.getIntelligence()
+                * Boss.INTELLIGENCE_MULTIPLIER);
     }
 
     private static int getInitialAgility() {

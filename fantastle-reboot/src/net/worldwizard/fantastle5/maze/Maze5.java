@@ -111,7 +111,7 @@ public class Maze5 implements Maze {
     }
 
     @Override
-    public boolean removeLevel(int level) {
+    public boolean removeLevel(final int level) {
         int fL = level;
         if (this.levelCount > 1) {
             if (fL >= 1 && fL <= this.levelCount) {
@@ -502,8 +502,8 @@ public class Maze5 implements Maze {
         final Maze5 m = new Maze5();
         m.levelCount = levels;
         for (int x = 0; x < levels; x++) {
-            m.mazeData[x] = LayeredTower
-                    .readLayeredTower(reader, formatVersion);
+            m.mazeData[x] = LayeredTower.readLayeredTower(reader,
+                    formatVersion);
         }
         // New in V5.00
         if (formatVersion == FormatConstants.MAZE_FORMAT_3) {
@@ -535,7 +535,8 @@ public class Maze5 implements Maze {
     }
 
     @Override
-    public void writeSavedMazeState(final DataWriter writer) throws IOException {
+    public void writeSavedMazeState(final DataWriter writer)
+            throws IOException {
         for (int x = 0; x < this.levelCount; x++) {
             this.mazeData[x].writeSavedTowerState(writer);
         }

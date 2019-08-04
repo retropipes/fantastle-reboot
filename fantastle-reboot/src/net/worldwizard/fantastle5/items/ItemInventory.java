@@ -127,7 +127,8 @@ public class ItemInventory {
         }
     }
 
-    public void equipOneHandedWeapon(final Equipment ei, final boolean useFirst) {
+    public void equipOneHandedWeapon(final Equipment ei,
+            final boolean useFirst) {
         // Check for two-handed weapon
         if (this.equipment[EquipmentSlotConstants.SLOT_MAINHAND] != null) {
             if (this.equipment[EquipmentSlotConstants.SLOT_MAINHAND]

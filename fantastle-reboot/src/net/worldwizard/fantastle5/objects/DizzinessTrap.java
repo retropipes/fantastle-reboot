@@ -51,14 +51,11 @@ public class DizzinessTrap extends GenericTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         Messager.showMessage("You feel dizzy!");
-        Fantastle5
-                .getApplication()
-                .getGameManager()
-                .activateEffect(EffectConstants.EFFECT_DIZZY,
-                        DizzinessTrap.EFFECT_DURATION);
+        Fantastle5.getApplication().getGameManager().activateEffect(
+                EffectConstants.EFFECT_DIZZY, DizzinessTrap.EFFECT_DURATION);
         if (Fantastle5.getApplication().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playDizzySound();

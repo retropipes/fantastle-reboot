@@ -41,12 +41,13 @@ public class BreakableWallVertical extends GenericWall {
         this.doChainReact(x, y, z, w);
     }
 
-    public void doChainReact(final int x, final int y, final int z, final int w) {
+    public void doChainReact(final int x, final int y, final int z,
+            final int w) {
         final Application app = Fantastle5.getApplication();
         BreakableWallVertical curr = null;
         try {
-            curr = (BreakableWallVertical) app.getMazeManager().getMazeObject(
-                    x, y, z, w, Maze.LAYER_OBJECT);
+            curr = (BreakableWallVertical) app.getMazeManager().getMazeObject(x,
+                    y, z, w, Maze.LAYER_OBJECT);
         } catch (final ClassCastException cce) {
             // We're not a breakable wall vertical, so abort
             return;

@@ -12,9 +12,7 @@ public class EquipmentFactory {
         final Equipment e = new Equipment(
                 WeaponMaterialConstants.MATERIAL_COMMON_NAMES[material] + " "
                         + WeaponConstants.WEAPON_1H[weaponType],
-                ItemCategoryConstants.ITEM_CATEGORY_NONE,
-                0,
-                0,
+                ItemCategoryConstants.ITEM_CATEGORY_NONE, 0, 0,
                 EquipmentCategoryConstants.EQUIPMENT_CATEGORY_ONE_HANDED_WEAPON,
                 material);
         e.setFirstSlotUsed(EquipmentSlotConstants.SLOT_MAINHAND);
@@ -30,9 +28,7 @@ public class EquipmentFactory {
         final Equipment e = new Equipment(
                 WeaponMaterialConstants.MATERIAL_COMMON_NAMES[material]
                         + " Claws",
-                ItemCategoryConstants.ITEM_CATEGORY_NONE,
-                0,
-                0,
+                ItemCategoryConstants.ITEM_CATEGORY_NONE, 0, 0,
                 EquipmentCategoryConstants.EQUIPMENT_CATEGORY_ONE_HANDED_WEAPON,
                 material);
         e.setFirstSlotUsed(EquipmentSlotConstants.SLOT_MAINHAND);
@@ -47,9 +43,7 @@ public class EquipmentFactory {
         final Equipment e = new Equipment(
                 WeaponMaterialConstants.MATERIAL_COMMON_NAMES[material] + " "
                         + WeaponConstants.WEAPON_2H[weaponType],
-                ItemCategoryConstants.ITEM_CATEGORY_NONE,
-                0,
-                0,
+                ItemCategoryConstants.ITEM_CATEGORY_NONE, 0, 0,
                 EquipmentCategoryConstants.EQUIPMENT_CATEGORY_TWO_HANDED_WEAPON,
                 material);
         e.setFirstSlotUsed(EquipmentSlotConstants.SLOT_MAINHAND);
@@ -61,7 +55,8 @@ public class EquipmentFactory {
         return e;
     }
 
-    public static Equipment createArmor(final int material, final int armorType) {
+    public static Equipment createArmor(final int material,
+            final int armorType) {
         final Equipment e = new Equipment(
                 ArmorMaterialConstants.MATERIAL_COMMON_NAMES[material] + " "
                         + ArmorConstants.ARMOR[armorType],

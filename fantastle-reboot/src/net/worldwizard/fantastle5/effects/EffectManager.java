@@ -71,14 +71,16 @@ public class EffectManager implements EffectConstants {
 
     private void handleMutualExclusiveEffects(final int effectID) {
         if (effectID == EffectConstants.EFFECT_ROTATED_CLOCKWISE) {
-            this.deactivateEffect(EffectConstants.EFFECT_ROTATED_COUNTERCLOCKWISE);
+            this.deactivateEffect(
+                    EffectConstants.EFFECT_ROTATED_COUNTERCLOCKWISE);
             this.deactivateEffect(EffectConstants.EFFECT_U_TURNED);
         } else if (effectID == EffectConstants.EFFECT_ROTATED_COUNTERCLOCKWISE) {
             this.deactivateEffect(EffectConstants.EFFECT_ROTATED_CLOCKWISE);
             this.deactivateEffect(EffectConstants.EFFECT_U_TURNED);
         } else if (effectID == EffectConstants.EFFECT_U_TURNED) {
             this.deactivateEffect(EffectConstants.EFFECT_ROTATED_CLOCKWISE);
-            this.deactivateEffect(EffectConstants.EFFECT_ROTATED_COUNTERCLOCKWISE);
+            this.deactivateEffect(
+                    EffectConstants.EFFECT_ROTATED_COUNTERCLOCKWISE);
         } else if (effectID == EffectConstants.EFFECT_CONFUSED) {
             this.deactivateEffect(EffectConstants.EFFECT_DIZZY);
             this.deactivateEffect(EffectConstants.EFFECT_DRUNK);

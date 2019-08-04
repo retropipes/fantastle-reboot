@@ -31,8 +31,8 @@ public class MusicManager {
 
     private static MicroMod getMusic(final String filename) {
         try {
-            final File file = new File("./Music/" + filename.toLowerCase()
-                    + ".wav");
+            final File file = new File(
+                    "./Music/" + filename.toLowerCase() + ".wav");
             final MicroMod mus = new MicroMod();
             mus.loadModule(file);
             return mus;

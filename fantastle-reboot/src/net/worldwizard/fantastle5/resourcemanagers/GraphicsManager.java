@@ -53,9 +53,9 @@ public class GraphicsManager {
                 dm = "desktop";
             }
             final String normalName = GraphicsManager.normalizeName(name);
-            final URL url = GraphicsManager.class
-                    .getResource("/net/worldwizard/fantastle5/resources/graphics/"
-                            + dm + "/objects/" + normalName + ".png");
+            final URL url = GraphicsManager.class.getResource(
+                    "/net/worldwizard/fantastle5/resources/graphics/" + dm
+                            + "/objects/" + normalName + ".png");
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             return icon;
@@ -78,9 +78,9 @@ public class GraphicsManager {
                 dm = "desktop";
             }
             final String normalName = GraphicsManager.normalizeName(name);
-            final URL url = GraphicsManager.class
-                    .getResource("/net/worldwizard/fantastle5/resources/graphics/"
-                            + dm + "/stats/" + normalName + ".png");
+            final URL url = GraphicsManager.class.getResource(
+                    "/net/worldwizard/fantastle5/resources/graphics/" + dm
+                            + "/stats/" + normalName + ".png");
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             final BufferedImageIcon result = new BufferedImageIcon(icon);
@@ -160,12 +160,12 @@ public class GraphicsManager {
         }
     }
 
-    public static BufferedImageIcon getVirtualCompositeImage(
-            final String name1, final String name2, final String name3) {
+    public static BufferedImageIcon getVirtualCompositeImage(final String name1,
+            final String name2, final String name3) {
         try {
             final BufferedImageIcon icon3 = ImageCache.getCachedImage(name3);
-            final BufferedImageIcon icon2 = GraphicsManager.getCompositeImage(
-                    name1, name2);
+            final BufferedImageIcon icon2 = GraphicsManager
+                    .getCompositeImage(name1, name2);
             final BufferedImageIcon result = new BufferedImageIcon(icon3);
             if (icon3 != null && icon2 != null) {
                 for (int x = 0; x < GraphicsManager.getGraphicSize(); x++) {
@@ -197,9 +197,9 @@ public class GraphicsManager {
             } else {
                 dm = "desktop";
             }
-            final URL url = GraphicsManager.class
-                    .getResource("/net/worldwizard/fantastle5/resources/graphics/"
-                            + dm + "/logo/logo.png");
+            final URL url = GraphicsManager.class.getResource(
+                    "/net/worldwizard/fantastle5/resources/graphics/" + dm
+                            + "/logo/logo.png");
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             return icon;
@@ -212,8 +212,8 @@ public class GraphicsManager {
 
     public static BufferedImageIcon getLoadingLogo() {
         try {
-            final URL url = GraphicsManager.class
-                    .getResource("/net/worldwizard/fantastle5/resources/graphics/loading/loading.png");
+            final URL url = GraphicsManager.class.getResource(
+                    "/net/worldwizard/fantastle5/resources/graphics/loading/loading.png");
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             return icon;
@@ -233,9 +233,9 @@ public class GraphicsManager {
             } else {
                 dm = "desktop";
             }
-            final URL url = GraphicsManager.class
-                    .getResource("/net/worldwizard/fantastle5/resources/graphics/"
-                            + dm + "/logo/minilogo.png");
+            final URL url = GraphicsManager.class.getResource(
+                    "/net/worldwizard/fantastle5/resources/graphics/" + dm
+                            + "/logo/minilogo.png");
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             return icon;
@@ -255,9 +255,9 @@ public class GraphicsManager {
             } else {
                 dm = "desktop";
             }
-            final URL url = GraphicsManager.class
-                    .getResource("/net/worldwizard/fantastle5/resources/graphics/"
-                            + dm + "/logo/micrologo.png");
+            final URL url = GraphicsManager.class.getResource(
+                    "/net/worldwizard/fantastle5/resources/graphics/" + dm
+                            + "/logo/micrologo.png");
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             return icon;
@@ -306,9 +306,9 @@ public class GraphicsManager {
             } else {
                 dm = "desktop";
             }
-            final URL url = GraphicsManager.class
-                    .getResource("/net/worldwizard/fantastle5/resources/graphics/"
-                            + dm + "/boss/boss.png");
+            final URL url = GraphicsManager.class.getResource(
+                    "/net/worldwizard/fantastle5/resources/graphics/" + dm
+                            + "/boss/boss.png");
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             return icon;
@@ -365,9 +365,9 @@ public class GraphicsManager {
                 dm = "desktop";
             }
             final String normalName = GraphicsManager.normalizeName(name);
-            final URL url = GraphicsManager.class
-                    .getResource("/net/worldwizard/fantastle5/resources/graphics/"
-                            + dm + "/monsters/" + normalName + ".png");
+            final URL url = GraphicsManager.class.getResource(
+                    "/net/worldwizard/fantastle5/resources/graphics/" + dm
+                            + "/monsters/" + normalName + ".png");
             final BufferedImage image = ImageIO.read(url);
             if (image != null) {
                 return image;
@@ -403,7 +403,8 @@ public class GraphicsManager {
     }
 
     public static int getGraphicSize() {
-        if (Fantastle5.getApplication().getPrefsManager().isMobileModeEnabled()) {
+        if (Fantastle5.getApplication().getPrefsManager()
+                .isMobileModeEnabled()) {
             return 24;
         } else {
             return 48;

@@ -72,8 +72,8 @@ public class SaveTask extends Thread {
             }
             mazeFile.close();
         } catch (final Exception ex) {
-            Messager.showDialog("Unknown error writing " + sg.toLowerCase()
-                    + " file.");
+            Messager.showDialog(
+                    "Unknown error writing " + sg.toLowerCase() + " file.");
             success = false;
         }
         if (success) {

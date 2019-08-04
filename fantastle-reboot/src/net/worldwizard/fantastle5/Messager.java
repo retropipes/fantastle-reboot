@@ -49,27 +49,28 @@ public class Messager {
             final String defaultChoice) {
         final Application app = Fantastle5.getApplication();
         return (String) JOptionPane.showInputDialog(app.getOutputFrame(),
-                prompt, title, JOptionPane.QUESTION_MESSAGE,
-                app.getMicroLogo(), choices, defaultChoice);
+                prompt, title, JOptionPane.QUESTION_MESSAGE, app.getMicroLogo(),
+                choices, defaultChoice);
     }
 
     public static String showTextInputDialog(final String prompt,
             final String title) {
         final Application app = Fantastle5.getApplication();
         return (String) JOptionPane.showInputDialog(app.getOutputFrame(),
-                prompt, title, JOptionPane.QUESTION_MESSAGE,
-                app.getMicroLogo(), null, null);
+                prompt, title, JOptionPane.QUESTION_MESSAGE, app.getMicroLogo(),
+                null, null);
     }
 
     public static String showTextInputDialogWithDefault(final String prompt,
             final String title, final String defaultValue) {
         final Application app = Fantastle5.getApplication();
         return (String) JOptionPane.showInputDialog(app.getOutputFrame(),
-                prompt, title, JOptionPane.QUESTION_MESSAGE,
-                app.getMicroLogo(), null, defaultValue);
+                prompt, title, JOptionPane.QUESTION_MESSAGE, app.getMicroLogo(),
+                null, defaultValue);
     }
 
-    public static int showConfirmDialog(final String prompt, final String title) {
+    public static int showConfirmDialog(final String prompt,
+            final String title) {
         final Application app = Fantastle5.getApplication();
         return JOptionPane.showConfirmDialog(app.getOutputFrame(), prompt,
                 title, JOptionPane.YES_NO_OPTION,

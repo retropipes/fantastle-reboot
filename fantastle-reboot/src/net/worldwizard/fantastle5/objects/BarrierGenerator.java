@@ -51,7 +51,8 @@ public class BarrierGenerator extends GenericWall {
                 .getPlayerLocationZ();
         final int pw = app.getGameManager().getPlayerManager()
                 .getPlayerLocationW();
-        String mo2Name, mo4Name, mo6Name, mo8Name, invalidName, horzName, vertName;
+        String mo2Name, mo4Name, mo6Name, mo8Name, invalidName, horzName,
+                vertName;
         invalidName = new EmptyVoid().getName();
         horzName = new HorizontalBarrier().getName();
         vertName = new VerticalBarrier().getName();
@@ -87,8 +88,8 @@ public class BarrierGenerator extends GenericWall {
             scanResult = this.scan(DirectionConstants.DIRECTION_WEST, dirX,
                     dirY, pz, pw, BarrierGenerator.SCAN_LIMIT, false);
             if (scanResult) {
-                this.generate(DirectionConstants.DIRECTION_WEST, dirX, dirY,
-                        pz, pw, BarrierGenerator.SCAN_LIMIT, false);
+                this.generate(DirectionConstants.DIRECTION_WEST, dirX, dirY, pz,
+                        pw, BarrierGenerator.SCAN_LIMIT, false);
                 flag = true;
             }
         }
@@ -114,14 +115,14 @@ public class BarrierGenerator extends GenericWall {
             scanResult = this.scan(DirectionConstants.DIRECTION_EAST, dirX,
                     dirY, pz, pw, BarrierGenerator.SCAN_LIMIT, false);
             if (scanResult) {
-                this.generate(DirectionConstants.DIRECTION_EAST, dirX, dirY,
-                        pz, pw, BarrierGenerator.SCAN_LIMIT, false);
+                this.generate(DirectionConstants.DIRECTION_EAST, dirX, dirY, pz,
+                        pw, BarrierGenerator.SCAN_LIMIT, false);
                 flag = true;
             }
         }
         if (flag) {
-            if (app.getPrefsManager().getSoundEnabled(
-                    PreferencesManager.SOUNDS_GAME)) {
+            if (app.getPrefsManager()
+                    .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 SoundManager.playSoundAsynchronously("generate");
             }
             this.activateTimer(BarrierGenerator.TIMER_DELAY);
@@ -146,7 +147,8 @@ public class BarrierGenerator extends GenericWall {
                 .getPlayerLocationZ();
         final int pw = app.getGameManager().getPlayerManager()
                 .getPlayerLocationW();
-        String mo2Name, mo4Name, mo6Name, mo8Name, invalidName, horzName, vertName;
+        String mo2Name, mo4Name, mo6Name, mo8Name, invalidName, horzName,
+                vertName;
         invalidName = new EmptyVoid().getName();
         horzName = new HorizontalBarrier().getName();
         vertName = new VerticalBarrier().getName();
@@ -182,8 +184,8 @@ public class BarrierGenerator extends GenericWall {
             scanResult = this.scan(DirectionConstants.DIRECTION_WEST, dirX,
                     dirY, pz, pw, BarrierGenerator.SCAN_LIMIT, true);
             if (scanResult) {
-                this.generate(DirectionConstants.DIRECTION_WEST, dirX, dirY,
-                        pz, pw, BarrierGenerator.SCAN_LIMIT, true);
+                this.generate(DirectionConstants.DIRECTION_WEST, dirX, dirY, pz,
+                        pw, BarrierGenerator.SCAN_LIMIT, true);
                 flag = true;
             }
         }
@@ -209,14 +211,14 @@ public class BarrierGenerator extends GenericWall {
             scanResult = this.scan(DirectionConstants.DIRECTION_EAST, dirX,
                     dirY, pz, pw, BarrierGenerator.SCAN_LIMIT, true);
             if (scanResult) {
-                this.generate(DirectionConstants.DIRECTION_EAST, dirX, dirY,
-                        pz, pw, BarrierGenerator.SCAN_LIMIT, true);
+                this.generate(DirectionConstants.DIRECTION_EAST, dirX, dirY, pz,
+                        pw, BarrierGenerator.SCAN_LIMIT, true);
                 flag = true;
             }
         }
         if (flag) {
-            if (app.getPrefsManager().getSoundEnabled(
-                    PreferencesManager.SOUNDS_GAME)) {
+            if (app.getPrefsManager()
+                    .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 SoundManager.playSoundAsynchronously("generate");
             }
         }
@@ -340,10 +342,9 @@ public class BarrierGenerator extends GenericWall {
                             break;
                         }
                         try {
-                            app.getMazeManager()
-                                    .getMaze()
-                                    .setCell(new HorizontalBarrier(), x + l, y,
-                                            z, w, Maze.LAYER_OBJECT);
+                            app.getMazeManager().getMaze().setCell(
+                                    new HorizontalBarrier(), x + l, y, z, w,
+                                    Maze.LAYER_OBJECT);
                         } catch (final ArrayIndexOutOfBoundsException aioob) {
                             // Do nothing
                         }
@@ -356,10 +357,8 @@ public class BarrierGenerator extends GenericWall {
                             break;
                         }
                         try {
-                            app.getMazeManager()
-                                    .getMaze()
-                                    .setCell(new Empty(), x + l, y, z, w,
-                                            Maze.LAYER_OBJECT);
+                            app.getMazeManager().getMaze().setCell(new Empty(),
+                                    x + l, y, z, w, Maze.LAYER_OBJECT);
                         } catch (final ArrayIndexOutOfBoundsException aioob) {
                             // Do nothing
                         }
@@ -384,10 +383,9 @@ public class BarrierGenerator extends GenericWall {
                             break;
                         }
                         try {
-                            app.getMazeManager()
-                                    .getMaze()
-                                    .setCell(new VerticalBarrier(), x, y - l,
-                                            z, w, Maze.LAYER_OBJECT);
+                            app.getMazeManager().getMaze().setCell(
+                                    new VerticalBarrier(), x, y - l, z, w,
+                                    Maze.LAYER_OBJECT);
                         } catch (final ArrayIndexOutOfBoundsException aioob) {
                             // Do nothing
                         }
@@ -400,10 +398,8 @@ public class BarrierGenerator extends GenericWall {
                             break;
                         }
                         try {
-                            app.getMazeManager()
-                                    .getMaze()
-                                    .setCell(new Empty(), x, y - l, z, w,
-                                            Maze.LAYER_OBJECT);
+                            app.getMazeManager().getMaze().setCell(new Empty(),
+                                    x, y - l, z, w, Maze.LAYER_OBJECT);
                         } catch (final ArrayIndexOutOfBoundsException aioob) {
                             // Do nothing
                         }
@@ -428,10 +424,9 @@ public class BarrierGenerator extends GenericWall {
                             break;
                         }
                         try {
-                            app.getMazeManager()
-                                    .getMaze()
-                                    .setCell(new VerticalBarrier(), x, y + l,
-                                            z, w, Maze.LAYER_OBJECT);
+                            app.getMazeManager().getMaze().setCell(
+                                    new VerticalBarrier(), x, y + l, z, w,
+                                    Maze.LAYER_OBJECT);
                         } catch (final ArrayIndexOutOfBoundsException aioob) {
                             // Do nothing
                         }
@@ -444,10 +439,8 @@ public class BarrierGenerator extends GenericWall {
                             break;
                         }
                         try {
-                            app.getMazeManager()
-                                    .getMaze()
-                                    .setCell(new Empty(), x, y + l, z, w,
-                                            Maze.LAYER_OBJECT);
+                            app.getMazeManager().getMaze().setCell(new Empty(),
+                                    x, y + l, z, w, Maze.LAYER_OBJECT);
                         } catch (final ArrayIndexOutOfBoundsException aioob) {
                             // Do nothing
                         }
@@ -472,10 +465,9 @@ public class BarrierGenerator extends GenericWall {
                             break;
                         }
                         try {
-                            app.getMazeManager()
-                                    .getMaze()
-                                    .setCell(new HorizontalBarrier(), x - l, y,
-                                            z, w, Maze.LAYER_OBJECT);
+                            app.getMazeManager().getMaze().setCell(
+                                    new HorizontalBarrier(), x - l, y, z, w,
+                                    Maze.LAYER_OBJECT);
                         } catch (final ArrayIndexOutOfBoundsException aioob) {
                             // Do nothing
                         }
@@ -488,10 +480,8 @@ public class BarrierGenerator extends GenericWall {
                             break;
                         }
                         try {
-                            app.getMazeManager()
-                                    .getMaze()
-                                    .setCell(new Empty(), x - l, y, z, w,
-                                            Maze.LAYER_OBJECT);
+                            app.getMazeManager().getMaze().setCell(new Empty(),
+                                    x - l, y, z, w, Maze.LAYER_OBJECT);
                         } catch (final ArrayIndexOutOfBoundsException aioob) {
                             // Do nothing
                         }

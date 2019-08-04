@@ -54,10 +54,11 @@ public class DrainTrap extends GenericTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         this.maxDrain = PCManager.getPlayer().getMaximumMP() / 10;
-        this.amountDrained = new RandomRange(this.maxDrain, DrainTrap.MIN_DRAIN);
+        this.amountDrained = new RandomRange(this.maxDrain,
+                DrainTrap.MIN_DRAIN);
         PCManager.getPlayer().regenerate(this.amountDrained.generate());
         if (Fantastle5.getApplication().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

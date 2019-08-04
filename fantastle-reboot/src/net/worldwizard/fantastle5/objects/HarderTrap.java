@@ -48,8 +48,8 @@ public class HarderTrap extends GenericTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         Messager.showMessage("The monsters get stronger...");
         PCManager.getPlayer().incrementMonsterLevel();
         if (Fantastle5.getApplication().getPrefsManager()

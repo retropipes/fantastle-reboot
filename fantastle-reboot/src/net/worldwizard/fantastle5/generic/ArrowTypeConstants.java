@@ -19,6 +19,6 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package net.worldwizard.fantastle5.generic;
 
 public interface ArrowTypeConstants {
-    public static final int ARROW_TYPE_PLAIN = 0;
-    public static final int ARROW_TYPE_ICE = 1;
+    int ARROW_TYPE_PLAIN = 0;
+    int ARROW_TYPE_ICE = 1;
 }

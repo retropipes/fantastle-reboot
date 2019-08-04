@@ -37,8 +37,8 @@ public class ForceField extends GenericField {
             final int dirY, final ObjectInventory inv) {
         final Application app = Fantastle5.getApplication();
         Messager.showMessage("You'll get zapped");
-        if (app.getPrefsManager().getSoundEnabled(
-                PreferencesManager.SOUNDS_GAME)) {
+        if (app.getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveFailedSound();
         }
     }

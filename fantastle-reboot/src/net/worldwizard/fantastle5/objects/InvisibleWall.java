@@ -39,8 +39,8 @@ public class InvisibleWall extends GenericWall {
         final Application app = Fantastle5.getApplication();
         Messager.showMessage("Invisible Wall!");
         // Play move failed sound, if it's enabled
-        if (app.getPrefsManager().getSoundEnabled(
-                PreferencesManager.SOUNDS_GAME)) {
+        if (app.getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveFailedSound();
         }
     }

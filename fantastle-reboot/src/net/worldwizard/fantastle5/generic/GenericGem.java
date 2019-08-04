@@ -32,8 +32,8 @@ public abstract class GenericGem extends MazeObject {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         Fantastle5.getApplication().getGameManager().decay();
         this.postMoveActionHook();
         Fantastle5.getApplication().getGameManager().redrawMaze();
@@ -61,8 +61,8 @@ public abstract class GenericGem extends MazeObject {
     public boolean arrowHitAction(final int locX, final int locY,
             final int locZ, final int locW, final int dirX, final int dirY,
             final int arrowType, final ObjectInventory inv) {
-        Fantastle5.getApplication().getGameManager()
-                .morph(new Empty(), locX, locY, locZ, locW);
+        Fantastle5.getApplication().getGameManager().morph(new Empty(), locX,
+                locY, locZ, locW);
         if (Fantastle5.getApplication().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             SoundManager.playSoundAsynchronously("shatter");

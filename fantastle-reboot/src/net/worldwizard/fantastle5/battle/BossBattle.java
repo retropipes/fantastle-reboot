@@ -72,14 +72,16 @@ public class BossBattle extends Battle {
             this.rewards.doRewards();
             this.battleDone();
         } else if (this.result == BattleResults.PERFECT) {
-            this.appendToMessageArea("You beat the Boss, and didn't suffer any damage!");
+            this.appendToMessageArea(
+                    "You beat the Boss, and didn't suffer any damage!");
             this.rewards.doRewards();
             this.battleDone();
         } else if (this.result == BattleResults.LOST) {
             this.appendToMessageArea("The Boss beat you...");
             playerCharacter.healPercentage(Creature.FULL_HEAL_PERCENTAGE);
         } else if (this.result == BattleResults.ANNIHILATED) {
-            this.appendToMessageArea("The Boss beat you... and you didn't even hurt him!");
+            this.appendToMessageArea(
+                    "The Boss beat you... and you didn't even hurt him!");
             playerCharacter.healPercentage(Creature.FULL_HEAL_PERCENTAGE);
         } else if (this.result == BattleResults.DRAW) {
             this.appendToMessageArea("The battle was a draw!");

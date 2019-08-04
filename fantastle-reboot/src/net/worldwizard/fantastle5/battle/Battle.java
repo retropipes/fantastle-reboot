@@ -123,23 +123,23 @@ public class Battle implements BattleResults, MoveTypes {
         this.steal.addActionListener(this.handler);
         this.drain.addActionListener(this.handler);
         this.done.addActionListener(this.handler);
-        this.attack.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), "Attack");
+        this.attack.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), "Attack");
         this.attack.getActionMap().put("Attack", this.handler);
-        this.flee.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_F, 0), "Flee");
+        this.flee.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_F, 0), "Flee");
         this.flee.getActionMap().put("Flee", this.handler);
-        this.spell.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_C, 0), "Cast Spell");
+        this.spell.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0), "Cast Spell");
         this.spell.getActionMap().put("Cast Spell", this.handler);
-        this.steal.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_S, 0), "Steal Money");
+        this.steal.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0), "Steal Money");
         this.steal.getActionMap().put("Steal Money", this.handler);
-        this.drain.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_D, 0), "Drain Enemy");
+        this.drain.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0), "Drain Enemy");
         this.drain.getActionMap().put("Drain Enemy", this.handler);
-        this.item.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_I, 0), "Use Item");
+        this.item.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0), "Use Item");
         this.item.getActionMap().put("Use Item", this.handler);
     }
 
@@ -237,8 +237,8 @@ public class Battle implements BattleResults, MoveTypes {
             final PlayerCharacter playerCharacter = PCManager.getPlayer();
             if (Battle.fumble(playerCharacter)) {
                 this.moveType = MoveTypes.FUMBLE;
-                final RandomRange fumDamage = new RandomRange(1, Math.max(
-                        playerCharacter.getWeaponPower(), 1));
+                final RandomRange fumDamage = new RandomRange(1,
+                        Math.max(playerCharacter.getWeaponPower(), 1));
                 this.fumbleDamage = fumDamage.generate();
                 playerCharacter.doDamage(this.fumbleDamage);
             } else {
@@ -247,15 +247,14 @@ public class Battle implements BattleResults, MoveTypes {
                         (int) playerCharacter
                                 .getEffectedStat(StatConstants.STAT_ATTACK));
                 final RandomRange randomEnemyDefenseGenerator = new RandomRange(
-                        0,
-                        (int) this.enemy
+                        0, (int) this.enemy
                                 .getEffectedStat(StatConstants.STAT_DEFENSE));
                 int currDamage = 0;
                 int currRiposteEnemyDamage = 0;
                 this.multiplier = MultiplierValues.getRandomNormalValue();
                 final boolean didPierce = Battle.pierce();
-                final int randomAttack = (int) (randomAttackGenerator
-                        .generate() * this.multiplier);
+                final int randomAttack = (int) (randomAttackGenerator.generate()
+                        * this.multiplier);
                 final int randomEnemyDefense = randomEnemyDefenseGenerator
                         .generate();
                 if (didPierce) {
@@ -269,8 +268,10 @@ public class Battle implements BattleResults, MoveTypes {
                         currDamage = randomAttack - randomEnemyDefense;
                     }
                 }
-                this.damage = (int) (currDamage * StatConstants.FACTOR_DIFFERENTIAL_DAMAGE);
-                this.riposteEnemyDamage = (int) (currRiposteEnemyDamage * StatConstants.FACTOR_DIFFERENTIAL_DAMAGE);
+                this.damage = (int) (currDamage
+                        * StatConstants.FACTOR_DIFFERENTIAL_DAMAGE);
+                this.riposteEnemyDamage = (int) (currRiposteEnemyDamage
+                        * StatConstants.FACTOR_DIFFERENTIAL_DAMAGE);
                 if (currRiposteEnemyDamage > 0) {
                     this.enemyDidDamage = true;
                 }
@@ -290,8 +291,8 @@ public class Battle implements BattleResults, MoveTypes {
             final PlayerCharacter playerCharacter = PCManager.getPlayer();
             if (Battle.fumble(this.enemy)) {
                 this.enemyMoveType = MoveTypes.FUMBLE;
-                final RandomRange fumDamage = new RandomRange(1, Math.max(
-                        this.enemy.getAttack(), 1));
+                final RandomRange fumDamage = new RandomRange(1,
+                        Math.max(this.enemy.getAttack(), 1));
                 this.enemyFumbleDamage = fumDamage.generate();
                 this.enemy.doDamage(this.enemyFumbleDamage);
             } else {
@@ -300,8 +301,7 @@ public class Battle implements BattleResults, MoveTypes {
                         (int) playerCharacter
                                 .getEffectedStat(StatConstants.STAT_DEFENSE));
                 final RandomRange randomEnemyAttackGenerator = new RandomRange(
-                        0,
-                        (int) this.enemy
+                        0, (int) this.enemy
                                 .getEffectedStat(StatConstants.STAT_ATTACK));
                 int currEnemyDamage = 0;
                 int currRiposteDamage = 0;
@@ -320,8 +320,10 @@ public class Battle implements BattleResults, MoveTypes {
                         currEnemyDamage = randomEnemyAttack - randomDefense;
                     }
                 }
-                this.enemyDamage = (int) (currEnemyDamage * StatConstants.FACTOR_DIFFERENTIAL_DAMAGE);
-                this.riposteDamage = (int) (currRiposteDamage * StatConstants.FACTOR_DIFFERENTIAL_DAMAGE);
+                this.enemyDamage = (int) (currEnemyDamage
+                        * StatConstants.FACTOR_DIFFERENTIAL_DAMAGE);
+                this.riposteDamage = (int) (currRiposteDamage
+                        * StatConstants.FACTOR_DIFFERENTIAL_DAMAGE);
                 if (currEnemyDamage > 0) {
                     this.enemyDidDamage = true;
                 }
@@ -387,7 +389,8 @@ public class Battle implements BattleResults, MoveTypes {
                     displayPlayerDamageString = "You try to hit the "
                             + enemyName + ", but MISS!";
                     if (Fantastle5.getApplication().getPrefsManager()
-                            .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
+                            .getSoundEnabled(
+                                    PreferencesManager.SOUNDS_BATTLE)) {
                         SoundManager.playSoundAsynchronously("missed");
                     }
                 } else if (this.damage == 0 && this.riposteEnemyDamage != 0) {
@@ -395,14 +398,16 @@ public class Battle implements BattleResults, MoveTypes {
                             + enemyName + ", but are RIPOSTED for "
                             + this.riposteEnemyDamage + " damage!";
                     if (Fantastle5.getApplication().getPrefsManager()
-                            .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
+                            .getSoundEnabled(
+                                    PreferencesManager.SOUNDS_BATTLE)) {
                         SoundManager.playSoundAsynchronously("counter");
                     }
                 } else {
                     displayPlayerDamageString = "You hit the " + enemyName
                             + " for " + playerDamageString + " damage!";
                     if (Fantastle5.getApplication().getPrefsManager()
-                            .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
+                            .getSoundEnabled(
+                                    PreferencesManager.SOUNDS_BATTLE)) {
                         SoundManager.playSoundAsynchronously("hit");
                     }
                 }
@@ -446,7 +451,8 @@ public class Battle implements BattleResults, MoveTypes {
                     displayEnemyDamageString = "The " + enemyName
                             + " tries to hit you, but MISSES!";
                     if (Fantastle5.getApplication().getPrefsManager()
-                            .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
+                            .getSoundEnabled(
+                                    PreferencesManager.SOUNDS_BATTLE)) {
                         SoundManager.playSoundAsynchronously("missed");
                     }
                 } else if (this.enemyDamage == 0 && this.riposteDamage != 0) {
@@ -454,14 +460,16 @@ public class Battle implements BattleResults, MoveTypes {
                             + " tries to hit you, but you RIPOSTE for "
                             + this.riposteDamage + " damage!";
                     if (Fantastle5.getApplication().getPrefsManager()
-                            .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
+                            .getSoundEnabled(
+                                    PreferencesManager.SOUNDS_BATTLE)) {
                         SoundManager.playSoundAsynchronously("counter");
                     }
                 } else {
                     displayEnemyDamageString = "The " + enemyName
                             + " hits you for " + enemyDamageString + " damage!";
                     if (Fantastle5.getApplication().getPrefsManager()
-                            .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
+                            .getSoundEnabled(
+                                    PreferencesManager.SOUNDS_BATTLE)) {
                         SoundManager.playSoundAsynchronously("hit");
                     }
                 }
@@ -471,7 +479,8 @@ public class Battle implements BattleResults, MoveTypes {
                     enemyWhackString = "The " + enemyName
                             + "'s attack hits with " + whack + "force!\n";
                 }
-                if ((this.enemyMoveType | MoveTypes.PIERCING) == this.enemyMoveType) {
+                if ((this.enemyMoveType
+                        | MoveTypes.PIERCING) == this.enemyMoveType) {
                     enemyWhackString += "The " + enemyName
                             + "'s attack pierces YOUR armor!\n";
                 }
@@ -527,8 +536,8 @@ public class Battle implements BattleResults, MoveTypes {
         if (playerCharacter.checkLevelUp()) {
             playerCharacter.levelUp();
             Fantastle5.getApplication().getGameManager().keepNextMessage();
-            Messager.showMessage("You reached level "
-                    + playerCharacter.getLevel() + ".");
+            Messager.showMessage(
+                    "You reached level " + playerCharacter.getLevel() + ".");
         }
     }
 
@@ -667,12 +676,14 @@ public class Battle implements BattleResults, MoveTypes {
     }
 
     protected final void updateMessageAreaEnemyFleeFailed() {
-        this.appendToMessageArea("The enemy tries to run away, but doesn't quite make it!");
+        this.appendToMessageArea(
+                "The enemy tries to run away, but doesn't quite make it!");
     }
 
     protected final void updateMessageAreaPostSteal() {
-        this.appendToMessageArea("You try to steal money, and successfully steal "
-                + this.stealAmount + " Gold!");
+        this.appendToMessageArea(
+                "You try to steal money, and successfully steal "
+                        + this.stealAmount + " Gold!");
     }
 
     protected final void updateMessageAreaPostDrain() {
@@ -680,14 +691,15 @@ public class Battle implements BattleResults, MoveTypes {
     }
 
     protected final void updateMessageAreaFleeFailed() {
-        this.appendToMessageArea("You try to run away, but don't quite make it!");
+        this.appendToMessageArea(
+                "You try to run away, but don't quite make it!");
     }
 
     protected final boolean stealMoney() {
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
         final Caste caste = playerCharacter.getCaste();
-        final int stealChance = StatConstants.CHANCE_STEAL
-                + caste.getAttribute(CasteConstants.CASTE_ATTRIBUTE_STEAL_SUCCESS_MODIFIER);
+        final int stealChance = StatConstants.CHANCE_STEAL + caste.getAttribute(
+                CasteConstants.CASTE_ATTRIBUTE_STEAL_SUCCESS_MODIFIER);
         if (stealChance <= 0) {
             // Failed
             this.stealAmount = 0;
@@ -719,8 +731,8 @@ public class Battle implements BattleResults, MoveTypes {
     protected final boolean drainEnemy() {
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
         final Caste caste = playerCharacter.getCaste();
-        final int drainChance = StatConstants.CHANCE_DRAIN
-                + caste.getAttribute(CasteConstants.CASTE_ATTRIBUTE_DRAIN_SUCCESS_MODIFIER);
+        final int drainChance = StatConstants.CHANCE_DRAIN + caste.getAttribute(
+                CasteConstants.CASTE_ATTRIBUTE_DRAIN_SUCCESS_MODIFIER);
         if (drainChance <= 0) {
             // Failed
             return false;
@@ -751,11 +763,13 @@ public class Battle implements BattleResults, MoveTypes {
     }
 
     protected final void updateMessageAreaStealFailed() {
-        this.appendToMessageArea("You try to steal money from the enemy, but the attempt fails!");
+        this.appendToMessageArea(
+                "You try to steal money from the enemy, but the attempt fails!");
     }
 
     protected final void updateMessageAreaDrainFailed() {
-        this.appendToMessageArea("You try to drain the enemy's MP, but the attempt fails!");
+        this.appendToMessageArea(
+                "You try to drain the enemy's MP, but the attempt fails!");
     }
 
     protected void doResult() {
@@ -787,26 +801,25 @@ public class Battle implements BattleResults, MoveTypes {
                     .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
                 SoundManager.playSoundAsynchronously("victory");
             }
-            Fantastle5
-                    .getApplication()
-                    .getGameManager()
-                    .getScoreTracker()
-                    .updateScore(
-                            m.getExperience() + m.getGold()
-                                    + m.getPerfectBonusGold());
+            Fantastle5.getApplication().getGameManager().getScoreTracker()
+                    .updateScore(m.getExperience() + m.getGold()
+                            + m.getPerfectBonusGold());
         } else if (this.result == BattleResults.LOST) {
             this.appendToMessageArea("You lost...");
         } else if (this.result == BattleResults.ANNIHILATED) {
-            this.appendToMessageArea("You lost without hurting your foe... you were annihilated!");
+            this.appendToMessageArea(
+                    "You lost without hurting your foe... you were annihilated!");
         } else if (this.result == BattleResults.DRAW) {
-            this.appendToMessageArea("The battle was a draw. You are fully healed!");
+            this.appendToMessageArea(
+                    "The battle was a draw. You are fully healed!");
             playerCharacter.healPercentage(Creature.FULL_HEAL_PERCENTAGE);
             playerCharacter.regeneratePercentage(Creature.FULL_HEAL_PERCENTAGE);
         } else if (this.result == BattleResults.FLED) {
             this.appendToMessageArea("You ran away successfully!");
         } else if (this.result == BattleResults.ENEMY_FLED) {
             this.appendToMessageArea("The enemy runs away!");
-            this.appendToMessageArea("Since the enemy ran away, you gain nothing for this battle.");
+            this.appendToMessageArea(
+                    "Since the enemy ran away, you gain nothing for this battle.");
         }
         // Cleanup
         this.attack.setVisible(false);
@@ -830,8 +843,8 @@ public class Battle implements BattleResults, MoveTypes {
                     .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
                 SoundManager.playSoundAsynchronously("levelup");
             }
-            this.appendToMessageArea("You reached level "
-                    + playerCharacter.getLevel() + ".");
+            this.appendToMessageArea(
+                    "You reached level " + playerCharacter.getLevel() + ".");
         }
         // Final Cleanup
         this.stripExtraNewLine();

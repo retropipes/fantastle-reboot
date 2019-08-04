@@ -46,8 +46,8 @@ public class BasherSpellBook extends SpellBook {
                 "The charge has dissipated!");
         final Spell spell2 = new Spell(spell2Effect, 2, 'P', "attack");
         this.spells[2] = spell2;
-        final DamageEffect spell3Effect = new DamageEffect("Ghostly Axe", 20,
-                5, Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE, 4.0);
+        final DamageEffect spell3Effect = new DamageEffect("Ghostly Axe", 20, 5,
+                Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE, 4.0);
         spell3Effect.setMessage(Effect.MESSAGE_INITIAL,
                 "You summon a ghostly axe!");
         spell3Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,

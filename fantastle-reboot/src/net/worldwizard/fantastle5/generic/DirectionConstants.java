@@ -5,25 +5,25 @@
 package net.worldwizard.fantastle5.generic;
 
 public interface DirectionConstants {
-    public static final boolean DIRECTION_EXTERNAL = true;
-    public static final boolean DIRECTION_INTERNAL = false;
-    public static final int DIRECTION_INVALID = -2;
-    public static final int DIRECTION_NONE = -1;
-    public static final int DIRECTION_NORTHWEST = 0;
-    public static final int DIRECTION_NORTH = 1;
-    public static final int DIRECTION_NORTHEAST = 2;
-    public static final int DIRECTION_EAST = 3;
-    public static final int DIRECTION_SOUTHEAST = 4;
-    public static final int DIRECTION_SOUTH = 5;
-    public static final int DIRECTION_SOUTHWEST = 6;
-    public static final int DIRECTION_WEST = 7;
-    public static final int DIRECTION_COUNT = 8;
-    public static final String DIRECTION_NORTHWEST_NAME = "Northwest";
-    public static final String DIRECTION_NORTH_NAME = "North";
-    public static final String DIRECTION_NORTHEAST_NAME = "Northeast";
-    public static final String DIRECTION_EAST_NAME = "East";
-    public static final String DIRECTION_SOUTHEAST_NAME = "Southeast";
-    public static final String DIRECTION_SOUTH_NAME = "South";
-    public static final String DIRECTION_SOUTHWEST_NAME = "Southwest";
-    public static final String DIRECTION_WEST_NAME = "West";
+    boolean DIRECTION_EXTERNAL = true;
+    boolean DIRECTION_INTERNAL = false;
+    int DIRECTION_INVALID = -2;
+    int DIRECTION_NONE = -1;
+    int DIRECTION_NORTHWEST = 0;
+    int DIRECTION_NORTH = 1;
+    int DIRECTION_NORTHEAST = 2;
+    int DIRECTION_EAST = 3;
+    int DIRECTION_SOUTHEAST = 4;
+    int DIRECTION_SOUTH = 5;
+    int DIRECTION_SOUTHWEST = 6;
+    int DIRECTION_WEST = 7;
+    int DIRECTION_COUNT = 8;
+    String DIRECTION_NORTHWEST_NAME = "Northwest";
+    String DIRECTION_NORTH_NAME = "North";
+    String DIRECTION_NORTHEAST_NAME = "Northeast";
+    String DIRECTION_EAST_NAME = "East";
+    String DIRECTION_SOUTHEAST_NAME = "Southeast";
+    String DIRECTION_SOUTH_NAME = "South";
+    String DIRECTION_SOUTHWEST_NAME = "Southwest";
+    String DIRECTION_WEST_NAME = "West";
 }

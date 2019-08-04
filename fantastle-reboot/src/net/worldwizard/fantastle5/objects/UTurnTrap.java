@@ -51,14 +51,11 @@ public class UTurnTrap extends GenericTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         Messager.showMessage("Your controls are turned around!");
-        Fantastle5
-                .getApplication()
-                .getGameManager()
-                .activateEffect(EffectConstants.EFFECT_U_TURNED,
-                        UTurnTrap.EFFECT_DURATION);
+        Fantastle5.getApplication().getGameManager().activateEffect(
+                EffectConstants.EFFECT_U_TURNED, UTurnTrap.EFFECT_DURATION);
         if (Fantastle5.getApplication().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playRotatedSound();

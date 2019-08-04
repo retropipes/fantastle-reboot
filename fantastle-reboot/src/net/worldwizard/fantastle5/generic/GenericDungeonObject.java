@@ -11,8 +11,8 @@ public abstract class GenericDungeonObject extends MazeObject {
 
     // Methods
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         this.postMoveActionHook();
     }
 

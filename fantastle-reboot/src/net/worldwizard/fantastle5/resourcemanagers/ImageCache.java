@@ -67,8 +67,8 @@ public class ImageCache {
         if (!ImageCache.cacheCreated) {
             ImageCache.createCache();
         }
-        final GraphicalHelpViewer cv = new GraphicalHelpViewer(
-                ImageCache.cache, ImageCache.nameCache);
+        final GraphicalHelpViewer cv = new GraphicalHelpViewer(ImageCache.cache,
+                ImageCache.nameCache);
         final JFrame viewFrame = new JFrame("Image Cache Viewer");
         viewFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         viewFrame.setLayout(new FlowLayout());

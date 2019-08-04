@@ -47,8 +47,8 @@ public class PushableBlockThrice extends GenericMovableObject {
             final int x, final int y, final int pushX, final int pushY) {
         final Application app = Fantastle5.getApplication();
         app.getGameManager().updatePushedPosition(x, y, pushX, pushY, this);
-        if (app.getPrefsManager().getSoundEnabled(
-                PreferencesManager.SOUNDS_GAME)) {
+        if (app.getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playPushSuccessSound();
         }
         app.getGameManager().morphOther(new PushableBlockTwice(), pushX, pushY,

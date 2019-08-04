@@ -655,7 +655,9 @@ public class MazeObjectList {
                     if (o != null) {
                         return o;
                     }
-                } catch (final InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
+                } catch (final InstantiationException
+                        | InvocationTargetException | NoSuchMethodException
+                        | IllegalAccessException ex) {
                     Fantastle5.logError(ex);
                 }
             } else {

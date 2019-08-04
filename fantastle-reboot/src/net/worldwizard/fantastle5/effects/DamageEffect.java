@@ -16,7 +16,8 @@ public class DamageEffect extends Effect {
 
     public DamageEffect(final String buffName, final int HPReduction,
             final int newRounds, final double factor, final int scaleStat,
-            final double decay, final double rScaleFactor, final int rScaleStat) {
+            final double decay, final double rScaleFactor,
+            final int rScaleStat) {
         super(buffName, newRounds, rScaleFactor, rScaleStat);
         this.setAffectedStat(StatConstants.STAT_CURRENT_HP);
         this.setEffect(Effect.EFFECT_ADD, HPReduction, factor, scaleStat);

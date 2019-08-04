@@ -70,12 +70,11 @@ public class ArrowTask extends Thread {
             o = new Wall();
         }
         final GenericTransientObject a = ArrowTask.createArrowForType(this.at);
-        final String suffix = MazeObject
-                .resolveDirectionConstantToName(MazeObject
-                        .resolveRelativeDirection(incX, incY));
+        final String suffix = MazeObject.resolveDirectionConstantToName(
+                MazeObject.resolveRelativeDirection(incX, incY));
         a.setNameSuffix(suffix);
-        if (app.getPrefsManager().getSoundEnabled(
-                PreferencesManager.SOUNDS_GAME)) {
+        if (app.getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             SoundManager.playSoundSynchronously("arrow");
         }
         while (!o.isConditionallyDirectionallySolid(true, incX, incY, inv)) {
@@ -85,8 +84,8 @@ public class ArrowTask extends Thread {
                 break;
             }
             if (!o.isConditionallyDirectionallySolid(true, incX, incY, inv)) {
-                app.getGameManager().redrawOneSquare(px + cumX, py + cumY,
-                        true, a.getName());
+                app.getGameManager().redrawOneSquare(px + cumX, py + cumY, true,
+                        a.getName());
             }
             app.getGameManager().redrawOneSquare(px + cumX, py + cumY, false,
                     new Empty().getName());
@@ -104,8 +103,8 @@ public class ArrowTask extends Thread {
             o.arrowHitAction(px + cumX, py + cumY, pz, pw, incX, incY, this.at,
                     inv);
         }
-        if (app.getPrefsManager().getSoundEnabled(
-                PreferencesManager.SOUNDS_GAME)) {
+        if (app.getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             SoundManager.playSoundAsynchronously("arrowdie");
         }
         app.getGameManager().arrowDone();

@@ -28,8 +28,8 @@ public class SuperRandomPotion extends GenericPotion {
 
     // Constructors
     public SuperRandomPotion() {
-        super(StatConstants.STAT_CURRENT_MP, true,
-                SuperRandomPotion.MIN_EFFECT, SuperRandomPotion.MAX_EFFECT);
+        super(StatConstants.STAT_CURRENT_MP, true, SuperRandomPotion.MIN_EFFECT,
+                SuperRandomPotion.MAX_EFFECT);
     }
 
     @Override

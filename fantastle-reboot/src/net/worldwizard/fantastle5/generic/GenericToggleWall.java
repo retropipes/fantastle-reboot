@@ -37,8 +37,8 @@ public abstract class GenericToggleWall extends MazeObject {
         final Application app = Fantastle5.getApplication();
         Messager.showMessage("Can't go that way");
         // Play move failed sound, if it's enabled
-        if (app.getPrefsManager().getSoundEnabled(
-                PreferencesManager.SOUNDS_GAME)) {
+        if (app.getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveFailedSound();
         }
     }

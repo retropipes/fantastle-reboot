@@ -131,8 +131,8 @@ public class UndoRedoEngine {
         public int coordX, coordY, coordZ, coordW, coordE;
         public Link next;
 
-        public Link(final MazeObject obj, final int x, final int y,
-                final int z, final int w, final int e) {
+        public Link(final MazeObject obj, final int x, final int y, final int z,
+                final int w, final int e) {
             this.mo = obj;
             this.coordX = x;
             this.coordY = y;

@@ -394,15 +394,15 @@ public class GameManager implements EffectConstants {
         at.start();
     }
 
-    public void updatePositionRelative(int ox, int oy) {
+    public void updatePositionRelative(final int ox, final int oy) {
         this.actingRemotely = false;
         int px = this.plMgr.getPlayerLocationX();
         int py = this.plMgr.getPlayerLocationY();
         final int pz = this.plMgr.getPlayerLocationZ();
         final int pw = this.plMgr.getPlayerLocationW();
         final int[] mod = this.doEffects(ox, oy);
-        int x = mod[0];
-        int y = mod[1];
+        final int x = mod[0];
+        final int y = mod[1];
         final Application app = Fantastle5.getApplication();
         final Maze m = app.getMazeManager().getMaze();
         m.tickTimers(pw, pz);
@@ -503,7 +503,8 @@ public class GameManager implements EffectConstants {
                         }
                         if (acted.isPullable() && this.isPullInProgress()) {
                             if (!this.checkPull(x, y, pullX, pullY, acted,
-                                    previousBelow, below, this.savedMazeObject)) {
+                                    previousBelow, below,
+                                    this.savedMazeObject)) {
                                 // Pull failed - object can't move that way
                                 acted.pullFailedAction(this.objectInv, x, y,
                                         pullX, pullY);
@@ -561,8 +562,8 @@ public class GameManager implements EffectConstants {
                                 py += y;
                                 this.vwMgr.offsetViewingWindowLocationX(y);
                                 this.vwMgr.offsetViewingWindowLocationY(x);
-                                this.savedMazeObject = m.getCell(px, py, pz,
-                                        pw, Maze.LAYER_OBJECT);
+                                this.savedMazeObject = m.getCell(px, py, pz, pw,
+                                        Maze.LAYER_OBJECT);
                                 groundInto = m.getCell(px, py, pz, pw,
                                         Maze.LAYER_GROUND);
                                 m.setCell(new Player(), px, py, pz, pw,
@@ -573,8 +574,8 @@ public class GameManager implements EffectConstants {
                                 this.st.deductStep();
                                 if (!Battle.isInBattle()) {
                                     if (groundInto.overridesDefaultPostMove()) {
-                                        groundInto.postMoveAction(false, px,
-                                                py, this.objectInv);
+                                        groundInto.postMoveAction(false, px, py,
+                                                this.objectInv);
                                     } else {
                                         this.savedMazeObject.postMoveAction(
                                                 false, px, py, this.objectInv);
@@ -622,8 +623,8 @@ public class GameManager implements EffectConstants {
             }
         } while (proceed
                 && !groundInto.hasFrictionConditionally(this.objectInv, false)
-                && this.checkSolid(x, y, this.savedMazeObject, below,
-                        nextBelow, nextAbove));
+                && this.checkSolid(x, y, this.savedMazeObject, below, nextBelow,
+                        nextAbove));
         this.updateStats();
     }
 
@@ -708,9 +709,8 @@ public class GameManager implements EffectConstants {
     }
 
     private boolean checkPush(final int x, final int y, final int pushX,
-            final int pushY, final MazeObject acted,
-            final MazeObject nextBelow, final MazeObject nextNextBelow,
-            final MazeObject nextNextAbove) {
+            final int pushY, final MazeObject acted, final MazeObject nextBelow,
+            final MazeObject nextNextBelow, final MazeObject nextNextAbove) {
         final int px = this.plMgr.getPlayerLocationX();
         final int py = this.plMgr.getPlayerLocationY();
         final int pz = this.plMgr.getPlayerLocationZ();
@@ -719,13 +719,13 @@ public class GameManager implements EffectConstants {
         final boolean nextNextBelowAccept = nextNextBelow.isPushableInto();
         final boolean nextNextAboveAccept = nextNextAbove.isPushableInto();
         if (nextBelowAccept && nextNextBelowAccept && nextNextAboveAccept) {
-            nextBelow.pushOutAction(this.objectInv, acted, px + pushX, py
-                    + pushY, pz, pw);
+            nextBelow.pushOutAction(this.objectInv, acted, px + pushX,
+                    py + pushY, pz, pw);
             acted.pushAction(this.objectInv, nextNextAbove, x, y, pushX, pushY);
-            nextNextAbove.pushIntoAction(this.objectInv, acted, px + pushX, py
-                    + pushY, pz, pw);
-            nextNextBelow.pushIntoAction(this.objectInv, acted, px + pushX, py
-                    + pushY, pz, pw);
+            nextNextAbove.pushIntoAction(this.objectInv, acted, px + pushX,
+                    py + pushY, pz, pw);
+            nextNextBelow.pushIntoAction(this.objectInv, acted, px + pushX,
+                    py + pushY, pz, pw);
             return true;
         } else {
             return false;
@@ -744,8 +744,8 @@ public class GameManager implements EffectConstants {
         final boolean belowAccept = below.isPullableInto();
         final boolean aboveAccept = above.isPullableInto();
         if (previousBelowAccept && belowAccept && aboveAccept) {
-            previousBelow.pullOutAction(this.objectInv, acted, px - pullX, py
-                    - pullY, pz, pw);
+            previousBelow.pullOutAction(this.objectInv, acted, px - pullX,
+                    py - pullY, pz, pw);
             acted.pullAction(this.objectInv, above, x, y, pullX, pullY);
             above.pullIntoAction(this.objectInv, acted, px - pullX, py - pullY,
                     pz, pw);
@@ -763,20 +763,20 @@ public class GameManager implements EffectConstants {
         int cumPushX = pushX, cumPushY = pushY, cumX = x, cumY = y;
         final Application app = Fantastle5.getApplication();
         final MazeManager mm = app.getMazeManager();
-        MazeObject there = mm.getMazeObject(this.plMgr.getPlayerLocationX()
-                + cumX, this.plMgr.getPlayerLocationY() + cumY,
+        MazeObject there = mm.getMazeObject(
+                this.plMgr.getPlayerLocationX() + cumX,
+                this.plMgr.getPlayerLocationY() + cumY,
                 this.plMgr.getPlayerLocationZ(),
                 this.plMgr.getPlayerLocationW(), Maze.LAYER_GROUND);
         if (there != null) {
             do {
-                this.movePushedObjectPosition(cumX, cumY, cumPushX, cumPushY,
-                        o, there);
+                this.movePushedObjectPosition(cumX, cumY, cumPushX, cumPushY, o,
+                        there);
                 cumX += xInc;
                 cumY += yInc;
                 cumPushX += xInc;
                 cumPushY += yInc;
-                there = mm.getMazeObject(
-                        this.plMgr.getPlayerLocationX() + cumX,
+                there = mm.getMazeObject(this.plMgr.getPlayerLocationX() + cumX,
                         this.plMgr.getPlayerLocationY() + cumY,
                         this.plMgr.getPlayerLocationZ(),
                         this.plMgr.getPlayerLocationW(), Maze.LAYER_GROUND);
@@ -835,14 +835,14 @@ public class GameManager implements EffectConstants {
         final Application app = Fantastle5.getApplication();
         final Maze m = app.getMazeManager().getMaze();
         try {
-            if (!m.getCell(x, y, z, w, Maze.LAYER_OBJECT).isConditionallySolid(
-                    this.objectInv)) {
+            if (!m.getCell(x, y, z, w, Maze.LAYER_OBJECT)
+                    .isConditionallySolid(this.objectInv)) {
                 final MazeObject saved = m.getCell(x, y, z, w,
                         Maze.LAYER_OBJECT);
                 m.setCell(pushedInto, x, y, z, w, Maze.LAYER_OBJECT);
                 m.setCell(source, x2, y2, z2, w2, Maze.LAYER_OBJECT);
-                saved.pushIntoAction(this.objectInv, pushedInto, x2, y2,
-                        z2 - 1, w2);
+                saved.pushIntoAction(this.objectInv, pushedInto, x2, y2, z2 - 1,
+                        w2);
                 this.redrawMaze();
                 app.getMazeManager().setDirty(true);
             }
@@ -869,8 +869,8 @@ public class GameManager implements EffectConstants {
                     this.plMgr.getPlayerLocationY() + y,
                     this.plMgr.getPlayerLocationZ(),
                     this.plMgr.getPlayerLocationW(), Maze.LAYER_OBJECT);
-            return this.checkSolid(x, y, this.savedMazeObject, below,
-                    nextBelow, nextAbove);
+            return this.checkSolid(x, y, this.savedMazeObject, below, nextBelow,
+                    nextAbove);
         } catch (final ArrayIndexOutOfBoundsException ae) {
             return false;
         }
@@ -911,18 +911,19 @@ public class GameManager implements EffectConstants {
         this.plMgr.savePlayerLocation();
         this.vwMgr.saveViewingWindow();
         try {
-            if (!m.getCell(x, y, z, w, Maze.LAYER_OBJECT).isConditionallySolid(
-                    this.objectInv)) {
-                m.setCell(this.savedMazeObject,
-                        this.plMgr.getPlayerLocationX(),
+            if (!m.getCell(x, y, z, w, Maze.LAYER_OBJECT)
+                    .isConditionallySolid(this.objectInv)) {
+                m.setCell(this.savedMazeObject, this.plMgr.getPlayerLocationX(),
                         this.plMgr.getPlayerLocationY(),
                         this.plMgr.getPlayerLocationZ(),
                         this.plMgr.getPlayerLocationW(), Maze.LAYER_OBJECT);
                 this.plMgr.setPlayerLocation(x, y, z, w);
-                this.vwMgr.setViewingWindowLocationX(this.plMgr
-                        .getPlayerLocationY() - this.vwMgr.getOffsetFactorX());
-                this.vwMgr.setViewingWindowLocationY(this.plMgr
-                        .getPlayerLocationX() - this.vwMgr.getOffsetFactorY());
+                this.vwMgr.setViewingWindowLocationX(
+                        this.plMgr.getPlayerLocationY()
+                                - this.vwMgr.getOffsetFactorX());
+                this.vwMgr.setViewingWindowLocationY(
+                        this.plMgr.getPlayerLocationX()
+                                - this.vwMgr.getOffsetFactorY());
                 this.savedMazeObject = m.getCell(
                         this.plMgr.getPlayerLocationX(),
                         this.plMgr.getPlayerLocationY(),
@@ -934,8 +935,8 @@ public class GameManager implements EffectConstants {
                         this.plMgr.getPlayerLocationW(), Maze.LAYER_OBJECT);
                 this.redrawMaze();
                 app.getMazeManager().setDirty(true);
-                this.savedMazeObject
-                        .postMoveAction(false, x, y, this.objectInv);
+                this.savedMazeObject.postMoveAction(false, x, y,
+                        this.objectInv);
             }
         } catch (final ArrayIndexOutOfBoundsException ae) {
             this.plMgr.restorePlayerLocation();
@@ -963,18 +964,19 @@ public class GameManager implements EffectConstants {
         this.plMgr.savePlayerLocation();
         this.vwMgr.saveViewingWindow();
         try {
-            if (!m.getCell(x, y, z, w, Maze.LAYER_OBJECT).isConditionallySolid(
-                    this.objectInv)) {
-                m.setCell(this.savedMazeObject,
-                        this.plMgr.getPlayerLocationX(),
+            if (!m.getCell(x, y, z, w, Maze.LAYER_OBJECT)
+                    .isConditionallySolid(this.objectInv)) {
+                m.setCell(this.savedMazeObject, this.plMgr.getPlayerLocationX(),
                         this.plMgr.getPlayerLocationY(),
                         this.plMgr.getPlayerLocationZ(),
                         this.plMgr.getPlayerLocationW(), Maze.LAYER_OBJECT);
                 this.plMgr.setPlayerLocation(x, y, z, w);
-                this.vwMgr.setViewingWindowLocationX(this.plMgr
-                        .getPlayerLocationY() - this.vwMgr.getOffsetFactorX());
-                this.vwMgr.setViewingWindowLocationY(this.plMgr
-                        .getPlayerLocationX() - this.vwMgr.getOffsetFactorY());
+                this.vwMgr.setViewingWindowLocationX(
+                        this.plMgr.getPlayerLocationY()
+                                - this.vwMgr.getOffsetFactorX());
+                this.vwMgr.setViewingWindowLocationY(
+                        this.plMgr.getPlayerLocationX()
+                                - this.vwMgr.getOffsetFactorY());
                 this.savedMazeObject = m.getCell(
                         this.plMgr.getPlayerLocationX(),
                         this.plMgr.getPlayerLocationY(),
@@ -1057,16 +1059,11 @@ public class GameManager implements EffectConstants {
                         .getLowerRightViewingWindowLocationY(); y++) {
                     xFix = x - this.vwMgr.getViewingWindowLocationX();
                     yFix = y - this.vwMgr.getViewingWindowLocationY();
-                    visible = app
-                            .getMazeManager()
-                            .getMaze()
-                            .isSquareVisible(u, v, y, x,
-                                    this.plMgr.getPlayerLocationW());
+                    visible = app.getMazeManager().getMaze().isSquareVisible(u,
+                            v, y, x, this.plMgr.getPlayerLocationW());
                     try {
                         if (visible) {
-                            final String name1 = app
-                                    .getMazeManager()
-                                    .getMaze()
+                            final String name1 = app.getMazeManager().getMaze()
                                     .getCell(y, x,
                                             this.plMgr.getPlayerLocationZ(),
                                             this.plMgr.getPlayerLocationW(),
@@ -1074,9 +1071,7 @@ public class GameManager implements EffectConstants {
                                     .gameRenderHook(y, x,
                                             this.plMgr.getPlayerLocationZ(),
                                             this.plMgr.getPlayerLocationW());
-                            final String name2 = app
-                                    .getMazeManager()
-                                    .getMaze()
+                            final String name2 = app.getMazeManager().getMaze()
                                     .getCell(y, x,
                                             this.plMgr.getPlayerLocationZ(),
                                             this.plMgr.getPlayerLocationW(),
@@ -1087,8 +1082,8 @@ public class GameManager implements EffectConstants {
                             this.drawGrid[xFix][yFix].setIcon(GraphicsManager
                                     .getCompositeImage(name1, name2));
                         } else {
-                            this.drawGrid[xFix][yFix].setIcon(GraphicsManager
-                                    .getImage("Darkness"));
+                            this.drawGrid[xFix][yFix].setIcon(
+                                    GraphicsManager.getImage("Darkness"));
                         }
                     } catch (final ArrayIndexOutOfBoundsException ae) {
                         this.drawGrid[xFix][yFix].setIcon(GraphicsManager
@@ -1121,26 +1116,20 @@ public class GameManager implements EffectConstants {
             boolean visible;
             xFix = y - this.vwMgr.getViewingWindowLocationX();
             yFix = x - this.vwMgr.getViewingWindowLocationY();
-            visible = app
-                    .getMazeManager()
-                    .getMaze()
-                    .isSquareVisible(this.plMgr.getPlayerLocationX(),
-                            this.plMgr.getPlayerLocationY(), x, y,
-                            this.plMgr.getPlayerLocationW());
+            visible = app.getMazeManager().getMaze().isSquareVisible(
+                    this.plMgr.getPlayerLocationX(),
+                    this.plMgr.getPlayerLocationY(), x, y,
+                    this.plMgr.getPlayerLocationW());
             try {
                 if (visible) {
-                    final String name1 = app
-                            .getMazeManager()
-                            .getMaze()
+                    final String name1 = app.getMazeManager().getMaze()
                             .getCell(x, y, this.plMgr.getPlayerLocationZ(),
                                     this.plMgr.getPlayerLocationW(),
                                     Maze.LAYER_GROUND)
                             .gameRenderHook(x, y,
                                     this.plMgr.getPlayerLocationZ(),
                                     this.plMgr.getPlayerLocationW());
-                    final String name2 = app
-                            .getMazeManager()
-                            .getMaze()
+                    final String name2 = app.getMazeManager().getMaze()
                             .getCell(x, y, this.plMgr.getPlayerLocationZ(),
                                     this.plMgr.getPlayerLocationW(),
                                     Maze.LAYER_OBJECT)
@@ -1150,8 +1139,8 @@ public class GameManager implements EffectConstants {
                     this.drawGrid[xFix][yFix].setIcon(GraphicsManager
                             .getVirtualCompositeImage(name1, name2, name3));
                 } else {
-                    this.drawGrid[xFix][yFix].setIcon(GraphicsManager
-                            .getImage("Darkness"));
+                    this.drawGrid[xFix][yFix]
+                            .setIcon(GraphicsManager.getImage("Darkness"));
                 }
                 this.drawGrid[xFix][yFix].repaint();
             } catch (final ArrayIndexOutOfBoundsException ae) {
@@ -1252,8 +1241,8 @@ public class GameManager implements EffectConstants {
         this.deactivateAllEffects();
         final Application app = Fantastle5.getApplication();
         final Maze m = app.getMazeManager().getMaze();
-        final boolean playerExists = m.findPlayerOnLevel(this.plMgr
-                .getPlayerLocationW() + 1);
+        final boolean playerExists = m
+                .findPlayerOnLevel(this.plMgr.getPlayerLocationW() + 1);
         if (playerExists) {
             m.restoreLevel(this.plMgr.getPlayerLocationW());
             this.resetPlayerLocation(this.plMgr.getPlayerLocationW() + 1);
@@ -1333,13 +1322,10 @@ public class GameManager implements EffectConstants {
 
     public void decay() {
         if (this.actingRemotely) {
-            Fantastle5
-                    .getApplication()
-                    .getMazeManager()
-                    .getMaze()
-                    .setCell(new Empty(), this.remoteCoords[0],
-                            this.remoteCoords[1], this.remoteCoords[2],
-                            this.remoteCoords[3], Maze.LAYER_OBJECT);
+            Fantastle5.getApplication().getMazeManager().getMaze().setCell(
+                    new Empty(), this.remoteCoords[0], this.remoteCoords[1],
+                    this.remoteCoords[2], this.remoteCoords[3],
+                    Maze.LAYER_OBJECT);
         } else {
             this.savedMazeObject = new Empty();
         }
@@ -1347,13 +1333,10 @@ public class GameManager implements EffectConstants {
 
     public void decayTo(final MazeObject obj) {
         if (this.actingRemotely) {
-            Fantastle5
-                    .getApplication()
-                    .getMazeManager()
-                    .getMaze()
-                    .setCell(obj, this.remoteCoords[0], this.remoteCoords[1],
-                            this.remoteCoords[2], this.remoteCoords[3],
-                            Maze.LAYER_OBJECT);
+            Fantastle5.getApplication().getMazeManager().getMaze().setCell(obj,
+                    this.remoteCoords[0], this.remoteCoords[1],
+                    this.remoteCoords[2], this.remoteCoords[3],
+                    Maze.LAYER_OBJECT);
         } else {
             this.savedMazeObject = obj;
         }
@@ -1361,13 +1344,10 @@ public class GameManager implements EffectConstants {
 
     private void doDelayedDecay() {
         if (this.actingRemotely) {
-            Fantastle5
-                    .getApplication()
-                    .getMazeManager()
-                    .getMaze()
-                    .setCell(this.delayedDecayObject, this.remoteCoords[0],
-                            this.remoteCoords[1], this.remoteCoords[2],
-                            this.remoteCoords[3], Maze.LAYER_OBJECT);
+            Fantastle5.getApplication().getMazeManager().getMaze().setCell(
+                    this.delayedDecayObject, this.remoteCoords[0],
+                    this.remoteCoords[1], this.remoteCoords[2],
+                    this.remoteCoords[3], Maze.LAYER_OBJECT);
         } else {
             this.savedMazeObject = this.delayedDecayObject;
         }
@@ -1443,8 +1423,8 @@ public class GameManager implements EffectConstants {
         }
     }
 
-    public void morphOther(final MazeObject morphInto, final int x,
-            final int y, final int e) {
+    public void morphOther(final MazeObject morphInto, final int x, final int y,
+            final int e) {
         final Application app = Fantastle5.getApplication();
         final Maze m = app.getMazeManager().getMaze();
         try {
@@ -1495,16 +1475,17 @@ public class GameManager implements EffectConstants {
         final MazeObjectList list = Fantastle5.getApplication().getObjects();
         final MazeObject[] choices = list.getAllUsableObjects();
         final String[] userChoices = this.objectInv.generateUseStringArray();
-        final String result = Messager
-                .showInputDialog("Use which item?", "Fantastle", userChoices,
-                        userChoices[this.lastUsedObjectIndex]);
+        final String result = Messager.showInputDialog("Use which item?",
+                "Fantastle", userChoices,
+                userChoices[this.lastUsedObjectIndex]);
         try {
             for (x = 0; x < choices.length; x++) {
                 if (result.equals(userChoices[x])) {
                     this.lastUsedObjectIndex = x;
                     this.objectBeingUsed = choices[x];
                     if (this.objectInv.getUses(this.objectBeingUsed) == 0) {
-                        Messager.showMessage("That item has no more uses left.");
+                        Messager.showMessage(
+                                "That item has no more uses left.");
                         this.setUsingAnItem(false);
                     } else if (!this.objectBeingUsed
                             .isOfType(TypeConstants.TYPE_BOW)) {
@@ -1544,9 +1525,7 @@ public class GameManager implements EffectConstants {
         final int destW = this.plMgr.getPlayerLocationW();
         if (this.usingAnItem() && app.getMode() == Application.STATUS_GAME) {
             if (!this.objectBeingUsed.isOfType(TypeConstants.TYPE_BOW)) {
-                final boolean visible = app
-                        .getMazeManager()
-                        .getMaze()
+                final boolean visible = app.getMazeManager().getMaze()
                         .isSquareVisible(this.plMgr.getPlayerLocationX(),
                                 this.plMgr.getPlayerLocationY(), destX, destY,
                                 this.plMgr.getPlayerLocationW());
@@ -1578,14 +1557,14 @@ public class GameManager implements EffectConstants {
                         this.setUsingAnItem(false);
                         Messager.showMessage("Can't create a finish there");
                     }
-                    if ((!target.isDestroyable() || !target
-                            .isOfType(TypeConstants.TYPE_WALL))
+                    if ((!target.isDestroyable()
+                            || !target.isOfType(TypeConstants.TYPE_WALL))
                             && name.equals(new WallBreakingWand().getName())) {
                         this.setUsingAnItem(false);
                         Messager.showMessage("Aim at a wall");
                     }
-                    if ((!target.isDestroyable() || !target
-                            .isOfType(TypeConstants.TYPE_TRAP))
+                    if ((!target.isDestroyable()
+                            || !target.isOfType(TypeConstants.TYPE_TRAP))
                             && name.equals(new DisarmTrapWand().getName())) {
                         this.setUsingAnItem(false);
                         Messager.showMessage("Aim at a trap");
@@ -1675,8 +1654,8 @@ public class GameManager implements EffectConstants {
             throws IOException {
         final Application app = Fantastle5.getApplication();
         this.objectInv = ObjectInventory.readInventory(mazeFile, formatVersion);
-        app.getMazeManager().getMaze()
-                .readSavedMazeState(mazeFile, formatVersion);
+        app.getMazeManager().getMaze().readSavedMazeState(mazeFile,
+                formatVersion);
         this.savedObjectInv = ObjectInventory.readInventory(mazeFile,
                 formatVersion);
         app.getMazeManager().setScoresFileName(mazeFile.readString());
@@ -1721,8 +1700,8 @@ public class GameManager implements EffectConstants {
     public void showOutput() {
         final Application app = Fantastle5.getApplication();
         app.getMenuManager().setGameMenus();
-        if (app.getPrefsManager().getMusicEnabled(
-                PreferencesManager.MUSIC_EXPLORING)) {
+        if (app.getPrefsManager()
+                .getMusicEnabled(PreferencesManager.MUSIC_EXPLORING)) {
             if (!MusicManager.isMusicPlaying()) {
                 MusicManager.playMusic("polyphonizer");
             }
@@ -1755,14 +1734,15 @@ public class GameManager implements EffectConstants {
         this.outputFrame.setContentPane(this.borderPane);
         this.outputFrame
                 .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        this.outputPane.setLayout(new GridLayout(this.vwMgr
-                .getViewingWindowSizeX(), this.vwMgr.getViewingWindowSizeY()));
+        this.outputPane
+                .setLayout(new GridLayout(this.vwMgr.getViewingWindowSizeX(),
+                        this.vwMgr.getViewingWindowSizeY()));
         this.outputFrame.setResizable(false);
         this.outputFrame.addKeyListener(this.handler);
         this.outputFrame.addWindowListener(this.handler);
         this.outputPane.addMouseListener(this.handler);
-        this.drawGrid = new JLabel[this.vwMgr.getViewingWindowSizeX()][this.vwMgr
-                .getViewingWindowSizeY()];
+        this.drawGrid = new JLabel[this.vwMgr
+                .getViewingWindowSizeX()][this.vwMgr.getViewingWindowSizeY()];
         for (int x = 0; x < this.vwMgr.getViewingWindowSizeX(); x++) {
             for (int y = 0; y < this.vwMgr.getViewingWindowSizeY(); y++) {
                 this.drawGrid[x][y] = new JLabel();
@@ -1778,8 +1758,8 @@ public class GameManager implements EffectConstants {
         this.borderPane.add(this.sg.getStatsPane(), BorderLayout.EAST);
     }
 
-    private class EventHandler implements KeyListener, WindowListener,
-            MouseListener {
+    private class EventHandler
+            implements KeyListener, WindowListener, MouseListener {
         public EventHandler() {
             // TODO Auto-generated constructor stub
         }

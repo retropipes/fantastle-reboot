@@ -6,12 +6,11 @@ public class MultiplierValues {
     private static final double tolerance = 0.001;
     private static final double[] values = { 0.25, 1.0 / 3.0, 0.5, 2.0 / 3.0,
             0.75, 1.0, 4.0 / 3.0, 1.5, 2.0, 3.0, 4.0 };
-    private static final int[] bellCurve = { 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2,
-            2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4,
-            4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-            5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7,
-            7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10,
-            10 };
+    private static final int[] bellCurve = { 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2,
+            2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+            4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+            5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7,
+            7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10 };
 
     private MultiplierValues() {
         // Do nothing
@@ -31,7 +30,8 @@ public class MultiplierValues {
     public static String getTextForValue(final double value) {
         int index;
         for (index = 0; index < MultiplierValues.values.length; index++) {
-            if (Math.abs(value - MultiplierValues.values[index]) < MultiplierValues.tolerance) {
+            if (Math.abs(value
+                    - MultiplierValues.values[index]) < MultiplierValues.tolerance) {
                 break;
             }
         }

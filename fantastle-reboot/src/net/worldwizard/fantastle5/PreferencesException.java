@@ -31,7 +31,7 @@ public class PreferencesException extends Exception {
     /**
      * Constructs an instance of <code>PreferencesException</code> with the
      * specified detail message.
-     * 
+     *
      * @param msg
      *            the detail message.
      */

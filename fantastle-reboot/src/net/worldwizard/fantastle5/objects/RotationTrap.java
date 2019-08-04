@@ -140,8 +140,8 @@ public class RotationTrap extends GenericTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         if (this.direction) {
             Fantastle5.getApplication().getGameManager()
                     .doClockwiseRotate(this.radius);

@@ -25,8 +25,8 @@ import net.worldwizard.fantastle5.PreferencesManager;
 import net.worldwizard.fantastle5.editor.MazeEditor;
 import net.worldwizard.fantastle5.game.ObjectInventory;
 
-public abstract class GenericRandomInvisibleTeleport extends
-        GenericRandomTeleport {
+public abstract class GenericRandomInvisibleTeleport
+        extends GenericRandomTeleport {
     // Constructors
     public GenericRandomInvisibleTeleport(final int newRandomRangeY,
             final int newRandomRangeX) {
@@ -38,8 +38,8 @@ public abstract class GenericRandomInvisibleTeleport extends
     abstract public String getName();
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         final Application app = Fantastle5.getApplication();
         int dr, dc;
         do {
@@ -48,8 +48,8 @@ public abstract class GenericRandomInvisibleTeleport extends
         } while (!app.getGameManager().tryUpdatePositionRelative(dr, dc));
         app.getGameManager().updatePositionRelative(dr, dc);
         Messager.showMessage("Invisible Teleport!");
-        if (app.getPrefsManager().getSoundEnabled(
-                PreferencesManager.SOUNDS_GAME)) {
+        if (app.getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveSuccessSound();
         }
     }
@@ -57,8 +57,8 @@ public abstract class GenericRandomInvisibleTeleport extends
     @Override
     public MazeObject editorPropertiesHook() {
         final MazeEditor me = Fantastle5.getApplication().getEditor();
-        final MazeObject mo = me
-                .editTeleportDestination(MazeEditor.TELEPORT_TYPE_RANDOM_INVISIBLE);
+        final MazeObject mo = me.editTeleportDestination(
+                MazeEditor.TELEPORT_TYPE_RANDOM_INVISIBLE);
         return mo;
     }
 

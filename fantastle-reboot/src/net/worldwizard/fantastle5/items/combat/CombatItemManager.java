@@ -40,9 +40,8 @@ public class CombatItemManager {
                     SoundManager.playSoundAsynchronously("spell");
                 }
                 String dialogResult = null;
-                dialogResult = Messager.showInputDialog(
-                        "Select an Item to Use", "Select Item", displayNames,
-                        displayNames[0]);
+                dialogResult = Messager.showInputDialog("Select an Item to Use",
+                        "Select Item", displayNames, displayNames[0]);
                 if (dialogResult != null) {
                     int index;
                     for (index = 0; index < displayNames.length; index++) {

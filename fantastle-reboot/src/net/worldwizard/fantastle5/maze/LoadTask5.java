@@ -58,9 +58,8 @@ public class LoadTask5 extends Thread {
             final DataReader mazeFile = new DataReader(this.filename,
                     DataConstants.DATA_MODE_BINARY);
             try {
-                final boolean supported = LoadTask5
-                        .checkFormatVersion(LoadTask5
-                                .readFormatVersion(mazeFile));
+                final boolean supported = LoadTask5.checkFormatVersion(
+                        LoadTask5.readFormatVersion(mazeFile));
                 if (!supported) {
                     throw new InvalidMazeException(
                             "Unsupported maze format version.");
@@ -88,13 +87,10 @@ public class LoadTask5 extends Thread {
                         .findPlayerOnLevel(startW);
                 if (playerExists) {
                     this.gameMaze.findAllStarts();
-                    app.getGameManager()
-                            .getPlayerManager()
-                            .setPlayerLocation(
-                                    this.gameMaze.getFindResultColumn(startW),
-                                    this.gameMaze.getFindResultRow(startW),
-                                    this.gameMaze.getFindResultFloor(startW),
-                                    startW);
+                    app.getGameManager().getPlayerManager().setPlayerLocation(
+                            this.gameMaze.getFindResultColumn(startW),
+                            this.gameMaze.getFindResultRow(startW),
+                            this.gameMaze.getFindResultFloor(startW), startW);
                     app.getGameManager().resetViewingWindow();
                 }
                 if (!this.isSavedGame) {
@@ -114,16 +110,16 @@ public class LoadTask5 extends Thread {
                 Messager.showDialog(sg + " file loaded.");
                 app.getMazeManager().handleDeferredSuccess(true);
             } catch (final IOException ie) {
-                throw new InvalidMazeException("Error reading "
-                        + sg.toLowerCase() + " file.");
+                throw new InvalidMazeException(
+                        "Error reading " + sg.toLowerCase() + " file.");
             }
         } catch (final InvalidMazeException ime) {
             Messager.showDialog(ime.getMessage());
             app.getMazeManager().handleDeferredSuccess(false);
         } catch (final Exception ex) {
             ex.printStackTrace();
-            Messager.showDialog("Unknown error reading " + sg.toLowerCase()
-                    + " file.");
+            Messager.showDialog(
+                    "Unknown error reading " + sg.toLowerCase() + " file.");
             app.getMazeManager().handleDeferredSuccess(false);
         }
     }

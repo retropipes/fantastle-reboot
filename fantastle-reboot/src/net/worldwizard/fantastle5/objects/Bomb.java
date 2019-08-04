@@ -61,8 +61,8 @@ public class Bomb extends GenericUsableObject {
         // Act as if bomb was used
         this.useAction(null, locX, locY, locZ, locW);
         // Destroy bomb
-        Fantastle5.getApplication().getGameManager()
-                .morph(new Empty(), locX, locY, locZ, locW);
+        Fantastle5.getApplication().getGameManager().morph(new Empty(), locX,
+                locY, locZ, locW);
         // Stop arrow
         return false;
     }
@@ -75,10 +75,7 @@ public class Bomb extends GenericUsableObject {
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playUseSound();
         }
-        Fantastle5
-                .getApplication()
-                .getMazeManager()
-                .getMaze()
+        Fantastle5.getApplication().getMazeManager().getMaze()
                 .radialScanKillMonsters(x, y, z, w, Maze.LAYER_OBJECT,
                         Bomb.EFFECT_RADIUS);
     }

@@ -72,8 +72,8 @@ public class AboutDialog {
         this.textPane.setLayout(new GridLayout(4, 1));
         this.textPane.add(new JLabel("Fantastle Version: " + ver));
         this.textPane.add(new JLabel("Author: Eric Ahnell"));
-        this.textPane.add(new JLabel(
-                "Web Site: http://fantastle.worldwizard.net/"));
+        this.textPane
+                .add(new JLabel("Web Site: http://fantastle.worldwizard.net/"));
         this.textPane.add(new JLabel(
                 "E-mail bug reports to: fantastle@worldwizard.net  "));
         this.buttonPane.setLayout(new FlowLayout());

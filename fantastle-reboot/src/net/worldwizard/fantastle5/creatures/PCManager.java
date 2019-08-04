@@ -89,8 +89,8 @@ public class PCManager {
         PCManager.playerCharacter.setVitality(vitality);
         PCManager.playerCharacter.setIntelligence(intelligence);
         PCManager.playerCharacter.setLuck(luck);
-        PCManager.playerCharacter.setItems(ItemInventory
-                .readItemInventory(mazeFile));
+        PCManager.playerCharacter
+                .setItems(ItemInventory.readItemInventory(mazeFile));
         PCManager.playerCharacter.loadPlayer(pAtk, pDef, pHP, pMP, k, lvl, cHP,
                 cMP, gld, gib, exp, ml, c, known);
     }
@@ -104,7 +104,8 @@ public class PCManager {
         mazeFile.writeInt(PCManager.playerCharacter.getIntelligence());
         mazeFile.writeInt(PCManager.playerCharacter.getLuck());
         mazeFile.writeInt(PCManager.playerCharacter.getPermanentAttackPoints());
-        mazeFile.writeInt(PCManager.playerCharacter.getPermanentDefensePoints());
+        mazeFile.writeInt(
+                PCManager.playerCharacter.getPermanentDefensePoints());
         mazeFile.writeInt(PCManager.playerCharacter.getPermanentHPPoints());
         mazeFile.writeInt(PCManager.playerCharacter.getPermanentMPPoints());
         mazeFile.writeInt(PCManager.playerCharacter.getKills());
@@ -119,14 +120,14 @@ public class PCManager {
         mazeFile.writeInt(PCManager.playerCharacter.getCaste().getCasteID());
         mazeFile.writeInt(PCManager.playerCharacter.getFaith().getFaithID());
         mazeFile.writeInt(PCManager.playerCharacter.getGender().getGenderID());
-        mazeFile.writeInt(PCManager.playerCharacter.getPersonality()
-                .getPersonalityID());
+        mazeFile.writeInt(
+                PCManager.playerCharacter.getPersonality().getPersonalityID());
         final int max = PCManager.playerCharacter.getSpellBook()
                 .getSpellCount();
         mazeFile.writeInt(max);
         for (int x = 0; x < max; x++) {
-            mazeFile.writeBoolean(PCManager.playerCharacter.getSpellBook()
-                    .isSpellKnown(x));
+            mazeFile.writeBoolean(
+                    PCManager.playerCharacter.getSpellBook().isSpellKnown(x));
         }
         PCManager.playerCharacter.getItems().writeItemInventory(mazeFile);
     }

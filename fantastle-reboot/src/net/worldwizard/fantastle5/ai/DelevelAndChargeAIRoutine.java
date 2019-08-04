@@ -49,7 +49,8 @@ public class DelevelAndChargeAIRoutine extends AIRoutine {
             final RandomRange chance = new RandomRange(1, 100);
             if (action == 1) {
                 if (this.delevelRounds == 0) {
-                    if (chance.generate() <= DelevelAndChargeAIRoutine.DELEVEL_CHANCE) {
+                    if (chance
+                            .generate() <= DelevelAndChargeAIRoutine.DELEVEL_CHANCE) {
                         this.delevelRounds = which.getEffect()
                                 .getInitialRounds();
                         this.spell = which;
@@ -64,7 +65,8 @@ public class DelevelAndChargeAIRoutine extends AIRoutine {
                 }
             } else {
                 if (this.chargeRounds == 0) {
-                    if (chance.generate() <= DelevelAndChargeAIRoutine.CHARGE_CHANCE) {
+                    if (chance
+                            .generate() <= DelevelAndChargeAIRoutine.CHARGE_CHANCE) {
                         this.chargeRounds = which.getEffect()
                                 .getInitialRounds();
                         this.spell = which;

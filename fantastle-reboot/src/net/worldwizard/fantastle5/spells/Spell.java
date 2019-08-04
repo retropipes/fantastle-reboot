@@ -10,7 +10,8 @@ public class Spell {
     private final String soundEffect;
 
     // Constructors
-    public Spell(final Effect newEffect, final int newCost, final char newTarget) {
+    public Spell(final Effect newEffect, final int newCost,
+            final char newTarget) {
         this.effect = newEffect;
         this.cost = newCost;
         this.target = newTarget;

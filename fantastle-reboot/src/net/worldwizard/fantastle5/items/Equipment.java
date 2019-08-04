@@ -16,8 +16,8 @@ public class Equipment extends Item {
     // Constructors
     private Equipment(final Item i, final int equipCategory,
             final int newMaterialID) {
-        super(i.getName(), i.getCategory(), i.getInitialUses(), i
-                .getWeightPerUse());
+        super(i.getName(), i.getCategory(), i.getInitialUses(),
+                i.getWeightPerUse());
         this.equipCat = equipCategory;
         this.materialID = newMaterialID;
         this.firstSlotUsed = EquipmentSlotConstants.SLOT_NONE;
@@ -28,8 +28,7 @@ public class Equipment extends Item {
     Equipment(final String itemName, final int itemCat,
             final int itemInitialUses, final int itemWeightPerUse,
             final int equipCategory, final int newMaterialID) {
-        super(itemName,
-                itemCat | ItemCategoryConstants.ITEM_CATEGORY_EQUIPMENT,
+        super(itemName, itemCat | ItemCategoryConstants.ITEM_CATEGORY_EQUIPMENT,
                 itemInitialUses, itemWeightPerUse);
         this.equipCat = equipCategory;
         this.materialID = newMaterialID;

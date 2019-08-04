@@ -111,8 +111,8 @@ public class MazePreferencesManager {
         this.startLevelChoices.setModel(model);
         this.horizontalWrap.setSelected(m.isHorizontalWraparoundEnabled(level));
         this.verticalWrap.setSelected(m.isVerticalWraparoundEnabled(level));
-        this.thirdDimensionalWrap.setSelected(m
-                .is3rdDimensionWraparoundEnabled(level));
+        this.thirdDimensionalWrap
+                .setSelected(m.is3rdDimensionWraparoundEnabled(level));
         this.startLevelChoices.setSelectedIndex(m.getStartLevel());
     }
 

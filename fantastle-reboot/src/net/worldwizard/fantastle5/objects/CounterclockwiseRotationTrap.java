@@ -51,19 +51,16 @@ public class CounterclockwiseRotationTrap extends GenericTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         if (Fantastle5.getApplication().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playRotatedSound();
         }
         Messager.showMessage("Your controls are rotated!");
-        Fantastle5
-                .getApplication()
-                .getGameManager()
-                .activateEffect(
-                        EffectConstants.EFFECT_ROTATED_COUNTERCLOCKWISE,
-                        CounterclockwiseRotationTrap.EFFECT_DURATION);
+        Fantastle5.getApplication().getGameManager().activateEffect(
+                EffectConstants.EFFECT_ROTATED_COUNTERCLOCKWISE,
+                CounterclockwiseRotationTrap.EFFECT_DURATION);
     }
 
     @Override

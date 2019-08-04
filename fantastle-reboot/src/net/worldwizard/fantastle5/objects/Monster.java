@@ -39,8 +39,8 @@ public class Monster extends GenericDungeonObject {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         if (!Battle.isInBattle()) {
             Fantastle5.getApplication().getBattle().doBattle();
             Fantastle5.getApplication().getMazeManager().getMaze()
@@ -58,11 +58,8 @@ public class Monster extends GenericDungeonObject {
                     .getPlayerManager().getPlayerLocationZ();
             final int pw = Fantastle5.getApplication().getGameManager()
                     .getPlayerManager().getPlayerLocationW();
-            Fantastle5
-                    .getApplication()
-                    .getGameManager()
-                    .morph(new IcedMonster(this.savedObject), locX, locY, pz,
-                            pw);
+            Fantastle5.getApplication().getGameManager().morph(
+                    new IcedMonster(this.savedObject), locX, locY, pz, pw);
             return false;
         } else {
             return true;

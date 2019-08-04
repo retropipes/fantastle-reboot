@@ -121,8 +121,8 @@ public class MazeManager {
             source = "Fantastle";
         }
         int status = JOptionPane.DEFAULT_OPTION;
-        status = Messager.showYNCConfirmDialog("Do you want to save your "
-                + type + "?", source);
+        status = Messager.showYNCConfirmDialog(
+                "Do you want to save your " + type + "?", source);
         return status;
     }
 
@@ -247,7 +247,8 @@ public class MazeManager {
                 app.getGameManager().resetObjectInventory();
                 if (extension.equals(Extension.getGameExtension())) {
                     this.lastUsedGameFile = filename;
-                    this.loadFile(filename, true, FormatConstants.MAZE_FORMAT_5);
+                    this.loadFile(filename, true,
+                            FormatConstants.MAZE_FORMAT_5);
                 } else if (extension.equals(Extension.getMaze2Extension())
                         || extension.equals(Extension.getMaze3Extension())) {
                     this.lastUsedMazeFile = filename;
@@ -268,7 +269,8 @@ public class MazeManager {
                     this.loadFile(filename, false,
                             FormatConstants.MAZE_FORMAT_5);
                 } else {
-                    Messager.showDialog("You opened something other than a maze file. Select a maze file, and try again.");
+                    Messager.showDialog(
+                            "You opened something other than a maze file. Select a maze file, and try again.");
                 }
             } else {
                 // User cancelled
@@ -280,12 +282,12 @@ public class MazeManager {
         return false;
     }
 
-    public void loadFromOSHandler(String infilename) {
+    public void loadFromOSHandler(final String infilename) {
         final Application app = Fantastle5.getApplication();
         if (!this.loaded) {
             String extension;
             final File file = new File(infilename);
-            String filename = file.getAbsolutePath();
+            final String filename = file.getAbsolutePath();
             extension = MazeManager.getExtension(file);
             app.getGameManager().resetObjectInventory();
             if (extension.equals(Extension.getGameExtension())) {
@@ -294,23 +296,25 @@ public class MazeManager {
             } else if (extension.equals(Extension.getMaze2Extension())
                     || extension.equals(Extension.getMaze3Extension())) {
                 this.lastUsedMazeFile = filename;
-                this.scoresFileName = MazeManager.getNameWithoutExtension(file
-                        .getName());
+                this.scoresFileName = MazeManager
+                        .getNameWithoutExtension(file.getName());
                 this.loadFile(filename, false, FormatConstants.MAZE_FORMAT_3);
             } else if (extension.equals(Extension.getMaze4Extension())) {
                 this.lastUsedMazeFile = filename;
-                this.scoresFileName = MazeManager.getNameWithoutExtension(file
-                        .getName());
+                this.scoresFileName = MazeManager
+                        .getNameWithoutExtension(file.getName());
                 this.loadFile(filename, false, FormatConstants.MAZE_FORMAT_4);
             } else if (extension.equals(Extension.getMaze5Extension())) {
                 this.lastUsedMazeFile = filename;
-                this.scoresFileName = MazeManager.getNameWithoutExtension(file
-                        .getName());
+                this.scoresFileName = MazeManager
+                        .getNameWithoutExtension(file.getName());
                 this.loadFile(filename, false, FormatConstants.MAZE_FORMAT_5);
             } else if (extension.equals(Extension.getScoresExtension())) {
-                Messager.showDialog("You double-clicked a scores file. These are automatically loaded when their associated maze is loaded, and need not be double-clicked.");
+                Messager.showDialog(
+                        "You double-clicked a scores file. These are automatically loaded when their associated maze is loaded, and need not be double-clicked.");
             } else if (extension.equals(Extension.getPreferencesExtension())) {
-                Messager.showDialog("You double-clicked a preferences file. These are automatically loaded when the program is loaded, and need not be double-clicked.");
+                Messager.showDialog(
+                        "You double-clicked a preferences file. These are automatically loaded when the program is loaded, and need not be double-clicked.");
             }
         }
     }
@@ -401,8 +405,8 @@ public class MazeManager {
         final int returnVal = fc.showSaveDialog(app.getOutputFrame());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             final File file = fc.getSelectedFile();
-            app.getPrefsManager().setLastDirSave(
-                    fc.getCurrentDirectory().getAbsolutePath());
+            app.getPrefsManager()
+                    .setLastDirSave(fc.getCurrentDirectory().getAbsolutePath());
             extension = MazeManager.getExtension(file);
             filename = file.getAbsolutePath();
             if (app.getMode() == Application.STATUS_GAME) {
@@ -426,8 +430,8 @@ public class MazeManager {
                     filename += Extension.getMaze5ExtensionWithPeriod();
                 }
                 this.lastUsedMazeFile = filename;
-                this.scoresFileName = MazeManager.getNameWithoutExtension(file
-                        .getName());
+                this.scoresFileName = MazeManager
+                        .getNameWithoutExtension(file.getName());
                 MazeManager.saveFile(filename, false);
             }
         }

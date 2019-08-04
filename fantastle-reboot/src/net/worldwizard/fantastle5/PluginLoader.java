@@ -9,8 +9,8 @@ import javax.swing.JMenu;
 public class PluginLoader {
     public static Object loadPlugin(final String name) {
         try {
-            final URL[] loadPath = { new URL("jar:file:./plugin/" + name
-                    + ".jar!/") };
+            final URL[] loadPath = {
+                    new URL("jar:file:./plugin/" + name + ".jar!/") };
             try (final URLClassLoader instance = URLClassLoader
                     .newInstance(loadPath)) {
                 return instance.loadClass("net.worldwizard.fantastle5." + name)
@@ -24,8 +24,8 @@ public class PluginLoader {
     public static void addPluginMenus(final Object plugin) {
         if (plugin != null) {
             try {
-                final Method menuMethod = plugin.getClass().getDeclaredMethod(
-                        "getNewMenus");
+                final Method menuMethod = plugin.getClass()
+                        .getDeclaredMethod("getNewMenus");
                 final JMenu[] newMenus = (JMenu[]) menuMethod.invoke(plugin);
                 final MenuManager mm = Fantastle5.getApplication()
                         .getMenuManager();

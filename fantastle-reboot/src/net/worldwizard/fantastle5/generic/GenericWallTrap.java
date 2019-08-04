@@ -57,8 +57,8 @@ public abstract class GenericWallTrap extends MazeObject {
 
     // Scriptability
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         final int currLevel = Fantastle5.getApplication().getGameManager()
                 .getPlayerManager().getPlayerLocationW();
         Fantastle5.getApplication().getGameManager().decay();

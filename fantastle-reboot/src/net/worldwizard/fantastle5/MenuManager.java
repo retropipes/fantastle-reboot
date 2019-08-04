@@ -362,23 +362,23 @@ public class MenuManager {
         this.fileOpenAccel = KeyStroke.getKeyStroke(KeyEvent.VK_O, modKey);
         this.fileCloseAccel = KeyStroke.getKeyStroke(KeyEvent.VK_W, modKey);
         this.fileSaveAccel = KeyStroke.getKeyStroke(KeyEvent.VK_S, modKey);
-        this.fileSaveAsAccel = KeyStroke.getKeyStroke(KeyEvent.VK_S, modKey
-                | InputEvent.SHIFT_DOWN_MASK);
+        this.fileSaveAsAccel = KeyStroke.getKeyStroke(KeyEvent.VK_S,
+                modKey | InputEvent.SHIFT_DOWN_MASK);
         this.editUndoAccel = KeyStroke.getKeyStroke(KeyEvent.VK_Z, modKey);
-        this.editRedoAccel = KeyStroke.getKeyStroke(KeyEvent.VK_Z, modKey
-                | InputEvent.SHIFT_DOWN_MASK);
+        this.editRedoAccel = KeyStroke.getKeyStroke(KeyEvent.VK_Z,
+                modKey | InputEvent.SHIFT_DOWN_MASK);
         this.editCutLevelAccel = KeyStroke.getKeyStroke(KeyEvent.VK_X, modKey);
         this.editCopyLevelAccel = KeyStroke.getKeyStroke(KeyEvent.VK_C, modKey);
-        this.editPasteLevelAccel = KeyStroke
-                .getKeyStroke(KeyEvent.VK_V, modKey);
-        this.editInsertLevelFromClipboardAccel = KeyStroke.getKeyStroke(
-                KeyEvent.VK_F, modKey);
+        this.editPasteLevelAccel = KeyStroke.getKeyStroke(KeyEvent.VK_V,
+                modKey);
+        this.editInsertLevelFromClipboardAccel = KeyStroke
+                .getKeyStroke(KeyEvent.VK_F, modKey);
         this.editPreferencesAccel = KeyStroke.getKeyStroke(KeyEvent.VK_COMMA,
                 modKey);
         this.editClearHistoryAccel = KeyStroke.getKeyStroke(KeyEvent.VK_Y,
                 modKey);
-        this.editGoToAccel = KeyStroke.getKeyStroke(KeyEvent.VK_G, modKey
-                | InputEvent.SHIFT_DOWN_MASK);
+        this.editGoToAccel = KeyStroke.getKeyStroke(KeyEvent.VK_G,
+                modKey | InputEvent.SHIFT_DOWN_MASK);
         this.playPlayMazeAccel = KeyStroke.getKeyStroke(KeyEvent.VK_P, modKey);
         this.playEditMazeAccel = KeyStroke.getKeyStroke(KeyEvent.VK_E, modKey);
         this.gameInventoryAccel = KeyStroke.getKeyStroke(KeyEvent.VK_I, modKey);
@@ -755,10 +755,9 @@ public class MenuManager {
                     }
                 } else if (cmd.equals("Reset Current Level")) {
                     if (!app.getGameManager().usingAnItem()) {
-                        final int result = Messager
-                                .showConfirmDialog(
-                                        "Are you sure you want to reset the current level?",
-                                        "Fantastle");
+                        final int result = Messager.showConfirmDialog(
+                                "Are you sure you want to reset the current level?",
+                                "Fantastle");
                         if (result == JOptionPane.YES_OPTION) {
                             app.getGameManager().resetCurrentLevel();
                         }

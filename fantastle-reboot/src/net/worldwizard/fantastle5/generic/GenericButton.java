@@ -45,13 +45,12 @@ public abstract class GenericButton extends MazeObject {
             return false;
         }
         final GenericButton other = (GenericButton) obj;
-        if (this.offState != other.offState
-                && (this.offState == null || !this.offState
-                        .equals(other.offState))) {
+        if (this.offState != other.offState && (this.offState == null
+                || !this.offState.equals(other.offState))) {
             return false;
         }
-        if (this.onState != other.onState
-                && (this.onState == null || !this.onState.equals(other.onState))) {
+        if (this.onState != other.onState && (this.onState == null
+                || !this.onState.equals(other.onState))) {
             return false;
         }
         return true;
@@ -76,14 +75,11 @@ public abstract class GenericButton extends MazeObject {
 
     // Scriptability
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         final int currLevel = Fantastle5.getApplication().getGameManager()
                 .getPlayerManager().getPlayerLocationW();
-        Fantastle5
-                .getApplication()
-                .getMazeManager()
-                .getMaze()
+        Fantastle5.getApplication().getMazeManager().getMaze()
                 .findAllObjectPairsAndSwap(currLevel, this.offState,
                         this.onState);
         Fantastle5.getApplication().getGameManager().redrawMazeNoRebuild();

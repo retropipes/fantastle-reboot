@@ -94,7 +94,8 @@ class LayeredTower {
         return copy;
     }
 
-    public MazeObject getCell(int row, int col, int floor, final int extra) {
+    public MazeObject getCell(final int row, final int col, final int floor,
+            final int extra) {
         int fR = row;
         int fC = col;
         int fF = floor;
@@ -256,8 +257,8 @@ class LayeredTower {
                 for (z = 0; z < this.getFloors(); z++) {
                     final MazeObject mo = this.towerData[x][y][z][Maze.LAYER_OBJECT];
                     if (mo != null) {
-                        if (mo.isOfType(TypeConstants.TYPE_WALL_TRAP)
-                                || mo.isOfType(TypeConstants.TYPE_TRAPPED_WALL)) {
+                        if (mo.isOfType(TypeConstants.TYPE_WALL_TRAP) || mo
+                                .isOfType(TypeConstants.TYPE_TRAPPED_WALL)) {
                             this.towerData[x][y][z][Maze.LAYER_OBJECT] = decayTo;
                         }
                     }
@@ -286,7 +287,8 @@ class LayeredTower {
         uFix = vFix = uRot = vRot = uAdj = vAdj = 0;
         final int cosineTheta = 0;
         final int sineTheta = 1;
-        final MazeObject[][][] tempStorage = new MazeObject[2 * r + 1][2 * r + 1][Maze.LAYER_COUNT];
+        final MazeObject[][][] tempStorage = new MazeObject[2 * r + 1][2 * r
+                + 1][Maze.LAYER_COUNT];
         try {
             for (u = x - r; u <= x + r; u++) {
                 for (v = y - r; v <= y + r; v++) {
@@ -324,7 +326,8 @@ class LayeredTower {
         uFix = vFix = uRot = vRot = uAdj = vAdj = 0;
         final int cosineTheta = 0;
         final int sineTheta = 1;
-        final MazeObject[][][] tempStorage = new MazeObject[2 * r + 1][2 * r + 1][Maze.LAYER_COUNT];
+        final MazeObject[][][] tempStorage = new MazeObject[2 * r + 1][2 * r
+                + 1][Maze.LAYER_COUNT];
         try {
             for (u = x - r; u <= x + r; u++) {
                 for (v = y - r; v <= y + r; v++) {
@@ -354,7 +357,7 @@ class LayeredTower {
         }
     }
 
-    public void resize(int x, int y, int z) {
+    public void resize(final int x, final int y, final int z) {
         int fX = x;
         int fY = y;
         int fZ = z;
@@ -474,11 +477,12 @@ class LayeredTower {
                         if (there.getClass() == Monster.class) {
                             final Monster m = (Monster) there;
                             // Freeze the monster
-                            this.setCell(new IcedMonster(m.getSavedObject()),
-                                    u, v, z, l);
+                            this.setCell(new IcedMonster(m.getSavedObject()), u,
+                                    v, z, l);
                         } else if (there.getClass() == BarrierGenerator.class) {
                             // Freeze the generator
-                            this.setCell(new IcedBarrierGenerator(), u, v, z, l);
+                            this.setCell(new IcedBarrierGenerator(), u, v, z,
+                                    l);
                         } else {
                             // Assume object is already iced, and extend its
                             // timer
@@ -515,7 +519,8 @@ class LayeredTower {
     public void radialScanShuffleObjects(final int x, final int y, final int z,
             final int r) {
         int u, v, l, uFix, vFix;
-        final MazeObject[][][] preShuffle = new MazeObject[2 * r + 1][2 * r + 1][Maze.LAYER_COUNT];
+        final MazeObject[][][] preShuffle = new MazeObject[2 * r + 1][2 * r
+                + 1][Maze.LAYER_COUNT];
         // Load the preShuffle array
         for (u = x - r; u <= x + r; u++) {
             for (v = y - r; v <= y + r; v++) {
@@ -531,8 +536,8 @@ class LayeredTower {
             }
         }
         // Do the shuffle
-        final MazeObject[][][] postShuffle = LayeredTower.shuffleObjects(
-                preShuffle, r);
+        final MazeObject[][][] postShuffle = LayeredTower
+                .shuffleObjects(preShuffle, r);
         // Load the maze with the postShuffle array
         for (u = x - r; u <= x + r; u++) {
             for (v = y - r; v <= y + r; v++) {
@@ -587,8 +592,8 @@ class LayeredTower {
         }
     }
 
-    public void setCell(final MazeObject mo, int row, int col, int floor,
-            final int extra) {
+    public void setCell(final MazeObject mo, final int row, final int col,
+            final int floor, final int extra) {
         int fR = row;
         int fC = col;
         int fF = floor;
@@ -709,10 +714,10 @@ class LayeredTower {
         final int zLoc = Fantastle5.getApplication().getGameManager()
                 .getPlayerManager().getPlayerLocationZ();
         try {
-            final MazeObject there = this.getCell(xLoc + dirMove[0], yLoc
-                    + dirMove[1], zLoc, Maze.LAYER_OBJECT);
-            final MazeObject ground = this.getCell(xLoc + dirMove[0], yLoc
-                    + dirMove[1], zLoc, Maze.LAYER_GROUND);
+            final MazeObject there = this.getCell(xLoc + dirMove[0],
+                    yLoc + dirMove[1], zLoc, Maze.LAYER_OBJECT);
+            final MazeObject ground = this.getCell(xLoc + dirMove[0],
+                    yLoc + dirMove[1], zLoc, Maze.LAYER_GROUND);
             if (!there.isSolid() && !there.getName().equals("Monster")) {
                 if (there.getName().equals("Player")) {
                     if (!Battle.isInBattle()) {
@@ -745,10 +750,10 @@ class LayeredTower {
         final int zLoc = Fantastle5.getApplication().getGameManager()
                 .getPlayerManager().getPlayerLocationZ();
         try {
-            final MazeObject there = this.getCell(xLoc + dirMove[0], yLoc
-                    + dirMove[1], zLoc, Maze.LAYER_OBJECT);
-            final MazeObject ground = this.getCell(xLoc + dirMove[0], yLoc
-                    + dirMove[1], zLoc, Maze.LAYER_GROUND);
+            final MazeObject there = this.getCell(xLoc + dirMove[0],
+                    yLoc + dirMove[1], zLoc, Maze.LAYER_OBJECT);
+            final MazeObject ground = this.getCell(xLoc + dirMove[0],
+                    yLoc + dirMove[1], zLoc, Maze.LAYER_GROUND);
             if (!there.isSolid() && !there.getName().equals("Player")) {
                 this.setCell(block.getSavedObject(), xLoc, yLoc, zLoc,
                         Maze.LAYER_OBJECT);
@@ -835,7 +840,8 @@ class LayeredTower {
 
     private static MazeObject[][][] shuffleObjects(
             final MazeObject[][][] preShuffle, final int r) {
-        final MazeObject[][][] postShuffle = new MazeObject[2 * r + 1][2 * r + 1][Maze.LAYER_COUNT];
+        final MazeObject[][][] postShuffle = new MazeObject[2 * r + 1][2 * r
+                + 1][Maze.LAYER_COUNT];
         int[][] randomLocations = new int[(2 * r + 1) * (2 * r + 1)][2];
         // Populate randomLocations array
         int counter = 0;
@@ -893,7 +899,7 @@ class LayeredTower {
         return src;
     }
 
-    private int normalizeRow(int row) {
+    private int normalizeRow(final int row) {
         int fR = row;
         if (fR < 0) {
             fR += this.getRows();
@@ -909,7 +915,7 @@ class LayeredTower {
         return fR;
     }
 
-    private int normalizeColumn(int column) {
+    private int normalizeColumn(final int column) {
         int fC = column;
         if (fC < 0) {
             fC += this.getColumns();
@@ -925,7 +931,7 @@ class LayeredTower {
         return fC;
     }
 
-    private int normalizeFloor(int floor) {
+    private int normalizeFloor(final int floor) {
         int fF = floor;
         if (fF < 0) {
             fF += this.getFloors();

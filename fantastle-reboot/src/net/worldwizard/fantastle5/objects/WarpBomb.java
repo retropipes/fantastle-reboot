@@ -59,8 +59,8 @@ public class WarpBomb extends GenericUsableObject {
             final int locZ, final int locW, final int dirX, final int dirY,
             final int arrowType, final ObjectInventory inv) {
         // Destroy bomb
-        Fantastle5.getApplication().getGameManager()
-                .morph(new Empty(), locX, locY, locZ, locW);
+        Fantastle5.getApplication().getGameManager().morph(new Empty(), locX,
+                locY, locZ, locW);
         // Act as if bomb was used
         this.useAction(null, locX, locY, locZ, locW);
         // Stop arrow
@@ -75,10 +75,7 @@ public class WarpBomb extends GenericUsableObject {
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playUseSound();
         }
-        Fantastle5
-                .getApplication()
-                .getMazeManager()
-                .getMaze()
+        Fantastle5.getApplication().getMazeManager().getMaze()
                 .radialScanWarpObjects(x, y, z, w, Maze.LAYER_OBJECT,
                         WarpBomb.EFFECT_RADIUS);
         // Player might have moved

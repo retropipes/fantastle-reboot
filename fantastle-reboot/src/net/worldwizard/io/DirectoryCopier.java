@@ -17,9 +17,8 @@ public class DirectoryCopier {
             }
             final String[] children = sourceLocation.list();
             for (final String element : children) {
-                DirectoryCopier.copyDirectory(
-                        new File(sourceLocation, element), new File(
-                                targetLocation, element));
+                DirectoryCopier.copyDirectory(new File(sourceLocation, element),
+                        new File(targetLocation, element));
             }
         } else {
             try (final InputStream in = new FileInputStream(sourceLocation);

@@ -24,8 +24,8 @@ public class LowLevelSpellBook extends SpellBook {
                 "You are no longer poisoned!");
         final Spell spell0 = new Spell(spell0Effect, 1, 'P');
         this.spells[0] = spell0;
-        final HealingEffect spell1Effect = new HealingEffect("Minor Recover",
-                3, 1, Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE,
+        final HealingEffect spell1Effect = new HealingEffect("Minor Recover", 3,
+                1, Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE,
                 Effect.DEFAULT_DECAY_RATE);
         spell1Effect.setMessage(Effect.MESSAGE_INITIAL,
                 "The enemy applies a small bandage to its wounds!");

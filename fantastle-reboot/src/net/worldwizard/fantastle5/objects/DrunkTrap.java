@@ -51,14 +51,11 @@ public class DrunkTrap extends GenericTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         Messager.showMessage("You stumble around drunkenly!");
-        Fantastle5
-                .getApplication()
-                .getGameManager()
-                .activateEffect(EffectConstants.EFFECT_DRUNK,
-                        DrunkTrap.EFFECT_DURATION);
+        Fantastle5.getApplication().getGameManager().activateEffect(
+                EffectConstants.EFFECT_DRUNK, DrunkTrap.EFFECT_DURATION);
         if (Fantastle5.getApplication().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playDrunkSound();

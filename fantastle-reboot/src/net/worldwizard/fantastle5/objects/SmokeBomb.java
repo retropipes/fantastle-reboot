@@ -62,8 +62,8 @@ public class SmokeBomb extends GenericUsableObject {
         // Act as if smoke bomb was used
         this.useAction(null, locX, locY, locZ, locW);
         // Destroy smoke bomb
-        Fantastle5.getApplication().getGameManager()
-                .morph(new Empty(), locX, locY, locZ, locW);
+        Fantastle5.getApplication().getGameManager().morph(new Empty(), locX,
+                locY, locZ, locW);
         // Stop arrow
         return false;
     }
@@ -76,10 +76,7 @@ public class SmokeBomb extends GenericUsableObject {
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playUseSound();
         }
-        Fantastle5
-                .getApplication()
-                .getMazeManager()
-                .getMaze()
+        Fantastle5.getApplication().getMazeManager().getMaze()
                 .radialScanTimerAction(x, y, z, w, Maze.LAYER_OBJECT,
                         SmokeBomb.EFFECT_RADIUS, "Monster",
                         SmokeBomb.STUN_DURATION);

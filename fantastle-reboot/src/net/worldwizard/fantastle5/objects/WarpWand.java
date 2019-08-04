@@ -53,12 +53,11 @@ public class WarpWand extends GenericWand {
     public void useAction(final MazeObject mo, final int x, final int y,
             final int z, final int w) {
         final Application app = Fantastle5.getApplication();
-        app.getMazeManager()
-                .getMaze()
+        app.getMazeManager().getMaze()
                 .warpObject(
-                        app.getMazeManager().getMaze()
-                                .getCell(x, y, z, w, Maze.LAYER_OBJECT), x, y,
-                        z, w, Maze.LAYER_OBJECT);
+                        app.getMazeManager().getMaze().getCell(x, y, z, w,
+                                Maze.LAYER_OBJECT),
+                        x, y, z, w, Maze.LAYER_OBJECT);
     }
 
     @Override

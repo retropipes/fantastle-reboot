@@ -46,9 +46,11 @@ public class Pit extends StairsDown {
     @Override
     public boolean preMoveAction(final boolean ie, final int dirX,
             final int dirY, final ObjectInventory inv) {
-        return this.searchNestedPits(dirX, dirY, Fantastle5.getApplication()
-                .getGameManager().getPlayerManager().getPlayerLocationZ() - 1,
-                inv);
+        return this
+                .searchNestedPits(dirX, dirY,
+                        Fantastle5.getApplication().getGameManager()
+                                .getPlayerManager().getPlayerLocationZ() - 1,
+                        inv);
     }
 
     private boolean searchNestedPits(final int dirX, final int dirY,
@@ -62,15 +64,11 @@ public class Pit extends StairsDown {
             throw new InfiniteRecursionException();
         }
         if (app.getGameManager().doesFloorExist(floor)) {
-            final MazeObject obj = app
-                    .getMazeManager()
-                    .getMaze()
+            final MazeObject obj = app.getMazeManager().getMaze()
                     .getCell(
-                            dirX,
-                            dirY,
-                            floor,
-                            app.getGameManager().getPlayerManager()
-                                    .getPlayerLocationW(), Maze.LAYER_OBJECT);
+                            dirX, dirY, floor, app.getGameManager()
+                                    .getPlayerManager().getPlayerLocationW(),
+                            Maze.LAYER_OBJECT);
             if (obj.isConditionallySolid(inv)) {
                 return false;
             } else {
@@ -87,14 +85,14 @@ public class Pit extends StairsDown {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         final Application app = Fantastle5.getApplication();
         app.getGameManager().updatePositionAbsolute(this.getDestinationRow(),
                 this.getDestinationColumn(), this.getDestinationFloor(),
                 this.getDestinationLevel());
-        if (app.getPrefsManager().getSoundEnabled(
-                PreferencesManager.SOUNDS_GAME)) {
+        if (app.getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playFallSound();
         }
     }
@@ -110,14 +108,14 @@ public class Pit extends StairsDown {
                 final GenericMovableObject pushedInto = (GenericMovableObject) pushed;
                 app.getGameManager().updatePushedIntoPositionAbsolute(x, y,
                         z - 1, w, x, y, z, w, pushedInto, this);
-                if (app.getPrefsManager().getSoundEnabled(
-                        PreferencesManager.SOUNDS_GAME)) {
+                if (app.getPrefsManager()
+                        .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                     MazeObject.playFallSound();
                 }
             }
         } catch (final InfiniteRecursionException ir) {
-            if (app.getPrefsManager().getSoundEnabled(
-                    PreferencesManager.SOUNDS_GAME)) {
+            if (app.getPrefsManager()
+                    .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 MazeObject.playFallSound();
             }
             Fantastle5.getApplication().getMazeManager().getMaze()

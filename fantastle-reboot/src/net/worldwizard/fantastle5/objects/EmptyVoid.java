@@ -38,7 +38,8 @@ public class EmptyVoid extends GenericWall {
     public String gameRenderHook(final int x, final int y, final int z,
             final int w) {
         final Application app = Fantastle5.getApplication();
-        String mo1Name, mo2Name, mo3Name, mo4Name, mo6Name, mo7Name, mo8Name, mo9Name, thisName;
+        String mo1Name, mo2Name, mo3Name, mo4Name, mo6Name, mo7Name, mo8Name,
+                mo9Name, thisName;
         thisName = this.getName();
         final MazeObject mo1 = app.getMazeManager().getMazeObject(x - 1, y - 1,
                 z, w, Maze.LAYER_OBJECT);
@@ -112,7 +113,8 @@ public class EmptyVoid extends GenericWall {
     public void determineCurrentAppearance(final int x, final int y,
             final int z, final int w) {
         final Application app = Fantastle5.getApplication();
-        String mo1Name, mo2Name, mo3Name, mo4Name, mo6Name, mo7Name, mo8Name, mo9Name, thisName;
+        String mo1Name, mo2Name, mo3Name, mo4Name, mo6Name, mo7Name, mo8Name,
+                mo9Name, thisName;
         thisName = this.getName();
         final MazeObject mo1 = app.getMazeManager().getMazeObject(x - 1, y - 1,
                 z, w, Maze.LAYER_OBJECT);

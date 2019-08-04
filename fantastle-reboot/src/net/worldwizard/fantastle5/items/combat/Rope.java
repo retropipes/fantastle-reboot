@@ -13,8 +13,8 @@ public class Rope extends CombatUsableItem {
         this.sound = "focus";
         this.e = new Effect("Roped", 2);
         this.e.setAffectedStat(StatConstants.STAT_AGILITY);
-        this.e.setEffect(Effect.EFFECT_MULTIPLY, 0,
-                Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE);
+        this.e.setEffect(Effect.EFFECT_MULTIPLY, 0, Effect.DEFAULT_SCALE_FACTOR,
+                StatConstants.STAT_NONE);
         this.e.setMessage(Effect.MESSAGE_INITIAL,
                 "You wind a rope around the enemy!");
         this.e.setMessage(Effect.MESSAGE_SUBSEQUENT,

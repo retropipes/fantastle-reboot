@@ -34,9 +34,10 @@ public abstract class GenericLock extends MazeObject {
         this.key = mgk;
     }
 
-    protected GenericLock(final GenericKey mgk, final boolean doesAcceptPushInto) {
-        super(true, false, doesAcceptPushInto, false, false, false, false,
-                true, false, 0);
+    protected GenericLock(final GenericKey mgk,
+            final boolean doesAcceptPushInto) {
+        super(true, false, doesAcceptPushInto, false, false, false, false, true,
+                false, 0);
         this.key = mgk;
     }
 
@@ -86,8 +87,8 @@ public abstract class GenericLock extends MazeObject {
             final int dirY, final ObjectInventory inv);
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         if (!this.key.isInfinite()) {
             inv.removeItem(this.key);
         }

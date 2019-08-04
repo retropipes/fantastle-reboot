@@ -38,11 +38,11 @@ public class FinishTo extends Finish {
 
     // Scriptability
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         final Application app = Fantastle5.getApplication();
-        if (app.getPrefsManager().getSoundEnabled(
-                PreferencesManager.SOUNDS_GAME)) {
+        if (app.getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveSuccessSound();
         }
         if (app.getGameManager().doesLevelExist(this.getDestinationLevel())) {
@@ -66,14 +66,14 @@ public class FinishTo extends Finish {
 
     @Override
     public void gameProbeHook() {
-        Messager.showMessage("Finish To Level "
-                + (this.getDestinationLevel() + 1));
+        Messager.showMessage(
+                "Finish To Level " + (this.getDestinationLevel() + 1));
     }
 
     @Override
     public void editorProbeHook() {
-        Messager.showMessage("Finish To Level "
-                + (this.getDestinationLevel() + 1));
+        Messager.showMessage(
+                "Finish To Level " + (this.getDestinationLevel() + 1));
     }
 
     @Override

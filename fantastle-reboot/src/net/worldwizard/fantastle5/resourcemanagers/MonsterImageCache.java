@@ -52,7 +52,8 @@ public class MonsterImageCache {
             MonsterImageCache.cache = new BufferedImageIcon[MonsterImageCache.nameCache.length];
             for (int x = 0; x < MonsterImageCache.nameCache.length; x++) {
                 MonsterImageCache.cache[x] = GraphicsManager
-                        .getUncachedMonsterImage(MonsterImageCache.nameCache[x]);
+                        .getUncachedMonsterImage(
+                                MonsterImageCache.nameCache[x]);
             }
             MonsterImageCache.cacheCreated = true;
         }

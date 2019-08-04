@@ -100,7 +100,7 @@ public class Effect implements StatConstants {
     }
 
     /**
-     * 
+     *
      * @param c
      */
     public void customUseLogic(final Creature c) {
@@ -116,18 +116,17 @@ public class Effect implements StatConstants {
             return false;
         }
         final Effect other = (Effect) obj;
-        if (this.name == null ? other.name != null : !this.name
-                .equals(other.name)) {
+        if (this.name == null ? other.name != null
+                : !this.name.equals(other.name)) {
             return false;
         }
         if (this.initialEffect != other.initialEffect
-                && (this.initialEffect == null || !Arrays.equals(
-                        this.initialEffect, other.initialEffect))) {
+                && (this.initialEffect == null || !Arrays
+                        .equals(this.initialEffect, other.initialEffect))) {
             return false;
         }
-        if (this.effect != other.effect
-                && (this.effect == null || !Arrays.equals(this.effect,
-                        other.effect))) {
+        if (this.effect != other.effect && (this.effect == null
+                || !Arrays.equals(this.effect, other.effect))) {
             return false;
         }
         if (this.statAffected != other.statAffected) {
@@ -154,9 +153,8 @@ public class Effect implements StatConstants {
         if (this.roundsScaleStat != other.roundsScaleStat) {
             return false;
         }
-        if (this.messages != other.messages
-                && (this.messages == null || !Arrays.equals(this.messages,
-                        other.messages))) {
+        if (this.messages != other.messages && (this.messages == null
+                || !Arrays.equals(this.messages, other.messages))) {
             return false;
         }
         return true;
@@ -166,27 +164,22 @@ public class Effect implements StatConstants {
     public int hashCode() {
         int hash = 7;
         hash = 17 * hash + (this.name != null ? this.name.hashCode() : 0);
-        hash = 17
-                * hash
+        hash = 17 * hash
                 + (this.initialEffect != null ? this.initialEffect.hashCode()
                         : 0);
         hash = 17 * hash + (this.effect != null ? this.effect.hashCode() : 0);
         hash = 17 * hash + this.statAffected;
-        hash = 17
-                * hash
-                + (int) (Double.doubleToLongBits(this.effectScaleFactor) ^ Double
-                        .doubleToLongBits(this.effectScaleFactor) >>> 32);
+        hash = 17 * hash + (int) (Double
+                .doubleToLongBits(this.effectScaleFactor)
+                ^ Double.doubleToLongBits(this.effectScaleFactor) >>> 32);
         hash = 17 * hash + this.effectScaleStat;
-        hash = 17
-                * hash
-                + (int) (Double.doubleToLongBits(this.effectDecayRate) ^ Double
-                        .doubleToLongBits(this.effectDecayRate) >>> 32);
+        hash = 17 * hash + (int) (Double.doubleToLongBits(this.effectDecayRate)
+                ^ Double.doubleToLongBits(this.effectDecayRate) >>> 32);
         hash = 17 * hash + this.rounds;
         hash = 17 * hash + this.initialRounds;
-        hash = 17
-                * hash
-                + (int) (Double.doubleToLongBits(this.roundsScaleFactor) ^ Double
-                        .doubleToLongBits(this.roundsScaleFactor) >>> 32);
+        hash = 17 * hash + (int) (Double
+                .doubleToLongBits(this.roundsScaleFactor)
+                ^ Double.doubleToLongBits(this.roundsScaleFactor) >>> 32);
         hash = 17 * hash + this.roundsScaleStat;
         hash = 17 * hash
                 + (this.messages != null ? this.messages.hashCode() : 0);
@@ -217,18 +210,18 @@ public class Effect implements StatConstants {
     public String getCurrentMessage() {
         String msg = Effect.getNullMessage();
         if (this.rounds == this.initialRounds) {
-            if (!this.messages[Effect.MESSAGE_INITIAL].equals(Effect
-                    .getNullMessage())) {
+            if (!this.messages[Effect.MESSAGE_INITIAL]
+                    .equals(Effect.getNullMessage())) {
                 msg += this.messages[Effect.MESSAGE_INITIAL] + "\n";
             }
         }
-        if (!this.messages[Effect.MESSAGE_SUBSEQUENT].equals(Effect
-                .getNullMessage())) {
+        if (!this.messages[Effect.MESSAGE_SUBSEQUENT]
+                .equals(Effect.getNullMessage())) {
             msg += this.messages[Effect.MESSAGE_SUBSEQUENT] + "\n";
         }
         if (this.rounds == 1) {
-            if (!this.messages[Effect.MESSAGE_WEAR_OFF].equals(Effect
-                    .getNullMessage())) {
+            if (!this.messages[Effect.MESSAGE_WEAR_OFF]
+                    .equals(Effect.getNullMessage())) {
                 msg += this.messages[Effect.MESSAGE_WEAR_OFF] + "\n";
             }
         }

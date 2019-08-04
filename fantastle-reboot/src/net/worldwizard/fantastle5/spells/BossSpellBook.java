@@ -14,7 +14,8 @@ public class BossSpellBook extends SpellBook {
     @Override
     protected void defineSpells() {
         final DamageEffect spell0Effect = new DamageEffect("Lethally Poisoned",
-                10, 10, Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE, 1);
+                10, 10, Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE,
+                1);
         spell0Effect.setMessage(Effect.MESSAGE_INITIAL,
                 "The Boss breathes extremely poisonous breath at you!");
         spell0Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,

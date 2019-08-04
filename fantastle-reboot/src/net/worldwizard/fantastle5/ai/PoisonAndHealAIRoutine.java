@@ -50,10 +50,12 @@ public class PoisonAndHealAIRoutine extends AIRoutine {
         } else {
             if (cost <= currMP) {
                 final int currHP = c.getCurrentHP();
-                final int targetHP = (int) (currHP * PoisonAndHealAIRoutine.HEAL_PERCENT);
+                final int targetHP = (int) (currHP
+                        * PoisonAndHealAIRoutine.HEAL_PERCENT);
                 if (currHP <= targetHP) {
                     final RandomRange chance = new RandomRange(1, 100);
-                    if (chance.generate() <= PoisonAndHealAIRoutine.HEAL_CHANCE) {
+                    if (chance
+                            .generate() <= PoisonAndHealAIRoutine.HEAL_CHANCE) {
                         this.spell = which;
                         return AIRoutine.ACTION_CAST_SPELL;
                     } else {

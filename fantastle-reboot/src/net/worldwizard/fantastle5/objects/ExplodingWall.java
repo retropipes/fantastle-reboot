@@ -97,8 +97,8 @@ public class ExplodingWall extends GenericWall {
         if (mo8Name.equals(currName)) {
             curr.chainReactionAction(x + 1, y, z, w);
         }
-        if (app.getPrefsManager().getSoundEnabled(
-                PreferencesManager.SOUNDS_GAME)) {
+        if (app.getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             curr.playChainReactSound();
         }
     }

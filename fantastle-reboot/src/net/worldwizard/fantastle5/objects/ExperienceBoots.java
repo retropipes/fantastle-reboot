@@ -63,8 +63,8 @@ public class ExperienceBoots extends GenericBoots {
         if (playerCharacter.checkLevelUp()) {
             playerCharacter.levelUp();
             Fantastle5.getApplication().getGameManager().keepNextMessage();
-            Messager.showMessage("You reached level "
-                    + playerCharacter.getLevel() + ".");
+            Messager.showMessage(
+                    "You reached level " + playerCharacter.getLevel() + ".");
         }
     }
 }

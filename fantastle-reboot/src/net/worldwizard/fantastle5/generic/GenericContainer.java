@@ -94,8 +94,8 @@ public abstract class GenericContainer extends GenericLock {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX,
-            final int dirY, final ObjectInventory inv) {
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
         final Application app = Fantastle5.getApplication();
         if (!this.getKey().isInfinite()) {
             inv.removeItem(this.getKey());
@@ -109,8 +109,8 @@ public abstract class GenericContainer extends GenericLock {
         } else {
             app.getGameManager().decay();
         }
-        if (app.getPrefsManager().getSoundEnabled(
-                PreferencesManager.SOUNDS_GAME)) {
+        if (app.getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveSuccessSound();
         }
         app.getGameManager().backUpPlayer();
@@ -119,8 +119,8 @@ public abstract class GenericContainer extends GenericLock {
     @Override
     public void editorProbeHook() {
         if (this.inside != null) {
-            Messager.showMessage(this.getName() + ": Contains "
-                    + this.inside.getName());
+            Messager.showMessage(
+                    this.getName() + ": Contains " + this.inside.getName());
         } else {
             Messager.showMessage(this.getName() + ": Contains Nothing");
         }

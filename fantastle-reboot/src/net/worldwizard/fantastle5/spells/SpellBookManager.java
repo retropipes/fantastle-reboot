@@ -88,7 +88,8 @@ public class SpellBookManager {
                 final String snd = cast.getSound();
                 if (snd != null) {
                     if (Fantastle5.getApplication().getPrefsManager()
-                            .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
+                            .getSoundEnabled(
+                                    PreferencesManager.SOUNDS_BATTLE)) {
                         SoundManager.playSoundAsynchronously(snd);
                     }
                 }
