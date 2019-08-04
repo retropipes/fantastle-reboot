@@ -1,0 +1,18 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="624px" height="624px" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<title>Fantastle 4 Mac Background</title>
+<desc>Fantastle 4 Mac Background SVG</desc>
+<defs>
+ <linearGradient id="Grass" x1="100%" y1="100%" x2="100%" y2="0%">
+   <stop offset="0%" stop-color="#00ff00" />
+   <stop offset="100%" stop-color="#00df00" />
+ </linearGradient>
+ <linearGradient id="Sky" x1="0%" y1="0%" x2="0%" y2="100%">
+   <stop offset="0%" stop-color="#00ffff" />
+   <stop offset="100%" stop-color="#00dfdf" />
+ </linearGradient>
+</defs>
+ <rect x="0%" y="50%" width="100%" height="50%" fill="url(#Grass)" />
+ <rect x="0%" y="0%" width="100%" height="50%" fill="url(#Sky)" />
+</svg>

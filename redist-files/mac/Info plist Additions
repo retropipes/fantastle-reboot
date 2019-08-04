@@ -1,0 +1,75 @@
+    <key>CFBundleDocumentTypes</key>
+    <array>
+	<dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>ftlmz</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>FantastleMaze.icns</string>
+            <key>CFBundleTypeName</key>
+            <string>Fantastle 2 Maze</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+        </dict>
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>ft3mz</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>Fantastle3Maze.icns</string>
+            <key>CFBundleTypeName</key>
+            <string>Fantastle 3 Maze</string>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+        </dict>
+	<dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>ft4mz</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>Fantastle4Maze.icns</string>
+            <key>CFBundleTypeName</key>
+            <string>Fantastle 4 Maze</string>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+        </dict>
+	<dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>ft4sg</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>Fantastle4SavedGame.icns</string>
+            <key>CFBundleTypeName</key>
+            <string>Fantastle 4 Saved Game</string>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+        </dict>
+	<dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>ft4sc</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>Fantastle4Scores.icns</string>
+            <key>CFBundleTypeName</key>
+            <string>Fantastle 4 Scores</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+        </dict>
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>ftprf</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>Fantastle4Prefs.icns</string>
+            <key>CFBundleTypeName</key>
+            <string>Fantastle Preferences</string>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+        </dict>
+    </array>
