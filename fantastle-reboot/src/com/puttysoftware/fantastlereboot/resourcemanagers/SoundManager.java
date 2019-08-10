@@ -33,7 +33,7 @@ public class SoundManager {
     static WAVFactory getUncachedSound(final String filename) {
         try {
             final URL url = SoundManager.class
-                    .getResource("/net/worldwizard/fantastle5/resources/sounds/"
+                    .getResource("/assets/sounds/"
                             + filename.toLowerCase() + ".wav");
             final WAVFactory snd = WAVFactory.loadResource(url);
             return snd;

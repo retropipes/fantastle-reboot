@@ -26,7 +26,7 @@ public class CasteDataManager {
         final String name = CasteConstants.CASTE_NAMES[c].toLowerCase();
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
                 CasteDataManager.class.getResourceAsStream(
-                        "/net/worldwizard/fantastle5/resources/data/caste/"
+                        "/assets/data/caste/"
                                 + name + ".dat"))) {
             // Fetch data
             final int[] rawData = new int[CasteConstants.CASTES_ATTRIBUTE_COUNT];

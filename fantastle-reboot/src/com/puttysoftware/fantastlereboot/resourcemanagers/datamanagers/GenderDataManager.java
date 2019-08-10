@@ -26,7 +26,7 @@ public class GenderDataManager {
         final String name = GenderConstants.GENDER_NAMES[g].toLowerCase();
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
                 GenderDataManager.class.getResourceAsStream(
-                        "/net/worldwizard/fantastle5/resources/data/gender/"
+                        "/assets/data/gender/"
                                 + name + ".dat"))) {
             // Fetch data
             final int[] rawData = new int[GenderConstants.GENDERS_ATTRIBUTE_COUNT];

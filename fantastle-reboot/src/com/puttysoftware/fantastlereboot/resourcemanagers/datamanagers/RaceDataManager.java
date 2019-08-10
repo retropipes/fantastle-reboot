@@ -26,7 +26,7 @@ public class RaceDataManager {
         final String name = RaceConstants.RACE_NAMES[c].toLowerCase();
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
                 RaceDataManager.class.getResourceAsStream(
-                        "/net/worldwizard/fantastle5/resources/data/race/"
+                        "/assets/data/race/"
                                 + name + ".dat"))) {
             // Fetch data
             final int[] rawData = new int[RaceConstants.RACE_ATTRIBUTE_COUNT];

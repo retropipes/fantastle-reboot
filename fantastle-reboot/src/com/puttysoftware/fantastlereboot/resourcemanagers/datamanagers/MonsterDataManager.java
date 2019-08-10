@@ -26,7 +26,7 @@ public class MonsterDataManager {
     public static String[] getMonsterData() {
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
                 MonsterDataManager.class.getResourceAsStream(
-                        "/net/worldwizard/fantastle5/resources/data/monster/monsternames.dat"))) {
+                        "/assets/data/monster/monsternames.dat"))) {
             // Fetch data
             final ArrayList<String> data = new ArrayList<>();
             String raw = "0";

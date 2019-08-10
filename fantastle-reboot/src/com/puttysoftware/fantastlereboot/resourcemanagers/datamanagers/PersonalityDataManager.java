@@ -27,7 +27,7 @@ public class PersonalityDataManager {
                 .toLowerCase();
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
                 PersonalityDataManager.class.getResourceAsStream(
-                        "/net/worldwizard/fantastle5/resources/data/personality/"
+                        "/assets/data/personality/"
                                 + name + ".dat"))) {
             // Fetch data
             final int[] rawData = new int[PersonalityConstants.PERSONALITY_ATTRIBUTE_COUNT];
