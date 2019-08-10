@@ -658,9 +658,7 @@ public class MenuManager {
                     }
                 } else if (cmd.equals("Exit")) {
                     // Exit program
-                    if (app.getMazeManager().quitHandler()) {
-                        System.exit(0);
-                    }
+                    System.exit(0);
                 } else if (cmd.equals("Undo")) {
                     // Undo most recent action
                     me.undo();

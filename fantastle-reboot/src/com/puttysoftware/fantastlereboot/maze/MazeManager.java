@@ -18,6 +18,11 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.maze;
 
+import java.awt.desktop.OpenFilesEvent;
+import java.awt.desktop.OpenFilesHandler;
+import java.awt.desktop.QuitEvent;
+import java.awt.desktop.QuitHandler;
+import java.awt.desktop.QuitResponse;
 import java.io.File;
 
 import javax.swing.JFileChooser;
@@ -30,7 +35,7 @@ import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
 
-public class MazeManager {
+public class MazeManager implements OpenFilesHandler, QuitHandler {
     // Fields
     private Maze gameMaze;
     private boolean loaded, isDirty;
@@ -90,7 +95,8 @@ public class MazeManager {
         }
     }
 
-    public boolean quitHandler() {
+    @Override
+    public void handleQuitRequestWith(QuitEvent inE, QuitResponse inResponse) {
         boolean saved = true;
         int status = JOptionPane.DEFAULT_OPTION;
         if (this.getDirty()) {
@@ -105,8 +111,10 @@ public class MazeManager {
         }
         if (saved) {
             FantastleReboot.getApplication().getPrefsManager().writePrefs();
+            inResponse.performQuit();
+        } else {
+            inResponse.cancelQuit();
         }
-        return saved;
     }
 
     public int showSaveDialog() {
@@ -282,7 +290,9 @@ public class MazeManager {
         return false;
     }
 
-    public void loadFromOSHandler(final String infilename) {
+    @Override
+    public void openFiles(OpenFilesEvent inE) {
+        final String infilename = inE.getFiles().get(0).getAbsolutePath();
         final Application app = FantastleReboot.getApplication();
         if (!this.loaded) {
             String extension;

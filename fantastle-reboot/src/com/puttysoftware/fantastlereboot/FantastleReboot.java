@@ -32,7 +32,7 @@ import javax.swing.WindowConstants;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.errorlogger.ErrorLogger;
-//import com.puttysoftware.integration.NativeIntegration;
+import com.puttysoftware.integration.NativeIntegration;
 import com.puttysoftware.fantastlereboot.resourcemanagers.GraphicsManager;
 import com.puttysoftware.fantastlereboot.resourcemanagers.ImageCache;
 import com.puttysoftware.fantastlereboot.resourcemanagers.MonsterImageCache;
@@ -62,11 +62,11 @@ public class FantastleReboot {
         FantastleReboot.debug.logError(t);
     }
 
-    public static boolean inFantastle5() {
+    public static boolean inFantastleReboot() {
         return FantastleReboot.IN_FANTASTLE_5;
     }
 
-    public static void leaveFantastle5() {
+    public static void leaveFantastleReboot() {
         FantastleReboot.IN_FANTASTLE_5 = false;
     }
 
@@ -94,21 +94,12 @@ public class FantastleReboot {
             // Done loading
             FantastleReboot.application.playLogoSound();
             FantastleReboot.application.getGUIManager().showGUI();
-            // OS Integration (FIXME: broken)
-            // NativeIntegration ni = new NativeIntegration();
-            // ni.setOpenFileHandler(Fantastle5.application.getMazeManager(),
-            // Fantastle5.application.getMazeManager().getClass()
-            // .getDeclaredMethod("loadFromOSHandler",
-            // String.class));
-            // ni.setQuitHandler(Fantastle5.application.getMazeManager(),
-            // Fantastle5.application.getMazeManager().getClass()
-            // .getDeclaredMethod("quitHandler"));
-            // ni.setPreferencesHandler(Fantastle5.application.getPrefsManager(),
-            // Fantastle5.application.getPrefsManager().getClass()
-            // .getDeclaredMethod("showPrefs"));
-            // ni.setAboutHandler(Fantastle5.application.getAboutDialog(),
-            // Fantastle5.application.getAboutDialog().getClass()
-            // .getDeclaredMethod("showAboutDialog"));
+            // OS Integration
+             NativeIntegration ni = new NativeIntegration();
+             ni.setOpenFileHandler(FantastleReboot.application.getMazeManager());
+             ni.setQuitHandler(FantastleReboot.application.getMazeManager());
+             ni.setPreferencesHandler(FantastleReboot.application.getPrefsManager());
+             ni.setAboutHandler(FantastleReboot.application.getAboutDialog());
         } catch (final Throwable t) {
             FantastleReboot.logError(t);
         }
