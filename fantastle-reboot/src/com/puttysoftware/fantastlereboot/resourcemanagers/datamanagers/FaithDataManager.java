@@ -26,7 +26,7 @@ public class FaithDataManager {
         final String name = FaithConstants.FAITH_NAMES[f].toLowerCase();
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
                 FaithDataManager.class.getResourceAsStream(
-                        "/net/worldwizard/fantastle5/resources/data/faith/"
+                        "/assets/data/faith/"
                                 + name + ".dat"))) {
             // Fetch data
             final int[] rawData = new int[FaithConstants.FAITHS_COUNT];

@@ -22,6 +22,8 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.desktop.AboutEvent;
+import java.awt.desktop.AboutHandler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -33,7 +35,7 @@ import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.resourcemanagers.GraphicsManager;
 
-public class AboutDialog {
+public class AboutDialog implements AboutHandler {
     // Fields
     private JFrame aboutFrame;
     private Container aboutPane, textPane, buttonPane, logoPane;
@@ -46,6 +48,11 @@ public class AboutDialog {
     }
 
     // Methods
+    @Override
+    public void handleAbout(AboutEvent inE) {
+        this.aboutFrame.setVisible(true);
+    }
+
     public void showAboutDialog() {
         this.aboutFrame.setVisible(true);
     }

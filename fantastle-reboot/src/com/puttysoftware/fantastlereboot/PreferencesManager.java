@@ -23,6 +23,8 @@ import java.awt.Container;
 import java.awt.FileDialog;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.desktop.PreferencesEvent;
+import java.awt.desktop.PreferencesHandler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -55,7 +57,7 @@ import com.puttysoftware.fantastlereboot.objects.Snow;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.fantastlereboot.objects.Tundra;
 
-public class PreferencesManager {
+public class PreferencesManager implements PreferencesHandler {
     // Fields
     JFrame prefFrame;
     private JFrame waitFrame;
@@ -224,8 +226,13 @@ public class PreferencesManager {
         }
     }
 
+    @Override
+    public void handlePreferences(PreferencesEvent inE) {
+        this.showPrefs();
+    }
+
     public void showPrefs() {
-        if (FantastleReboot.inFantastle5()) {
+        if (FantastleReboot.inFantastleReboot()) {
             final Application app = FantastleReboot.getApplication();
             app.setInPrefs(true);
             this.prefFrame.setJMenuBar(app.getMenuManager().getMainMenuBar());
@@ -247,7 +254,7 @@ public class PreferencesManager {
     }
 
     public void hidePrefs() {
-        if (FantastleReboot.inFantastle5()) {
+        if (FantastleReboot.inFantastleReboot()) {
             final Application app = FantastleReboot.getApplication();
             app.setInPrefs(false);
             this.prefFrame.setVisible(false);
