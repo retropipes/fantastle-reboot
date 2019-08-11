@@ -1,13 +1,13 @@
 package com.puttysoftware.fantastlereboot.creatures.personalities;
 
-import com.puttysoftware.fantastlereboot.loaders.data.PersonalityDataManager;
+import com.puttysoftware.fantastlereboot.loaders.assets.DataLoader;
 
 public class Personality {
     private final int[] data;
     private final int personalityID;
 
     Personality(final int pid) {
-        this.data = PersonalityDataManager.getPersonalityData(pid);
+        this.data = DataLoader.loadPersonalityData(pid);
         this.personalityID = pid;
     }
 

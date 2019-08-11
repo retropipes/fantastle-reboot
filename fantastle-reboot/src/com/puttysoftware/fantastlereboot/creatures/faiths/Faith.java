@@ -2,14 +2,14 @@ package com.puttysoftware.fantastlereboot.creatures.faiths;
 
 import java.awt.Color;
 
-import com.puttysoftware.fantastlereboot.loaders.data.FaithDataManager;
+import com.puttysoftware.fantastlereboot.loaders.assets.DataLoader;
 
 public final class Faith {
     private final int faithID;
     private final double[] multipliers;
 
     Faith(final int fid) {
-        this.multipliers = FaithDataManager.getFaithData(fid);
+        this.multipliers = DataLoader.loadFaithData(fid);
         this.faithID = fid;
     }
 

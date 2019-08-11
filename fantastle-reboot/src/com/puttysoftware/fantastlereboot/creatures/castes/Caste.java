@@ -1,13 +1,13 @@
 package com.puttysoftware.fantastlereboot.creatures.castes;
 
-import com.puttysoftware.fantastlereboot.loaders.data.CasteDataManager;
+import com.puttysoftware.fantastlereboot.loaders.assets.DataLoader;
 
 public class Caste {
     private final int[] data;
     private final int casteID;
 
     Caste(final int cid) {
-        this.data = CasteDataManager.getCasteData(cid);
+        this.data = DataLoader.loadCasteData(cid);
         this.casteID = cid;
     }
 

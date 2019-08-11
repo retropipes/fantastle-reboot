@@ -1,13 +1,13 @@
 package com.puttysoftware.fantastlereboot.creatures.genders;
 
-import com.puttysoftware.fantastlereboot.loaders.data.GenderDataManager;
+import com.puttysoftware.fantastlereboot.loaders.assets.DataLoader;
 
 public class Gender {
     private final int[] data;
     private final int genderID;
 
     Gender(final int gid) {
-        this.data = GenderDataManager.getGenderData(gid);
+        this.data = DataLoader.loadGenderData(gid);
         this.genderID = gid;
     }
 

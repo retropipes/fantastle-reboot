@@ -6,7 +6,6 @@ import java.util.Properties;
 
 import com.puttysoftware.audio.wav.WAVFactory;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.loaders.data.SoundDataManager;
 
 public class SoundLoader {
     private SoundLoader() {
@@ -18,7 +17,7 @@ public class SoundLoader {
 
     private static String getSoundFilename(final GameSound sound) {
         if (allFilenames == null && fileExtensions == null) {
-            allFilenames = SoundDataManager.getSoundData();
+            allFilenames = DataLoader.loadSoundData();
             try {
                 fileExtensions = new Properties();
                 fileExtensions.load(SoundLoader.class.getResourceAsStream(

@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.loaders.old;
 
-import com.puttysoftware.fantastlereboot.loaders.data.MonsterDataManager;
+import com.puttysoftware.fantastlereboot.loaders.assets.DataLoader;
 
 public class MonsterNames {
     // Fields
@@ -9,7 +9,7 @@ public class MonsterNames {
 
     public static String[] getAllNames() {
         if (!MonsterNames.CACHE_CREATED) {
-            MonsterNames.CACHE = MonsterDataManager.getMonsterData();
+            MonsterNames.CACHE = DataLoader.loadMonsterData();
             MonsterNames.CACHE_CREATED = true;
         }
         return MonsterNames.CACHE;

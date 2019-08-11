@@ -1,13 +1,13 @@
 package com.puttysoftware.fantastlereboot.creatures.races;
 
-import com.puttysoftware.fantastlereboot.loaders.data.RaceDataManager;
+import com.puttysoftware.fantastlereboot.loaders.assets.DataLoader;
 
 public class Race {
     private final int[] data;
     private final int raceID;
 
     Race(final int rid) {
-        this.data = RaceDataManager.getRaceData(rid);
+        this.data = DataLoader.loadRaceData(rid);
         this.raceID = rid;
     }
 

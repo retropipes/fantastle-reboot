@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.loaders.old;
 
-import com.puttysoftware.fantastlereboot.loaders.data.SoundDataManager;
+import com.puttysoftware.fantastlereboot.loaders.assets.DataLoader;
 
 @Deprecated(forRemoval = true)
 class SoundList {
@@ -32,7 +32,7 @@ class SoundList {
 
     static String[] getAllSoundNames() {
         if (allNames == null) {
-            allNames = SoundDataManager.getSoundData();
+            allNames = DataLoader.loadSoundData();
         }
         return allNames;
     }
