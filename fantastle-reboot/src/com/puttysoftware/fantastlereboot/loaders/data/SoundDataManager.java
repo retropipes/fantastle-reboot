@@ -37,26 +37,11 @@ public class SoundDataManager {
             String raw = "0";
             while (raw != null) {
                 raw = rsr.readString();
-                data.add(raw);
-            }
-            final Object[] arr = data.toArray();
-            final String[] tempres = new String[arr.length];
-            int count = 0;
-            for (int x = 0; x < arr.length; x++) {
-                if (arr[x] != null) {
-                    tempres[x] = arr[x].toString();
-                    count++;
+                if (raw != null) {
+                    data.add(raw);
                 }
             }
-            final String[] res = new String[count];
-            count = 0;
-            for (final String tempre : tempres) {
-                if (tempre != null) {
-                    res[count] = tempre;
-                    count++;
-                }
-            }
-            return res;
+            return data.toArray(new String[data.size()]);
         } catch (final IOException e) {
             return new String[0];
         }

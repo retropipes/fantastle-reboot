@@ -20,19 +20,20 @@ package com.puttysoftware.fantastlereboot.loaders.assets;
 
 import com.puttysoftware.fantastlereboot.loaders.data.SoundDataManager;
 
-public class SoundList {
+@Deprecated
+class SoundList {
     // Private constructor
     private SoundList() {
         // Do nothing
     }
 
     // Fields
-    private static String[] allSounds;
+    private static String[] allNames = null;
 
-    public static String[] getAllSoundNames() {
-        if (allSounds == null) {
-            allSounds = SoundDataManager.getSoundData();
+    static String[] getAllSoundNames() {
+        if (allNames == null) {
+            allNames = SoundDataManager.getSoundData();
         }
-        return allSounds;
+        return allNames;
     }
 }
