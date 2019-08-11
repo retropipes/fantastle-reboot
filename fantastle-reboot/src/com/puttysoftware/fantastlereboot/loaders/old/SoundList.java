@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.loaders.old;
 
-import com.puttysoftware.fantastlereboot.loaders.assets.DataLoader;
+import com.puttysoftware.fantastlereboot.loaders.DataLoader;
 
 @Deprecated(forRemoval = true)
 class SoundList {

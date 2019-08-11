@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.loaders.old;
 
-import com.puttysoftware.fantastlereboot.loaders.assets.DataLoader;
+import com.puttysoftware.fantastlereboot.loaders.DataLoader;
 
 public class MonsterNames {
     // Fields

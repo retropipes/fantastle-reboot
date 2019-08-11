@@ -23,7 +23,7 @@ import java.awt.FlowLayout;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import com.puttysoftware.fantastlereboot.loaders.assets.HelpLoader;
+import com.puttysoftware.fantastlereboot.loaders.HelpLoader;
 import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
 import com.puttysoftware.help.HTMLHelpViewer;
 

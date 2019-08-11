@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.loaders.assets;
+package com.puttysoftware.fantastlereboot.assets;
 
 public enum GameSound {
     ACTION_FAILED,

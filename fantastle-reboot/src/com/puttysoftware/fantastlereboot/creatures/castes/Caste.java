@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.creatures.castes;
 
-import com.puttysoftware.fantastlereboot.loaders.assets.DataLoader;
+import com.puttysoftware.fantastlereboot.loaders.DataLoader;
 
 public class Caste {
     private final int[] data;

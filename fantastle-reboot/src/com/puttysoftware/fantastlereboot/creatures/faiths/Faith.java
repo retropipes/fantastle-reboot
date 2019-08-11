@@ -2,7 +2,7 @@ package com.puttysoftware.fantastlereboot.creatures.faiths;
 
 import java.awt.Color;
 
-import com.puttysoftware.fantastlereboot.loaders.assets.DataLoader;
+import com.puttysoftware.fantastlereboot.loaders.DataLoader;
 
 public final class Faith {
     private final int faithID;

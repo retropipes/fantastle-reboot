@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.loaders.assets;
+package com.puttysoftware.fantastlereboot.loaders;
 
 import java.io.IOException;
 import java.net.URL;
@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import com.puttysoftware.audio.wav.WAVFactory;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 
 public class SoundLoader {
     private SoundLoader() {

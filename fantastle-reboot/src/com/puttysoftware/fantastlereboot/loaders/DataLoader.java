@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.loaders.assets;
+package com.puttysoftware.fantastlereboot.loaders;
 
 import java.io.IOException;
 import java.util.ArrayList;

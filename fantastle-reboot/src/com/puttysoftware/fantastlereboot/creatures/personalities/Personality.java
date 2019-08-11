@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.creatures.personalities;
 
-import com.puttysoftware.fantastlereboot.loaders.assets.DataLoader;
+import com.puttysoftware.fantastlereboot.loaders.DataLoader;
 
 public class Personality {
     private final int[] data;
