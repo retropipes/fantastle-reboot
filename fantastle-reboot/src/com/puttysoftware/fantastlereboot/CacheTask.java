@@ -18,8 +18,8 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot;
 
-import com.puttysoftware.fantastlereboot.loaders.assets.ImageCache;
-import com.puttysoftware.fantastlereboot.loaders.assets.MonsterImageCache;
+import com.puttysoftware.fantastlereboot.loaders.old.ImageCache;
+import com.puttysoftware.fantastlereboot.loaders.old.MonsterImageCache;
 
 class CacheTask extends Thread {
     // Constructors

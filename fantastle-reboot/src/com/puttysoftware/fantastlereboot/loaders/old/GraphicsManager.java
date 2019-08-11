@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Any questions should be directed to the author via email at: fantastle@worldwizard.net
  */
-package com.puttysoftware.fantastlereboot.loaders.assets;
+package com.puttysoftware.fantastlereboot.loaders.old;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;

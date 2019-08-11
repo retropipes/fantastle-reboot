@@ -28,7 +28,7 @@ import com.puttysoftware.fantastlereboot.creatures.castes.Caste;
 import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemManager;
-import com.puttysoftware.fantastlereboot.loaders.assets.MusicManager;
+import com.puttysoftware.fantastlereboot.loaders.old.MusicManager;
 import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
 import com.puttysoftware.fantastlereboot.spells.SpellBookManager;
 import com.puttysoftware.randomrange.RandomRange;

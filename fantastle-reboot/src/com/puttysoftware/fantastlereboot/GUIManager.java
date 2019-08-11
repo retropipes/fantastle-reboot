@@ -27,7 +27,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-import com.puttysoftware.fantastlereboot.loaders.assets.GraphicsManager;
+import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class GUIManager {
