@@ -35,7 +35,6 @@ import com.puttysoftware.errorlogger.ErrorLogger;
 import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
 import com.puttysoftware.fantastlereboot.loaders.old.ImageCache;
 import com.puttysoftware.fantastlereboot.loaders.old.MonsterImageCache;
-import com.puttysoftware.fantastlereboot.loaders.old.SoundCache;
 import com.puttysoftware.integration.NativeIntegration;
 
 public class FantastleReboot {
@@ -140,7 +139,6 @@ public class FantastleReboot {
         MonsterImageCache.recreateMonsterCache();
         waitProgress.setValue(60);
         // Create sound cache
-        SoundCache.recreateCache();
         waitProgress.setValue(80);
         // Create stat image cache
         FantastleReboot.getApplication().getGameManager().getStatGUI().updateGUI();

@@ -80,6 +80,7 @@ level_up
 light
 light_fuse
 light_stone
+logo
 lose
 low_health
 mace_crit

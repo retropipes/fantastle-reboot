@@ -83,6 +83,7 @@ public enum GameSound {
     LIGHT,
     LIGHT_FUSE,
     LIGHT_STONE,
+    LOGO,
     LOSE,
     LOW_HEALTH,
     MACE_CRIT,

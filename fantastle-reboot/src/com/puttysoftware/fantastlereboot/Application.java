@@ -20,6 +20,7 @@ package com.puttysoftware.fantastlereboot;
 
 import javax.swing.JFrame;
 
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.BossBattle;
 import com.puttysoftware.fantastlereboot.creatures.Boss;
@@ -30,8 +31,8 @@ import com.puttysoftware.fantastlereboot.generic.MazeObjectList;
 import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
-import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.images.BufferedImageIcon;
 
@@ -223,19 +224,19 @@ public class Application {
 
     public void playHighScoreSound() {
         if (this.prefsMgr.getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
-            SoundManager.playSoundAsynchronously("highscor");
+            SoundLoader.playSound(GameSound.HIGH_SCORE);
         }
     }
 
     public void playLogoSound() {
         if (this.prefsMgr.getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
-            SoundManager.playSoundAsynchronously("logo");
+            SoundLoader.playSound(GameSound.LOGO);
         }
     }
 
     public void playStartSound() {
         if (this.prefsMgr.getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
-            SoundManager.playSoundAsynchronously("start");
+            SoundLoader.playSound(GameSound.GET_READY);
         }
     }
 
