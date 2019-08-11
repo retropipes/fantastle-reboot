@@ -52,7 +52,6 @@ import com.puttysoftware.fantastlereboot.generic.TypeConstants;
 import com.puttysoftware.fantastlereboot.legacyio.DataReader;
 import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
 import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
-import com.puttysoftware.fantastlereboot.loaders.old.MusicManager;
 import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
@@ -1700,23 +1699,11 @@ public class GameManager implements EffectConstants {
     public void showOutput() {
         final Application app = FantastleReboot.getApplication();
         app.getMenuManager().setGameMenus();
-        if (app.getPrefsManager()
-                .getMusicEnabled(PreferencesManager.MUSIC_EXPLORING)) {
-            if (!MusicManager.isMusicPlaying()) {
-                MusicManager.playMusic("polyphonizer");
-            }
-        }
         this.outputFrame.setVisible(true);
         this.outputFrame.setJMenuBar(app.getMenuManager().getMainMenuBar());
     }
 
     public void hideOutput() {
-        if (FantastleReboot.getApplication().getPrefsManager()
-                .getMusicEnabled(PreferencesManager.MUSIC_EXPLORING)) {
-            if (MusicManager.isMusicPlaying()) {
-                MusicManager.stopMusic();
-            }
-        }
         if (this.outputFrame != null) {
             this.outputFrame.setVisible(false);
         }

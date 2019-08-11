@@ -28,7 +28,6 @@ import com.puttysoftware.fantastlereboot.creatures.castes.Caste;
 import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemManager;
-import com.puttysoftware.fantastlereboot.loaders.old.MusicManager;
 import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
 import com.puttysoftware.fantastlereboot.spells.SpellBookManager;
 import com.puttysoftware.randomrange.RandomRange;
@@ -495,10 +494,6 @@ public class Battle implements BattleResults, MoveTypes {
         Battle.IN_BATTLE = true;
         FantastleReboot.getApplication().getGameManager().hideOutput();
         if (FantastleReboot.getApplication().getPrefsManager()
-                .getMusicEnabled(PreferencesManager.MUSIC_BATTLE)) {
-            MusicManager.playMusic("battle");
-        }
-        if (FantastleReboot.getApplication().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
             SoundManager.playSoundAsynchronously("battle");
         }
@@ -772,10 +767,6 @@ public class Battle implements BattleResults, MoveTypes {
     }
 
     protected void doResult() {
-        if (FantastleReboot.getApplication().getPrefsManager()
-                .getMusicEnabled(PreferencesManager.MUSIC_BATTLE)) {
-            MusicManager.stopMusic();
-        }
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
         final Monster m = (Monster) this.enemy;
         if (this.result == BattleResults.WON) {
