@@ -28,7 +28,7 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.legacyio.DataReader;
 import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
-import com.puttysoftware.fantastlereboot.loaders.assets.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;
 
 public abstract class MazeObject implements DirectionConstants, TypeConstants,

@@ -24,7 +24,7 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.generic.ArrowTypeConstants;
 import com.puttysoftware.fantastlereboot.generic.GenericTransientObject;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
-import com.puttysoftware.fantastlereboot.loaders.assets.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objects.Arrow;
 import com.puttysoftware.fantastlereboot.objects.Empty;

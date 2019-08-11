@@ -31,7 +31,7 @@ import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.assets.GraphicsManager;
-import com.puttysoftware.fantastlereboot.loaders.assets.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.images.BufferedImageIcon;
 

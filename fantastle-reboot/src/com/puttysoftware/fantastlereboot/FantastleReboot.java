@@ -35,7 +35,7 @@ import com.puttysoftware.errorlogger.ErrorLogger;
 import com.puttysoftware.fantastlereboot.loaders.assets.GraphicsManager;
 import com.puttysoftware.fantastlereboot.loaders.assets.ImageCache;
 import com.puttysoftware.fantastlereboot.loaders.assets.MonsterImageCache;
-import com.puttysoftware.fantastlereboot.loaders.assets.SoundCache;
+import com.puttysoftware.fantastlereboot.loaders.old.SoundCache;
 import com.puttysoftware.integration.NativeIntegration;
 
 public class FantastleReboot {

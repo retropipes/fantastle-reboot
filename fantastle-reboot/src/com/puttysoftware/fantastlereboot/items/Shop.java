@@ -8,7 +8,7 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.creatures.PCManager;
 import com.puttysoftware.fantastlereboot.creatures.PlayerCharacter;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
-import com.puttysoftware.fantastlereboot.loaders.assets.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
 
 public class Shop implements ShopTypes {
     // Fields

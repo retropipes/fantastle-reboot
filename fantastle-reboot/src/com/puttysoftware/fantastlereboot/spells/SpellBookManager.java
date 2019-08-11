@@ -7,7 +7,7 @@ import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.PCManager;
 import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
 import com.puttysoftware.fantastlereboot.effects.Effect;
-import com.puttysoftware.fantastlereboot.loaders.assets.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
 
 public class SpellBookManager {
     // Fields

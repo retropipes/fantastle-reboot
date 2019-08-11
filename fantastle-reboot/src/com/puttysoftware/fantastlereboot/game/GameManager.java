@@ -53,7 +53,7 @@ import com.puttysoftware.fantastlereboot.legacyio.DataReader;
 import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
 import com.puttysoftware.fantastlereboot.loaders.assets.GraphicsManager;
 import com.puttysoftware.fantastlereboot.loaders.assets.MusicManager;
-import com.puttysoftware.fantastlereboot.loaders.assets.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objects.AnnihilationWand;
