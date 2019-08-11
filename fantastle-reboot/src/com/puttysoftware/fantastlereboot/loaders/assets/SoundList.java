@@ -20,7 +20,7 @@ package com.puttysoftware.fantastlereboot.loaders.assets;
 
 import com.puttysoftware.fantastlereboot.loaders.data.SoundDataManager;
 
-@Deprecated
+@Deprecated(forRemoval = true)
 class SoundList {
     // Private constructor
     private SoundList() {

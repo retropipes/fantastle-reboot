@@ -20,7 +20,7 @@ package com.puttysoftware.fantastlereboot.loaders.assets;
 
 import com.puttysoftware.audio.wav.WAVFactory;
 
-@Deprecated
+@Deprecated(forRemoval = true)
 public class SoundCache {
     // Fields
     private static WAVFactory[] cache;
