@@ -21,8 +21,10 @@ package com.puttysoftware.fantastlereboot.objects;
 import com.puttysoftware.fantastlereboot.Application;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.generic.GenericTrap;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class WarpTrap extends GenericTrap {
@@ -80,7 +82,7 @@ public class WarpTrap extends GenericTrap {
     }
 
     @Override
-    public String getMoveSuccessSoundName() {
-        return "teleport";
+    public void playMoveSuccessSound() {
+        SoundLoader.playSound(GameSound.TELEPORT);
     }
 }

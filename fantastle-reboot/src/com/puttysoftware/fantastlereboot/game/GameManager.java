@@ -39,6 +39,7 @@ import com.puttysoftware.fantastlereboot.Application;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.creatures.PCManager;
 import com.puttysoftware.fantastlereboot.creatures.StatGUI;
@@ -51,8 +52,8 @@ import com.puttysoftware.fantastlereboot.generic.MazeObjectList;
 import com.puttysoftware.fantastlereboot.generic.TypeConstants;
 import com.puttysoftware.fantastlereboot.legacyio.DataReader;
 import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
-import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objects.AnnihilationWand;
@@ -1275,7 +1276,7 @@ public class GameManager implements EffectConstants {
     private void gameOver() {
         if (FantastleReboot.getApplication().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
-            SoundManager.playSoundAsynchronously("gameover");
+            SoundLoader.playSound(GameSound.GAME_OVER);
         }
         if (this.gameOverMessage == null) {
             Messager.showDialog("You have died - Game Over!");
@@ -1605,7 +1606,7 @@ public class GameManager implements EffectConstants {
             this.updatePositionAbsolute(destX, destY, destZ, destW);
             if (FantastleReboot.getApplication().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-                SoundManager.playSoundAsynchronously("teleport");
+                SoundLoader.playSound(GameSound.TELEPORT);
             }
             this.teleporting = false;
         }

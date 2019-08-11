@@ -21,10 +21,12 @@ package com.puttysoftware.fantastlereboot.objects;
 import com.puttysoftware.fantastlereboot.Application;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.generic.GenericTeleport;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 
 public class StairsDown extends GenericTeleport {
     // Constructors
@@ -96,8 +98,8 @@ public class StairsDown extends GenericTeleport {
     }
 
     @Override
-    public String getMoveSuccessSoundName() {
-        return "down";
+    public void playMoveSuccessSound() {
+        SoundLoader.playSound(GameSound.DOWN);
     }
 
     @Override

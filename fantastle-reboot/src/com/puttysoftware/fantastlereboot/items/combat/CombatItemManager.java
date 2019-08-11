@@ -3,11 +3,12 @@ package com.puttysoftware.fantastlereboot.items.combat;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.PCManager;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
-import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 
 public class CombatItemManager {
     // Fields
@@ -20,9 +21,23 @@ public class CombatItemManager {
 
     public static boolean selectAndUseItem(final Creature user) {
         boolean result = false;
-        final CombatUsableItem i = CombatItemManager.selectItem(user);
-        if (i != null) {
-            result = CombatItemManager.useItem(i, user);
+        if (FantastleReboot.getApplication().getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
+            SoundLoader.playSound(GameSound.SPECIAL);
+        }
+        final CombatUsableItem used = CombatItemManager.selectItem(user);
+        if (used != null) {
+            final Effect e = used.getEffect();
+            e.resetEffect();
+            final Creature target = CombatItemManager.resolveTarget(used);
+            user.getItems().useItem(used);
+            if (target.isEffectActive(e)) {
+                target.extendEffect(e, e.getInitialRounds());
+            } else {
+                e.restoreEffect(target);
+                target.applyEffect(e);
+            }
+            result = true;
         }
         return result;
     }
@@ -37,7 +52,7 @@ public class CombatItemManager {
                 // Play using item sound
                 if (FantastleReboot.getApplication().getPrefsManager()
                         .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
-                    SoundManager.playSoundAsynchronously("spell");
+                    SoundLoader.playSound(GameSound.PARTY_SPELL);
                 }
                 String dialogResult = null;
                 dialogResult = Messager.showInputDialog("Select an Item to Use",
@@ -79,15 +94,12 @@ public class CombatItemManager {
     public static boolean useItem(final CombatUsableItem used,
             final Creature user) {
         if (used != null) {
-            final Effect e = used.getEffect();
-            // Play item's associated sound effect, if it has one
-            final String snd = used.getSound();
-            if (snd != null) {
-                if (FantastleReboot.getApplication().getPrefsManager()
-                        .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
-                    SoundManager.playSoundAsynchronously(snd);
-                }
+         // Play using item sound
+            if (FantastleReboot.getApplication().getPrefsManager()
+                    .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
+                SoundLoader.playSound(GameSound.MONSTER_SPELL);
             }
+            final Effect e = used.getEffect();
             e.resetEffect();
             final Creature target = CombatItemManager.resolveTarget(used);
             user.getItems().useItem(used);

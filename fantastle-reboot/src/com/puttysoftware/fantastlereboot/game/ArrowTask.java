@@ -21,10 +21,11 @@ package com.puttysoftware.fantastlereboot.game;
 import com.puttysoftware.fantastlereboot.Application;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.generic.ArrowTypeConstants;
 import com.puttysoftware.fantastlereboot.generic.GenericTransientObject;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
-import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objects.Arrow;
 import com.puttysoftware.fantastlereboot.objects.Empty;
@@ -75,7 +76,7 @@ public class ArrowTask extends Thread {
         a.setNameSuffix(suffix);
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-            SoundManager.playSoundSynchronously("arrow");
+            SoundLoader.playSound(GameSound.ARROW_SHOOT);
         }
         while (!o.isConditionallyDirectionallySolid(true, incX, incY, inv)) {
             res = o.arrowHitAction(px + cumX, py + cumY, pz, pw, incX, incY,
@@ -105,7 +106,7 @@ public class ArrowTask extends Thread {
         }
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-            SoundManager.playSoundAsynchronously("arrowdie");
+            SoundLoader.playSound(GameSound.ARROW_DIE);
         }
         app.getGameManager().arrowDone();
     }

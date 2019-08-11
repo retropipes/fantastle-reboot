@@ -144,7 +144,7 @@ public enum GameSound {
     UP,
     USE_FAILED,
     VICTORY,
-    WALK_1,
+    WALK,
     WALK_2,
     WALK_3,
     WALK_4,

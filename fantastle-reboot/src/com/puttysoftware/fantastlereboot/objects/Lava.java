@@ -22,8 +22,10 @@ import com.puttysoftware.fantastlereboot.Application;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.generic.GenericField;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 
 public class Lava extends GenericField {
     // Constructors
@@ -68,13 +70,13 @@ public class Lava extends GenericField {
     }
 
     @Override
-    public String getMoveFailedSoundName() {
-        return "lava";
+    public void playMoveFailedSound() {
+        SoundLoader.playSound(GameSound.OW);
     }
 
     @Override
-    public String getMoveSuccessSoundName() {
-        return "walklava";
+    public void playMoveSuccessSound() {
+        SoundLoader.playSound(GameSound.WALK_LAVA);
     }
 
     @Override

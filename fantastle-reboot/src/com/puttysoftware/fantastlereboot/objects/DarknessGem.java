@@ -20,8 +20,10 @@ package com.puttysoftware.fantastlereboot.objects;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.generic.GenericGem;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 
 public class DarknessGem extends GenericGem {
     // Constructors
@@ -57,8 +59,8 @@ public class DarknessGem extends GenericGem {
     }
 
     @Override
-    public String getMoveSuccessSoundName() {
-        return "darkness";
+    public void playMoveSuccessSound() {
+        SoundLoader.playSound(GameSound.DARKNESS);
     }
 
     @Override

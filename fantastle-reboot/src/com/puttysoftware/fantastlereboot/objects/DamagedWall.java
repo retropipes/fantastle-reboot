@@ -20,8 +20,10 @@ package com.puttysoftware.fantastlereboot.objects;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.generic.GenericWall;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 
 public class DamagedWall extends GenericWall {
     // Constructors
@@ -65,8 +67,8 @@ public class DamagedWall extends GenericWall {
     }
 
     @Override
-    public String getMoveFailedSoundName() {
-        return "crack";
+    public void playMoveFailedSound() {
+        SoundLoader.playSound(GameSound.CRACK);
     }
 
     @Override

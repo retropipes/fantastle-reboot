@@ -21,10 +21,11 @@ package com.puttysoftware.fantastlereboot.objects;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.PCManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.generic.GenericTrap;
-import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 
 public class EasierTrap extends GenericTrap {
     // Constructors
@@ -54,7 +55,7 @@ public class EasierTrap extends GenericTrap {
         PCManager.getPlayer().decrementMonsterLevel();
         if (FantastleReboot.getApplication().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-            SoundManager.playSoundAsynchronously("easier");
+            SoundLoader.playSound(GameSound.EASIER);
         }
     }
 

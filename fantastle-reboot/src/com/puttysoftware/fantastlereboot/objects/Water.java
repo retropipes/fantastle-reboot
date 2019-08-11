@@ -22,9 +22,11 @@ import com.puttysoftware.fantastlereboot.Application;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.generic.GenericField;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 
 public class Water extends GenericField {
@@ -88,13 +90,8 @@ public class Water extends GenericField {
     }
 
     @Override
-    public String getMoveFailedSoundName() {
-        return "water";
-    }
-
-    @Override
-    public String getMoveSuccessSoundName() {
-        return "walkwatr";
+    public void playMoveSuccessSound() {
+        SoundLoader.playSound(GameSound.WALK_WATER);
     }
 
     @Override

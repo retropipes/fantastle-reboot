@@ -22,8 +22,10 @@ import com.puttysoftware.fantastlereboot.Application;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.generic.GenericField;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 
 public class ForceField extends GenericField {
     // Constructors
@@ -59,8 +61,8 @@ public class ForceField extends GenericField {
     }
 
     @Override
-    public String getMoveFailedSoundName() {
-        return "forcefld";
+    public void playMoveFailedSound() {
+        SoundLoader.playSound(GameSound.SHOCKED);
     }
 
     @Override

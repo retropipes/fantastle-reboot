@@ -7,6 +7,7 @@ import java.util.Properties;
 import com.puttysoftware.audio.wav.WAVFactory;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.randomrange.RandomRange;
 
 public class SoundLoader {
     private SoundLoader() {
@@ -28,6 +29,14 @@ public class SoundLoader {
             }
         }
         String soundExt = fileExtensions.getProperty("sounds");
+        if (sound == GameSound.WALK || sound == GameSound.WALK_2
+                || sound == GameSound.WALK_3 || sound == GameSound.WALK_4
+                || sound == GameSound.WALK_5 || sound == GameSound.WALK_6) {
+            // Pick a random walk sound and play it
+            int base = GameSound.WALK.ordinal();
+            int offset = RandomRange.generate(0, 5);
+            return allFilenames[base + offset] + soundExt;
+        }
         return allFilenames[sound.ordinal()] + soundExt;
     }
 

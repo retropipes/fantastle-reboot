@@ -3,11 +3,12 @@ package com.puttysoftware.fantastlereboot.spells;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.PCManager;
 import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
 import com.puttysoftware.fantastlereboot.effects.Effect;
-import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 
 public class SpellBookManager {
     // Fields
@@ -21,9 +22,33 @@ public class SpellBookManager {
     public static boolean selectAndCastSpell(final Creature caster) {
         boolean result = false;
         SpellBookManager.NO_SPELLS_FLAG = false;
-        final Spell s = SpellBookManager.selectSpell(caster);
-        if (s != null) {
-            result = SpellBookManager.castSpell(s, caster);
+        final Spell cast = SpellBookManager.selectSpell(caster);
+        if (cast != null) {
+            // Play casting spell sound
+            if (FantastleReboot.getApplication().getPrefsManager()
+                    .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
+                SoundLoader.playSound(GameSound.PARTY_SPELL);
+            }
+            // Cast spell
+            result = true;
+            final int casterMP = caster.getCurrentMP();
+            final int cost = cast.getCost();
+            if (casterMP >= cost) {
+                // Cast Spell
+                caster.drain(cost);
+                final Effect b = cast.getEffect();
+                b.resetEffect();
+                final Creature target = SpellBookManager.resolveTarget(cast);
+                if (target.isEffectActive(b)) {
+                    target.extendEffect(b, b.getInitialRounds());
+                } else {
+                    b.restoreEffect(target);
+                    target.applyEffect(b);
+                }
+            } else {
+                // Not enough MP
+                result = false;
+            }
             if (!result && !SpellBookManager.NO_SPELLS_FLAG) {
                 Messager.showErrorDialog(
                         "You try to cast a spell, but realize you don't have enough MP!",
@@ -39,10 +64,9 @@ public class SpellBookManager {
             final String[] names = book.getAllSpellNames();
             final String[] displayNames = book.getAllSpellNamesWithCosts();
             if (names != null && displayNames != null) {
-                // Play casting spell sound
                 if (FantastleReboot.getApplication().getPrefsManager()
                         .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
-                    SoundManager.playSoundAsynchronously("spell");
+                    SoundLoader.playSound(GameSound.SPECIAL);
                 }
                 String dialogResult = null;
                 dialogResult = Messager.showInputDialog(
@@ -84,14 +108,10 @@ public class SpellBookManager {
                 // Cast Spell
                 caster.drain(cost);
                 final Effect b = cast.getEffect();
-                // Play spell's associated sound effect, if it has one
-                final String snd = cast.getSound();
-                if (snd != null) {
-                    if (FantastleReboot.getApplication().getPrefsManager()
-                            .getSoundEnabled(
-                                    PreferencesManager.SOUNDS_BATTLE)) {
-                        SoundManager.playSoundAsynchronously(snd);
-                    }
+                // Play casting spell sound
+                if (FantastleReboot.getApplication().getPrefsManager()
+                        .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
+                    SoundLoader.playSound(GameSound.MONSTER_SPELL);
                 }
                 b.resetEffect();
                 final Creature target = SpellBookManager.resolveTarget(cast);

@@ -24,8 +24,10 @@ import com.puttysoftware.fantastlereboot.Application;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 
 public abstract class GenericRandomTeleport extends MazeObject {
@@ -169,8 +171,8 @@ public abstract class GenericRandomTeleport extends MazeObject {
     }
 
     @Override
-    public String getMoveSuccessSoundName() {
-        return "teleport";
+    public void playMoveSuccessSound() {
+        SoundLoader.playSound(GameSound.TELEPORT);
     }
 
     @Override

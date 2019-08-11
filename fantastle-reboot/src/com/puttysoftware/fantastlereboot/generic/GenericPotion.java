@@ -20,10 +20,11 @@ package com.puttysoftware.fantastlereboot.generic;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.PCManager;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
-import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objects.Empty;
 import com.puttysoftware.randomrange.RandomRange;
@@ -122,12 +123,12 @@ public abstract class GenericPotion extends MazeObject
         if (this.effectValue >= 0) {
             if (FantastleReboot.getApplication().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-                SoundManager.playSoundAsynchronously("heal");
+                SoundLoader.playSound(GameSound.HEAL);
             }
         } else {
             if (FantastleReboot.getApplication().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-                SoundManager.playSoundAsynchronously("hurt");
+                SoundLoader.playSound(GameSound.HURT);
             }
         }
     }
@@ -140,7 +141,7 @@ public abstract class GenericPotion extends MazeObject
                 locY, locZ, locW);
         if (FantastleReboot.getApplication().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-            SoundManager.playSoundAsynchronously("shatter");
+            SoundLoader.playSound(GameSound.CRUSH);
         }
         return false;
     }

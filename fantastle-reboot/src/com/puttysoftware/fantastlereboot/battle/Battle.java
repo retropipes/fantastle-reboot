@@ -19,6 +19,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.Monster;
 import com.puttysoftware.fantastlereboot.creatures.PCManager;
@@ -28,7 +29,7 @@ import com.puttysoftware.fantastlereboot.creatures.castes.Caste;
 import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemManager;
-import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.spells.SpellBookManager;
 import com.puttysoftware.randomrange.RandomRange;
 
@@ -172,13 +173,13 @@ public class Battle implements BattleResults, MoveTypes {
             if (success) {
                 if (FantastleReboot.getApplication().getPrefsManager()
                         .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
-                    SoundManager.playSoundAsynchronously("drain");
+                    SoundLoader.playSound(GameSound.DRAIN);
                 }
                 this.updateMessageAreaPostSteal();
             } else {
                 if (FantastleReboot.getApplication().getPrefsManager()
                         .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
-                    SoundManager.playSoundAsynchronously("actfail");
+                    SoundLoader.playSound(GameSound.ACTION_FAILED);
                 }
                 this.updateMessageAreaStealFailed();
             }
@@ -187,13 +188,13 @@ public class Battle implements BattleResults, MoveTypes {
             if (success) {
                 if (FantastleReboot.getApplication().getPrefsManager()
                         .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
-                    SoundManager.playSoundAsynchronously("drain");
+                    SoundLoader.playSound(GameSound.DRAIN);
                 }
                 this.updateMessageAreaPostDrain();
             } else {
                 if (FantastleReboot.getApplication().getPrefsManager()
                         .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
-                    SoundManager.playSoundAsynchronously("actfail");
+                    SoundLoader.playSound(GameSound.ACTION_FAILED);
                 }
                 this.updateMessageAreaDrainFailed();
             }
@@ -380,7 +381,7 @@ public class Battle implements BattleResults, MoveTypes {
                         + playerFumbleDamageString + " damage to yourself!";
                 if (FantastleReboot.getApplication().getPrefsManager()
                         .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
-                    SoundManager.playSoundAsynchronously("fumble");
+                    SoundLoader.playSound(GameSound.FUMBLE);
                 }
             } else {
                 if (this.damage == 0 && this.riposteEnemyDamage == 0) {
@@ -389,7 +390,7 @@ public class Battle implements BattleResults, MoveTypes {
                     if (FantastleReboot.getApplication().getPrefsManager()
                             .getSoundEnabled(
                                     PreferencesManager.SOUNDS_BATTLE)) {
-                        SoundManager.playSoundAsynchronously("missed");
+                        SoundLoader.playSound(GameSound.MISSED);
                     }
                 } else if (this.damage == 0 && this.riposteEnemyDamage != 0) {
                     displayPlayerDamageString = "You try to hit the "
@@ -398,7 +399,7 @@ public class Battle implements BattleResults, MoveTypes {
                     if (FantastleReboot.getApplication().getPrefsManager()
                             .getSoundEnabled(
                                     PreferencesManager.SOUNDS_BATTLE)) {
-                        SoundManager.playSoundAsynchronously("counter");
+                        SoundLoader.playSound(GameSound.PARTY_COUNTER);
                     }
                 } else {
                     displayPlayerDamageString = "You hit the " + enemyName
@@ -406,7 +407,7 @@ public class Battle implements BattleResults, MoveTypes {
                     if (FantastleReboot.getApplication().getPrefsManager()
                             .getSoundEnabled(
                                     PreferencesManager.SOUNDS_BATTLE)) {
-                        SoundManager.playSoundAsynchronously("hit");
+                        SoundLoader.playSound(GameSound.PARTY_HIT);
                     }
                 }
                 final String whack = MultiplierValues
@@ -441,7 +442,7 @@ public class Battle implements BattleResults, MoveTypes {
                         + " damage to itself!";
                 if (FantastleReboot.getApplication().getPrefsManager()
                         .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
-                    SoundManager.playSoundAsynchronously("fumble");
+                    SoundLoader.playSound(GameSound.FUMBLE);
                 }
                 enemyWhackString = "";
             } else {
@@ -451,7 +452,7 @@ public class Battle implements BattleResults, MoveTypes {
                     if (FantastleReboot.getApplication().getPrefsManager()
                             .getSoundEnabled(
                                     PreferencesManager.SOUNDS_BATTLE)) {
-                        SoundManager.playSoundAsynchronously("missed");
+                        SoundLoader.playSound(GameSound.MISSED);
                     }
                 } else if (this.enemyDamage == 0 && this.riposteDamage != 0) {
                     displayEnemyDamageString = "The " + enemyName
@@ -460,7 +461,7 @@ public class Battle implements BattleResults, MoveTypes {
                     if (FantastleReboot.getApplication().getPrefsManager()
                             .getSoundEnabled(
                                     PreferencesManager.SOUNDS_BATTLE)) {
-                        SoundManager.playSoundAsynchronously("counter");
+                        SoundLoader.playSound(GameSound.MONSTER_COUNTER);
                     }
                 } else {
                     displayEnemyDamageString = "The " + enemyName
@@ -468,7 +469,7 @@ public class Battle implements BattleResults, MoveTypes {
                     if (FantastleReboot.getApplication().getPrefsManager()
                             .getSoundEnabled(
                                     PreferencesManager.SOUNDS_BATTLE)) {
-                        SoundManager.playSoundAsynchronously("hit");
+                        SoundLoader.playSound(GameSound.MONSTER_HIT);
                     }
                 }
                 final String whack = MultiplierValues
@@ -495,7 +496,7 @@ public class Battle implements BattleResults, MoveTypes {
         FantastleReboot.getApplication().getGameManager().hideOutput();
         if (FantastleReboot.getApplication().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
-            SoundManager.playSoundAsynchronously("battle");
+            SoundLoader.playSound(GameSound.DRAW_SWORD);
         }
         this.enemy = new Monster();
         this.iconLabel.setIcon(this.enemy.getImage());
@@ -776,7 +777,7 @@ public class Battle implements BattleResults, MoveTypes {
             playerCharacter.offsetGold(m.getGold());
             if (FantastleReboot.getApplication().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
-                SoundManager.playSoundAsynchronously("victory");
+                SoundLoader.playSound(GameSound.VICTORY);
             }
             FantastleReboot.getApplication().getGameManager().getScoreTracker()
                     .updateScore(m.getExperience() + m.getGold());
@@ -789,7 +790,7 @@ public class Battle implements BattleResults, MoveTypes {
             playerCharacter.offsetGold(m.getGold() + m.getPerfectBonusGold());
             if (FantastleReboot.getApplication().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
-                SoundManager.playSoundAsynchronously("victory");
+                SoundLoader.playSound(GameSound.VICTORY);
             }
             FantastleReboot.getApplication().getGameManager().getScoreTracker()
                     .updateScore(m.getExperience() + m.getGold()
@@ -831,7 +832,7 @@ public class Battle implements BattleResults, MoveTypes {
             playerCharacter.levelUp();
             if (FantastleReboot.getApplication().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
-                SoundManager.playSoundAsynchronously("levelup");
+                SoundLoader.playSound(GameSound.LEVEL_UP);
             }
             this.appendToMessageArea(
                     "You reached level " + playerCharacter.getLevel() + ".");

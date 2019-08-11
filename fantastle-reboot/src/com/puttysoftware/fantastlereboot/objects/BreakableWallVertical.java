@@ -21,8 +21,10 @@ package com.puttysoftware.fantastlereboot.objects;
 import com.puttysoftware.fantastlereboot.Application;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.generic.GenericWall;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 
 public class BreakableWallVertical extends GenericWall {
@@ -104,7 +106,7 @@ public class BreakableWallVertical extends GenericWall {
     }
 
     @Override
-    public String getChainReactSoundName() {
-        return "crack";
+    public void playChainReactSound() {
+        SoundLoader.playSound(GameSound.BREAK);
     }
 }

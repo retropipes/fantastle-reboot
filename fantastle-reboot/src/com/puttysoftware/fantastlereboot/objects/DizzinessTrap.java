@@ -21,10 +21,12 @@ package com.puttysoftware.fantastlereboot.objects;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.generic.GenericTrap;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 
 public class DizzinessTrap extends GenericTrap {
     // Fields
@@ -63,8 +65,8 @@ public class DizzinessTrap extends GenericTrap {
     }
 
     @Override
-    public String getMoveSuccessSoundName() {
-        return "dizzy";
+    public void playMoveSuccessSound() {
+        SoundLoader.playSound(GameSound.DIZZY);
     }
 
     @Override

@@ -20,10 +20,11 @@ package com.puttysoftware.fantastlereboot.objects;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.PCManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.generic.GenericTrap;
-import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class DrainTrap extends GenericTrap {
@@ -61,7 +62,7 @@ public class DrainTrap extends GenericTrap {
         PCManager.getPlayer().regenerate(this.amountDrained.generate());
         if (FantastleReboot.getApplication().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-            SoundManager.playSoundAsynchronously("barrier");
+            SoundLoader.playSound(GameSound.DRAIN);
         }
         FantastleReboot.getApplication().getGameManager().decay();
     }

@@ -25,10 +25,11 @@ import java.util.BitSet;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.legacyio.DataReader;
 import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
-import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;
 
 public abstract class MazeObject implements DirectionConstants, TypeConstants,
@@ -747,110 +748,84 @@ public abstract class MazeObject implements DirectionConstants, TypeConstants,
         return null;
     }
 
-    public final void playMoveFailedSound() {
-        MazeObject
-                .playGenericSoundAsynchronously(this.getMoveFailedSoundName());
+    public void playMoveFailedSound() {
+        SoundLoader.playSound(GameSound.OOF);
     }
 
-    public final void playMoveSuccessSound() {
-        MazeObject
-                .playGenericSoundAsynchronously(this.getMoveSuccessSoundName());
+    public void playMoveSuccessSound() {
+        SoundLoader.playSound(GameSound.WALK);
     }
 
     public final static void playPushSuccessSound() {
-        MazeObject.playGenericSoundAsynchronously(
-                MazeObject.getPushSuccessSoundName());
+        SoundLoader.playSound(GameSound.PUSH);
     }
 
     public final static void playPushFailedSound() {
-        MazeObject.playGenericSoundAsynchronously(
-                MazeObject.getPushFailedSoundName());
+        SoundLoader.playSound(GameSound.PUSH_PULL_FAILED);
     }
 
     public final static void playPullFailedSound() {
-        MazeObject.playGenericSoundAsynchronously(
-                MazeObject.getPullFailedSoundName());
+        SoundLoader.playSound(GameSound.PUSH_PULL_FAILED);
     }
 
     public final static void playPullSuccessSound() {
-        MazeObject.playGenericSoundAsynchronously(
-                MazeObject.getPullSuccessSoundName());
+        SoundLoader.playSound(GameSound.PULL);
     }
 
-    public final void playUseSound() {
-        MazeObject.playGenericSoundAsynchronously(this.getUseSoundName());
+    public void playUseSound() {
+        // Do nothing
     }
 
-    public final void playChainReactSound() {
-        MazeObject.playGenericSoundSynchronously(this.getChainReactSoundName());
+    public void playChainReactSound() {
+        // Do nothing
     }
 
     public final static void playIdentifySound() {
-        MazeObject.playGenericSoundAsynchronously(
-                MazeObject.getIdentifySoundName());
+        SoundLoader.playSound(GameSound.IDENTIFY);
     }
 
     public final static void playRotatedSound() {
-        MazeObject.playGenericSoundAsynchronously(
-                MazeObject.getRotatedSoundName());
+        SoundLoader.playSound(GameSound.ROTATED);
     }
 
     public final static void playFallSound() {
-        MazeObject
-                .playGenericSoundAsynchronously(MazeObject.getFallSoundName());
+        SoundLoader.playSound(GameSound.FALLING);
     }
 
     public final static void playButtonSound() {
-        MazeObject.playGenericSoundAsynchronously(
-                MazeObject.getButtonSoundName());
+        SoundLoader.playSound(GameSound.BUTTON);
     }
 
     public final static void playConfusedSound() {
-        MazeObject.playGenericSoundAsynchronously(
-                MazeObject.getConfusedSoundName());
+        SoundLoader.playSound(GameSound.CONFUSED);
     }
 
     public final static void playDarknessSound() {
-        MazeObject.playGenericSoundAsynchronously(
-                MazeObject.getDarknessSoundName());
+        SoundLoader.playSound(GameSound.DARKNESS);
     }
 
     public final static void playDizzySound() {
-        MazeObject
-                .playGenericSoundAsynchronously(MazeObject.getDizzySoundName());
+        SoundLoader.playSound(GameSound.DIZZY);
     }
 
     public final static void playDrunkSound() {
-        MazeObject
-                .playGenericSoundAsynchronously(MazeObject.getDrunkSoundName());
+        SoundLoader.playSound(GameSound.DRUNK);
     }
 
     public final static void playFinishSound() {
-        MazeObject.playGenericSoundAsynchronously(
-                MazeObject.getFinishSoundName());
+        SoundLoader.playSound(GameSound.FINISH);
     }
 
     public final static void playLightSound() {
-        MazeObject
-                .playGenericSoundAsynchronously(MazeObject.getLightSoundName());
+        SoundLoader.playSound(GameSound.LIGHT);
     }
 
     public final static void playSinkBlockSound() {
-        MazeObject.playGenericSoundAsynchronously(
-                MazeObject.getSinkBlockSoundName());
+        SoundLoader.playSound(GameSound.SINK);
     }
 
     public final static void playWallTrapSound() {
-        MazeObject.playGenericSoundAsynchronously(
-                MazeObject.getWallTrapSoundName());
-    }
-
-    private static void playGenericSoundAsynchronously(final String soundName) {
-        SoundManager.playSoundAsynchronously(soundName);
-    }
-
-    private static void playGenericSoundSynchronously(final String soundName) {
-        SoundManager.playSoundSynchronously(soundName);
+        SoundLoader.playSound(GameSound.TRAP);
     }
 
     /**
@@ -1100,86 +1075,6 @@ public abstract class MazeObject implements DirectionConstants, TypeConstants,
     public void chainReactionAction(final int x, final int y, final int z,
             final int w) {
         // Do nothing
-    }
-
-    public String getMoveFailedSoundName() {
-        return "walkfail";
-    }
-
-    public String getMoveSuccessSoundName() {
-        return "walk";
-    }
-
-    public final static String getPushSuccessSoundName() {
-        return "pushpull";
-    }
-
-    public final static String getPushFailedSoundName() {
-        return "actfail";
-    }
-
-    public final static String getPullSuccessSoundName() {
-        return "pushpull";
-    }
-
-    public final static String getPullFailedSoundName() {
-        return "actfail";
-    }
-
-    public String getUseSoundName() {
-        return "";
-    }
-
-    public String getChainReactSoundName() {
-        return "explode";
-    }
-
-    public final static String getIdentifySoundName() {
-        return "identify";
-    }
-
-    public final static String getRotatedSoundName() {
-        return "change";
-    }
-
-    public final static String getFallSoundName() {
-        return "intopit";
-    }
-
-    public final static String getButtonSoundName() {
-        return "button";
-    }
-
-    public final static String getConfusedSoundName() {
-        return "confused";
-    }
-
-    public final static String getDarknessSoundName() {
-        return "darkness";
-    }
-
-    public final static String getDizzySoundName() {
-        return "dizzy";
-    }
-
-    public final static String getDrunkSoundName() {
-        return "drunk";
-    }
-
-    public final static String getFinishSoundName() {
-        return "finish";
-    }
-
-    public final static String getLightSoundName() {
-        return "light";
-    }
-
-    public final static String getSinkBlockSoundName() {
-        return "sinkblck";
-    }
-
-    public final static String getWallTrapSoundName() {
-        return "walltrap";
     }
 
     public boolean defersSetProperties() {

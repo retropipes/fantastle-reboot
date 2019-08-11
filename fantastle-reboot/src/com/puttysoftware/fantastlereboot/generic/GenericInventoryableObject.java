@@ -21,7 +21,9 @@ package com.puttysoftware.fantastlereboot.generic;
 import com.puttysoftware.fantastlereboot.Application;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 
 public abstract class GenericInventoryableObject extends MazeObject {
@@ -61,7 +63,7 @@ public abstract class GenericInventoryableObject extends MazeObject {
     }
 
     @Override
-    public String getMoveSuccessSoundName() {
-        return "grab";
+    public void playMoveSuccessSound() {
+        SoundLoader.playSound(GameSound.GRAB);
     }
 }

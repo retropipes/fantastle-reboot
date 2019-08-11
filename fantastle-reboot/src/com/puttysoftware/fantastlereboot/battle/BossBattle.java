@@ -2,11 +2,12 @@ package com.puttysoftware.fantastlereboot.battle;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.Boss;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.PCManager;
 import com.puttysoftware.fantastlereboot.creatures.PlayerCharacter;
-import com.puttysoftware.fantastlereboot.loaders.old.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 
 public class BossBattle extends Battle {
     // Fields
@@ -24,7 +25,7 @@ public class BossBattle extends Battle {
         FantastleReboot.getApplication().getGameManager().hideOutput();
         if (FantastleReboot.getApplication().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
-            SoundManager.playSoundAsynchronously("battle");
+            SoundLoader.playSound(GameSound.DRAW_SWORD);
         }
         this.enemy = new Boss();
         this.iconLabel.setIcon(this.enemy.getImage());

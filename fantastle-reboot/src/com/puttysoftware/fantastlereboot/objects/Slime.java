@@ -22,8 +22,10 @@ import com.puttysoftware.fantastlereboot.Application;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.generic.GenericField;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 
 public class Slime extends GenericField {
     // Constructors
@@ -68,13 +70,13 @@ public class Slime extends GenericField {
     }
 
     @Override
-    public String getMoveFailedSoundName() {
-        return "slime";
+    public void playMoveFailedSound() {
+        SoundLoader.playSound(GameSound.SLIME);
     }
 
     @Override
-    public String getMoveSuccessSoundName() {
-        return "walkslim";
+    public void playMoveSuccessSound() {
+        SoundLoader.playSound(GameSound.WALK_SLIME);
     }
 
     @Override

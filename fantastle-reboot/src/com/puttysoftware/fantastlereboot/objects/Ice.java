@@ -18,8 +18,10 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.objects;
 
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.generic.GenericGround;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 
 public class Ice extends GenericGround {
     public Ice() {
@@ -42,8 +44,8 @@ public class Ice extends GenericGround {
     }
 
     @Override
-    public String getMoveSuccessSoundName() {
-        return "walkice";
+    public void playMoveSuccessSound() {
+        SoundLoader.playSound(GameSound.WALK_ICE);
     }
 
     @Override

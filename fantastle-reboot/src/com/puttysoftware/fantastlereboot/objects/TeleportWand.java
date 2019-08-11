@@ -21,8 +21,10 @@ package com.puttysoftware.fantastlereboot.objects;
 import com.puttysoftware.fantastlereboot.Application;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.generic.GenericWand;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 
 public class TeleportWand extends GenericWand {
     public TeleportWand() {
@@ -56,8 +58,8 @@ public class TeleportWand extends GenericWand {
     }
 
     @Override
-    public String getUseSoundName() {
-        return "teleport";
+    public void playUseSound() {
+        SoundLoader.playSound(GameSound.TELEPORT);
     }
 
     @Override
