@@ -24,7 +24,7 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import com.puttysoftware.fantastlereboot.resourcemanagers.GraphicsManager;
+import com.puttysoftware.fantastlereboot.loaders.assets.GraphicsManager;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class StatGUI {

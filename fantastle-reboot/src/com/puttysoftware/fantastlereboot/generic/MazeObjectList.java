@@ -23,10 +23,10 @@ import java.lang.reflect.InvocationTargetException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.legacyio.DataReader;
+import com.puttysoftware.fantastlereboot.loaders.assets.GraphicsManager;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objects.*;
-import com.puttysoftware.fantastlereboot.resourcemanagers.GraphicsManager;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class MazeObjectList {

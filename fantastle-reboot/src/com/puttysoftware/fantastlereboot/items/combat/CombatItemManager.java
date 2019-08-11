@@ -7,7 +7,7 @@ import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.PCManager;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
-import com.puttysoftware.fantastlereboot.resourcemanagers.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.assets.SoundManager;
 
 public class CombatItemManager {
     // Fields

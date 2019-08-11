@@ -4,7 +4,7 @@ import com.puttysoftware.fantastlereboot.ai.BossAIRoutine;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithConstants;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
-import com.puttysoftware.fantastlereboot.resourcemanagers.GraphicsManager;
+import com.puttysoftware.fantastlereboot.loaders.assets.GraphicsManager;
 import com.puttysoftware.fantastlereboot.spells.BossSpellBook;
 import com.puttysoftware.images.BufferedImageIcon;
 

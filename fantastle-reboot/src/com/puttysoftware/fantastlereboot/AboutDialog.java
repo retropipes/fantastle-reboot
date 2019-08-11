@@ -33,7 +33,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
-import com.puttysoftware.fantastlereboot.resourcemanagers.GraphicsManager;
+import com.puttysoftware.fantastlereboot.loaders.assets.GraphicsManager;
 
 public class AboutDialog implements AboutHandler {
     // Fields

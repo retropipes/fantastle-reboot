@@ -28,8 +28,8 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.legacyio.DataReader;
 import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
+import com.puttysoftware.fantastlereboot.loaders.assets.SoundManager;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;
-import com.puttysoftware.fantastlereboot.resourcemanagers.SoundManager;
 
 public abstract class MazeObject implements DirectionConstants, TypeConstants,
         ArrowTypeConstants, UniqueID5 {

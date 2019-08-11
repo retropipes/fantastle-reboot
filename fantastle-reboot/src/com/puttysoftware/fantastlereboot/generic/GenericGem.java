@@ -21,9 +21,9 @@ package com.puttysoftware.fantastlereboot.generic;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
+import com.puttysoftware.fantastlereboot.loaders.assets.SoundManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objects.Empty;
-import com.puttysoftware.fantastlereboot.resourcemanagers.SoundManager;
 
 public abstract class GenericGem extends MazeObject {
     // Constructors

@@ -44,6 +44,7 @@ import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.game.GameManager;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
 import com.puttysoftware.fantastlereboot.generic.MazeObjectList;
+import com.puttysoftware.fantastlereboot.loaders.assets.GraphicsManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.Maze5;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
@@ -63,7 +64,6 @@ import com.puttysoftware.fantastlereboot.objects.StairsUp;
 import com.puttysoftware.fantastlereboot.objects.Teleport;
 import com.puttysoftware.fantastlereboot.objects.TreasureChest;
 import com.puttysoftware.fantastlereboot.objects.TwoWayTeleport;
-import com.puttysoftware.fantastlereboot.resourcemanagers.GraphicsManager;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.picturepicker.PicturePicker;
 

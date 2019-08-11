@@ -6,7 +6,7 @@ import com.puttysoftware.fantastlereboot.creatures.Boss;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.PCManager;
 import com.puttysoftware.fantastlereboot.creatures.PlayerCharacter;
-import com.puttysoftware.fantastlereboot.resourcemanagers.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.assets.SoundManager;
 
 public class BossBattle extends Battle {
     // Fields

@@ -24,7 +24,7 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.creatures.PCManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.generic.GenericTrap;
-import com.puttysoftware.fantastlereboot.resourcemanagers.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.assets.SoundManager;
 
 public class EasierTrap extends GenericTrap {
     // Constructors

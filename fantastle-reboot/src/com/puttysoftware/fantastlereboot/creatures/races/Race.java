@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.creatures.races;
 
-import com.puttysoftware.fantastlereboot.resourcemanagers.datamanagers.RaceDataManager;
+import com.puttysoftware.fantastlereboot.loaders.data.RaceDataManager;
 
 public class Race {
     private final int[] data;

@@ -26,8 +26,8 @@ import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.generic.GenericField;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
 import com.puttysoftware.fantastlereboot.generic.TypeConstants;
+import com.puttysoftware.fantastlereboot.loaders.assets.SoundManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.resourcemanagers.SoundManager;
 
 public class MetalButton extends GenericField {
     // Fields

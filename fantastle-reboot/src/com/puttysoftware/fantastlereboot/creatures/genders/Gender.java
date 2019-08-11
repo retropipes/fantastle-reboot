@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.creatures.genders;
 
-import com.puttysoftware.fantastlereboot.resourcemanagers.datamanagers.GenderDataManager;
+import com.puttysoftware.fantastlereboot.loaders.data.GenderDataManager;
 
 public class Gender {
     private final int[] data;
