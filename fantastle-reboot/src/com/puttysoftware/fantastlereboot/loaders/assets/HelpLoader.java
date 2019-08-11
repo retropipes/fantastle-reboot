@@ -20,9 +20,12 @@ package com.puttysoftware.fantastlereboot.loaders.assets;
 
 import java.net.URL;
 
-public class HelpManager {
+public class HelpLoader {
+    private HelpLoader() {
+        // Do nothing
+    }
+
     public static URL getHelpURL() {
-        return HelpManager.class.getResource(
-                "/assets/help/FantastleHelp.html");
+        return HelpLoader.class.getResource("/assets/help/help.html");
     }
 }

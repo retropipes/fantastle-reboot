@@ -19,13 +19,12 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot;
 
 import java.awt.FlowLayout;
-import java.net.URL;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.loaders.assets.GraphicsManager;
-import com.puttysoftware.fantastlereboot.loaders.assets.HelpManager;
+import com.puttysoftware.fantastlereboot.loaders.assets.HelpLoader;
 import com.puttysoftware.help.HTMLHelpViewer;
 
 public class GeneralHelpManager {
@@ -35,8 +34,7 @@ public class GeneralHelpManager {
 
     // Constructors
     public GeneralHelpManager() {
-        final URL helpURL = HelpManager.getHelpURL();
-        this.hv = new HTMLHelpViewer(helpURL);
+        this.hv = new HTMLHelpViewer(HelpLoader.getHelpURL());
         this.helpFrame = new JFrame("Fantastle Help");
         this.helpFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         this.helpFrame.setLayout(new FlowLayout());
