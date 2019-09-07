@@ -72,6 +72,7 @@ public class Bomb extends GenericUsableObject {
     @Override
     public void useAction(final MazeObject mo, final int x, final int y,
             final int z, final int w) {
+        FantastleReboot.getBagOStuff().getPrefsManager();
         // Kill any monsters nearby
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

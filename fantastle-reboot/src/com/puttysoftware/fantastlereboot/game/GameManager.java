@@ -1274,6 +1274,7 @@ public class GameManager implements EffectConstants {
     }
 
     private void gameOver() {
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
             SoundLoader.playSound(GameSound.GAME_OVER);
@@ -1604,6 +1605,7 @@ public class GameManager implements EffectConstants {
             final int destZ = this.plMgr.getPlayerLocationZ();
             final int destW = this.plMgr.getPlayerLocationW();
             this.updatePositionAbsolute(destX, destY, destZ, destW);
+            FantastleReboot.getBagOStuff().getPrefsManager();
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 SoundLoader.playSound(GameSound.TELEPORT);
@@ -1635,6 +1637,7 @@ public class GameManager implements EffectConstants {
             final String gameName1 = target1.getGameName();
             final String gameName2 = target2.getGameName();
             Messager.showMessage(gameName2 + " on " + gameName1);
+            FantastleReboot.getBagOStuff().getPrefsManager();
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 MazeObject.playIdentifySound();
@@ -1643,6 +1646,7 @@ public class GameManager implements EffectConstants {
             final EmptyVoid ev = new EmptyVoid();
             ev.determineCurrentAppearance(destX, destY, destZ, destW);
             Messager.showMessage(ev.getGameName());
+            FantastleReboot.getBagOStuff().getPrefsManager();
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 MazeObject.playIdentifySound();

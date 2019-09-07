@@ -122,6 +122,7 @@ public class BarrierGenerator extends GenericWall {
             }
         }
         if (flag) {
+            FantastleReboot.getBagOStuff().getPrefsManager();
             if (app.getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 SoundLoader.playSound(GameSound.GENERATE);
@@ -218,6 +219,7 @@ public class BarrierGenerator extends GenericWall {
             }
         }
         if (flag) {
+            FantastleReboot.getBagOStuff().getPrefsManager();
             if (app.getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 SoundLoader.playSound(GameSound.GENERATE);

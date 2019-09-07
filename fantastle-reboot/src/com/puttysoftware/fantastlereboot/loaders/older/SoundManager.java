@@ -8,7 +8,7 @@ package com.puttysoftware.fantastlereboot.loaders.older;
 import java.net.URL;
 
 import com.puttysoftware.audio.wav.WAVFactory;
-import com.puttysoftware.fantastlereboot.ttprefs.PreferencesManager;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class SoundManager {
@@ -29,7 +29,7 @@ public class SoundManager {
 
     public static void playSound(final int soundID) {
         try {
-            if (PreferencesManager.getSoundsEnabled()) {
+            if (FantastleReboot.getBagOStuff().getPrefsManager().getSoundEnabled()) {
                 int offset = 0;
                 if (soundID == SoundConstants.SOUND_WALK) {
                     final RandomRange rSound = new RandomRange(0, 2);

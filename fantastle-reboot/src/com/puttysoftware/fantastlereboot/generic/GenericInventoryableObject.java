@@ -39,6 +39,7 @@ public abstract class GenericInventoryableObject extends MazeObject {
         inv.addItem(this);
         final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getGameManager().decay();
+        FantastleReboot.getBagOStuff().getPrefsManager();
         // Play grab sound, if it's enabled
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

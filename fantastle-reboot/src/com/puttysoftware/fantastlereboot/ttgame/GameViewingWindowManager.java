@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ttgame;
 
-import com.puttysoftware.fantastlereboot.ttprefs.PreferencesManager;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 
 public final class GameViewingWindowManager {
     // Fields
@@ -29,11 +29,11 @@ public final class GameViewingWindowManager {
     }
 
     public int getLowerRightViewingWindowLocationX() {
-        return this.locX + PreferencesManager.getViewingWindowSize() - 1;
+        return this.locX + FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize() - 1;
     }
 
     public int getLowerRightViewingWindowLocationY() {
-        return this.locY + PreferencesManager.getViewingWindowSize() - 1;
+        return this.locY + FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize() - 1;
     }
 
     public void setViewingWindowLocationX(final int val) {
@@ -63,10 +63,10 @@ public final class GameViewingWindowManager {
     }
 
     public static int getOffsetFactorX() {
-        return PreferencesManager.getViewingWindowSize() / 2;
+        return FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize() / 2;
     }
 
     public static int getOffsetFactorY() {
-        return PreferencesManager.getViewingWindowSize() / 2;
+        return FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize() / 2;
     }
 }

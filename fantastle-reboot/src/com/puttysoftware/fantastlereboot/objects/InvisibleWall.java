@@ -38,6 +38,7 @@ public class InvisibleWall extends GenericWall {
         // Display invisible wall message, if it's enabled
         final BagOStuff app = FantastleReboot.getBagOStuff();
         Messager.showMessage("Invisible Wall!");
+        FantastleReboot.getBagOStuff().getPrefsManager();
         // Play move failed sound, if it's enabled
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

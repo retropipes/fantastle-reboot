@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ai.map.AbstractMapAIRoutine;
 import com.puttysoftware.fantastlereboot.ai.map.AutoMapAI;
 import com.puttysoftware.fantastlereboot.ai.map.MapAIContext;
@@ -36,7 +37,6 @@ import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.BattleCharacter;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Empty;
-import com.puttysoftware.fantastlereboot.ttprefs.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ttspells.Spell;
 import com.puttysoftware.fantastlereboot.ttspells.SpellCaster;
 import com.puttysoftware.randomrange.RandomRange;
@@ -1320,7 +1320,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
                     if (!message.equals(TTEffect.getNullMessage())) {
                         this.setStatusMessage(message);
                         try {
-                            Thread.sleep(PreferencesManager.getBattleSpeed());
+                            Thread.sleep(FantastleReboot.getBagOStuff().getPrefsManager().getBattleSpeed());
                         } catch (final InterruptedException ie) {
                             // Ignore
                         }

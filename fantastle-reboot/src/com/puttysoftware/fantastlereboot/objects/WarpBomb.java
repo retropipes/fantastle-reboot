@@ -72,6 +72,7 @@ public class WarpBomb extends GenericUsableObject {
     @Override
     public void useAction(final MazeObject mo, final int x, final int y,
             final int z, final int w) {
+        FantastleReboot.getBagOStuff().getPrefsManager();
         // Warp objects
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

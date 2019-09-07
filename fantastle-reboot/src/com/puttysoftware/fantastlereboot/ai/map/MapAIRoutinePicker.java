@@ -5,7 +5,8 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ai.map;
 
-import com.puttysoftware.fantastlereboot.ttprefs.PreferencesManager;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.PreferencesManager;
 
 public final class MapAIRoutinePicker {
     // Constructors
@@ -15,19 +16,32 @@ public final class MapAIRoutinePicker {
 
     // Methods
     public static AbstractMapAIRoutine getNextRoutine() {
-        final int difficulty = PreferencesManager.getGameDifficulty();
+        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager().getGameDifficulty();
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
             return new VeryEasyMapAIRoutine();
-        } else if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
-            return new EasyMapAIRoutine();
-        } else if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
-            return new NormalMapAIRoutine();
-        } else if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
-            return new HardMapAIRoutine();
-        } else if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
-            return new VeryHardMapAIRoutine();
         } else {
-            return new NormalMapAIRoutine();
+            FantastleReboot.getBagOStuff().getPrefsManager();
+            if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
+                return new EasyMapAIRoutine();
+            } else {
+                FantastleReboot.getBagOStuff().getPrefsManager();
+                if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
+                    return new NormalMapAIRoutine();
+                } else {
+                    FantastleReboot.getBagOStuff().getPrefsManager();
+                    if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
+                        return new HardMapAIRoutine();
+                    } else {
+                        FantastleReboot.getBagOStuff().getPrefsManager();
+                        if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
+                            return new VeryHardMapAIRoutine();
+                        } else {
+                            return new NormalMapAIRoutine();
+                        }
+                    }
+                }
+            }
         }
     }
 }

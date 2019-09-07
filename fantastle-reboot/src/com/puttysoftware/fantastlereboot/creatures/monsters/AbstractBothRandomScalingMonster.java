@@ -5,9 +5,10 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.creatures.monsters;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
-import com.puttysoftware.fantastlereboot.ttprefs.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ttshops.Shop;
 import com.puttysoftware.randomrange.RandomLongRange;
 import com.puttysoftware.randomrange.RandomRange;
@@ -116,53 +117,92 @@ abstract class AbstractBothRandomScalingMonster extends
     }
 
     private static int getStatMultiplierForDifficulty() {
-        final int difficulty = PreferencesManager.getGameDifficulty();
+        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager().getGameDifficulty();
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
             return STAT_MULT_VERY_EASY;
-        } else if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
-            return STAT_MULT_EASY;
-        } else if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
-            return STAT_MULT_NORMAL;
-        } else if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
-            return STAT_MULT_HARD;
-        } else if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
-            return STAT_MULT_VERY_HARD;
         } else {
-            return STAT_MULT_NORMAL;
+            FantastleReboot.getBagOStuff().getPrefsManager();
+            if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
+                return STAT_MULT_EASY;
+            } else {
+                FantastleReboot.getBagOStuff().getPrefsManager();
+                if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
+                    return STAT_MULT_NORMAL;
+                } else {
+                    FantastleReboot.getBagOStuff().getPrefsManager();
+                    if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
+                        return STAT_MULT_HARD;
+                    } else {
+                        FantastleReboot.getBagOStuff().getPrefsManager();
+                        if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
+                            return STAT_MULT_VERY_HARD;
+                        } else {
+                            return STAT_MULT_NORMAL;
+                        }
+                    }
+                }
+            }
         }
     }
 
     private static double getGoldMultiplierForDifficulty() {
-        final int difficulty = PreferencesManager.getGameDifficulty();
+        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager().getGameDifficulty();
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
             return GOLD_MULT_VERY_EASY;
-        } else if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
-            return GOLD_MULT_EASY;
-        } else if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
-            return GOLD_MULT_NORMAL;
-        } else if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
-            return GOLD_MULT_HARD;
-        } else if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
-            return GOLD_MULT_VERY_HARD;
         } else {
-            return GOLD_MULT_NORMAL;
+            FantastleReboot.getBagOStuff().getPrefsManager();
+            if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
+                return GOLD_MULT_EASY;
+            } else {
+                FantastleReboot.getBagOStuff().getPrefsManager();
+                if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
+                    return GOLD_MULT_NORMAL;
+                } else {
+                    FantastleReboot.getBagOStuff().getPrefsManager();
+                    if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
+                        return GOLD_MULT_HARD;
+                    } else {
+                        FantastleReboot.getBagOStuff().getPrefsManager();
+                        if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
+                            return GOLD_MULT_VERY_HARD;
+                        } else {
+                            return GOLD_MULT_NORMAL;
+                        }
+                    }
+                }
+            }
         }
     }
 
     private static double getExpMultiplierForDifficulty() {
-        final int difficulty = PreferencesManager.getGameDifficulty();
+        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager().getGameDifficulty();
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
             return EXP_MULT_VERY_EASY;
-        } else if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
-            return EXP_MULT_EASY;
-        } else if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
-            return EXP_MULT_NORMAL;
-        } else if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
-            return EXP_MULT_HARD;
-        } else if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
-            return EXP_MULT_VERY_HARD;
         } else {
-            return EXP_MULT_NORMAL;
+            FantastleReboot.getBagOStuff().getPrefsManager();
+            if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
+                return EXP_MULT_EASY;
+            } else {
+                FantastleReboot.getBagOStuff().getPrefsManager();
+                if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
+                    return EXP_MULT_NORMAL;
+                } else {
+                    FantastleReboot.getBagOStuff().getPrefsManager();
+                    if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
+                        return EXP_MULT_HARD;
+                    } else {
+                        FantastleReboot.getBagOStuff().getPrefsManager();
+                        if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
+                            return EXP_MULT_VERY_HARD;
+                        } else {
+                            return EXP_MULT_NORMAL;
+                        }
+                    }
+                }
+            }
         }
     }
 }

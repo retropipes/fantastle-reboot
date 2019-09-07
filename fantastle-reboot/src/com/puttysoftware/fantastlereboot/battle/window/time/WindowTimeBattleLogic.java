@@ -6,6 +6,7 @@ import java.util.TimerTask;
 import javax.swing.JFrame;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
@@ -28,7 +29,6 @@ import com.puttysoftware.fantastlereboot.ttmain.Application;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.BattleCharacter;
-import com.puttysoftware.fantastlereboot.ttprefs.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ttspells.SpellCaster;
 import com.puttysoftware.randomrange.RandomRange;
 
@@ -331,7 +331,8 @@ public class WindowTimeBattleLogic extends AbstractBattle {
             gm.stopMovement();
             this.enemy = MonsterFactory.getNewMonsterInstance();
             this.enemy.loadCreature();
-            if (PreferencesManager
+            FantastleReboot.getBagOStuff().getPrefsManager();
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getMusicEnabled(PreferencesManager.MUSIC_BATTLE)) {
                 MusicManager.playMusic(MusicConstants.MUSIC_BATTLE);
             }
@@ -574,7 +575,8 @@ public class WindowTimeBattleLogic extends AbstractBattle {
 
     @Override
     public void doResult() {
-        if (PreferencesManager.getMusicEnabled(PreferencesManager.MUSIC_BATTLE)) {
+        FantastleReboot.getBagOStuff().getPrefsManager();
+        if (FantastleReboot.getBagOStuff().getPrefsManager().getMusicEnabled(PreferencesManager.MUSIC_BATTLE)) {
             MusicManager.stopMusic();
         }
         final PartyMember playerCharacter = PartyManager.getParty().getLeader();
@@ -649,7 +651,7 @@ public class WindowTimeBattleLogic extends AbstractBattle {
         // Level Up Check
         if (playerCharacter.checkLevelUp()) {
             playerCharacter.levelUp();
-            if (PreferencesManager.getSoundsEnabled()) {
+            if (FantastleReboot.getBagOStuff().getPrefsManager().getSoundEnabled()) {
                 SoundManager.playSound(SoundConstants.SOUND_LEVEL_UP);
             }
             this.setStatusMessage("You reached level "

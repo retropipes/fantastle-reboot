@@ -49,6 +49,7 @@ public class CrackedWall extends GenericWall {
                 .getPlayerManager().getPlayerLocationW();
         FantastleReboot.getBagOStuff().getGameManager().morph(new DamagedWall(),
                 dirX, dirY, pz, pw);
+        FantastleReboot.getBagOStuff().getPrefsManager();
         // Play move failed sound, if it's enabled
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

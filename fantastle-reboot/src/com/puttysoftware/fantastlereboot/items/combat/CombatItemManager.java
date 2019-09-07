@@ -21,6 +21,7 @@ public class CombatItemManager {
 
     public static boolean selectAndUseItem(final Creature user) {
         boolean result = false;
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
             SoundLoader.playSound(GameSound.SPECIAL);
@@ -49,6 +50,7 @@ public class CombatItemManager {
             final String[] displayNames = ii
                     .generateCombatUsableDisplayStringArray();
             if (names != null && displayNames != null) {
+                FantastleReboot.getBagOStuff().getPrefsManager();
                 // Play using item sound
                 if (FantastleReboot.getBagOStuff().getPrefsManager()
                         .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
@@ -94,7 +96,8 @@ public class CombatItemManager {
     public static boolean useItem(final CombatUsableItem used,
             final Creature user) {
         if (used != null) {
-         // Play using item sound
+         FantastleReboot.getBagOStuff().getPrefsManager();
+            // Play using item sound
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
                 SoundLoader.playSound(GameSound.MONSTER_SPELL);

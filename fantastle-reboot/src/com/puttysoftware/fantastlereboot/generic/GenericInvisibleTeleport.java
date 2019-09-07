@@ -42,6 +42,7 @@ public abstract class GenericInvisibleTeleport extends GenericTeleport {
                 this.getDestinationColumn(), this.getDestinationFloor(),
                 this.getDestinationLevel());
         Messager.showMessage("Invisible Teleport!");
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveSuccessSound();

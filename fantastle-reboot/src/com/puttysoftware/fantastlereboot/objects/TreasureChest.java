@@ -42,6 +42,7 @@ public class TreasureChest extends GenericContainer {
         if (this.isConditionallyDirectionallySolid(ie, dirX, dirY, inv)) {
             Messager.showMessage("You need a key");
         }
+        FantastleReboot.getBagOStuff().getPrefsManager();
         // Play move failed sound, if it's enabled
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

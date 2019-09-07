@@ -1,8 +1,8 @@
 package com.puttysoftware.fantastlereboot.loaders.older;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.datamanagers.MusicDataManager;
-import com.puttysoftware.fantastlereboot.ttprefs.PreferencesManager;
 
 public class MusicConstants {
     // Public Music Constants
@@ -27,7 +27,7 @@ public class MusicConstants {
         } else if (ID == MUSIC_BATTLE) {
             final int nID = PartyManager.getParty().getTowerLevel()
                     / DIVIDE_BASE;
-            if (PreferencesManager.useMapBattleEngine()) {
+            if (FantastleReboot.getBagOStuff().getPrefsManager().useMapBattleEngine()) {
                 return nID + OFFSET_MAP_BATTLE;
             } else {
                 return nID + OFFSET_WINDOW_BATTLE;
@@ -45,7 +45,7 @@ public class MusicConstants {
         } else if (ID == MUSIC_BATTLE) {
             final int nID = PartyManager.getParty().getTowerLevel()
                     / DIVIDE_BASE;
-            if (PreferencesManager.useMapBattleEngine()) {
+            if (FantastleReboot.getBagOStuff().getPrefsManager().useMapBattleEngine()) {
                 return MUSIC_NAMES[nID + OFFSET_MAP_BATTLE];
             } else {
                 return MUSIC_NAMES[nID + OFFSET_WINDOW_BATTLE];

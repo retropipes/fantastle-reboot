@@ -5,9 +5,9 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.loaders.older.ImageTransformer;
 import com.puttysoftware.fantastlereboot.ttmain.DrawGrid;
-import com.puttysoftware.fantastlereboot.ttprefs.PreferencesManager;
 
 class GameDraw extends JPanel {
     private static final long serialVersionUID = 35935343464625L;
@@ -16,7 +16,7 @@ class GameDraw extends JPanel {
     public GameDraw(final DrawGrid grid) {
         super();
         this.drawGrid = grid;
-        final int vSize = PreferencesManager.getViewingWindowSize();
+        final int vSize = FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize();
         final int gSize = ImageTransformer.getGraphicSize();
         this.setPreferredSize(new Dimension(vSize * gSize, vSize * gSize));
     }
@@ -26,7 +26,7 @@ class GameDraw extends JPanel {
         super.paintComponent(g);
         if (this.drawGrid != null) {
             final int gSize = ImageTransformer.getGraphicSize();
-            final int vSize = PreferencesManager.getViewingWindowSize();
+            final int vSize = FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize();
             for (int x = 0; x < vSize; x++) {
                 for (int y = 0; y < vSize; y++) {
                     g.drawImage(this.drawGrid.getImageCell(y, x), x * gSize, y

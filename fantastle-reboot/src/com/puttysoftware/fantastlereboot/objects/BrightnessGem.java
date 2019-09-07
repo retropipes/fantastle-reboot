@@ -52,6 +52,7 @@ public class BrightnessGem extends GenericGem {
                 .getPlayerManager().getPlayerLocationW();
         FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                 .setVisionRadiusToMaximum(currLevel);
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playLightSound();

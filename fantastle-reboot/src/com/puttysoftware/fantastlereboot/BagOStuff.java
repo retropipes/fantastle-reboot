@@ -18,9 +18,16 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot;
 
+import java.awt.Image;
+
 import javax.swing.JFrame;
 
 import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
+import com.puttysoftware.fantastlereboot.battle.map.time.MapTimeBattleLogic;
+import com.puttysoftware.fantastlereboot.battle.map.turn.MapTurnBattleLogic;
+import com.puttysoftware.fantastlereboot.battle.window.time.WindowTimeBattleLogic;
+import com.puttysoftware.fantastlereboot.battle.window.turn.WindowTurnBattleLogic;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.GameManager;
 import com.puttysoftware.fantastlereboot.generic.MazeObjectList;
@@ -29,12 +36,11 @@ import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
+import com.puttysoftware.fantastlereboot.loaders.older.LogoManager;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.oldbattle.Battle;
-import com.puttysoftware.fantastlereboot.oldbattle.BossBattle;
-import com.puttysoftware.fantastlereboot.oldcreatures.Boss;
-import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 import com.puttysoftware.images.BufferedImageIcon;
+import com.puttysoftware.updater.ProductData;
 
 public class BagOStuff {
     // Fields
@@ -50,36 +56,58 @@ public class BagOStuff {
     private final MazeObjectList objects;
     private final CombatItemList combatItems;
     private Shop weapons, armor, healer, bank, regenerator, spells, items;
-    private Battle battle;
-    private BossBattle bossBattle;
     private BufferedImageIcon microLogo;
-    private boolean bossFlag;
-    private boolean IN_GUI, IN_PREFS, IN_GAME;
+    private WindowTurnBattleLogic windowTurnBattle;
+    private WindowTimeBattleLogic windowTimeBattle;
+    private MapTurnBattleLogic mapTurnBattle;
+    private MapTimeBattleLogic mapTimeBattle;
+    private int currentMode;
+    private int formerMode;
+    private static final String UPDATE_SITE = "http://update.puttysoftware.com/tallertower/";
+    private static final String NEW_VERSION_SITE = "http://www.puttysoftware.com/tallertower/";
+    private static final String PRODUCT_NAME = "TallerTower";
+    private static final String COMPANY_NAME = "Putty Software";
+    private static final String RDNS_COMPANY_NAME = "com.puttysoftware.tallertower";
+    private static final ProductData pd = new ProductData(BagOStuff.UPDATE_SITE,
+            BagOStuff.UPDATE_SITE, BagOStuff.NEW_VERSION_SITE,
+            BagOStuff.RDNS_COMPANY_NAME, BagOStuff.COMPANY_NAME,
+            BagOStuff.PRODUCT_NAME, BagOStuff.VERSION_MAJOR,
+            BagOStuff.VERSION_MINOR, BagOStuff.VERSION_BUGFIX,
+            BagOStuff.VERSION_CODE, BagOStuff.VERSION_PRERELEASE);
     private static final int VERSION_MAJOR = 5;
-    private static final int VERSION_MINOR = 0;
+    private static final int VERSION_MINOR = 1;
     private static final int VERSION_BUGFIX = 0;
-    private static final int VERSION_BETA = 5;
+    private static final int VERSION_CODE = ProductData.CODE_BETA;
+    private static final int VERSION_PRERELEASE = 2;
     public static final int STATUS_GUI = 0;
     public static final int STATUS_GAME = 1;
     public static final int STATUS_EDITOR = 2;
     public static final int STATUS_PREFS = 3;
+    public static final int STATUS_BATTLE = 4;
+    public static final int STATUS_NULL = 5;
 
     // Constructors
     public BagOStuff() {
         this.objects = new MazeObjectList();
         this.combatItems = new CombatItemList();
+        this.currentMode = BagOStuff.STATUS_NULL;
+        this.formerMode = BagOStuff.STATUS_NULL;
     }
 
     // Methods
     void postConstruct() {
         this.prefsMgr = new PreferencesManager();
-        this.about = new AboutDialog(this.getVersionString());
+        this.about = new AboutDialog(BagOStuff.getVersionString());
         this.guiMgr = new GUIManager();
         this.gameMgr = new GameManager();
         this.mazeMgr = new MazeManager();
         this.menuMgr = new MenuManager();
         this.gHelpMgr = new GeneralHelpManager();
         this.oHelpMgr = new ObjectHelpManager();
+        this.windowTurnBattle = new WindowTurnBattleLogic();
+        this.windowTimeBattle = new WindowTimeBattleLogic();
+        this.mapTurnBattle = new MapTurnBattleLogic();
+        this.mapTimeBattle = new MapTimeBattleLogic();
         this.editor = new MazeEditor();
         this.weapons = new Shop(ShopTypes.SHOP_TYPE_WEAPONS);
         this.armor = new Shop(ShopTypes.SHOP_TYPE_ARMOR);
@@ -88,9 +116,6 @@ public class BagOStuff {
         this.regenerator = new Shop(ShopTypes.SHOP_TYPE_REGENERATOR);
         this.spells = new Shop(ShopTypes.SHOP_TYPE_SPELLS);
         this.items = new Shop(ShopTypes.SHOP_TYPE_ITEMS);
-        this.battle = new Battle();
-        this.bossBattle = new BossBattle();
-        this.bossFlag = false;
         // Attempt to load extras
         final Object extras = PluginLoader.loadPlugin("ExtrasPlugin");
         PluginLoader.addPluginMenus(extras);
@@ -99,37 +124,36 @@ public class BagOStuff {
     }
 
     public void setInGUI(final boolean value) {
-        this.IN_GUI = value;
+        this.formerMode = this.currentMode;
+        this.currentMode = BagOStuff.STATUS_GUI;
     }
 
     public void setInPrefs(final boolean value) {
-        this.IN_PREFS = value;
+        this.formerMode = this.currentMode;
+        this.currentMode = BagOStuff.STATUS_PREFS;
     }
 
     public void setInGame(final boolean value) {
-        this.IN_GAME = value;
+        this.formerMode = this.currentMode;
+        this.currentMode = BagOStuff.STATUS_GAME;
+    }
+
+    public void setInEditor() {
+        this.formerMode = this.currentMode;
+        this.currentMode = BagOStuff.STATUS_EDITOR;
+    }
+
+    public void setInBattle() {
+        this.formerMode = this.currentMode;
+        this.currentMode = BagOStuff.STATUS_BATTLE;
     }
 
     public int getMode() {
-        if (this.IN_PREFS) {
-            return BagOStuff.STATUS_PREFS;
-        } else if (this.IN_GUI) {
-            return BagOStuff.STATUS_GUI;
-        } else if (this.IN_GAME) {
-            return BagOStuff.STATUS_GAME;
-        } else {
-            return BagOStuff.STATUS_EDITOR;
-        }
+        return this.currentMode;
     }
 
     public int getFormerMode() {
-        if (this.IN_GUI) {
-            return BagOStuff.STATUS_GUI;
-        } else if (this.IN_GAME) {
-            return BagOStuff.STATUS_GAME;
-        } else {
-            return BagOStuff.STATUS_EDITOR;
-        }
+        return this.formerMode;
     }
 
     public MenuManager getMenuManager() {
@@ -205,21 +229,36 @@ public class BagOStuff {
         return this.weapons;
     }
 
-    public Battle getBattle() {
-        if (PCManager.getPlayer().getLevel() == Boss.FIGHT_LEVEL) {
-            if (!this.bossFlag) {
-                this.battle.battleDone();
-                this.bossFlag = true;
+    public AbstractBattle getBattle() {
+        PreferencesManager prefs = this.getPrefsManager();
+        if (prefs.useMapBattleEngine()) {
+            if (prefs.useTimeBattleEngine()) {
+                return this.mapTimeBattle;
+            } else {
+                return this.mapTurnBattle;
             }
-            return this.bossBattle;
         } else {
-            this.bossFlag = false;
-            return this.battle;
+            if (prefs.useTimeBattleEngine()) {
+                return this.windowTimeBattle;
+            } else {
+                return this.windowTurnBattle;
+            }
         }
+    }
+
+    public void resetBattleGUI() {
+        this.mapTimeBattle.resetGUI();
+        this.windowTimeBattle.resetGUI();
+        this.mapTurnBattle.resetGUI();
+        this.windowTurnBattle.resetGUI();
     }
 
     public BufferedImageIcon getMicroLogo() {
         return this.microLogo;
+    }
+
+    public static Image getIconLogo() {
+        return LogoManager.getIconLogo();
     }
 
     public void playHighScoreSound() {
@@ -240,17 +279,16 @@ public class BagOStuff {
         }
     }
 
-    private String getVersionString() {
-        if (this.isBetaModeEnabled()) {
-            return "" + BagOStuff.VERSION_MAJOR + "."
-                    + BagOStuff.VERSION_MINOR + "."
-                    + BagOStuff.VERSION_BUGFIX + "-dev"
-                    + BagOStuff.VERSION_BETA;
+    private static String getVersionString() {
+        final int code = pd.getCodeVersion();
+        String rt;
+        if (code < ProductData.CODE_STABLE) {
+            rt = "-beta" + BagOStuff.VERSION_PRERELEASE;
         } else {
-            return "" + BagOStuff.VERSION_MAJOR + "."
-                    + BagOStuff.VERSION_MINOR + "."
-                    + BagOStuff.VERSION_BUGFIX;
+            rt = "";
         }
+        return BagOStuff.VERSION_MAJOR + "." + BagOStuff.VERSION_MINOR + "."
+                + BagOStuff.VERSION_BUGFIX + rt;
     }
 
     public JFrame getOutputFrame() {
@@ -258,7 +296,7 @@ public class BagOStuff {
             if (this.getMode() == BagOStuff.STATUS_PREFS) {
                 return this.getPrefsManager().getPrefFrame();
             } else if (Battle.isInBattle()) {
-                return this.getBattle().getBattleFrame();
+                return this.getBattle().getOutputFrame();
             } else if (this.getMode() == BagOStuff.STATUS_GUI) {
                 return this.getGUIManager().getGUIFrame();
             } else if (this.getMode() == BagOStuff.STATUS_GAME) {
@@ -280,6 +318,6 @@ public class BagOStuff {
     }
 
     public boolean isBetaModeEnabled() {
-        return BagOStuff.VERSION_BETA > 0;
+        return BagOStuff.VERSION_PRERELEASE > 0;
     }
 }

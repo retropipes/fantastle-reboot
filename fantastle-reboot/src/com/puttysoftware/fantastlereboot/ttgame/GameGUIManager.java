@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.loaders.older.ImageTransformer;
 import com.puttysoftware.fantastlereboot.loaders.older.MusicConstants;
 import com.puttysoftware.fantastlereboot.loaders.older.MusicManager;
@@ -38,7 +39,6 @@ import com.puttysoftware.fantastlereboot.ttmaze.objects.EmptyVoid;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.MazeNoteObject;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Player;
 import com.puttysoftware.fantastlereboot.ttmaze.utilities.ImageColorConstants;
-import com.puttysoftware.fantastlereboot.ttprefs.PreferencesManager;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class GameGUIManager {
@@ -103,7 +103,8 @@ class GameGUIManager {
         this.lastExploringMusicID = this.currExploringMusicID;
         this.currExploringMusicID = MusicConstants
                 .getMusicID(MusicConstants.MUSIC_EXPLORING);
-        if (PreferencesManager
+        FantastleReboot.getBagOStuff().getPrefsManager();
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getMusicEnabled(PreferencesManager.MUSIC_EXPLORING)) {
             if (this.lastExploringMusicID != this.currExploringMusicID) {
                 MusicManager.stopMusic();
@@ -127,7 +128,8 @@ class GameGUIManager {
     }
 
     public void hideOutput() {
-        if (PreferencesManager
+        FantastleReboot.getBagOStuff().getPrefsManager();
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getMusicEnabled(PreferencesManager.MUSIC_EXPLORING)) {
             if (MusicManager.isMusicPlaying()) {
                 MusicManager.stopMusic();
@@ -279,7 +281,7 @@ class GameGUIManager {
         this.outputFrame = new JFrame("TallerTower");
         final Image iconlogo = Application.getIconLogo();
         this.outputFrame.setIconImage(iconlogo);
-        this.drawGrid = new DrawGrid(PreferencesManager.getViewingWindowSize());
+        this.drawGrid = new DrawGrid(FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize());
         this.outputPane = new GameDraw(this.drawGrid);
         this.outputFrame.setContentPane(this.borderPane);
         this.outputFrame
@@ -299,7 +301,7 @@ class GameGUIManager {
         @Override
         public void keyPressed(final KeyEvent e) {
             if (GameGUIManager.this.eventFlag) {
-                if (!PreferencesManager.oneMove()) {
+                if (!FantastleReboot.getBagOStuff().getPrefsManager().oneMove()) {
                     this.handleMovement(e);
                 }
             }
@@ -308,7 +310,7 @@ class GameGUIManager {
         @Override
         public void keyReleased(final KeyEvent e) {
             if (GameGUIManager.this.eventFlag) {
-                if (PreferencesManager.oneMove()) {
+                if (FantastleReboot.getBagOStuff().getPrefsManager().oneMove()) {
                     this.handleMovement(e);
                 }
             }

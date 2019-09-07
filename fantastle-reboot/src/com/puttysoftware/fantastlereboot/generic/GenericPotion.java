@@ -121,11 +121,13 @@ public abstract class GenericPotion extends MazeObject
         }
         FantastleReboot.getBagOStuff().getGameManager().decay();
         if (this.effectValue >= 0) {
+            FantastleReboot.getBagOStuff().getPrefsManager();
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 SoundLoader.playSound(GameSound.HEAL);
             }
         } else {
+            FantastleReboot.getBagOStuff().getPrefsManager();
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 SoundLoader.playSound(GameSound.HURT);
@@ -139,6 +141,7 @@ public abstract class GenericPotion extends MazeObject
             final int arrowType, final ObjectInventory inv) {
         FantastleReboot.getBagOStuff().getGameManager().morph(new Empty(), locX,
                 locY, locZ, locW);
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             SoundLoader.playSound(GameSound.CRUSH);

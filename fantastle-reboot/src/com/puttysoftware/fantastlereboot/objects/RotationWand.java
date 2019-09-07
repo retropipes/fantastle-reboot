@@ -93,6 +93,7 @@ public class RotationWand extends GenericWand {
             FantastleReboot.getBagOStuff().getGameManager()
                     .doCounterclockwiseRotate(r);
         }
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playRotatedSound();

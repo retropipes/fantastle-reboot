@@ -6,7 +6,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.battle.map;
 
-import com.puttysoftware.fantastlereboot.ttprefs.PreferencesManager;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 
 public class MapBattleViewingWindowManager {
     // Fields
@@ -70,7 +70,7 @@ public class MapBattleViewingWindowManager {
     }
 
     public static int getViewingWindowSize() {
-        return (PreferencesManager.getViewingWindowSize() * VIEWING_WINDOW_SIZE_MULTIPLIER)
+        return (FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize() * VIEWING_WINDOW_SIZE_MULTIPLIER)
                 + VIEWING_WINDOW_SIZE_ADDITION;
     }
 }

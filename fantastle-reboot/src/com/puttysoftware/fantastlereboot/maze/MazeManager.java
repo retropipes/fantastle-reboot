@@ -217,34 +217,49 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
             fc.addChoosableFileFilter(m5f);
             fc.addChoosableFileFilter(gf);
             final int filter = app.getPrefsManager().getLastFilterUsedIndex();
+            FantastleReboot.getBagOStuff().getPrefsManager();
             if (filter == PreferencesManager.FILTER_GAME) {
                 fc.setFileFilter(gf);
-            } else if (filter == PreferencesManager.FILTER_MAZE_V2) {
-                fc.setFileFilter(m2f);
-            } else if (filter == PreferencesManager.FILTER_MAZE_V3) {
-                fc.setFileFilter(m3f);
-            } else if (filter == PreferencesManager.FILTER_MAZE_V4) {
-                fc.setFileFilter(m4f);
             } else {
-                fc.setFileFilter(m5f);
+                FantastleReboot.getBagOStuff().getPrefsManager();
+                if (filter == PreferencesManager.FILTER_MAZE_V2) {
+                    fc.setFileFilter(m2f);
+                } else {
+                    FantastleReboot.getBagOStuff().getPrefsManager();
+                    if (filter == PreferencesManager.FILTER_MAZE_V3) {
+                        fc.setFileFilter(m3f);
+                    } else {
+                        FantastleReboot.getBagOStuff().getPrefsManager();
+                        if (filter == PreferencesManager.FILTER_MAZE_V4) {
+                            fc.setFileFilter(m4f);
+                        } else {
+                            fc.setFileFilter(m5f);
+                        }
+                    }
+                }
             }
             final int returnVal = fc.showOpenDialog(app.getOutputFrame());
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 final File file = fc.getSelectedFile();
                 final FileFilter ff = fc.getFileFilter();
                 if (ff.getDescription().equals(gf.getDescription())) {
+                    FantastleReboot.getBagOStuff().getPrefsManager();
                     app.getPrefsManager().setLastFilterUsedIndex(
                             PreferencesManager.FILTER_GAME);
                 } else if (ff.getDescription().equals(m2f.getDescription())) {
+                    FantastleReboot.getBagOStuff().getPrefsManager();
                     app.getPrefsManager().setLastFilterUsedIndex(
                             PreferencesManager.FILTER_MAZE_V2);
                 } else if (ff.getDescription().equals(m3f.getDescription())) {
+                    FantastleReboot.getBagOStuff().getPrefsManager();
                     app.getPrefsManager().setLastFilterUsedIndex(
                             PreferencesManager.FILTER_MAZE_V3);
                 } else if (ff.getDescription().equals(m4f.getDescription())) {
+                    FantastleReboot.getBagOStuff().getPrefsManager();
                     app.getPrefsManager().setLastFilterUsedIndex(
                             PreferencesManager.FILTER_MAZE_V4);
                 } else {
+                    FantastleReboot.getBagOStuff().getPrefsManager();
                     app.getPrefsManager().setLastFilterUsedIndex(
                             PreferencesManager.FILTER_MAZE_V5);
                 }

@@ -72,10 +72,14 @@ public class PreferencesManager implements PreferencesHandler {
     JCheckBox checkBetaUpdatesStartup;
     JCheckBox moveOneAtATime;
     JCheckBox mobileMode;
+    JCheckBox mapBattleEngine;
+    JCheckBox timeBattleEngine;
     JComboBox<String> editorFillChoices;
     private String[] editorFillChoiceArray;
+    JComboBox<String> difficultyChoices;
     JComboBox<String> updateCheckInterval;
     private String[] updateCheckIntervalValues;
+    private JComboBox<String> viewingWindowChoices;
     private JLabel waitLabel;
     private JProgressBar waitProgress;
     int editorFill;
@@ -86,11 +90,24 @@ public class PreferencesManager implements PreferencesHandler {
     boolean checkBetaUpdatesStartupEnabled;
     boolean moveOneAtATimeEnabled;
     boolean mobileModeEnabled;
+    boolean useMapBattleEngine;
+    boolean useTimeBattleEngine;
+    int difficultySetting = PreferencesManager.DEFAULT_DIFFICULTY;
+    int viewingWindowIndex;
     final boolean[] soundsEnabled;
     final boolean[] musicEnabled;
     String lastDirOpen;
     String lastDirSave;
     int lastFilterUsed;
+    static final int[] VIEWING_WINDOW_SIZES = new int[] { 7, 9, 11, 13, 15, 17,
+            19, 21, 23, 25 };
+    static final int DEFAULT_SIZE_INDEX = 2;
+    static final int DEFAULT_VIEWING_WINDOW_SIZE = VIEWING_WINDOW_SIZES[DEFAULT_SIZE_INDEX];
+    private static final String[] VIEWING_WINDOW_SIZE_NAMES = new String[] {
+            "Tiny", "Small", "Medium", "Large", "Huge", "Tiny HD", "Small HD",
+            "Medium HD", "Large HD", "Huge HD" };
+    private static final String[] DIFFICULTY_CHOICE_NAMES = new String[] {
+            "Very Easy", "Easy", "Normal", "Hard", "Very Hard" };
     private static final int SOUNDS_ALL = 0;
     public static final int SOUNDS_UI = 1;
     public static final int SOUNDS_GAME = 2;
@@ -104,6 +121,13 @@ public class PreferencesManager implements PreferencesHandler {
     public static final int FILTER_MAZE_V4 = 3;
     public static final int FILTER_GAME = 4;
     public static final int FILTER_MAZE_V5 = 5;
+    public static final int DIFFICULTY_VERY_EASY = 0;
+    public static final int DIFFICULTY_EASY = 1;
+    public static final int DIFFICULTY_NORMAL = 2;
+    public static final int DIFFICULTY_HARD = 3;
+    public static final int DIFFICULTY_VERY_HARD = 4;
+    private static final int DEFAULT_DIFFICULTY = DIFFICULTY_NORMAL;
+    private static final int BATTLE_SPEED = 1000;
     private static final int MUSIC_LENGTH = 3;
     private static final int SOUNDS_LENGTH = 5;
     private static final int GRID_LENGTH = 6;
@@ -123,6 +147,34 @@ public class PreferencesManager implements PreferencesHandler {
     }
 
     // Methods
+    public int getBattleSpeed() {
+        return PreferencesManager.BATTLE_SPEED;
+    }
+
+    public boolean useMapBattleEngine() {
+        return this.useMapBattleEngine;
+    }
+
+    public void setMapBattleEngine(final boolean value) {
+        this.useMapBattleEngine = value;
+    }
+
+    public boolean useTimeBattleEngine() {
+        return this.useTimeBattleEngine;
+    }
+
+    public void setTimeBattleEngine(final boolean value) {
+        this.useTimeBattleEngine = value;
+    }
+
+    public int getGameDifficulty() {
+        return this.difficultySetting;
+    }
+
+    public void setGameDifficulty(final int value) {
+        this.difficultySetting = value;
+    }
+
     public String getLastDirOpen() {
         return this.lastDirOpen;
     }
@@ -157,6 +209,19 @@ public class PreferencesManager implements PreferencesHandler {
 
     public boolean oneMove() {
         return this.moveOneAtATimeEnabled;
+    }
+
+    public int getViewingWindowSize() {
+        return PreferencesManager.VIEWING_WINDOW_SIZES[this
+                .getViewingWindowSizeIndex()];
+    }
+
+    public int getViewingWindowSizeIndex() {
+        return this.viewingWindowIndex;
+    }
+
+    public void setViewingWindowSizeIndex(final int value) {
+        this.viewingWindowIndex = value;
     }
 
     public boolean isMobileModeEnabled() {
@@ -239,7 +304,7 @@ public class PreferencesManager implements PreferencesHandler {
             app.getMenuManager().setPrefMenus();
             this.prefFrame.setVisible(true);
             if (Battle.isInBattle()) {
-                app.getBattle().getBattleFrame().setVisible(false);
+                app.getBattle().getOutputFrame().setVisible(false);
             } else {
                 final int formerMode = app.getFormerMode();
                 if (formerMode == BagOStuff.STATUS_GUI) {
@@ -260,7 +325,7 @@ public class PreferencesManager implements PreferencesHandler {
             this.prefFrame.setVisible(false);
             this.fileMgr.writePreferencesFile();
             if (Battle.isInBattle()) {
-                app.getBattle().getBattleFrame().setVisible(true);
+                app.getBattle().getOutputFrame().setVisible(true);
             } else {
                 final int formerMode = app.getFormerMode();
                 if (formerMode == BagOStuff.STATUS_GUI) {
@@ -411,6 +476,7 @@ public class PreferencesManager implements PreferencesHandler {
                 "Every 2nd Day", "Weekly", "Every 2nd Week", "Monthly" };
         this.updateCheckInterval = new JComboBox<>(
                 this.updateCheckIntervalValues);
+        this.difficultyChoices = new JComboBox<>(DIFFICULTY_CHOICE_NAMES);
         this.prefFrame.setContentPane(this.mainPrefPane);
         this.prefFrame
                 .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -441,6 +507,14 @@ public class PreferencesManager implements PreferencesHandler {
         this.miscPane.add(this.mobileMode);
         this.miscPane.add(new JLabel("Check How Often For Updates"));
         this.miscPane.add(this.updateCheckInterval);
+        this.miscPane.add(new JLabel("Game Difficulty"));
+        this.miscPane.add(this.difficultyChoices);
+        final Container viewPane = new Container();
+        viewPane.setLayout(new GridLayout(PreferencesManager.GRID_LENGTH, 1));
+        viewPane.add(new JLabel("Viewing Window Size"));
+        this.viewingWindowChoices = new JComboBox<>(
+                PreferencesManager.VIEWING_WINDOW_SIZE_NAMES);
+        viewPane.add(this.viewingWindowChoices);
         this.buttonPane.setLayout(new FlowLayout());
         this.buttonPane.add(this.prefsOK);
         this.buttonPane.add(this.prefsCancel);
@@ -450,6 +524,7 @@ public class PreferencesManager implements PreferencesHandler {
         this.prefTabPane.addTab("Sounds", null, this.soundPane, "Sounds");
         this.prefTabPane.addTab("Music", null, this.musicPane, "Music");
         this.prefTabPane.addTab("Misc.", null, this.miscPane, "Misc.");
+        this.prefTabPane.addTab("View", null, viewPane, "View");
         this.mainPrefPane.add(this.prefTabPane, BorderLayout.CENTER);
         this.mainPrefPane.add(this.buttonPane, BorderLayout.SOUTH);
         this.sounds[PreferencesManager.SOUNDS_ALL]

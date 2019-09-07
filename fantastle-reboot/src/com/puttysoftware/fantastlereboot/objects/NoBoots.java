@@ -49,6 +49,7 @@ public class NoBoots extends GenericInventoryModifier {
             final ObjectInventory inv) {
         FantastleReboot.getBagOStuff().getGameManager().decay();
         inv.removeAllBoots();
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveSuccessSound();

@@ -140,6 +140,7 @@ public abstract class GenericRandomTeleport extends MazeObject {
             dc = this.getDestinationColumn();
         } while (!app.getGameManager().tryUpdatePositionRelative(dr, dc));
         app.getGameManager().updatePositionRelative(dr, dc);
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveSuccessSound();

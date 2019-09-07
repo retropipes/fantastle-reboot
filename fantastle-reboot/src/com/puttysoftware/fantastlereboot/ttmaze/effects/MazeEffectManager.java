@@ -10,9 +10,9 @@ import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.utilities.DirectionResolver;
-import com.puttysoftware.fantastlereboot.ttprefs.PreferencesManager;
 
 public class MazeEffectManager {
     // Fields
@@ -85,7 +85,7 @@ public class MazeEffectManager {
 
     public void activateEffect(final int effectID) {
         this.activateEffectInternal(effectID,
-                MazeEffectConstants.DURATIONS[PreferencesManager
+                MazeEffectConstants.DURATIONS[FantastleReboot.getBagOStuff().getPrefsManager()
                         .getGameDifficulty()][effectID]);
     }
 

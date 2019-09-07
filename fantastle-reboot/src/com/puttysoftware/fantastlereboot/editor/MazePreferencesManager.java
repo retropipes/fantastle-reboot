@@ -79,7 +79,8 @@ public class MazePreferencesManager {
     public void setPrefs() {
         final int level = FantastleReboot.getBagOStuff().getEditor()
                 .getLocationManager().getEditorLocationW();
-        final Maze m = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
+        final Maze m = FantastleReboot.getBagOStuff().getMazeManager()
+                .getMaze();
         if (this.horizontalWrap.isSelected()) {
             m.enableHorizontalWraparound(level);
         } else {
@@ -101,7 +102,8 @@ public class MazePreferencesManager {
     public void loadPrefs() {
         final int level = FantastleReboot.getBagOStuff().getEditor()
                 .getLocationManager().getEditorLocationW();
-        final Maze m = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
+        final Maze m = FantastleReboot.getBagOStuff().getMazeManager()
+                .getMaze();
         this.startLevelChoiceArray = new String[m.getLevels()];
         for (int x = 0; x < m.getLevels(); x++) {
             this.startLevelChoiceArray[x] = Integer.toString(x + 1);

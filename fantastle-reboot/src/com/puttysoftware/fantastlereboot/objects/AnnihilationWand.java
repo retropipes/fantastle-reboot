@@ -43,6 +43,7 @@ public class AnnihilationWand extends GenericWand {
     @Override
     public void useHelper(final int x, final int y, final int z, final int w) {
         this.useAction(new Empty(), x, y, z, w);
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playUseSound();

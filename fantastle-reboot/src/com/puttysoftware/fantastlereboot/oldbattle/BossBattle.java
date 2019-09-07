@@ -3,6 +3,7 @@ package com.puttysoftware.fantastlereboot.oldbattle;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.battle.BattleResults;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.oldcreatures.Boss;
 import com.puttysoftware.fantastlereboot.oldcreatures.Creature;
@@ -23,6 +24,7 @@ public class BossBattle extends Battle {
     public void doBattle() {
         Battle.IN_BATTLE = true;
         FantastleReboot.getBagOStuff().getGameManager().hideOutput();
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
             SoundLoader.playSound(GameSound.DRAW_SWORD);

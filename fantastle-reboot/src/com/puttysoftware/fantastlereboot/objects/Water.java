@@ -40,6 +40,7 @@ public class Water extends GenericField {
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveSuccessSound();
@@ -51,6 +52,7 @@ public class Water extends GenericField {
             final int dirY, final ObjectInventory inv) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         Messager.showMessage("You'll drown");
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveFailedSound();
@@ -67,6 +69,7 @@ public class Water extends GenericField {
                     Maze.LAYER_GROUND);
             app.getGameManager().morph(new Empty(), x, y, z, w,
                     Maze.LAYER_OBJECT);
+            FantastleReboot.getBagOStuff().getPrefsManager();
             if (app.getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 MazeObject.playSinkBlockSound();

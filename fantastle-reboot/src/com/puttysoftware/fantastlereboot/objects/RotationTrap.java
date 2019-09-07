@@ -149,6 +149,7 @@ public class RotationTrap extends GenericTrap {
             FantastleReboot.getBagOStuff().getGameManager()
                     .doCounterclockwiseRotate(this.radius);
         }
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playRotatedSound();

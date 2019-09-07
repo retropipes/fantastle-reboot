@@ -24,7 +24,6 @@ import com.puttysoftware.fantastlereboot.ttgame.NoteManager;
 import com.puttysoftware.fantastlereboot.ttgame.StatisticsViewer;
 import com.puttysoftware.fantastlereboot.ttmaze.GenerateTask;
 import com.puttysoftware.fantastlereboot.ttmaze.MazeManager;
-import com.puttysoftware.fantastlereboot.ttprefs.PreferencesManager;
 
 public class MenuManager {
     // Fields
@@ -282,7 +281,7 @@ public class MenuManager {
                     }
                 } else if (cmd.equals("Preferences...")) {
                     // Show preferences dialog
-                    PreferencesManager.showPrefs();
+                    FantastleReboot.getBagOStuff().getPrefsManager().showPrefs();
                 } else if (cmd.equals("New Game")) {
                     // Start a new game
                     final boolean proceed = app.getGameManager().newGame();

@@ -19,10 +19,10 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.loaders.older.LogoManager;
 import com.puttysoftware.fantastlereboot.ttmaze.Maze;
 import com.puttysoftware.fantastlereboot.ttmaze.MazeManager;
-import com.puttysoftware.fantastlereboot.ttprefs.PreferencesManager;
 import com.puttysoftware.fileutils.DirectoryUtilities;
 import com.puttysoftware.images.BufferedImageIcon;
 
@@ -99,7 +99,7 @@ public final class GUIManager {
             }
         }
         if (saved) {
-            PreferencesManager.writePrefs();
+            FantastleReboot.getBagOStuff().getPrefsManager().writePrefs();
             // Run cleanup task
             try {
                 final File dirToDelete = new File(Maze.getMazeTempFolder());

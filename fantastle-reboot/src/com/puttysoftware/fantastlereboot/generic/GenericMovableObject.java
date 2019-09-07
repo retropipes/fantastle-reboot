@@ -37,6 +37,7 @@ public abstract class GenericMovableObject extends MazeObject {
             final int x, final int y, final int pushX, final int pushY) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getGameManager().updatePushedPosition(x, y, pushX, pushY, this);
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playPushSuccessSound();
@@ -48,6 +49,7 @@ public abstract class GenericMovableObject extends MazeObject {
             final int x, final int y, final int pullX, final int pullY) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getGameManager().updatePulledPosition(x, y, pullX, pullY, this);
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playPullSuccessSound();

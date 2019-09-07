@@ -85,6 +85,7 @@ public abstract class GenericButton extends MazeObject {
                 .findAllObjectPairsAndSwap(currLevel, this.offState,
                         this.onState);
         FantastleReboot.getBagOStuff().getGameManager().redrawMazeNoRebuild();
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playButtonSound();

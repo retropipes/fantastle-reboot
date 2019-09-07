@@ -24,6 +24,7 @@ import javax.swing.WindowConstants;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.map.AbstractMapAIRoutine;
 import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleDraw;
@@ -39,7 +40,6 @@ import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Darkness;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.EmptyVoid;
-import com.puttysoftware.fantastlereboot.ttprefs.PreferencesManager;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class MapTurnBattleGUI {
@@ -87,7 +87,8 @@ class MapTurnBattleGUI {
     }
 
     void showBattle() {
-        if (PreferencesManager.getMusicEnabled(PreferencesManager.MUSIC_BATTLE)) {
+        FantastleReboot.getBagOStuff().getPrefsManager();
+        if (FantastleReboot.getBagOStuff().getPrefsManager().getMusicEnabled(PreferencesManager.MUSIC_BATTLE)) {
             MusicManager.stopMusic();
             MusicManager.playMusic(MusicConstants.MUSIC_BATTLE);
         }
@@ -317,7 +318,7 @@ class MapTurnBattleGUI {
 
         @Override
         public void keyPressed(final KeyEvent e) {
-            if (!PreferencesManager.oneMove()) {
+            if (!FantastleReboot.getBagOStuff().getPrefsManager().oneMove()) {
                 if (e.isShiftDown()) {
                     this.handleArrows(e);
                 } else {
@@ -328,7 +329,7 @@ class MapTurnBattleGUI {
 
         @Override
         public void keyReleased(final KeyEvent e) {
-            if (PreferencesManager.oneMove()) {
+            if (FantastleReboot.getBagOStuff().getPrefsManager().oneMove()) {
                 if (e.isShiftDown()) {
                     this.handleArrows(e);
                 } else {

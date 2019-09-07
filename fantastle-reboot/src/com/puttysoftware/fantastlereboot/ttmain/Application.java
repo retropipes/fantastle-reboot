@@ -10,6 +10,7 @@ import java.awt.Image;
 import javax.swing.JFrame;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
 import com.puttysoftware.fantastlereboot.battle.map.time.MapTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.map.turn.MapTurnBattleLogic;
@@ -21,7 +22,6 @@ import com.puttysoftware.fantastlereboot.loaders.older.SoundManager;
 import com.puttysoftware.fantastlereboot.ttgame.GameLogicManager;
 import com.puttysoftware.fantastlereboot.ttmaze.MazeManager;
 import com.puttysoftware.fantastlereboot.ttmaze.utilities.MazeObjectList;
-import com.puttysoftware.fantastlereboot.ttprefs.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ttshops.Shop;
 import com.puttysoftware.fantastlereboot.ttshops.ShopTypes;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -191,7 +191,7 @@ public final class Application {
     public JFrame getOutputFrame() {
         try {
             if (this.getMode() == Application.STATUS_PREFS) {
-                return PreferencesManager.getPrefFrame();
+                return FantastleReboot.getBagOStuff().getPrefsManager().getPrefFrame();
             } else if (this.getMode() == Application.STATUS_GUI) {
                 return this.getGUIManager().getGUIFrame();
             } else if (this.getMode() == Application.STATUS_GAME) {
@@ -240,14 +240,14 @@ public final class Application {
     }
 
     public AbstractBattle getBattle() {
-        if (PreferencesManager.useMapBattleEngine()) {
-            if (PreferencesManager.useTimeBattleEngine()) {
+        if (FantastleReboot.getBagOStuff().getPrefsManager().useMapBattleEngine()) {
+            if (FantastleReboot.getBagOStuff().getPrefsManager().useTimeBattleEngine()) {
                 return this.mapTimeBattle;
             } else {
                 return this.mapTurnBattle;
             }
         } else {
-            if (PreferencesManager.useTimeBattleEngine()) {
+            if (FantastleReboot.getBagOStuff().getPrefsManager().useTimeBattleEngine()) {
                 return this.windowTimeBattle;
             } else {
                 return this.windowTurnBattle;

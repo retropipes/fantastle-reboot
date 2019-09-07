@@ -37,6 +37,7 @@ public class CyanLock extends GenericSingleLock {
         if (this.isConditionallyDirectionallySolid(ie, dirX, dirY, inv)) {
             Messager.showMessage("You need a cyan key");
         }
+        FantastleReboot.getBagOStuff().getPrefsManager();
         // Play move failed sound, if it's enabled
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

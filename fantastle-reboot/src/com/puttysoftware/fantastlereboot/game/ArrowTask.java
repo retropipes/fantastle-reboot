@@ -74,6 +74,7 @@ public class ArrowTask extends Thread {
         final String suffix = MazeObject.resolveDirectionConstantToName(
                 MazeObject.resolveRelativeDirection(incX, incY));
         a.setNameSuffix(suffix);
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             SoundLoader.playSound(GameSound.ARROW_SHOOT);
@@ -104,6 +105,7 @@ public class ArrowTask extends Thread {
             o.arrowHitAction(px + cumX, py + cumY, pz, pw, incX, incY, this.at,
                     inv);
         }
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             SoundLoader.playSound(GameSound.ARROW_DIE);

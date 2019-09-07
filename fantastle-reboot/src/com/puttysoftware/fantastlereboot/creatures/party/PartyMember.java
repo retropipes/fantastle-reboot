@@ -7,6 +7,8 @@ package com.puttysoftware.fantastlereboot.creatures.party;
 
 import java.io.IOException;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.castes.Caste;
@@ -24,7 +26,6 @@ import com.puttysoftware.fantastlereboot.ttmain.VersionException;
 import com.puttysoftware.fantastlereboot.ttmaze.FormatConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.GenerateTask;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Player;
-import com.puttysoftware.fantastlereboot.ttprefs.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ttspells.SpellBook;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.page.Page;
@@ -211,20 +212,33 @@ public class PartyMember extends AbstractCreature {
 
     @Override
     public int getSpeed() {
-        final int difficulty = PreferencesManager.getGameDifficulty();
+        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager().getGameDifficulty();
         final int base = this.getBaseSpeed();
+        FantastleReboot.getBagOStuff().getPrefsManager();
         if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
             return (int) (base * SPEED_ADJUST_FASTEST);
-        } else if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
-            return (int) (base * SPEED_ADJUST_FAST);
-        } else if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
-            return (int) (base * SPEED_ADJUST_NORMAL);
-        } else if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
-            return (int) (base * SPEED_ADJUST_SLOW);
-        } else if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
-            return (int) (base * SPEED_ADJUST_SLOWEST);
         } else {
-            return (int) (base * SPEED_ADJUST_NORMAL);
+            FantastleReboot.getBagOStuff().getPrefsManager();
+            if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
+                return (int) (base * SPEED_ADJUST_FAST);
+            } else {
+                FantastleReboot.getBagOStuff().getPrefsManager();
+                if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
+                    return (int) (base * SPEED_ADJUST_NORMAL);
+                } else {
+                    FantastleReboot.getBagOStuff().getPrefsManager();
+                    if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
+                        return (int) (base * SPEED_ADJUST_SLOW);
+                    } else {
+                        FantastleReboot.getBagOStuff().getPrefsManager();
+                        if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
+                            return (int) (base * SPEED_ADJUST_SLOWEST);
+                        } else {
+                            return (int) (base * SPEED_ADJUST_NORMAL);
+                        }
+                    }
+                }
+            }
         }
     }
 

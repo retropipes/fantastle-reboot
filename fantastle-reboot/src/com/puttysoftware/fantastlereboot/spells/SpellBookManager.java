@@ -24,6 +24,7 @@ public class SpellBookManager {
         SpellBookManager.NO_SPELLS_FLAG = false;
         final Spell cast = SpellBookManager.selectSpell(caster);
         if (cast != null) {
+            FantastleReboot.getBagOStuff().getPrefsManager();
             // Play casting spell sound
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
@@ -64,6 +65,7 @@ public class SpellBookManager {
             final String[] names = book.getAllSpellNames();
             final String[] displayNames = book.getAllSpellNamesWithCosts();
             if (names != null && displayNames != null) {
+                FantastleReboot.getBagOStuff().getPrefsManager();
                 if (FantastleReboot.getBagOStuff().getPrefsManager()
                         .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
                     SoundLoader.playSound(GameSound.SPECIAL);
@@ -108,6 +110,7 @@ public class SpellBookManager {
                 // Cast Spell
                 caster.drain(cost);
                 final Effect b = cast.getEffect();
+                FantastleReboot.getBagOStuff().getPrefsManager();
                 // Play casting spell sound
                 if (FantastleReboot.getBagOStuff().getPrefsManager()
                         .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
