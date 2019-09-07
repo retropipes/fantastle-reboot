@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.game;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
@@ -47,7 +47,7 @@ public class ArrowTask extends Thread {
     @Override
     public void run() {
         boolean res = true;
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final PlayerLocationManager plMgr = app.getGameManager()
                 .getPlayerManager();
         final ObjectInventory inv = app.getGameManager().getObjectInventory();

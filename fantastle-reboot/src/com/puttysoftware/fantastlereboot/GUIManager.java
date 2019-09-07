@@ -59,7 +59,7 @@ public class GUIManager {
     }
 
     public void showGUI() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         app.setInGUI(true);
         this.guiFrame.setJMenuBar(app.getMenuManager().getMainMenuBar());
         this.guiFrame.setVisible(true);
@@ -68,7 +68,7 @@ public class GUIManager {
     }
 
     public void hideGUI() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         app.setInGUI(false);
         this.guiFrame.setVisible(false);
     }

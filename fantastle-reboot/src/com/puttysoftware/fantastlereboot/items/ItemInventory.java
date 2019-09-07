@@ -38,7 +38,7 @@ public class ItemInventory {
 
     // Constructors
     public ItemInventory() {
-        this.cil = FantastleReboot.getApplication().getCombatItems();
+        this.cil = FantastleReboot.getBagOStuff().getCombatItems();
         this.inventory = this.cil.getAllItems();
         this.uses = new int[ItemInventory.MAX_ITEMS];
         this.quantity = new int[ItemInventory.MAX_ITEMS];

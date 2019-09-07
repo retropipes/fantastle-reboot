@@ -43,14 +43,14 @@ public class DamagedWall extends GenericWall {
     public void moveFailedAction(final boolean ie, final int dirX,
             final int dirY, final ObjectInventory inv) {
         // Destroy the wall
-        final int pz = FantastleReboot.getApplication().getGameManager()
+        final int pz = FantastleReboot.getBagOStuff().getGameManager()
                 .getPlayerManager().getPlayerLocationZ();
-        final int pw = FantastleReboot.getApplication().getGameManager()
+        final int pw = FantastleReboot.getBagOStuff().getGameManager()
                 .getPlayerManager().getPlayerLocationW();
-        FantastleReboot.getApplication().getGameManager().morph(new Empty(), dirX,
+        FantastleReboot.getBagOStuff().getGameManager().morph(new Empty(), dirX,
                 dirY, pz, pw);
         // Play move failed sound, if it's enabled
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveFailedSound();
         }

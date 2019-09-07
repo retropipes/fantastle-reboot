@@ -22,8 +22,8 @@ public class BossBattle extends Battle {
     @Override
     public void doBattle() {
         Battle.IN_BATTLE = true;
-        FantastleReboot.getApplication().getGameManager().hideOutput();
-        if (FantastleReboot.getApplication().getPrefsManager()
+        FantastleReboot.getBagOStuff().getGameManager().hideOutput();
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
             SoundLoader.playSound(GameSound.DRAW_SWORD);
         }

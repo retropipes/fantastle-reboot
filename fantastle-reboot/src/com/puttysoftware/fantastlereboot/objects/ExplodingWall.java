@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.objects;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
@@ -44,7 +44,7 @@ public class ExplodingWall extends GenericWall {
     public void chainReactionAction(final int x, final int y, final int z,
             final int w) {
         // Explode this wall, and any exploding walls next to this wall as well
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         ExplodingWall curr = null;
         try {
             curr = (ExplodingWall) app.getMazeManager().getMazeObject(x, y, z,

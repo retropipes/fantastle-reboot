@@ -46,7 +46,7 @@ public class EffectManager implements EffectConstants {
             if (this.activeEffects[x].isActive()) {
                 this.activeEffects[x].useEffect();
                 if (!this.activeEffects[x].isActive()) {
-                    FantastleReboot.getApplication().getGameManager()
+                    FantastleReboot.getBagOStuff().getGameManager()
                             .keepNextMessage();
                     Messager.showMessage("You feel normal again.");
                 }

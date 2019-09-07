@@ -21,7 +21,7 @@ public class CombatItemManager {
 
     public static boolean selectAndUseItem(final Creature user) {
         boolean result = false;
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
             SoundLoader.playSound(GameSound.SPECIAL);
         }
@@ -50,7 +50,7 @@ public class CombatItemManager {
                     .generateCombatUsableDisplayStringArray();
             if (names != null && displayNames != null) {
                 // Play using item sound
-                if (FantastleReboot.getApplication().getPrefsManager()
+                if (FantastleReboot.getBagOStuff().getPrefsManager()
                         .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
                     SoundLoader.playSound(GameSound.PARTY_SPELL);
                 }
@@ -95,7 +95,7 @@ public class CombatItemManager {
             final Creature user) {
         if (used != null) {
          // Play using item sound
-            if (FantastleReboot.getApplication().getPrefsManager()
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
                 SoundLoader.playSound(GameSound.MONSTER_SPELL);
             }
@@ -121,7 +121,7 @@ public class CombatItemManager {
         case 'P':
             return PCManager.getPlayer();
         case 'E':
-            return FantastleReboot.getApplication().getBattle().getEnemy();
+            return FantastleReboot.getBagOStuff().getBattle().getEnemy();
         default:
             return null;
         }

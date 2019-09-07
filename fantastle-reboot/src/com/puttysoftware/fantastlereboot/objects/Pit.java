@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.objects;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.game.InfiniteRecursionException;
@@ -48,14 +48,14 @@ public class Pit extends StairsDown {
             final int dirY, final ObjectInventory inv) {
         return this
                 .searchNestedPits(dirX, dirY,
-                        FantastleReboot.getApplication().getGameManager()
+                        FantastleReboot.getBagOStuff().getGameManager()
                                 .getPlayerManager().getPlayerLocationZ() - 1,
                         inv);
     }
 
     private boolean searchNestedPits(final int dirX, final int dirY,
             final int floor, final ObjectInventory inv) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         // Stop infinite recursion
         final int level = app.getGameManager().getPlayerManager()
                 .getPlayerLocationW();
@@ -87,7 +87,7 @@ public class Pit extends StairsDown {
     @Override
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getGameManager().updatePositionAbsolute(this.getDestinationRow(),
                 this.getDestinationColumn(), this.getDestinationFloor(),
                 this.getDestinationLevel());
@@ -101,7 +101,7 @@ public class Pit extends StairsDown {
     public void pushIntoAction(final ObjectInventory inv,
             final MazeObject pushed, final int x, final int y, final int z,
             final int w) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         try {
             this.searchNestedPits(x, y, z - 1, inv);
             if (pushed.isPushable()) {
@@ -118,7 +118,7 @@ public class Pit extends StairsDown {
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 MazeObject.playFallSound();
             }
-            FantastleReboot.getApplication().getMazeManager().getMaze()
+            FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                     .setCell(new Empty(), x, y, z, w, Maze.LAYER_OBJECT);
         }
     }
@@ -126,7 +126,7 @@ public class Pit extends StairsDown {
     @Override
     public boolean isConditionallyDirectionallySolid(final boolean ie,
             final int dirX, final int dirY, final ObjectInventory inv) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         if (!app.getGameManager().isFloorBelow()) {
             if (ie) {
                 return true;

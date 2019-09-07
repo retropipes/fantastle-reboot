@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.objects;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
@@ -116,7 +116,7 @@ public class MetalButton extends GenericField {
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
         if (inv.isItemThere(this.getKey())) {
-            final Application app = FantastleReboot.getApplication();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             final MazeObject there = app.getMazeManager().getMazeObject(
                     this.getTargetRow(), this.getTargetColumn(),
                     this.getTargetFloor(), this.getTargetLevel(),
@@ -137,7 +137,7 @@ public class MetalButton extends GenericField {
                 this.playMoveSuccessSound();
             }
         } else {
-            if (FantastleReboot.getApplication().getPrefsManager()
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 SoundLoader.playSound(GameSound.WALK);
             }
@@ -184,7 +184,7 @@ public class MetalButton extends GenericField {
 
     @Override
     public MazeObject editorPropertiesHook() {
-        return FantastleReboot.getApplication().getEditor().editMetalButtonTarget();
+        return FantastleReboot.getBagOStuff().getEditor().editMetalButtonTarget();
     }
 
     @Override

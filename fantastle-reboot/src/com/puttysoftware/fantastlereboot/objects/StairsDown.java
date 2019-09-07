@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.objects;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
@@ -51,32 +51,32 @@ public class StairsDown extends GenericTeleport {
 
     @Override
     public int getDestinationRow() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         return app.getGameManager().getPlayerManager().getPlayerLocationX();
     }
 
     @Override
     public int getDestinationColumn() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         return app.getGameManager().getPlayerManager().getPlayerLocationY();
     }
 
     @Override
     public int getDestinationFloor() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         return app.getGameManager().getPlayerManager().getPlayerLocationZ() - 1;
     }
 
     @Override
     public int getDestinationLevel() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         return app.getGameManager().getPlayerManager().getPlayerLocationW();
     }
 
     @Override
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getGameManager().updatePositionAbsoluteNoEvents(
                 this.getDestinationRow(), this.getDestinationColumn(),
                 this.getDestinationFloor(), this.getDestinationLevel());
@@ -88,7 +88,7 @@ public class StairsDown extends GenericTeleport {
 
     @Override
     public void editorPlaceHook() {
-        final MazeEditor me = FantastleReboot.getApplication().getEditor();
+        final MazeEditor me = FantastleReboot.getBagOStuff().getEditor();
         me.pairStairs(MazeEditor.STAIRS_DOWN);
     }
 
@@ -114,7 +114,7 @@ public class StairsDown extends GenericTeleport {
 
     @Override
     public int getCustomFormat() {
-        if (FantastleReboot.getApplication().getMazeManager().maze3Compatible()) {
+        if (FantastleReboot.getBagOStuff().getMazeManager().maze3Compatible()) {
             // Emulate older format bug
             return 4;
         } else {

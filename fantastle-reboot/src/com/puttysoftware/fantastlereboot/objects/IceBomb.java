@@ -63,7 +63,7 @@ public class IceBomb extends GenericUsableObject {
         // Act as if bomb was used
         this.useAction(null, locX, locY, locZ, locW);
         // Destroy bomb
-        FantastleReboot.getApplication().getGameManager().morph(new Empty(), locX,
+        FantastleReboot.getBagOStuff().getGameManager().morph(new Empty(), locX,
                 locY, locZ, locW);
         // Stop arrow
         return false;
@@ -73,11 +73,11 @@ public class IceBomb extends GenericUsableObject {
     public void useAction(final MazeObject mo, final int x, final int y,
             final int z, final int w) {
         // Freeze any monsters nearby
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playUseSound();
         }
-        FantastleReboot.getApplication().getMazeManager().getMaze()
+        FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                 .radialScanFreezeObjects(x, y, z, w, Maze.LAYER_OBJECT,
                         IceBomb.EFFECT_RADIUS);
     }

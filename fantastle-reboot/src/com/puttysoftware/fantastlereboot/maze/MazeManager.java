@@ -29,7 +29,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
@@ -83,7 +83,7 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
         }
         this.maze3CompatibleModeEnabled = false;
         this.maze4CompatibleModeEnabled = false;
-        FantastleReboot.getApplication().getMenuManager().checkFlags();
+        FantastleReboot.getBagOStuff().getMenuManager().checkFlags();
     }
 
     public MazeObject getMazeObject(final int x, final int y, final int z,
@@ -110,7 +110,7 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
             }
         }
         if (saved) {
-            FantastleReboot.getApplication().getPrefsManager().writePrefs();
+            FantastleReboot.getBagOStuff().getPrefsManager().writePrefs();
             inResponse.performQuit();
         } else {
             inResponse.cancelQuit();
@@ -119,9 +119,9 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
 
     public int showSaveDialog() {
         String type, source;
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final int mode = app.getMode();
-        if (mode == Application.STATUS_EDITOR) {
+        if (mode == BagOStuff.STATUS_EDITOR) {
             type = "maze";
             source = "Editor";
         } else {
@@ -139,7 +139,7 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
     }
 
     public void setLoaded(final boolean status) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         this.loaded = status;
         app.getMenuManager().checkFlags();
     }
@@ -149,7 +149,7 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
     }
 
     public void setDirty(final boolean newDirty) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         this.isDirty = newDirty;
         app.getMenuManager().checkFlags();
     }
@@ -184,7 +184,7 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
     }
 
     public boolean loadMaze() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         int status = 0;
         boolean saved = true;
         String filename, extension;
@@ -293,7 +293,7 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
     @Override
     public void openFiles(OpenFilesEvent inE) {
         final String infilename = inE.getFiles().get(0).getAbsolutePath();
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         if (!this.loaded) {
             String extension;
             final File file = new File(infilename);
@@ -350,8 +350,8 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
     }
 
     public boolean saveMaze() {
-        final Application app = FantastleReboot.getApplication();
-        if (app.getMode() == Application.STATUS_GAME) {
+        final BagOStuff app = FantastleReboot.getBagOStuff();
+        if (app.getMode() == BagOStuff.STATUS_GAME) {
             if (this.lastUsedGameFile != null
                     && !this.lastUsedGameFile.equals("")) {
                 final String extension = MazeManager
@@ -394,7 +394,7 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
     }
 
     public boolean saveMazeAs() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         String filename, extension;
         final String lastSave = app.getPrefsManager().getLastDirSave();
         File lastSaveDir = null;
@@ -405,7 +405,7 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
         final Maze5Filter bmf = new Maze5Filter();
         final GameFilter bsf = new GameFilter();
         fc.setAcceptAllFileFilterUsed(false);
-        if (app.getMode() == Application.STATUS_GAME) {
+        if (app.getMode() == BagOStuff.STATUS_GAME) {
             fc.addChoosableFileFilter(bsf);
             fc.setFileFilter(bsf);
         } else {
@@ -419,7 +419,7 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
                     .setLastDirSave(fc.getCurrentDirectory().getAbsolutePath());
             extension = MazeManager.getExtension(file);
             filename = file.getAbsolutePath();
-            if (app.getMode() == Application.STATUS_GAME) {
+            if (app.getMode() == BagOStuff.STATUS_GAME) {
                 if (extension != null) {
                     if (!extension.equals(Extension.getGameExtension())) {
                         filename = MazeManager.getNameWithoutExtension(file)

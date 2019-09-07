@@ -47,7 +47,7 @@ public class MovingBlock extends GenericDungeonObject {
         // Move the block
         final RandomRange r = new RandomRange(0, 7);
         final int move = r.generate();
-        FantastleReboot.getApplication().getMazeManager().getMaze()
+        FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                 .updateMovingBlockPosition(move, dirX, dirY, this);
         final RandomRange t = new RandomRange(1, 2);
         this.activateTimer(t.generate());
@@ -87,7 +87,7 @@ public class MovingBlock extends GenericDungeonObject {
     @Override
     protected MazeObject readMazeObjectHook(final DataReader reader,
             final int formatVersion) throws IOException {
-        final MazeObjectList objectList = FantastleReboot.getApplication()
+        final MazeObjectList objectList = FantastleReboot.getBagOStuff()
                 .getObjects();
         this.savedObject = objectList.readMazeObject(reader, formatVersion);
         return this;

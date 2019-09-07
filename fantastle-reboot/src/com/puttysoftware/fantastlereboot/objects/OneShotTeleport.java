@@ -18,7 +18,7 @@
  */
 package com.puttysoftware.fantastlereboot.objects;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
@@ -43,7 +43,7 @@ public class OneShotTeleport extends GenericTeleport {
     @Override
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getGameManager().decay();
         app.getGameManager().updatePositionAbsolute(this.getDestinationRow(),
                 this.getDestinationColumn(), this.getDestinationFloor(),
@@ -66,7 +66,7 @@ public class OneShotTeleport extends GenericTeleport {
 
     @Override
     public MazeObject editorPropertiesHook() {
-        final MazeEditor me = FantastleReboot.getApplication().getEditor();
+        final MazeEditor me = FantastleReboot.getBagOStuff().getEditor();
         final MazeObject mo = me
                 .editTeleportDestination(MazeEditor.TELEPORT_TYPE_ONESHOT);
         return mo;

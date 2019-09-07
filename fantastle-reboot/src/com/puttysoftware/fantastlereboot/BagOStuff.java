@@ -36,7 +36,7 @@ import com.puttysoftware.fantastlereboot.oldcreatures.Boss;
 import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 import com.puttysoftware.images.BufferedImageIcon;
 
-public class Application {
+public class BagOStuff {
     // Fields
     private AboutDialog about;
     private GameManager gameMgr;
@@ -65,7 +65,7 @@ public class Application {
     public static final int STATUS_PREFS = 3;
 
     // Constructors
-    public Application() {
+    public BagOStuff() {
         this.objects = new MazeObjectList();
         this.combatItems = new CombatItemList();
     }
@@ -112,23 +112,23 @@ public class Application {
 
     public int getMode() {
         if (this.IN_PREFS) {
-            return Application.STATUS_PREFS;
+            return BagOStuff.STATUS_PREFS;
         } else if (this.IN_GUI) {
-            return Application.STATUS_GUI;
+            return BagOStuff.STATUS_GUI;
         } else if (this.IN_GAME) {
-            return Application.STATUS_GAME;
+            return BagOStuff.STATUS_GAME;
         } else {
-            return Application.STATUS_EDITOR;
+            return BagOStuff.STATUS_EDITOR;
         }
     }
 
     public int getFormerMode() {
         if (this.IN_GUI) {
-            return Application.STATUS_GUI;
+            return BagOStuff.STATUS_GUI;
         } else if (this.IN_GAME) {
-            return Application.STATUS_GAME;
+            return BagOStuff.STATUS_GAME;
         } else {
-            return Application.STATUS_EDITOR;
+            return BagOStuff.STATUS_EDITOR;
         }
     }
 
@@ -242,26 +242,26 @@ public class Application {
 
     private String getVersionString() {
         if (this.isBetaModeEnabled()) {
-            return "" + Application.VERSION_MAJOR + "."
-                    + Application.VERSION_MINOR + "."
-                    + Application.VERSION_BUGFIX + "-dev"
-                    + Application.VERSION_BETA;
+            return "" + BagOStuff.VERSION_MAJOR + "."
+                    + BagOStuff.VERSION_MINOR + "."
+                    + BagOStuff.VERSION_BUGFIX + "-dev"
+                    + BagOStuff.VERSION_BETA;
         } else {
-            return "" + Application.VERSION_MAJOR + "."
-                    + Application.VERSION_MINOR + "."
-                    + Application.VERSION_BUGFIX;
+            return "" + BagOStuff.VERSION_MAJOR + "."
+                    + BagOStuff.VERSION_MINOR + "."
+                    + BagOStuff.VERSION_BUGFIX;
         }
     }
 
     public JFrame getOutputFrame() {
         try {
-            if (this.getMode() == Application.STATUS_PREFS) {
+            if (this.getMode() == BagOStuff.STATUS_PREFS) {
                 return this.getPrefsManager().getPrefFrame();
             } else if (Battle.isInBattle()) {
                 return this.getBattle().getBattleFrame();
-            } else if (this.getMode() == Application.STATUS_GUI) {
+            } else if (this.getMode() == BagOStuff.STATUS_GUI) {
                 return this.getGUIManager().getGUIFrame();
-            } else if (this.getMode() == Application.STATUS_GAME) {
+            } else if (this.getMode() == BagOStuff.STATUS_GAME) {
                 return this.getGameManager().getOutputFrame();
             } else {
                 return this.getEditor().getOutputFrame();
@@ -280,6 +280,6 @@ public class Application {
     }
 
     public boolean isBetaModeEnabled() {
-        return Application.VERSION_BETA > 0;
+        return BagOStuff.VERSION_BETA > 0;
     }
 }

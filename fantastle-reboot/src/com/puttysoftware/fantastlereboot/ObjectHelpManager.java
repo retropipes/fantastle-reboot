@@ -38,7 +38,7 @@ public class ObjectHelpManager {
 
     // Constructors
     public ObjectHelpManager() {
-        this.objectList = FantastleReboot.getApplication().getObjects();
+        this.objectList = FantastleReboot.getBagOStuff().getObjects();
         this.objectNames = this.objectList.getAllDescriptions();
         this.objectAppearances = this.objectList.getAllEditorAppearances();
         this.hv = new GraphicalHelpViewer(this.objectAppearances,
@@ -47,7 +47,7 @@ public class ObjectHelpManager {
         this.helpFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         this.helpFrame.setLayout(new FlowLayout());
         this.helpFrame.add(this.hv.getHelp());
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .isMobileModeEnabled()) {
             this.hv.setHelpSize(GraphicsManager.MAX_MOBILE_WINDOW_SIZE,
                     GraphicsManager.MAX_MOBILE_WINDOW_SIZE);
@@ -65,7 +65,7 @@ public class ObjectHelpManager {
     }
 
     public void updateHelpSize() {
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .isMobileModeEnabled()) {
             this.hv.setHelpSize(GraphicsManager.MAX_MOBILE_WINDOW_SIZE,
                     GraphicsManager.MAX_MOBILE_WINDOW_SIZE);

@@ -11,7 +11,7 @@ public class Bank extends GenericDungeonObject {
 
     @Override
     public void postMoveActionHook() {
-        FantastleReboot.getApplication().getBank().showShop();
+        FantastleReboot.getBagOStuff().getBank().showShop();
     }
 
     @Override

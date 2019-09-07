@@ -11,7 +11,7 @@ public class Regenerator extends GenericDungeonObject {
 
     @Override
     public void postMoveActionHook() {
-        FantastleReboot.getApplication().getRegenerator().showShop();
+        FantastleReboot.getBagOStuff().getRegenerator().showShop();
     }
 
     @Override

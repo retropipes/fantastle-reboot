@@ -29,7 +29,7 @@ public class ArmorShop extends GenericDungeonObject {
 
     @Override
     public void postMoveActionHook() {
-        FantastleReboot.getApplication().getArmor().showShop();
+        FantastleReboot.getBagOStuff().getArmor().showShop();
     }
 
     @Override

@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.objects;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.generic.GenericWall;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
@@ -37,7 +37,7 @@ public class EmptyVoid extends GenericWall {
     @Override
     public String gameRenderHook(final int x, final int y, final int z,
             final int w) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         String mo1Name, mo2Name, mo3Name, mo4Name, mo6Name, mo7Name, mo8Name,
                 mo9Name, thisName;
         thisName = this.getName();
@@ -112,7 +112,7 @@ public class EmptyVoid extends GenericWall {
     @Override
     public void determineCurrentAppearance(final int x, final int y,
             final int z, final int w) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         String mo1Name, mo2Name, mo3Name, mo4Name, mo6Name, mo7Name, mo8Name,
                 mo9Name, thisName;
         thisName = this.getName();

@@ -29,7 +29,7 @@ public class ItemShop extends GenericDungeonObject {
 
     @Override
     public void postMoveActionHook() {
-        FantastleReboot.getApplication().getItems().showShop();
+        FantastleReboot.getBagOStuff().getItems().showShop();
     }
 
     @Override

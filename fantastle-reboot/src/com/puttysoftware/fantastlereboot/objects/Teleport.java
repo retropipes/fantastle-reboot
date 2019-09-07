@@ -47,7 +47,7 @@ public class Teleport extends GenericTeleport {
 
     @Override
     public MazeObject editorPropertiesHook() {
-        final MazeEditor me = FantastleReboot.getApplication().getEditor();
+        final MazeEditor me = FantastleReboot.getBagOStuff().getEditor();
         final MazeObject mo = me
                 .editTeleportDestination(MazeEditor.TELEPORT_TYPE_GENERIC);
         return mo;

@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.objects;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
@@ -42,7 +42,7 @@ public class Finish extends GenericTeleport {
     @Override
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveSuccessSound();
@@ -93,7 +93,7 @@ public class Finish extends GenericTeleport {
 
     @Override
     public int getCustomFormat() {
-        if (FantastleReboot.getApplication().getMazeManager().maze3Compatible()) {
+        if (FantastleReboot.getBagOStuff().getMazeManager().maze3Compatible()) {
             // Emulate older format bug
             return 4;
         } else {

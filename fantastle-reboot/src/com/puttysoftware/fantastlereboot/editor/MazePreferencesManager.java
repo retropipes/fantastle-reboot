@@ -65,21 +65,21 @@ public class MazePreferencesManager {
     }
 
     public void showPrefs() {
-        FantastleReboot.getApplication().getEditor().disableOutput();
+        FantastleReboot.getBagOStuff().getEditor().disableOutput();
         this.prefFrame.setVisible(true);
     }
 
     public void hidePrefs() {
         this.prefFrame.setVisible(false);
-        FantastleReboot.getApplication().getEditor().enableOutput();
-        FantastleReboot.getApplication().getMazeManager().setDirty(true);
-        FantastleReboot.getApplication().getEditor().redrawEditor();
+        FantastleReboot.getBagOStuff().getEditor().enableOutput();
+        FantastleReboot.getBagOStuff().getMazeManager().setDirty(true);
+        FantastleReboot.getBagOStuff().getEditor().redrawEditor();
     }
 
     public void setPrefs() {
-        final int level = FantastleReboot.getApplication().getEditor()
+        final int level = FantastleReboot.getBagOStuff().getEditor()
                 .getLocationManager().getEditorLocationW();
-        final Maze m = FantastleReboot.getApplication().getMazeManager().getMaze();
+        final Maze m = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
         if (this.horizontalWrap.isSelected()) {
             m.enableHorizontalWraparound(level);
         } else {
@@ -99,9 +99,9 @@ public class MazePreferencesManager {
     }
 
     public void loadPrefs() {
-        final int level = FantastleReboot.getApplication().getEditor()
+        final int level = FantastleReboot.getBagOStuff().getEditor()
                 .getLocationManager().getEditorLocationW();
-        final Maze m = FantastleReboot.getApplication().getMazeManager().getMaze();
+        final Maze m = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
         this.startLevelChoiceArray = new String[m.getLevels()];
         for (int x = 0; x < m.getLevels(); x++) {
             this.startLevelChoiceArray[x] = Integer.toString(x + 1);

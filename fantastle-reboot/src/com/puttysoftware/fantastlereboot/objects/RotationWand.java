@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.objects;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
@@ -60,7 +60,7 @@ public class RotationWand extends GenericWand {
     @Override
     public void useAction(final MazeObject mo, final int x, final int y,
             final int z, final int w) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getGameManager().setRemoteAction(x, y, z, w);
         int r = 1;
         final String[] rChoices = new String[] { "1", "2", "3" };
@@ -88,12 +88,12 @@ public class RotationWand extends GenericWand {
             d = RotationWand.COUNTERCLOCKWISE;
         }
         if (d) {
-            FantastleReboot.getApplication().getGameManager().doClockwiseRotate(r);
+            FantastleReboot.getBagOStuff().getGameManager().doClockwiseRotate(r);
         } else {
-            FantastleReboot.getApplication().getGameManager()
+            FantastleReboot.getBagOStuff().getGameManager()
                     .doCounterclockwiseRotate(r);
         }
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playRotatedSound();
         }

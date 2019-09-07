@@ -11,6 +11,9 @@ public class TallerTower {
 
     // Methods
     public static Application getApplication() {
+        if (TallerTower.application == null) {
+            TallerTower.application = new Application();
+        }
         return TallerTower.application;
     }
 }

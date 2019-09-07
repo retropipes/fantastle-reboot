@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.objects;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.generic.GenericWand;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
@@ -47,7 +47,7 @@ public class RemoteActionWand extends GenericWand {
     @Override
     public void useAction(final MazeObject mo, final int x, final int y,
             final int z, final int w) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getGameManager().doRemoteAction(x, y, z, w);
     }
 

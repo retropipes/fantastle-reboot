@@ -39,7 +39,7 @@ import com.puttysoftware.integration.NativeIntegration;
 
 public class FantastleReboot {
     // Constants
-    private static Application application;
+    private static BagOStuff bag;
     private static final String PROGRAM_NAME = "Fantastle";
     private static final String ERROR_MESSAGE = "Perhaps a bug is to blame for this error message.\n"
             + "Include the debug log with your bug report.\n"
@@ -52,8 +52,8 @@ public class FantastleReboot {
     private static final int BATTLE_MAZE_SIZE = 16;
 
     // Methods
-    public static Application getApplication() {
-        return FantastleReboot.application;
+    public static BagOStuff getBagOStuff() {
+        return FantastleReboot.bag;
     }
 
     public static void logError(final Throwable t) {
@@ -79,21 +79,22 @@ public class FantastleReboot {
             // Compute action cap
             AbstractCreature.computeActionCap(FantastleReboot.BATTLE_MAZE_SIZE,
                     FantastleReboot.BATTLE_MAZE_SIZE);
-            FantastleReboot.application = new Application();
-            FantastleReboot.application.postConstruct();
+            // Create the Bag O'Stuff
+            FantastleReboot.bag = new BagOStuff();
+            FantastleReboot.bag.postConstruct();
             // OS Integration
             NativeIntegration ni = new NativeIntegration();
             ni.configureLookAndFeel();
-            ni.setOpenFileHandler(FantastleReboot.application.getMazeManager());
-            ni.setQuitHandler(FantastleReboot.application.getMazeManager());
+            ni.setOpenFileHandler(FantastleReboot.bag.getMazeManager());
+            ni.setQuitHandler(FantastleReboot.bag.getMazeManager());
             ni.setPreferencesHandler(
-                    FantastleReboot.application.getPrefsManager());
-            ni.setAboutHandler(FantastleReboot.application.getAboutDialog());
+                    FantastleReboot.bag.getPrefsManager());
+            ni.setAboutHandler(FantastleReboot.bag.getAboutDialog());
             // Load stuff
             FantastleReboot.showLoadingScreen();
             // Done loading
-            FantastleReboot.application.playLogoSound();
-            FantastleReboot.application.getGUIManager().showGUI();
+            FantastleReboot.bag.playLogoSound();
+            FantastleReboot.bag.getGUIManager().showGUI();
         } catch (final Throwable t) {
             FantastleReboot.logError(t);
         }
@@ -125,7 +126,7 @@ public class FantastleReboot {
         // Do the loading
         waitFrame.setVisible(true);
         // Create logo cache
-        FantastleReboot.getApplication().getGUIManager().updateLogo();
+        FantastleReboot.getBagOStuff().getGUIManager().updateLogo();
         waitProgress.setValue(20);
         // Create image cache
         ImageCache.recreateCache();
@@ -136,7 +137,7 @@ public class FantastleReboot {
         // Create sound cache
         waitProgress.setValue(80);
         // Create stat image cache
-        FantastleReboot.getApplication().getGameManager().getStatGUI()
+        FantastleReboot.getBagOStuff().getGameManager().getStatGUI()
                 .updateGUI();
         waitProgress.setValue(100);
         waitFrame.setVisible(false);

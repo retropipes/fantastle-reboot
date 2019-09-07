@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.objects;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.generic.GenericWall;
 import com.puttysoftware.fantastlereboot.maze.Maze;
@@ -37,7 +37,7 @@ public class FadingWall extends GenericWall {
     public void timerExpiredAction(final int dirX, final int dirY) {
         // Disappear if the player is close to us
         boolean scanResult = false;
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final int pz = app.getGameManager().getPlayerManager()
                 .getPlayerLocationZ();
         final int pw = app.getGameManager().getPlayerManager()

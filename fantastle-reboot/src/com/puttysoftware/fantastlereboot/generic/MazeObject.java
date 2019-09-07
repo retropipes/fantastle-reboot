@@ -698,7 +698,7 @@ public abstract class MazeObject implements DirectionConstants, TypeConstants,
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
         // Play move success sound, if it's enabled
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveSuccessSound();
         }
@@ -714,7 +714,7 @@ public abstract class MazeObject implements DirectionConstants, TypeConstants,
     public void moveFailedAction(final boolean ie, final int dirX,
             final int dirY, final ObjectInventory inv) {
         // Play move failed sound, if it's enabled
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveFailedSound();
         }
@@ -883,11 +883,11 @@ public abstract class MazeObject implements DirectionConstants, TypeConstants,
     public void pushFailedAction(final ObjectInventory inv, final int x,
             final int y, final int pushX, final int pushY) {
         // Play push failed sound, if it's enabled
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playPushFailedSound();
         }
-        FantastleReboot.getApplication().getGameManager().keepNextMessage();
+        FantastleReboot.getBagOStuff().getGameManager().keepNextMessage();
         Messager.showMessage("Can't push that");
     }
 
@@ -946,11 +946,11 @@ public abstract class MazeObject implements DirectionConstants, TypeConstants,
     public void pullFailedAction(final ObjectInventory inv, final int x,
             final int y, final int pullX, final int pullY) {
         // Play pull failed sound, if it's enabled
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playPullFailedSound();
         }
-        FantastleReboot.getApplication().getGameManager().keepNextMessage();
+        FantastleReboot.getBagOStuff().getGameManager().keepNextMessage();
         Messager.showMessage("Can't pull that");
     }
 

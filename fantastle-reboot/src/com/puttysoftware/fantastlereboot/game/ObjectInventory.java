@@ -40,7 +40,7 @@ public class ObjectInventory implements Cloneable {
 
     // Constructors
     public ObjectInventory() {
-        final MazeObjectList list = FantastleReboot.getApplication().getObjects();
+        final MazeObjectList list = FantastleReboot.getBagOStuff().getObjects();
         this.nameList = list.getAllInventoryableNamesMinusBoots();
         this.contents = new int[this.nameList.length];
         this.uses = new int[this.nameList.length][this.MAX_QUANTITY];
@@ -145,7 +145,7 @@ public class ObjectInventory implements Cloneable {
     }
 
     public String[] generateUseStringArray() {
-        final MazeObjectList list = FantastleReboot.getApplication().getObjects();
+        final MazeObjectList list = FantastleReboot.getBagOStuff().getObjects();
         final String[] names = list.getAllUsableNames();
         final int len = names.length;
         final StringBuilder[] sb = new StringBuilder[len];
@@ -281,7 +281,7 @@ public class ObjectInventory implements Cloneable {
 
     public static ObjectInventory readInventory(final DataReader reader,
             final int formatVersion) throws IOException {
-        final MazeObjectList objects = FantastleReboot.getApplication().getObjects();
+        final MazeObjectList objects = FantastleReboot.getBagOStuff().getObjects();
         final ObjectInventory i = new ObjectInventory();
         i.boots = (GenericBoots) objects.readMazeObject(reader, formatVersion);
         if (i.boots == null) {

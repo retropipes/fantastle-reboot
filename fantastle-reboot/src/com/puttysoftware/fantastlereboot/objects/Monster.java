@@ -41,8 +41,8 @@ public class Monster extends GenericDungeonObject {
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
         if (!Battle.isInBattle()) {
-            FantastleReboot.getApplication().getBattle().doBattle();
-            FantastleReboot.getApplication().getMazeManager().getMaze()
+            FantastleReboot.getBagOStuff().getBattle().doBattle();
+            FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                     .postBattle(this, dirX, dirY, true);
         }
     }
@@ -53,11 +53,11 @@ public class Monster extends GenericDungeonObject {
             final int arrowType, final ObjectInventory inv) {
         if (arrowType == ArrowTypeConstants.ARROW_TYPE_ICE) {
             // Transform into iced monster, if hit by an ice arrow
-            final int pz = FantastleReboot.getApplication().getGameManager()
+            final int pz = FantastleReboot.getBagOStuff().getGameManager()
                     .getPlayerManager().getPlayerLocationZ();
-            final int pw = FantastleReboot.getApplication().getGameManager()
+            final int pw = FantastleReboot.getBagOStuff().getGameManager()
                     .getPlayerManager().getPlayerLocationW();
-            FantastleReboot.getApplication().getGameManager().morph(
+            FantastleReboot.getBagOStuff().getGameManager().morph(
                     new IcedMonster(this.savedObject), locX, locY, pz, pw);
             return false;
         } else {
@@ -83,7 +83,7 @@ public class Monster extends GenericDungeonObject {
         // Move the monster
         final RandomRange r = new RandomRange(0, 7);
         final int move = r.generate();
-        FantastleReboot.getApplication().getMazeManager().getMaze()
+        FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                 .updateMonsterPosition(move, dirX, dirY, this);
         this.activateTimer(1);
     }
@@ -122,7 +122,7 @@ public class Monster extends GenericDungeonObject {
     @Override
     protected MazeObject readMazeObjectHook(final DataReader reader,
             final int formatVersion) throws IOException {
-        final MazeObjectList objectList = FantastleReboot.getApplication()
+        final MazeObjectList objectList = FantastleReboot.getBagOStuff()
                 .getObjects();
         this.savedObject = objectList.readMazeObject(reader, formatVersion);
         return this;

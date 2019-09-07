@@ -48,11 +48,11 @@ public class DarknessGem extends GenericGem {
 
     @Override
     public void postMoveActionHook() {
-        final int currLevel = FantastleReboot.getApplication().getGameManager()
+        final int currLevel = FantastleReboot.getBagOStuff().getGameManager()
                 .getPlayerManager().getPlayerLocationW();
-        FantastleReboot.getApplication().getMazeManager().getMaze()
+        FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                 .setVisionRadiusToMinimum(currLevel);
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playDarknessSound();
         }

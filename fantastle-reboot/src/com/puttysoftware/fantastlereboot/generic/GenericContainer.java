@@ -20,7 +20,7 @@ package com.puttysoftware.fantastlereboot.generic;
 
 import java.io.IOException;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
@@ -96,7 +96,7 @@ public abstract class GenericContainer extends GenericLock {
     @Override
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         if (!this.getKey().isInfinite()) {
             inv.removeItem(this.getKey());
         }
@@ -139,7 +139,7 @@ public abstract class GenericContainer extends GenericLock {
     @Override
     protected MazeObject readMazeObjectHook(final DataReader reader,
             final int formatVersion) throws IOException {
-        final MazeObjectList objectList = FantastleReboot.getApplication()
+        final MazeObjectList objectList = FantastleReboot.getBagOStuff()
                 .getObjects();
         this.inside = objectList.readMazeObject(reader, formatVersion);
         return this;

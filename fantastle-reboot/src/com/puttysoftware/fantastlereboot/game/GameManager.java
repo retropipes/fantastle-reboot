@@ -35,7 +35,7 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
@@ -165,7 +165,7 @@ public class GameManager implements EffectConstants {
     }
 
     public boolean isFloorBelow() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
             m.getCell(this.plMgr.getPlayerLocationX(),
@@ -181,7 +181,7 @@ public class GameManager implements EffectConstants {
     }
 
     public boolean isFloorAbove() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
             m.getCell(this.plMgr.getPlayerLocationX(),
@@ -197,7 +197,7 @@ public class GameManager implements EffectConstants {
     }
 
     public boolean isLevelBelow() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
             m.getCell(this.plMgr.getPlayerLocationX(),
@@ -213,7 +213,7 @@ public class GameManager implements EffectConstants {
     }
 
     public boolean isLevelAbove() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
             m.getCell(this.plMgr.getPlayerLocationX(),
@@ -229,7 +229,7 @@ public class GameManager implements EffectConstants {
     }
 
     public boolean doesFloorExist(final int floor) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
             m.getCell(this.plMgr.getPlayerLocationX(),
@@ -244,7 +244,7 @@ public class GameManager implements EffectConstants {
     }
 
     public boolean doesLevelExist(final int level) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
             m.getCell(this.plMgr.getPlayerLocationX(),
@@ -327,7 +327,7 @@ public class GameManager implements EffectConstants {
     public void doRemoteAction(final int x, final int y, final int z,
             final int w) {
         this.setRemoteAction(x, y, z, w);
-        final MazeObject acted = FantastleReboot.getApplication().getMazeManager()
+        final MazeObject acted = FantastleReboot.getBagOStuff().getMazeManager()
                 .getMazeObject(x, y, z, w, Maze.LAYER_OBJECT);
         acted.postMoveAction(false, x, y, this.objectInv);
         if (acted.doesChainReact()) {
@@ -336,7 +336,7 @@ public class GameManager implements EffectConstants {
     }
 
     public void doClockwiseRotate(final int r) {
-        final Maze m = FantastleReboot.getApplication().getMazeManager().getMaze();
+        final Maze m = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
         boolean b = false;
         if (this.actingRemotely) {
             b = m.rotateRadiusClockwise(this.remoteCoords[0],
@@ -358,7 +358,7 @@ public class GameManager implements EffectConstants {
 
     public void findPlayerAndAdjust() {
         // Find the player, adjust player location
-        final Maze m = FantastleReboot.getApplication().getMazeManager().getMaze();
+        final Maze m = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
         final int w = this.plMgr.getPlayerLocationW();
         m.findPlayerOnLevel(w);
         this.plMgr.setPlayerLocation(m.getFindResultColumn(w),
@@ -368,7 +368,7 @@ public class GameManager implements EffectConstants {
     }
 
     public void doCounterclockwiseRotate(final int r) {
-        final Maze m = FantastleReboot.getApplication().getMazeManager().getMaze();
+        final Maze m = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
         boolean b = false;
         if (this.actingRemotely) {
             b = m.rotateRadiusCounterclockwise(this.remoteCoords[0],
@@ -403,7 +403,7 @@ public class GameManager implements EffectConstants {
         final int[] mod = this.doEffects(ox, oy);
         final int x = mod[0];
         final int y = mod[1];
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         m.tickTimers(pw, pz);
         boolean proceed = false;
@@ -629,7 +629,7 @@ public class GameManager implements EffectConstants {
     }
 
     public void backUpPlayer() {
-        final Maze m = FantastleReboot.getApplication().getMazeManager().getMaze();
+        final Maze m = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
         final int pz = this.plMgr.getPlayerLocationZ();
         final int pw = this.plMgr.getPlayerLocationW();
         this.plMgr.restorePlayerLocation();
@@ -761,7 +761,7 @@ public class GameManager implements EffectConstants {
             final int pushY, final MazeObject o) {
         final int xInc = (int) Math.signum(x), yInc = (int) Math.signum(y);
         int cumPushX = pushX, cumPushY = pushY, cumX = x, cumY = y;
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final MazeManager mm = app.getMazeManager();
         MazeObject there = mm.getMazeObject(
                 this.plMgr.getPlayerLocationX() + cumX,
@@ -790,7 +790,7 @@ public class GameManager implements EffectConstants {
     private void movePushedObjectPosition(final int x, final int y,
             final int pushX, final int pushY, final MazeObject o,
             final MazeObject g) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
             m.setCell(new Empty(), this.plMgr.getPlayerLocationX() + x,
@@ -812,7 +812,7 @@ public class GameManager implements EffectConstants {
 
     public void updatePulledPosition(final int x, final int y, final int pullX,
             final int pullY, final MazeObject o) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
             m.setCell(new Empty(), this.plMgr.getPlayerLocationX() - x,
@@ -832,7 +832,7 @@ public class GameManager implements EffectConstants {
             final int z, final int w, final int x2, final int y2, final int z2,
             final int w2, final GenericMovableObject pushedInto,
             final MazeObject source) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
             if (!m.getCell(x, y, z, w, Maze.LAYER_OBJECT)
@@ -853,7 +853,7 @@ public class GameManager implements EffectConstants {
 
     public boolean tryUpdatePositionRelative(final int x, final int y) {
         try {
-            final Application app = FantastleReboot.getApplication();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             final Maze m = app.getMazeManager().getMaze();
             final MazeObject below = m.getCell(this.plMgr.getPlayerLocationX(),
                     this.plMgr.getPlayerLocationY(),
@@ -879,7 +879,7 @@ public class GameManager implements EffectConstants {
     public boolean tryUpdatePositionAbsolute(final int x, final int y,
             final int z) {
         try {
-            final Application app = FantastleReboot.getApplication();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             final Maze m = app.getMazeManager().getMaze();
             final MazeObject below = m.getCell(this.plMgr.getPlayerLocationX(),
                     this.plMgr.getPlayerLocationY(),
@@ -898,7 +898,7 @@ public class GameManager implements EffectConstants {
 
     public void updatePositionAbsolute(final int x, final int y, final int z,
             final int w) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
             m.getCell(x, y, z, w, Maze.LAYER_OBJECT).preMoveAction(true, x, y,
@@ -959,7 +959,7 @@ public class GameManager implements EffectConstants {
 
     public void updatePositionAbsoluteNoEvents(final int x, final int y,
             final int z, final int w) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         this.plMgr.savePlayerLocation();
         this.vwMgr.saveViewingWindow();
@@ -1047,7 +1047,7 @@ public class GameManager implements EffectConstants {
         this.updateStats();
         // Draw the maze, if it is visible
         if (this.outputFrame.isVisible()) {
-            final Application app = FantastleReboot.getApplication();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             int x, y, u, v;
             int xFix, yFix;
             boolean visible;
@@ -1110,7 +1110,7 @@ public class GameManager implements EffectConstants {
     void redrawOneSquare(final int x, final int y, final boolean useDelay,
             final String name3) {
         // Draw the square, if the maze is visible
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         if (this.outputFrame.isVisible()) {
             int xFix, yFix;
             boolean visible;
@@ -1186,7 +1186,7 @@ public class GameManager implements EffectConstants {
     }
 
     public void resetPlayerLocation(final int level) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         this.plMgr.setPlayerLocation(m.getStartColumn(level),
                 m.getStartRow(level), m.getStartFloor(level), level);
@@ -1198,7 +1198,7 @@ public class GameManager implements EffectConstants {
 
     public void resetGameState() {
         this.deactivateAllEffects();
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         app.getMazeManager().setDirty(false);
         m.restore();
@@ -1221,7 +1221,7 @@ public class GameManager implements EffectConstants {
     public void resetLevel(final int level) {
         PCManager.getPlayer().healAndRegenerateFully();
         this.deactivateAllEffects();
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         app.getMazeManager().setDirty(true);
         m.restoreLevel(level);
@@ -1239,7 +1239,7 @@ public class GameManager implements EffectConstants {
 
     public void solvedLevel() {
         this.deactivateAllEffects();
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         final boolean playerExists = m
                 .findPlayerOnLevel(this.plMgr.getPlayerLocationW() + 1);
@@ -1258,7 +1258,7 @@ public class GameManager implements EffectConstants {
 
     public void solvedLevelWarp(final int level) {
         this.deactivateAllEffects();
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         final boolean playerExists = m.findPlayerOnLevel(level);
         if (playerExists) {
@@ -1274,7 +1274,7 @@ public class GameManager implements EffectConstants {
     }
 
     private void gameOver() {
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
             SoundLoader.playSound(GameSound.GAME_OVER);
         }
@@ -1293,7 +1293,7 @@ public class GameManager implements EffectConstants {
     public void solvedMaze() {
         PCManager.getPlayer().healAndRegenerateFully();
         this.deactivateAllEffects();
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         // Restore the maze
         m.restoreLevel(this.plMgr.getPlayerLocationW());
@@ -1322,7 +1322,7 @@ public class GameManager implements EffectConstants {
 
     public void decay() {
         if (this.actingRemotely) {
-            FantastleReboot.getApplication().getMazeManager().getMaze().setCell(
+            FantastleReboot.getBagOStuff().getMazeManager().getMaze().setCell(
                     new Empty(), this.remoteCoords[0], this.remoteCoords[1],
                     this.remoteCoords[2], this.remoteCoords[3],
                     Maze.LAYER_OBJECT);
@@ -1333,7 +1333,7 @@ public class GameManager implements EffectConstants {
 
     public void decayTo(final MazeObject obj) {
         if (this.actingRemotely) {
-            FantastleReboot.getApplication().getMazeManager().getMaze().setCell(obj,
+            FantastleReboot.getBagOStuff().getMazeManager().getMaze().setCell(obj,
                     this.remoteCoords[0], this.remoteCoords[1],
                     this.remoteCoords[2], this.remoteCoords[3],
                     Maze.LAYER_OBJECT);
@@ -1344,7 +1344,7 @@ public class GameManager implements EffectConstants {
 
     private void doDelayedDecay() {
         if (this.actingRemotely) {
-            FantastleReboot.getApplication().getMazeManager().getMaze().setCell(
+            FantastleReboot.getBagOStuff().getMazeManager().getMaze().setCell(
                     this.delayedDecayObject, this.remoteCoords[0],
                     this.remoteCoords[1], this.remoteCoords[2],
                     this.remoteCoords[3], Maze.LAYER_OBJECT);
@@ -1361,7 +1361,7 @@ public class GameManager implements EffectConstants {
 
     public void morph(final MazeObject morphInto, final int x, final int y,
             final int z, final int w) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
             m.setCell(morphInto, x, y, z, w, morphInto.getLayer());
@@ -1376,7 +1376,7 @@ public class GameManager implements EffectConstants {
 
     public void morph(final MazeObject morphInto, final int x, final int y,
             final int z, final int w, final String msg) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
             m.setCell(morphInto, x, y, z, w, morphInto.getLayer());
@@ -1393,7 +1393,7 @@ public class GameManager implements EffectConstants {
 
     public void morph(final MazeObject morphInto, final int x, final int y,
             final int z, final int w, final int e) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
             m.setCell(morphInto, x, y, z, w, e);
@@ -1408,7 +1408,7 @@ public class GameManager implements EffectConstants {
 
     public void morph(final MazeObject morphInto, final int x, final int y,
             final int z, final int w, final int e, final String msg) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
             m.setCell(morphInto, x, y, z, w, e);
@@ -1425,7 +1425,7 @@ public class GameManager implements EffectConstants {
 
     public void morphOther(final MazeObject morphInto, final int x, final int y,
             final int e) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
             m.setCell(morphInto, this.plMgr.getPlayerLocationX() + x,
@@ -1472,7 +1472,7 @@ public class GameManager implements EffectConstants {
 
     public void showUseDialog() {
         int x;
-        final MazeObjectList list = FantastleReboot.getApplication().getObjects();
+        final MazeObjectList list = FantastleReboot.getBagOStuff().getObjects();
         final MazeObject[] choices = list.getAllUsableObjects();
         final String[] userChoices = this.objectInv.generateUseStringArray();
         final String result = Messager.showInputDialog("Use which item?",
@@ -1511,7 +1511,7 @@ public class GameManager implements EffectConstants {
     }
 
     public void useItemHandler(final int x, final int y) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         final int xOffset = this.vwMgr.getViewingWindowLocationX()
                 - this.vwMgr.getOffsetFactorX();
@@ -1523,7 +1523,7 @@ public class GameManager implements EffectConstants {
                 + this.vwMgr.getViewingWindowLocationY() + xOffset - yOffset;
         final int destZ = this.plMgr.getPlayerLocationZ();
         final int destW = this.plMgr.getPlayerLocationW();
-        if (this.usingAnItem() && app.getMode() == Application.STATUS_GAME) {
+        if (this.usingAnItem() && app.getMode() == BagOStuff.STATUS_GAME) {
             if (!this.objectBeingUsed.isOfType(TypeConstants.TYPE_BOW)) {
                 final boolean visible = app.getMazeManager().getMaze()
                         .isSquareVisible(this.plMgr.getPlayerLocationX(),
@@ -1604,7 +1604,7 @@ public class GameManager implements EffectConstants {
             final int destZ = this.plMgr.getPlayerLocationZ();
             final int destW = this.plMgr.getPlayerLocationW();
             this.updatePositionAbsolute(destX, destY, destZ, destW);
-            if (FantastleReboot.getApplication().getPrefsManager()
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 SoundLoader.playSound(GameSound.TELEPORT);
             }
@@ -1613,7 +1613,7 @@ public class GameManager implements EffectConstants {
     }
 
     public void identifyObject(final int x, final int y) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         final int xOffset = this.vwMgr.getViewingWindowLocationX()
                 - this.vwMgr.getOffsetFactorX();
@@ -1635,7 +1635,7 @@ public class GameManager implements EffectConstants {
             final String gameName1 = target1.getGameName();
             final String gameName2 = target2.getGameName();
             Messager.showMessage(gameName2 + " on " + gameName1);
-            if (FantastleReboot.getApplication().getPrefsManager()
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 MazeObject.playIdentifySound();
             }
@@ -1643,7 +1643,7 @@ public class GameManager implements EffectConstants {
             final EmptyVoid ev = new EmptyVoid();
             ev.determineCurrentAppearance(destX, destY, destZ, destW);
             Messager.showMessage(ev.getGameName());
-            if (FantastleReboot.getApplication().getPrefsManager()
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 MazeObject.playIdentifySound();
             }
@@ -1652,7 +1652,7 @@ public class GameManager implements EffectConstants {
 
     public void loadGameHook(final DataReader mazeFile, final int formatVersion)
             throws IOException {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         this.objectInv = ObjectInventory.readInventory(mazeFile, formatVersion);
         app.getMazeManager().getMaze().readSavedMazeState(mazeFile,
                 formatVersion);
@@ -1663,7 +1663,7 @@ public class GameManager implements EffectConstants {
     }
 
     public void saveGameHook(final DataWriter mazeFile) throws IOException {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         this.objectInv.writeInventory(mazeFile);
         app.getMazeManager().getMaze().writeSavedMazeState(mazeFile);
         this.savedObjectInv.writeInventory(mazeFile);
@@ -1672,7 +1672,7 @@ public class GameManager implements EffectConstants {
     }
 
     public void playMaze() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         if (app.getMazeManager().getLoaded()) {
             app.getGUIManager().hideGUI();
             app.setInGame(true);
@@ -1698,7 +1698,7 @@ public class GameManager implements EffectConstants {
     }
 
     public void showOutput() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getMenuManager().setGameMenus();
         this.outputFrame.setVisible(true);
         this.outputFrame.setJMenuBar(app.getMenuManager().getMainMenuBar());
@@ -1755,7 +1755,7 @@ public class GameManager implements EffectConstants {
         @Override
         public void keyPressed(final KeyEvent e) {
             if (!GameManager.this.arrowActive) {
-                if (!FantastleReboot.getApplication().getPrefsManager().oneMove()) {
+                if (!FantastleReboot.getBagOStuff().getPrefsManager().oneMove()) {
                     if (e.isAltDown()) {
                         this.handleArrows(e);
                     } else {
@@ -1768,7 +1768,7 @@ public class GameManager implements EffectConstants {
         @Override
         public void keyReleased(final KeyEvent e) {
             if (!GameManager.this.arrowActive) {
-                if (FantastleReboot.getApplication().getPrefsManager().oneMove()) {
+                if (FantastleReboot.getBagOStuff().getPrefsManager().oneMove()) {
                     if (e.isAltDown()) {
                         this.handleArrows(e);
                     } else {
@@ -1963,7 +1963,7 @@ public class GameManager implements EffectConstants {
         @Override
         public void windowClosing(final WindowEvent we) {
             try {
-                final Application app = FantastleReboot.getApplication();
+                final BagOStuff app = FantastleReboot.getBagOStuff();
                 boolean success = false;
                 int status = 0;
                 if (app.getMazeManager().getDirty()) {

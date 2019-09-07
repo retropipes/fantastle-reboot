@@ -449,7 +449,7 @@ class LayeredTower {
                         final Monster m = (Monster) this.getCell(u, v, z, l);
                         this.setCell(m.getSavedObject(), u, v, z, l);
                         // Reward player for monster death
-                        FantastleReboot.getApplication().getBattle()
+                        FantastleReboot.getBagOStuff().getBattle()
                                 .doBattleByProxy();
                         // Respawn it
                         this.generateOneMonster();
@@ -658,7 +658,7 @@ class LayeredTower {
     }
 
     private void fillNulls() {
-        final MazeObject bottom = FantastleReboot.getApplication().getPrefsManager()
+        final MazeObject bottom = FantastleReboot.getBagOStuff().getPrefsManager()
                 .getEditorDefaultFill();
         final MazeObject top = new Empty();
         int x, y, z, e;
@@ -710,7 +710,7 @@ class LayeredTower {
     public void updateMonsterPosition(final int move, final int xLoc,
             final int yLoc, final Monster monster) {
         final int[] dirMove = MazeObject.unresolveRelativeDirection(move);
-        final int zLoc = FantastleReboot.getApplication().getGameManager()
+        final int zLoc = FantastleReboot.getBagOStuff().getGameManager()
                 .getPlayerManager().getPlayerLocationZ();
         try {
             final MazeObject there = this.getCell(xLoc + dirMove[0],
@@ -720,7 +720,7 @@ class LayeredTower {
             if (!there.isSolid() && !there.getName().equals("Monster")) {
                 if (there.getName().equals("Player")) {
                     if (!Battle.isInBattle()) {
-                        FantastleReboot.getApplication().getBattle().doBattle();
+                        FantastleReboot.getBagOStuff().getBattle().doBattle();
                         this.postBattle(monster, xLoc, yLoc, false);
                     }
                 } else {
@@ -746,7 +746,7 @@ class LayeredTower {
     public void updateMovingBlockPosition(final int move, final int xLoc,
             final int yLoc, final MovingBlock block) {
         final int[] dirMove = MazeObject.unresolveRelativeDirection(move);
-        final int zLoc = FantastleReboot.getApplication().getGameManager()
+        final int zLoc = FantastleReboot.getBagOStuff().getGameManager()
                 .getPlayerManager().getPlayerLocationZ();
         try {
             final MazeObject there = this.getCell(xLoc + dirMove[0],
@@ -775,10 +775,10 @@ class LayeredTower {
     public void postBattle(final Monster m, final int xLoc, final int yLoc,
             final boolean player) {
         final MazeObject saved = m.getSavedObject();
-        final int zLoc = FantastleReboot.getApplication().getGameManager()
+        final int zLoc = FantastleReboot.getBagOStuff().getGameManager()
                 .getPlayerManager().getPlayerLocationZ();
         if (player) {
-            FantastleReboot.getApplication().getGameManager()
+            FantastleReboot.getBagOStuff().getGameManager()
                     .setSavedMazeObject(saved);
         } else {
             this.setCell(saved, xLoc, yLoc, zLoc, Maze.LAYER_OBJECT);
@@ -789,7 +789,7 @@ class LayeredTower {
     public void generateOneMonster() {
         final RandomRange row = new RandomRange(0, this.getRows() - 1);
         final RandomRange column = new RandomRange(0, this.getColumns() - 1);
-        final int zLoc = FantastleReboot.getApplication().getGameManager()
+        final int zLoc = FantastleReboot.getBagOStuff().getGameManager()
                 .getPlayerManager().getPlayerLocationZ();
         int randomRow, randomColumn;
         randomRow = row.generate();
@@ -1017,7 +1017,7 @@ class LayeredTower {
             for (y = 0; y < lt.getRows(); y++) {
                 for (z = 0; z < lt.getFloors(); z++) {
                     for (e = 0; e < Maze.LAYER_COUNT; e++) {
-                        lt.towerData[x][y][z][e] = FantastleReboot.getApplication()
+                        lt.towerData[x][y][z][e] = FantastleReboot.getBagOStuff()
                                 .getObjects()
                                 .readMazeObject(reader, formatVersion);
                         if (lt.towerData[x][y][z][e] == null) {

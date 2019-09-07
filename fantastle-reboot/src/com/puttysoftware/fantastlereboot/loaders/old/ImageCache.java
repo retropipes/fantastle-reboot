@@ -50,7 +50,7 @@ public class ImageCache {
     private static void createCache() {
         if (!ImageCache.cacheCreated) {
             // Create the cache
-            final MazeObjectList list = FantastleReboot.getApplication()
+            final MazeObjectList list = FantastleReboot.getBagOStuff()
                     .getObjects();
             ImageCache.nameCache = list.getAllNamesForCache();
             ImageCache.cache = new BufferedImageIcon[ImageCache.nameCache.length];

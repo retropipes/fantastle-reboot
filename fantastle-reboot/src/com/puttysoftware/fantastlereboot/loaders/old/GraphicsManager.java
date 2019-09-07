@@ -45,7 +45,7 @@ public class GraphicsManager {
     static BufferedImageIcon getUncachedImage(final String name) {
         try {
             String dm;
-            if (FantastleReboot.getApplication().getPrefsManager()
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .isMobileModeEnabled()) {
                 dm = "mobile";
             } else {
@@ -70,7 +70,7 @@ public class GraphicsManager {
     public static BufferedImageIcon getStatImage(final String name) {
         try {
             String dm;
-            if (FantastleReboot.getApplication().getPrefsManager()
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .isMobileModeEnabled()) {
                 dm = "mobile";
             } else {
@@ -190,7 +190,7 @@ public class GraphicsManager {
     public static BufferedImageIcon getLogo() {
         try {
             String dm;
-            if (FantastleReboot.getApplication().getPrefsManager()
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .isMobileModeEnabled()) {
                 dm = "mobile";
             } else {
@@ -226,7 +226,7 @@ public class GraphicsManager {
     public static BufferedImageIcon getMiniatureLogo() {
         try {
             String dm;
-            if (FantastleReboot.getApplication().getPrefsManager()
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .isMobileModeEnabled()) {
                 dm = "mobile";
             } else {
@@ -248,7 +248,7 @@ public class GraphicsManager {
     public static BufferedImageIcon getMicroLogo() {
         try {
             String dm;
-            if (FantastleReboot.getApplication().getPrefsManager()
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .isMobileModeEnabled()) {
                 dm = "mobile";
             } else {
@@ -299,7 +299,7 @@ public class GraphicsManager {
     private static BufferedImageIcon getBossTemplate() {
         try {
             String dm;
-            if (FantastleReboot.getApplication().getPrefsManager()
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .isMobileModeEnabled()) {
                 dm = "mobile";
             } else {
@@ -357,7 +357,7 @@ public class GraphicsManager {
     private static BufferedImage getMonsterTemplate(final String name) {
         try {
             String dm;
-            if (FantastleReboot.getApplication().getPrefsManager()
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .isMobileModeEnabled()) {
                 dm = "mobile";
             } else {
@@ -402,7 +402,7 @@ public class GraphicsManager {
     }
 
     public static int getGraphicSize() {
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .isMobileModeEnabled()) {
             return 24;
         } else {

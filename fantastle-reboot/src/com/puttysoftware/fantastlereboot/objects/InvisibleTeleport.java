@@ -54,7 +54,7 @@ public class InvisibleTeleport extends GenericInvisibleTeleport {
 
     @Override
     public MazeObject editorPropertiesHook() {
-        final MazeEditor me = FantastleReboot.getApplication().getEditor();
+        final MazeEditor me = FantastleReboot.getBagOStuff().getEditor();
         final MazeObject mo = me.editTeleportDestination(
                 MazeEditor.TELEPORT_TYPE_INVISIBLE_GENERIC);
         return mo;

@@ -20,7 +20,7 @@ package com.puttysoftware.fantastlereboot.maze;
 
 import java.io.IOException;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.legacyio.DataConstants;
@@ -44,7 +44,7 @@ public class LoadTask5 extends Thread {
     // Methods
     @Override
     public void run() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         int startW;
         String sg;
         if (this.isSavedGame) {

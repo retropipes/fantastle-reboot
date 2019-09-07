@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.generic;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 
 public abstract class GenericWand extends GenericUsableObject {
@@ -33,7 +33,7 @@ public abstract class GenericWand extends GenericUsableObject {
     @Override
     public void useAction(final MazeObject mo, final int x, final int y,
             final int z, final int w) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getGameManager().morph(mo, x, y, z, w);
     }
 

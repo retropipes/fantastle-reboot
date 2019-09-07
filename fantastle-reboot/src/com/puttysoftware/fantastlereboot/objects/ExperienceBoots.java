@@ -57,12 +57,12 @@ public class ExperienceBoots extends GenericBoots {
     public void stepAction() {
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
         playerCharacter.offsetExperience(ExperienceBoots.EXP_AMOUNT);
-        FantastleReboot.getApplication().getGameManager().getScoreTracker()
+        FantastleReboot.getBagOStuff().getGameManager().getScoreTracker()
                 .incrementScore();
         // Level Up Check
         if (playerCharacter.checkLevelUp()) {
             playerCharacter.levelUp();
-            FantastleReboot.getApplication().getGameManager().keepNextMessage();
+            FantastleReboot.getBagOStuff().getGameManager().keepNextMessage();
             Messager.showMessage(
                     "You reached level " + playerCharacter.getLevel() + ".");
         }

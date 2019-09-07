@@ -79,13 +79,13 @@ public abstract class GenericButton extends MazeObject {
     @Override
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
-        final int currLevel = FantastleReboot.getApplication().getGameManager()
+        final int currLevel = FantastleReboot.getBagOStuff().getGameManager()
                 .getPlayerManager().getPlayerLocationW();
-        FantastleReboot.getApplication().getMazeManager().getMaze()
+        FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                 .findAllObjectPairsAndSwap(currLevel, this.offState,
                         this.onState);
-        FantastleReboot.getApplication().getGameManager().redrawMazeNoRebuild();
-        if (FantastleReboot.getApplication().getPrefsManager()
+        FantastleReboot.getBagOStuff().getGameManager().redrawMazeNoRebuild();
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playButtonSound();
         }

@@ -38,7 +38,7 @@ public class PurpleLock extends GenericSingleLock {
             Messager.showMessage("You need a purple key");
         }
         // Play move failed sound, if it's enabled
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveFailedSound();
         }

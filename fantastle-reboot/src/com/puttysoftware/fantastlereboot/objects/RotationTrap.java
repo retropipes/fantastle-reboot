@@ -143,13 +143,13 @@ public class RotationTrap extends GenericTrap {
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
         if (this.direction) {
-            FantastleReboot.getApplication().getGameManager()
+            FantastleReboot.getBagOStuff().getGameManager()
                     .doClockwiseRotate(this.radius);
         } else {
-            FantastleReboot.getApplication().getGameManager()
+            FantastleReboot.getBagOStuff().getGameManager()
                     .doCounterclockwiseRotate(this.radius);
         }
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playRotatedSound();
         }

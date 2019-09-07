@@ -40,7 +40,7 @@ public class Player extends GenericCharacter {
 
     @Override
     public void editorPlaceHook() {
-        final MazeEditor me = FantastleReboot.getApplication().getEditor();
+        final MazeEditor me = FantastleReboot.getBagOStuff().getEditor();
         me.setPlayerLocation();
     }
 

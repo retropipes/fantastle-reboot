@@ -38,7 +38,7 @@ import javax.swing.JScrollBar;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.game.GameManager;
@@ -118,7 +118,7 @@ public class MazeEditor {
         this.mbhandler = new MetalButtonEventHandler();
         this.thandler = new TeleportEventHandler();
         this.engine = new UndoRedoEngine();
-        this.objectList = FantastleReboot.getApplication().getObjects();
+        this.objectList = FantastleReboot.getBagOStuff().getObjects();
         this.groundNames = this.objectList.getAllGroundLayerNames();
         this.objectNames = this.objectList.getAllObjectLayerNames();
         this.groundObjects = this.objectList.getAllGroundLayerObjects();
@@ -182,7 +182,7 @@ public class MazeEditor {
     }
 
     private void checkMenus() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         if (app.getMazeManager().getMaze().getLevels() == m.getMinLevels()) {
             app.getMenuManager().disableRemoveLevel();
@@ -277,7 +277,7 @@ public class MazeEditor {
 
     private void redrawGround() {
         // Draw the maze in edit mode
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         int x, y, w;
         int xFix, yFix;
         w = this.elMgr.getEditorLocationW();
@@ -313,7 +313,7 @@ public class MazeEditor {
 
     private void redrawGroundAndObjects() {
         // Draw the maze in edit mode
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         int x, y, w;
         int xFix, yFix;
         w = this.elMgr.getEditorLocationW();
@@ -354,7 +354,7 @@ public class MazeEditor {
     }
 
     public void editObject(final int x, final int y) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         this.currentObjectIndex = this.picker.getPicked();
         final int xOffset = this.vertScroll.getValue()
                 - this.vertScroll.getMinimum();
@@ -410,7 +410,7 @@ public class MazeEditor {
     }
 
     public void probeObjectProperties(final int x, final int y) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final int xOffset = this.vertScroll.getValue()
                 - this.vertScroll.getMinimum();
         final int yOffset = this.horzScroll.getValue()
@@ -437,7 +437,7 @@ public class MazeEditor {
     }
 
     public void editObjectProperties(final int x, final int y) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final int xOffset = this.vertScroll.getValue()
                 - this.vertScroll.getMinimum();
         final int yOffset = this.horzScroll.getValue()
@@ -484,7 +484,7 @@ public class MazeEditor {
     }
 
     private void checkStairPair(final int z, final int w) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final MazeObject mo1 = app.getMazeManager().getMaze().getCell(
                 this.elMgr.getEditorLocationX(),
                 this.elMgr.getEditorLocationY(), z, w, Maze.LAYER_OBJECT);
@@ -520,7 +520,7 @@ public class MazeEditor {
     }
 
     private void reverseCheckStairPair(final int z, final int w) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final MazeObject mo1 = app.getMazeManager().getMaze().getCell(
                 this.elMgr.getEditorLocationX(),
                 this.elMgr.getEditorLocationY(), z, w, Maze.LAYER_OBJECT);
@@ -556,7 +556,7 @@ public class MazeEditor {
     }
 
     public void pairStairs(final int type) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         switch (type) {
         case STAIRS_UP:
             try {
@@ -586,7 +586,7 @@ public class MazeEditor {
     }
 
     private void pairStairs(final int type, final int z, final int w) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         switch (type) {
         case STAIRS_UP:
             try {
@@ -614,7 +614,7 @@ public class MazeEditor {
     }
 
     private void unpairStairs(final int type, final int z, final int w) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         switch (type) {
         case STAIRS_UP:
             try {
@@ -642,7 +642,7 @@ public class MazeEditor {
     }
 
     private void checkTwoWayTeleportPair(final int z, final int w) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final MazeObject mo1 = app.getMazeManager().getMaze().getCell(
                 this.elMgr.getEditorLocationX(),
                 this.elMgr.getEditorLocationY(), z, w, Maze.LAYER_OBJECT);
@@ -665,7 +665,7 @@ public class MazeEditor {
     }
 
     private void reverseCheckTwoWayTeleportPair(final int z, final int w) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final MazeObject mo1 = app.getMazeManager().getMaze().getCell(
                 this.elMgr.getEditorLocationX(),
                 this.elMgr.getEditorLocationY(), z, w, Maze.LAYER_OBJECT);
@@ -689,7 +689,7 @@ public class MazeEditor {
 
     public void pairTwoWayTeleport(final int destX, final int destY,
             final int destZ, final int destW) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getMazeManager().getMaze()
                 .setCell(new TwoWayTeleport(this.elMgr.getEditorLocationX(),
                         this.elMgr.getEditorLocationY(),
@@ -699,13 +699,13 @@ public class MazeEditor {
 
     private static void unpairTwoWayTeleport(final int destX, final int destY,
             final int destZ, final int destW) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getMazeManager().getMaze().setCell(new Empty(), destX, destY, destZ,
                 destW, Maze.LAYER_OBJECT);
     }
 
     public MazeObject editTeleportDestination(final int type) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         String input1 = null, input2 = null;
         this.TELEPORT_TYPE = type;
         int destX = 0, destY = 0;
@@ -787,7 +787,7 @@ public class MazeEditor {
 
     public MazeObject editMetalButtonTarget() {
         Messager.showMessage("Click to set metal button target");
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         this.horzScroll.removeAdjustmentListener(this.mhandler);
         this.vertScroll.removeAdjustmentListener(this.mhandler);
         this.secondaryPane.removeMouseListener(this.mhandler);
@@ -813,7 +813,7 @@ public class MazeEditor {
         TreasureChest tc = null;
         MazeObject contents = null;
         int contentsIndex = 0;
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         try {
             tc = (TreasureChest) app.getMazeManager().getMazeObject(
                     this.elMgr.getEditorLocationX(),
@@ -852,7 +852,7 @@ public class MazeEditor {
     }
 
     public void setTeleportDestination(final int x, final int y) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final int xOffset = this.vertScroll.getValue()
                 - this.vertScroll.getMinimum();
         final int yOffset = this.horzScroll.getValue()
@@ -928,7 +928,7 @@ public class MazeEditor {
     }
 
     public void setMetalButtonTarget(final int x, final int y) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final int xOffset = this.vertScroll.getValue()
                 - this.vertScroll.getMinimum();
         final int yOffset = this.horzScroll.getValue()
@@ -970,7 +970,7 @@ public class MazeEditor {
 
     public void setTreasureChestContents() {
         this.enableOutput();
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final MazeObject contents = this.containableObjects[this.treasurePicker
                 .getPicked()];
         app.getMazeManager().getMaze().setCell(new TreasureChest(contents),
@@ -984,7 +984,7 @@ public class MazeEditor {
     }
 
     public void setPlayerLocation() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getGameManager().getPlayerManager().setPlayerLocation(
                 this.elMgr.getEditorLocationX(),
                 this.elMgr.getEditorLocationY(),
@@ -1002,7 +1002,7 @@ public class MazeEditor {
     }
 
     public void editMaze() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         if (app.getMazeManager().getLoaded()) {
             app.getGUIManager().hideGUI();
             app.setInGame(false);
@@ -1045,7 +1045,7 @@ public class MazeEditor {
     }
 
     public boolean newMaze() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         boolean success = true;
         boolean saved = true;
         int status = 0;
@@ -1079,7 +1079,7 @@ public class MazeEditor {
 
     public void fixLimits() {
         // Fix limits
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         if (app.getMazeManager().getMaze() != null && this.elMgr != null
                 && this.evMgr != null) {
             this.elMgr.setLimitsFromMaze(app.getMazeManager().getMaze());
@@ -1093,7 +1093,7 @@ public class MazeEditor {
     }
 
     private boolean addLevelInternal(final boolean flag) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         int levelSizeX, levelSizeY, levelSizeZ;
         final int absoluteRCLimit = 64;
         final int absoluteFLimit = 8;
@@ -1178,7 +1178,7 @@ public class MazeEditor {
     }
 
     public boolean resizeLevel() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         int levelSizeX, levelSizeY, levelSizeZ;
         final int absoluteRCLimit = 64;
         final int absoluteFLimit = 8;
@@ -1253,7 +1253,7 @@ public class MazeEditor {
     }
 
     public boolean removeLevel() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         int level;
         boolean success = true;
         String input;
@@ -1326,7 +1326,7 @@ public class MazeEditor {
     }
 
     public void showOutput() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         this.outputFrame.setJMenuBar(app.getMenuManager().getMainMenuBar());
         app.getMenuManager().setEditorMenus();
         this.outputFrame.setVisible(true);
@@ -1356,7 +1356,7 @@ public class MazeEditor {
     }
 
     public void exitEditor() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         // Hide the editor
         this.hideOutput();
         final MazeManager mm = app.getMazeManager();
@@ -1365,7 +1365,7 @@ public class MazeEditor {
         mm.getMaze().save();
         // Reset the viewing window
         gm.resetViewingWindowAndPlayerLocation();
-        FantastleReboot.getApplication().getGUIManager().showGUI();
+        FantastleReboot.getBagOStuff().getGUIManager().showGUI();
     }
 
     private void setUpGUI() {
@@ -1373,7 +1373,7 @@ public class MazeEditor {
         if (this.outputFrame != null) {
             this.outputFrame.dispose();
         }
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         this.outputFrame = new JFrame("Editor");
         this.outputPane = new Container();
         this.secondaryPane = new Container();
@@ -1439,7 +1439,7 @@ public class MazeEditor {
     }
 
     public void undo() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         this.engine.undo();
         final MazeObject obj = this.engine.getObject();
         final int x = this.engine.getX();
@@ -1478,7 +1478,7 @@ public class MazeEditor {
     }
 
     public void redo() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         this.engine.redo();
         final MazeObject obj = this.engine.getObject();
         final int x = this.engine.getX();
@@ -1550,7 +1550,7 @@ public class MazeEditor {
 
     public void handleCloseWindow() {
         try {
-            final Application app = FantastleReboot.getApplication();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             boolean success = false;
             int status = JOptionPane.DEFAULT_OPTION;
             if (app.getMazeManager().getDirty()) {

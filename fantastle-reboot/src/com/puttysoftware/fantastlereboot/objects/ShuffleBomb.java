@@ -60,7 +60,7 @@ public class ShuffleBomb extends GenericUsableObject {
             final int locZ, final int locW, final int dirX, final int dirY,
             final int arrowType, final ObjectInventory inv) {
         // Destroy bomb
-        FantastleReboot.getApplication().getGameManager().morph(new Empty(), locX,
+        FantastleReboot.getBagOStuff().getGameManager().morph(new Empty(), locX,
                 locY, locZ, locW);
         // Act as if bomb was used
         this.useAction(null, locX, locY, locZ, locW);
@@ -72,15 +72,15 @@ public class ShuffleBomb extends GenericUsableObject {
     public void useAction(final MazeObject mo, final int x, final int y,
             final int z, final int w) {
         // Shuffle objects
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playUseSound();
         }
-        FantastleReboot.getApplication().getMazeManager().getMaze()
+        FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                 .radialScanShuffleObjects(x, y, z, w,
                         ShuffleBomb.EFFECT_RADIUS);
         // Player might have moved
-        FantastleReboot.getApplication().getGameManager().findPlayerAndAdjust();
+        FantastleReboot.getBagOStuff().getGameManager().findPlayerAndAdjust();
     }
 
     @Override

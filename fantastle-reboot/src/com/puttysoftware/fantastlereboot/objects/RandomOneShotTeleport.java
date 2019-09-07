@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.objects;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
@@ -40,7 +40,7 @@ public class RandomOneShotTeleport extends RandomTeleport {
     @Override
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getGameManager().decay();
         int dr, dc;
         do {
@@ -66,7 +66,7 @@ public class RandomOneShotTeleport extends RandomTeleport {
 
     @Override
     public MazeObject editorPropertiesHook() {
-        final MazeEditor me = FantastleReboot.getApplication().getEditor();
+        final MazeEditor me = FantastleReboot.getBagOStuff().getEditor();
         final MazeObject mo = me.editTeleportDestination(
                 MazeEditor.TELEPORT_TYPE_RANDOM_ONESHOT);
         return mo;

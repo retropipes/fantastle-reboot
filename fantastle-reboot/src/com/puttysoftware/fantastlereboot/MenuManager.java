@@ -290,7 +290,7 @@ public class MenuManager {
     }
 
     public void checkFlags() {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         if (app.getMazeManager().getDirty()) {
             this.setMenusDirtyOn();
         } else {
@@ -301,7 +301,7 @@ public class MenuManager {
         } else {
             this.setMenusLoadedOff();
         }
-        if (app.getMode() == Application.STATUS_EDITOR) {
+        if (app.getMode() == BagOStuff.STATUS_EDITOR) {
             if (app.getMazeManager().getMaze().isPasteBlocked()) {
                 this.disablePasteLevel();
                 this.disableInsertLevelFromClipboard();
@@ -326,8 +326,8 @@ public class MenuManager {
     }
 
     private void setMenusLoadedOn() {
-        final Application app = FantastleReboot.getApplication();
-        if (app.getMode() == Application.STATUS_GUI) {
+        final BagOStuff app = FantastleReboot.getBagOStuff();
+        if (app.getMode() == BagOStuff.STATUS_GUI) {
             this.fileClose.setEnabled(false);
             this.fileSaveAs.setEnabled(false);
             if (app.getMazeManager().getMaze().findPlayerOnLevel(0)) {
@@ -612,7 +612,7 @@ public class MenuManager {
         @Override
         public void actionPerformed(final ActionEvent e) {
             try {
-                final Application app = FantastleReboot.getApplication();
+                final BagOStuff app = FantastleReboot.getBagOStuff();
                 final MazeEditor me = app.getEditor();
                 boolean loaded = false;
                 final String cmd = e.getActionCommand();
@@ -624,9 +624,9 @@ public class MenuManager {
                     app.getMazeManager().setLoaded(loaded);
                 } else if (cmd.equals("Close")) {
                     // Close the window
-                    if (app.getMode() == Application.STATUS_EDITOR) {
+                    if (app.getMode() == BagOStuff.STATUS_EDITOR) {
                         app.getEditor().handleCloseWindow();
-                    } else if (app.getMode() == Application.STATUS_GAME) {
+                    } else if (app.getMode() == BagOStuff.STATUS_GAME) {
                         boolean saved = true;
                         int status = 0;
                         if (app.getMazeManager().getDirty()) {

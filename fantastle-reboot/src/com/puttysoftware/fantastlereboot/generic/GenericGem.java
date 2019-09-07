@@ -35,9 +35,9 @@ public abstract class GenericGem extends MazeObject {
     @Override
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
-        FantastleReboot.getApplication().getGameManager().decay();
+        FantastleReboot.getBagOStuff().getGameManager().decay();
         this.postMoveActionHook();
-        FantastleReboot.getApplication().getGameManager().redrawMaze();
+        FantastleReboot.getBagOStuff().getGameManager().redrawMaze();
     }
 
     public abstract void postMoveActionHook();
@@ -62,9 +62,9 @@ public abstract class GenericGem extends MazeObject {
     public boolean arrowHitAction(final int locX, final int locY,
             final int locZ, final int locW, final int dirX, final int dirY,
             final int arrowType, final ObjectInventory inv) {
-        FantastleReboot.getApplication().getGameManager().morph(new Empty(), locX,
+        FantastleReboot.getBagOStuff().getGameManager().morph(new Empty(), locX,
                 locY, locZ, locW);
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             SoundLoader.playSound(GameSound.CRUSH);
         }

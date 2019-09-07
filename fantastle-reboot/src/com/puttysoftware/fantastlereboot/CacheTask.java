@@ -29,29 +29,29 @@ class CacheTask extends Thread {
 
     @Override
     public void run() {
-        FantastleReboot.getApplication().getPrefsManager().updateWaitProgress(0);
+        FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(0);
         // Enter Wait Mode
-        FantastleReboot.getApplication().getPrefsManager().enterWaitMode();
+        FantastleReboot.getBagOStuff().getPrefsManager().enterWaitMode();
         // Update Micro Logo
-        FantastleReboot.getApplication().updateMicroLogo();
-        FantastleReboot.getApplication().getPrefsManager().updateWaitProgress(20);
+        FantastleReboot.getBagOStuff().updateMicroLogo();
+        FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(20);
         // Update GUI Logo
-        FantastleReboot.getApplication().getGUIManager().updateLogo();
-        FantastleReboot.getApplication().getPrefsManager().updateWaitProgress(40);
+        FantastleReboot.getBagOStuff().getGUIManager().updateLogo();
+        FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(40);
         // Recreate image cache
         ImageCache.recreateCache();
-        FantastleReboot.getApplication().getPrefsManager().updateWaitProgress(60);
+        FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(60);
         // Recreate monster image cache
         MonsterImageCache.recreateMonsterCache();
-        FantastleReboot.getApplication().getPrefsManager().updateWaitProgress(80);
+        FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(80);
         // Update stat image cache
-        FantastleReboot.getApplication().getGameManager().getStatGUI().updateGUI();
-        FantastleReboot.getApplication().getPrefsManager().updateWaitProgress(100);
+        FantastleReboot.getBagOStuff().getGameManager().getStatGUI().updateGUI();
+        FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(100);
         // Update Help
-        FantastleReboot.getApplication().getObjectHelpManager().updateHelpSize();
-        FantastleReboot.getApplication().getGeneralHelpManager().updateHelpSize();
+        FantastleReboot.getBagOStuff().getObjectHelpManager().updateHelpSize();
+        FantastleReboot.getBagOStuff().getGeneralHelpManager().updateHelpSize();
         // Exit Wait Mode
-        FantastleReboot.getApplication().getPrefsManager().exitWaitMode();
-        FantastleReboot.getApplication().getPrefsManager().hidePrefs();
+        FantastleReboot.getBagOStuff().getPrefsManager().exitWaitMode();
+        FantastleReboot.getBagOStuff().getPrefsManager().hidePrefs();
     }
 }

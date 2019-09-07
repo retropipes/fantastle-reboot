@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.objects;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
@@ -47,7 +47,7 @@ public class BarrierGenerator extends GenericWall {
         // Remove barriers if present
         boolean scanResult = false;
         boolean flag = false;
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final int pz = app.getGameManager().getPlayerManager()
                 .getPlayerLocationZ();
         final int pw = app.getGameManager().getPlayerManager()
@@ -143,7 +143,7 @@ public class BarrierGenerator extends GenericWall {
         // Generate barriers again
         boolean scanResult = false;
         boolean flag = false;
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final int pz = app.getGameManager().getPlayerManager()
                 .getPlayerLocationZ();
         final int pw = app.getGameManager().getPlayerManager()
@@ -227,7 +227,7 @@ public class BarrierGenerator extends GenericWall {
 
     private boolean scan(final int dir, final int x, final int y, final int z,
             final int w, final int limit, final boolean o) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final String invalidName = new EmptyVoid().getName();
         if (dir == DirectionConstants.DIRECTION_EAST) {
             for (int l = 1; l < limit; l++) {
@@ -323,7 +323,7 @@ public class BarrierGenerator extends GenericWall {
 
     private void generate(final int dir, final int x, final int y, final int z,
             final int w, final int limit, final boolean o) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final String invalidName = new EmptyVoid().getName();
         if (dir == DirectionConstants.DIRECTION_EAST) {
             for (int l = 1; l < limit; l++) {
@@ -499,7 +499,7 @@ public class BarrierGenerator extends GenericWall {
         // Behave as if the generator was walked into, unless the arrow was an
         // ice arrow
         if (arrowType == ArrowTypeConstants.ARROW_TYPE_ICE) {
-            final Application app = FantastleReboot.getApplication();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             app.getGameManager().morph(new IcedBarrierGenerator(), locX, locY,
                     locZ, locW);
         } else {

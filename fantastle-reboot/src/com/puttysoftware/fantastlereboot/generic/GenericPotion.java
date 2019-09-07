@@ -119,14 +119,14 @@ public abstract class GenericPotion extends MazeObject
                 }
             }
         }
-        FantastleReboot.getApplication().getGameManager().decay();
+        FantastleReboot.getBagOStuff().getGameManager().decay();
         if (this.effectValue >= 0) {
-            if (FantastleReboot.getApplication().getPrefsManager()
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 SoundLoader.playSound(GameSound.HEAL);
             }
         } else {
-            if (FantastleReboot.getApplication().getPrefsManager()
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 SoundLoader.playSound(GameSound.HURT);
             }
@@ -137,9 +137,9 @@ public abstract class GenericPotion extends MazeObject
     public boolean arrowHitAction(final int locX, final int locY,
             final int locZ, final int locW, final int dirX, final int dirY,
             final int arrowType, final ObjectInventory inv) {
-        FantastleReboot.getApplication().getGameManager().morph(new Empty(), locX,
+        FantastleReboot.getBagOStuff().getGameManager().morph(new Empty(), locX,
                 locY, locZ, locW);
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             SoundLoader.playSound(GameSound.CRUSH);
         }

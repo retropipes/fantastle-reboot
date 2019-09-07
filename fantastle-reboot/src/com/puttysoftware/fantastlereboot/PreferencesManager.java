@@ -233,7 +233,7 @@ public class PreferencesManager implements PreferencesHandler {
 
     public void showPrefs() {
         if (FantastleReboot.inFantastleReboot()) {
-            final Application app = FantastleReboot.getApplication();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             app.setInPrefs(true);
             this.prefFrame.setJMenuBar(app.getMenuManager().getMainMenuBar());
             app.getMenuManager().setPrefMenus();
@@ -242,11 +242,11 @@ public class PreferencesManager implements PreferencesHandler {
                 app.getBattle().getBattleFrame().setVisible(false);
             } else {
                 final int formerMode = app.getFormerMode();
-                if (formerMode == Application.STATUS_GUI) {
+                if (formerMode == BagOStuff.STATUS_GUI) {
                     app.getGUIManager().hideGUITemporarily();
-                } else if (formerMode == Application.STATUS_GAME) {
+                } else if (formerMode == BagOStuff.STATUS_GAME) {
                     app.getGameManager().hideOutput();
-                } else if (formerMode == Application.STATUS_EDITOR) {
+                } else if (formerMode == BagOStuff.STATUS_EDITOR) {
                     app.getEditor().hideOutput();
                 }
             }
@@ -255,7 +255,7 @@ public class PreferencesManager implements PreferencesHandler {
 
     public void hidePrefs() {
         if (FantastleReboot.inFantastleReboot()) {
-            final Application app = FantastleReboot.getApplication();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             app.setInPrefs(false);
             this.prefFrame.setVisible(false);
             this.fileMgr.writePreferencesFile();
@@ -263,11 +263,11 @@ public class PreferencesManager implements PreferencesHandler {
                 app.getBattle().getBattleFrame().setVisible(true);
             } else {
                 final int formerMode = app.getFormerMode();
-                if (formerMode == Application.STATUS_GUI) {
+                if (formerMode == BagOStuff.STATUS_GUI) {
                     app.getGUIManager().showGUI();
-                } else if (formerMode == Application.STATUS_GAME) {
+                } else if (formerMode == BagOStuff.STATUS_GAME) {
                     app.getGameManager().showOutput();
-                } else if (formerMode == Application.STATUS_EDITOR) {
+                } else if (formerMode == BagOStuff.STATUS_EDITOR) {
                     app.getEditor().showOutput();
                 }
             }
@@ -434,7 +434,7 @@ public class PreferencesManager implements PreferencesHandler {
         this.miscPane
                 .setLayout(new GridLayout(PreferencesManager.GRID_LENGTH, 1));
         this.miscPane.add(this.checkUpdatesStartup);
-        if (FantastleReboot.getApplication().isBetaModeEnabled()) {
+        if (FantastleReboot.getBagOStuff().isBetaModeEnabled()) {
             this.miscPane.add(this.checkBetaUpdatesStartup);
         }
         this.miscPane.add(this.moveOneAtATime);

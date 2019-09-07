@@ -38,7 +38,7 @@ public class MagentaLock extends GenericSingleLock {
             Messager.showMessage("You need a magenta key");
         }
         // Play move failed sound, if it's enabled
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveFailedSound();
         }

@@ -247,7 +247,7 @@ public class EditorLocationManager {
 
     private void checkLimits() {
         // Check for limits out of bounds
-        final Maze m = FantastleReboot.getApplication().getMazeManager().getMaze();
+        final Maze m = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
         if (this.locW < this.minW) {
             this.locW = this.minW;
         }

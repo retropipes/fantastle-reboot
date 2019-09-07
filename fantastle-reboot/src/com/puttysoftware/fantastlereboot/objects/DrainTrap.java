@@ -60,11 +60,11 @@ public class DrainTrap extends GenericTrap {
         this.amountDrained = new RandomRange(this.maxDrain,
                 DrainTrap.MIN_DRAIN);
         PCManager.getPlayer().regenerate(this.amountDrained.generate());
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             SoundLoader.playSound(GameSound.DRAIN);
         }
-        FantastleReboot.getApplication().getGameManager().decay();
+        FantastleReboot.getBagOStuff().getGameManager().decay();
     }
 
     @Override

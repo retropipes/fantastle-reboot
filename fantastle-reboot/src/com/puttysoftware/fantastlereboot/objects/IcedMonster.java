@@ -59,11 +59,11 @@ public class IcedMonster extends GenericDungeonObject {
     @Override
     public void timerExpiredAction(final int dirX, final int dirY) {
         // Transform into a normal monster
-        final int pz = FantastleReboot.getApplication().getGameManager()
+        final int pz = FantastleReboot.getBagOStuff().getGameManager()
                 .getPlayerManager().getPlayerLocationZ();
-        final int pw = FantastleReboot.getApplication().getGameManager()
+        final int pw = FantastleReboot.getBagOStuff().getGameManager()
                 .getPlayerManager().getPlayerLocationW();
-        FantastleReboot.getApplication().getGameManager()
+        FantastleReboot.getBagOStuff().getGameManager()
                 .morph(new Monster(this.savedObject), dirX, dirY, pz, pw);
     }
 
@@ -101,7 +101,7 @@ public class IcedMonster extends GenericDungeonObject {
     @Override
     protected MazeObject readMazeObjectHook(final DataReader reader,
             final int formatVersion) throws IOException {
-        final MazeObjectList objectList = FantastleReboot.getApplication()
+        final MazeObjectList objectList = FantastleReboot.getBagOStuff()
                 .getObjects();
         this.savedObject = objectList.readMazeObject(reader, formatVersion);
         return this;

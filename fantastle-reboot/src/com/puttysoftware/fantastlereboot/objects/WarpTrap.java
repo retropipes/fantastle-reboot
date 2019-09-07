@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.objects;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
@@ -54,7 +54,7 @@ public class WarpTrap extends GenericTrap {
     @Override
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         int pw, maxRow, maxCol, maxFloor, rRow, rCol, rFloor;
         pw = app.getGameManager().getPlayerManager().getPlayerLocationW();
         maxRow = app.getMazeManager().getMaze().getRows(pw) - 1;
@@ -70,7 +70,7 @@ public class WarpTrap extends GenericTrap {
         } while (!app.getGameManager().tryUpdatePositionAbsolute(rRow, rCol,
                 rFloor));
         app.getGameManager().updatePositionAbsolute(rRow, rCol, rFloor, pw);
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveSuccessSound();
         }

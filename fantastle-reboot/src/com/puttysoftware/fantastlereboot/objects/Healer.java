@@ -11,7 +11,7 @@ public class Healer extends GenericDungeonObject {
 
     @Override
     public void postMoveActionHook() {
-        FantastleReboot.getApplication().getHealer().showShop();
+        FantastleReboot.getBagOStuff().getHealer().showShop();
     }
 
     @Override

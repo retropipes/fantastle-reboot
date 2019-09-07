@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.objects;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
@@ -44,7 +44,7 @@ public class TeleportWand extends GenericWand {
     @Override
     public void useHelper(final int x, final int y, final int z, final int w) {
         this.useAction(null, x, y, z, w);
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playUseSound();
         }
@@ -53,7 +53,7 @@ public class TeleportWand extends GenericWand {
     @Override
     public void useAction(final MazeObject mo, final int x, final int y,
             final int z, final int w) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getGameManager().updatePositionAbsolute(x, y, z, w);
     }
 

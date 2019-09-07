@@ -25,7 +25,7 @@ public class SpellBookManager {
         final Spell cast = SpellBookManager.selectSpell(caster);
         if (cast != null) {
             // Play casting spell sound
-            if (FantastleReboot.getApplication().getPrefsManager()
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
                 SoundLoader.playSound(GameSound.PARTY_SPELL);
             }
@@ -64,7 +64,7 @@ public class SpellBookManager {
             final String[] names = book.getAllSpellNames();
             final String[] displayNames = book.getAllSpellNamesWithCosts();
             if (names != null && displayNames != null) {
-                if (FantastleReboot.getApplication().getPrefsManager()
+                if (FantastleReboot.getBagOStuff().getPrefsManager()
                         .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
                     SoundLoader.playSound(GameSound.SPECIAL);
                 }
@@ -109,7 +109,7 @@ public class SpellBookManager {
                 caster.drain(cost);
                 final Effect b = cast.getEffect();
                 // Play casting spell sound
-                if (FantastleReboot.getApplication().getPrefsManager()
+                if (FantastleReboot.getBagOStuff().getPrefsManager()
                         .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
                     SoundLoader.playSound(GameSound.MONSTER_SPELL);
                 }
@@ -137,7 +137,7 @@ public class SpellBookManager {
         case 'P':
             return PCManager.getPlayer();
         case 'E':
-            return FantastleReboot.getApplication().getBattle().getEnemy();
+            return FantastleReboot.getBagOStuff().getBattle().getEnemy();
         default:
             return null;
         }

@@ -27,7 +27,7 @@ public class PluginLoader {
                 final Method menuMethod = plugin.getClass()
                         .getDeclaredMethod("getNewMenus");
                 final JMenu[] newMenus = (JMenu[]) menuMethod.invoke(plugin);
-                final MenuManager mm = FantastleReboot.getApplication()
+                final MenuManager mm = FantastleReboot.getBagOStuff()
                         .getMenuManager();
                 for (final JMenu newMenu : newMenus) {
                     mm.getMainMenuBar().add(newMenu);

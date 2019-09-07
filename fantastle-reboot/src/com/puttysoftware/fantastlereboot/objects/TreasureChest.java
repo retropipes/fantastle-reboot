@@ -43,7 +43,7 @@ public class TreasureChest extends GenericContainer {
             Messager.showMessage("You need a key");
         }
         // Play move failed sound, if it's enabled
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveFailedSound();
         }
@@ -61,7 +61,7 @@ public class TreasureChest extends GenericContainer {
 
     @Override
     public MazeObject editorPropertiesHook() {
-        return FantastleReboot.getApplication().getEditor()
+        return FantastleReboot.getBagOStuff().getEditor()
                 .editTreasureChestContents();
     }
 

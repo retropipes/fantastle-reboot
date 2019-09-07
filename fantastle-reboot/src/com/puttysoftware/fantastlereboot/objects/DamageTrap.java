@@ -63,11 +63,11 @@ public class DamageTrap extends GenericTrap {
         this.damageDealt = new RandomRange(DamageTrap.MIN_DAMAGE,
                 this.maxDamage);
         PCManager.getPlayer().doDamage(this.damageDealt.generate());
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             SoundLoader.playSound(GameSound.BARRIER);
         }
-        FantastleReboot.getApplication().getGameManager().decay();
+        FantastleReboot.getBagOStuff().getGameManager().decay();
     }
 
     @Override

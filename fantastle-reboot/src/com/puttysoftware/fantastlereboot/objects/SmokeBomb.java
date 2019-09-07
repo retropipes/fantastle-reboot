@@ -64,7 +64,7 @@ public class SmokeBomb extends GenericUsableObject {
         // Act as if smoke bomb was used
         this.useAction(null, locX, locY, locZ, locW);
         // Destroy smoke bomb
-        FantastleReboot.getApplication().getGameManager().morph(new Empty(), locX,
+        FantastleReboot.getBagOStuff().getGameManager().morph(new Empty(), locX,
                 locY, locZ, locW);
         // Stop arrow
         return false;
@@ -74,11 +74,11 @@ public class SmokeBomb extends GenericUsableObject {
     public void useAction(final MazeObject mo, final int x, final int y,
             final int z, final int w) {
         // Paralyze any monsters nearby
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playUseSound();
         }
-        FantastleReboot.getApplication().getMazeManager().getMaze()
+        FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                 .radialScanTimerAction(x, y, z, w, Maze.LAYER_OBJECT,
                         SmokeBomb.EFFECT_RADIUS, "Monster",
                         SmokeBomb.STUN_DURATION);

@@ -33,7 +33,7 @@ public class Shop implements ShopTypes {
     // Constructors
     public Shop(final int shopType) {
         this.type = shopType;
-        this.itemList = FantastleReboot.getApplication().getCombatItems();
+        this.itemList = FantastleReboot.getBagOStuff().getCombatItems();
         this.index = 0;
     }
 
@@ -138,7 +138,7 @@ public class Shop implements ShopTypes {
     private boolean shopStage1() {
         // Stage 1
         // Play enter shop sound
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_SHOP)) {
             SoundLoader.playSound(GameSound.SHOP);
         }
@@ -375,7 +375,7 @@ public class Shop implements ShopTypes {
         // Stage 6
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
         // Play transact sound
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_SHOP)) {
             SoundLoader.playSound(GameSound.TRANSACT);
         }

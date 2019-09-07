@@ -33,9 +33,9 @@ public abstract class GenericBow extends GenericUsableObject {
     @Override
     public void useAction(final MazeObject mo, final int x, final int y,
             final int z, final int w) {
-        FantastleReboot.getApplication().getGameManager()
+        FantastleReboot.getBagOStuff().getGameManager()
                 .setArrowType(ArrowTypeConstants.ARROW_TYPE_ICE);
-        FantastleReboot.getApplication().getGameManager().keepNextMessage();
+        FantastleReboot.getBagOStuff().getGameManager().keepNextMessage();
         Messager.showMessage(this.getName() + " activated.");
     }
 

@@ -54,7 +54,7 @@ public class MoneyBoots extends GenericBoots {
     @Override
     public void stepAction() {
         PCManager.getPlayer().offsetGold(MoneyBoots.GOLD_AMOUNT);
-        FantastleReboot.getApplication().getGameManager().getScoreTracker()
+        FantastleReboot.getBagOStuff().getGameManager().getScoreTracker()
                 .incrementScore();
     }
 }

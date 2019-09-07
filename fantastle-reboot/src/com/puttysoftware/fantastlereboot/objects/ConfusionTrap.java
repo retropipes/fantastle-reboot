@@ -56,9 +56,9 @@ public class ConfusionTrap extends GenericTrap {
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
         Messager.showMessage("You are confused!");
-        FantastleReboot.getApplication().getGameManager().activateEffect(
+        FantastleReboot.getBagOStuff().getGameManager().activateEffect(
                 EffectConstants.EFFECT_CONFUSED, ConfusionTrap.EFFECT_DURATION);
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playConfusedSound();
         }

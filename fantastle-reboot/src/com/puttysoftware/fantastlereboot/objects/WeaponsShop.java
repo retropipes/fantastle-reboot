@@ -11,7 +11,7 @@ public class WeaponsShop extends GenericDungeonObject {
 
     @Override
     public void postMoveActionHook() {
-        FantastleReboot.getApplication().getWeapons().showShop();
+        FantastleReboot.getBagOStuff().getWeapons().showShop();
     }
 
     @Override

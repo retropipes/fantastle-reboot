@@ -61,22 +61,22 @@ public abstract class GenericWallTrap extends MazeObject {
     @Override
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
-        final int currLevel = FantastleReboot.getApplication().getGameManager()
+        final int currLevel = FantastleReboot.getBagOStuff().getGameManager()
                 .getPlayerManager().getPlayerLocationW();
-        FantastleReboot.getApplication().getGameManager().decay();
-        FantastleReboot.getApplication().getMazeManager().getMaze()
+        FantastleReboot.getBagOStuff().getGameManager().decay();
+        FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                 .findAllMatchingObjectsAndDecay(currLevel, this.masterTrigger);
         if (this.number == GenericWallTrap.NUMBER_MASTER) {
-            FantastleReboot.getApplication().getMazeManager().getMaze()
+            FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                     .masterTrapTrigger(currLevel);
         } else {
-            FantastleReboot.getApplication().getMazeManager().getMaze()
+            FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                     .findAllMatchingObjectsAndDecay(currLevel, this);
-            FantastleReboot.getApplication().getMazeManager().getMaze()
+            FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                     .findAllMatchingObjectsAndDecay(currLevel, this.trigger);
         }
-        FantastleReboot.getApplication().getGameManager().redrawMaze();
-        if (FantastleReboot.getApplication().getPrefsManager()
+        FantastleReboot.getBagOStuff().getGameManager().redrawMaze();
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playWallTrapSound();
         }

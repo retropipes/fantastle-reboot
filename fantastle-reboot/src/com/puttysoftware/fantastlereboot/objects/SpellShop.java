@@ -11,7 +11,7 @@ public class SpellShop extends GenericDungeonObject {
 
     @Override
     public void postMoveActionHook() {
-        FantastleReboot.getApplication().getSpells().showShop();
+        FantastleReboot.getBagOStuff().getSpells().showShop();
     }
 
     @Override

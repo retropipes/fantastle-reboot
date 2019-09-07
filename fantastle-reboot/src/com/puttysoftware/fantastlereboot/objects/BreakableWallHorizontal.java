@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.objects;
 
-import com.puttysoftware.fantastlereboot.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
@@ -36,7 +36,7 @@ public class BreakableWallHorizontal extends GenericWall {
     @Override
     public void chainReactionAction(final int x, final int y, final int z,
             final int w) {
-        if (FantastleReboot.getApplication().getPrefsManager()
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playChainReactSound();
         }
@@ -45,7 +45,7 @@ public class BreakableWallHorizontal extends GenericWall {
 
     private static void doChainReact(final int x, final int y, final int z,
             final int w) {
-        final Application app = FantastleReboot.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         BreakableWallHorizontal curr = null;
         try {
             curr = (BreakableWallHorizontal) app.getMazeManager()
