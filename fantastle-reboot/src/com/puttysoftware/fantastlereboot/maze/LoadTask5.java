@@ -23,9 +23,9 @@ import java.io.IOException;
 import com.puttysoftware.fantastlereboot.Application;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
-import com.puttysoftware.fantastlereboot.creatures.PCManager;
 import com.puttysoftware.fantastlereboot.legacyio.DataConstants;
 import com.puttysoftware.fantastlereboot.legacyio.DataReader;
+import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 
 public class LoadTask5 extends Thread {
     // Fields

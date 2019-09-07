@@ -1,9 +1,9 @@
 package com.puttysoftware.fantastlereboot.spells;
 
-import com.puttysoftware.fantastlereboot.creatures.StatConstants;
-import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
 import com.puttysoftware.fantastlereboot.effects.DamageEffect;
 import com.puttysoftware.fantastlereboot.effects.Effect;
+import com.puttysoftware.fantastlereboot.oldcreatures.StatConstants;
+import com.puttysoftware.fantastlereboot.oldcreatures.castes.CasteConstants;
 
 public class AssassinSpellBook extends SpellBook {
     // Constructor

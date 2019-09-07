@@ -1,16 +1,26 @@
+/*  TallerTower: An RPG
+Copyright (C) 2011-2012 Eric Ahnell
+
+Any questions should be directed to the author via email at: products@puttysoftware.com
+ */
 package com.puttysoftware.fantastlereboot.creatures.races;
 
-import com.puttysoftware.fantastlereboot.Messager;
+import javax.swing.JFrame;
 
-public class RaceManager implements RaceConstants {
+import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.datamanagers.RaceDataManager;
+
+public class RaceManager {
     private static boolean CACHE_CREATED = false;
     private static Race[] CACHE;
+    private static String[] DESC_CACHE;
 
-    public static Race selectRace() {
-        final String[] names = RaceConstants.RACE_NAMES;
+    public static Race selectRace(final JFrame owner) {
+        RaceManager.createCache();
+        final String[] names = RaceConstants.getRaceNames();
         String dialogResult = null;
-        dialogResult = Messager.showInputDialog("Select a Race", "Select Race",
-                names, names[0]);
+        dialogResult = PartyManager.showCreationDialog(owner, "Select a Race",
+                "Create Character", names, RaceManager.DESC_CACHE);
         if (dialogResult != null) {
             int index;
             for (index = 0; index < names.length; index++) {
@@ -24,15 +34,29 @@ public class RaceManager implements RaceConstants {
         }
     }
 
-    public static Race getRace(final int casteID) {
+    public static Race getRace(final int raceID) {
+        RaceManager.createCache();
+        return RaceManager.CACHE[raceID];
+    }
+
+    private static void createCache() {
         if (!RaceManager.CACHE_CREATED) {
+            if (!RaceConstants.racesReady()) {
+                RaceConstants.initRaces();
+            }
             // Create cache
-            RaceManager.CACHE = new Race[RaceConstants.RACES_COUNT];
-            for (int x = 0; x < RaceConstants.RACES_COUNT; x++) {
-                RaceManager.CACHE[x] = new Race(x);
+            if (!RaceConstants.racesReady()) {
+                RaceConstants.initRaces();
+            }
+            RaceManager.CACHE = new Race[RaceConstants.getRacesCount()];
+            RaceManager.DESC_CACHE = new String[RaceConstants.getRacesCount()];
+            for (int x = 0; x < RaceConstants.getRacesCount(); x++) {
+                final int[] rdata = RaceDataManager.getRaceData(x);
+                RaceManager.CACHE[x] = new Race(x, rdata);
+                RaceManager.DESC_CACHE[x] = RaceManager.CACHE[x]
+                        .getDescription();
             }
             RaceManager.CACHE_CREATED = true;
         }
-        return RaceManager.CACHE[casteID];
     }
 }

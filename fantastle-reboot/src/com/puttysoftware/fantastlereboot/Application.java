@@ -21,10 +21,6 @@ package com.puttysoftware.fantastlereboot;
 import javax.swing.JFrame;
 
 import com.puttysoftware.fantastlereboot.assets.GameSound;
-import com.puttysoftware.fantastlereboot.battle.Battle;
-import com.puttysoftware.fantastlereboot.battle.BossBattle;
-import com.puttysoftware.fantastlereboot.creatures.Boss;
-import com.puttysoftware.fantastlereboot.creatures.PCManager;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.GameManager;
 import com.puttysoftware.fantastlereboot.generic.MazeObjectList;
@@ -34,6 +30,10 @@ import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
+import com.puttysoftware.fantastlereboot.oldbattle.Battle;
+import com.puttysoftware.fantastlereboot.oldbattle.BossBattle;
+import com.puttysoftware.fantastlereboot.oldcreatures.Boss;
+import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class Application {

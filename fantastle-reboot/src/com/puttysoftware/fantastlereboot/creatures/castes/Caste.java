@@ -1,25 +1,30 @@
+/*  TallerTower: An RPG
+Copyright (C) 2011-2012 Eric Ahnell
+
+Any questions should be directed to the author via email at: products@puttysoftware.com
+ */
 package com.puttysoftware.fantastlereboot.creatures.castes;
 
-import com.puttysoftware.fantastlereboot.loaders.DataLoader;
+import com.puttysoftware.fantastlereboot.descriptionmanagers.CasteDescriptionManager;
 
 public class Caste {
-    private final int[] data;
     private final int casteID;
+    private final String desc;
 
-    Caste(final int cid) {
-        this.data = DataLoader.loadCasteData(cid);
+    public Caste(final int cid) {
+        this.desc = CasteDescriptionManager.getCasteDescription(cid);
         this.casteID = cid;
     }
 
-    public int getAttribute(final int aid) {
-        return this.data[aid];
+    public String getDescription() {
+        return this.desc;
     }
 
-    public String getName() {
-        return CasteConstants.CASTE_NAMES[this.casteID];
-    }
-
-    public int getCasteID() {
+    public final int getCasteID() {
         return this.casteID;
+    }
+
+    static String casteIDtoName(final int casteID) {
+        return CasteConstants.CASTE_NAMES[casteID];
     }
 }

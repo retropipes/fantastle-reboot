@@ -1,38 +1,42 @@
 package com.puttysoftware.fantastlereboot.battle;
 
-import com.puttysoftware.fantastlereboot.Messager;
-import com.puttysoftware.fantastlereboot.creatures.PCManager;
-import com.puttysoftware.fantastlereboot.creatures.PlayerCharacter;
+import javax.swing.JOptionPane;
+
+import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 
 public class BossRewards {
+    // Fields
+    static final String[] rewardOptions = { "Attack", "Defense", "HP", "MP" };
+
+    // Constructor
+    private BossRewards() {
+        // Do nothing
+    }
+
     // Methods
-    public void doRewards() {
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
-        final String[] rewardOptions = { "Attack", "Defense", "HP", "MP" };
+    public static void doRewards() {
+        final PartyMember player = PartyManager.getParty().getLeader();
         String dialogResult = null;
         while (dialogResult == null) {
-            dialogResult = Messager.showInputDialog(
+            dialogResult = (String) JOptionPane.showInputDialog(null,
                     "You get to increase a stat permanently.\nWhich Stat?",
-                    "Boss Rewards", rewardOptions, rewardOptions[0]);
+                    "Boss Rewards", JOptionPane.QUESTION_MESSAGE, null,
+                    rewardOptions, rewardOptions[0]);
         }
         if (dialogResult.equals(rewardOptions[0])) {
             // Attack
-            playerCharacter.spendPointOnAttack();
+            player.spendPointOnAttack();
         } else if (dialogResult.equals(rewardOptions[1])) {
             // Defense
-            playerCharacter.spendPointOnDefense();
+            player.spendPointOnDefense();
         } else if (dialogResult.equals(rewardOptions[2])) {
             // HP
-            playerCharacter.spendPointOnHP();
-        } else {
+            player.spendPointOnHP();
+        } else if (dialogResult.equals(rewardOptions[3])) {
             // MP
-            playerCharacter.spendPointOnMP();
+            player.spendPointOnMP();
         }
-        final int pAtk = playerCharacter.getPermanentAttackPoints();
-        final int pDef = playerCharacter.getPermanentDefensePoints();
-        final int pHP = playerCharacter.getPermanentHPPoints();
-        final int pMP = playerCharacter.getPermanentMPPoints();
-        final int k = playerCharacter.getKills();
-        PCManager.createNewPCPostKill(pAtk, pDef, pHP, pMP, k);
+        PartyManager.updatePostKill();
     }
 }

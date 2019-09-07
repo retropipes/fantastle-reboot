@@ -1,7 +1,7 @@
 package com.puttysoftware.fantastlereboot.items.combat;
 
-import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.effects.Effect;
+import com.puttysoftware.fantastlereboot.oldcreatures.StatConstants;
 
 public class Rope extends CombatUsableItem {
     public Rope() {

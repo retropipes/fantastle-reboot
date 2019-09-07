@@ -19,8 +19,8 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot.objects;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.creatures.PCManager;
 import com.puttysoftware.fantastlereboot.generic.GenericBoots;
+import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 
 public class MoneyBoots extends GenericBoots {
     // Constants

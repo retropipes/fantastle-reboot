@@ -47,7 +47,6 @@ import javax.swing.JProgressBar;
 import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 
-import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
 import com.puttysoftware.fantastlereboot.maze.Extension;
 import com.puttysoftware.fantastlereboot.objects.Dirt;
@@ -56,6 +55,7 @@ import com.puttysoftware.fantastlereboot.objects.Sand;
 import com.puttysoftware.fantastlereboot.objects.Snow;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.fantastlereboot.objects.Tundra;
+import com.puttysoftware.fantastlereboot.oldbattle.Battle;
 
 public class PreferencesManager implements PreferencesHandler {
     // Fields

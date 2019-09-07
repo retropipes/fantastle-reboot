@@ -1,42 +1,78 @@
+/*  TallerTower: An RPG
+Copyright (C) 2011-2012 Eric Ahnell
+
+Any questions should be directed to the author via email at: products@puttysoftware.com
+ */
 package com.puttysoftware.fantastlereboot.creatures.personalities;
 
-public interface PersonalityConstants {
-    int PERSONALITY_AGILE = 0;
-    int PERSONALITY_BULLY = 1;
-    int PERSONALITY_CAREFREE = 2;
-    int PERSONALITY_CAUTIOUS = 3;
-    int PERSONALITY_DARING = 4;
-    int PERSONALITY_FLIPPANT = 5;
-    int PERSONALITY_GLUTTON = 6;
-    int PERSONALITY_HONEST = 7;
-    int PERSONALITY_IMPULSIVE = 8;
-    int PERSONALITY_JEALOUS = 9;
-    int PERSONALITY_KINDLY = 10;
-    int PERSONALITY_LOGICAL = 11;
-    int PERSONALITY_LUCKY = 12;
-    int PERSONALITY_ORDINARY = 13;
-    int PERSONALITY_PROUD = 14;
-    int PERSONALITY_QUIET = 15;
-    int PERSONALITY_REBEL = 16;
-    int PERSONALITY_ROMANTIC = 17;
-    int PERSONALITY_SILLY = 18;
-    int PERSONALITY_SMART = 19;
-    int PERSONALITY_TOUGH = 20;
-    int PERSONALITY_UNIQUE = 21;
-    int PERSONALITY_VALIANT = 22;
-    int PERSONALITY_WEEPY = 23;
-    int PERSONALITY_ZEALOUS = 24;
-    int PERSONALITIES_COUNT = 25;
-    int PERSONALITY_ATTRIBUTE_RANDOM_STRENGTH = 0;
-    int PERSONALITY_ATTRIBUTE_RANDOM_BLOCK = 1;
-    int PERSONALITY_ATTRIBUTE_RANDOM_AGILITY = 2;
-    int PERSONALITY_ATTRIBUTE_RANDOM_VITALITY = 3;
-    int PERSONALITY_ATTRIBUTE_RANDOM_INTELLIGENCE = 4;
-    int PERSONALITY_ATTRIBUTE_RANDOM_LUCK = 5;
-    int PERSONALITY_ATTRIBUTE_COUNT = 6;
-    String[] PERSONALITY_NAMES = { "Agile", "Bully", "Carefree", "Cautious",
-            "Daring", "Flippant", "Glutton", "Honest", "Impulsive", "Jealous",
-            "Kindly", "Logical", "Lucky", "Ordinary", "Proud", "Quiet", "Rebel",
-            "Romantic", "Silly", "Smart", "Tough", "Unique", "Valiant", "Weepy",
-            "Zealous" };
+import java.io.IOException;
+import java.util.ArrayList;
+
+import com.puttysoftware.fantastlereboot.datamanagers.PersonalityDataManager;
+import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
+import com.puttysoftware.fileutils.ResourceStreamReader;
+
+public class PersonalityConstants {
+    // Fields
+    public static final int PERSONALITY_ATTRIBUTE_LEVEL_UP_SPEED = 0;
+    public static final int PERSONALITY_ATTRIBUTE_ACTION_MOD = 1;
+    public static final int PERSONALITY_ATTRIBUTE_CAPACITY_MOD = 2;
+    public static final int PERSONALITY_ATTRIBUTE_WEALTH_MOD = 3;
+    public static final int PERSONALITY_ATTRIBUTES_COUNT = 4;
+    private static int PERSONALITIES_COUNT = -1;
+    private static String[] PERSONALITY_NAMES = {};
+    private static boolean INITED = false;
+    private static final double[] LOOKUP_TABLE = { 0.5, 0.54, 0.58, 0.63, 0.67,
+            0.71, 0.75, 0.79, 0.83, 0.88, 0.92, 0.96, 1.0, 1.08, 1.17, 1.25,
+            1.33, 1.42, 1.5, 1.58, 1.67, 1.75, 1.83, 1.92, 2.0 };
+
+    // Private constructor
+    private PersonalityConstants() {
+        // Do nothing
+    }
+
+    // Methods
+    static int getPersonalitiesCount() {
+        return PersonalityConstants.PERSONALITIES_COUNT;
+    }
+
+    static String[] getPersonalityNames() {
+        return PersonalityConstants.PERSONALITY_NAMES;
+    }
+
+    public static String getPersonalityName(final int p) {
+        return PersonalityConstants.PERSONALITY_NAMES[p];
+    }
+
+    public static double getLookupTableEntry(final int entryNum) {
+        return PersonalityConstants.LOOKUP_TABLE[entryNum + 12];
+    }
+
+    static boolean personalitiesReady() {
+        return PersonalityConstants.INITED;
+    }
+
+    static void initPersonalities() {
+        if (!PersonalityConstants.INITED) {
+            try (final ResourceStreamReader rsr = new ResourceStreamReader(
+                    PersonalityDataManager.class
+                            .getResourceAsStream("/com/puttysoftware/tallertower/resources/data/personality/catalog.txt"))) {
+                // Fetch data
+                final ArrayList<String> tempNames = new ArrayList<>();
+                String input = "";
+                while (input != null) {
+                    input = rsr.readString();
+                    if (input != null) {
+                        tempNames.add(input);
+                    }
+                }
+                PersonalityConstants.PERSONALITY_NAMES = tempNames
+                        .toArray(new String[tempNames.size()]);
+                PersonalityConstants.PERSONALITIES_COUNT = PersonalityConstants.PERSONALITY_NAMES.length;
+                PersonalityConstants.INITED = true;
+            } catch (final IOException ioe) {
+                TallerTower.getErrorLogger().logError(ioe);
+            }
+        }
+    }
 }

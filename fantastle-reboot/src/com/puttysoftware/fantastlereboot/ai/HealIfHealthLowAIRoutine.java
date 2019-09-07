@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.ai;
 
-import com.puttysoftware.fantastlereboot.creatures.Creature;
+import com.puttysoftware.fantastlereboot.oldcreatures.Creature;
 import com.puttysoftware.fantastlereboot.spells.Spell;
 import com.puttysoftware.randomrange.RandomRange;
 

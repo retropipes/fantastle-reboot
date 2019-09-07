@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.ai;
 
-import com.puttysoftware.fantastlereboot.creatures.Creature;
+import com.puttysoftware.fantastlereboot.oldcreatures.Creature;
 
 public class AttackAIRoutine extends AIRoutine {
     @Override

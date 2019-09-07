@@ -20,9 +20,9 @@ package com.puttysoftware.fantastlereboot.objects;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
-import com.puttysoftware.fantastlereboot.creatures.PCManager;
-import com.puttysoftware.fantastlereboot.creatures.PlayerCharacter;
 import com.puttysoftware.fantastlereboot.generic.GenericBoots;
+import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
+import com.puttysoftware.fantastlereboot.oldcreatures.PlayerCharacter;
 
 public class ExperienceBoots extends GenericBoots {
     // Constants

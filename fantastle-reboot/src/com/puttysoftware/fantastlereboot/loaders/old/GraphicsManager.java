@@ -27,7 +27,7 @@ import javax.imageio.ImageIO;
 import javax.swing.UIManager;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.creatures.Element;
+import com.puttysoftware.fantastlereboot.oldcreatures.Element;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class GraphicsManager {

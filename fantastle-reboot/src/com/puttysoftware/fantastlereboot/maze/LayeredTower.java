@@ -21,7 +21,6 @@ package com.puttysoftware.fantastlereboot.maze;
 import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
 import com.puttysoftware.fantastlereboot.generic.TypeConstants;
 import com.puttysoftware.fantastlereboot.legacyio.DataReader;
@@ -32,6 +31,7 @@ import com.puttysoftware.fantastlereboot.objects.IcedBarrierGenerator;
 import com.puttysoftware.fantastlereboot.objects.IcedMonster;
 import com.puttysoftware.fantastlereboot.objects.Monster;
 import com.puttysoftware.fantastlereboot.objects.MovingBlock;
+import com.puttysoftware.fantastlereboot.oldbattle.Battle;
 import com.puttysoftware.randomrange.RandomRange;
 
 class LayeredTower {
