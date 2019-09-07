@@ -27,11 +27,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.errorlogger.ErrorLogger;
+import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
 import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
 import com.puttysoftware.fantastlereboot.loaders.old.ImageCache;
 import com.puttysoftware.fantastlereboot.loaders.old.MonsterImageCache;
@@ -49,6 +49,7 @@ public class FantastleReboot {
     private static final ErrorLogger debug = new ErrorLogger(
             FantastleReboot.PROGRAM_NAME);
     private static boolean IN_FANTASTLE_5 = true;
+    private static final int BATTLE_MAZE_SIZE = 16;
 
     // Methods
     public static Application getApplication() {
@@ -61,6 +62,10 @@ public class FantastleReboot {
         FantastleReboot.debug.logError(t);
     }
 
+    public static int getBattleMazeSize() {
+        return FantastleReboot.BATTLE_MAZE_SIZE;
+    }
+
     public static boolean inFantastleReboot() {
         return FantastleReboot.IN_FANTASTLE_5;
     }
@@ -70,35 +75,25 @@ public class FantastleReboot {
     }
 
     public static void main(final String[] args) {
-        if (System.getProperty("os.name").startsWith("Mac OS X")) {
-            // Mac OS X-specific stuff
-            System.setProperty(
-                    "com.apple.mrj.application.apple.menu.about.name",
-                    "Fantastle");
-            System.setProperty("apple.laf.useScreenMenuBar", "true");
-        } else {
-            try {
-                // Tell the UIManager to use the platform native look and feel
-                UIManager.setLookAndFeel(
-                        UIManager.getSystemLookAndFeelClassName());
-            } catch (final Exception e) {
-                // Do nothing
-            }
-        }
         try {
+            // Compute action cap
+            AbstractCreature.computeActionCap(FantastleReboot.BATTLE_MAZE_SIZE,
+                    FantastleReboot.BATTLE_MAZE_SIZE);
             FantastleReboot.application = new Application();
             FantastleReboot.application.postConstruct();
+            // OS Integration
+            NativeIntegration ni = new NativeIntegration();
+            ni.configureLookAndFeel();
+            ni.setOpenFileHandler(FantastleReboot.application.getMazeManager());
+            ni.setQuitHandler(FantastleReboot.application.getMazeManager());
+            ni.setPreferencesHandler(
+                    FantastleReboot.application.getPrefsManager());
+            ni.setAboutHandler(FantastleReboot.application.getAboutDialog());
             // Load stuff
             FantastleReboot.showLoadingScreen();
             // Done loading
             FantastleReboot.application.playLogoSound();
             FantastleReboot.application.getGUIManager().showGUI();
-            // OS Integration
-             NativeIntegration ni = new NativeIntegration();
-             ni.setOpenFileHandler(FantastleReboot.application.getMazeManager());
-             ni.setQuitHandler(FantastleReboot.application.getMazeManager());
-             ni.setPreferencesHandler(FantastleReboot.application.getPrefsManager());
-             ni.setAboutHandler(FantastleReboot.application.getAboutDialog());
         } catch (final Throwable t) {
             FantastleReboot.logError(t);
         }
@@ -141,7 +136,8 @@ public class FantastleReboot {
         // Create sound cache
         waitProgress.setValue(80);
         // Create stat image cache
-        FantastleReboot.getApplication().getGameManager().getStatGUI().updateGUI();
+        FantastleReboot.getApplication().getGameManager().getStatGUI()
+                .updateGUI();
         waitProgress.setValue(100);
         waitFrame.setVisible(false);
     }

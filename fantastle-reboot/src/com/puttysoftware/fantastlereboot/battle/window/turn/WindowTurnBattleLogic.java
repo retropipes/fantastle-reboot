@@ -2,6 +2,7 @@ package com.puttysoftware.fantastlereboot.battle.window.turn;
 
 import javax.swing.JFrame;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
@@ -328,7 +329,7 @@ public class WindowTurnBattleLogic extends AbstractBattle {
             this.battleGUI.initBattle(this.enemy.getImage());
             this.firstUpdateMessageArea();
         } catch (final Throwable t) {
-            TallerTower.getErrorLogger().logError(t);
+            FantastleReboot.logError(t);
         }
     }
 

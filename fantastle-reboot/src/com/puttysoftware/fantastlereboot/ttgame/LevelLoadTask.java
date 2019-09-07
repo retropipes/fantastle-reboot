@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 import javax.swing.WindowConstants;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.loaders.older.LogoManager;
 import com.puttysoftware.fantastlereboot.ttmain.Application;
@@ -54,7 +55,7 @@ public class LevelLoadTask extends Thread {
             app.getGameManager().enableEvents();
             app.getGameManager().redrawMaze();
         } catch (final Exception ex) {
-            TallerTower.getErrorLogger().logError(ex);
+            FantastleReboot.logError(ex);
         } finally {
             this.loadFrame.setVisible(false);
         }

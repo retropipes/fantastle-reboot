@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
-import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ttmain.VersionException;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Empty;
@@ -84,8 +84,8 @@ public class Maze {
     // Methods
     public static Maze getTemporaryBattleCopy() {
         final Maze temp = new Maze();
-        temp.addLevel(TallerTower.getBattleMazeSize(),
-                TallerTower.getBattleMazeSize(), 1);
+        temp.addLevel(FantastleReboot.getBattleMazeSize(),
+                FantastleReboot.getBattleMazeSize(), 1);
         temp.fill(new Tile(), new Empty());
         return temp;
     }

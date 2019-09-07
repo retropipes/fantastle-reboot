@@ -9,8 +9,8 @@ import java.io.File;
 import java.io.IOException;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
-import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmain.VersionException;
 import com.puttysoftware.fantastlereboot.ttmaze.Extension;
 import com.puttysoftware.xio.UnexpectedTagException;
@@ -28,7 +28,7 @@ public class CharacterLoader {
             CharacterRegistration.autoremoveCharacter(name);
             return null;
         } catch (final IOException e) {
-            TallerTower.getErrorLogger().logError(e);
+            FantastleReboot.logError(e);
             return null;
         }
     }
@@ -63,7 +63,7 @@ public class CharacterLoader {
         try (XDataWriter saver = new XDataWriter(characterFile, "character")) {
             character.write(saver);
         } catch (final IOException e) {
-            TallerTower.getErrorLogger().logError(e);
+            FantastleReboot.logError(e);
         }
     }
 

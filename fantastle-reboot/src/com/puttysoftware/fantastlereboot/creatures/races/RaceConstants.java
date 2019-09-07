@@ -8,8 +8,8 @@ package com.puttysoftware.fantastlereboot.creatures.races;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.datamanagers.RaceDataManager;
-import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fileutils.ResourceStreamReader;
 
 public class RaceConstants {
@@ -59,7 +59,7 @@ public class RaceConstants {
                 RaceConstants.RACES_COUNT = RaceConstants.RACE_NAMES.length;
                 RaceConstants.INITED = true;
             } catch (final IOException ioe) {
-                TallerTower.getErrorLogger().logError(ioe);
+                FantastleReboot.logError(ioe);
             }
         }
     }

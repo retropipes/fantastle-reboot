@@ -6,6 +6,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.ttgame;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
 import com.puttysoftware.fantastlereboot.loaders.older.SoundManager;
@@ -56,7 +57,7 @@ final class MovementTask extends Thread {
                 }
             }
         } catch (final Throwable t) {
-            TallerTower.getErrorLogger().logError(t);
+            FantastleReboot.logError(t);
         }
     }
 

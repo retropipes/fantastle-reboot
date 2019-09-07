@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ai.map.AbstractMapAIRoutine;
 import com.puttysoftware.fantastlereboot.ai.map.AutoMapAI;
 import com.puttysoftware.fantastlereboot.ai.map.MapAIContext;
@@ -1448,7 +1449,7 @@ public class MapTimeBattleLogic extends AbstractBattle {
                     }
                 }
             } catch (final Throwable t) {
-                TallerTower.getErrorLogger().logError(t);
+                FantastleReboot.logError(t);
             }
         }
     }
@@ -1477,7 +1478,7 @@ public class MapTimeBattleLogic extends AbstractBattle {
                     }
                 }
             } catch (final Throwable t) {
-                TallerTower.getErrorLogger().logError(t);
+                FantastleReboot.logError(t);
             }
         }
 

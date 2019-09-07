@@ -9,7 +9,7 @@ package com.puttysoftware.fantastlereboot.datamanagers;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fileutils.ResourceStreamReader;
 
 public class GraphicsDataManager {
@@ -28,7 +28,7 @@ public class GraphicsDataManager {
             }
             return rawData.toArray(new String[rawData.size()]);
         } catch (final IOException e) {
-            TallerTower.getErrorLogger().logError(e);
+            FantastleReboot.logError(e);
             return null;
         }
     }
@@ -48,7 +48,7 @@ public class GraphicsDataManager {
             }
             return rawData.toArray(new String[rawData.size()]);
         } catch (final IOException e) {
-            TallerTower.getErrorLogger().logError(e);
+            FantastleReboot.logError(e);
             return null;
         }
     }

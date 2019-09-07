@@ -11,8 +11,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.oldnames.NamesConstants;
-import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fileutils.ResourceStreamReader;
 
 public class NamesDataManager {
@@ -63,7 +63,7 @@ public class NamesDataManager {
             }
             return res;
         } catch (final IOException e) {
-            TallerTower.getErrorLogger().logError(e);
+            FantastleReboot.logError(e);
             return null;
         }
     }
@@ -109,7 +109,7 @@ public class NamesDataManager {
                 return res;
             }
         } catch (final IOException e) {
-            TallerTower.getErrorLogger().logError(e);
+            FantastleReboot.logError(e);
             return null;
         }
     }

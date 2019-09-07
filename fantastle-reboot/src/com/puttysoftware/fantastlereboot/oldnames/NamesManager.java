@@ -5,8 +5,8 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.oldnames;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.datamanagers.NamesDataManager;
-import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 
 public class NamesManager {
     private static boolean CACHE_CREATED = false;
@@ -17,11 +17,11 @@ public class NamesManager {
         try {
             NamesManager.createCache();
         } catch (final Exception e) {
-            TallerTower.getErrorLogger().logError(e);
+            FantastleReboot.logError(e);
         }
         final String key = section + ":" + type;
         if (!NamesManager.containsKey(key)) {
-            TallerTower.getErrorLogger().logError(
+            FantastleReboot.logError(
                     new IllegalArgumentException("No such key " + key));
         }
         return NamesManager.getValue(key);

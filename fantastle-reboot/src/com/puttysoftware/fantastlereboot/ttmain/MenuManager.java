@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.characterfiles.CharacterRegistration;
 import com.puttysoftware.fantastlereboot.ttgame.InventoryViewer;
 import com.puttysoftware.fantastlereboot.ttgame.NoteManager;
@@ -321,7 +322,7 @@ public class MenuManager {
                 }
                 MenuManager.this.checkFlags();
             } catch (final Throwable t) {
-                TallerTower.getErrorLogger().logError(t);
+                FantastleReboot.logError(t);
             }
         }
     }

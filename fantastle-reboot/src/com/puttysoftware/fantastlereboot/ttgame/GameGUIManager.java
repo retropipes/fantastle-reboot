@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.loaders.older.ImageTransformer;
 import com.puttysoftware.fantastlereboot.loaders.older.MusicConstants;
 import com.puttysoftware.fantastlereboot.loaders.older.MusicManager;
@@ -397,7 +398,7 @@ class GameGUIManager {
                     break;
                 }
             } catch (final Exception ex) {
-                TallerTower.getErrorLogger().logError(ex);
+                FantastleReboot.logError(ex);
             }
         }
 
@@ -434,7 +435,7 @@ class GameGUIManager {
                     app.getGameManager().exitGame();
                 }
             } catch (final Exception ex) {
-                TallerTower.getErrorLogger().logError(ex);
+                FantastleReboot.logError(ex);
             }
         }
 
@@ -480,7 +481,7 @@ class GameGUIManager {
                     gm.identifyObject(x, y);
                 }
             } catch (final Exception ex) {
-                TallerTower.getErrorLogger().logError(ex);
+                FantastleReboot.logError(ex);
             }
         }
 

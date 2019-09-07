@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.loaders.older.LogoManager;
 
 public class AboutDialog {
@@ -91,7 +92,7 @@ public class AboutDialog {
                     ad.hideAboutDialog();
                 }
             } catch (final Exception ex) {
-                TallerTower.getErrorLogger().logError(ex);
+                FantastleReboot.logError(ex);
             }
         }
     }

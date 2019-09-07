@@ -25,6 +25,7 @@ import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ai.map.AbstractMapAIRoutine;
 import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleDraw;
@@ -346,7 +347,7 @@ class MapTimeBattleGUI {
                     b.doPlayerActions(AbstractMapAIRoutine.ACTION_USE_ITEM);
                 }
             } catch (final Throwable t) {
-                TallerTower.getErrorLogger().logError(t);
+                FantastleReboot.logError(t);
             }
         }
 
@@ -446,7 +447,7 @@ class MapTimeBattleGUI {
                     bg.resetPlayerActionBar();
                 }
             } catch (final Exception ex) {
-                TallerTower.getErrorLogger().logError(ex);
+                FantastleReboot.logError(ex);
             }
         }
 
@@ -519,7 +520,7 @@ class MapTimeBattleGUI {
                     bg.resetPlayerActionBar();
                 }
             } catch (final Exception ex) {
-                TallerTower.getErrorLogger().logError(ex);
+                FantastleReboot.logError(ex);
             }
         }
     }

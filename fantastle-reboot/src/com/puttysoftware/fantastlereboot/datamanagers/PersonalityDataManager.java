@@ -8,8 +8,8 @@ package com.puttysoftware.fantastlereboot.datamanagers;
 
 import java.io.IOException;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.personalities.PersonalityConstants;
-import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.Extension;
 import com.puttysoftware.fileutils.ResourceStreamReader;
 
@@ -41,7 +41,7 @@ public class PersonalityDataManager {
             }
             return finalData;
         } catch (final IOException e) {
-            TallerTower.getErrorLogger().logError(e);
+            FantastleReboot.logError(e);
             return null;
         }
     }

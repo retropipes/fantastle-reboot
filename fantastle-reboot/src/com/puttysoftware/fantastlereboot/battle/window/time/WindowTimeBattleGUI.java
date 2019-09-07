@@ -17,6 +17,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
@@ -319,7 +320,7 @@ public class WindowTimeBattleGUI {
                     return;
                 }
             } catch (final Throwable t) {
-                TallerTower.getErrorLogger().logError(t);
+                FantastleReboot.logError(t);
             }
         }
     }

@@ -8,8 +8,8 @@ package com.puttysoftware.fantastlereboot.datamanagers;
 
 import java.io.IOException;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithConstants;
-import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.Extension;
 import com.puttysoftware.fileutils.ResourceStreamReader;
 
@@ -34,7 +34,7 @@ public class FaithDataManager {
             }
             return finalData;
         } catch (final IOException e) {
-            TallerTower.getErrorLogger().logError(e);
+            FantastleReboot.logError(e);
             return null;
         }
     }

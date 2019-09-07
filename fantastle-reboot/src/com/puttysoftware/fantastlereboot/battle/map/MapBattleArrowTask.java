@@ -5,6 +5,7 @@ Any questions should be directed to the author via email at: mazer5d@worldwizard
  */
 package com.puttysoftware.fantastlereboot.battle.map;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
@@ -110,7 +111,7 @@ public class MapBattleArrowTask extends Thread {
             SoundManager.playSound(SoundConstants.SOUND_ARROW_DIE);
             app.getBattle().arrowDone(hit);
         } catch (final Throwable t) {
-            TallerTower.getErrorLogger().logError(t);
+            FantastleReboot.logError(t);
         }
     }
 

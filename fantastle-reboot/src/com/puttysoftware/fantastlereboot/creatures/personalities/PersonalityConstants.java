@@ -8,8 +8,8 @@ package com.puttysoftware.fantastlereboot.creatures.personalities;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.datamanagers.PersonalityDataManager;
-import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fileutils.ResourceStreamReader;
 
 public class PersonalityConstants {
@@ -71,7 +71,7 @@ public class PersonalityConstants {
                 PersonalityConstants.PERSONALITIES_COUNT = PersonalityConstants.PERSONALITY_NAMES.length;
                 PersonalityConstants.INITED = true;
             } catch (final IOException ioe) {
-                TallerTower.getErrorLogger().logError(ioe);
+                FantastleReboot.logError(ioe);
             }
         }
     }

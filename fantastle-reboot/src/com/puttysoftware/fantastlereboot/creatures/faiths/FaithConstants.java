@@ -9,10 +9,10 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.datamanagers.FaithDataManager;
 import com.puttysoftware.fantastlereboot.oldnames.NamesConstants;
 import com.puttysoftware.fantastlereboot.oldnames.NamesManager;
-import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fileutils.ResourceStreamReader;
 
 public class FaithConstants {
@@ -127,7 +127,7 @@ public class FaithConstants {
                 }
                 FaithConstants.INITED = true;
             } catch (final IOException ioe) {
-                TallerTower.getErrorLogger().logError(ioe);
+                FantastleReboot.logError(ioe);
             }
         }
     }

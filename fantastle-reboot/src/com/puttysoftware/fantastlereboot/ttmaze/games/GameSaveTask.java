@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ttmain.Application;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.Extension;
@@ -66,7 +67,7 @@ public class GameSaveTask extends Thread {
                             + " failed, probably due to illegal characters in the file name.");
             success = false;
         } catch (final Exception ex) {
-            TallerTower.getErrorLogger().logError(ex);
+            FantastleReboot.logError(ex);
         }
         TallerTower.getApplication().getMazeManager()
                 .handleDeferredSuccess(success, false, null);

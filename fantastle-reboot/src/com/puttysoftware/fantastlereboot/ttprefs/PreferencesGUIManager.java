@@ -30,6 +30,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.loaders.older.LogoManager;
 import com.puttysoftware.fantastlereboot.ttmain.Application;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
@@ -269,7 +270,7 @@ class PreferencesGUIManager {
                     pm.hidePrefs();
                 }
             } catch (final Exception ex) {
-                TallerTower.getErrorLogger().logError(ex);
+                FantastleReboot.logError(ex);
             }
         }
 
@@ -293,7 +294,7 @@ class PreferencesGUIManager {
                     }
                 }
             } catch (final Exception ex) {
-                TallerTower.getErrorLogger().logError(ex);
+                FantastleReboot.logError(ex);
             }
         }
 

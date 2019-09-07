@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.loaders.older.ImageTransformer;
 import com.puttysoftware.fantastlereboot.loaders.older.ObjectImageManager;
-import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.FormatConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Amulet;
@@ -173,7 +173,7 @@ public class MazeObjectList {
             } catch (final NoSuchMethodException | InstantiationException
                     | IllegalAccessException | IllegalArgumentException
                     | InvocationTargetException | SecurityException ex) {
-                TallerTower.getErrorLogger().logError(ex);
+                FantastleReboot.logError(ex);
                 return null;
             }
         }
@@ -200,7 +200,7 @@ public class MazeObjectList {
             } catch (InstantiationException | IllegalAccessException
                     | IllegalArgumentException | InvocationTargetException
                     | NoSuchMethodException | SecurityException ex) {
-                TallerTower.getErrorLogger().logError(ex);
+                FantastleReboot.logError(ex);
             }
         }
         return null;
@@ -223,7 +223,7 @@ public class MazeObjectList {
             } catch (InstantiationException | IllegalAccessException
                     | IllegalArgumentException | InvocationTargetException
                     | NoSuchMethodException | SecurityException ex) {
-                TallerTower.getErrorLogger().logError(ex);
+                FantastleReboot.logError(ex);
             }
         }
         return null;

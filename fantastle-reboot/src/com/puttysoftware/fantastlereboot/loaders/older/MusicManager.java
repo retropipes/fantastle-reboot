@@ -11,7 +11,7 @@ import java.io.InputStream;
 import java.nio.BufferUnderflowException;
 
 import com.puttysoftware.audio.mod.MicroMod;
-import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ttmaze.Extension;
 import com.puttysoftware.fantastlereboot.ttmaze.Maze;
 import com.puttysoftware.fileutils.FileUtilities;
@@ -70,7 +70,7 @@ public class MusicManager {
             } catch (final NullPointerException np) {
                 // Ignore
             } catch (final Throwable t) {
-                TallerTower.getErrorLogger().logError(t);
+                FantastleReboot.logError(t);
             }
         }
     }

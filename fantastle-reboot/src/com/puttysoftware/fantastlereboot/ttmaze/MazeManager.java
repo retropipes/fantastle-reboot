@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ttmain.Application;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
@@ -211,7 +212,7 @@ public final class MazeManager {
                     if (!file.getParentFile().exists()) {
                         final boolean okay = file.getParentFile().mkdirs();
                         if (!okay) {
-                            TallerTower.getErrorLogger().logError(
+                            FantastleReboot.logError(
                                     new IOException(
                                             "Cannot create game folder!"));
                         }
