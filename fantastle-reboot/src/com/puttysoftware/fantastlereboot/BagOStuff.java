@@ -31,13 +31,13 @@ import com.puttysoftware.fantastlereboot.battle.window.turn.WindowTurnBattleLogi
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.GameManager;
 import com.puttysoftware.fantastlereboot.generic.MazeObjectList;
-import com.puttysoftware.fantastlereboot.items.Shop;
-import com.puttysoftware.fantastlereboot.items.ShopTypes;
-import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
 import com.puttysoftware.fantastlereboot.loaders.older.LogoManager;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
+import com.puttysoftware.fantastlereboot.ttitems.Shop;
+import com.puttysoftware.fantastlereboot.ttitems.ShopTypes;
+import com.puttysoftware.fantastlereboot.ttitems.combat.CombatItemList;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.updater.ProductData;
 

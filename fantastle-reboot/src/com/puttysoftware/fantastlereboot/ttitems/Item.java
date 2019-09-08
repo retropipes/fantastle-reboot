@@ -21,6 +21,7 @@ public class Item {
     private int weight;
     private int potency;
     private boolean combatUsable;
+    private boolean autoDropAtZeroUses;
 
     // Constructors
     public Item() {
@@ -34,6 +35,7 @@ public class Item {
         this.weight = 0;
         this.potency = 0;
         this.combatUsable = false;
+        this.autoDropAtZeroUses = false;
     }
 
     public Item(final String itemName, final int itemInitialUses,
@@ -48,6 +50,7 @@ public class Item {
         this.weight = 0;
         this.potency = 0;
         this.combatUsable = false;
+        this.autoDropAtZeroUses = false;
     }
 
     protected Item(final String iName, final Item i) {
@@ -61,6 +64,7 @@ public class Item {
         this.weight = i.weight;
         this.potency = i.potency;
         this.combatUsable = false;
+        this.autoDropAtZeroUses = false;
     }
 
     // Methods
@@ -96,6 +100,9 @@ public class Item {
             return false;
         }
         final Item other = (Item) obj;
+        if (this.autoDropAtZeroUses != other.autoDropAtZeroUses) {
+            return false;
+        }
         if (this.buyPrice != other.buyPrice) {
             return false;
         }
@@ -125,6 +132,10 @@ public class Item {
             return false;
         }
         return true;
+    }
+
+    public void setAutoDropAtZeroUses(final boolean doAutoDropAtZeroUses) {
+        this.autoDropAtZeroUses = doAutoDropAtZeroUses;
     }
 
     public final void setName(final String newName) {
@@ -177,6 +188,10 @@ public class Item {
 
     private final int getUses() {
         return this.uses;
+    }
+
+    public boolean shouldAutoDropAtZeroUses() {
+        return this.autoDropAtZeroUses;
     }
 
     private final boolean isUsable() {

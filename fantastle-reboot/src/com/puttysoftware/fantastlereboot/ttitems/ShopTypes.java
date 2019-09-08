@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.items;
+package com.puttysoftware.fantastlereboot.ttitems;
 
 public class ShopTypes {
     private ShopTypes() {

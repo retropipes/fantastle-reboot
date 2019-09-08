@@ -1,8 +1,8 @@
 package com.puttysoftware.fantastlereboot.items.combat;
 
 import com.puttysoftware.fantastlereboot.effects.Effect;
-import com.puttysoftware.fantastlereboot.items.Item;
 import com.puttysoftware.fantastlereboot.items.ItemCategoryConstants;
+import com.puttysoftware.fantastlereboot.ttitems.Item;
 
 public abstract class CombatUsableItem extends Item {
     // Fields

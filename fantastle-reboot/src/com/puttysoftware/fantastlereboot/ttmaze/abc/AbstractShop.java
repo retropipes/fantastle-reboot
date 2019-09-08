@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ttmaze.abc;
 
-import com.puttysoftware.fantastlereboot.items.Shop;
+import com.puttysoftware.fantastlereboot.ttitems.Shop;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.utilities.TypeConstants;

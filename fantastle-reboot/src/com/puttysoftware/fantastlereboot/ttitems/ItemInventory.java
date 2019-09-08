@@ -173,14 +173,14 @@ public class ItemInventory {
         this.equipment[slot] = e;
     }
 
-    public String[] generateInventoryStringArray() {
+    public String[] generateInventoryStringArray(final int offset) {
         final ArrayList<String> result = new ArrayList<>();
         StringBuilder sb;
         int counter = 0;
         for (final ItemUseQuantity iqu : this.entries) {
             sb = new StringBuilder();
             sb.append("Slot ");
-            sb.append(counter + 1);
+            sb.append(counter + offset + 1);
             sb.append(": ");
             sb.append(iqu.getItem().getName());
             sb.append(" (Qty: ");
@@ -415,5 +415,23 @@ public class ItemInventory {
             return false;
         }
         return true;
+    }
+
+    public boolean isAnythingEquippedInFirstSlot(final Equipment ei) {
+        boolean result = false;
+        final int first = ei.getFirstSlotUsed();
+        result = this.equipment[first] != null;
+        return result;
+    }
+
+    public boolean isAnythingEquippedInSecondSlot(final Equipment ei) {
+        boolean result = false;
+        final int second = ei.getSecondSlotUsed();
+        result = this.equipment[second] != null;
+        return result;
+    }
+
+    public boolean isEquipmentInSlot(final int slot) {
+        return this.equipment[slot] != null;
     }
 }

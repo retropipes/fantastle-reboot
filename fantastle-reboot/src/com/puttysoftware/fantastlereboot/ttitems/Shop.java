@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.items;
+package com.puttysoftware.fantastlereboot.ttitems;
 
 import javax.swing.JOptionPane;
 
@@ -8,11 +8,10 @@ import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
-import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 import com.puttysoftware.fantastlereboot.oldcreatures.PlayerCharacter;
-import com.puttysoftware.fantastlereboot.ttitems.Socks;
+import com.puttysoftware.fantastlereboot.ttitems.combat.CombatItemList;
 
 public class Shop {
     // Fields
@@ -164,10 +163,10 @@ public class Shop {
             SoundLoader.playSound(GameSound.SHOP);
         }
         if (this.type == ShopTypes.WEAPONS) {
-            this.typeChoices = WeaponConstants.WEAPON_CHOICES;
+            this.typeChoices = WeaponConstants.getWeaponChoices();
             this.typeDefault = 0;
         } else if (this.type == ShopTypes.ARMOR) {
-            this.typeChoices = ArmorConstants.ARMOR_CHOICES;
+            this.typeChoices = ArmorConstants.getArmorChoices();
             this.typeDefault = 0;
         } else if (this.type == ShopTypes.FAITH_POWERS) {
             this.typeIndex = PartyManager.getParty().getLeader().getFaith()
@@ -206,7 +205,7 @@ public class Shop {
                 this.choices = EquipmentFactory.createOneHandedWeaponNames(
                         playerCharacter.getCaste().getCasteID());
                 // Choose Hand
-                this.handChoices = WeaponConstants.HAND_CHOICES;
+                this.handChoices = WeaponConstants.getHandChoices();
                 this.handDefault = 0;
                 this.handResult = Messager.showInputDialog(
                         this.getGoldTotals() + "Select Hand",
@@ -478,19 +477,19 @@ public class Shop {
             playerCharacter.offsetGold(-this.cost);
             if (this.typeResult.equals(this.typeChoices[0])) {
                 final Equipment bought = EquipmentFactory.createOneHandedWeapon(
-                        this.index, playerCharacter.getCaste().getCasteID());
-                playerCharacter.getItems().equipOneHandedWeapon(bought,
-                        this.handIndex);
+                        this.index, playerCharacter.getCaste().getCasteID(), 0);
+                playerCharacter.getItems().equipOneHandedWeapon(playerCharacter, bought,
+                        this.handIndex, true);
             } else {
                 final Equipment bought = EquipmentFactory.createTwoHandedWeapon(
-                        this.index, playerCharacter.getCaste().getCasteID());
-                playerCharacter.getItems().equipTwoHandedWeapon(bought);
+                        this.index, playerCharacter.getCaste().getCasteID(), 0);
+                playerCharacter.getItems().equipTwoHandedWeapon(playerCharacter, bought, true);
             }
         } else if (this.type == ShopTypes.ARMOR) {
             playerCharacter.offsetGold(-this.cost);
             final Equipment bought = EquipmentFactory.createArmor(this.index,
-                    this.typeIndex);
-            playerCharacter.getItems().equipArmor(bought);
+                    this.typeIndex, 0);
+            playerCharacter.getItems().equipArmor(playerCharacter, bought, true);
         } else if (this.type == ShopTypes.HEALER) {
             playerCharacter.offsetGold(-this.cost);
             playerCharacter.healPercentage((this.index + 1) * 10);
