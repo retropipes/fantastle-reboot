@@ -11,7 +11,7 @@ import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 import com.puttysoftware.fantastlereboot.oldcreatures.PlayerCharacter;
 
-public class Shop implements ShopTypes {
+public class Shop {
     // Fields
     private final int type;
     private int index;
@@ -43,7 +43,7 @@ public class Shop implements ShopTypes {
 
     private String getGoldTotals() {
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
-        if (this.type == ShopTypes.SHOP_TYPE_BANK) {
+        if (this.type == ShopTypes.BANK) {
             return "Gold on Hand: " + playerCharacter.getGold()
                     + "\nGold in Bank: " + playerCharacter.getGoldInBank()
                     + "\n";
@@ -84,19 +84,19 @@ public class Shop implements ShopTypes {
 
     private String getShopNameFromType() {
         switch (this.type) {
-        case SHOP_TYPE_WEAPONS:
+        case ShopTypes.WEAPONS:
             return "Weapons";
-        case SHOP_TYPE_ARMOR:
+        case ShopTypes.ARMOR:
             return "Armor";
-        case SHOP_TYPE_HEALER:
+        case ShopTypes.HEALER:
             return "Healer";
-        case SHOP_TYPE_BANK:
+        case ShopTypes.BANK:
             return "Bank";
-        case SHOP_TYPE_REGENERATOR:
+        case ShopTypes.REGENERATOR:
             return "Regenerator";
-        case SHOP_TYPE_SPELLS:
+        case ShopTypes.SPELLS:
             return "Spells";
-        case SHOP_TYPE_ITEMS:
+        case ShopTypes.ITEMS:
             return "Items";
         default:
             return null;
@@ -143,10 +143,10 @@ public class Shop implements ShopTypes {
                 .getSoundEnabled(PreferencesManager.SOUNDS_SHOP)) {
             SoundLoader.playSound(GameSound.SHOP);
         }
-        if (this.type == ShopTypes.SHOP_TYPE_WEAPONS) {
+        if (this.type == ShopTypes.WEAPONS) {
             this.typeChoices = WeaponConstants.WEAPON_CHOICES;
             this.typeDefault = 0;
-        } else if (this.type == ShopTypes.SHOP_TYPE_ARMOR) {
+        } else if (this.type == ShopTypes.ARMOR) {
             this.typeChoices = ArmorConstants.ARMOR_CHOICES;
             this.typeDefault = 0;
         }
@@ -167,7 +167,7 @@ public class Shop implements ShopTypes {
             if (this.typeIndex == this.typeChoices.length) {
                 return false;
             }
-            if (this.type == ShopTypes.SHOP_TYPE_ARMOR && this.typeIndex > 1) {
+            if (this.type == ShopTypes.ARMOR && this.typeIndex > 1) {
                 // Adjust typeIndex, position 2 is blank
                 this.typeIndex++;
             }
@@ -178,7 +178,7 @@ public class Shop implements ShopTypes {
     private boolean shopStage2() {
         // Stage 2
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
-        if (this.type == ShopTypes.SHOP_TYPE_WEAPONS) {
+        if (this.type == ShopTypes.WEAPONS) {
             if (this.typeResult.equals(this.typeChoices[0])) {
                 this.choices = EquipmentFactory.createOneHandedWeaponNames(
                         playerCharacter.getCaste().getCasteID());
@@ -201,28 +201,28 @@ public class Shop implements ShopTypes {
                 this.choices = EquipmentFactory.createTwoHandedWeaponNames(
                         playerCharacter.getCaste().getCasteID());
             }
-        } else if (this.type == ShopTypes.SHOP_TYPE_ARMOR) {
+        } else if (this.type == ShopTypes.ARMOR) {
             this.choices = EquipmentFactory.createArmorNames(this.typeIndex);
-        } else if (this.type == ShopTypes.SHOP_TYPE_HEALER
-                || this.type == ShopTypes.SHOP_TYPE_REGENERATOR) {
+        } else if (this.type == ShopTypes.HEALER
+                || this.type == ShopTypes.REGENERATOR) {
             this.choices = new String[10];
             int x;
             for (x = 0; x < this.choices.length; x++) {
                 this.choices[x] = Integer.toString((x + 1) * 10) + "%";
             }
             this.defaultChoice = 9;
-        } else if (this.type == ShopTypes.SHOP_TYPE_BANK) {
+        } else if (this.type == ShopTypes.BANK) {
             this.choices = new String[2];
             this.choices[0] = "Deposit";
             this.choices[1] = "Withdraw";
-        } else if (this.type == ShopTypes.SHOP_TYPE_SPELLS) {
+        } else if (this.type == ShopTypes.SPELLS) {
             this.choices = playerCharacter.getSpellBook()
                     .getAllSpellsToLearnNames();
             if (this.choices == null) {
                 this.choices = new String[1];
                 this.choices[0] = "No Spells Left To Learn";
             }
-        } else if (this.type == ShopTypes.SHOP_TYPE_ITEMS) {
+        } else if (this.type == ShopTypes.ITEMS) {
             this.choices = this.itemList.getAllNames();
             if (this.choices == null) {
                 this.choices = new String[1];
@@ -244,16 +244,16 @@ public class Shop implements ShopTypes {
         // Stage 3
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
         // Check
-        if (this.type == ShopTypes.SHOP_TYPE_HEALER && playerCharacter
+        if (this.type == ShopTypes.HEALER && playerCharacter
                 .getCurrentHP() == playerCharacter.getMaximumHP()) {
             Messager.showDialog("You don't need healing.");
             return false;
-        } else if (this.type == ShopTypes.SHOP_TYPE_REGENERATOR
+        } else if (this.type == ShopTypes.REGENERATOR
                 && playerCharacter.getCurrentMP() == playerCharacter
                         .getMaximumMP()) {
             Messager.showDialog("You don't need regeneration.");
             return false;
-        } else if (this.type == ShopTypes.SHOP_TYPE_SPELLS && playerCharacter
+        } else if (this.type == ShopTypes.SPELLS && playerCharacter
                 .getSpellBook().getSpellsKnownCount() == playerCharacter
                         .getSpellBook().getMaximumSpellsKnownCount()) {
             Messager.showDialog("There are no more spells to learn.");
@@ -269,7 +269,7 @@ public class Shop implements ShopTypes {
             return false;
         }
         this.index = 0;
-        if (this.type != ShopTypes.SHOP_TYPE_SPELLS) {
+        if (this.type != ShopTypes.SPELLS) {
             for (this.index = 0; this.index < this.choices.length; this.index++) {
                 if (this.result.equals(this.choices[this.index])) {
                     break;
@@ -286,10 +286,10 @@ public class Shop implements ShopTypes {
         // Stage 4
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
         this.cost = 0;
-        if (this.type == ShopTypes.SHOP_TYPE_WEAPONS
-                || this.type == ShopTypes.SHOP_TYPE_ARMOR) {
+        if (this.type == ShopTypes.WEAPONS
+                || this.type == ShopTypes.ARMOR) {
             this.cost = Shop.getEquipmentCost(this.index + 1);
-            if (this.type == ShopTypes.SHOP_TYPE_WEAPONS) {
+            if (this.type == ShopTypes.WEAPONS) {
                 if (this.typeResult != null) {
                     if (this.typeIndex == 1) {
                         // Two-Handed Weapon, price doubled
@@ -297,15 +297,15 @@ public class Shop implements ShopTypes {
                     }
                 }
             }
-        } else if (this.type == ShopTypes.SHOP_TYPE_HEALER) {
+        } else if (this.type == ShopTypes.HEALER) {
             this.cost = Shop.getHealingCost(playerCharacter.getLevel(),
                     playerCharacter.getCurrentHP(),
                     playerCharacter.getMaximumHP(), playerCharacter.getKills());
-        } else if (this.type == ShopTypes.SHOP_TYPE_REGENERATOR) {
+        } else if (this.type == ShopTypes.REGENERATOR) {
             this.cost = Shop.getRegenerationCost(playerCharacter.getLevel(),
                     playerCharacter.getCurrentMP(),
                     playerCharacter.getMaximumMP(), playerCharacter.getKills());
-        } else if (this.type == ShopTypes.SHOP_TYPE_BANK) {
+        } else if (this.type == ShopTypes.BANK) {
             String stage4Result = "";
             while (stage4Result.equals("")) {
                 stage4Result = Messager.showTextInputDialog(
@@ -326,14 +326,14 @@ public class Shop implements ShopTypes {
                     stage4Result = "";
                 }
             }
-        } else if (this.type == ShopTypes.SHOP_TYPE_SPELLS) {
+        } else if (this.type == ShopTypes.SPELLS) {
             this.cost = Shop.getSpellCost(this.index,
                     playerCharacter.getKills());
-        } else if (this.type == ShopTypes.SHOP_TYPE_ITEMS) {
+        } else if (this.type == ShopTypes.ITEMS) {
             this.item = this.itemList.getAllItems()[this.index];
             this.cost = this.item.getBuyPrice();
         }
-        if (this.type != ShopTypes.SHOP_TYPE_BANK) {
+        if (this.type != ShopTypes.BANK) {
             final int stage4Confirm = Messager.showConfirmDialog(
                     "This will cost " + this.cost + " Gold. Are you sure?",
                     this.getShopNameFromType());
@@ -348,7 +348,7 @@ public class Shop implements ShopTypes {
     private boolean shopStage5() {
         // Stage 5
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
-        if (this.type == ShopTypes.SHOP_TYPE_BANK) {
+        if (this.type == ShopTypes.BANK) {
             if (this.index == 0) {
                 if (playerCharacter.getGold() < this.cost) {
                     Messager.showErrorDialog("Not Enough Gold!",
@@ -381,7 +381,7 @@ public class Shop implements ShopTypes {
                 .getSoundEnabled(PreferencesManager.SOUNDS_SHOP)) {
             SoundLoader.playSound(GameSound.TRANSACT);
         }
-        if (this.type == ShopTypes.SHOP_TYPE_WEAPONS) {
+        if (this.type == ShopTypes.WEAPONS) {
             playerCharacter.offsetGold(-this.cost);
             if (this.typeResult.equals(this.typeChoices[0])) {
                 final Equipment bought = EquipmentFactory.createOneHandedWeapon(
@@ -393,18 +393,18 @@ public class Shop implements ShopTypes {
                         this.index, playerCharacter.getCaste().getCasteID());
                 playerCharacter.getItems().equipTwoHandedWeapon(bought);
             }
-        } else if (this.type == ShopTypes.SHOP_TYPE_ARMOR) {
+        } else if (this.type == ShopTypes.ARMOR) {
             playerCharacter.offsetGold(-this.cost);
             final Equipment bought = EquipmentFactory.createArmor(this.index,
                     this.typeIndex);
             playerCharacter.getItems().equipArmor(bought);
-        } else if (this.type == ShopTypes.SHOP_TYPE_HEALER) {
+        } else if (this.type == ShopTypes.HEALER) {
             playerCharacter.offsetGold(-this.cost);
             playerCharacter.healPercentage((this.index + 1) * 10);
-        } else if (this.type == ShopTypes.SHOP_TYPE_REGENERATOR) {
+        } else if (this.type == ShopTypes.REGENERATOR) {
             playerCharacter.offsetGold(-this.cost);
             playerCharacter.regeneratePercentage((this.index + 1) * 10);
-        } else if (this.type == ShopTypes.SHOP_TYPE_BANK) {
+        } else if (this.type == ShopTypes.BANK) {
             if (this.index == 0) {
                 playerCharacter.offsetGold(-this.cost);
                 playerCharacter.addGoldToBank(this.cost);
@@ -412,12 +412,12 @@ public class Shop implements ShopTypes {
                 playerCharacter.removeGoldFromBank(this.cost);
                 playerCharacter.offsetGold(this.cost);
             }
-        } else if (this.type == ShopTypes.SHOP_TYPE_SPELLS) {
+        } else if (this.type == ShopTypes.SPELLS) {
             playerCharacter.offsetGold(-this.cost);
             if (this.index != -1) {
                 playerCharacter.getSpellBook().learnSpellByID(this.index);
             }
-        } else if (this.type == ShopTypes.SHOP_TYPE_ITEMS) {
+        } else if (this.type == ShopTypes.ITEMS) {
             playerCharacter.offsetGold(-this.cost);
             playerCharacter.getItems().addItem(this.item);
         }

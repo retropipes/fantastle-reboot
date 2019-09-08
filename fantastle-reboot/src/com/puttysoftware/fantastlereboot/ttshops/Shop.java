@@ -11,6 +11,7 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
+import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.ttitems.ArmorConstants;
 import com.puttysoftware.fantastlereboot.ttitems.Equipment;
@@ -59,7 +60,7 @@ public class Shop {
 
     String getGoldTotals() {
         final PartyMember playerCharacter = PartyManager.getParty().getLeader();
-        if (this.type == ShopTypes.SHOP_TYPE_BANK) {
+        if (this.type == ShopTypes.BANK) {
             return "Gold on Hand: " + playerCharacter.getGold()
                     + "\nGold in Bank: " + PartyManager.getGoldInBank() + "\n";
         } else {
@@ -153,13 +154,13 @@ public class Shop {
             // Stage 1
             // Play enter shop sound
             SoundLoader.playSound(GameSound.SHOP);
-            if (Shop.this.type == ShopTypes.SHOP_TYPE_WEAPONS) {
+            if (Shop.this.type == ShopTypes.WEAPONS) {
                 Shop.this.typeChoices = WeaponConstants.getWeaponChoices();
                 Shop.this.typeDefault = 0;
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_ARMOR) {
+            } else if (Shop.this.type == ShopTypes.ARMOR) {
                 Shop.this.typeChoices = ArmorConstants.getArmorChoices();
                 Shop.this.typeDefault = 0;
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_FAITH_POWERS) {
+            } else if (Shop.this.type == ShopTypes.FAITH_POWERS) {
                 Shop.this.typeIndex = PartyManager.getParty().getLeader()
                         .getFaith().getFaithID();
             }
@@ -180,7 +181,7 @@ public class Shop {
                 if (Shop.this.typeIndex == Shop.this.typeChoices.length) {
                     return false;
                 }
-                if (Shop.this.type == ShopTypes.SHOP_TYPE_ARMOR
+                if (Shop.this.type == ShopTypes.ARMOR
                         && Shop.this.typeIndex > 1) {
                     // Adjust typeIndex, position 2 is blank
                     Shop.this.typeIndex++;
@@ -193,7 +194,7 @@ public class Shop {
             // Stage 2
             final PartyMember playerCharacter = PartyManager.getParty()
                     .getLeader();
-            if (Shop.this.type == ShopTypes.SHOP_TYPE_WEAPONS) {
+            if (Shop.this.type == ShopTypes.WEAPONS) {
                 if (Shop.this.typeResult.equals(Shop.this.typeChoices[0])) {
                     Shop.this.choices = EquipmentFactory
                             .createOneHandedWeaponNames(playerCharacter
@@ -219,47 +220,47 @@ public class Shop {
                             .createTwoHandedWeaponNames(playerCharacter
                                     .getCaste().getCasteID());
                 }
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_ARMOR) {
+            } else if (Shop.this.type == ShopTypes.ARMOR) {
                 Shop.this.choices = EquipmentFactory
                         .createArmorNames(Shop.this.typeIndex);
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_HEALER
-                    || Shop.this.type == ShopTypes.SHOP_TYPE_REGENERATOR) {
+            } else if (Shop.this.type == ShopTypes.HEALER
+                    || Shop.this.type == ShopTypes.REGENERATOR) {
                 Shop.this.choices = new String[10];
                 int x;
                 for (x = 0; x < Shop.this.choices.length; x++) {
                     Shop.this.choices[x] = Integer.toString((x + 1) * 10) + "%";
                 }
                 Shop.this.defaultChoice = 9;
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_BANK) {
+            } else if (Shop.this.type == ShopTypes.BANK) {
                 Shop.this.choices = new String[2];
                 Shop.this.choices[0] = "Deposit";
                 Shop.this.choices[1] = "Withdraw";
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_SPELLS) {
+            } else if (Shop.this.type == ShopTypes.SPELLS) {
                 Shop.this.choices = playerCharacter.getSpellBook()
                         .getAllSpellsToLearnNames();
                 if (Shop.this.choices == null) {
                     Shop.this.choices = new String[1];
                     Shop.this.choices[0] = "No Spells Left To Learn";
                 }
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_ITEMS) {
+            } else if (Shop.this.type == ShopTypes.ITEMS) {
                 Shop.this.choices = Shop.this.itemList.getAllNames();
                 if (Shop.this.choices.length == 0) {
                     Shop.this.choices = new String[1];
                     Shop.this.choices[0] = "No Items To Buy";
                     Shop.this.index = -1;
                 }
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_SOCKS) {
+            } else if (Shop.this.type == ShopTypes.SOCKS) {
                 Shop.this.choices = EquipmentFactory.createSocksNames();
                 if (Shop.this.choices.length == 0) {
                     Shop.this.choices = new String[1];
                     Shop.this.choices[0] = "No Socks To Buy";
                     Shop.this.index = -1;
                 }
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_ENHANCEMENTS) {
+            } else if (Shop.this.type == ShopTypes.ENHANCEMENTS) {
                 Shop.this.choices = PartyManager.getParty().getLeader()
                         .getItems().generateEquipmentEnhancementStringArray();
                 Shop.this.index = 0;
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_FAITH_POWERS) {
+            } else if (Shop.this.type == ShopTypes.FAITH_POWERS) {
                 Shop.this.choices = PartyManager.getParty().getLeader()
                         .getItems().generateEquipmentEnhancementStringArray();
                 Shop.this.index = 0;
@@ -275,17 +276,17 @@ public class Shop {
             final PartyMember playerCharacter = PartyManager.getParty()
                     .getLeader();
             // Check
-            if (Shop.this.type == ShopTypes.SHOP_TYPE_HEALER
+            if (Shop.this.type == ShopTypes.HEALER
                     && playerCharacter.getCurrentHP() == playerCharacter
                             .getMaximumHP()) {
                 CommonDialogs.showDialog("You don't need healing.");
                 return false;
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_REGENERATOR
+            } else if (Shop.this.type == ShopTypes.REGENERATOR
                     && playerCharacter.getCurrentMP() == playerCharacter
                             .getMaximumMP()) {
                 CommonDialogs.showDialog("You don't need regeneration.");
                 return false;
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_SPELLS
+            } else if (Shop.this.type == ShopTypes.SPELLS
                     && playerCharacter.getSpellBook().getSpellsKnownCount() == playerCharacter
                             .getSpellBook().getMaximumSpellsKnownCount()) {
                 CommonDialogs.showDialog("There are no more spells to learn.");
@@ -302,7 +303,7 @@ public class Shop {
                 return false;
             }
             Shop.this.index = 0;
-            if (Shop.this.type != ShopTypes.SHOP_TYPE_SPELLS) {
+            if (Shop.this.type != ShopTypes.SPELLS) {
                 for (Shop.this.index = 0; Shop.this.index < Shop.this.choices.length; Shop.this.index++) {
                     if (Shop.this.result
                             .equals(Shop.this.choices[Shop.this.index])) {
@@ -321,10 +322,10 @@ public class Shop {
             final PartyMember playerCharacter = PartyManager.getParty()
                     .getLeader();
             Shop.this.cost = 0;
-            if ((Shop.this.type == ShopTypes.SHOP_TYPE_WEAPONS)
-                    || (Shop.this.type == ShopTypes.SHOP_TYPE_ARMOR)) {
+            if ((Shop.this.type == ShopTypes.WEAPONS)
+                    || (Shop.this.type == ShopTypes.ARMOR)) {
                 Shop.this.cost = Shop.getEquipmentCost(Shop.this.index);
-                if (Shop.this.type == ShopTypes.SHOP_TYPE_WEAPONS) {
+                if (Shop.this.type == ShopTypes.WEAPONS) {
                     if (Shop.this.typeResult != null) {
                         if (Shop.this.typeIndex == 1) {
                             // Two-Handed Weapon, price doubled
@@ -332,17 +333,17 @@ public class Shop {
                         }
                     }
                 }
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_HEALER) {
+            } else if (Shop.this.type == ShopTypes.HEALER) {
                 Shop.this.cost = Shop.getHealingCost(
                         playerCharacter.getLevel(),
                         playerCharacter.getCurrentHP(),
                         playerCharacter.getMaximumHP());
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_REGENERATOR) {
+            } else if (Shop.this.type == ShopTypes.REGENERATOR) {
                 Shop.this.cost = Shop.getRegenerationCost(
                         playerCharacter.getLevel(),
                         playerCharacter.getCurrentMP(),
                         playerCharacter.getMaximumMP());
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_BANK) {
+            } else if (Shop.this.type == ShopTypes.BANK) {
                 String stage4Result = "";
                 while (stage4Result.equals("")) {
                     stage4Result = CommonDialogs.showTextInputDialog(
@@ -364,17 +365,17 @@ public class Shop {
                         stage4Result = "";
                     }
                 }
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_SPELLS) {
+            } else if (Shop.this.type == ShopTypes.SPELLS) {
                 Shop.this.cost = Shop.getSpellCost(Shop.this.index);
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_ITEMS) {
+            } else if (Shop.this.type == ShopTypes.ITEMS) {
                 Shop.this.item = Shop.this.itemList.getAllItems()[Shop.this.index];
                 Shop.this.cost = Shop.this.item.getBuyPrice();
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_SOCKS) {
+            } else if (Shop.this.type == ShopTypes.SOCKS) {
                 Shop.this.item = EquipmentFactory.createSocks(
                         Shop.this.index + 1, (Shop.this.index + 1) * 500
                                 * playerCharacter.getLevel());
                 Shop.this.cost = Shop.this.item.getBuyPrice();
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_ENHANCEMENTS) {
+            } else if (Shop.this.type == ShopTypes.ENHANCEMENTS) {
                 final Equipment old = playerCharacter.getItems()
                         .getEquipmentInSlot(Shop.this.index);
                 if (old != null) {
@@ -399,7 +400,7 @@ public class Shop {
                             Shop.this.getShopNameFromType());
                     return false;
                 }
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_FAITH_POWERS) {
+            } else if (Shop.this.type == ShopTypes.FAITH_POWERS) {
                 final Equipment old = playerCharacter.getItems()
                         .getEquipmentInSlot(Shop.this.index);
                 if (old != null) {
@@ -427,7 +428,7 @@ public class Shop {
                     return false;
                 }
             }
-            if (Shop.this.type != ShopTypes.SHOP_TYPE_BANK) {
+            if (Shop.this.type != ShopTypes.BANK) {
                 // Handle inflation
                 final double actualInflation = Shop.this.inflationRate / 100.0;
                 final double inflatedCost = Shop.this.cost * actualInflation;
@@ -449,7 +450,7 @@ public class Shop {
             // Stage 5
             final PartyMember playerCharacter = PartyManager.getParty()
                     .getLeader();
-            if (Shop.this.type == ShopTypes.SHOP_TYPE_BANK) {
+            if (Shop.this.type == ShopTypes.BANK) {
                 if (Shop.this.index == 0) {
                     if (playerCharacter.getGold() < Shop.this.cost) {
                         CommonDialogs.showErrorDialog("Not Enough Gold!",
@@ -479,7 +480,7 @@ public class Shop {
                     .getLeader();
             // Play transact sound
             SoundLoader.playSound(GameSound.TRANSACT);
-            if (Shop.this.type == ShopTypes.SHOP_TYPE_WEAPONS) {
+            if (Shop.this.type == ShopTypes.WEAPONS) {
                 playerCharacter.offsetGold(-Shop.this.cost);
                 if (Shop.this.typeResult.equals(Shop.this.typeChoices[0])) {
                     final Equipment bought = EquipmentFactory
@@ -494,20 +495,20 @@ public class Shop {
                     playerCharacter.getItems().equipTwoHandedWeapon(
                             playerCharacter, bought, true);
                 }
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_ARMOR) {
+            } else if (Shop.this.type == ShopTypes.ARMOR) {
                 playerCharacter.offsetGold(-Shop.this.cost);
                 final Equipment bought = EquipmentFactory.createArmor(
                         Shop.this.index, Shop.this.typeIndex, 0);
                 playerCharacter.getItems().equipArmor(playerCharacter, bought,
                         true);
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_HEALER) {
+            } else if (Shop.this.type == ShopTypes.HEALER) {
                 playerCharacter.offsetGold(-Shop.this.cost);
                 playerCharacter.healPercentage((Shop.this.index + 1) * 10);
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_REGENERATOR) {
+            } else if (Shop.this.type == ShopTypes.REGENERATOR) {
                 playerCharacter.offsetGold(-Shop.this.cost);
                 playerCharacter
                         .regeneratePercentage((Shop.this.index + 1) * 10);
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_BANK) {
+            } else if (Shop.this.type == ShopTypes.BANK) {
                 if (Shop.this.index == 0) {
                     playerCharacter.offsetGold(-Shop.this.cost);
                     PartyManager.addGoldToBank(Shop.this.cost);
@@ -515,20 +516,20 @@ public class Shop {
                     PartyManager.removeGoldFromBank(Shop.this.cost);
                     playerCharacter.offsetGold(Shop.this.cost);
                 }
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_SPELLS) {
+            } else if (Shop.this.type == ShopTypes.SPELLS) {
                 playerCharacter.offsetGold(-Shop.this.cost);
                 if (Shop.this.index != -1) {
                     playerCharacter.getSpellBook().learnSpellByID(
                             Shop.this.index);
                 }
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_ITEMS) {
+            } else if (Shop.this.type == ShopTypes.ITEMS) {
                 playerCharacter.offsetGold(-Shop.this.cost);
                 playerCharacter.getItems().addItem(Shop.this.item);
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_SOCKS) {
+            } else if (Shop.this.type == ShopTypes.SOCKS) {
                 playerCharacter.offsetGold(-Shop.this.cost);
                 playerCharacter.getItems().equipArmor(playerCharacter,
                         (Socks) Shop.this.item, true);
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_ENHANCEMENTS) {
+            } else if (Shop.this.type == ShopTypes.ENHANCEMENTS) {
                 playerCharacter.offsetGold(-Shop.this.cost);
                 playerCharacter.getItems().setEquipmentInSlot(Shop.this.index,
                         (Equipment) Shop.this.item);
@@ -543,7 +544,7 @@ public class Shop {
                                 (Equipment) Shop.this.item);
                     }
                 }
-            } else if (Shop.this.type == ShopTypes.SHOP_TYPE_FAITH_POWERS) {
+            } else if (Shop.this.type == ShopTypes.FAITH_POWERS) {
                 playerCharacter.offsetGold(-Shop.this.cost);
                 playerCharacter.getItems().setEquipmentInSlot(Shop.this.index,
                         (Equipment) Shop.this.item);

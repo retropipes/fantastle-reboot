@@ -17,13 +17,13 @@ import com.puttysoftware.fantastlereboot.battle.map.time.MapTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.map.turn.MapTurnBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.window.time.WindowTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.window.turn.WindowTurnBattleLogic;
+import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.older.LogoManager;
 import com.puttysoftware.fantastlereboot.ttgame.GameLogicManager;
 import com.puttysoftware.fantastlereboot.ttmaze.MazeManager;
 import com.puttysoftware.fantastlereboot.ttmaze.utilities.MazeObjectList;
 import com.puttysoftware.fantastlereboot.ttshops.Shop;
-import com.puttysoftware.fantastlereboot.ttshops.ShopTypes;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.updater.ProductData;
 
@@ -85,16 +85,16 @@ public final class Application {
         this.windowTimeBattle = new WindowTimeBattleLogic();
         this.mapTurnBattle = new MapTurnBattleLogic();
         this.mapTimeBattle = new MapTimeBattleLogic();
-        this.weapons = new Shop(ShopTypes.SHOP_TYPE_WEAPONS);
-        this.armor = new Shop(ShopTypes.SHOP_TYPE_ARMOR);
-        this.healer = new Shop(ShopTypes.SHOP_TYPE_HEALER);
-        this.bank = new Shop(ShopTypes.SHOP_TYPE_BANK);
-        this.regenerator = new Shop(ShopTypes.SHOP_TYPE_REGENERATOR);
-        this.spells = new Shop(ShopTypes.SHOP_TYPE_SPELLS);
-        this.items = new Shop(ShopTypes.SHOP_TYPE_ITEMS);
-        this.socks = new Shop(ShopTypes.SHOP_TYPE_SOCKS);
-        this.enhancements = new Shop(ShopTypes.SHOP_TYPE_ENHANCEMENTS);
-        this.faiths = new Shop(ShopTypes.SHOP_TYPE_FAITH_POWERS);
+        this.weapons = new Shop(ShopTypes.WEAPONS);
+        this.armor = new Shop(ShopTypes.ARMOR);
+        this.healer = new Shop(ShopTypes.HEALER);
+        this.bank = new Shop(ShopTypes.BANK);
+        this.regenerator = new Shop(ShopTypes.REGENERATOR);
+        this.spells = new Shop(ShopTypes.SPELLS);
+        this.items = new Shop(ShopTypes.ITEMS);
+        this.socks = new Shop(ShopTypes.SOCKS);
+        this.enhancements = new Shop(ShopTypes.ENHANCEMENTS);
+        this.faiths = new Shop(ShopTypes.FAITH_POWERS);
         // Cache Logo
         this.guiMgr.updateLogo();
     }
@@ -213,25 +213,25 @@ public final class Application {
     public Shop getGenericShop(final int shopType) {
         this.getGameManager().stopMovement();
         switch (shopType) {
-        case ShopTypes.SHOP_TYPE_ARMOR:
+        case ShopTypes.ARMOR:
             return this.armor;
-        case ShopTypes.SHOP_TYPE_BANK:
+        case ShopTypes.BANK:
             return this.bank;
-        case ShopTypes.SHOP_TYPE_ENHANCEMENTS:
+        case ShopTypes.ENHANCEMENTS:
             return this.enhancements;
-        case ShopTypes.SHOP_TYPE_FAITH_POWERS:
+        case ShopTypes.FAITH_POWERS:
             return this.faiths;
-        case ShopTypes.SHOP_TYPE_HEALER:
+        case ShopTypes.HEALER:
             return this.healer;
-        case ShopTypes.SHOP_TYPE_ITEMS:
+        case ShopTypes.ITEMS:
             return this.items;
-        case ShopTypes.SHOP_TYPE_REGENERATOR:
+        case ShopTypes.REGENERATOR:
             return this.regenerator;
-        case ShopTypes.SHOP_TYPE_SOCKS:
+        case ShopTypes.SOCKS:
             return this.socks;
-        case ShopTypes.SHOP_TYPE_SPELLS:
+        case ShopTypes.SPELLS:
             return this.spells;
-        case ShopTypes.SHOP_TYPE_WEAPONS:
+        case ShopTypes.WEAPONS:
             return this.weapons;
         default:
             // Invalid shop type

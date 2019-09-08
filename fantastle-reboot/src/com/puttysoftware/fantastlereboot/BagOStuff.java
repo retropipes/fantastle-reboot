@@ -108,13 +108,13 @@ public class BagOStuff {
         this.mapTurnBattle = new MapTurnBattleLogic();
         this.mapTimeBattle = new MapTimeBattleLogic();
         this.editor = new MazeEditor();
-        this.weapons = new Shop(ShopTypes.SHOP_TYPE_WEAPONS);
-        this.armor = new Shop(ShopTypes.SHOP_TYPE_ARMOR);
-        this.healer = new Shop(ShopTypes.SHOP_TYPE_HEALER);
-        this.bank = new Shop(ShopTypes.SHOP_TYPE_BANK);
-        this.regenerator = new Shop(ShopTypes.SHOP_TYPE_REGENERATOR);
-        this.spells = new Shop(ShopTypes.SHOP_TYPE_SPELLS);
-        this.items = new Shop(ShopTypes.SHOP_TYPE_ITEMS);
+        this.weapons = new Shop(ShopTypes.WEAPONS);
+        this.armor = new Shop(ShopTypes.ARMOR);
+        this.healer = new Shop(ShopTypes.HEALER);
+        this.bank = new Shop(ShopTypes.BANK);
+        this.regenerator = new Shop(ShopTypes.REGENERATOR);
+        this.spells = new Shop(ShopTypes.SPELLS);
+        this.items = new Shop(ShopTypes.ITEMS);
         // Attempt to load extras
         final Object extras = PluginLoader.loadPlugin("ExtrasPlugin");
         PluginLoader.addPluginMenus(extras);

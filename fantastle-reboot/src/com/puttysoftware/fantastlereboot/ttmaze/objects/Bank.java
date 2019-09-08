@@ -5,14 +5,14 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ttmaze.objects;
 
+import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.loaders.older.ObjectImageConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractShop;
-import com.puttysoftware.fantastlereboot.ttshops.ShopTypes;
 
 public class Bank extends AbstractShop {
     // Constructors
     public Bank() {
-        super(ShopTypes.SHOP_TYPE_BANK);
+        super(ShopTypes.BANK);
     }
 
     @Override
