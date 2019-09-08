@@ -7,7 +7,7 @@ package com.puttysoftware.fantastlereboot.effects;
 
 import java.util.Arrays;
 
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 
 public class TTEffect {
@@ -252,7 +252,7 @@ public class TTEffect {
         }
     }
 
-    public void useEffect(final AbstractCreature target) {
+    public void useEffect(final Creature target) {
         final double hpAddEffect = this.getEffect(TTEffect.EFFECT_ADD,
                 StatConstants.STAT_CURRENT_HP);
         final double mpAddEffect = this.getEffect(TTEffect.EFFECT_ADD,
@@ -327,7 +327,7 @@ public class TTEffect {
         return this.effect[type][stat];
     }
 
-    public void scaleEffect(final int type, final AbstractCreature scaleTo) {
+    public void scaleEffect(final int type, final Creature scaleTo) {
         for (int stat = 0; stat < StatConstants.MAX_STATS; stat++) {
             final double base = this.effect[type][stat];
             final int scst = this.effectScaleStat;

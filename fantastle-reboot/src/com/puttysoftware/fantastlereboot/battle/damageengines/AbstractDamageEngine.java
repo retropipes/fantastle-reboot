@@ -7,12 +7,12 @@ package com.puttysoftware.fantastlereboot.battle.damageengines;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 
 public abstract class AbstractDamageEngine {
     // Methods
-    public abstract int computeDamage(AbstractCreature enemy,
-            AbstractCreature acting);
+    public abstract int computeDamage(Creature enemy,
+            Creature acting);
 
     public abstract boolean enemyDodged();
 

@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.castes.Caste;
 import com.puttysoftware.fantastlereboot.creatures.castes.CasteManager;
@@ -32,7 +32,7 @@ import com.puttysoftware.page.Page;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
-public class PartyMember extends AbstractCreature {
+public class PartyMember extends Creature {
     // Fields
     private Race race;
     private Caste caste;

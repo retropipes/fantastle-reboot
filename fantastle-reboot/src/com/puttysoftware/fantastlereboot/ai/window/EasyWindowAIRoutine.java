@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.ai.window;
 
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class EasyWindowAIRoutine extends AbstractWindowAIRoutine {
@@ -18,7 +18,7 @@ public class EasyWindowAIRoutine extends AbstractWindowAIRoutine {
     }
 
     @Override
-    public int getNextAction(final AbstractCreature c) {
+    public int getNextAction(final Creature c) {
         if (this.roundsRemaining == null) {
             this.roundsRemaining = new int[c.getSpellBook().getSpellCount()];
         }
@@ -40,7 +40,7 @@ public class EasyWindowAIRoutine extends AbstractWindowAIRoutine {
         }
     }
 
-    private boolean spellCheck(final AbstractCreature c) {
+    private boolean spellCheck(final Creature c) {
         final RandomRange random = new RandomRange(1, 100);
         final int chance = random.generate();
         if (chance <= CAST_SPELL_CHANCE) {

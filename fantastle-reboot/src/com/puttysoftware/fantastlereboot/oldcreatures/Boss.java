@@ -1,6 +1,7 @@
 package com.puttysoftware.fantastlereboot.oldcreatures;
 
 import com.puttysoftware.fantastlereboot.ai.BossAIRoutine;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
 import com.puttysoftware.fantastlereboot.oldcreatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.oldcreatures.faiths.FaithConstants;

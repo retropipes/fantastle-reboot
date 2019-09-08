@@ -2,7 +2,7 @@ package com.puttysoftware.fantastlereboot.effects;
 
 import java.util.Arrays;
 
-import com.puttysoftware.fantastlereboot.oldcreatures.Creature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.oldcreatures.StatConstants;
 
 public class Effect implements StatConstants {

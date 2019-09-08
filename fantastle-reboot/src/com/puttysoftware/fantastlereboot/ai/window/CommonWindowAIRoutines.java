@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ai.window;
 
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.randomrange.RandomRange;
 
 class CommonWindowAIRoutines {
@@ -17,7 +17,7 @@ class CommonWindowAIRoutines {
         // Do nothing
     }
 
-    static int getMaxCastIndex(final AbstractCreature c) {
+    static int getMaxCastIndex(final Creature c) {
         final int currMP = c.getCurrentMP();
         final int[] allCosts = c.getSpellBook().getAllSpellCosts();
         int result = -1;

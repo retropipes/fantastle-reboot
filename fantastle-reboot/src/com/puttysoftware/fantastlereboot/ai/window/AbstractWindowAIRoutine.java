@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.ai.window;
 
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.ttspells.Spell;
 
 public abstract class AbstractWindowAIRoutine {
@@ -14,7 +14,7 @@ public abstract class AbstractWindowAIRoutine {
     public static final int ACTION_USE_ITEM = 5;
 
     // Methods
-    public abstract int getNextAction(AbstractCreature c);
+    public abstract int getNextAction(Creature c);
 
     public void newRoundHook() {
         // Do nothing

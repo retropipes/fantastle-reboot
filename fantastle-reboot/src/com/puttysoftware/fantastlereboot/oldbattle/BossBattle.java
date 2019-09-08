@@ -4,9 +4,9 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.oldcreatures.Boss;
-import com.puttysoftware.fantastlereboot.oldcreatures.Creature;
 import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 import com.puttysoftware.fantastlereboot.oldcreatures.PlayerCharacter;
 

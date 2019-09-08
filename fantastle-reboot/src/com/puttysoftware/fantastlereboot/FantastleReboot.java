@@ -31,7 +31,7 @@ import javax.swing.WindowConstants;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.errorlogger.ErrorLogger;
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
 import com.puttysoftware.fantastlereboot.loaders.old.ImageCache;
 import com.puttysoftware.fantastlereboot.loaders.old.MonsterImageCache;
@@ -77,7 +77,7 @@ public class FantastleReboot {
     public static void main(final String[] args) {
         try {
             // Compute action cap
-            AbstractCreature.computeActionCap(FantastleReboot.BATTLE_MAZE_SIZE,
+            Creature.computeActionCap(FantastleReboot.BATTLE_MAZE_SIZE,
                     FantastleReboot.BATTLE_MAZE_SIZE);
             // Create the Bag O'Stuff
             FantastleReboot.bag = new BagOStuff();

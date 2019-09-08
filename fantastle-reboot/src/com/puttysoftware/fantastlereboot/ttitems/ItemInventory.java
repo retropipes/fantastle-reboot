@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.puttysoftware.fantastlereboot.assets.GameSound;
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.ttitems.combat.CombatItemList;
@@ -72,7 +72,7 @@ public class ItemInventory {
         return 0;
     }
 
-    public void equipOneHandedWeapon(final AbstractCreature pc,
+    public void equipOneHandedWeapon(final Creature pc,
             final Equipment ei, final boolean useFirst, final boolean playSound) {
         // Fix character load, changing weapons
         if (this.equipment[EquipmentSlotConstants.SLOT_MAINHAND] != null
@@ -106,7 +106,7 @@ public class ItemInventory {
         }
     }
 
-    public void equipTwoHandedWeapon(final AbstractCreature pc,
+    public void equipTwoHandedWeapon(final Creature pc,
             final Equipment ei, final boolean playSound) {
         // Fix character load, changing weapons
         if (this.equipment[EquipmentSlotConstants.SLOT_MAINHAND] != null) {
@@ -123,7 +123,7 @@ public class ItemInventory {
         }
     }
 
-    public void equipArmor(final AbstractCreature pc, final Equipment ei,
+    public void equipArmor(final Creature pc, final Equipment ei,
             final boolean playSound) {
         // Check for socks
         if (ei instanceof Socks) {
@@ -277,7 +277,7 @@ public class ItemInventory {
         return result;
     }
 
-    public void fireStepActions(final AbstractCreature wearer) {
+    public void fireStepActions(final Creature wearer) {
         if (this.socks != null) {
             this.socks.stepAction(wearer);
         }

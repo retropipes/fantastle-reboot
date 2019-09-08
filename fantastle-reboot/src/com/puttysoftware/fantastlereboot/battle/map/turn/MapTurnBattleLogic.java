@@ -20,7 +20,7 @@ import com.puttysoftware.fantastlereboot.battle.BossRewards;
 import com.puttysoftware.fantastlereboot.battle.damageengines.AbstractDamageEngine;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattle;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleArrowTask;
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.monsters.BossMonster;
 import com.puttysoftware.fantastlereboot.creatures.monsters.MonsterFactory;
@@ -87,7 +87,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
 
     @Override
     public void doBattleByProxy() {
-        final AbstractCreature m = MonsterFactory.getNewMonsterInstance();
+        final Creature m = MonsterFactory.getNewMonsterInstance();
         final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         playerCharacter.offsetExperience(m.getExperience());
         playerCharacter.offsetGold(m.getGold());
@@ -176,27 +176,27 @@ public class MapTurnBattleLogic extends AbstractBattle {
         if (this.result != BattleResults.IN_PROGRESS) {
             return this.result;
         }
-        if (this.areTeamEnemiesAlive(AbstractCreature.TEAM_PARTY)
-                && !this.isTeamAlive(AbstractCreature.TEAM_PARTY)) {
+        if (this.areTeamEnemiesAlive(Creature.TEAM_PARTY)
+                && !this.isTeamAlive(Creature.TEAM_PARTY)) {
             currResult = BattleResults.LOST;
-        } else if (!this.areTeamEnemiesAlive(AbstractCreature.TEAM_PARTY)
-                && this.isTeamAlive(AbstractCreature.TEAM_PARTY)) {
+        } else if (!this.areTeamEnemiesAlive(Creature.TEAM_PARTY)
+                && this.isTeamAlive(Creature.TEAM_PARTY)) {
             currResult = BattleResults.WON;
-        } else if (!this.areTeamEnemiesAlive(AbstractCreature.TEAM_PARTY)
-                && !this.isTeamAlive(AbstractCreature.TEAM_PARTY)) {
+        } else if (!this.areTeamEnemiesAlive(Creature.TEAM_PARTY)
+                && !this.isTeamAlive(Creature.TEAM_PARTY)) {
             currResult = BattleResults.DRAW;
-        } else if (this.isTeamAlive(AbstractCreature.TEAM_PARTY)
-                && !this.isTeamGone(AbstractCreature.TEAM_PARTY)
-                && this.areTeamEnemiesDeadOrGone(AbstractCreature.TEAM_PARTY)) {
+        } else if (this.isTeamAlive(Creature.TEAM_PARTY)
+                && !this.isTeamGone(Creature.TEAM_PARTY)
+                && this.areTeamEnemiesDeadOrGone(Creature.TEAM_PARTY)) {
             currResult = BattleResults.WON;
-        } else if (!this.isTeamAlive(AbstractCreature.TEAM_PARTY)
-                && !this.isTeamGone(AbstractCreature.TEAM_PARTY)
+        } else if (!this.isTeamAlive(Creature.TEAM_PARTY)
+                && !this.isTeamGone(Creature.TEAM_PARTY)
                 && !this.areTeamEnemiesDeadOrGone(
-                        AbstractCreature.TEAM_PARTY)) {
+                        Creature.TEAM_PARTY)) {
             currResult = BattleResults.LOST;
-        } else if (this.areTeamEnemiesGone(AbstractCreature.TEAM_PARTY)) {
+        } else if (this.areTeamEnemiesGone(Creature.TEAM_PARTY)) {
             currResult = BattleResults.ENEMY_FLED;
-        } else if (this.isTeamGone(AbstractCreature.TEAM_PARTY)) {
+        } else if (this.isTeamGone(Creature.TEAM_PARTY)) {
             currResult = BattleResults.FLED;
         } else {
             currResult = BattleResults.IN_PROGRESS;
@@ -263,11 +263,11 @@ public class MapTurnBattleLogic extends AbstractBattle {
             final int x = this.auto.getMoveX();
             final int y = this.auto.getMoveY();
             final int activeTID = this.bd.getActiveCharacter().getTeamID();
-            final BattleCharacter theEnemy = (activeTID == AbstractCreature.TEAM_PARTY
+            final BattleCharacter theEnemy = (activeTID == Creature.TEAM_PARTY
                     ? this.enemy
                     : this.bd.getBattlers()[this.bd.findFirstBattlerOnTeam(
-                            AbstractCreature.TEAM_PARTY)]);
-            final AbstractDamageEngine activeDE = (activeTID == AbstractCreature.TEAM_PARTY
+                            Creature.TEAM_PARTY)]);
+            final AbstractDamageEngine activeDE = (activeTID == Creature.TEAM_PARTY
                     ? this.ede
                     : this.pde);
             this.updatePositionInternal(x, y, false, acting, theEnemy,
@@ -278,12 +278,12 @@ public class MapTurnBattleLogic extends AbstractBattle {
         }
     }
 
-    private void displayRoundResults(final AbstractCreature theEnemy,
-            final AbstractCreature active,
+    private void displayRoundResults(final Creature theEnemy,
+            final Creature active,
             final AbstractDamageEngine activeDE) {
         // Display round results
         final boolean isParty = active
-                .getTeamID() == AbstractCreature.TEAM_PARTY;
+                .getTeamID() == Creature.TEAM_PARTY;
         final String activeName = active.getName();
         final String enemyName = theEnemy.getName();
         String damageString = Integer.toString(this.damage);
@@ -372,8 +372,8 @@ public class MapTurnBattleLogic extends AbstractBattle {
         this.setStatusMessage(displayDamageString);
     }
 
-    private void computeDamage(final AbstractCreature theEnemy,
-            final AbstractCreature acting,
+    private void computeDamage(final Creature theEnemy,
+            final Creature acting,
             final AbstractDamageEngine activeDE) {
         // Compute Damage
         this.damage = 0;
@@ -608,11 +608,11 @@ public class MapTurnBattleLogic extends AbstractBattle {
     @Override
     public boolean updatePosition(final int x, final int y) {
         final int activeTID = this.bd.getActiveCharacter().getTeamID();
-        BattleCharacter theEnemy = (activeTID == AbstractCreature.TEAM_PARTY
+        BattleCharacter theEnemy = (activeTID == Creature.TEAM_PARTY
                 ? this.enemy
                 : this.bd.getBattlers()[this.bd
-                        .findFirstBattlerOnTeam(AbstractCreature.TEAM_PARTY)]);
-        final AbstractDamageEngine activeDE = (activeTID == AbstractCreature.TEAM_PARTY
+                        .findFirstBattlerOnTeam(Creature.TEAM_PARTY)]);
+        final AbstractDamageEngine activeDE = (activeTID == Creature.TEAM_PARTY
                 ? this.ede
                 : this.pde);
         if (x == 0 && y == 0) {
@@ -645,7 +645,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
         this.battleGUI.turnEventHandlersOn();
         // Handle death
         if (hit != null && !hit.getTemplate().isAlive()) {
-            if (hit.getTeamID() != AbstractCreature.TEAM_PARTY) {
+            if (hit.getTeamID() != Creature.TEAM_PARTY) {
                 // Update victory spoils
                 this.battleExp = hit.getTemplate().getExperience();
             }
@@ -884,7 +884,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
                                 active.getTemplate(), activeDE);
                         // Handle low health for party members
                         if (theEnemy.getTemplate().isAlive() && theEnemy
-                                .getTeamID() == AbstractCreature.TEAM_PARTY
+                                .getTeamID() == Creature.TEAM_PARTY
                                 && theEnemy.getTemplate()
                                         .getCurrentHP() <= theEnemy
                                                 .getTemplate().getMaximumHP()
@@ -894,7 +894,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
                         // Handle enemy death
                         if (!theEnemy.getTemplate().isAlive()) {
                             if (theEnemy
-                                    .getTeamID() != AbstractCreature.TEAM_PARTY) {
+                                    .getTeamID() != Creature.TEAM_PARTY) {
                                 // Update victory spoils
                                 this.battleExp = theEnemy.getTemplate()
                                         .getExperience();
@@ -985,7 +985,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
     }
 
     @Override
-    public AbstractCreature getEnemy() {
+    public Creature getEnemy() {
         return this.enemy.getTemplate();
     }
 
@@ -1119,7 +1119,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
     public boolean steal() {
         // Check Action Counter
         if (this.getActiveActionCounter() > 0) {
-            AbstractCreature activeEnemy = null;
+            Creature activeEnemy = null;
             try {
                 activeEnemy = this.getEnemyBC().getTemplate();
             } catch (final NullPointerException npe) {
@@ -1200,7 +1200,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
     public boolean drain() {
         // Check Action Counter
         if (this.getActiveActionCounter() > 0) {
-            AbstractCreature activeEnemy = null;
+            Creature activeEnemy = null;
             try {
                 activeEnemy = this.getEnemyBC().getTemplate();
             } catch (final NullPointerException npe) {
@@ -1344,7 +1344,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
             // Maintain Effects
             if (this.bd.getBattlers()[x] != null
                     && this.bd.getBattlers()[x].isActive()) {
-                final AbstractCreature active = this.bd.getBattlers()[x]
+                final Creature active = this.bd.getBattlers()[x]
                         .getTemplate();
                 // Use Effects
                 active.useEffects();
@@ -1366,7 +1366,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
                 }
                 // Handle low health for party members
                 if (active.isAlive()
-                        && active.getTeamID() == AbstractCreature.TEAM_PARTY
+                        && active.getTeamID() == Creature.TEAM_PARTY
                         && active.getCurrentHP() <= active.getMaximumHP() * 3
                                 / 10) {
                     SoundLoader.playSound(GameSound.LOW_HEALTH);
@@ -1376,7 +1376,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
                 // Handle death caused by effects
                 if (!active.isAlive()) {
                     if (this.bd.getBattlers()[x]
-                            .getTeamID() != AbstractCreature.TEAM_PARTY) {
+                            .getTeamID() != Creature.TEAM_PARTY) {
                         // Update victory spoils
                         this.battleExp = this.bd.getBattlers()[x].getTemplate()
                                 .getExperience();
@@ -1507,9 +1507,9 @@ public class MapTurnBattleLogic extends AbstractBattle {
                     this.setStatusMessage(
                             "The Boss battle was a draw. You are fully healed!");
                     PartyManager.getParty().getLeader().healPercentage(
-                            AbstractCreature.FULL_HEAL_PERCENTAGE);
+                            Creature.FULL_HEAL_PERCENTAGE);
                     PartyManager.getParty().getLeader().regeneratePercentage(
-                            AbstractCreature.FULL_HEAL_PERCENTAGE);
+                            Creature.FULL_HEAL_PERCENTAGE);
                 } else if (this.result == BattleResults.FLED) {
                     this.setStatusMessage("You ran away successfully!");
                 } else if (this.result == BattleResults.ENEMY_FLED) {

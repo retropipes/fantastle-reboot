@@ -10,7 +10,7 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.map.MapAIRoutinePicker;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.ai.window.VeryHardWindowAIRoutine;
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
@@ -19,7 +19,7 @@ import com.puttysoftware.fantastlereboot.ttspells.SpellBook;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.randomrange.RandomRange;
 
-public class BossMonster extends AbstractCreature {
+public class BossMonster extends Creature {
     // Fields
     private static final int MINIMUM_STAT_VALUE_VERY_EASY = 100;
     private static final int MINIMUM_STAT_VALUE_EASY = 200;

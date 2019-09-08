@@ -1,5 +1,6 @@
 package com.puttysoftware.fantastlereboot.oldcreatures;
 
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.oldcreatures.castes.Caste;
 import com.puttysoftware.fantastlereboot.oldcreatures.castes.CasteConstants;
 import com.puttysoftware.fantastlereboot.oldcreatures.faiths.Faith;

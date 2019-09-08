@@ -6,7 +6,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.ttitems;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 
 public final class Socks extends Equipment {
     // Fields
@@ -26,7 +26,7 @@ public final class Socks extends Equipment {
     }
 
     // Methods
-    final void stepAction(final AbstractCreature wearer) {
+    final void stepAction(final Creature wearer) {
         switch (this.actionType) {
         case Socks.STEP_ACTION_HEAL:
             wearer.heal(this.actionAmount);

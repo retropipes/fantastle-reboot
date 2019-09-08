@@ -11,13 +11,13 @@ import com.puttysoftware.fantastlereboot.ai.map.AbstractMapAIRoutine;
 import com.puttysoftware.fantastlereboot.ai.map.MapAIRoutinePicker;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.ai.window.WindowAIRoutinePicker;
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.ttspells.SpellBook;
 import com.puttysoftware.randomrange.RandomRange;
 
-public abstract class AbstractMonster extends AbstractCreature {
+public abstract class AbstractMonster extends Creature {
     // Fields
     private String type;
     protected Element element;

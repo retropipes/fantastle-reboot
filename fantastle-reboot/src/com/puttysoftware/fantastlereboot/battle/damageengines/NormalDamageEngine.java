@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.battle.damageengines;
 
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithConstants;
 import com.puttysoftware.fantastlereboot.ttitems.Equipment;
@@ -31,8 +31,8 @@ class NormalDamageEngine extends AbstractDamageEngine {
     private boolean fumble = false;
 
     @Override
-    public int computeDamage(final AbstractCreature enemy,
-            final AbstractCreature acting) {
+    public int computeDamage(final Creature enemy,
+            final Creature acting) {
         // Compute Damage
         final double attack = acting.getEffectedAttack();
         final double defense = enemy

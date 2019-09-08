@@ -6,12 +6,12 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ttmaze.objects;
 
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractBattleCharacter;
 
 public class BattleCharacter extends AbstractBattleCharacter {
     // Constructors
-    public BattleCharacter(final AbstractCreature newTemplate) {
+    public BattleCharacter(final Creature newTemplate) {
         super(newTemplate);
     }
 }

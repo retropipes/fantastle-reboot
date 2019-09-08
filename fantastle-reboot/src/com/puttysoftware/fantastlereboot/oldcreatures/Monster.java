@@ -2,6 +2,7 @@ package com.puttysoftware.fantastlereboot.oldcreatures;
 
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.ai.RandomAIRoutinePicker;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.items.Equipment;
 import com.puttysoftware.fantastlereboot.items.EquipmentFactory;
 import com.puttysoftware.fantastlereboot.items.EquipmentSlotConstants;

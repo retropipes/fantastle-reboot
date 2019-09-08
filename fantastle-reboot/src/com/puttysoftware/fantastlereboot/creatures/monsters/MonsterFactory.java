@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.creatures.monsters;
 
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.ttmaze.Maze;
 
@@ -14,7 +14,7 @@ public class MonsterFactory {
         // Do nothing
     }
 
-    public static AbstractCreature getNewMonsterInstance() {
+    public static Creature getNewMonsterInstance() {
         if (PartyManager.getParty().getTowerLevel() == Maze.getMaxLevels() - 1) {
             return new BossMonster();
         } else {

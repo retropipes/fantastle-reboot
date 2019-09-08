@@ -8,7 +8,7 @@ package com.puttysoftware.fantastlereboot.ttspells;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.TTEffect;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
@@ -23,7 +23,7 @@ public class SpellCaster {
         // Do nothing
     }
 
-    public static boolean selectAndCastSpell(final AbstractCreature caster) {
+    public static boolean selectAndCastSpell(final Creature caster) {
         boolean result = false;
         SpellCaster.NO_SPELLS_FLAG = false;
         final Spell s = SpellCaster.selectSpell(caster);
@@ -40,7 +40,7 @@ public class SpellCaster {
     }
 
     public static boolean castSpell(final Spell cast,
-            final AbstractCreature caster) {
+            final Creature caster) {
         if (cast != null) {
             final int casterMP = caster.getCurrentMP();
             final int cost = cast.getCost();
@@ -52,7 +52,7 @@ public class SpellCaster {
                 final GameSound snd = cast.getSound();
                 SoundLoader.playSound(snd);
                 b.resetEffect();
-                final AbstractCreature target = SpellCaster.resolveTarget(cast,
+                final Creature target = SpellCaster.resolveTarget(cast,
                         caster.getTeamID());
                 if (target.isEffectActive(b)) {
                     target.extendEffect(b, b.getInitialRounds());
@@ -70,7 +70,7 @@ public class SpellCaster {
         }
     }
 
-    private static Spell selectSpell(final AbstractCreature caster) {
+    private static Spell selectSpell(final Creature caster) {
         final SpellBook book = caster.getSpellBook();
         if (book != null) {
             final String[] names = book.getAllSpellNames();
@@ -110,18 +110,18 @@ public class SpellCaster {
         }
     }
 
-    private static AbstractCreature resolveTarget(final Spell cast,
+    private static Creature resolveTarget(final Spell cast,
             final int teamID) {
         final BattleTarget target = cast.getTarget();
         switch (target) {
         case SELF:
-            if (teamID == AbstractCreature.TEAM_PARTY) {
+            if (teamID == Creature.TEAM_PARTY) {
                 return PartyManager.getParty().getLeader();
             } else {
                 return TallerTower.getApplication().getBattle().getEnemy();
             }
         case ENEMY:
-            if (teamID == AbstractCreature.TEAM_PARTY) {
+            if (teamID == Creature.TEAM_PARTY) {
                 return TallerTower.getApplication().getBattle().getEnemy();
             } else {
                 return PartyManager.getParty().getLeader();

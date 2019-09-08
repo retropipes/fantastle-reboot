@@ -12,7 +12,7 @@ import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
 import com.puttysoftware.fantastlereboot.battle.damageengines.AbstractDamageEngine;
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.monsters.AbstractMonster;
 import com.puttysoftware.fantastlereboot.creatures.monsters.BossMonster;
@@ -38,7 +38,7 @@ public class WindowTimeBattleLogic extends AbstractBattle {
     private int damage;
     private boolean enemyDidDamage;
     private boolean playerDidDamage;
-    private AbstractCreature enemy;
+    private Creature enemy;
     private int result;
     private final AbstractDamageEngine pde;
     private final AbstractDamageEngine ede;
@@ -149,8 +149,8 @@ public class WindowTimeBattleLogic extends AbstractBattle {
         }
     }
 
-    private void computeDamage(final AbstractCreature theEnemy,
-            final AbstractCreature acting, final AbstractDamageEngine activeDE) {
+    private void computeDamage(final Creature theEnemy,
+            final Creature acting, final AbstractDamageEngine activeDE) {
         // Compute Damage
         this.damage = 0;
         final int actual = activeDE.computeDamage(theEnemy, acting);
@@ -355,7 +355,7 @@ public class WindowTimeBattleLogic extends AbstractBattle {
         this.enemy = MonsterFactory.getNewMonsterInstance();
         this.enemy.loadCreature();
         final PartyMember playerCharacter = PartyManager.getParty().getLeader();
-        final AbstractCreature m = this.enemy;
+        final Creature m = this.enemy;
         playerCharacter.offsetExperience(m.getExperience());
         playerCharacter.offsetGold(m.getGold());
         // Level Up Check
@@ -580,7 +580,7 @@ public class WindowTimeBattleLogic extends AbstractBattle {
             MusicManager.stopMusic();
         }
         final PartyMember playerCharacter = PartyManager.getParty().getLeader();
-        final AbstractCreature m = this.enemy;
+        final Creature m = this.enemy;
         boolean rewardsFlag = false;
         if (m instanceof BossMonster) {
             if (this.result == BattleResults.WON
@@ -599,9 +599,9 @@ public class WindowTimeBattleLogic extends AbstractBattle {
             } else if (this.result == BattleResults.DRAW) {
                 this.setStatusMessage("The Boss battle was a draw. You are fully healed!");
                 playerCharacter
-                        .healPercentage(AbstractCreature.FULL_HEAL_PERCENTAGE);
+                        .healPercentage(Creature.FULL_HEAL_PERCENTAGE);
                 playerCharacter
-                        .regeneratePercentage(AbstractCreature.FULL_HEAL_PERCENTAGE);
+                        .regeneratePercentage(Creature.FULL_HEAL_PERCENTAGE);
             } else if (this.result == BattleResults.FLED) {
                 this.setStatusMessage("You ran away successfully!");
             } else if (this.result == BattleResults.ENEMY_FLED) {
@@ -634,9 +634,9 @@ public class WindowTimeBattleLogic extends AbstractBattle {
             } else if (this.result == BattleResults.DRAW) {
                 this.setStatusMessage("The battle was a draw. You are fully healed!");
                 playerCharacter
-                        .healPercentage(AbstractCreature.FULL_HEAL_PERCENTAGE);
+                        .healPercentage(Creature.FULL_HEAL_PERCENTAGE);
                 playerCharacter
-                        .regeneratePercentage(AbstractCreature.FULL_HEAL_PERCENTAGE);
+                        .regeneratePercentage(Creature.FULL_HEAL_PERCENTAGE);
             } else if (this.result == BattleResults.FLED) {
                 this.setStatusMessage("You ran away successfully!");
             } else if (this.result == BattleResults.ENEMY_FLED) {
@@ -698,7 +698,7 @@ public class WindowTimeBattleLogic extends AbstractBattle {
     }
 
     @Override
-    public AbstractCreature getEnemy() {
+    public Creature getEnemy() {
         return this.enemy;
     }
 

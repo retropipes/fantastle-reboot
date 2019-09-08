@@ -7,7 +7,7 @@ package com.puttysoftware.fantastlereboot.battle;
 
 import javax.swing.JFrame;
 
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.BattleCharacter;
 
@@ -42,7 +42,7 @@ public abstract class AbstractBattle {
 
     public abstract void endTurn();
 
-    public abstract AbstractCreature getEnemy();
+    public abstract Creature getEnemy();
 
     public abstract void battleDone();
 

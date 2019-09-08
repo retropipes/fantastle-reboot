@@ -6,7 +6,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ttmaze.abc;
 
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.loaders.older.ObjectImageConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
@@ -15,14 +15,14 @@ import com.puttysoftware.images.BufferedImageIcon;
 
 public abstract class AbstractBattleCharacter extends AbstractMazeObject {
     // Fields
-    private final AbstractCreature template;
+    private final Creature template;
     private int actionCounter;
     private int attackCounter;
     private int spellCounter;
     private boolean isActive;
 
     // Constructors
-    protected AbstractBattleCharacter(final AbstractCreature newTemplate) {
+    protected AbstractBattleCharacter(final Creature newTemplate) {
         super(true, false);
         this.template = newTemplate;
         this.actionCounter = newTemplate.getMapBattleActionsPerRound();
@@ -81,7 +81,7 @@ public abstract class AbstractBattleCharacter extends AbstractMazeObject {
         this.template.setY(-1);
     }
 
-    public final AbstractCreature getTemplate() {
+    public final Creature getTemplate() {
         return this.template;
     }
 

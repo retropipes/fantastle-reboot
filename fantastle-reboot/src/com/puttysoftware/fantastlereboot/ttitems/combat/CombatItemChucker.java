@@ -8,7 +8,7 @@ package com.puttysoftware.fantastlereboot.ttitems.combat;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
-import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.TTEffect;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
@@ -24,7 +24,7 @@ public class CombatItemChucker {
         // Do nothing
     }
 
-    public static boolean selectAndUseItem(final AbstractCreature user) {
+    public static boolean selectAndUseItem(final Creature user) {
         boolean result = false;
         final CombatItem i = CombatItemChucker.selectItem(user);
         if (i != null) {
@@ -34,14 +34,14 @@ public class CombatItemChucker {
     }
 
     public static boolean useItem(final CombatItem used,
-            final AbstractCreature user) {
+            final Creature user) {
         if (used != null) {
             final TTEffect e = used.getEffect();
             // Play item's associated sound effect, if it has one
             final GameSound snd = used.getSound();
             SoundLoader.playSound(snd);
             e.resetEffect();
-            final AbstractCreature target = CombatItemChucker.resolveTarget(
+            final Creature target = CombatItemChucker.resolveTarget(
                     used, user.getTeamID());
             used.use();
             if (target.isEffectActive(e)) {
@@ -56,18 +56,18 @@ public class CombatItemChucker {
         }
     }
 
-    private static AbstractCreature resolveTarget(final CombatItem cast,
+    private static Creature resolveTarget(final CombatItem cast,
             final int teamID) {
         final BattleTarget target = cast.getTarget();
         switch (target) {
         case SELF:
-            if (teamID == AbstractCreature.TEAM_PARTY) {
+            if (teamID == Creature.TEAM_PARTY) {
                 return PartyManager.getParty().getLeader();
             } else {
                 return TallerTower.getApplication().getBattle().getEnemy();
             }
         case ENEMY:
-            if (teamID == AbstractCreature.TEAM_PARTY) {
+            if (teamID == Creature.TEAM_PARTY) {
                 return TallerTower.getApplication().getBattle().getEnemy();
             } else {
                 return PartyManager.getParty().getLeader();
@@ -77,7 +77,7 @@ public class CombatItemChucker {
         }
     }
 
-    private static CombatItem selectItem(final AbstractCreature user) {
+    private static CombatItem selectItem(final Creature user) {
         final ItemInventory ii = user.getItems();
         if (ii != null) {
             final String[] names = ii.generateCombatUsableStringArray();
