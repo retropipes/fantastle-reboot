@@ -10,10 +10,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.ttitems.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.ttmaze.FormatConstants;
 import com.puttysoftware.xio.XDataReader;
@@ -102,7 +102,7 @@ public class ItemInventory {
             this.equipment[ei.getSecondSlotUsed()] = ei;
         }
         if (playSound) {
-            SoundManager.playSound(SoundConstants.SOUND_EQUIP);
+            SoundLoader.playSound(GameSound.EQUIP);
         }
     }
 
@@ -119,7 +119,7 @@ public class ItemInventory {
         // Equip it in second slot
         this.equipment[ei.getSecondSlotUsed()] = ei;
         if (playSound) {
-            SoundManager.playSound(SoundConstants.SOUND_EQUIP);
+            SoundLoader.playSound(GameSound.EQUIP);
         }
     }
 
@@ -161,7 +161,7 @@ public class ItemInventory {
             this.equipment[ei.getFirstSlotUsed()] = ei;
         }
         if (playSound) {
-            SoundManager.playSound(SoundConstants.SOUND_EQUIP);
+            SoundLoader.playSound(GameSound.EQUIP);
         }
     }
 

@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
 import com.puttysoftware.fantastlereboot.battle.damageengines.AbstractDamageEngine;
@@ -19,10 +20,9 @@ import com.puttysoftware.fantastlereboot.creatures.monsters.MonsterFactory;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.effects.TTEffect;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.older.MusicConstants;
 import com.puttysoftware.fantastlereboot.loaders.older.MusicManager;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundManager;
 import com.puttysoftware.fantastlereboot.ttgame.GameLogicManager;
 import com.puttysoftware.fantastlereboot.ttitems.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.ttmain.Application;
@@ -99,19 +99,19 @@ public class WindowTimeBattleLogic extends AbstractBattle {
         } else if (actionToPerform == AbstractWindowAIRoutine.ACTION_STEAL) {
             success = this.steal();
             if (success) {
-                SoundManager.playSound(SoundConstants.SOUND_DRAIN);
+                SoundLoader.playSound(GameSound.DRAIN);
                 this.updateMessageAreaPostSteal();
             } else {
-                SoundManager.playSound(SoundConstants.SOUND_ACTION_FAILED);
+                SoundLoader.playSound(GameSound.ACTION_FAILED);
                 this.updateMessageAreaStealFailed();
             }
         } else if (actionToPerform == AbstractWindowAIRoutine.ACTION_DRAIN) {
             success = this.drain();
             if (success) {
-                SoundManager.playSound(SoundConstants.SOUND_DRAIN);
+                SoundLoader.playSound(GameSound.DRAIN);
                 this.updateMessageAreaPostDrain();
             } else {
-                SoundManager.playSound(SoundConstants.SOUND_ACTION_FAILED);
+                SoundLoader.playSound(GameSound.ACTION_FAILED);
                 this.updateMessageAreaDrainFailed();
             }
         } else if (actionToPerform == AbstractWindowAIRoutine.ACTION_USE_ITEM) {
@@ -241,25 +241,25 @@ public class WindowTimeBattleLogic extends AbstractBattle {
             if (this.pde.weaponFumble()) {
                 displayPlayerDamageString = "FUMBLE! You drop your weapon, doing "
                         + playerFumbleDamageString + " damage to yourself!";
-                SoundManager.playSound(SoundConstants.SOUND_FUMBLE);
+                SoundLoader.playSound(GameSound.FUMBLE);
             } else {
                 if (this.damage == 0) {
                     displayPlayerDamageString = "You try to hit the "
                             + enemyName + ", but MISS!";
-                    SoundManager.playSound(SoundConstants.SOUND_MISSED);
+                    SoundLoader.playSound(GameSound.MISSED);
                 } else if (this.damage < 0) {
                     displayPlayerDamageString = "You try to hit the "
                             + enemyName + ", but are RIPOSTED for "
                             + (-this.damage) + " damage!";
-                    SoundManager.playSound(SoundConstants.SOUND_COUNTER);
+                    SoundLoader.playSound(GameSound.PARTY_COUNTER);
                 } else {
                     displayPlayerDamageString = "You hit the " + enemyName
                             + " for " + playerDamageString + " damage!";
-                    SoundManager.playSound(SoundConstants.SOUND_HIT);
+                    SoundLoader.playSound(GameSound.PARTY_HIT);
                 }
                 if (this.pde.weaponCrit()) {
                     playerWhackString += "CRITICAL HIT!\n";
-                    SoundManager.playSound(SoundConstants.SOUND_CRITICAL);
+                    SoundLoader.playSound(GameSound.CRITICAL);
                 }
                 if (this.pde.weaponPierce()) {
                     playerWhackString += "Your attack pierces the " + enemyName
@@ -285,26 +285,26 @@ public class WindowTimeBattleLogic extends AbstractBattle {
                 displayEnemyDamageString = "FUMBLE! The " + enemyName
                         + " drops its weapon, doing " + enemyFumbleDamageString
                         + " damage to itself!";
-                SoundManager.playSound(SoundConstants.SOUND_FUMBLE);
+                SoundLoader.playSound(GameSound.FUMBLE);
                 enemyWhackString = "";
             } else {
                 if (this.damage == 0) {
                     displayEnemyDamageString = "The " + enemyName
                             + " tries to hit you, but MISSES!";
-                    SoundManager.playSound(SoundConstants.SOUND_MISSED);
+                    SoundLoader.playSound(GameSound.MISSED);
                 } else if (this.damage < 0) {
                     displayEnemyDamageString = "The " + enemyName
                             + " tries to hit you, but you RIPOSTE for "
                             + (-this.damage) + " damage!";
-                    SoundManager.playSound(SoundConstants.SOUND_COUNTER);
+                    SoundLoader.playSound(GameSound.MONSTER_COUNTER);
                 } else {
                     displayEnemyDamageString = "The " + enemyName
                             + " hits you for " + enemyDamageString + " damage!";
-                    SoundManager.playSound(SoundConstants.SOUND_HIT);
+                    SoundLoader.playSound(GameSound.MONSTER_HIT);
                 }
                 if (this.ede.weaponCrit()) {
                     enemyWhackString += "CRITICAL HIT!\n";
-                    SoundManager.playSound(SoundConstants.SOUND_CRITICAL);
+                    SoundLoader.playSound(GameSound.CRITICAL);
                 }
                 if (this.ede.weaponPierce()) {
                     enemyWhackString += "The " + enemyName
@@ -324,7 +324,7 @@ public class WindowTimeBattleLogic extends AbstractBattle {
             final Application app = TallerTower.getApplication();
             final GameLogicManager gm = app.getGameManager();
             if (app.getMode() != Application.STATUS_BATTLE) {
-                SoundManager.playSound(SoundConstants.SOUND_BATTLE);
+                SoundLoader.playSound(GameSound.DRAW_SWORD);
             }
             app.setMode(Application.STATUS_BATTLE);
             gm.hideOutput();
@@ -586,15 +586,15 @@ public class WindowTimeBattleLogic extends AbstractBattle {
             if (this.result == BattleResults.WON
                     || this.result == BattleResults.PERFECT) {
                 this.setStatusMessage("You defeated the Boss!");
-                SoundManager.playSound(SoundConstants.SOUND_VICTORY);
+                SoundLoader.playSound(GameSound.VICTORY);
                 rewardsFlag = true;
             } else if (this.result == BattleResults.LOST) {
                 this.setStatusMessage("The Boss defeated you...");
-                SoundManager.playSound(SoundConstants.SOUND_GAME_OVER);
+                SoundLoader.playSound(GameSound.GAME_OVER);
                 PartyManager.getParty().getLeader().onDeath(-10);
             } else if (this.result == BattleResults.ANNIHILATED) {
                 this.setStatusMessage("The Boss defeated you without suffering damage... you were annihilated!");
-                SoundManager.playSound(SoundConstants.SOUND_GAME_OVER);
+                SoundLoader.playSound(GameSound.GAME_OVER);
                 PartyManager.getParty().getLeader().onDeath(-20);
             } else if (this.result == BattleResults.DRAW) {
                 this.setStatusMessage("The Boss battle was a draw. You are fully healed!");
@@ -613,7 +613,7 @@ public class WindowTimeBattleLogic extends AbstractBattle {
                         + " experience and " + m.getGold() + " Gold.");
                 playerCharacter.offsetExperience(m.getExperience());
                 playerCharacter.offsetGold(m.getGold());
-                SoundManager.playSound(SoundConstants.SOUND_VICTORY);
+                SoundLoader.playSound(GameSound.VICTORY);
             } else if (this.result == BattleResults.PERFECT) {
                 this.setStatusMessage("You gain " + m.getExperience()
                         + " experience and " + m.getGold() + " Gold,\nplus "
@@ -622,14 +622,14 @@ public class WindowTimeBattleLogic extends AbstractBattle {
                 playerCharacter.offsetExperience(m.getExperience());
                 playerCharacter.offsetGold(m.getGold()
                         + m.getPerfectBonusGold());
-                SoundManager.playSound(SoundConstants.SOUND_VICTORY);
+                SoundLoader.playSound(GameSound.VICTORY);
             } else if (this.result == BattleResults.LOST) {
                 this.setStatusMessage("You lost...");
-                SoundManager.playSound(SoundConstants.SOUND_GAME_OVER);
+                SoundLoader.playSound(GameSound.GAME_OVER);
                 PartyManager.getParty().getLeader().onDeath(-10);
             } else if (this.result == BattleResults.ANNIHILATED) {
                 this.setStatusMessage("You lost without hurting your foe... you were annihilated!");
-                SoundManager.playSound(SoundConstants.SOUND_GAME_OVER);
+                SoundLoader.playSound(GameSound.GAME_OVER);
                 PartyManager.getParty().getLeader().onDeath(-20);
             } else if (this.result == BattleResults.DRAW) {
                 this.setStatusMessage("The battle was a draw. You are fully healed!");
@@ -651,8 +651,8 @@ public class WindowTimeBattleLogic extends AbstractBattle {
         // Level Up Check
         if (playerCharacter.checkLevelUp()) {
             playerCharacter.levelUp();
-            if (FantastleReboot.getBagOStuff().getPrefsManager().getSoundEnabled()) {
-                SoundManager.playSound(SoundConstants.SOUND_LEVEL_UP);
+            if (FantastleReboot.getBagOStuff().getPrefsManager().getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
+                SoundLoader.playSound(GameSound.LEVEL_UP);
             }
             this.setStatusMessage("You reached level "
                     + playerCharacter.getLevel() + ".");
@@ -746,8 +746,7 @@ public class WindowTimeBattleLogic extends AbstractBattle {
                         gui.disableActionButtons();
                         gui.updatePlayerActionBarValue();
                         if (gui.isPlayerActionBarFull()) {
-                            SoundManager
-                                    .playSound(SoundConstants.SOUND_PLAYER_UP);
+                            SoundLoader.playSound(GameSound.PLAYER_UP);
                             gui.enableActionButtons();
                         }
                     } else {

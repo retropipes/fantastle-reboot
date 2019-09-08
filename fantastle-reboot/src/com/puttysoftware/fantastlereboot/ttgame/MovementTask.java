@@ -7,9 +7,9 @@ package com.puttysoftware.fantastlereboot.ttgame;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.ttmain.Application;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.Maze;
@@ -347,7 +347,7 @@ final class MovementTask extends Thread {
 
     private static void checkGameOver() {
         if (!PartyManager.getParty().isAlive()) {
-            SoundManager.playSound(SoundConstants.SOUND_GAME_OVER);
+            SoundLoader.playSound(GameSound.GAME_OVER);
             CommonDialogs
                     .showDialog("You have died! You lose 10% of your experience and all your Gold, but you are healed fully.");
             PartyManager.getParty().getLeader().onDeath(-10);

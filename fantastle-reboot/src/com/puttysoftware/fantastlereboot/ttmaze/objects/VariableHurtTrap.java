@@ -5,10 +5,10 @@ Any questions should be directed to the author via email at: TallerTower@worldwi
  */
 package com.puttysoftware.fantastlereboot.ttmaze.objects;
 
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.older.ObjectImageConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundManager;
 import com.puttysoftware.fantastlereboot.ttgame.GameLogicManager;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractTrap;
@@ -42,7 +42,7 @@ public class VariableHurtTrap extends AbstractTrap {
         final RandomRange damageDealt = new RandomRange(
                 VariableHurtTrap.MIN_DAMAGE, maxDamage);
         PartyManager.getParty().getLeader().doDamage(damageDealt.generate());
-        SoundManager.playSound(SoundConstants.SOUND_BARRIER);
+        SoundLoader.playSound(GameSound.BARRIER);
         TallerTower.getApplication().getGameManager();
         GameLogicManager.decay();
     }

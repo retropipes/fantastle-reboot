@@ -5,10 +5,10 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ttitems.combat.predefined;
 
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.effects.TTEffect;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
 import com.puttysoftware.fantastlereboot.ttitems.combat.CombatItem;
 
 public class Potion extends CombatItem {
@@ -18,7 +18,7 @@ public class Potion extends CombatItem {
 
     @Override
     protected void defineFields() {
-        this.sound = SoundConstants.SOUND_HEAL;
+        this.sound = GameSound.HEAL;
         this.e = new TTEffect("Potion", 1);
         this.e.setEffect(TTEffect.EFFECT_ADD, StatConstants.STAT_CURRENT_HP, 5);
         this.e.setScaleStat(StatConstants.STAT_LEVEL);

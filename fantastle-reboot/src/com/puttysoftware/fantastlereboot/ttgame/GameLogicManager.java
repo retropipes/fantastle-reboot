@@ -8,10 +8,10 @@ package com.puttysoftware.fantastlereboot.ttgame;
 import javax.swing.JFrame;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.older.ImageTransformer;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundManager;
 import com.puttysoftware.fantastlereboot.ttmain.Application;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.GenerateTask;
@@ -224,12 +224,12 @@ public final class GameLogicManager {
             final String gameName2 = target2.getGameName();
             TallerTower.getApplication().showMessage(
                     gameName2 + " on " + gameName1);
-            SoundManager.playSound(SoundConstants.SOUND_IDENTIFY);
+            SoundLoader.playSound(GameSound.IDENTIFY);
         } catch (final ArrayIndexOutOfBoundsException ae) {
             final EmptyVoid ev = new EmptyVoid();
             ev.determineCurrentAppearance(destX, destY, destZ);
             TallerTower.getApplication().showMessage(ev.getGameName());
-            SoundManager.playSound(SoundConstants.SOUND_IDENTIFY);
+            SoundLoader.playSound(GameSound.IDENTIFY);
         }
     }
 

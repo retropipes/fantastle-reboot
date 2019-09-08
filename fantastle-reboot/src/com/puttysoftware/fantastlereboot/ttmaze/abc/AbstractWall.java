@@ -5,8 +5,8 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ttmaze.abc;
 
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.utilities.TypeConstants;
@@ -27,7 +27,7 @@ public abstract class AbstractWall extends AbstractMazeObject {
             final int dirY) {
         TallerTower.getApplication().showMessage("Can't go that way");
         // Play move failed sound, if it's enabled
-        SoundManager.playSound(SoundConstants.SOUND_WALK_FAILED);
+        SoundLoader.playSound(GameSound.WALK_FAILED);
     }
 
     @Override

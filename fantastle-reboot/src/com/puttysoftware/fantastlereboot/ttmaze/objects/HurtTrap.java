@@ -5,10 +5,10 @@ Any questions should be directed to the author via email at: TallerTower@worldwi
  */
 package com.puttysoftware.fantastlereboot.ttmaze.objects;
 
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.older.ObjectImageConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundManager;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractTrap;
 
 public class HurtTrap extends AbstractTrap {
@@ -34,7 +34,7 @@ public class HurtTrap extends AbstractTrap {
             damage = 1;
         }
         PartyManager.getParty().getLeader().doDamage(damage);
-        SoundManager.playSound(SoundConstants.SOUND_BARRIER);
+        SoundLoader.playSound(GameSound.BARRIER);
     }
 
     @Override

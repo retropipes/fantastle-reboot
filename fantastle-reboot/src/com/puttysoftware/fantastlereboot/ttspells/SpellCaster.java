@@ -6,12 +6,12 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.ttspells;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.TTEffect;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 
 public class SpellCaster {
@@ -49,8 +49,8 @@ public class SpellCaster {
                 caster.drain(cost);
                 final TTEffect b = cast.getEffect();
                 // Play spell's associated sound effect, if it has one
-                final int snd = cast.getSound();
-                SoundManager.playSound(snd);
+                final GameSound snd = cast.getSound();
+                SoundLoader.playSound(snd);
                 b.resetEffect();
                 final AbstractCreature target = SpellCaster.resolveTarget(cast,
                         caster.getTeamID());
@@ -77,7 +77,7 @@ public class SpellCaster {
             final String[] displayNames = book.getAllSpellNamesWithCosts();
             if (names != null && displayNames != null) {
                 // Play casting spell sound
-                SoundManager.playSound(SoundConstants.SOUND_SPELL);
+                SoundLoader.playSound(GameSound.PARTY_SPELL);
                 String dialogResult = null;
                 dialogResult = CommonDialogs.showInputDialog(
                         "Select a Spell to Cast", "Select Spell", displayNames,

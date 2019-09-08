@@ -38,7 +38,6 @@ import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
 import com.puttysoftware.fantastlereboot.loaders.older.LogoManager;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
-import com.puttysoftware.fantastlereboot.oldbattle.Battle;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.updater.ProductData;
 
@@ -295,7 +294,7 @@ public class BagOStuff {
         try {
             if (this.getMode() == BagOStuff.STATUS_PREFS) {
                 return this.getPrefsManager().getPrefFrame();
-            } else if (Battle.isInBattle()) {
+            } else if (this.getMode() == BagOStuff.STATUS_BATTLE) {
                 return this.getBattle().getOutputFrame();
             } else if (this.getMode() == BagOStuff.STATUS_GUI) {
                 return this.getGUIManager().getGUIFrame();

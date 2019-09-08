@@ -5,9 +5,9 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ttmaze.objects;
 
+import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.older.ObjectImageConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundManager;
 import com.puttysoftware.fantastlereboot.ttgame.GameLogicManager;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractTrigger;
@@ -41,7 +41,7 @@ public class ClosedDoor extends AbstractTrigger {
 
     @Override
     public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
-        SoundManager.playSound(SoundConstants.SOUND_PICK_LOCK);
+        SoundLoader.playSound(GameSound.PICK_LOCK);
         final GameLogicManager glm = TallerTower.getApplication()
                 .getGameManager();
         GameLogicManager.morph(new OpenDoor());

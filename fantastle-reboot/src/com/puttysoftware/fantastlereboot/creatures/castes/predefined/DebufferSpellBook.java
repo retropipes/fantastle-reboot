@@ -5,11 +5,11 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.creatures.castes.predefined;
 
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
 import com.puttysoftware.fantastlereboot.effects.TTEffect;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
 import com.puttysoftware.fantastlereboot.ttspells.Spell;
 import com.puttysoftware.fantastlereboot.ttspells.SpellBook;
 
@@ -31,7 +31,7 @@ public class DebufferSpellBook extends SpellBook {
                 "The enemy recoils, taking a little damage!");
         spell0Effect.setMessage(TTEffect.MESSAGE_WEAR_OFF, "The enemy recovers!");
         final Spell spell0 = new Spell(spell0Effect, 1, BattleTarget.ENEMY,
-                SoundConstants.SOUND_UNLOCK);
+                GameSound.UNLOCK);
         this.spells[0] = spell0;
         final TTEffect spell1Effect = new TTEffect("Speed Down", 5);
         spell1Effect.setEffect(TTEffect.EFFECT_MULTIPLY,
@@ -44,7 +44,7 @@ public class DebufferSpellBook extends SpellBook {
         spell1Effect.setMessage(TTEffect.MESSAGE_WEAR_OFF,
                 "The enemy breaks free of the tangle!");
         final Spell spell1 = new Spell(spell1Effect, 2, BattleTarget.ENEMY,
-                SoundConstants.SOUND_BIND);
+                GameSound.DEBUFF_1);
         this.spells[1] = spell1;
         final TTEffect spell2Effect = new TTEffect("Power Lock", 5);
         spell2Effect.setEffect(TTEffect.EFFECT_ADD,
@@ -55,7 +55,7 @@ public class DebufferSpellBook extends SpellBook {
                 "The enemy recoils, taking damage!");
         spell2Effect.setMessage(TTEffect.MESSAGE_WEAR_OFF, "The trap vanishes!");
         final Spell spell2 = new Spell(spell2Effect, 3, BattleTarget.ENEMY,
-                SoundConstants.SOUND_UNLOCK);
+                GameSound.UNLOCK);
         this.spells[2] = spell2;
         final TTEffect spell3Effect = new TTEffect("Attack Lock", 10);
         spell3Effect.setEffect(TTEffect.EFFECT_MULTIPLY,
@@ -67,7 +67,7 @@ public class DebufferSpellBook extends SpellBook {
                 "The enemy cannot attack!");
         spell3Effect.setMessage(TTEffect.MESSAGE_WEAR_OFF, "The lock breaks!");
         final Spell spell3 = new Spell(spell3Effect, 5, BattleTarget.ENEMY,
-                SoundConstants.SOUND_UNLOCK);
+                GameSound.UNLOCK);
         this.spells[3] = spell3;
         final TTEffect spell4Effect = new TTEffect("Weapon Steal", 5);
         spell4Effect.setEffect(TTEffect.EFFECT_MULTIPLY,
@@ -80,7 +80,7 @@ public class DebufferSpellBook extends SpellBook {
         spell4Effect.setMessage(TTEffect.MESSAGE_WEAR_OFF,
                 "The enemy recovers their weapon!");
         final Spell spell4 = new Spell(spell4Effect, 7, BattleTarget.ENEMY,
-                SoundConstants.SOUND_BIND);
+                GameSound.DEBUFF_1);
         this.spells[4] = spell4;
         final TTEffect spell5Effect = new TTEffect("Armor Bind", 5);
         spell5Effect.setEffect(TTEffect.EFFECT_MULTIPLY,
@@ -92,7 +92,7 @@ public class DebufferSpellBook extends SpellBook {
                 "The enemy is unable to defend!");
         spell5Effect.setMessage(TTEffect.MESSAGE_WEAR_OFF, "The binding breaks!");
         final Spell spell5 = new Spell(spell5Effect, 11, BattleTarget.ENEMY,
-                SoundConstants.SOUND_BIND);
+                GameSound.DEBUFF_1);
         this.spells[5] = spell5;
         final TTEffect spell6Effect = new TTEffect("Killer Poison", 10);
         spell6Effect.setEffect(TTEffect.EFFECT_ADD,
@@ -104,7 +104,7 @@ public class DebufferSpellBook extends SpellBook {
                 "The enemy is badly hurt by the poison!");
         spell6Effect.setMessage(TTEffect.MESSAGE_WEAR_OFF, "The poison fades!");
         final Spell spell6 = new Spell(spell6Effect, 13, BattleTarget.ENEMY,
-                SoundConstants.SOUND_UNLOCK);
+                GameSound.UNLOCK);
         this.spells[6] = spell6;
         final TTEffect spell7Effect = new TTEffect("Blindness", 10);
         spell7Effect.setEffect(TTEffect.EFFECT_MULTIPLY,
@@ -116,7 +116,7 @@ public class DebufferSpellBook extends SpellBook {
         spell7Effect.setMessage(TTEffect.MESSAGE_WEAR_OFF,
                 "The enemy's vision returns to normal!");
         final Spell spell7 = new Spell(spell7Effect, 17, BattleTarget.ENEMY,
-                SoundConstants.SOUND_UNLOCK);
+                GameSound.UNLOCK);
         this.spells[7] = spell7;
     }
 

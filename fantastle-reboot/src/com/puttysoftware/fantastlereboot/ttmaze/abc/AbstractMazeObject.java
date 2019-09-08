@@ -8,10 +8,10 @@ package com.puttysoftware.fantastlereboot.ttmaze.abc;
 import java.io.IOException;
 import java.util.BitSet;
 
+import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.older.BattleImageManager;
 import com.puttysoftware.fantastlereboot.loaders.older.ObjectImageConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundManager;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.FormatConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.Maze;
@@ -199,7 +199,7 @@ public abstract class AbstractMazeObject implements
      */
     public void moveFailedAction(final boolean ie, final int dirX,
             final int dirY) {
-        SoundManager.playSound(SoundConstants.SOUND_WALK_FAILED);
+        SoundLoader.playSound(GameSound.WALK_FAILED);
         TallerTower.getApplication().showMessage("Can't go that way");
     }
 

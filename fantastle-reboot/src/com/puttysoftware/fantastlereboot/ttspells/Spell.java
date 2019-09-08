@@ -5,6 +5,9 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ttspells;
 
+import java.util.Objects;
+
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.effects.TTEffect;
 
@@ -13,19 +16,11 @@ public class Spell {
     private final TTEffect effect;
     private final int cost;
     private final BattleTarget target;
-    private final int soundEffect;
+    private final GameSound soundEffect;
 
     // Constructors
-    public Spell() {
-        super();
-        this.effect = null;
-        this.cost = 0;
-        this.target = null;
-        this.soundEffect = -1;
-    }
-
     public Spell(final TTEffect newEffect, final int newCost,
-            final BattleTarget newTarget, final int sfx) {
+            final BattleTarget newTarget, final GameSound sfx) {
         super();
         this.effect = newEffect;
         this.cost = newCost;
@@ -45,50 +40,28 @@ public class Spell {
         return this.target;
     }
 
-    int getSound() {
+    GameSound getSound() {
         return this.soundEffect;
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + this.cost;
-        result = prime * result
-                + ((this.effect == null) ? 0 : this.effect.hashCode());
-        result = prime * result + this.soundEffect;
-        return prime * result
-                + ((this.target == null) ? 0 : this.target.hashCode());
+        return Objects.hash(this.cost, this.effect, this.soundEffect,
+                this.target);
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
-        }
-        if (obj == null) {
-            return false;
         }
         if (!(obj instanceof Spell)) {
             return false;
         }
-        final Spell other = (Spell) obj;
-        if (this.cost != other.cost) {
-            return false;
-        }
-        if (this.effect == null) {
-            if (other.effect != null) {
-                return false;
-            }
-        } else if (!this.effect.equals(other.effect)) {
-            return false;
-        }
-        if (this.soundEffect != other.soundEffect) {
-            return false;
-        }
-        if (this.target != other.target) {
-            return false;
-        }
-        return true;
+        Spell other = (Spell) obj;
+        return this.cost == other.cost
+                && Objects.equals(this.effect, other.effect)
+                && this.soundEffect == other.soundEffect
+                && this.target == other.target;
     }
 }

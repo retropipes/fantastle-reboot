@@ -11,14 +11,14 @@ import javax.swing.JFrame;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
 import com.puttysoftware.fantastlereboot.battle.map.time.MapTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.map.turn.MapTurnBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.window.time.WindowTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.window.turn.WindowTurnBattleLogic;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.older.LogoManager;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundManager;
 import com.puttysoftware.fantastlereboot.ttgame.GameLogicManager;
 import com.puttysoftware.fantastlereboot.ttmaze.MazeManager;
 import com.puttysoftware.fantastlereboot.ttmaze.utilities.MazeObjectList;
@@ -173,7 +173,7 @@ public final class Application {
     }
 
     public static void playLogoSound() {
-        SoundManager.playSound(SoundConstants.SOUND_LOGO);
+        SoundLoader.playSound(GameSound.LOGO);
     }
 
     private static String getVersionString() {

@@ -8,8 +8,8 @@ package com.puttysoftware.fantastlereboot.creatures.party;
 import java.io.IOException;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundManager;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.ttmaze.Maze;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.BattleCharacter;
 import com.puttysoftware.xio.XDataReader;
@@ -75,7 +75,7 @@ public class Party {
         // Level Up Check
         if (this.members.checkLevelUp()) {
             this.members.levelUp();
-            SoundManager.playSound(SoundConstants.SOUND_LEVEL_UP);
+            SoundLoader.playSound(GameSound.LEVEL_UP);
             CommonDialogs.showTitledDialog(this.members.getName()
                     + " reached level " + this.members.getLevel() + "!",
                     "Level Up");

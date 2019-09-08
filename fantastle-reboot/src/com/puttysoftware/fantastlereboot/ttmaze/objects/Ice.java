@@ -5,9 +5,9 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ttmaze.objects;
 
+import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.older.ObjectImageConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundManager;
 import com.puttysoftware.fantastlereboot.ttmaze.Maze;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractGround;
 import com.puttysoftware.randomrange.RandomRange;
@@ -39,7 +39,7 @@ public class Ice extends AbstractGround {
 
     @Override
     public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
-        SoundManager.playSound(SoundConstants.SOUND_WALK_ICE);
+        SoundLoader.playSound(GameSound.WALK_ICE);
     }
 
     @Override

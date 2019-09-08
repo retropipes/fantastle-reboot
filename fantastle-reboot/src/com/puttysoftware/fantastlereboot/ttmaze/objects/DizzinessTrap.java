@@ -5,9 +5,9 @@ Any questions should be directed to the author via email at: TallerTower@worldwi
  */
 package com.puttysoftware.fantastlereboot.ttmaze.objects;
 
+import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.older.ObjectImageConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundManager;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractTrap;
 import com.puttysoftware.fantastlereboot.ttmaze.effects.MazeEffectConstants;
@@ -33,7 +33,7 @@ public class DizzinessTrap extends AbstractTrap {
         TallerTower.getApplication().showMessage("You feel dizzy!");
         TallerTower.getApplication().getGameManager()
                 .activateEffect(MazeEffectConstants.EFFECT_DIZZY);
-        SoundManager.playSound(SoundConstants.SOUND_DIZZY);
+        SoundLoader.playSound(GameSound.DIZZY);
     }
 
     @Override

@@ -5,6 +5,9 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ttitems.combat;
 
+import java.util.Objects;
+
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.effects.TTEffect;
 import com.puttysoftware.fantastlereboot.ttitems.Item;
@@ -13,14 +16,9 @@ public class CombatItem extends Item {
     // Fields
     private final BattleTarget target;
     protected TTEffect e;
-    protected int sound;
+    protected GameSound sound;
 
     // Constructors
-    public CombatItem() {
-        super();
-        this.target = null;
-    }
-
     public CombatItem(final String itemName, final int itemBuyPrice,
             final BattleTarget itemTarget) {
         super(itemName, 1, 0);
@@ -39,7 +37,7 @@ public class CombatItem extends Item {
         return this.e;
     }
 
-    final int getSound() {
+    final GameSound getSound() {
         return this.sound;
     }
 
@@ -47,14 +45,12 @@ public class CombatItem extends Item {
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + ((this.e == null) ? 0 : this.e.hashCode());
-        result = prime * result + this.sound;
-        return prime * result
-                + ((this.target == null) ? 0 : this.target.hashCode());
+        result = prime * result + Objects.hash(this.e, this.sound, this.target);
+        return result;
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -64,21 +60,9 @@ public class CombatItem extends Item {
         if (!(obj instanceof CombatItem)) {
             return false;
         }
-        final CombatItem other = (CombatItem) obj;
-        if (this.e == null) {
-            if (other.e != null) {
-                return false;
-            }
-        } else if (!this.e.equals(other.e)) {
-            return false;
-        }
-        if (this.sound != other.sound) {
-            return false;
-        }
-        if (this.target != other.target) {
-            return false;
-        }
-        return true;
+        CombatItem other = (CombatItem) obj;
+        return Objects.equals(this.e, other.e) && this.sound == other.sound
+                && this.target == other.target;
     }
 
     protected void defineFields() {

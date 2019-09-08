@@ -5,10 +5,10 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.creatures.monsters;
 
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.effects.TTEffect;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
 import com.puttysoftware.fantastlereboot.ttspells.Spell;
 import com.puttysoftware.fantastlereboot.ttspells.SpellBook;
 
@@ -33,7 +33,7 @@ class SystemMonsterSpellBook extends SpellBook {
         spell0Effect.setMessage(TTEffect.MESSAGE_WEAR_OFF,
                 "You are no longer poisoned!");
         final Spell spell0 = new Spell(spell0Effect, 1, BattleTarget.ENEMY,
-                SoundConstants.SOUND_SLIME);
+                GameSound.SLIME);
         this.spells[0] = spell0;
         final TTEffect spell1Effect = new TTEffect("Recover", 1);
         spell1Effect.setEffect(TTEffect.EFFECT_ADD,
@@ -43,7 +43,7 @@ class SystemMonsterSpellBook extends SpellBook {
         spell1Effect.setMessage(TTEffect.MESSAGE_SUBSEQUENT,
                 "The enemy regains some health!");
         final Spell spell1 = new Spell(spell1Effect, 2, BattleTarget.SELF,
-                SoundConstants.SOUND_HEAL);
+                GameSound.HEAL);
         this.spells[1] = spell1;
         final TTEffect spell2Effect = new TTEffect("Weapon Drain", 5);
         spell2Effect.setEffect(TTEffect.EFFECT_MULTIPLY,
@@ -56,7 +56,7 @@ class SystemMonsterSpellBook extends SpellBook {
         spell2Effect.setMessage(TTEffect.MESSAGE_WEAR_OFF,
                 "Your weapon's power has returned!");
         final Spell spell2 = new Spell(spell2Effect, 3, BattleTarget.ENEMY,
-                SoundConstants.SOUND_DRAIN);
+                GameSound.DRAIN);
         this.spells[2] = spell2;
         final TTEffect spell3Effect = new TTEffect("Armor Drain", 5);
         spell3Effect.setEffect(TTEffect.EFFECT_MULTIPLY,
@@ -69,7 +69,7 @@ class SystemMonsterSpellBook extends SpellBook {
         spell3Effect.setMessage(TTEffect.MESSAGE_WEAR_OFF,
                 "Your armor's power has returned!");
         final Spell spell3 = new Spell(spell3Effect, 5, BattleTarget.ENEMY,
-                SoundConstants.SOUND_DRAIN);
+                GameSound.DRAIN);
         this.spells[3] = spell3;
         final TTEffect spell4Effect = new TTEffect("Weapon Charge", 5);
         spell4Effect.setEffect(TTEffect.EFFECT_MULTIPLY,
@@ -82,7 +82,7 @@ class SystemMonsterSpellBook extends SpellBook {
         spell4Effect.setMessage(TTEffect.MESSAGE_WEAR_OFF,
                 "The enemy's weapon returns to normal!");
         final Spell spell4 = new Spell(spell4Effect, 7, BattleTarget.SELF,
-                SoundConstants.SOUND_DEFENSE);
+                GameSound.BUFF_2);
         this.spells[4] = spell4;
         final TTEffect spell5Effect = new TTEffect("Armor Charge", 5);
         spell5Effect.setEffect(TTEffect.EFFECT_MULTIPLY,
@@ -95,7 +95,7 @@ class SystemMonsterSpellBook extends SpellBook {
         spell5Effect.setMessage(TTEffect.MESSAGE_WEAR_OFF,
                 "The enemy's armor returns to normal!");
         final Spell spell5 = new Spell(spell5Effect, 11, BattleTarget.SELF,
-                SoundConstants.SOUND_ATTACK);
+                GameSound.BUFF_1);
         this.spells[5] = spell5;
     }
 }

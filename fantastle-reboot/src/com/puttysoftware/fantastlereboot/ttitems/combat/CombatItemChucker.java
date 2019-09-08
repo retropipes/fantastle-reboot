@@ -6,12 +6,12 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.ttitems.combat;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.AbstractCreature;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.TTEffect;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundConstants;
-import com.puttysoftware.fantastlereboot.loaders.older.SoundManager;
+import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.ttitems.ItemInventory;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 
@@ -38,8 +38,8 @@ public class CombatItemChucker {
         if (used != null) {
             final TTEffect e = used.getEffect();
             // Play item's associated sound effect, if it has one
-            final int snd = used.getSound();
-            SoundManager.playSound(snd);
+            final GameSound snd = used.getSound();
+            SoundLoader.playSound(snd);
             e.resetEffect();
             final AbstractCreature target = CombatItemChucker.resolveTarget(
                     used, user.getTeamID());
@@ -85,7 +85,7 @@ public class CombatItemChucker {
                     .generateCombatUsableDisplayStringArray();
             if (names != null && displayNames != null) {
                 // Play using item sound
-                SoundManager.playSound(SoundConstants.SOUND_SPELL);
+                SoundLoader.playSound(GameSound.PARTY_SPELL);
                 String dialogResult = null;
                 dialogResult = CommonDialogs.showInputDialog(
                         "Select an Item to Use", "Select Item", displayNames,
