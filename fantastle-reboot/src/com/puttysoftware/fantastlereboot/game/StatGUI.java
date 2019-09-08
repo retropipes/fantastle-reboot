@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Any questions should be directed to the author via email at: fantastle@worldwizard.net
  */
-package com.puttysoftware.fantastlereboot.oldcreatures;
+package com.puttysoftware.fantastlereboot.game;
 
 import java.awt.Container;
 import java.awt.GridLayout;
@@ -25,6 +25,8 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
+import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
+import com.puttysoftware.fantastlereboot.oldcreatures.PlayerCharacter;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class StatGUI {

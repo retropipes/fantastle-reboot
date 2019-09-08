@@ -64,7 +64,6 @@ import com.puttysoftware.fantastlereboot.objects.WallBreakingWand;
 import com.puttysoftware.fantastlereboot.objects.WallMakingWand;
 import com.puttysoftware.fantastlereboot.oldbattle.Battle;
 import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
-import com.puttysoftware.fantastlereboot.oldcreatures.StatGUI;
 
 public class GameManager {
     // Fields
