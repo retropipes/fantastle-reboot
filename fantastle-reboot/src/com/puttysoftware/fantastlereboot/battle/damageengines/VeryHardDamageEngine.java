@@ -8,9 +8,9 @@ package com.puttysoftware.fantastlereboot.battle.damageengines;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithConstants;
-import com.puttysoftware.fantastlereboot.ttitems.Equipment;
-import com.puttysoftware.fantastlereboot.ttitems.EquipmentCategoryConstants;
-import com.puttysoftware.fantastlereboot.ttitems.EquipmentSlotConstants;
+import com.puttysoftware.fantastlereboot.items.Equipment;
+import com.puttysoftware.fantastlereboot.items.EquipmentCategoryConstants;
+import com.puttysoftware.fantastlereboot.items.EquipmentSlotConstants;
 import com.puttysoftware.randomrange.RandomRange;
 
 class VeryHardDamageEngine extends AbstractDamageEngine {

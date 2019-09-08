@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.ttitems;
+package com.puttysoftware.fantastlereboot.items;
 
 import javax.swing.JOptionPane;
 
@@ -8,10 +8,10 @@ import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 import com.puttysoftware.fantastlereboot.oldcreatures.PlayerCharacter;
-import com.puttysoftware.fantastlereboot.ttitems.combat.CombatItemList;
 
 public class Shop {
     // Fields

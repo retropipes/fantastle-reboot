@@ -331,6 +331,19 @@ public class Effect {
         this.statAffected = newStat;
     }
 
+    public void setEffect(final int type, final double value) {
+        this.effect[type] = value;
+        this.initialEffect[type] = value;
+    }
+
+    public void setScaleFactor(final double factor) {
+        this.effectScaleFactor = factor;
+    }
+
+    public void setScaleStat(final int scaleStat) {
+        this.effectScaleStat = scaleStat;
+    }
+
     public void setEffect(final int type, final double value,
             final double factor, final int scaleStat) {
         this.effect[type] = value;

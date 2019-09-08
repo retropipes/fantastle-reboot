@@ -12,7 +12,7 @@ import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.Effect;
-import com.puttysoftware.fantastlereboot.ttitems.ItemInventory;
+import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.ttspells.SpellBook;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.page.Page;

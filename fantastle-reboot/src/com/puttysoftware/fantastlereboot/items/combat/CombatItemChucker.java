@@ -3,16 +3,16 @@ Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.ttitems.combat;
+package com.puttysoftware.fantastlereboot.items.combat;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
-import com.puttysoftware.fantastlereboot.effects.TTEffect;
+import com.puttysoftware.fantastlereboot.effects.Effect;
+import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
-import com.puttysoftware.fantastlereboot.ttitems.ItemInventory;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 
 public class CombatItemChucker {
@@ -36,7 +36,7 @@ public class CombatItemChucker {
     public static boolean useItem(final CombatItem used,
             final Creature user) {
         if (used != null) {
-            final TTEffect e = used.getEffect();
+            final Effect e = used.getEffect();
             // Play item's associated sound effect, if it has one
             final GameSound snd = used.getSound();
             SoundLoader.playSound(snd);
@@ -47,7 +47,7 @@ public class CombatItemChucker {
             if (target.isEffectActive(e)) {
                 target.extendEffect(e, e.getInitialRounds());
             } else {
-                e.restoreEffect();
+                e.restoreEffect(target);
                 target.applyEffect(e);
             }
             return true;

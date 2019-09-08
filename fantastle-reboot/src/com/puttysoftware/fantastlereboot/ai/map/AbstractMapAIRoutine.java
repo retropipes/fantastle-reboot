@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ai.map;
 
-import com.puttysoftware.fantastlereboot.ttitems.combat.CombatItem;
+import com.puttysoftware.fantastlereboot.items.combat.CombatItem;
 import com.puttysoftware.fantastlereboot.ttspells.Spell;
 
 public abstract class AbstractMapAIRoutine {

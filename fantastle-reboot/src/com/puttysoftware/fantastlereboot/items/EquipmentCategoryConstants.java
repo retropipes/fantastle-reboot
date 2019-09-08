@@ -3,7 +3,7 @@ Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.ttitems;
+package com.puttysoftware.fantastlereboot.items;
 
 public class EquipmentCategoryConstants {
     public static final int EQUIPMENT_CATEGORY_ONE_HANDED_WEAPON = 1;

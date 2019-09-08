@@ -4,7 +4,7 @@ Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.ttitems;
+package com.puttysoftware.fantastlereboot.items;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,8 +13,8 @@ import java.util.Arrays;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
+import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
-import com.puttysoftware.fantastlereboot.ttitems.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.ttmaze.FormatConstants;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;

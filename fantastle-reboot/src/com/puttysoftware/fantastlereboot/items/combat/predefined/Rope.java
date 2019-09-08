@@ -3,13 +3,13 @@ Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.ttitems.combat.predefined;
+package com.puttysoftware.fantastlereboot.items.combat.predefined;
 
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
-import com.puttysoftware.fantastlereboot.effects.TTEffect;
-import com.puttysoftware.fantastlereboot.ttitems.combat.CombatItem;
+import com.puttysoftware.fantastlereboot.effects.Effect;
+import com.puttysoftware.fantastlereboot.items.combat.CombatItem;
 
 public class Rope extends CombatItem {
     public Rope() {
@@ -19,13 +19,14 @@ public class Rope extends CombatItem {
     @Override
     protected void defineFields() {
         this.sound = GameSound.DEBUFF_1;
-        this.e = new TTEffect("Roped", 4);
-        this.e.setEffect(TTEffect.EFFECT_MULTIPLY, StatConstants.STAT_AGILITY, 0,
-                TTEffect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE);
-        this.e.setMessage(TTEffect.MESSAGE_INITIAL,
+        this.e = new Effect("Roped", 4);
+        this.e.setAffectedStat(StatConstants.STAT_AGILITY);
+        this.e.setEffect(Effect.EFFECT_MULTIPLY, 0,
+                Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE);
+        this.e.setMessage(Effect.MESSAGE_INITIAL,
                 "You wind a rope around the enemy!");
-        this.e.setMessage(TTEffect.MESSAGE_SUBSEQUENT,
+        this.e.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "The enemy is tied up, and unable to act!");
-        this.e.setMessage(TTEffect.MESSAGE_WEAR_OFF, "The rope falls off!");
+        this.e.setMessage(Effect.MESSAGE_WEAR_OFF, "The rope falls off!");
     }
 }

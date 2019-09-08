@@ -3,19 +3,19 @@ Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.ttitems.combat;
+package com.puttysoftware.fantastlereboot.items.combat;
 
 import java.util.Objects;
 
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
-import com.puttysoftware.fantastlereboot.effects.TTEffect;
-import com.puttysoftware.fantastlereboot.ttitems.Item;
+import com.puttysoftware.fantastlereboot.effects.Effect;
+import com.puttysoftware.fantastlereboot.items.Item;
 
 public class CombatItem extends Item {
     // Fields
     private final BattleTarget target;
-    protected TTEffect e;
+    protected Effect e;
     protected GameSound sound;
 
     // Constructors
@@ -33,7 +33,7 @@ public class CombatItem extends Item {
         return this.target;
     }
 
-    final TTEffect getEffect() {
+    final Effect getEffect() {
         return this.e;
     }
 

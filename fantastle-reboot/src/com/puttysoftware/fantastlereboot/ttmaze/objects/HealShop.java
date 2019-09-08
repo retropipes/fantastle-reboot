@@ -5,8 +5,8 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ttmaze.objects;
 
+import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.loaders.older.ObjectImageConstants;
-import com.puttysoftware.fantastlereboot.ttitems.ShopTypes;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractShop;
 
 public class HealShop extends AbstractShop {

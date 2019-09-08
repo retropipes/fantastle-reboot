@@ -20,6 +20,7 @@ package com.puttysoftware.fantastlereboot.oldcreatures;
 
 import java.io.IOException;
 
+import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.legacyio.DataReader;
 import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
 import com.puttysoftware.fantastlereboot.oldcreatures.castes.Caste;
@@ -32,7 +33,6 @@ import com.puttysoftware.fantastlereboot.oldcreatures.personalities.Personality;
 import com.puttysoftware.fantastlereboot.oldcreatures.personalities.PersonalityManager;
 import com.puttysoftware.fantastlereboot.oldcreatures.races.Race;
 import com.puttysoftware.fantastlereboot.oldcreatures.races.RaceManager;
-import com.puttysoftware.fantastlereboot.ttitems.ItemInventory;
 
 public class PCManager {
     // Fields
