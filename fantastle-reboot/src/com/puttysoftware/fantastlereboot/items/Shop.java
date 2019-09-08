@@ -2,14 +2,17 @@ package com.puttysoftware.fantastlereboot.items;
 
 import javax.swing.JOptionPane;
 
+import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 import com.puttysoftware.fantastlereboot.oldcreatures.PlayerCharacter;
+import com.puttysoftware.fantastlereboot.ttitems.Socks;
 
 public class Shop {
     // Fields
@@ -29,10 +32,14 @@ public class Shop {
     private int cost;
     private Item item;
     private final CombatItemList itemList;
+    private final int inflationRate;
+    private boolean twoHanded;
+    private static final int MAX_ENHANCEMENTS = 9;
 
     // Constructors
     public Shop(final int shopType) {
         this.type = shopType;
+        this.inflationRate = 100;
         this.itemList = FantastleReboot.getBagOStuff().getCombatItems();
         this.index = 0;
     }
@@ -79,6 +86,19 @@ public class Shop {
         } else {
             return (int) (20 * i * i + 20
                     + Math.log((double) k + 1) / Math.log(2));
+        }
+    }
+
+    private static int getEnhancementCost(final int i, final int x) {
+        if (i > Shop.MAX_ENHANCEMENTS) {
+            return 0;
+        }
+        final int cost = 15 * i * i + 15 * i
+                + (int) (Math.sqrt(Shop.getEquipmentCost(x)));
+        if (cost < 0) {
+            return 0;
+        } else {
+            return cost;
         }
     }
 
@@ -149,6 +169,9 @@ public class Shop {
         } else if (this.type == ShopTypes.ARMOR) {
             this.typeChoices = ArmorConstants.ARMOR_CHOICES;
             this.typeDefault = 0;
+        } else if (this.type == ShopTypes.FAITH_POWERS) {
+            this.typeIndex = PartyManager.getParty().getLeader().getFaith()
+                    .getFaithID();
         }
         if (this.typeChoices != null) {
             this.typeResult = Messager.showInputDialog(
@@ -233,6 +256,21 @@ public class Shop {
                 this.choices[0] = "No Items To Buy";
                 this.index = -1;
             }
+        } else if (this.type == ShopTypes.SOCKS) {
+            this.choices = EquipmentFactory.createSocksNames();
+            if (this.choices.length == 0) {
+                this.choices = new String[1];
+                this.choices[0] = "No Socks To Buy";
+                this.index = -1;
+            }
+        } else if (this.type == ShopTypes.ENHANCEMENTS) {
+            this.choices = PartyManager.getParty().getLeader().getItems()
+                    .generateEquipmentEnhancementStringArray();
+            this.index = 0;
+        } else if (this.type == ShopTypes.FAITH_POWERS) {
+            this.choices = PartyManager.getParty().getLeader().getItems()
+                    .generateEquipmentEnhancementStringArray();
+            this.index = 0;
         } else {
             // Invalid shop type
             return false;
@@ -248,9 +286,8 @@ public class Shop {
                 .getCurrentHP() == playerCharacter.getMaximumHP()) {
             Messager.showDialog("You don't need healing.");
             return false;
-        } else if (this.type == ShopTypes.REGENERATOR
-                && playerCharacter.getCurrentMP() == playerCharacter
-                        .getMaximumMP()) {
+        } else if (this.type == ShopTypes.REGENERATOR && playerCharacter
+                .getCurrentMP() == playerCharacter.getMaximumMP()) {
             Messager.showDialog("You don't need regeneration.");
             return false;
         } else if (this.type == ShopTypes.SPELLS && playerCharacter
@@ -286,8 +323,7 @@ public class Shop {
         // Stage 4
         final PlayerCharacter playerCharacter = PCManager.getPlayer();
         this.cost = 0;
-        if (this.type == ShopTypes.WEAPONS
-                || this.type == ShopTypes.ARMOR) {
+        if (this.type == ShopTypes.WEAPONS || this.type == ShopTypes.ARMOR) {
             this.cost = Shop.getEquipmentCost(this.index + 1);
             if (this.type == ShopTypes.WEAPONS) {
                 if (this.typeResult != null) {
@@ -332,8 +368,65 @@ public class Shop {
         } else if (this.type == ShopTypes.ITEMS) {
             this.item = this.itemList.getAllItems()[this.index];
             this.cost = this.item.getBuyPrice();
+        } else if (this.type == ShopTypes.SOCKS) {
+            this.item = EquipmentFactory.createSocks(this.index + 1,
+                    (this.index + 1) * 500 * playerCharacter.getLevel());
+            this.cost = this.item.getBuyPrice();
+        } else if (this.type == ShopTypes.ENHANCEMENTS) {
+            final Equipment old = playerCharacter.getItems()
+                    .getEquipmentInSlot(this.index);
+            if (old != null) {
+                if (old.isTwoHanded()) {
+                    this.twoHanded = true;
+                }
+                final int power = old.getPotency();
+                final int bonus = (power % (Shop.MAX_ENHANCEMENTS + 1)) + 1;
+                this.item = EquipmentFactory.createEnhancedEquipment(old,
+                        bonus);
+                this.cost = Shop.getEnhancementCost(bonus, power);
+                if (this.cost == 0) {
+                    // Equipment is maxed out on enhancements
+                    CommonDialogs.showErrorDialog(
+                            "That equipment cannot be enhanced any further, sorry!",
+                            this.getShopNameFromType());
+                    return false;
+                }
+            } else {
+                CommonDialogs.showErrorDialog("Nothing is equipped there!",
+                        this.getShopNameFromType());
+                return false;
+            }
+        } else if (this.type == ShopTypes.FAITH_POWERS) {
+            final Equipment old = playerCharacter.getItems()
+                    .getEquipmentInSlot(this.index);
+            if (old != null) {
+                if (old.isTwoHanded()) {
+                    this.twoHanded = true;
+                }
+                final int power = old.getPotency();
+                final int bonus = old.getFaithPowerLevel(this.typeIndex);
+                this.item = EquipmentFactory.createFaithPoweredEquipment(old,
+                        this.typeIndex, bonus);
+                this.cost = Shop.getEnhancementCost(bonus, power);
+                if (this.cost == 0) {
+                    // Equipment is maxed out on Faith Powers
+                    CommonDialogs.showErrorDialog(
+                            "That equipment cannot be Faith Powered any further, sorry!",
+                            this.getShopNameFromType());
+                    return false;
+                }
+            } else {
+                CommonDialogs.showErrorDialog("Nothing is equipped there!",
+                        this.getShopNameFromType());
+                return false;
+            }
         }
         if (this.type != ShopTypes.BANK) {
+            // Handle inflation
+            final double actualInflation = Shop.this.inflationRate / 100.0;
+            final double inflatedCost = Shop.this.cost * actualInflation;
+            Shop.this.cost = (int) inflatedCost;
+            // Confirm
             final int stage4Confirm = Messager.showConfirmDialog(
                     "This will cost " + this.cost + " Gold. Are you sure?",
                     this.getShopNameFromType());
@@ -420,6 +513,40 @@ public class Shop {
         } else if (this.type == ShopTypes.ITEMS) {
             playerCharacter.offsetGold(-this.cost);
             playerCharacter.getItems().addItem(this.item);
+        } else if (Shop.this.type == ShopTypes.SOCKS) {
+            playerCharacter.offsetGold(-Shop.this.cost);
+            playerCharacter.getItems().equipArmor(playerCharacter,
+                    (Socks) Shop.this.item, true);
+        } else if (Shop.this.type == ShopTypes.ENHANCEMENTS) {
+            playerCharacter.offsetGold(-Shop.this.cost);
+            playerCharacter.getItems().setEquipmentInSlot(Shop.this.index,
+                    (Equipment) Shop.this.item);
+            if (Shop.this.twoHanded) {
+                if (Shop.this.index == EquipmentSlotConstants.SLOT_MAINHAND) {
+                    playerCharacter.getItems().setEquipmentInSlot(
+                            EquipmentSlotConstants.SLOT_OFFHAND,
+                            (Equipment) Shop.this.item);
+                } else if (Shop.this.index == EquipmentSlotConstants.SLOT_OFFHAND) {
+                    playerCharacter.getItems().setEquipmentInSlot(
+                            EquipmentSlotConstants.SLOT_MAINHAND,
+                            (Equipment) Shop.this.item);
+                }
+            }
+        } else if (Shop.this.type == ShopTypes.FAITH_POWERS) {
+            playerCharacter.offsetGold(-Shop.this.cost);
+            playerCharacter.getItems().setEquipmentInSlot(Shop.this.index,
+                    (Equipment) Shop.this.item);
+            if (Shop.this.twoHanded) {
+                if (Shop.this.index == EquipmentSlotConstants.SLOT_MAINHAND) {
+                    playerCharacter.getItems().setEquipmentInSlot(
+                            EquipmentSlotConstants.SLOT_OFFHAND,
+                            (Equipment) Shop.this.item);
+                } else if (Shop.this.index == EquipmentSlotConstants.SLOT_OFFHAND) {
+                    playerCharacter.getItems().setEquipmentInSlot(
+                            EquipmentSlotConstants.SLOT_MAINHAND,
+                            (Equipment) Shop.this.item);
+                }
+            }
         }
     }
 }

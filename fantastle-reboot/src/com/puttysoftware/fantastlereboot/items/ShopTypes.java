@@ -15,7 +15,4 @@ public class ShopTypes {
     public static final int SOCKS = 8;
     public static final int ENHANCEMENTS = 9;
     public static final int FAITH_POWERS = 10;
-    public static final String[] SHOP_NAMES = { "Weapons", "Armor", "Healer", "Bank",
-            "Regenerator", "Spells", "Items", "Socks", "Enhancements",
-            "Faith Powers" };
 }

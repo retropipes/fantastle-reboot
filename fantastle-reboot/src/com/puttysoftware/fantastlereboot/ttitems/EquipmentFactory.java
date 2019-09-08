@@ -6,7 +6,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.ttitems;
 
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithConstants;
-import com.puttysoftware.fantastlereboot.ttshops.Shop;
+import com.puttysoftware.fantastlereboot.items.Shop;
 
 public class EquipmentFactory {
     // Private constructor
