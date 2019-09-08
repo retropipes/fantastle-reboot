@@ -1,7 +1,7 @@
 package com.puttysoftware.fantastlereboot.effects;
 
 import com.puttysoftware.fantastlereboot.creatures.Creature;
-import com.puttysoftware.fantastlereboot.oldcreatures.StatConstants;
+import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 
 public class DrainEffect extends Effect {
     // Constructor

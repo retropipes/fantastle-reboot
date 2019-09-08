@@ -18,7 +18,6 @@ import com.puttysoftware.randomrange.RandomRange;
 public class Monster extends Creature {
     // Fields
     private final int levelDifference;
-    private final int perfectBonusGold;
     private String type;
     private Element element;
     private static final double MINIMUM_EXPERIENCE_RANDOM_VARIANCE = -5.0 / 2.0;
@@ -43,7 +42,6 @@ public class Monster extends Creature {
         this.setLuck(this.getInitialLuck());
         this.setGold(this.getInitialGold());
         this.setExperience(this.getInitialExperience());
-        this.perfectBonusGold = this.getInitialPerfectBonusGold();
         this.image = this.getInitialImage();
         this.getInitialSpellBook();
         this.setAI(Monster.getInitialAI());
@@ -90,10 +88,6 @@ public class Monster extends Creature {
     }
 
     // Methods
-    public int getPerfectBonusGold() {
-        return this.perfectBonusGold;
-    }
-
     @Override
     public String getName() {
         return this.element.getName() + " " + this.type;
@@ -167,17 +161,6 @@ public class Monster extends Creature {
         final int max = needed / factor * 2 + averageHealingCost
                 + averageRegenerationCost;
         final RandomRange r = new RandomRange(0, max);
-        return (int) (r.generate() * this.adjustForLevelDifference());
-    }
-
-    private int getInitialPerfectBonusGold() {
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
-        final int needed = Shop.getEquipmentCost(playerCharacter.getLevel() + 1)
-                * 24;
-        final int factor = Monster.getFightsPerLevel();
-        final int min = needed / factor / 4;
-        final int max = needed / factor / 2;
-        final RandomRange r = new RandomRange(min, max);
         return (int) (r.generate() * this.adjustForLevelDifference());
     }
 

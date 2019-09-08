@@ -366,7 +366,7 @@ public abstract class Creature {
         for (x = 0; x < this.effectList.length; x++) {
             try {
                 final Effect e = this.get(x);
-                p *= e.getEffect(Effect.EFFECT_MULTIPLY, stat);
+                p *= e.getEffect(Effect.EFFECT_MULTIPLY);
             } catch (final NullPointerException np) {
                 // Do nothing
             } catch (final ArrayIndexOutOfBoundsException aioob) {
@@ -376,7 +376,7 @@ public abstract class Creature {
         for (x = 0; x < this.effectList.length; x++) {
             try {
                 final Effect e = this.get(x);
-                s += e.getEffect(Effect.EFFECT_ADD, stat);
+                s += e.getEffect(Effect.EFFECT_ADD);
             } catch (final NullPointerException np) {
                 // Do nothing
             } catch (final ArrayIndexOutOfBoundsException aioob) {

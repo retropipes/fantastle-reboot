@@ -1,6 +1,7 @@
 package com.puttysoftware.fantastlereboot.oldcreatures;
 
 import com.puttysoftware.fantastlereboot.creatures.Creature;
+import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.oldcreatures.castes.Caste;
 import com.puttysoftware.fantastlereboot.oldcreatures.castes.CasteConstants;
 import com.puttysoftware.fantastlereboot.oldcreatures.faiths.Faith;
@@ -191,6 +192,7 @@ public class PlayerCharacter extends Creature {
         this.bank += newGold;
     }
 
+    @Override
     public boolean checkLevelUp() {
         return this.getExperience() >= this.toNextLevel;
     }
@@ -289,6 +291,7 @@ public class PlayerCharacter extends Creature {
     }
 
     // Transformers
+    @Override
     public void levelUp() {
         this.offsetLevel(1);
         this.offsetStrength(StatConstants.GAIN_STRENGTH

@@ -21,10 +21,10 @@ package com.puttysoftware.fantastlereboot.items;
 import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.legacyio.DataReader;
 import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
-import com.puttysoftware.fantastlereboot.oldcreatures.StatConstants;
 
 public class ItemInventory {
     // Properties

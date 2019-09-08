@@ -3,9 +3,9 @@ package com.puttysoftware.fantastlereboot.effects;
 import java.util.Arrays;
 
 import com.puttysoftware.fantastlereboot.creatures.Creature;
-import com.puttysoftware.fantastlereboot.oldcreatures.StatConstants;
+import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 
-public class Effect implements StatConstants {
+public class Effect {
     // Fields
     protected String name;
     protected double[] initialEffect;
