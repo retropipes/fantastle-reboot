@@ -22,7 +22,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
 
-public class EffectManager implements EffectConstants {
+public class EffectManager {
     // Fields
     private final Effect[] activeEffects;
     private static final int NUM_EFFECTS = 6;

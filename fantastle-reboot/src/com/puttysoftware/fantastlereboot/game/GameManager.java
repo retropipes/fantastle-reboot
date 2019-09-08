@@ -67,7 +67,7 @@ import com.puttysoftware.fantastlereboot.oldbattle.Battle;
 import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 import com.puttysoftware.fantastlereboot.oldcreatures.StatGUI;
 
-public class GameManager implements EffectConstants {
+public class GameManager {
     // Fields
     private JFrame outputFrame;
     private Container outputPane, borderPane;
