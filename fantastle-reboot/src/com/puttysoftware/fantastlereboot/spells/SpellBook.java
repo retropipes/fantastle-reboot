@@ -20,12 +20,12 @@ public abstract class SpellBook {
         this.known = new ArrayList<>();
     }
 
-    protected void addKnownSpell(final Spell sp) {
+    protected final void addKnownSpell(final Spell sp) {
         this.spells.add(sp);
         this.known.add(true);
     }
 
-    protected void addUnknownSpell(final Spell sp) {
+    protected final void addUnknownSpell(final Spell sp) {
         this.spells.add(sp);
         this.known.add(false);
     }
