@@ -147,7 +147,7 @@ public class PartyManager {
         if (name != null) {
             final Race race = RaceManager.selectRace(owner);
             if (race != null) {
-                final Caste caste = CasteManager.selectCaste(owner);
+                final Caste caste = CasteManager.selectCaste();
                 if (caste != null) {
                     final Faith faith = FaithManager.selectFaith(owner);
                     if (faith != null) {

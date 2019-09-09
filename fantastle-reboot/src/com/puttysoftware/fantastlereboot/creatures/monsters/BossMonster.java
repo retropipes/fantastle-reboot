@@ -15,6 +15,7 @@ import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.loaders.older.BossImageManager;
+import com.puttysoftware.fantastlereboot.spells.BossSpellBook;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.randomrange.RandomRange;
@@ -37,7 +38,7 @@ public class BossMonster extends Creature {
         super(true, 1);
         this.setWindowAI(BossMonster.getInitialWindowAI());
         this.setMapAI(MapAIRoutinePicker.getNextRoutine());
-        final SpellBook spells = new SystemMonsterSpellBook();
+        final SpellBook spells = new BossSpellBook();
         spells.learnAllSpells();
         this.setSpellBook(spells);
         this.loadCreature();

@@ -23,7 +23,6 @@ import java.io.IOException;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
-import com.puttysoftware.fantastlereboot.legacyio.XDataConstants;
 import com.puttysoftware.xio.XDataReader;
 
 public class LoadTask3 extends Thread {

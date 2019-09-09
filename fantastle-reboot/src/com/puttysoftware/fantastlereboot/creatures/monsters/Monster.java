@@ -15,14 +15,17 @@ import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
+import com.puttysoftware.fantastlereboot.spells.SpellBookManager;
 import com.puttysoftware.randomrange.RandomRange;
 
 public abstract class Monster extends Creature {
     // Fields
     private String type;
     protected Element element;
-    protected static final double MINIMUM_EXPERIENCE_RANDOM_VARIANCE = -5.0 / 2.0;
-    protected static final double MAXIMUM_EXPERIENCE_RANDOM_VARIANCE = 5.0 / 2.0;
+    protected static final double MINIMUM_EXPERIENCE_RANDOM_VARIANCE = -5.0
+            / 2.0;
+    protected static final double MAXIMUM_EXPERIENCE_RANDOM_VARIANCE = 5.0
+            / 2.0;
     protected static final int PERFECT_GOLD_MIN = 1;
     protected static final int PERFECT_GOLD_MAX = 3;
     private static final int BATTLES_SCALE_FACTOR = 2;
@@ -34,7 +37,9 @@ public abstract class Monster extends Creature {
         this.setWindowAI(Monster.getInitialWindowAI());
         this.setMapAI(Monster.getInitialMapAI());
         this.element = new Element(FaithManager.getFaith(0));
-        final SpellBook spells = new SystemMonsterSpellBook();
+        final SpellBook spells = SpellBookManager
+                .getEnemySpellBookByID(FantastleReboot.getBagOStuff()
+                        .getPrefsManager().getGameDifficulty());
         spells.learnAllSpells();
         this.setSpellBook(spells);
     }
@@ -71,7 +76,8 @@ public abstract class Monster extends Creature {
 
     @Override
     public int getSpeed() {
-        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager().getGameDifficulty();
+        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager()
+                .getGameDifficulty();
         final int base = this.getBaseSpeed();
         FantastleReboot.getBagOStuff().getPrefsManager();
         if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
@@ -171,7 +177,7 @@ public abstract class Monster extends Creature {
     }
 
     protected final int getBattlesToNextLevel() {
-        return Monster.BATTLES_START + (this.getLevel() + 1)
-                * Monster.BATTLES_SCALE_FACTOR;
+        return Monster.BATTLES_START
+                + (this.getLevel() + 1) * Monster.BATTLES_SCALE_FACTOR;
     }
 }
