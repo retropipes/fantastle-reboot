@@ -1,5 +1,6 @@
 package com.puttysoftware.fantastlereboot.spells;
 
+import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.effects.DamageEffect;
 import com.puttysoftware.fantastlereboot.effects.Effect;
@@ -22,7 +23,7 @@ public class ToughLevelSpellBook extends SpellBook {
                 "You lose a LOT of health from being poisoned!");
         spell0Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "You are no longer poisoned!");
-        final Spell spell0 = new Spell(spell0Effect, 4, 'P');
+        final Spell spell0 = new Spell(spell0Effect, 4, BattleTarget.ENEMY);
         this.spells[0] = spell0;
         final HealingEffect spell1Effect = new HealingEffect("Ultra Recover",
                 100, 1, Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE,
@@ -31,7 +32,7 @@ public class ToughLevelSpellBook extends SpellBook {
                 "The enemy applies a very large bandage to its wounds!");
         spell1Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "The enemy regains a LOT of health!");
-        final Spell spell1 = new Spell(spell1Effect, 4, 'E');
+        final Spell spell1 = new Spell(spell1Effect, 4, BattleTarget.SELF);
         this.spells[1] = spell1;
         final Effect spell2Effect = new Effect("Ultra Weapon Drain", 10);
         spell2Effect.setAffectedStat(StatConstants.STAT_ATTACK);
@@ -43,7 +44,7 @@ public class ToughLevelSpellBook extends SpellBook {
                 "Your attack is significantly decreased!");
         spell2Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "Your weapon's power has returned!");
-        final Spell spell2 = new Spell(spell2Effect, 8, 'P');
+        final Spell spell2 = new Spell(spell2Effect, 8, BattleTarget.ENEMY);
         this.spells[2] = spell2;
         final Effect spell3Effect = new Effect("Ultra Armor Drain", 10);
         spell3Effect.setAffectedStat(StatConstants.STAT_DEFENSE);
@@ -55,7 +56,7 @@ public class ToughLevelSpellBook extends SpellBook {
                 "Your defense is significantly decreased!");
         spell3Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "Your armor's power has returned!");
-        final Spell spell3 = new Spell(spell3Effect, 8, 'P');
+        final Spell spell3 = new Spell(spell3Effect, 8, BattleTarget.ENEMY);
         this.spells[3] = spell3;
         final Effect spell4Effect = new Effect("Ultra Weapon Charge", 10);
         spell4Effect.setAffectedStat(StatConstants.STAT_ATTACK);
@@ -67,7 +68,7 @@ public class ToughLevelSpellBook extends SpellBook {
                 "The enemy's attack is drastically increased!");
         spell4Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "The enemy's weapon returns to normal!");
-        final Spell spell4 = new Spell(spell4Effect, 16, 'E');
+        final Spell spell4 = new Spell(spell4Effect, 16, BattleTarget.SELF);
         this.spells[4] = spell4;
         final Effect spell5Effect = new Effect("Ultra Armor Charge", 10);
         spell5Effect.setAffectedStat(StatConstants.STAT_DEFENSE);
@@ -79,7 +80,7 @@ public class ToughLevelSpellBook extends SpellBook {
                 "The enemy's defense is drastically increased!");
         spell5Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "The enemy's armor returns to normal!");
-        final Spell spell5 = new Spell(spell5Effect, 16, 'E');
+        final Spell spell5 = new Spell(spell5Effect, 16, BattleTarget.SELF);
         this.spells[5] = spell5;
     }
 

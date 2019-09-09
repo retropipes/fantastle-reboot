@@ -1,5 +1,6 @@
 package com.puttysoftware.fantastlereboot.spells;
 
+import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.effects.DamageEffect;
 import com.puttysoftware.fantastlereboot.effects.DrainEffect;
@@ -24,7 +25,7 @@ public class GuruSpellBook extends SpellBook {
                 "You regain some MP!");
         spell0Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "Your focus is broken!");
-        final Spell spell0 = new Spell(spell0Effect, 1, 'P', "focus");
+        final Spell spell0 = new Spell(spell0Effect, 1, BattleTarget.SELF, "focus");
         this.spells[0] = spell0;
         final DamageEffect spell1Effect = new DamageEffect("Wind Sword", 1, 1,
                 0.4, StatConstants.STAT_MAXIMUM_HP, Effect.DEFAULT_DECAY_RATE);
@@ -32,7 +33,7 @@ public class GuruSpellBook extends SpellBook {
                 "You conjure a sword of wind, then throw it at the enemy!");
         spell1Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "The enemy loses some health from being cut!");
-        final Spell spell1 = new Spell(spell1Effect, 3, 'E', "windswrd");
+        final Spell spell1 = new Spell(spell1Effect, 3, BattleTarget.ENEMY, "windswrd");
         this.spells[1] = spell1;
         final HealingEffect spell2Effect = new HealingEffect("Full Heal", 1, 1,
                 1, StatConstants.STAT_MAXIMUM_HP, Effect.DEFAULT_DECAY_RATE);
@@ -40,7 +41,7 @@ public class GuruSpellBook extends SpellBook {
                 "You conjure a full body wrap, and apply it to your wounds!");
         spell2Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "You are healed completely!");
-        final Spell spell2 = new Spell(spell2Effect, 6, 'P', "heal");
+        final Spell spell2 = new Spell(spell2Effect, 6, BattleTarget.SELF, "heal");
         this.spells[2] = spell2;
         final DrainEffect spell3Effect = new DrainEffect("Dust Drain", 1, 1, 1,
                 StatConstants.STAT_MAXIMUM_MP, Effect.DEFAULT_DECAY_RATE);
@@ -48,7 +49,7 @@ public class GuruSpellBook extends SpellBook {
                 "You conjure a dust devil, and throw it at the enemy!");
         spell3Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "The enemy loses the ability to cast spells in the confusion!");
-        final Spell spell3 = new Spell(spell3Effect, 10, 'E', "drain");
+        final Spell spell3 = new Spell(spell3Effect, 10, BattleTarget.ENEMY, "drain");
         this.spells[3] = spell3;
         final Effect spell4Effect = new Effect("Fortified", 10);
         spell4Effect.setAffectedStat(StatConstants.STAT_MAXIMUM_HP);
@@ -60,7 +61,7 @@ public class GuruSpellBook extends SpellBook {
                 "Your maximum health is increased!");
         spell4Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "The potion wears off!");
-        final Spell spell4 = new Spell(spell4Effect, 25, 'P', "potion");
+        final Spell spell4 = new Spell(spell4Effect, 25, BattleTarget.SELF, "potion");
         this.spells[4] = spell4;
         final DamageEffect spell5Effect = new DamageEffect("Tornado", 1, 1,
                 0.99, StatConstants.STAT_CURRENT_HP, Effect.DEFAULT_DECAY_RATE);
@@ -68,7 +69,7 @@ public class GuruSpellBook extends SpellBook {
                 "You summon a tornado, then throw it at the enemy!");
         spell5Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "The enemy gets sucked in, then comes out MUCH weaker!");
-        final Spell spell5 = new Spell(spell5Effect, 50, 'E', "tornado");
+        final Spell spell5 = new Spell(spell5Effect, 50, BattleTarget.ENEMY, "tornado");
         this.spells[5] = spell5;
     }
 

@@ -1,5 +1,6 @@
 package com.puttysoftware.fantastlereboot.spells;
 
+import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.effects.DamageEffect;
 import com.puttysoftware.fantastlereboot.effects.Effect;
@@ -21,7 +22,7 @@ public class MidLevelSpellBook extends SpellBook {
                 "You lose some health from being poisoned!");
         spell0Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "You are no longer poisoned!");
-        final Spell spell0 = new Spell(spell0Effect, 2, 'P');
+        final Spell spell0 = new Spell(spell0Effect, 2, BattleTarget.ENEMY);
         this.spells[0] = spell0;
         final HealingEffect spell1Effect = new HealingEffect("Recover", 15, 1,
                 Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE,
@@ -30,7 +31,7 @@ public class MidLevelSpellBook extends SpellBook {
                 "The enemy applies a bandage to its wounds!");
         spell1Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "The enemy regains some health!");
-        final Spell spell1 = new Spell(spell1Effect, 2, 'E');
+        final Spell spell1 = new Spell(spell1Effect, 2, BattleTarget.SELF);
         this.spells[1] = spell1;
         final Effect spell2Effect = new Effect("Weapon Drain", 5);
         spell2Effect.setAffectedStat(StatConstants.STAT_ATTACK);
@@ -42,7 +43,7 @@ public class MidLevelSpellBook extends SpellBook {
                 "Your attack is decreased!");
         spell2Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "Your weapon's power has returned!");
-        final Spell spell2 = new Spell(spell2Effect, 4, 'P');
+        final Spell spell2 = new Spell(spell2Effect, 4, BattleTarget.ENEMY);
         this.spells[2] = spell2;
         final Effect spell3Effect = new Effect("Armor Drain", 5);
         spell3Effect.setAffectedStat(StatConstants.STAT_DEFENSE);
@@ -54,7 +55,7 @@ public class MidLevelSpellBook extends SpellBook {
                 "Your defense is decreased!");
         spell3Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "Your armor's power has returned!");
-        final Spell spell3 = new Spell(spell3Effect, 4, 'P');
+        final Spell spell3 = new Spell(spell3Effect, 4, BattleTarget.ENEMY);
         this.spells[3] = spell3;
         final Effect spell4Effect = new Effect("Weapon Charge", 5);
         spell4Effect.setAffectedStat(StatConstants.STAT_ATTACK);
@@ -66,7 +67,7 @@ public class MidLevelSpellBook extends SpellBook {
                 "The enemy's attack is increased!");
         spell4Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "The enemy's weapon returns to normal!");
-        final Spell spell4 = new Spell(spell4Effect, 8, 'E');
+        final Spell spell4 = new Spell(spell4Effect, 8, BattleTarget.SELF);
         this.spells[4] = spell4;
         final Effect spell5Effect = new Effect("Armor Charge", 5);
         spell5Effect.setAffectedStat(StatConstants.STAT_DEFENSE);
@@ -78,7 +79,7 @@ public class MidLevelSpellBook extends SpellBook {
                 "The enemy's defense is increased!");
         spell5Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "The enemy's armor returns to normal!");
-        final Spell spell5 = new Spell(spell5Effect, 8, 'E');
+        final Spell spell5 = new Spell(spell5Effect, 8, BattleTarget.SELF);
         this.spells[5] = spell5;
     }
 
