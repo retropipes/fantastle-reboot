@@ -11,22 +11,22 @@ import com.puttysoftware.fantastlereboot.battle.BattleResults;
 import com.puttysoftware.fantastlereboot.battle.damageengines.AbstractDamageEngine;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
-import com.puttysoftware.fantastlereboot.creatures.monsters.AbstractMonster;
 import com.puttysoftware.fantastlereboot.creatures.monsters.BossMonster;
+import com.puttysoftware.fantastlereboot.creatures.monsters.Monster;
 import com.puttysoftware.fantastlereboot.creatures.monsters.MonsterFactory;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
-import com.puttysoftware.fantastlereboot.effects.TTEffect;
+import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.older.MusicConstants;
 import com.puttysoftware.fantastlereboot.loaders.older.MusicManager;
+import com.puttysoftware.fantastlereboot.spells.SpellCaster;
 import com.puttysoftware.fantastlereboot.ttgame.GameLogicManager;
 import com.puttysoftware.fantastlereboot.ttmain.Application;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.BattleCharacter;
-import com.puttysoftware.fantastlereboot.ttspells.SpellCaster;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class WindowTurnBattleLogic extends AbstractBattle {
@@ -160,7 +160,7 @@ public class WindowTurnBattleLogic extends AbstractBattle {
             } else if (this.damage < 0) {
                 this.enemyDidDamage = true;
             }
-        } else if (acting instanceof AbstractMonster
+        } else if (acting instanceof Monster
                 || acting instanceof BossMonster) {
             if (this.damage > 0) {
                 this.enemyDidDamage = true;
@@ -400,7 +400,7 @@ public class WindowTurnBattleLogic extends AbstractBattle {
                 .getAllCurrentEffectMessages();
         final String enemyEffectMessages = this.enemy
                 .getAllCurrentEffectMessages();
-        final String nMsg = TTEffect.getNullMessage();
+        final String nMsg = Effect.getNullMessage();
         if (!(effectString.equals(nMsg))) {
             flag1 = true;
         }

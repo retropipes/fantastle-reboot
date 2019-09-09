@@ -11,7 +11,7 @@ import com.puttysoftware.fantastlereboot.loaders.older.MonsterNames;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.randomrange.RandomRange;
 
-abstract class AbstractBothRandomMonster extends AbstractMonster {
+abstract class AbstractBothRandomMonster extends Monster {
     // Constructors
     AbstractBothRandomMonster() {
         super();

@@ -21,12 +21,12 @@ import com.puttysoftware.fantastlereboot.creatures.races.Race;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.loaders.older.BattleImageManager;
+import com.puttysoftware.fantastlereboot.spells.SpellBook;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmain.VersionException;
 import com.puttysoftware.fantastlereboot.ttmaze.FormatConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.GenerateTask;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Player;
-import com.puttysoftware.fantastlereboot.ttspells.SpellBook;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.page.Page;
 import com.puttysoftware.xio.XDataReader;
@@ -184,6 +184,10 @@ public class PartyMember extends Creature {
         super.offsetGold(fixedValue);
     }
 
+    public int getKills() {
+        return this.kills;
+    }
+
     @Override
     public String getName() {
         return this.name;
@@ -284,7 +288,7 @@ public class PartyMember extends Creature {
         nextLevelEquation.setCoefficient(3, value);
         this.setToNextLevel(nextLevelEquation);
         this.setSpellBook(CasteManager.getSpellBookByID(this.caste.getCasteID()));
-        PartyManager.getParty().resetTowerLevel();
+        PartyManager.getParty().resetMonsterLevel();
         new GenerateTask(true).start();
     }
 

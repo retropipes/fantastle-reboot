@@ -8,10 +8,9 @@ import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
-import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
-import com.puttysoftware.fantastlereboot.oldcreatures.PlayerCharacter;
 
 public class Shop {
     // Fields
@@ -48,10 +47,10 @@ public class Shop {
     }
 
     private String getGoldTotals() {
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         if (this.type == ShopTypes.BANK) {
             return "Gold on Hand: " + playerCharacter.getGold()
-                    + "\nGold in Bank: " + playerCharacter.getGoldInBank()
+                    + "\nGold in Bank: " + PartyManager.getGoldInBank()
                     + "\n";
         } else {
             return "";
@@ -199,7 +198,7 @@ public class Shop {
 
     private boolean shopStage2() {
         // Stage 2
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         if (this.type == ShopTypes.WEAPONS) {
             if (this.typeResult.equals(this.typeChoices[0])) {
                 this.choices = EquipmentFactory.createOneHandedWeaponNames(
@@ -279,7 +278,7 @@ public class Shop {
 
     private boolean shopStage3() {
         // Stage 3
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         // Check
         if (this.type == ShopTypes.HEALER && playerCharacter
                 .getCurrentHP() == playerCharacter.getMaximumHP()) {
@@ -320,7 +319,7 @@ public class Shop {
 
     private boolean shopStage4() {
         // Stage 4
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         this.cost = 0;
         if (this.type == ShopTypes.WEAPONS || this.type == ShopTypes.ARMOR) {
             this.cost = Shop.getEquipmentCost(this.index + 1);
@@ -439,7 +438,7 @@ public class Shop {
 
     private boolean shopStage5() {
         // Stage 5
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         if (this.type == ShopTypes.BANK) {
             if (this.index == 0) {
                 if (playerCharacter.getGold() < this.cost) {
@@ -448,7 +447,7 @@ public class Shop {
                     return false;
                 }
             } else {
-                if (playerCharacter.getGoldInBank() < this.cost) {
+                if (PartyManager.getGoldInBank() < this.cost) {
                     Messager.showErrorDialog("Not Enough Gold!",
                             this.getShopNameFromType());
                     return false;
@@ -466,7 +465,7 @@ public class Shop {
 
     private void shopStage6() {
         // Stage 6
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         FantastleReboot.getBagOStuff().getPrefsManager();
         // Play transact sound
         if (FantastleReboot.getBagOStuff().getPrefsManager()
@@ -499,9 +498,9 @@ public class Shop {
         } else if (this.type == ShopTypes.BANK) {
             if (this.index == 0) {
                 playerCharacter.offsetGold(-this.cost);
-                playerCharacter.addGoldToBank(this.cost);
+                PartyManager.addGoldToBank(this.cost);
             } else {
-                playerCharacter.removeGoldFromBank(this.cost);
+                PartyManager.removeGoldFromBank(this.cost);
                 playerCharacter.offsetGold(this.cost);
             }
         } else if (this.type == ShopTypes.SPELLS) {

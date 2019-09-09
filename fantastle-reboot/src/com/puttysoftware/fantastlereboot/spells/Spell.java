@@ -1,17 +1,21 @@
 package com.puttysoftware.fantastlereboot.spells;
 
+import java.util.Objects;
+
+import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 
 public class Spell {
     // Fields
     private final Effect effect;
     private final int cost;
-    private final char target;
-    private final String soundEffect;
+    private final BattleTarget target;
+    private final GameSound soundEffect;
 
     // Constructors
     public Spell(final Effect newEffect, final int newCost,
-            final char newTarget) {
+            final BattleTarget newTarget) {
         this.effect = newEffect;
         this.cost = newCost;
         this.target = newTarget;
@@ -19,7 +23,7 @@ public class Spell {
     }
 
     public Spell(final Effect newEffect, final int newCost,
-            final char newTarget, final String sfx) {
+            final BattleTarget newTarget, final GameSound sfx) {
         this.effect = newEffect;
         this.cost = newCost;
         this.target = newTarget;
@@ -34,11 +38,32 @@ public class Spell {
         return this.cost;
     }
 
-    public char getTarget() {
+    public BattleTarget getTarget() {
         return this.target;
     }
 
-    public String getSound() {
+    public GameSound getSound() {
         return this.soundEffect;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.cost, this.effect, this.soundEffect,
+                this.target);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Spell)) {
+            return false;
+        }
+        Spell other = (Spell) obj;
+        return this.cost == other.cost
+                && Objects.equals(this.effect, other.effect)
+                && this.soundEffect == other.soundEffect
+                && this.target == other.target;
     }
 }

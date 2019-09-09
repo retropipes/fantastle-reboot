@@ -26,10 +26,12 @@ import com.puttysoftware.fantastlereboot.creatures.monsters.BossMonster;
 import com.puttysoftware.fantastlereboot.creatures.monsters.MonsterFactory;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
-import com.puttysoftware.fantastlereboot.effects.TTEffect;
+import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItem;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.spells.Spell;
+import com.puttysoftware.fantastlereboot.spells.SpellCaster;
 import com.puttysoftware.fantastlereboot.ttmain.Application;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.Maze;
@@ -37,8 +39,6 @@ import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.BattleCharacter;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Empty;
-import com.puttysoftware.fantastlereboot.ttspells.Spell;
-import com.puttysoftware.fantastlereboot.ttspells.SpellCaster;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class MapTurnBattleLogic extends AbstractBattle {
@@ -1354,7 +1354,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
                 final String[] individualEffectMessages = effectMessages
                         .split("\n");
                 for (final String message : individualEffectMessages) {
-                    if (!message.equals(TTEffect.getNullMessage())) {
+                    if (!message.equals(Effect.getNullMessage())) {
                         this.setStatusMessage(message);
                         try {
                             Thread.sleep(FantastleReboot.getBagOStuff()

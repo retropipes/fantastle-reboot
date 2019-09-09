@@ -13,7 +13,7 @@ import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
-import com.puttysoftware.fantastlereboot.ttspells.SpellBook;
+import com.puttysoftware.fantastlereboot.spells.SpellBook;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.page.Page;
 import com.puttysoftware.randomrange.RandomRange;

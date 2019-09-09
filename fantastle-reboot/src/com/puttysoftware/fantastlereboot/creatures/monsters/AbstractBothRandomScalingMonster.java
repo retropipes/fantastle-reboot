@@ -39,7 +39,7 @@ abstract class AbstractBothRandomScalingMonster extends
 
     @Override
     public void loadCreature() {
-        final int newLevel = PartyManager.getParty().getTowerLevel() + 1;
+        final int newLevel = PartyManager.getParty().getMonsterLevel() + 1;
         this.setLevel(newLevel);
         this.setVitality(this.getInitialVitality());
         this.setCurrentHP(this.getMaximumHP());
@@ -71,8 +71,8 @@ abstract class AbstractBothRandomScalingMonster extends
 
     private long getInitialExperience() {
         int minvar, maxvar;
-        minvar = (int) (this.getLevel() * AbstractMonster.MINIMUM_EXPERIENCE_RANDOM_VARIANCE);
-        maxvar = (int) (this.getLevel() * AbstractMonster.MAXIMUM_EXPERIENCE_RANDOM_VARIANCE);
+        minvar = (int) (this.getLevel() * Monster.MINIMUM_EXPERIENCE_RANDOM_VARIANCE);
+        maxvar = (int) (this.getLevel() * Monster.MAXIMUM_EXPERIENCE_RANDOM_VARIANCE);
         final RandomLongRange r = new RandomLongRange(minvar, maxvar);
         final long expbase = PartyManager.getParty().getPartyMaxToNextLevel();
         final long factor = this.getBattlesToNextLevel();

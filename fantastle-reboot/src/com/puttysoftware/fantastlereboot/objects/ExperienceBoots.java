@@ -20,9 +20,9 @@ package com.puttysoftware.fantastlereboot.objects;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.generic.GenericBoots;
-import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
-import com.puttysoftware.fantastlereboot.oldcreatures.PlayerCharacter;
 
 public class ExperienceBoots extends GenericBoots {
     // Constants
@@ -55,7 +55,7 @@ public class ExperienceBoots extends GenericBoots {
 
     @Override
     public void stepAction() {
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         playerCharacter.offsetExperience(ExperienceBoots.EXP_AMOUNT);
         FantastleReboot.getBagOStuff().getGameManager().getScoreTracker()
                 .incrementScore();

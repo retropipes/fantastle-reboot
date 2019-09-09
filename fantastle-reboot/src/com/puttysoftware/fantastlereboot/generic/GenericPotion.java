@@ -22,11 +22,11 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objects.Empty;
-import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 import com.puttysoftware.randomrange.RandomRange;
 
 public abstract class GenericPotion extends MazeObject
@@ -92,30 +92,30 @@ public abstract class GenericPotion extends MazeObject
         if (this.effectValueIsPercentage) {
             if (this.statAffected == StatConstants.STAT_CURRENT_HP) {
                 if (this.effectValue >= 0) {
-                    PCManager.getPlayer().healPercentage(this.effectValue);
+                    PartyManager.getParty().getLeader().healPercentage(this.effectValue);
                 } else {
-                    PCManager.getPlayer().doDamagePercentage(-this.effectValue);
+                    PartyManager.getParty().getLeader().doDamagePercentage(-this.effectValue);
                 }
             } else if (this.statAffected == StatConstants.STAT_CURRENT_MP) {
                 if (this.effectValue >= 0) {
-                    PCManager.getPlayer()
+                    PartyManager.getParty().getLeader()
                             .regeneratePercentage(this.effectValue);
                 } else {
-                    PCManager.getPlayer().drainPercentage(-this.effectValue);
+                    PartyManager.getParty().getLeader().drainPercentage(-this.effectValue);
                 }
             }
         } else {
             if (this.statAffected == StatConstants.STAT_CURRENT_HP) {
                 if (this.effectValue >= 0) {
-                    PCManager.getPlayer().heal(this.effectValue);
+                    PartyManager.getParty().getLeader().heal(this.effectValue);
                 } else {
-                    PCManager.getPlayer().doDamage(-this.effectValue);
+                    PartyManager.getParty().getLeader().doDamage(-this.effectValue);
                 }
             } else if (this.statAffected == StatConstants.STAT_CURRENT_MP) {
                 if (this.effectValue >= 0) {
-                    PCManager.getPlayer().regenerate(this.effectValue);
+                    PartyManager.getParty().getLeader().regenerate(this.effectValue);
                 } else {
-                    PCManager.getPlayer().drain(-this.effectValue);
+                    PartyManager.getParty().getLeader().drain(-this.effectValue);
                 }
             }
         }

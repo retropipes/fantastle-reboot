@@ -24,9 +24,9 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
-import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
-import com.puttysoftware.fantastlereboot.oldcreatures.PlayerCharacter;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class StatGUI {
@@ -51,10 +51,10 @@ public class StatGUI {
     }
 
     public void updateStats() {
-        final PlayerCharacter pc = PCManager.getPlayer();
+        final PartyMember pc = PartyManager.getParty().getLeader();
         this.hpLabel.setText(pc.getHPString());
         this.mpLabel.setText(pc.getMPString());
-        this.mlLabel.setText(Integer.toString(pc.getMonsterLevel()));
+        this.mlLabel.setText(Integer.toString(PartyManager.getParty().getMonsterLevel()));
         this.goldLabel.setText(Integer.toString(pc.getGold()));
         this.attackLabel.setText(Integer.toString(pc.getAttack()));
         this.defenseLabel.setText(Integer.toString(pc.getDefense()));

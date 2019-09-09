@@ -48,9 +48,9 @@ public class LevelLoadTask extends Thread {
             app.getGameManager().disableEvents();
             gameMaze.switchLevelOffset(this.level);
             gameMaze.offsetPlayerLocationW(this.level);
-            PartyManager.getParty().offsetTowerLevel(this.level);
+            PartyManager.getParty().offsetMonsterLevel(this.level);
             AbstractMazeObject.setTemplateColor(ImageColorConstants
-                    .getColorForLevel(PartyManager.getParty().getTowerLevel()));
+                    .getColorForLevel(PartyManager.getParty().getMonsterLevel()));
             app.getGameManager().resetViewingWindow();
             app.getGameManager().enableEvents();
             app.getGameManager().redrawMaze();

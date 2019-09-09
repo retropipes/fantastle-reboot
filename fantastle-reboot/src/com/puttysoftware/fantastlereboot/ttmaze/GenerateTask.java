@@ -85,12 +85,12 @@ public class GenerateTask extends Thread {
                 gameMaze.setPlayerLocationX(startR);
                 gameMaze.setPlayerLocationY(startC);
                 gameMaze.setPlayerLocationZ(startF);
-                PartyManager.getParty().offsetTowerLevel(1);
+                PartyManager.getParty().offsetMonsterLevel(1);
             }
             gameMaze.save();
             // Final cleanup
             AbstractMazeObject.setTemplateColor(ImageColorConstants
-                    .getColorForLevel(PartyManager.getParty().getTowerLevel()));
+                    .getColorForLevel(PartyManager.getParty().getMonsterLevel()));
             if (this.scratch) {
                 app.getGameManager().stateChanged();
                 app.getGameManager().playMaze();

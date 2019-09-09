@@ -23,14 +23,15 @@ import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
+import com.puttysoftware.fantastlereboot.creatures.castes.Caste;
+import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
+import com.puttysoftware.fantastlereboot.creatures.monsters.Monster;
+import com.puttysoftware.fantastlereboot.creatures.monsters.MonsterFactory;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.effects.Effect;
-import com.puttysoftware.fantastlereboot.items.combat.CombatItemManager;
+import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
-import com.puttysoftware.fantastlereboot.oldcreatures.Monster;
-import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
-import com.puttysoftware.fantastlereboot.oldcreatures.PlayerCharacter;
-import com.puttysoftware.fantastlereboot.oldcreatures.castes.Caste;
-import com.puttysoftware.fantastlereboot.oldcreatures.castes.CasteConstants;
 import com.puttysoftware.fantastlereboot.spells.SpellBookManager;
 import com.puttysoftware.randomrange.RandomRange;
 
@@ -149,7 +150,7 @@ public class Battle implements BattleResults, MoveTypes {
 
     protected final boolean doPlayerActions(final int actionToPerform) {
         boolean success = true;
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         if (actionToPerform == AIRoutine.ACTION_ATTACK) {
             final int actions = playerCharacter.getActionsPerRound();
             for (int x = 0; x < actions; x++) {
@@ -204,7 +205,7 @@ public class Battle implements BattleResults, MoveTypes {
                 this.updateMessageAreaDrainFailed();
             }
         } else if (actionToPerform == AIRoutine.ACTION_USE_ITEM) {
-            success = CombatItemManager.selectAndUseItem(playerCharacter);
+            success = CombatItemChucker.selectAndUseItem(playerCharacter);
         }
         return success;
     }
@@ -238,7 +239,7 @@ public class Battle implements BattleResults, MoveTypes {
         // Compute Player Damage
         if (this.result != BattleResults.ENEMY_FLED) {
             this.fumbleDamage = 0;
-            final PlayerCharacter playerCharacter = PCManager.getPlayer();
+            final PartyMember playerCharacter = PartyManager.getParty().getLeader();
             if (Battle.fumble(playerCharacter)) {
                 this.moveType = MoveTypes.FUMBLE;
                 final RandomRange fumDamage = new RandomRange(1,
@@ -292,7 +293,7 @@ public class Battle implements BattleResults, MoveTypes {
         // Compute Enemy Damage
         if (this.result != BattleResults.ENEMY_FLED) {
             this.enemyFumbleDamage = 0;
-            final PlayerCharacter playerCharacter = PCManager.getPlayer();
+            final PartyMember playerCharacter = PartyManager.getParty().getLeader();
             if (Battle.fumble(this.enemy)) {
                 this.enemyMoveType = MoveTypes.FUMBLE;
                 final RandomRange fumDamage = new RandomRange(1,
@@ -351,7 +352,7 @@ public class Battle implements BattleResults, MoveTypes {
     }
 
     protected final void displayBattleStats() {
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         final String enemyName = this.enemy.getName();
         final String fightingWhat = this.enemy.getFightingWhatString();
         final String monsterLevelString = enemyName + "'s Level: "
@@ -512,7 +513,7 @@ public class Battle implements BattleResults, MoveTypes {
                 .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
             SoundLoader.playSound(GameSound.DRAW_SWORD);
         }
-        this.enemy = new Monster();
+        this.enemy = MonsterFactory.getNewMonsterInstance();
         this.iconLabel.setIcon(this.enemy.getImage());
         this.enemyDidDamage = false;
         this.playerDidDamage = false;
@@ -534,8 +535,8 @@ public class Battle implements BattleResults, MoveTypes {
     }
 
     public void doBattleByProxy() {
-        this.enemy = new Monster();
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        this.enemy = MonsterFactory.getNewMonsterInstance();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         final Monster m = (Monster) this.enemy;
         playerCharacter.offsetExperience(m.getExperience());
         playerCharacter.offsetGold(m.getGold());
@@ -555,7 +556,7 @@ public class Battle implements BattleResults, MoveTypes {
     }
 
     protected final int getResult() {
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         int currResult;
         if (this.result != BattleResults.IN_PROGRESS) {
             return this.result;
@@ -581,7 +582,7 @@ public class Battle implements BattleResults, MoveTypes {
     }
 
     protected final void maintainEffects() {
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         playerCharacter.useEffects();
         playerCharacter.cullInactiveEffects();
         this.enemy.useEffects();
@@ -603,7 +604,7 @@ public class Battle implements BattleResults, MoveTypes {
 
     protected final void displayActiveEffects() {
         boolean flag1 = false, flag2 = false, flag3 = false;
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         final String effectString = playerCharacter.getCompleteEffectString();
         final String effectMessages = playerCharacter
                 .getAllCurrentEffectMessages();
@@ -649,10 +650,10 @@ public class Battle implements BattleResults, MoveTypes {
         this.appendToMessageArea("*** Beginning of Round ***\n");
         // Determine initiative
         boolean enemyGotJump = false;
-        if (this.enemy.getSpeed() > PCManager.getPlayer().getSpeed()) {
+        if (this.enemy.getSpeed() > PartyManager.getParty().getLeader().getSpeed()) {
             // Enemy acts first!
             enemyGotJump = true;
-        } else if (this.enemy.getSpeed() < PCManager.getPlayer().getSpeed()) {
+        } else if (this.enemy.getSpeed() < PartyManager.getParty().getLeader().getSpeed()) {
             // You act first!
             enemyGotJump = false;
         } else {
@@ -705,7 +706,7 @@ public class Battle implements BattleResults, MoveTypes {
     }
 
     protected final boolean stealMoney() {
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         final Caste caste = playerCharacter.getCaste();
         final int stealChance = StatConstants.CHANCE_STEAL + caste.getAttribute(
                 CasteConstants.CASTE_ATTRIBUTE_STEAL_SUCCESS_MODIFIER);
@@ -738,7 +739,7 @@ public class Battle implements BattleResults, MoveTypes {
     }
 
     protected final boolean drainEnemy() {
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         final Caste caste = playerCharacter.getCaste();
         final int drainChance = StatConstants.CHANCE_DRAIN + caste.getAttribute(
                 CasteConstants.CASTE_ATTRIBUTE_DRAIN_SUCCESS_MODIFIER);
@@ -782,7 +783,7 @@ public class Battle implements BattleResults, MoveTypes {
     }
 
     protected void doResult() {
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         final Monster m = (Monster) this.enemy;
         if (this.result == BattleResults.WON) {
             this.appendToMessageArea("You gain " + m.getExperience()

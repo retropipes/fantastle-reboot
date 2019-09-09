@@ -5,10 +5,9 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
-import com.puttysoftware.fantastlereboot.oldcreatures.Boss;
-import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
-import com.puttysoftware.fantastlereboot.oldcreatures.PlayerCharacter;
 
 public class BossBattle extends Battle {
     // Fields
@@ -54,7 +53,7 @@ public class BossBattle extends Battle {
 
     @Override
     public void doResult() {
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         this.appendToMessageArea("\n");
         // Cleanup
         playerCharacter.stripAllEffects();

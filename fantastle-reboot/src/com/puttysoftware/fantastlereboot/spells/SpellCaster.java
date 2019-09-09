@@ -3,14 +3,14 @@ Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.ttspells;
+package com.puttysoftware.fantastlereboot.spells;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
-import com.puttysoftware.fantastlereboot.effects.TTEffect;
+import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 
@@ -47,7 +47,7 @@ public class SpellCaster {
             if (casterMP >= cost) {
                 // Cast Spell
                 caster.drain(cost);
-                final TTEffect b = cast.getEffect();
+                final Effect b = cast.getEffect();
                 // Play spell's associated sound effect, if it has one
                 final GameSound snd = cast.getSound();
                 SoundLoader.playSound(snd);
@@ -57,7 +57,7 @@ public class SpellCaster {
                 if (target.isEffectActive(b)) {
                     target.extendEffect(b, b.getInitialRounds());
                 } else {
-                    b.restoreEffect();
+                    b.restoreEffect(target);
                     target.applyEffect(b);
                 }
                 return true;

@@ -25,7 +25,7 @@ public final class InventoryViewer {
         final PartyMember member = PartyManager.getParty().getLeader();
         if (member != null) {
             final String[] invString = member.getItems()
-                    .generateInventoryStringArray();
+                    .generateInventoryStringArray(0);
             CommonDialogs.showInputDialog("Items", title, invString,
                     invString[0]);
         }

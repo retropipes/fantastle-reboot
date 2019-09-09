@@ -19,8 +19,8 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot.objects;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.generic.GenericBoots;
-import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 
 public class MoneyBoots extends GenericBoots {
     // Constants
@@ -53,7 +53,7 @@ public class MoneyBoots extends GenericBoots {
 
     @Override
     public void stepAction() {
-        PCManager.getPlayer().offsetGold(MoneyBoots.GOLD_AMOUNT);
+        PartyManager.getParty().getLeader().offsetGold(MoneyBoots.GOLD_AMOUNT);
         FantastleReboot.getBagOStuff().getGameManager().getScoreTracker()
                 .incrementScore();
     }

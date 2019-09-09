@@ -40,6 +40,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.generic.ArrowTypeConstants;
 import com.puttysoftware.fantastlereboot.generic.GenericMovableObject;
@@ -63,7 +64,6 @@ import com.puttysoftware.fantastlereboot.objects.Wall;
 import com.puttysoftware.fantastlereboot.objects.WallBreakingWand;
 import com.puttysoftware.fantastlereboot.objects.WallMakingWand;
 import com.puttysoftware.fantastlereboot.oldbattle.Battle;
-import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 
 public class GameManager {
     // Fields
@@ -121,7 +121,7 @@ public class GameManager {
         if (this.savedGameFlag) {
             return true;
         } else {
-            return PCManager.createNewPC();
+            return PartyManager.createParty(FantastleReboot.getBagOStuff().getOutputFrame());
         }
     }
 
@@ -1162,7 +1162,7 @@ public class GameManager {
         // Update stats
         this.sg.updateStats();
         // Check for game over
-        if (!PCManager.getPlayer().isAlive()) {
+        if (!PartyManager.getParty().getLeader().isAlive()) {
             this.gameOver();
         }
     }
@@ -1217,7 +1217,7 @@ public class GameManager {
     }
 
     public void resetLevel(final int level) {
-        PCManager.getPlayer().healAndRegenerateFully();
+        PartyManager.getParty().getLeader().healAndRegenerateFully();
         this.deactivateAllEffects();
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
@@ -1290,7 +1290,7 @@ public class GameManager {
     }
 
     public void solvedMaze() {
-        PCManager.getPlayer().healAndRegenerateFully();
+        PartyManager.getParty().getLeader().healAndRegenerateFully();
         this.deactivateAllEffects();
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
@@ -1445,7 +1445,7 @@ public class GameManager {
     }
 
     public void showEquipmentDialog() {
-        final String[] equipString = PCManager.getPlayer().getItems()
+        final String[] equipString = PartyManager.getParty().getLeader().getItems()
                 .generateEquipmentStringArray();
         Messager.showInputDialog("Equipment", "Equipment", equipString,
                 equipString[0]);
@@ -1454,7 +1454,7 @@ public class GameManager {
     public void showInventoryDialog() {
         final String[] inv1String = this.objectInv
                 .generateInventoryStringArray();
-        final String[] inv2String = PCManager.getPlayer().getItems()
+        final String[] inv2String = PartyManager.getParty().getLeader().getItems()
                 .generateInventoryStringArray(inv1String.length);
         final String[] invString = new String[inv1String.length
                 + inv2String.length];

@@ -1,13 +1,13 @@
 package com.puttysoftware.fantastlereboot.oldbattle;
 
 import com.puttysoftware.fantastlereboot.Messager;
-import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
-import com.puttysoftware.fantastlereboot.oldcreatures.PlayerCharacter;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 
 public class BossRewards {
     // Methods
     public void doRewards() {
-        final PlayerCharacter playerCharacter = PCManager.getPlayer();
+        final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         final String[] rewardOptions = { "Attack", "Defense", "HP", "MP" };
         String dialogResult = null;
         while (dialogResult == null) {
@@ -33,6 +33,6 @@ public class BossRewards {
         final int pHP = playerCharacter.getPermanentHPPoints();
         final int pMP = playerCharacter.getPermanentMPPoints();
         final int k = playerCharacter.getKills();
-        PCManager.createNewPCPostKill(pAtk, pDef, pHP, pMP, k);
+        PartyManager.createNewPCPostKill(pAtk, pDef, pHP, pMP, k);
     }
 }

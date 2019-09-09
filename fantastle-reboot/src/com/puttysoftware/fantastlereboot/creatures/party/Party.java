@@ -21,14 +21,14 @@ public class Party {
     private BattleCharacter battlers;
     private int leaderID;
     private int activePCs;
-    private int towerLevel;
+    private int monsterLevel;
 
     // Constructors
     public Party() {
         this.members = null;
         this.leaderID = 0;
         this.activePCs = 0;
-        this.towerLevel = 0;
+        this.monsterLevel = 0;
     }
 
     // Methods
@@ -47,24 +47,32 @@ public class Party {
         return this.members.getToNextLevelValue();
     }
 
-    public int getTowerLevel() {
-        return this.towerLevel;
+    public int getMonsterLevel() {
+        return this.monsterLevel;
     }
 
-    void resetTowerLevel() {
-        this.towerLevel = 0;
+    void resetMonsterLevel() {
+        this.monsterLevel = 0;
     }
 
-    public void offsetTowerLevel(final int offset) {
-        if (this.towerLevel + offset > Maze.getMaxLevels()
-                || this.towerLevel + offset < 0) {
+    public void decrementMonsterLevel() {
+        this.offsetMonsterLevel(-1);
+    }
+
+    public void incrementMonsterLevel() {
+        this.offsetMonsterLevel(1);
+    }
+
+    public void offsetMonsterLevel(final int offset) {
+        if (this.monsterLevel + offset > Maze.getMaxLevels()
+                || this.monsterLevel + offset < 0) {
             return;
         }
-        this.towerLevel += offset;
+        this.monsterLevel += offset;
     }
 
-    public String getTowerLevelString() {
-        return "Tower Level: " + (this.towerLevel + 1);
+    public String getMonsterLevelString() {
+        return "Monster Level: " + (this.monsterLevel + 1);
     }
 
     public PartyMember getLeader() {
@@ -103,7 +111,7 @@ public class Party {
         final Party pty = new Party();
         pty.leaderID = lid;
         pty.activePCs = apc;
-        pty.towerLevel = lvl;
+        pty.monsterLevel = lvl;
         final boolean present = worldFile.readBoolean();
         if (present) {
             pty.members = PartyMember.read(worldFile);
@@ -115,7 +123,7 @@ public class Party {
         worldFile.writeInt(1);
         worldFile.writeInt(this.leaderID);
         worldFile.writeInt(this.activePCs);
-        worldFile.writeInt(this.towerLevel);
+        worldFile.writeInt(this.monsterLevel);
         if (this.members == null) {
             worldFile.writeBoolean(false);
         } else {

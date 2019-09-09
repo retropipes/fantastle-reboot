@@ -3,7 +3,7 @@ package com.puttysoftware.fantastlereboot.loaders;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.puttysoftware.fantastlereboot.oldcreatures.castes.CasteConstants;
+import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
 import com.puttysoftware.fantastlereboot.oldcreatures.faiths.FaithConstants;
 import com.puttysoftware.fantastlereboot.oldcreatures.genders.GenderConstants;
 import com.puttysoftware.fantastlereboot.oldcreatures.personalities.PersonalityConstants;

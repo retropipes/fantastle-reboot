@@ -14,10 +14,10 @@ import com.puttysoftware.fantastlereboot.ai.window.WindowAIRoutinePicker;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
-import com.puttysoftware.fantastlereboot.ttspells.SpellBook;
+import com.puttysoftware.fantastlereboot.spells.SpellBook;
 import com.puttysoftware.randomrange.RandomRange;
 
-public abstract class AbstractMonster extends Creature {
+public abstract class Monster extends Creature {
     // Fields
     private String type;
     protected Element element;
@@ -29,10 +29,10 @@ public abstract class AbstractMonster extends Creature {
     private static final int BATTLES_START = 2;
 
     // Constructors
-    AbstractMonster() {
+    Monster() {
         super(true, 1);
-        this.setWindowAI(AbstractMonster.getInitialWindowAI());
-        this.setMapAI(AbstractMonster.getInitialMapAI());
+        this.setWindowAI(Monster.getInitialWindowAI());
+        this.setMapAI(Monster.getInitialMapAI());
         this.element = new Element(FaithManager.getFaith(0));
         final SpellBook spells = new SystemMonsterSpellBook();
         spells.learnAllSpells();
@@ -63,8 +63,8 @@ public abstract class AbstractMonster extends Creature {
     @Override
     protected final int getInitialPerfectBonusGold() {
         final int tough = this.getToughness();
-        final int min = tough * AbstractMonster.PERFECT_GOLD_MIN;
-        final int max = tough * AbstractMonster.PERFECT_GOLD_MAX;
+        final int min = tough * Monster.PERFECT_GOLD_MIN;
+        final int max = tough * Monster.PERFECT_GOLD_MAX;
         final RandomRange r = new RandomRange(min, max);
         return (int) (r.generate() * this.adjustForLevelDifference());
     }
@@ -149,10 +149,10 @@ public abstract class AbstractMonster extends Creature {
         if (!super.equals(obj)) {
             return false;
         }
-        if (!(obj instanceof AbstractMonster)) {
+        if (!(obj instanceof Monster)) {
             return false;
         }
-        final AbstractMonster other = (AbstractMonster) obj;
+        final Monster other = (Monster) obj;
         if (this.element == null) {
             if (other.element != null) {
                 return false;
@@ -171,7 +171,7 @@ public abstract class AbstractMonster extends Creature {
     }
 
     protected final int getBattlesToNextLevel() {
-        return AbstractMonster.BATTLES_START + (this.getLevel() + 1)
-                * AbstractMonster.BATTLES_SCALE_FACTOR;
+        return Monster.BATTLES_START + (this.getLevel() + 1)
+                * Monster.BATTLES_SCALE_FACTOR;
     }
 }

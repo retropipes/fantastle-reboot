@@ -21,11 +21,11 @@ public class MusicConstants {
 
     public static int getMusicID(final int ID) {
         if (ID == MUSIC_EXPLORING) {
-            final int nID = PartyManager.getParty().getTowerLevel()
+            final int nID = PartyManager.getParty().getMonsterLevel()
                     / DIVIDE_BASE;
             return nID + OFFSET_EXPLORING;
         } else if (ID == MUSIC_BATTLE) {
-            final int nID = PartyManager.getParty().getTowerLevel()
+            final int nID = PartyManager.getParty().getMonsterLevel()
                     / DIVIDE_BASE;
             if (FantastleReboot.getBagOStuff().getPrefsManager().useMapBattleEngine()) {
                 return nID + OFFSET_MAP_BATTLE;
@@ -39,11 +39,11 @@ public class MusicConstants {
 
     static String getMusicName(final int ID) {
         if (ID == MUSIC_EXPLORING) {
-            final int nID = PartyManager.getParty().getTowerLevel()
+            final int nID = PartyManager.getParty().getMonsterLevel()
                     / DIVIDE_BASE;
             return MUSIC_NAMES[nID + OFFSET_EXPLORING];
         } else if (ID == MUSIC_BATTLE) {
-            final int nID = PartyManager.getParty().getTowerLevel()
+            final int nID = PartyManager.getParty().getMonsterLevel()
                     / DIVIDE_BASE;
             if (FantastleReboot.getBagOStuff().getPrefsManager().useMapBattleEngine()) {
                 return MUSIC_NAMES[nID + OFFSET_MAP_BATTLE];

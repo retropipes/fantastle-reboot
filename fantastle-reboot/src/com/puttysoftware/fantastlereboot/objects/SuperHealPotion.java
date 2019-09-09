@@ -19,8 +19,8 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot.objects;
 
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.generic.GenericPotion;
-import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 
 public class SuperHealPotion extends GenericPotion {
     // Constructors
@@ -45,7 +45,7 @@ public class SuperHealPotion extends GenericPotion {
 
     @Override
     public int getEffectValue() {
-        return PCManager.getPlayer().getMaximumHP();
+        return PartyManager.getParty().getLeader().getMaximumHP();
     }
 
     @Override

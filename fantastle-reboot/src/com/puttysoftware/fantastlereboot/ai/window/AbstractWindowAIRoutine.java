@@ -1,7 +1,7 @@
 package com.puttysoftware.fantastlereboot.ai.window;
 
 import com.puttysoftware.fantastlereboot.creatures.Creature;
-import com.puttysoftware.fantastlereboot.ttspells.Spell;
+import com.puttysoftware.fantastlereboot.spells.Spell;
 
 public abstract class AbstractWindowAIRoutine {
     // Fields

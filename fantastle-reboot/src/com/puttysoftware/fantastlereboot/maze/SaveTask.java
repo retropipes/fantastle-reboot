@@ -23,9 +23,9 @@ import java.io.IOException;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.legacyio.DataConstants;
 import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
-import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 
 public class SaveTask extends Thread {
     // Fields
@@ -66,7 +66,7 @@ public class SaveTask extends Thread {
             app.getMazeManager().getMaze().writeMaze(mazeFile);
             if (this.isSavedGame) {
                 app.getGameManager().saveGameHook(mazeFile);
-                PCManager.saveGameHook(mazeFile);
+                PartyManager.saveGameHook(mazeFile);
             } else {
                 app.getGameManager().validateScore();
             }

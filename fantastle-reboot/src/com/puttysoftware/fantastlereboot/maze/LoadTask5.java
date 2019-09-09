@@ -23,9 +23,9 @@ import java.io.IOException;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.legacyio.DataConstants;
 import com.puttysoftware.fantastlereboot.legacyio.DataReader;
-import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 
 public class LoadTask5 extends Thread {
     // Fields
@@ -79,7 +79,7 @@ public class LoadTask5 extends Thread {
                 if (this.isSavedGame) {
                     app.getGameManager().loadGameHook(mazeFile,
                             FormatConstants.MAZE_FORMAT_5);
-                    PCManager.loadGameHook(mazeFile);
+                    PartyManager.loadGameHook(mazeFile);
                 }
                 mazeFile.close();
                 startW = this.gameMaze.getStartLevel();

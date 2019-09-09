@@ -15,7 +15,7 @@ import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.loaders.older.BossImageManager;
-import com.puttysoftware.fantastlereboot.ttspells.SpellBook;
+import com.puttysoftware.fantastlereboot.spells.SpellBook;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.randomrange.RandomRange;
 
@@ -109,7 +109,7 @@ public class BossMonster extends Creature {
     // Helper Methods
     @Override
     public void loadCreature() {
-        final int newLevel = PartyManager.getParty().getTowerLevel() + 6;
+        final int newLevel = PartyManager.getParty().getMonsterLevel() + 6;
         this.setLevel(newLevel);
         this.setVitality(this.getInitialVitality());
         this.setCurrentHP(this.getMaximumHP());

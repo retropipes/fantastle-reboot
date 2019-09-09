@@ -18,8 +18,8 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.objects;
 
+import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.generic.GenericBoots;
-import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 
 public class HealBoots extends GenericBoots {
     // Constants
@@ -52,6 +52,6 @@ public class HealBoots extends GenericBoots {
 
     @Override
     public void stepAction() {
-        PCManager.getPlayer().heal(HealBoots.HEAL_AMOUNT);
+        PartyManager.getParty().getLeader().heal(HealBoots.HEAL_AMOUNT);
     }
 }

@@ -19,8 +19,8 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot.objects;
 
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.generic.GenericPotion;
-import com.puttysoftware.fantastlereboot.oldcreatures.PCManager;
 
 public class SuperDrainPotion extends GenericPotion {
     // Constructors
@@ -45,7 +45,7 @@ public class SuperDrainPotion extends GenericPotion {
 
     @Override
     public int getEffectValue() {
-        return -PCManager.getPlayer().getCurrentMP();
+        return -PartyManager.getParty().getLeader().getCurrentMP();
     }
 
     @Override

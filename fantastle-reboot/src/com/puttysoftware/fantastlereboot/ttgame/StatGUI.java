@@ -50,7 +50,7 @@ class StatGUI {
                 this.attackLabel.setText(Integer.toString(pc.getAttack()));
                 this.defenseLabel.setText(Integer.toString(pc.getDefense()));
                 this.xpLabel.setText(pc.getXPString());
-                this.levelLabel.setText(party.getTowerLevelString());
+                this.levelLabel.setText(party.getMonsterLevelString());
             }
         }
     }

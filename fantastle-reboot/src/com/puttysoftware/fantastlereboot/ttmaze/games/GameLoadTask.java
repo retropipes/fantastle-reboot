@@ -88,7 +88,7 @@ public class GameLoadTask extends Thread {
             // Final cleanup
             app.getGameManager().stateChanged();
             AbstractMazeObject.setTemplateColor(ImageColorConstants
-                    .getColorForLevel(PartyManager.getParty().getTowerLevel()));
+                    .getColorForLevel(PartyManager.getParty().getMonsterLevel()));
             app.getMazeManager().setLoaded(true);
             CommonDialogs.showDialog(sg + " loaded.");
             app.getGameManager().playMaze();
