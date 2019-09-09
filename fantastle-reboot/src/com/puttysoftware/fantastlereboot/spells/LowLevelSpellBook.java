@@ -24,7 +24,7 @@ public class LowLevelSpellBook extends SpellBook {
         spell0Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "You are no longer poisoned!");
         final Spell spell0 = new Spell(spell0Effect, 1, BattleTarget.ENEMY);
-        this.spells[0] = spell0;
+        this.addKnownSpell(spell0);
         final HealingEffect spell1Effect = new HealingEffect("Minor Recover", 3,
                 1, Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE,
                 Effect.DEFAULT_DECAY_RATE);
@@ -33,7 +33,7 @@ public class LowLevelSpellBook extends SpellBook {
         spell1Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "The enemy regains a little health!");
         final Spell spell1 = new Spell(spell1Effect, 1, BattleTarget.SELF);
-        this.spells[1] = spell1;
+        this.addKnownSpell(spell1);
         final Effect spell2Effect = new Effect("Minor Weapon Drain", 3);
         spell2Effect.setAffectedStat(StatConstants.STAT_ATTACK);
         spell2Effect.setEffect(Effect.EFFECT_MULTIPLY, 0.9,
@@ -45,7 +45,7 @@ public class LowLevelSpellBook extends SpellBook {
         spell2Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "Your weapon's power has returned!");
         final Spell spell2 = new Spell(spell2Effect, 2, BattleTarget.ENEMY);
-        this.spells[2] = spell2;
+        this.addKnownSpell(spell2);
         final Effect spell3Effect = new Effect("Minor Armor Drain", 3);
         spell3Effect.setAffectedStat(StatConstants.STAT_DEFENSE);
         spell3Effect.setEffect(Effect.EFFECT_MULTIPLY, 0.9,
@@ -57,7 +57,7 @@ public class LowLevelSpellBook extends SpellBook {
         spell3Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "Your armor's power has returned!");
         final Spell spell3 = new Spell(spell3Effect, 2, BattleTarget.ENEMY);
-        this.spells[3] = spell3;
+        this.addKnownSpell(spell3);
         final Effect spell4Effect = new Effect("Minor Weapon Charge", 3);
         spell4Effect.setAffectedStat(StatConstants.STAT_ATTACK);
         spell4Effect.setEffect(Effect.EFFECT_MULTIPLY, 1.1,
@@ -69,7 +69,7 @@ public class LowLevelSpellBook extends SpellBook {
         spell4Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "The enemy's weapon returns to normal!");
         final Spell spell4 = new Spell(spell4Effect, 4, BattleTarget.SELF);
-        this.spells[4] = spell4;
+        this.addKnownSpell(spell4);
         final Effect spell5Effect = new Effect("Minor Armor Charge", 3);
         spell5Effect.setAffectedStat(StatConstants.STAT_DEFENSE);
         spell5Effect.setEffect(Effect.EFFECT_MULTIPLY, 0.9,
@@ -81,7 +81,7 @@ public class LowLevelSpellBook extends SpellBook {
         spell5Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "The enemy's armor returns to normal!");
         final Spell spell5 = new Spell(spell5Effect, 4, BattleTarget.SELF);
-        this.spells[5] = spell5;
+        this.addKnownSpell(spell5);
     }
 
     @Override

@@ -8,13 +8,13 @@ package com.puttysoftware.fantastlereboot.spells;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class SpellBook {
+public abstract class SpellBook {
     // Fields
     private final ArrayList<Spell> spells;
     private final ArrayList<Boolean> known;
 
     // Constructors
-    protected SpellBook(final String bookName) {
+    protected SpellBook() {
         super();
         this.spells = new ArrayList<>();
         this.known = new ArrayList<>();
@@ -29,6 +29,8 @@ public class SpellBook {
         this.spells.add(sp);
         this.known.add(false);
     }
+
+    public abstract int getID();
 
     public final int getSpellCount() {
         return this.spells.size();

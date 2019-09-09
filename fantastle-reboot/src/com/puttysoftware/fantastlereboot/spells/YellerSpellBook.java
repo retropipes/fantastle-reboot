@@ -9,7 +9,7 @@ import com.puttysoftware.fantastlereboot.effects.Effect;
 public class YellerSpellBook extends SpellBook {
     // Constructor
     public YellerSpellBook() {
-        super(6);
+        super();
     }
 
     @Override
@@ -21,7 +21,7 @@ public class YellerSpellBook extends SpellBook {
         spell0Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "The enemy loses some MP!");
         final Spell spell0 = new Spell(spell0Effect, 1, BattleTarget.ENEMY, "drain");
-        this.spells[0] = spell0;
+        this.addKnownSpell(spell0);
         final Effect spell1Effect = new Effect("Sneak Attack", 5);
         spell1Effect.setAffectedStat(StatConstants.STAT_DEFENSE);
         spell1Effect.setEffect(Effect.EFFECT_MULTIPLY, 0.5,
@@ -33,7 +33,7 @@ public class YellerSpellBook extends SpellBook {
         spell1Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "The enemy spots you, and turns around!");
         final Spell spell1 = new Spell(spell1Effect, 2, BattleTarget.ENEMY, "bind");
-        this.spells[1] = spell1;
+        this.addKnownSpell(spell1);
         final Effect spell2Effect = new Effect("Weapon Steal", 5);
         spell2Effect.setAffectedStat(StatConstants.STAT_ATTACK);
         spell2Effect.setEffect(Effect.EFFECT_MULTIPLY, 0.5,
@@ -45,7 +45,7 @@ public class YellerSpellBook extends SpellBook {
         spell2Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "The enemy finds their weapon, and reclaims it!");
         final Spell spell2 = new Spell(spell2Effect, 4, BattleTarget.ENEMY, "bind");
-        this.spells[2] = spell2;
+        this.addKnownSpell(spell2);
         final Effect spell3Effect = new Effect("Glowing Armor", 5);
         spell3Effect.setAffectedStat(StatConstants.STAT_DEFENSE);
         spell3Effect.setEffect(Effect.EFFECT_MULTIPLY, 3,
@@ -56,7 +56,7 @@ public class YellerSpellBook extends SpellBook {
                 "Your defense is increased!");
         spell3Effect.setMessage(Effect.MESSAGE_WEAR_OFF, "The glow fades!");
         final Spell spell3 = new Spell(spell3Effect, 7, BattleTarget.SELF, "defense");
-        this.spells[3] = spell3;
+        this.addKnownSpell(spell3);
         final Effect spell4Effect = new Effect("Hardened Armor", 5);
         spell4Effect.setAffectedStat(StatConstants.STAT_ATTACK);
         spell4Effect.setEffect(Effect.EFFECT_MULTIPLY, 10,
@@ -68,7 +68,7 @@ public class YellerSpellBook extends SpellBook {
         spell4Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "Your armor returns to normal!");
         final Spell spell4 = new Spell(spell4Effect, 10, BattleTarget.SELF, "defense");
-        this.spells[4] = spell4;
+        this.addKnownSpell(spell4);
         final DamageEffect spell5Effect = new DamageEffect("Weakness Strike", 1,
                 1, 0.8, StatConstants.STAT_CURRENT_HP,
                 Effect.DEFAULT_DECAY_RATE);
@@ -77,7 +77,7 @@ public class YellerSpellBook extends SpellBook {
         spell5Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "The enemy, caught off-guard by the attack, loses a LOT of health!");
         final Spell spell5 = new Spell(spell5Effect, 20, BattleTarget.ENEMY, "weakness");
-        this.spells[5] = spell5;
+        this.addKnownSpell(spell5);
     }
 
     @Override

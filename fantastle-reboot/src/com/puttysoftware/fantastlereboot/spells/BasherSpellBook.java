@@ -8,7 +8,7 @@ import com.puttysoftware.fantastlereboot.effects.Effect;
 public class BasherSpellBook extends SpellBook {
     // Constructor
     public BasherSpellBook() {
-        super(6);
+        super();
     }
 
     @Override
@@ -22,7 +22,7 @@ public class BasherSpellBook extends SpellBook {
         spell0Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "The enemy is no longer poisoned!");
         final Spell spell0 = new Spell(spell0Effect, 1, BattleTarget.ENEMY, "slime");
-        this.spells[0] = spell0;
+        this.addKnownSpell(spell0);
         final Effect spell1Effect = new Effect("Turtle Shell", 5);
         spell1Effect.setAffectedStat(StatConstants.STAT_DEFENSE);
         spell1Effect.setEffect(Effect.EFFECT_MULTIPLY, 1.5,
@@ -34,7 +34,7 @@ public class BasherSpellBook extends SpellBook {
         spell1Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "The shell has dissipated!");
         final Spell spell1 = new Spell(spell1Effect, 1, BattleTarget.SELF, "defense");
-        this.spells[1] = spell1;
+        this.addKnownSpell(spell1);
         final Effect spell2Effect = new Effect("Charged Up", 5);
         spell2Effect.setAffectedStat(StatConstants.STAT_ATTACK);
         spell2Effect.setEffect(Effect.EFFECT_MULTIPLY, 3,
@@ -46,7 +46,7 @@ public class BasherSpellBook extends SpellBook {
         spell2Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "The charge has dissipated!");
         final Spell spell2 = new Spell(spell2Effect, 2, BattleTarget.SELF, "attack");
-        this.spells[2] = spell2;
+        this.addKnownSpell(spell2);
         final DamageEffect spell3Effect = new DamageEffect("Ghostly Axe", 20, 5,
                 Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE, 4.0);
         spell3Effect.setMessage(Effect.MESSAGE_INITIAL,
@@ -55,7 +55,7 @@ public class BasherSpellBook extends SpellBook {
                 "The axe attacks the enemy, hurting it somewhat!");
         spell3Effect.setMessage(Effect.MESSAGE_WEAR_OFF, "The axe disappears!");
         final Spell spell3 = new Spell(spell3Effect, 4, BattleTarget.ENEMY, "ghostaxe");
-        this.spells[3] = spell3;
+        this.addKnownSpell(spell3);
         final Effect spell4Effect = new Effect("Armor Bind", 5);
         spell4Effect.setAffectedStat(StatConstants.STAT_DEFENSE);
         spell4Effect.setEffect(Effect.EFFECT_MULTIPLY, 0,
@@ -66,7 +66,7 @@ public class BasherSpellBook extends SpellBook {
                 "The enemy is unable to defend!");
         spell4Effect.setMessage(Effect.MESSAGE_WEAR_OFF, "The binding breaks!");
         final Spell spell4 = new Spell(spell4Effect, 7, BattleTarget.ENEMY, "bind");
-        this.spells[4] = spell4;
+        this.addKnownSpell(spell4);
         final Effect spell5Effect = new Effect("Supercharged", 10);
         spell5Effect.setAffectedStat(StatConstants.STAT_ATTACK);
         spell5Effect.setEffect(Effect.EFFECT_MULTIPLY, 10,
@@ -78,11 +78,6 @@ public class BasherSpellBook extends SpellBook {
         spell5Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "The supercharge has dissipated!");
         final Spell spell5 = new Spell(spell5Effect, 10, BattleTarget.SELF, "attack");
-        this.spells[5] = spell5;
-    }
-
-    @Override
-    public int getID() {
-        return 2;
+        this.addKnownSpell(spell5);
     }
 }
