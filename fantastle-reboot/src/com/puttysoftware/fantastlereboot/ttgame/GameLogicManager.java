@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.older.ImageTransformer;
 import com.puttysoftware.fantastlereboot.ttmain.Application;
@@ -18,7 +19,6 @@ import com.puttysoftware.fantastlereboot.ttmaze.GenerateTask;
 import com.puttysoftware.fantastlereboot.ttmaze.Maze;
 import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.ttmaze.effects.MazeEffectManager;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Empty;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.EmptyVoid;
 
@@ -28,13 +28,13 @@ public final class GameLogicManager {
     private final GameViewingWindowManager vwMgr;
     private boolean stateChanged;
     private final GameGUIManager gui;
-    private final MazeEffectManager em;
+    private final EffectManager em;
     private final MovementTask mt;
 
     // Constructors
     public GameLogicManager() {
         this.vwMgr = new GameViewingWindowManager();
-        this.em = new MazeEffectManager();
+        this.em = new EffectManager();
         this.gui = new GameGUIManager();
         this.mt = new MovementTask(this.vwMgr, this.em, this.gui);
         this.mt.start();
@@ -92,7 +92,7 @@ public final class GameLogicManager {
     }
 
     public void activateEffect(final int effectID) {
-        this.em.activateEffect(effectID);
+        this.em.activateEffect(effectID, -1);
     }
 
     public void setStatusMessage(final String msg) {

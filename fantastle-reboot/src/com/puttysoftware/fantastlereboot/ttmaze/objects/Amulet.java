@@ -6,12 +6,12 @@ Any questions should be directed to the author via email at: TallerTower@worldwi
 package com.puttysoftware.fantastlereboot.ttmaze.objects;
 
 import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.older.ObjectImageConstants;
 import com.puttysoftware.fantastlereboot.ttgame.GameLogicManager;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractTrap;
-import com.puttysoftware.fantastlereboot.ttmaze.effects.MazeEffectConstants;
 
 public class Amulet extends AbstractTrap {
     // Constructors
@@ -34,7 +34,7 @@ public class Amulet extends AbstractTrap {
         TallerTower.getApplication().showMessage("You no longer slide on ice!");
         final GameLogicManager glm = TallerTower.getApplication()
                 .getGameManager();
-        glm.activateEffect(MazeEffectConstants.EFFECT_STICKY);
+        glm.activateEffect(EffectConstants.EFFECT_STICKY);
         SoundLoader.playSound(GameSound.GRAB);
         GameLogicManager.decay();
     }

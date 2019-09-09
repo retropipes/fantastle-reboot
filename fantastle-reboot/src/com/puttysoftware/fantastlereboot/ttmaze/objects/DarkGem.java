@@ -6,13 +6,13 @@ Any questions should be directed to the author via email at: TallerTower@worldwi
 package com.puttysoftware.fantastlereboot.ttmaze.objects;
 
 import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.older.ObjectImageConstants;
 import com.puttysoftware.fantastlereboot.ttgame.GameLogicManager;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.Maze;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMPModifier;
-import com.puttysoftware.fantastlereboot.ttmaze.effects.MazeEffectConstants;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class DarkGem extends AbstractMPModifier {
@@ -45,7 +45,7 @@ public class DarkGem extends AbstractMPModifier {
     public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
         TallerTower.getApplication().showMessage("Your power withers!");
         TallerTower.getApplication().getGameManager()
-                .activateEffect(MazeEffectConstants.EFFECT_POWER_WITHER);
+                .activateEffect(EffectConstants.EFFECT_POWER_WITHER);
         SoundLoader.playSound(GameSound.FOCUS);
         GameLogicManager.decay();
     }

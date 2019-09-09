@@ -29,4 +29,7 @@ public class EffectConstants {
     public static final int EFFECT_CONFUSED = 3;
     public static final int EFFECT_DIZZY = 4;
     public static final int EFFECT_DRUNK = 5;
+    public static final int EFFECT_STICKY = 6;
+    public static final int EFFECT_POWER_GATHER = 7;
+    public static final int EFFECT_POWER_WITHER = 8;
 }

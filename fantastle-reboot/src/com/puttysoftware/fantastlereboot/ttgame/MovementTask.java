@@ -9,14 +9,14 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.effects.EffectConstants;
+import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.ttmain.Application;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.Maze;
 import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.ttmaze.effects.MazeEffectConstants;
-import com.puttysoftware.fantastlereboot.ttmaze.effects.MazeEffectManager;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Empty;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Wall;
 import com.puttysoftware.fantastlereboot.ttmaze.utilities.TypeConstants;
@@ -25,7 +25,7 @@ final class MovementTask extends Thread {
     // Fields
     private final GameViewingWindowManager vwMgr;
     private final GameGUIManager gui;
-    private final MazeEffectManager em;
+    private final EffectManager em;
     private AbstractMazeObject saved;
     private boolean proceed;
     private boolean relative;
@@ -33,7 +33,7 @@ final class MovementTask extends Thread {
 
     // Constructors
     public MovementTask(final GameViewingWindowManager view,
-            final MazeEffectManager effect, final GameGUIManager gameGUI) {
+            final EffectManager effect, final GameGUIManager gameGUI) {
         this.setName("Movement Handler");
         this.vwMgr = view;
         this.em = effect;
@@ -259,7 +259,7 @@ final class MovementTask extends Thread {
             final AbstractMazeObject nextBelow,
             final AbstractMazeObject nextAbove) {
         return this.proceed
-                && !this.em.isEffectActive(MazeEffectConstants.EFFECT_STICKY)
+                && !this.em.isEffectActive(EffectConstants.EFFECT_STICKY)
                 && !nextBelow.hasFriction()
                 && MovementTask.checkSolid(this.saved, below, nextBelow,
                         nextAbove);

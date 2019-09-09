@@ -6,11 +6,11 @@ Any questions should be directed to the author via email at: TallerTower@worldwi
 package com.puttysoftware.fantastlereboot.ttmaze.objects;
 
 import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.older.ObjectImageConstants;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractTrap;
-import com.puttysoftware.fantastlereboot.ttmaze.effects.MazeEffectConstants;
 
 public class ConfusionTrap extends AbstractTrap {
     // Constructors
@@ -32,7 +32,7 @@ public class ConfusionTrap extends AbstractTrap {
     public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
         TallerTower.getApplication().showMessage("You are confused!");
         TallerTower.getApplication().getGameManager()
-                .activateEffect(MazeEffectConstants.EFFECT_CONFUSED);
+                .activateEffect(EffectConstants.EFFECT_CONFUSED);
         SoundLoader.playSound(GameSound.CONFUSED);
     }
 

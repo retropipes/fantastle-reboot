@@ -6,11 +6,11 @@ Any questions should be directed to the author via email at: TallerTower@worldwi
 package com.puttysoftware.fantastlereboot.ttmaze.objects;
 
 import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.older.ObjectImageConstants;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractTrap;
-import com.puttysoftware.fantastlereboot.ttmaze.effects.MazeEffectConstants;
 
 public class DrunkTrap extends AbstractTrap {
     // Constructors
@@ -33,7 +33,7 @@ public class DrunkTrap extends AbstractTrap {
         TallerTower.getApplication().showMessage(
                 "You stumble around drunkenly!");
         TallerTower.getApplication().getGameManager()
-                .activateEffect(MazeEffectConstants.EFFECT_DRUNK);
+                .activateEffect(EffectConstants.EFFECT_DRUNK);
         SoundLoader.playSound(GameSound.DRUNK);
     }
 

@@ -22,6 +22,7 @@ import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.loaders.older.ImageTransformer;
 import com.puttysoftware.fantastlereboot.loaders.older.MusicConstants;
 import com.puttysoftware.fantastlereboot.loaders.older.MusicManager;
@@ -33,7 +34,6 @@ import com.puttysoftware.fantastlereboot.ttmaze.Maze;
 import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.MazeManager;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.ttmaze.effects.MazeEffectManager;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Darkness;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.EmptyVoid;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.MazeNoteObject;
@@ -88,7 +88,7 @@ class GameGUIManager {
         }
     }
 
-    void viewingWindowSizeChanged(final MazeEffectManager em) {
+    void viewingWindowSizeChanged(final EffectManager em) {
         this.setUpGUI();
         this.updateGameGUI(em);
         this.deferredRedraw = true;
@@ -144,7 +144,7 @@ class GameGUIManager {
         this.messageLabel.setText(msg);
     }
 
-    private void resetBorderPane(final MazeEffectManager em) {
+    private void resetBorderPane(final EffectManager em) {
         this.borderPane.removeAll();
         this.borderPane.add(this.outputPane, BorderLayout.CENTER);
         this.borderPane.add(this.messageLabel, BorderLayout.NORTH);
@@ -266,7 +266,7 @@ class GameGUIManager {
         this.knm = true;
     }
 
-    void updateGameGUI(final MazeEffectManager em) {
+    void updateGameGUI(final EffectManager em) {
         this.resetBorderPane(em);
         this.sg.updateImages();
         this.sg.updateStats();
