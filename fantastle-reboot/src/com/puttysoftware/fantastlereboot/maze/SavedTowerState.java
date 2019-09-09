@@ -22,8 +22,8 @@ import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
-import com.puttysoftware.fantastlereboot.legacyio.DataReader;
-import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
+import com.puttysoftware.xio.XDataReader;
+import com.puttysoftware.xio.XDataWriter;
 
 class SavedTowerState {
     // Properties
@@ -66,7 +66,7 @@ class SavedTowerState {
         this.saveData[x][y][z][e] = newData;
     }
 
-    public void writeSavedTowerState(final DataWriter writer)
+    public void writeSavedTowerState(final XDataWriter writer)
             throws IOException {
         int x, y, z, e;
         writer.writeInt(this.c);
@@ -83,7 +83,7 @@ class SavedTowerState {
         }
     }
 
-    public static SavedTowerState readSavedTowerState(final DataReader reader,
+    public static SavedTowerState readSavedTowerState(final XDataReader reader,
             final int formatVersion) throws IOException {
         int x, y, z, e, sizeX, sizeY, sizeZ;
         sizeX = reader.readInt();

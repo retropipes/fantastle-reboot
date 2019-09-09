@@ -22,10 +22,10 @@ import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
-import com.puttysoftware.fantastlereboot.legacyio.DataReader;
-import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
 import com.puttysoftware.fantastlereboot.objects.Monster;
 import com.puttysoftware.fantastlereboot.objects.MovingBlock;
+import com.puttysoftware.xio.XDataReader;
+import com.puttysoftware.xio.XDataWriter;
 
 public class Maze5 implements Maze {
     // Properties
@@ -496,7 +496,7 @@ public class Maze5 implements Maze {
     }
 
     @Override
-    public Maze readMaze(final DataReader reader, final int formatVersion)
+    public Maze readMaze(final XDataReader reader, final int formatVersion)
             throws IOException {
         final int levels = reader.readInt();
         final Maze5 m = new Maze5();
@@ -517,7 +517,7 @@ public class Maze5 implements Maze {
     }
 
     @Override
-    public void readSavedMazeState(final DataReader reader,
+    public void readSavedMazeState(final XDataReader reader,
             final int formatVersion) throws IOException {
         for (int x = 0; x < this.levelCount; x++) {
             this.mazeData[x].readSavedTowerState(reader, formatVersion);
@@ -525,7 +525,7 @@ public class Maze5 implements Maze {
     }
 
     @Override
-    public void writeMaze(final DataWriter writer) throws IOException {
+    public void writeMaze(final XDataWriter writer) throws IOException {
         writer.writeInt(this.levelCount);
         for (int x = 0; x < this.levelCount; x++) {
             this.mazeData[x].writeLayeredTower(writer);
@@ -535,7 +535,7 @@ public class Maze5 implements Maze {
     }
 
     @Override
-    public void writeSavedMazeState(final DataWriter writer)
+    public void writeSavedMazeState(final XDataWriter writer)
             throws IOException {
         for (int x = 0; x < this.levelCount; x++) {
             this.mazeData[x].writeSavedTowerState(writer);

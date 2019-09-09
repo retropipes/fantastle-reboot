@@ -23,8 +23,6 @@ import java.io.IOException;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
 import com.puttysoftware.fantastlereboot.generic.TypeConstants;
-import com.puttysoftware.fantastlereboot.legacyio.DataReader;
-import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
 import com.puttysoftware.fantastlereboot.objects.BarrierGenerator;
 import com.puttysoftware.fantastlereboot.objects.Empty;
 import com.puttysoftware.fantastlereboot.objects.IcedBarrierGenerator;
@@ -33,6 +31,8 @@ import com.puttysoftware.fantastlereboot.objects.Monster;
 import com.puttysoftware.fantastlereboot.objects.MovingBlock;
 import com.puttysoftware.fantastlereboot.oldbattle.Battle;
 import com.puttysoftware.randomrange.RandomRange;
+import com.puttysoftware.xio.XDataReader;
+import com.puttysoftware.xio.XDataWriter;
 
 class LayeredTower {
     // Properties
@@ -982,7 +982,7 @@ class LayeredTower {
         return this.thirdDimensionWraparoundEnabled;
     }
 
-    public void writeLayeredTower(final DataWriter writer) throws IOException {
+    public void writeLayeredTower(final XDataWriter writer) throws IOException {
         int x, y, z, e;
         writer.writeInt(this.getColumns());
         writer.writeInt(this.getRows());
@@ -1005,7 +1005,7 @@ class LayeredTower {
         writer.writeBoolean(this.thirdDimensionWraparoundEnabled);
     }
 
-    public static LayeredTower readLayeredTower(final DataReader reader,
+    public static LayeredTower readLayeredTower(final XDataReader reader,
             final int formatVersion) throws IOException {
         int x, y, z, e, mazeSizeX, mazeSizeY, mazeSizeZ;
         mazeSizeX = reader.readInt();
@@ -1044,12 +1044,12 @@ class LayeredTower {
         return lt;
     }
 
-    public void writeSavedTowerState(final DataWriter writer)
+    public void writeSavedTowerState(final XDataWriter writer)
             throws IOException {
         this.savedTowerState.writeSavedTowerState(writer);
     }
 
-    public void readSavedTowerState(final DataReader reader,
+    public void readSavedTowerState(final XDataReader reader,
             final int formatVersion) throws IOException {
         this.savedTowerState = SavedTowerState.readSavedTowerState(reader,
                 formatVersion);

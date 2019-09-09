@@ -26,8 +26,8 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.generic.GenericTrap;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
-import com.puttysoftware.fantastlereboot.legacyio.DataReader;
-import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
+import com.puttysoftware.xio.XDataReader;
+import com.puttysoftware.xio.XDataWriter;
 
 public class RotationTrap extends GenericTrap {
     // Fields
@@ -120,7 +120,7 @@ public class RotationTrap extends GenericTrap {
     }
 
     @Override
-    protected MazeObject readMazeObjectHook(final DataReader reader,
+    protected MazeObject readMazeObjectHook(final XDataReader reader,
             final int formatVersion) throws IOException {
         this.radius = reader.readInt();
         this.direction = reader.readBoolean();
@@ -128,7 +128,7 @@ public class RotationTrap extends GenericTrap {
     }
 
     @Override
-    protected void writeMazeObjectHook(final DataWriter writer)
+    protected void writeMazeObjectHook(final XDataWriter writer)
             throws IOException {
         writer.writeInt(this.radius);
         writer.writeBoolean(this.direction);

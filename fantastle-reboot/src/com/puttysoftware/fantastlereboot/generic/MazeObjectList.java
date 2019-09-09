@@ -22,12 +22,12 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.legacyio.DataReader;
 import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objects.*;
 import com.puttysoftware.images.BufferedImageIcon;
+import com.puttysoftware.xio.XDataReader;
 
 public class MazeObjectList {
     // Fields
@@ -624,7 +624,7 @@ public class MazeObjectList {
         return allUsableNames;
     }
 
-    public MazeObject readMazeObject(final DataReader reader,
+    public MazeObject readMazeObject(final XDataReader reader,
             final int formatVersion) throws IOException {
         MazeObject o = null;
         String ident = null;

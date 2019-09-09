@@ -23,8 +23,8 @@ import java.io.IOException;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
-import com.puttysoftware.fantastlereboot.legacyio.DataConstants;
-import com.puttysoftware.fantastlereboot.legacyio.DataReader;
+import com.puttysoftware.fantastlereboot.legacyio.XDataConstants;
+import com.puttysoftware.xio.XDataReader;
 
 public class LoadTask4 extends Thread {
     // Fields
@@ -47,8 +47,8 @@ public class LoadTask4 extends Thread {
         app.getGameManager().setSavedGameFlag(false);
         sg = "Maze";
         try {
-            final DataReader mazeFile = new DataReader(this.filename,
-                    DataConstants.DATA_MODE_TEXT);
+            final XDataReader mazeFile = new XDataReader(this.filename,
+                    XDataConstants.DATA_MODE_TEXT);
             try {
                 final boolean supported = LoadTask4.checkFormatVersion(
                         LoadTask4.readFormatVersion(mazeFile));
@@ -103,7 +103,7 @@ public class LoadTask4 extends Thread {
         }
     }
 
-    private static byte[] readFormatVersion(final DataReader mazeFile)
+    private static byte[] readFormatVersion(final XDataReader mazeFile)
             throws IOException {
         final byte major = mazeFile.readByte();
         final byte minor = mazeFile.readByte();

@@ -6,9 +6,9 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.generic.GenericDungeonObject;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
 import com.puttysoftware.fantastlereboot.generic.MazeObjectList;
-import com.puttysoftware.fantastlereboot.legacyio.DataReader;
-import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
 import com.puttysoftware.randomrange.RandomRange;
+import com.puttysoftware.xio.XDataReader;
+import com.puttysoftware.xio.XDataWriter;
 
 public class MovingBlock extends GenericDungeonObject {
     // Fields
@@ -79,13 +79,13 @@ public class MovingBlock extends GenericDungeonObject {
     }
 
     @Override
-    protected void writeMazeObjectHook(final DataWriter writer)
+    protected void writeMazeObjectHook(final XDataWriter writer)
             throws IOException {
         this.savedObject.writeMazeObject(writer);
     }
 
     @Override
-    protected MazeObject readMazeObjectHook(final DataReader reader,
+    protected MazeObject readMazeObjectHook(final XDataReader reader,
             final int formatVersion) throws IOException {
         final MazeObjectList objectList = FantastleReboot.getBagOStuff()
                 .getObjects();

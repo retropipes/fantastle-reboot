@@ -25,8 +25,8 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
-import com.puttysoftware.fantastlereboot.legacyio.DataReader;
-import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
+import com.puttysoftware.xio.XDataReader;
+import com.puttysoftware.xio.XDataWriter;
 
 public abstract class GenericContainer extends GenericLock {
     // Fields
@@ -138,7 +138,7 @@ public abstract class GenericContainer extends GenericLock {
     }
 
     @Override
-    protected MazeObject readMazeObjectHook(final DataReader reader,
+    protected MazeObject readMazeObjectHook(final XDataReader reader,
             final int formatVersion) throws IOException {
         final MazeObjectList objectList = FantastleReboot.getBagOStuff()
                 .getObjects();
@@ -147,7 +147,7 @@ public abstract class GenericContainer extends GenericLock {
     }
 
     @Override
-    protected void writeMazeObjectHook(final DataWriter writer)
+    protected void writeMazeObjectHook(final XDataWriter writer)
             throws IOException {
         this.inside.writeMazeObject(writer);
     }

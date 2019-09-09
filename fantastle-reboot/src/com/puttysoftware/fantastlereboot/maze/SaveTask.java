@@ -24,8 +24,8 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
-import com.puttysoftware.fantastlereboot.legacyio.DataConstants;
-import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
+import com.puttysoftware.fantastlereboot.legacyio.XDataConstants;
+import com.puttysoftware.xio.XDataWriter;
 
 public class SaveTask extends Thread {
     // Fields
@@ -60,8 +60,8 @@ public class SaveTask extends Thread {
             }
         }
         try {
-            final DataWriter mazeFile = new DataWriter(this.filename,
-                    DataConstants.DATA_MODE_BINARY);
+            final XDataWriter mazeFile = new XDataWriter(this.filename,
+                    XDataConstants.DATA_MODE_BINARY);
             SaveTask.writeFormatVersion(mazeFile);
             app.getMazeManager().getMaze().writeMaze(mazeFile);
             if (this.isSavedGame) {
@@ -82,7 +82,7 @@ public class SaveTask extends Thread {
         app.getMazeManager().handleDeferredSuccess(success);
     }
 
-    private static void writeFormatVersion(final DataWriter mazeFile)
+    private static void writeFormatVersion(final XDataWriter mazeFile)
             throws IOException {
         mazeFile.writeByte(SaveTask.FORMAT_VERSION_MAJOR);
         mazeFile.writeByte(SaveTask.FORMAT_VERSION_MINOR);

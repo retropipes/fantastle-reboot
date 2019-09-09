@@ -24,8 +24,8 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
-import com.puttysoftware.fantastlereboot.legacyio.DataConstants;
-import com.puttysoftware.fantastlereboot.legacyio.DataReader;
+import com.puttysoftware.fantastlereboot.legacyio.XDataConstants;
+import com.puttysoftware.xio.XDataReader;
 
 public class LoadTask5 extends Thread {
     // Fields
@@ -55,8 +55,8 @@ public class LoadTask5 extends Thread {
             sg = "Maze";
         }
         try {
-            final DataReader mazeFile = new DataReader(this.filename,
-                    DataConstants.DATA_MODE_BINARY);
+            final XDataReader mazeFile = new XDataReader(this.filename,
+                    XDataConstants.DATA_MODE_BINARY);
             try {
                 final boolean supported = LoadTask5.checkFormatVersion(
                         LoadTask5.readFormatVersion(mazeFile));
@@ -124,7 +124,7 @@ public class LoadTask5 extends Thread {
         }
     }
 
-    private static byte[] readFormatVersion(final DataReader mazeFile)
+    private static byte[] readFormatVersion(final XDataReader mazeFile)
             throws IOException {
         final byte major = mazeFile.readByte();
         final byte minor = mazeFile.readByte();

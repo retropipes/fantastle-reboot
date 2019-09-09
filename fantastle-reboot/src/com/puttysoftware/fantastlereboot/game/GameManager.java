@@ -47,8 +47,6 @@ import com.puttysoftware.fantastlereboot.generic.GenericMovableObject;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
 import com.puttysoftware.fantastlereboot.generic.MazeObjectList;
 import com.puttysoftware.fantastlereboot.generic.TypeConstants;
-import com.puttysoftware.fantastlereboot.legacyio.DataReader;
-import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
@@ -64,6 +62,8 @@ import com.puttysoftware.fantastlereboot.objects.Wall;
 import com.puttysoftware.fantastlereboot.objects.WallBreakingWand;
 import com.puttysoftware.fantastlereboot.objects.WallMakingWand;
 import com.puttysoftware.fantastlereboot.oldbattle.Battle;
+import com.puttysoftware.xio.XDataReader;
+import com.puttysoftware.xio.XDataWriter;
 
 public class GameManager {
     // Fields
@@ -1652,7 +1652,7 @@ public class GameManager {
         }
     }
 
-    public void loadGameHook(final DataReader mazeFile, final int formatVersion)
+    public void loadGameHook(final XDataReader mazeFile, final int formatVersion)
             throws IOException {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         this.objectInv = ObjectInventory.readInventory(mazeFile, formatVersion);
@@ -1664,7 +1664,7 @@ public class GameManager {
         this.st.setScore(mazeFile.readLong());
     }
 
-    public void saveGameHook(final DataWriter mazeFile) throws IOException {
+    public void saveGameHook(final XDataWriter mazeFile) throws IOException {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         this.objectInv.writeInventory(mazeFile);
         app.getMazeManager().getMaze().writeSavedMazeState(mazeFile);

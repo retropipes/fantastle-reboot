@@ -21,10 +21,10 @@ package com.puttysoftware.fantastlereboot.maze;
 import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
-import com.puttysoftware.fantastlereboot.legacyio.DataReader;
-import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
 import com.puttysoftware.fantastlereboot.objects.Monster;
 import com.puttysoftware.fantastlereboot.objects.MovingBlock;
+import com.puttysoftware.xio.XDataReader;
+import com.puttysoftware.xio.XDataWriter;
 
 public interface Maze extends FormatConstants {
     // Constants
@@ -196,12 +196,12 @@ public interface Maze extends FormatConstants {
 
     boolean is3rdDimensionWraparoundEnabled(int level);
 
-    void writeMaze(DataWriter writer) throws IOException;
+    void writeMaze(XDataWriter writer) throws IOException;
 
-    Maze readMaze(DataReader reader, int formatVersion) throws IOException;
+    Maze readMaze(XDataReader reader, int formatVersion) throws IOException;
 
-    void writeSavedMazeState(DataWriter writer) throws IOException;
+    void writeSavedMazeState(XDataWriter writer) throws IOException;
 
-    void readSavedMazeState(DataReader reader, int formatVersion)
+    void readSavedMazeState(XDataReader reader, int formatVersion)
             throws IOException;
 }

@@ -25,9 +25,9 @@ import com.puttysoftware.fantastlereboot.generic.GenericBoots;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
 import com.puttysoftware.fantastlereboot.generic.MazeObjectList;
 import com.puttysoftware.fantastlereboot.generic.TypeConstants;
-import com.puttysoftware.fantastlereboot.legacyio.DataReader;
-import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
 import com.puttysoftware.fantastlereboot.objects.RegularBoots;
+import com.puttysoftware.xio.XDataReader;
+import com.puttysoftware.xio.XDataWriter;
 
 public class ObjectInventory implements Cloneable {
     // Properties
@@ -279,7 +279,7 @@ public class ObjectInventory implements Cloneable {
         return clone;
     }
 
-    public static ObjectInventory readInventory(final DataReader reader,
+    public static ObjectInventory readInventory(final XDataReader reader,
             final int formatVersion) throws IOException {
         final MazeObjectList objects = FantastleReboot.getBagOStuff().getObjects();
         final ObjectInventory i = new ObjectInventory();
@@ -298,7 +298,7 @@ public class ObjectInventory implements Cloneable {
         return i;
     }
 
-    public void writeInventory(final DataWriter writer) throws IOException {
+    public void writeInventory(final XDataWriter writer) throws IOException {
         this.boots.writeMazeObject(writer);
         for (final int content : this.contents) {
             writer.writeInt(content);

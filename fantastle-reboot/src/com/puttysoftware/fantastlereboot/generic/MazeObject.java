@@ -27,10 +27,10 @@ import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
-import com.puttysoftware.fantastlereboot.legacyio.DataReader;
-import com.puttysoftware.fantastlereboot.legacyio.DataWriter;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;
+import com.puttysoftware.xio.XDataReader;
+import com.puttysoftware.xio.XDataWriter;
 
 public abstract class MazeObject implements DirectionConstants, TypeConstants,
         ArrowTypeConstants, UniqueID5 {
@@ -1142,7 +1142,7 @@ public abstract class MazeObject implements DirectionConstants, TypeConstants,
         return 0;
     }
 
-    public final void writeMazeObject(final DataWriter writer)
+    public final void writeMazeObject(final XDataWriter writer)
             throws IOException {
         writer.writeInt(this.getIdentifier5());
         final int cc = this.getCustomFormat();
@@ -1156,7 +1156,7 @@ public abstract class MazeObject implements DirectionConstants, TypeConstants,
         }
     }
 
-    public final MazeObject readMazeObject(final DataReader reader,
+    public final MazeObject readMazeObject(final XDataReader reader,
             final String ident) throws IOException {
         if (ident.equals(this.getIdentifier4())) {
             final int cc = this.getCustomFormat();
@@ -1175,7 +1175,7 @@ public abstract class MazeObject implements DirectionConstants, TypeConstants,
         }
     }
 
-    public final MazeObject readMazeObject(final DataReader reader,
+    public final MazeObject readMazeObject(final XDataReader reader,
             final int ident) throws IOException {
         if (ident == this.getIdentifier5()) {
             final int cc = this.getCustomFormat();
@@ -1199,7 +1199,7 @@ public abstract class MazeObject implements DirectionConstants, TypeConstants,
      * @param writer
      * @throws IOException
      */
-    protected void writeMazeObjectHook(final DataWriter writer)
+    protected void writeMazeObjectHook(final XDataWriter writer)
             throws IOException {
         // Do nothing - but let subclasses override
     }
@@ -1211,13 +1211,13 @@ public abstract class MazeObject implements DirectionConstants, TypeConstants,
      * @return
      * @throws IOException
      */
-    protected MazeObject readMazeObjectHook(final DataReader reader,
+    protected MazeObject readMazeObjectHook(final XDataReader reader,
             final int formatVersion) throws IOException {
         // Dummy implementation, subclasses can override
         return this;
     }
 
-    public final MazeObject readMazeObject(final DataReader reader,
+    public final MazeObject readMazeObject(final XDataReader reader,
             final byte groupID, final byte objectID) throws IOException {
         if (groupID == this.getGroupID() && objectID == this.getObjectID()) {
             final int cc = this.getCustomFormat();
