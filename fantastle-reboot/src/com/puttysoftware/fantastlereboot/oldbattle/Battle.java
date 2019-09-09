@@ -33,6 +33,7 @@ import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.spells.SpellBookManager;
+import com.puttysoftware.fantastlereboot.spells.SpellCaster;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class Battle implements BattleResults, MoveTypes {
@@ -158,7 +159,7 @@ public class Battle implements BattleResults, MoveTypes {
                 this.displayPlayerRoundResults();
             }
         } else if (actionToPerform == AIRoutine.ACTION_CAST_SPELL) {
-            success = SpellBookManager.selectAndCastSpell(playerCharacter);
+            success = SpellCaster.selectAndCastSpell(playerCharacter);
         } else if (actionToPerform == AIRoutine.ACTION_FLEE) {
             final RandomRange rf = new RandomRange(0, 100);
             final int runChance = rf.generate();

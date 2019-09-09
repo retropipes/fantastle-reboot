@@ -24,7 +24,6 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
-import com.puttysoftware.fantastlereboot.legacyio.XDataConstants;
 import com.puttysoftware.xio.XDataWriter;
 
 public class SaveTask extends Thread {
