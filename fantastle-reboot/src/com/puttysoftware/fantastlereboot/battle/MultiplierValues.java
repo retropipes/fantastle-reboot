@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.oldbattle;
+package com.puttysoftware.fantastlereboot.battle;
 
 import com.puttysoftware.randomrange.RandomRange;
 

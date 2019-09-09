@@ -61,7 +61,6 @@ import com.puttysoftware.fantastlereboot.objects.TeleportWand;
 import com.puttysoftware.fantastlereboot.objects.Wall;
 import com.puttysoftware.fantastlereboot.objects.WallBreakingWand;
 import com.puttysoftware.fantastlereboot.objects.WallMakingWand;
-import com.puttysoftware.fantastlereboot.oldbattle.Battle;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
@@ -533,7 +532,7 @@ public class GameManager {
                         this.redrawMaze();
                         app.getMazeManager().setDirty(true);
                         this.st.deductStep();
-                        if (!Battle.isInBattle()) {
+                        if (app.getMode() != BagOStuff.STATUS_BATTLE) {
                             if (groundInto.overridesDefaultPostMove()) {
                                 groundInto.postMoveAction(false, px, py,
                                         this.objectInv);
@@ -570,7 +569,7 @@ public class GameManager {
                                 this.redrawMaze();
                                 app.getMazeManager().setDirty(true);
                                 this.st.deductStep();
-                                if (!Battle.isInBattle()) {
+                                if (app.getMode() != BagOStuff.STATUS_BATTLE) {
                                     if (groundInto.overridesDefaultPostMove()) {
                                         groundInto.postMoveAction(false, px, py,
                                                 this.objectInv);

@@ -19,7 +19,7 @@ import javax.swing.KeyStroke;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
-import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
+import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
 import com.puttysoftware.fantastlereboot.battle.BossRewards;
 import com.puttysoftware.fantastlereboot.loaders.older.LogoManager;
@@ -242,7 +242,7 @@ public class WindowTimeBattleGUI {
                 boolean success = true;
                 final String cmd = e.getActionCommand();
                 final WindowTimeBattleGUI wbg = WindowTimeBattleGUI.this;
-                final AbstractBattle b = TallerTower.getApplication()
+                final Battle b = TallerTower.getApplication()
                         .getBattle();
                 // Clear Message Area
                 wbg.clearMessageArea();
@@ -313,7 +313,7 @@ public class WindowTimeBattleGUI {
                 // Maintain Player Effects
                 b.maintainEffects(true);
                 // Check result
-                final int bResult = b.getResult();
+                final BattleResults bResult = b.getResult();
                 if (bResult != BattleResults.IN_PROGRESS) {
                     b.setResult(bResult);
                     b.doResult();

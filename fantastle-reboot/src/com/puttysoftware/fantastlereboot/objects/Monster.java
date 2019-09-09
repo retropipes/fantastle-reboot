@@ -2,6 +2,7 @@ package com.puttysoftware.fantastlereboot.objects;
 
 import java.io.IOException;
 
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.generic.ArrowTypeConstants;
@@ -9,7 +10,6 @@ import com.puttysoftware.fantastlereboot.generic.GenericDungeonObject;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
 import com.puttysoftware.fantastlereboot.generic.MazeObjectList;
 import com.puttysoftware.fantastlereboot.generic.TypeConstants;
-import com.puttysoftware.fantastlereboot.oldbattle.Battle;
 import com.puttysoftware.randomrange.RandomRange;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
@@ -40,7 +40,7 @@ public class Monster extends GenericDungeonObject {
     @Override
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
-        if (!Battle.isInBattle()) {
+        if (FantastleReboot.getBagOStuff().getMode() != BagOStuff.STATUS_BATTLE) {
             FantastleReboot.getBagOStuff().getBattle().doBattle();
             FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                     .postBattle(this, dirX, dirY, true);

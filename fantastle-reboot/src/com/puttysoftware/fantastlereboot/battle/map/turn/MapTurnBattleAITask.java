@@ -6,14 +6,14 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.battle.map.turn;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
+import com.puttysoftware.fantastlereboot.battle.Battle;
 
 public class MapTurnBattleAITask extends Thread {
     // Fields
-    private final AbstractBattle b;
+    private final Battle b;
 
     // Constructors
-    public MapTurnBattleAITask(final AbstractBattle battle) {
+    public MapTurnBattleAITask(final Battle battle) {
         this.setName("Map AI Runner");
         this.b = battle;
     }

@@ -11,9 +11,9 @@ import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.BattleCharacter;
 
-public abstract class AbstractBattle {
+public abstract class Battle {
     // Constructors
-    protected AbstractBattle() {
+    protected Battle() {
         // Do nothing
     }
 
@@ -52,11 +52,11 @@ public abstract class AbstractBattle {
 
     public abstract boolean doPlayerActions(final int actionType);
 
-    public abstract int getResult();
+    public abstract BattleResults getResult();
 
     public abstract void doResult();
 
-    public abstract void setResult(final int resultCode);
+    public abstract void setResult(final BattleResults resultCode);
 
     public abstract void maintainEffects(final boolean player);
 

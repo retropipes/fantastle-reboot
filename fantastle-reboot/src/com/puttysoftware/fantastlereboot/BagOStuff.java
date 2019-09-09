@@ -23,7 +23,7 @@ import java.awt.Image;
 import javax.swing.JFrame;
 
 import com.puttysoftware.fantastlereboot.assets.GameSound;
-import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
+import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.map.time.MapTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.map.turn.MapTurnBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.window.time.WindowTimeBattleLogic;
@@ -228,7 +228,7 @@ public class BagOStuff {
         return this.weapons;
     }
 
-    public AbstractBattle getBattle() {
+    public Battle getBattle() {
         PreferencesManager prefs = this.getPrefsManager();
         if (prefs.useMapBattleEngine()) {
             if (prefs.useTimeBattleEngine()) {

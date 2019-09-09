@@ -26,7 +26,7 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.map.AbstractMapAIRoutine;
-import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
+import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleDraw;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleEffects;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleViewingWindowManager;
@@ -292,7 +292,7 @@ class MapTurnBattleGUI {
         public void actionPerformed(final ActionEvent e) {
             try {
                 final String cmd = e.getActionCommand();
-                final AbstractBattle b = TallerTower.getApplication()
+                final Battle b = TallerTower.getApplication()
                         .getBattle();
                 // Do Player Actions
                 if (cmd.equals("Cast Spell") || cmd.equals("c")) {
@@ -354,7 +354,7 @@ class MapTurnBattleGUI {
                         return;
                     }
                 }
-                final AbstractBattle bl = TallerTower.getApplication()
+                final Battle bl = TallerTower.getApplication()
                         .getBattle();
                 final MapTurnBattleGUI bg = MapTurnBattleGUI.this;
                 if (bg.eventHandlersOn) {
@@ -426,7 +426,7 @@ class MapTurnBattleGUI {
                         return;
                     }
                 }
-                final AbstractBattle bl = TallerTower.getApplication()
+                final Battle bl = TallerTower.getApplication()
                         .getBattle();
                 final MapTurnBattleGUI bg = MapTurnBattleGUI.this;
                 if (bg.eventHandlersOn) {

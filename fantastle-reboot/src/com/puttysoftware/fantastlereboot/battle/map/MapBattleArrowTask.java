@@ -7,7 +7,7 @@ package com.puttysoftware.fantastlereboot.battle.map;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
-import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
+import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.ttmain.Application;
@@ -92,7 +92,7 @@ public class MapBattleArrowTask extends Thread {
                 final Faith target = hit.getTemplate().getFaith();
                 final int mult = (int) (shooter
                         .getMultiplierForOtherFaith(target.getFaithID()) * 10);
-                final AbstractBattle bl = app.getBattle();
+                final Battle bl = app.getBattle();
                 if (mult == 0) {
                     hit.getTemplate().doDamage(1);
                     bl.setStatusMessage("Ow, you got shot! It didn't hurt much.");

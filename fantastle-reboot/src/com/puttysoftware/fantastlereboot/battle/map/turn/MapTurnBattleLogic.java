@@ -14,7 +14,7 @@ import com.puttysoftware.fantastlereboot.ai.map.AbstractMapAIRoutine;
 import com.puttysoftware.fantastlereboot.ai.map.AutoMapAI;
 import com.puttysoftware.fantastlereboot.ai.map.MapAIContext;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
-import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
+import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
 import com.puttysoftware.fantastlereboot.battle.BossRewards;
 import com.puttysoftware.fantastlereboot.battle.damageengines.AbstractDamageEngine;
@@ -41,14 +41,14 @@ import com.puttysoftware.fantastlereboot.ttmaze.objects.BattleCharacter;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Empty;
 import com.puttysoftware.randomrange.RandomRange;
 
-public class MapTurnBattleLogic extends AbstractBattle {
+public class MapTurnBattleLogic extends Battle {
     // Fields
     private MapTurnBattleDefinitions bd;
     private AbstractDamageEngine pde;
     private AbstractDamageEngine ede;
     private final AutoMapAI auto;
     private int damage;
-    private int result;
+    private BattleResults result;
     private int activeIndex;
     private long battleExp;
     private boolean newRound;
@@ -171,8 +171,8 @@ public class MapTurnBattleLogic extends AbstractBattle {
     }
 
     @Override
-    public int getResult() {
-        int currResult;
+    public BattleResults getResult() {
+        BattleResults currResult;
         if (this.result != BattleResults.IN_PROGRESS) {
             return this.result;
         }
@@ -658,7 +658,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
                     0, MazeConstants.LAYER_OBJECT);
         }
         // Check result
-        final int currResult = this.getResult();
+        final BattleResults currResult = this.getResult();
         if (currResult != BattleResults.IN_PROGRESS) {
             // Battle Done
             this.result = currResult;
@@ -960,7 +960,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
             // End Turn
             this.endTurn();
             this.updateStatsAndEffects();
-            final int currResult = this.getResult();
+            final BattleResults currResult = this.getResult();
             if (currResult != BattleResults.IN_PROGRESS) {
                 // Battle Done
                 this.result = currResult;
@@ -972,7 +972,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
             return true;
         }
         this.updateStatsAndEffects();
-        final int currResult = this.getResult();
+        final BattleResults currResult = this.getResult();
         if (currResult != BattleResults.IN_PROGRESS) {
             // Battle Done
             this.result = currResult;
@@ -1036,7 +1036,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
                 if (success) {
                     this.decrementActiveSpellCounter();
                 }
-                final int currResult = this.getResult();
+                final BattleResults currResult = this.getResult();
                 if (currResult != BattleResults.IN_PROGRESS) {
                     // Battle Done
                     this.result = currResult;
@@ -1052,7 +1052,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
                 if (success) {
                     this.decrementActiveSpellCounter();
                 }
-                final int currResult = this.getResult();
+                final BattleResults currResult = this.getResult();
                 if (currResult != BattleResults.IN_PROGRESS) {
                     // Battle Done
                     this.result = currResult;
@@ -1081,7 +1081,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
                     this.bd.getActiveCharacter()
                             .modifyAP(MapTurnBattleLogic.ITEM_ACTION_POINTS);
                 }
-                final int currResult = this.getResult();
+                final BattleResults currResult = this.getResult();
                 if (currResult != BattleResults.IN_PROGRESS) {
                     // Battle Done
                     this.result = currResult;
@@ -1098,7 +1098,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
                     this.bd.getActiveCharacter()
                             .modifyAP(MapTurnBattleLogic.ITEM_ACTION_POINTS);
                 }
-                final int currResult = this.getResult();
+                final BattleResults currResult = this.getResult();
                 if (currResult != BattleResults.IN_PROGRESS) {
                     // Battle Done
                     this.result = currResult;
@@ -1558,7 +1558,7 @@ public class MapTurnBattleLogic extends AbstractBattle {
     }
 
     @Override
-    public void setResult(final int resultCode) {
+    public void setResult(final BattleResults resultCode) {
         // Do nothing
     }
 }

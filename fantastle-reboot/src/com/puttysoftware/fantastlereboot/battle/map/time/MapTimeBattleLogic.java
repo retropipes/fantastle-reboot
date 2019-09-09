@@ -17,7 +17,7 @@ import com.puttysoftware.fantastlereboot.ai.map.AbstractMapAIRoutine;
 import com.puttysoftware.fantastlereboot.ai.map.AutoMapAI;
 import com.puttysoftware.fantastlereboot.ai.map.MapAIContext;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
-import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
+import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
 import com.puttysoftware.fantastlereboot.battle.BossRewards;
 import com.puttysoftware.fantastlereboot.battle.damageengines.AbstractDamageEngine;
@@ -43,14 +43,14 @@ import com.puttysoftware.fantastlereboot.ttmaze.objects.BattleCharacter;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Empty;
 import com.puttysoftware.randomrange.RandomRange;
 
-public class MapTimeBattleLogic extends AbstractBattle {
+public class MapTimeBattleLogic extends Battle {
     // Fields
     private Maze battleMaze;
     private AbstractDamageEngine pde;
     private AbstractDamageEngine ede;
     private final AutoMapAI auto;
     private int damage;
-    private int result;
+    private BattleResults result;
     private long battleExp;
     private boolean resultDoneAlready;
     private boolean lastAIActionResult;
@@ -159,8 +159,8 @@ public class MapTimeBattleLogic extends AbstractBattle {
     }
 
     @Override
-    public int getResult() {
-        int currResult;
+    public BattleResults getResult() {
+        BattleResults currResult;
         if (this.result != BattleResults.IN_PROGRESS) {
             return this.result;
         }
@@ -560,7 +560,7 @@ public class MapTimeBattleLogic extends AbstractBattle {
                     MazeConstants.LAYER_OBJECT);
         }
         // Check result
-        final int currResult = this.getResult();
+        final BattleResults currResult = this.getResult();
         if (currResult != BattleResults.IN_PROGRESS) {
             // Battle Done
             this.result = currResult;
@@ -836,7 +836,7 @@ public class MapTimeBattleLogic extends AbstractBattle {
             // End Turn
             this.endTurn();
             this.updateStatsAndEffects();
-            final int currResult = this.getResult();
+            final BattleResults currResult = this.getResult();
             if (currResult != BattleResults.IN_PROGRESS) {
                 // Battle Done
                 this.result = currResult;
@@ -850,7 +850,7 @@ public class MapTimeBattleLogic extends AbstractBattle {
             return true;
         }
         this.updateStatsAndEffects();
-        final int currResult = this.getResult();
+        final BattleResults currResult = this.getResult();
         if (currResult != BattleResults.IN_PROGRESS) {
             // Battle Done
             this.result = currResult;
@@ -909,7 +909,7 @@ public class MapTimeBattleLogic extends AbstractBattle {
     public boolean castSpell() {
         final boolean success = SpellCaster
                 .selectAndCastSpell(this.me.getTemplate());
-        final int currResult = this.getResult();
+        final BattleResults currResult = this.getResult();
         if (currResult != BattleResults.IN_PROGRESS) {
             // Battle Done
             this.result = currResult;
@@ -923,7 +923,7 @@ public class MapTimeBattleLogic extends AbstractBattle {
         final Spell sp = this.enemy.getTemplate().getMapAI().getSpellToCast();
         final boolean success = SpellCaster.castSpell(sp,
                 this.enemy.getTemplate());
-        final int currResult = this.getResult();
+        final BattleResults currResult = this.getResult();
         if (currResult != BattleResults.IN_PROGRESS) {
             // Battle Done
             this.result = currResult;
@@ -937,7 +937,7 @@ public class MapTimeBattleLogic extends AbstractBattle {
         // Active character has no AI, or AI is turned off
         final boolean success = CombatItemChucker
                 .selectAndUseItem(this.me.getTemplate());
-        final int currResult = this.getResult();
+        final BattleResults currResult = this.getResult();
         if (currResult != BattleResults.IN_PROGRESS) {
             // Battle Done
             this.result = currResult;
@@ -1451,7 +1451,7 @@ public class MapTimeBattleLogic extends AbstractBattle {
     }
 
     @Override
-    public void setResult(final int resultCode) {
+    public void setResult(final BattleResults resultCode) {
         // Do nothing
     }
 
@@ -1464,7 +1464,7 @@ public class MapTimeBattleLogic extends AbstractBattle {
         public void run() {
             try {
                 final Application app = TallerTower.getApplication();
-                final AbstractBattle b = app.getBattle();
+                final Battle b = app.getBattle();
                 if (app.getMode() == Application.STATUS_BATTLE
                         && b instanceof MapTimeBattleLogic) {
                     final MapTimeBattleLogic logic = MapTimeBattleLogic.this;
@@ -1495,7 +1495,7 @@ public class MapTimeBattleLogic extends AbstractBattle {
         public void run() {
             try {
                 final Application app = TallerTower.getApplication();
-                final AbstractBattle b = app.getBattle();
+                final Battle b = app.getBattle();
                 if (app.getMode() == Application.STATUS_BATTLE
                         && b instanceof MapTimeBattleLogic) {
                     final MapTimeBattleLogic logic = MapTimeBattleLogic.this;
@@ -1527,7 +1527,7 @@ public class MapTimeBattleLogic extends AbstractBattle {
             // Display End Stats
             logic.displayBattleStats();
             // Check Result
-            final int bResult = logic.getResult();
+            final BattleResults bResult = logic.getResult();
             if (bResult != BattleResults.IN_PROGRESS) {
                 logic.setResult(bResult);
                 logic.doResult();

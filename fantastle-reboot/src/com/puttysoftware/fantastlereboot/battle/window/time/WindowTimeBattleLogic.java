@@ -9,7 +9,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
-import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
+import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
 import com.puttysoftware.fantastlereboot.battle.damageengines.AbstractDamageEngine;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
@@ -32,14 +32,14 @@ import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.BattleCharacter;
 import com.puttysoftware.randomrange.RandomRange;
 
-public class WindowTimeBattleLogic extends AbstractBattle {
+public class WindowTimeBattleLogic extends Battle {
     // Fields
     private int stealAmount;
     private int damage;
     private boolean enemyDidDamage;
     private boolean playerDidDamage;
     private Creature enemy;
-    private int result;
+    private BattleResults result;
     private final AbstractDamageEngine pde;
     private final AbstractDamageEngine ede;
     WindowTimeBattleGUI battleGUI;
@@ -368,9 +368,9 @@ public class WindowTimeBattleLogic extends AbstractBattle {
     }
 
     @Override
-    public final int getResult() {
+    public final BattleResults getResult() {
         final PartyMember playerCharacter = PartyManager.getParty().getLeader();
-        int currResult;
+        BattleResults currResult;
         if (this.result != BattleResults.IN_PROGRESS) {
             return this.result;
         }
@@ -662,7 +662,7 @@ public class WindowTimeBattleLogic extends AbstractBattle {
     }
 
     @Override
-    public final void setResult(final int newResult) {
+    public final void setResult(final BattleResults newResult) {
         this.result = newResult;
     }
 
@@ -737,7 +737,7 @@ public class WindowTimeBattleLogic extends AbstractBattle {
         public void run() {
             try {
                 final Application app = TallerTower.getApplication();
-                final AbstractBattle b = app.getBattle();
+                final Battle b = app.getBattle();
                 if (app.getMode() == Application.STATUS_BATTLE
                         && b instanceof WindowTimeBattleLogic) {
                     final WindowTimeBattleLogic logic = WindowTimeBattleLogic.this;
@@ -768,7 +768,7 @@ public class WindowTimeBattleLogic extends AbstractBattle {
         public void run() {
             try {
                 final Application app = TallerTower.getApplication();
-                final AbstractBattle b = app.getBattle();
+                final Battle b = app.getBattle();
                 if (app.getMode() == Application.STATUS_BATTLE
                         && b instanceof WindowTimeBattleLogic) {
                     final WindowTimeBattleLogic logic = WindowTimeBattleLogic.this;
@@ -798,7 +798,7 @@ public class WindowTimeBattleLogic extends AbstractBattle {
             // Display End Stats
             logic.displayBattleStats();
             // Check Result
-            final int bResult = logic.getResult();
+            final BattleResults bResult = logic.getResult();
             if (bResult != BattleResults.IN_PROGRESS) {
                 logic.setResult(bResult);
                 logic.doResult();

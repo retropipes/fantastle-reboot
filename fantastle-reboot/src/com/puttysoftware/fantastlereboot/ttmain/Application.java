@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
-import com.puttysoftware.fantastlereboot.battle.AbstractBattle;
+import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.map.time.MapTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.map.turn.MapTurnBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.window.time.WindowTimeBattleLogic;
@@ -239,7 +239,7 @@ public final class Application {
         }
     }
 
-    public AbstractBattle getBattle() {
+    public Battle getBattle() {
         if (FantastleReboot.getBagOStuff().getPrefsManager().useMapBattleEngine()) {
             if (FantastleReboot.getBagOStuff().getPrefsManager().useTimeBattleEngine()) {
                 return this.mapTimeBattle;

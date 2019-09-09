@@ -55,7 +55,6 @@ import com.puttysoftware.fantastlereboot.objects.Sand;
 import com.puttysoftware.fantastlereboot.objects.Snow;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.fantastlereboot.objects.Tundra;
-import com.puttysoftware.fantastlereboot.oldbattle.Battle;
 
 public class PreferencesManager implements PreferencesHandler {
     // Fields
@@ -303,7 +302,7 @@ public class PreferencesManager implements PreferencesHandler {
             this.prefFrame.setJMenuBar(app.getMenuManager().getMainMenuBar());
             app.getMenuManager().setPrefMenus();
             this.prefFrame.setVisible(true);
-            if (Battle.isInBattle()) {
+            if (app.getMode() == BagOStuff.STATUS_BATTLE) {
                 app.getBattle().getOutputFrame().setVisible(false);
             } else {
                 final int formerMode = app.getFormerMode();
@@ -324,7 +323,7 @@ public class PreferencesManager implements PreferencesHandler {
             app.setInPrefs(false);
             this.prefFrame.setVisible(false);
             this.fileMgr.writePreferencesFile();
-            if (Battle.isInBattle()) {
+            if (app.getMode() == BagOStuff.STATUS_BATTLE) {
                 app.getBattle().getOutputFrame().setVisible(true);
             } else {
                 final int formerMode = app.getFormerMode();
