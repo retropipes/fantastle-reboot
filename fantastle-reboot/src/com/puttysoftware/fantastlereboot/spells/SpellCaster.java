@@ -30,17 +30,15 @@ public class SpellCaster {
         if (s != null) {
             result = SpellCaster.castSpell(s, caster);
             if (!result && !SpellCaster.NO_SPELLS_FLAG) {
-                CommonDialogs
-                        .showErrorDialog(
-                                "You try to cast a spell, but realize you don't have enough MP!",
-                                "Select Spell");
+                CommonDialogs.showErrorDialog(
+                        "You try to cast a spell, but realize you don't have enough MP!",
+                        "Select Spell");
             }
         }
         return result;
     }
 
-    public static boolean castSpell(final Spell cast,
-            final Creature caster) {
+    public static boolean castSpell(final Spell cast, final Creature caster) {
         if (cast != null) {
             final int casterMP = caster.getCurrentMP();
             final int cost = cast.getCost();
@@ -95,10 +93,9 @@ public class SpellCaster {
                 }
             } else {
                 SpellCaster.NO_SPELLS_FLAG = true;
-                CommonDialogs
-                        .showErrorDialog(
-                                "You try to cast a spell, but realize you don't know any!",
-                                "Select Spell");
+                CommonDialogs.showErrorDialog(
+                        "You try to cast a spell, but realize you don't know any!",
+                        "Select Spell");
                 return null;
             }
         } else {
@@ -110,8 +107,7 @@ public class SpellCaster {
         }
     }
 
-    private static Creature resolveTarget(final Spell cast,
-            final int teamID) {
+    private static Creature resolveTarget(final Spell cast, final int teamID) {
         final BattleTarget target = cast.getTarget();
         switch (target) {
         case SELF:

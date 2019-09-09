@@ -9,11 +9,7 @@ import com.puttysoftware.fantastlereboot.effects.HealingEffect;
 public class BossSpellBook extends SpellBook {
     // Constructor
     public BossSpellBook() {
-        super(6, true);
-    }
-
-    @Override
-    protected void defineSpells() {
+        super();
         final DamageEffect spell0Effect = new DamageEffect("Lethally Poisoned",
                 10, 10, Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE,
                 1);

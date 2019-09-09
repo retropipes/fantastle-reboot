@@ -9,11 +9,7 @@ import com.puttysoftware.fantastlereboot.effects.HealingEffect;
 public class MidLevelSpellBook extends SpellBook {
     // Constructor
     public MidLevelSpellBook() {
-        super(6, true);
-    }
-
-    @Override
-    protected void defineSpells() {
+        super();
         final DamageEffect spell0Effect = new DamageEffect("Poisoned", 3, 5,
                 Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE, 0.5);
         spell0Effect.setMessage(Effect.MESSAGE_INITIAL,
