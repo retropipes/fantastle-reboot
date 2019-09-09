@@ -53,9 +53,8 @@ public class LoadTask5 extends Thread {
             app.getGameManager().setSavedGameFlag(false);
             sg = "Maze";
         }
-        try {
-            final XDataReader mazeFile = new XDataReader(this.filename,
-                    XDataConstants.DATA_MODE_BINARY);
+        try (final XDataReader mazeFile = new XDataReader(this.filename,
+                "ft5")) {
             try {
                 final boolean supported = LoadTask5.checkFormatVersion(
                         LoadTask5.readFormatVersion(mazeFile));

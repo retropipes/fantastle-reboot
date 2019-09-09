@@ -58,9 +58,8 @@ public class SaveTask extends Thread {
                 this.filename += Extension.getMaze5ExtensionWithPeriod();
             }
         }
-        try {
-            final XDataWriter mazeFile = new XDataWriter(this.filename,
-                    XDataConstants.DATA_MODE_BINARY);
+        try (final XDataWriter mazeFile = new XDataWriter(this.filename,
+                "ft5")) {
             SaveTask.writeFormatVersion(mazeFile);
             app.getMazeManager().getMaze().writeMaze(mazeFile);
             if (this.isSavedGame) {
