@@ -22,8 +22,6 @@ import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.obsolete.loaders2.LogoManager;
-import com.puttysoftware.fantastlereboot.obsolete.names.NamesConstants;
-import com.puttysoftware.fantastlereboot.obsolete.names.NamesManager;
 
 public class StatisticsViewer {
     // Fields
@@ -50,17 +48,13 @@ public class StatisticsViewer {
                 if (x == StatConstants.STAT_HIT
                         || x == StatConstants.STAT_EVADE) {
                     final double fmtVal = value / 100.0;
-                    statisticsValues[x].setText(" "
-                            + NamesManager.getName(
-                                    NamesConstants.SECTION_STATS,
-                                    NamesConstants.SECTION_ARRAY_STATS[x])
-                            + ": " + fmtVal + "%  ");
+                    statisticsValues[x]
+                            .setText(" " + StatConstants.STAT_NAMES[x] + ": "
+                                    + fmtVal + "%  ");
                 } else {
-                    statisticsValues[x].setText(" "
-                            + NamesManager.getName(
-                                    NamesConstants.SECTION_STATS,
-                                    NamesConstants.SECTION_ARRAY_STATS[x])
-                            + ": " + value + "  ");
+                    statisticsValues[x]
+                            .setText(" " + StatConstants.STAT_NAMES[x] + ": "
+                                    + value + "  ");
                 }
             }
             statisticsFrame.pack();

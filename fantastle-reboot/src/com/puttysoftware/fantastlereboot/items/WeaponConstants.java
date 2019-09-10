@@ -5,17 +5,20 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.items;
 
-import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
-import com.puttysoftware.fantastlereboot.obsolete.names.NamesConstants;
-import com.puttysoftware.fantastlereboot.obsolete.names.NamesManager;
-
 public class WeaponConstants {
     // Constants
-    private static String[] WEAPON_1H = null;
-    private static String[] WEAPON_2H = null;
+    private static final String[] WEAPON_1H = { "Dagger", "Club", "Scimitar", "Boomerang", "Javelin",
+            "Grenade", "Whip", "Crossbow", "Dart", "Sword", "Lock", "Fists",
+            "Throwing Stars", "Pebbles", "Lockpicks", "Gun", "Flail", "Hammer",
+            "Wand", "Voice" };
+    private static final String[] WEAPON_2H = { "Longsword", "Mace", "Staff", "Slingshot", "Spear",
+            "Bazooka", "Catapult", "Bow", "Boulder", "Axe", "Key", "Feet",
+            "Halberd", "Lance", "Door", "Cannon", "Battering Ram", "Laser",
+            "Scythe", "Dance" };
+
     private static final String[] WEAPON_CHOICES = { "One-Handed Weapons",
             "Two-Handed Weapons" };
-    private static String[] HAND_CHOICES = null;
+    private static final String[] HAND_CHOICES = { "Main Hand", "Off-Hand" };
 
     // Private Constructor
     private WeaponConstants() {
@@ -28,39 +31,14 @@ public class WeaponConstants {
     }
 
     public static synchronized String[] getHandChoices() {
-        if (HAND_CHOICES == null) {
-            final String[] temp = EquipmentSlotConstants.getSlotNames();
-            final String[] temp2 = new String[2];
-            temp2[0] = temp[EquipmentSlotConstants.SLOT_MAINHAND];
-            temp2[1] = temp[EquipmentSlotConstants.SLOT_OFFHAND];
-            HAND_CHOICES = temp2;
-        }
         return HAND_CHOICES;
     }
 
     public static synchronized String[] get1HWeapons() {
-        if (WEAPON_1H == null) {
-            final String[] temp = new String[CasteConstants.CASTES_COUNT];
-            for (int x = 0; x < temp.length; x++) {
-                temp[x] = NamesManager.getName(
-                        NamesConstants.SECTION_EQUIP_WEAPONS_1H,
-                        NamesConstants.SECTION_ARRAY_WEAPONS_1H[x]);
-            }
-            WEAPON_1H = temp;
-        }
         return WEAPON_1H;
     }
 
     public static synchronized String[] get2HWeapons() {
-        if (WEAPON_2H == null) {
-            final String[] temp = new String[CasteConstants.CASTES_COUNT];
-            for (int x = 0; x < temp.length; x++) {
-                temp[x] = NamesManager.getName(
-                        NamesConstants.SECTION_EQUIP_WEAPONS_2H,
-                        NamesConstants.SECTION_ARRAY_WEAPONS_2H[x]);
-            }
-            WEAPON_2H = temp;
-        }
         return WEAPON_2H;
     }
 }

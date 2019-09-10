@@ -75,4 +75,14 @@ public class StatConstants {
     static final int HIT_MAX = 10000;
     static final int EVADE_MAX = 2000;
     static final int LEVEL_MAX = 99;
+    // Names
+    public static final String[] STAT_NAMES = { "Strength", "Block", "Agility",
+            "Vitality", "Intelligence", "Luck", "Current HP", "Current MP",
+            "Gold", "Level", "Attacks Per Round", "Spells Per Round", "Load",
+            "Maximum HP", "Maximum MP", "Attack", "Defense", "Speed", "Hit",
+            "Evade", "Capacity", "Maximum Level", "Fumble Chance" };
+
+    private StatConstants() {
+        super();
+    }
 }
