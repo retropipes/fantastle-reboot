@@ -30,6 +30,7 @@ import com.puttysoftware.fantastlereboot.objects.IcedBarrierGenerator;
 import com.puttysoftware.fantastlereboot.objects.IcedMonster;
 import com.puttysoftware.fantastlereboot.objects.Monster;
 import com.puttysoftware.fantastlereboot.objects.MovingBlock;
+import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
 import com.puttysoftware.randomrange.RandomRange;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
@@ -709,7 +710,7 @@ class LayeredTower {
 
     public void updateMonsterPosition(final int move, final int xLoc,
             final int yLoc, final Monster monster) {
-        final int[] dirMove = MazeObject.unresolveRelativeDirection(move);
+        final int[] dirMove = DirectionResolver.unresolveRelativeDirection(move);
         final int zLoc = FantastleReboot.getBagOStuff().getGameManager()
                 .getPlayerManager().getPlayerLocationZ();
         try {
@@ -745,7 +746,7 @@ class LayeredTower {
 
     public void updateMovingBlockPosition(final int move, final int xLoc,
             final int yLoc, final MovingBlock block) {
-        final int[] dirMove = MazeObject.unresolveRelativeDirection(move);
+        final int[] dirMove = DirectionResolver.unresolveRelativeDirection(move);
         final int zLoc = FantastleReboot.getBagOStuff().getGameManager()
                 .getPlayerManager().getPlayerLocationZ();
         try {

@@ -3,7 +3,7 @@ Copyright (C) 2008-2010 Eric Ahnell
 
 Any questions should be directed to the author via email at: mazer5d@worldwizard.net
  */
-package com.puttysoftware.fantastlereboot.ttmaze.utilities;
+package com.puttysoftware.fantastlereboot.utilities;
 
 public class DirectionConstants {
     // Constants
@@ -17,6 +17,7 @@ public class DirectionConstants {
     public static final int DIRECTION_SOUTH = 5;
     public static final int DIRECTION_SOUTHWEST = 6;
     public static final int DIRECTION_WEST = 7;
+    public static final int DIRECTION_COUNT = 8;
     static final String DIRECTION_INVALID_NAME = "Invalid";
     static final String DIRECTION_NONE_NAME = "None";
     static final String DIRECTION_NORTHWEST_NAME = "Northwest";

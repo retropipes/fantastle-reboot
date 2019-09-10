@@ -7,8 +7,8 @@ package com.puttysoftware.fantastlereboot.ttmaze.abc;
 
 import com.puttysoftware.fantastlereboot.loaders.older.ObjectImageConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
-import com.puttysoftware.fantastlereboot.ttmaze.utilities.DirectionConstants;
-import com.puttysoftware.fantastlereboot.ttmaze.utilities.DirectionResolver;
+import com.puttysoftware.fantastlereboot.utilities.DirectionConstants;
+import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
 
 public abstract class AbstractTransientObject extends AbstractMazeObject {
     // Fields

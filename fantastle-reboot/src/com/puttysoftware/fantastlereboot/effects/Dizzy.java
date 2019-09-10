@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.effects;
 
-import com.puttysoftware.fantastlereboot.generic.DirectionConstants;
+import com.puttysoftware.fantastlereboot.utilities.DirectionConstants;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class Dizzy extends Effect {

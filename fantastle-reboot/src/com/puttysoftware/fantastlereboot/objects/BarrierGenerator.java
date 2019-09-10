@@ -24,12 +24,12 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.generic.ArrowTypeConstants;
-import com.puttysoftware.fantastlereboot.generic.DirectionConstants;
 import com.puttysoftware.fantastlereboot.generic.GenericWall;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
 import com.puttysoftware.fantastlereboot.generic.TypeConstants;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.utilities.DirectionConstants;
 
 public class BarrierGenerator extends GenericWall {
     // Fields

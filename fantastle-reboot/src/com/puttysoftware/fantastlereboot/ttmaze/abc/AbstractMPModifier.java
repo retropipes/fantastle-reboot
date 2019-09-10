@@ -6,7 +6,7 @@ Any questions should be directed to the author via email at: mazer5d@worldwizard
 package com.puttysoftware.fantastlereboot.ttmaze.abc;
 
 import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
-import com.puttysoftware.fantastlereboot.ttmaze.utilities.TypeConstants;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public abstract class AbstractMPModifier extends AbstractMazeObject {
     // Constructors

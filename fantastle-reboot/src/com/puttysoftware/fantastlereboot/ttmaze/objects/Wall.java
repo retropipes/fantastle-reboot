@@ -7,7 +7,7 @@ package com.puttysoftware.fantastlereboot.ttmaze.objects;
 
 import com.puttysoftware.fantastlereboot.loaders.older.ObjectImageConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractWall;
-import com.puttysoftware.fantastlereboot.ttmaze.utilities.TypeConstants;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public class Wall extends AbstractWall {
     // Constructors

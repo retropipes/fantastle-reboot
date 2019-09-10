@@ -7,7 +7,7 @@ package com.puttysoftware.fantastlereboot.ttmaze.abc;
 
 import com.puttysoftware.fantastlereboot.ttmaze.Maze;
 import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
-import com.puttysoftware.fantastlereboot.ttmaze.utilities.TypeConstants;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 import com.puttysoftware.randomrange.RandomRange;
 
 public abstract class AbstractTrap extends AbstractMazeObject {

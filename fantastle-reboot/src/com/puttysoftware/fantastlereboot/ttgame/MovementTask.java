@@ -19,7 +19,7 @@ import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Empty;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Wall;
-import com.puttysoftware.fantastlereboot.ttmaze.utilities.TypeConstants;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 final class MovementTask extends Thread {
     // Fields

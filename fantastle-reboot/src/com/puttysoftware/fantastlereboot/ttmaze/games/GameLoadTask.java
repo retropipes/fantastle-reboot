@@ -24,7 +24,7 @@ import com.puttysoftware.fantastlereboot.ttmaze.Maze;
 import com.puttysoftware.fantastlereboot.ttmaze.PrefixHandler;
 import com.puttysoftware.fantastlereboot.ttmaze.SuffixHandler;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.ttmaze.utilities.ImageColorConstants;
+import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
 import com.puttysoftware.fileutils.ZipUtilities;
 
 public class GameLoadTask extends Thread {

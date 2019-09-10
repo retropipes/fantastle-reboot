@@ -7,7 +7,7 @@ package com.puttysoftware.fantastlereboot.ttmaze.objects;
 
 import com.puttysoftware.fantastlereboot.loaders.older.ObjectImageConstants;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractPassThroughObject;
-import com.puttysoftware.fantastlereboot.ttmaze.utilities.TypeConstants;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public class WallOff extends AbstractPassThroughObject {
     // Constructors

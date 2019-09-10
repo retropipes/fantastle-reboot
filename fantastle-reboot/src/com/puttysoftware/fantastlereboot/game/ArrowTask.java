@@ -31,6 +31,7 @@ import com.puttysoftware.fantastlereboot.objects.Arrow;
 import com.puttysoftware.fantastlereboot.objects.Empty;
 import com.puttysoftware.fantastlereboot.objects.IceArrow;
 import com.puttysoftware.fantastlereboot.objects.Wall;
+import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
 
 public class ArrowTask extends Thread {
     // Fields
@@ -71,8 +72,8 @@ public class ArrowTask extends Thread {
             o = new Wall();
         }
         final GenericTransientObject a = ArrowTask.createArrowForType(this.at);
-        final String suffix = MazeObject.resolveDirectionConstantToName(
-                MazeObject.resolveRelativeDirection(incX, incY));
+        final String suffix = DirectionResolver.resolveDirectionConstantToName(
+                DirectionResolver.resolveRelativeDirection(incX, incY));
         a.setNameSuffix(suffix);
         FantastleReboot.getBagOStuff().getPrefsManager();
         if (app.getPrefsManager()

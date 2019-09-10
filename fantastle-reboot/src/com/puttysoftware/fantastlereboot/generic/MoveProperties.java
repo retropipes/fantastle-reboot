@@ -20,7 +20,10 @@ package com.puttysoftware.fantastlereboot.generic;
 
 import java.util.Arrays;
 
-class MoveProperties implements DirectionConstants {
+import com.puttysoftware.fantastlereboot.utilities.DirectionConstants;
+import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
+
+class MoveProperties {
     // Properties
     private final boolean[] push;
     private final boolean[] pull;
@@ -105,7 +108,7 @@ class MoveProperties implements DirectionConstants {
     }
 
     public boolean isDirectionallyPushable(final int dirX, final int dirY) {
-        final int dir = MazeObject.resolveRelativeDirection(dirX, dirY);
+        final int dir = DirectionResolver.resolveRelativeDirection(dirX, dirY);
         try {
             if (dir != DirectionConstants.DIRECTION_NONE) {
                 return this.push[dir];
@@ -126,7 +129,7 @@ class MoveProperties implements DirectionConstants {
     }
 
     public boolean isDirectionallyPullable(final int dirX, final int dirY) {
-        final int dir = MazeObject.resolveRelativeDirection(dirX, dirY);
+        final int dir = DirectionResolver.resolveRelativeDirection(dirX, dirY);
         try {
             if (dir != DirectionConstants.DIRECTION_NONE) {
                 return this.pull[dir];
@@ -147,7 +150,7 @@ class MoveProperties implements DirectionConstants {
     }
 
     public boolean isDirectionallyPushableInto(final int dirX, final int dirY) {
-        final int dir = MazeObject.resolveRelativeDirection(dirX, dirY);
+        final int dir = DirectionResolver.resolveRelativeDirection(dirX, dirY);
         try {
             if (dir != DirectionConstants.DIRECTION_NONE) {
                 return this.pushInto[dir];
@@ -168,7 +171,7 @@ class MoveProperties implements DirectionConstants {
     }
 
     public boolean isDirectionallyPullableInto(final int dirX, final int dirY) {
-        final int dir = MazeObject.resolveRelativeDirection(dirX, dirY);
+        final int dir = DirectionResolver.resolveRelativeDirection(dirX, dirY);
         try {
             if (dir != DirectionConstants.DIRECTION_NONE) {
                 return this.pullInto[dir];
@@ -189,7 +192,7 @@ class MoveProperties implements DirectionConstants {
     }
 
     public boolean isDirectionallyPushableOut(final int dirX, final int dirY) {
-        final int dir = MazeObject.resolveRelativeDirection(dirX, dirY);
+        final int dir = DirectionResolver.resolveRelativeDirection(dirX, dirY);
         try {
             if (dir != DirectionConstants.DIRECTION_NONE) {
                 return this.pushOut[dir];
@@ -210,7 +213,7 @@ class MoveProperties implements DirectionConstants {
     }
 
     public boolean isDirectionallyPullableOut(final int dirX, final int dirY) {
-        final int dir = MazeObject.resolveRelativeDirection(dirX, dirY);
+        final int dir = DirectionResolver.resolveRelativeDirection(dirX, dirY);
         try {
             if (dir != DirectionConstants.DIRECTION_NONE) {
                 return this.pullOut[dir];

@@ -8,7 +8,7 @@ package com.puttysoftware.fantastlereboot.ttmaze.abc;
 import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
-import com.puttysoftware.fantastlereboot.ttmaze.utilities.TypeConstants;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public abstract class AbstractShop extends AbstractMazeObject {
     // Fields

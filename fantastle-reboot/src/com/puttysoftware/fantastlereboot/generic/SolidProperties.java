@@ -20,7 +20,10 @@ package com.puttysoftware.fantastlereboot.generic;
 
 import java.util.Arrays;
 
-class SolidProperties implements DirectionConstants {
+import com.puttysoftware.fantastlereboot.utilities.DirectionConstants;
+import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
+
+class SolidProperties {
     // Properties
     private final boolean[] solidX;
     private final boolean[] solidI;
@@ -77,7 +80,7 @@ class SolidProperties implements DirectionConstants {
 
     public boolean isDirectionallySolid(final boolean ie, final int dirX,
             final int dirY) {
-        final int dir = MazeObject.resolveRelativeDirection(dirX, dirY);
+        final int dir = DirectionResolver.resolveRelativeDirection(dirX, dirY);
         if (ie) {
             try {
                 if (dir != DirectionConstants.DIRECTION_NONE) {

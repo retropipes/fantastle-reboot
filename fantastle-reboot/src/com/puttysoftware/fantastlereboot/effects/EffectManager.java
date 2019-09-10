@@ -25,7 +25,7 @@ import javax.swing.JLabel;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
-import com.puttysoftware.fantastlereboot.generic.MazeObject;
+import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
 
 public class EffectManager {
     // Fields
@@ -205,11 +205,11 @@ public class EffectManager {
 
     public int[] doEffects(final int x, final int y) {
         int[] res = new int[] { x, y };
-        int dir = MazeObject.resolveRelativeDirection(x, y);
+        int dir = DirectionResolver.resolveRelativeDirection(x, y);
         for (int z = 0; z < EffectManager.NUM_EFFECTS; z++) {
             if (this.activeEffects[z].isActive()) {
                 dir = this.activeEffects[z].modifyMove1(dir);
-                res = MazeObject.unresolveRelativeDirection(dir);
+                res = DirectionResolver.unresolveRelativeDirection(dir);
                 res = this.activeEffects[z].modifyMove2(res);
             }
         }

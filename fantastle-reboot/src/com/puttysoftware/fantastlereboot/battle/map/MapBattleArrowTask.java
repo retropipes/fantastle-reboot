@@ -20,7 +20,7 @@ import com.puttysoftware.fantastlereboot.ttmaze.objects.Arrow;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.BattleCharacter;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Empty;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Wall;
-import com.puttysoftware.fantastlereboot.ttmaze.utilities.DirectionResolver;
+import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
 
 public class MapBattleArrowTask extends Thread {
     // Fields

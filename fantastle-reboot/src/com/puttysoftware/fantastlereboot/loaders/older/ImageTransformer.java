@@ -2,7 +2,7 @@ package com.puttysoftware.fantastlereboot.loaders.older;
 
 import java.awt.Color;
 
-import com.puttysoftware.fantastlereboot.ttmaze.utilities.ImageColorConstants;
+import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class ImageTransformer {

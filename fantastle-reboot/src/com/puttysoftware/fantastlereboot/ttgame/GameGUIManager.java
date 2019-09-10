@@ -38,7 +38,7 @@ import com.puttysoftware.fantastlereboot.ttmaze.objects.Darkness;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.EmptyVoid;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.MazeNoteObject;
 import com.puttysoftware.fantastlereboot.ttmaze.objects.Player;
-import com.puttysoftware.fantastlereboot.ttmaze.utilities.ImageColorConstants;
+import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class GameGUIManager {

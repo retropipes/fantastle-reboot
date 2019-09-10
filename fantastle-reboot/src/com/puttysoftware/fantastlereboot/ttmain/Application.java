@@ -23,7 +23,7 @@ import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.older.LogoManager;
 import com.puttysoftware.fantastlereboot.ttgame.GameLogicManager;
 import com.puttysoftware.fantastlereboot.ttmaze.MazeManager;
-import com.puttysoftware.fantastlereboot.ttmaze.utilities.MazeObjectList;
+import com.puttysoftware.fantastlereboot.utilities.MazeObjectList;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.updater.ProductData;
 

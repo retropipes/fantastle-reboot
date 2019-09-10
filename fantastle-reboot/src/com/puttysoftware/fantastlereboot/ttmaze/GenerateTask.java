@@ -15,7 +15,7 @@ import com.puttysoftware.fantastlereboot.loaders.older.LogoManager;
 import com.puttysoftware.fantastlereboot.ttmain.Application;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.ttmaze.utilities.ImageColorConstants;
+import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class GenerateTask extends Thread {

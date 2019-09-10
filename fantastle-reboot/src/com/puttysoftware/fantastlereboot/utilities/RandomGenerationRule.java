@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.ttmaze.utilities;
+package com.puttysoftware.fantastlereboot.utilities;
 
 import com.puttysoftware.fantastlereboot.ttmaze.Maze;
 

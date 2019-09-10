@@ -16,7 +16,7 @@ import com.puttysoftware.fantastlereboot.ttmain.Application;
 import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
 import com.puttysoftware.fantastlereboot.ttmaze.Maze;
 import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.ttmaze.utilities.ImageColorConstants;
+import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
 
 public class LevelLoadTask extends Thread {
     // Fields

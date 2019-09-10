@@ -1,7 +1,7 @@
 package com.puttysoftware.fantastlereboot.ttmaze.abc;
 
 import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
-import com.puttysoftware.fantastlereboot.ttmaze.utilities.TypeConstants;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public abstract class AbstractMovingObject extends AbstractMazeObject {
     // Constructors
