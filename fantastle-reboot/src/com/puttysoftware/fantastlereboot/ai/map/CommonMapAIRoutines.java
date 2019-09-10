@@ -7,6 +7,7 @@ package com.puttysoftware.fantastlereboot.ai.map;
 
 import java.awt.Point;
 
+import com.puttysoftware.fantastlereboot.ai.AIContext;
 import com.puttysoftware.randomrange.RandomRange;
 
 class CommonMapAIRoutines {
@@ -64,7 +65,7 @@ class CommonMapAIRoutines {
         }
     }
 
-    static int getMaxCastIndex(final MapAIContext ac) {
+    static int getMaxCastIndex(final AIContext ac) {
         final int currMP = ac.getCharacter().getTemplate().getCurrentMP();
         final int[] allCosts = ac.getCharacter().getTemplate().getSpellBook()
                 .getAllSpellCosts();
@@ -79,7 +80,7 @@ class CommonMapAIRoutines {
         return result;
     }
 
-    static boolean check(final MapAIContext ac, final int effChance) {
+    static boolean check(final AIContext ac, final int effChance) {
         final RandomRange random = new RandomRange(1, 100);
         final int chance = random.generate();
         if (chance <= effChance) {

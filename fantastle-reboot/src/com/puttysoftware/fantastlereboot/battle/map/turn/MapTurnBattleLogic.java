@@ -10,7 +10,8 @@ import javax.swing.JOptionPane;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.ai.map.AbstractMapAIRoutine;
+import com.puttysoftware.fantastlereboot.ai.AIContext;
+import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.ai.map.AutoMapAI;
 import com.puttysoftware.fantastlereboot.ai.map.MapAIContext;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
@@ -191,8 +192,7 @@ public class MapTurnBattleLogic extends Battle {
             currResult = BattleResults.WON;
         } else if (!this.isTeamAlive(Creature.TEAM_PARTY)
                 && !this.isTeamGone(Creature.TEAM_PARTY)
-                && !this.areTeamEnemiesDeadOrGone(
-                        Creature.TEAM_PARTY)) {
+                && !this.areTeamEnemiesDeadOrGone(Creature.TEAM_PARTY)) {
             currResult = BattleResults.LOST;
         } else if (this.areTeamEnemiesGone(Creature.TEAM_PARTY)) {
             currResult = BattleResults.ENEMY_FLED;
@@ -213,27 +213,27 @@ public class MapTurnBattleLogic extends Battle {
             final BattleCharacter active = this.bd.getActiveCharacter();
             if (active.getTemplate().isAlive()) {
                 final int action = active.getTemplate().getMapAI()
-                        .getNextAction(this.bd
+                        .getNextAction(this.bd.getActiveCharacter().getTemplate(), this.bd
                                 .getBattlerAIContexts()[this.activeIndex]);
                 switch (action) {
-                case AbstractMapAIRoutine.ACTION_MOVE:
+                case AIRoutine.ACTION_MOVE:
                     final int x = active.getTemplate().getMapAI().getMoveX();
                     final int y = active.getTemplate().getMapAI().getMoveY();
                     this.lastAIActionResult = this.updatePosition(x, y);
                     active.getTemplate().getMapAI()
                             .setLastResult(this.lastAIActionResult);
                     break;
-                case AbstractMapAIRoutine.ACTION_CAST_SPELL:
+                case AIRoutine.ACTION_CAST_SPELL:
                     this.lastAIActionResult = this.castSpell();
                     active.getTemplate().getMapAI()
                             .setLastResult(this.lastAIActionResult);
                     break;
-                case AbstractMapAIRoutine.ACTION_DRAIN:
+                case AIRoutine.ACTION_DRAIN:
                     this.lastAIActionResult = this.drain();
                     active.getTemplate().getMapAI()
                             .setLastResult(this.lastAIActionResult);
                     break;
-                case AbstractMapAIRoutine.ACTION_STEAL:
+                case AIRoutine.ACTION_STEAL:
                     this.lastAIActionResult = this.steal();
                     active.getTemplate().getMapAI()
                             .setLastResult(this.lastAIActionResult);
@@ -257,16 +257,16 @@ public class MapTurnBattleLogic extends Battle {
     private void executeAutoAI(final BattleCharacter acting) {
         final int index = this.bd.findBattler(acting.getName());
         final int action = this.auto
-                .getNextAction(this.bd.getBattlerAIContexts()[index]);
+                .getNextAction(acting.getTemplate(), this.bd.getBattlerAIContexts()[index]);
         switch (action) {
-        case AbstractMapAIRoutine.ACTION_MOVE:
+        case AIRoutine.ACTION_MOVE:
             final int x = this.auto.getMoveX();
             final int y = this.auto.getMoveY();
             final int activeTID = this.bd.getActiveCharacter().getTeamID();
             final BattleCharacter theEnemy = (activeTID == Creature.TEAM_PARTY
                     ? this.enemy
-                    : this.bd.getBattlers()[this.bd.findFirstBattlerOnTeam(
-                            Creature.TEAM_PARTY)]);
+                    : this.bd.getBattlers()[this.bd
+                            .findFirstBattlerOnTeam(Creature.TEAM_PARTY)]);
             final AbstractDamageEngine activeDE = (activeTID == Creature.TEAM_PARTY
                     ? this.ede
                     : this.pde);
@@ -279,11 +279,9 @@ public class MapTurnBattleLogic extends Battle {
     }
 
     private void displayRoundResults(final Creature theEnemy,
-            final Creature active,
-            final AbstractDamageEngine activeDE) {
+            final Creature active, final AbstractDamageEngine activeDE) {
         // Display round results
-        final boolean isParty = active
-                .getTeamID() == Creature.TEAM_PARTY;
+        final boolean isParty = active.getTeamID() == Creature.TEAM_PARTY;
         final String activeName = active.getName();
         final String enemyName = theEnemy.getName();
         String damageString = Integer.toString(this.damage);
@@ -372,8 +370,7 @@ public class MapTurnBattleLogic extends Battle {
         this.setStatusMessage(displayDamageString);
     }
 
-    private void computeDamage(final Creature theEnemy,
-            final Creature acting,
+    private void computeDamage(final Creature theEnemy, final Creature acting,
             final AbstractDamageEngine activeDE) {
         // Compute Damage
         this.damage = 0;
@@ -689,8 +686,8 @@ public class MapTurnBattleLogic extends Battle {
         }
         if (next != null && nextGround != null && currGround != null) {
             if (!next.isSolidInBattle()) {
-                if ((useAP && this.getActiveActionCounter() >= MapAIContext
-                        .getAPCost()) || !useAP) {
+                if ((useAP && this.getActiveActionCounter() >= AIContext
+                        .getDefaultAPCost()) || !useAP) {
                     // Move
                     AbstractMazeObject obj1 = null;
                     AbstractMazeObject obj2 = null;
@@ -847,7 +844,7 @@ public class MapTurnBattleLogic extends Battle {
                             m.getCell(px, py, 0, MazeConstants.LAYER_OBJECT));
                     m.setCell(active, px, py, 0, MazeConstants.LAYER_OBJECT);
                     this.decrementActiveActionCounterBy(
-                            MapAIContext.getAPCost());
+                            AIContext.getDefaultAPCost());
                     SoundLoader.playSound(GameSound.WALK);
                 } else {
                     // Deny move - out of actions
@@ -883,8 +880,8 @@ public class MapTurnBattleLogic extends Battle {
                         this.computeDamage(theEnemy.getTemplate(),
                                 active.getTemplate(), activeDE);
                         // Handle low health for party members
-                        if (theEnemy.getTemplate().isAlive() && theEnemy
-                                .getTeamID() == Creature.TEAM_PARTY
+                        if (theEnemy.getTemplate().isAlive()
+                                && theEnemy.getTeamID() == Creature.TEAM_PARTY
                                 && theEnemy.getTemplate()
                                         .getCurrentHP() <= theEnemy
                                                 .getTemplate().getMaximumHP()
@@ -893,8 +890,7 @@ public class MapTurnBattleLogic extends Battle {
                         }
                         // Handle enemy death
                         if (!theEnemy.getTemplate().isAlive()) {
-                            if (theEnemy
-                                    .getTeamID() != Creature.TEAM_PARTY) {
+                            if (theEnemy.getTeamID() != Creature.TEAM_PARTY) {
                                 // Update victory spoils
                                 this.battleExp = theEnemy.getTemplate()
                                         .getExperience();
@@ -1344,8 +1340,7 @@ public class MapTurnBattleLogic extends Battle {
             // Maintain Effects
             if (this.bd.getBattlers()[x] != null
                     && this.bd.getBattlers()[x].isActive()) {
-                final Creature active = this.bd.getBattlers()[x]
-                        .getTemplate();
+                final Creature active = this.bd.getBattlers()[x].getTemplate();
                 // Use Effects
                 active.useEffects();
                 // Display all effect messages
@@ -1462,16 +1457,16 @@ public class MapTurnBattleLogic extends Battle {
     @Override
     public boolean doPlayerActions(final int action) {
         switch (action) {
-        case AbstractMapAIRoutine.ACTION_CAST_SPELL:
+        case AIRoutine.ACTION_CAST_SPELL:
             this.castSpell();
             break;
-        case AbstractMapAIRoutine.ACTION_DRAIN:
+        case AIRoutine.ACTION_DRAIN:
             this.drain();
             break;
-        case AbstractMapAIRoutine.ACTION_STEAL:
+        case AIRoutine.ACTION_STEAL:
             this.steal();
             break;
-        case AbstractMapAIRoutine.ACTION_USE_ITEM:
+        case AIRoutine.ACTION_USE_ITEM:
             this.useItem();
             break;
         default:
@@ -1506,8 +1501,8 @@ public class MapTurnBattleLogic extends Battle {
                 } else if (this.result == BattleResults.DRAW) {
                     this.setStatusMessage(
                             "The Boss battle was a draw. You are fully healed!");
-                    PartyManager.getParty().getLeader().healPercentage(
-                            Creature.FULL_HEAL_PERCENTAGE);
+                    PartyManager.getParty().getLeader()
+                            .healPercentage(Creature.FULL_HEAL_PERCENTAGE);
                     PartyManager.getParty().getLeader().regeneratePercentage(
                             Creature.FULL_HEAL_PERCENTAGE);
                 } else if (this.result == BattleResults.FLED) {

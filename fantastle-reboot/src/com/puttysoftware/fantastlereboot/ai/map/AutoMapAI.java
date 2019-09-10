@@ -7,6 +7,10 @@ package com.puttysoftware.fantastlereboot.ai.map;
 
 import java.awt.Point;
 
+import com.puttysoftware.fantastlereboot.ai.AIContext;
+import com.puttysoftware.fantastlereboot.ai.AIRoutine;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
+
 public class AutoMapAI extends AbstractMapAIRoutine {
     // Constructor
     public AutoMapAI() {
@@ -14,13 +18,13 @@ public class AutoMapAI extends AbstractMapAIRoutine {
     }
 
     @Override
-    public int getNextAction(final MapAIContext ac) {
+    public int getNextAction(final Creature c, final AIContext ac) {
         final Point there = ac.isEnemyNearby();
         if (there != null) {
             // Something hostile is nearby, so attack it
             this.moveX = there.x;
             this.moveY = there.y;
-            return AbstractMapAIRoutine.ACTION_MOVE;
+            return AIRoutine.ACTION_MOVE;
         } else {
             return AbstractMapAIRoutine.ACTION_END_TURN;
         }

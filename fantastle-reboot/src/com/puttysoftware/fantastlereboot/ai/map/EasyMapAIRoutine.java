@@ -7,6 +7,9 @@ package com.puttysoftware.fantastlereboot.ai.map;
 
 import java.awt.Point;
 
+import com.puttysoftware.fantastlereboot.ai.AIContext;
+import com.puttysoftware.fantastlereboot.ai.AIRoutine;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.randomrange.RandomRange;
 
 class EasyMapAIRoutine extends AbstractMapAIRoutine {
@@ -29,29 +32,29 @@ class EasyMapAIRoutine extends AbstractMapAIRoutine {
     }
 
     @Override
-    public int getNextAction(final MapAIContext ac) {
+    public int getNextAction(final Creature c, final AIContext ac) {
         if (this.roundsRemaining == null) {
             this.roundsRemaining = new int[ac.getCharacter().getTemplate()
                     .getSpellBook().getSpellCount()];
         }
         if (this.spellCheck(ac)) {
             // Cast a spell
-            return AbstractMapAIRoutine.ACTION_CAST_SPELL;
+            return AIRoutine.ACTION_CAST_SPELL;
         } else {
             Point there = ac.isEnemyNearby();
             if (there != null) {
                 if (CommonMapAIRoutines.check(ac, STEAL_CHANCE)) {
                     // Steal
-                    return AbstractMapAIRoutine.ACTION_STEAL;
+                    return AIRoutine.ACTION_STEAL;
                 } else if (CommonMapAIRoutines.check(ac, DRAIN_CHANCE)) {
                     // Drain MP
-                    return AbstractMapAIRoutine.ACTION_DRAIN;
+                    return AIRoutine.ACTION_DRAIN;
                 } else {
                     // Something hostile is nearby, so attack it
                     if (ac.getCharacter().getCurrentAT() > 0) {
                         this.moveX = there.x;
                         this.moveY = there.y;
-                        return AbstractMapAIRoutine.ACTION_MOVE;
+                        return AIRoutine.ACTION_MOVE;
                     } else {
                         this.failedMoveAttempts = 0;
                         return AbstractMapAIRoutine.ACTION_END_TURN;
@@ -74,7 +77,7 @@ class EasyMapAIRoutine extends AbstractMapAIRoutine {
                         this.moveX = awayDir.x;
                         this.moveY = awayDir.y;
                     }
-                    return AbstractMapAIRoutine.ACTION_MOVE;
+                    return AIRoutine.ACTION_MOVE;
                 } else {
                     // Look further
                     for (int x = CommonMapAIRoutines.MIN_VISION + 1; x <= MAX_VISION; x++) {
@@ -120,7 +123,7 @@ class EasyMapAIRoutine extends AbstractMapAIRoutine {
                             this.moveY = this.randMove.generate();
                         }
                     }
-                    return AbstractMapAIRoutine.ACTION_MOVE;
+                    return AIRoutine.ACTION_MOVE;
                 } else {
                     this.failedMoveAttempts = 0;
                     return AbstractMapAIRoutine.ACTION_END_TURN;
@@ -129,7 +132,7 @@ class EasyMapAIRoutine extends AbstractMapAIRoutine {
         }
     }
 
-    private boolean spellCheck(final MapAIContext ac) {
+    private boolean spellCheck(final AIContext ac) {
         final RandomRange random = new RandomRange(1, 100);
         final int chance = random.generate();
         if (chance <= EasyMapAIRoutine.CAST_SPELL_CHANCE) {

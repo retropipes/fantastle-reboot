@@ -27,7 +27,7 @@ import javax.swing.WindowConstants;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.ai.map.AbstractMapAIRoutine;
+import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleDraw;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleEffects;
@@ -336,16 +336,16 @@ class MapTimeBattleGUI {
                 // Do Player Actions
                 if (cmd.equals("Cast Spell") || cmd.equals("c")) {
                     // Cast Spell
-                    b.doPlayerActions(AbstractMapAIRoutine.ACTION_CAST_SPELL);
+                    b.doPlayerActions(AIRoutine.ACTION_CAST_SPELL);
                 } else if (cmd.equals("Steal") || cmd.equals("t")) {
                     // Steal Money
-                    b.doPlayerActions(AbstractMapAIRoutine.ACTION_STEAL);
+                    b.doPlayerActions(AIRoutine.ACTION_STEAL);
                 } else if (cmd.equals("Drain") || cmd.equals("d")) {
                     // Drain Enemy
-                    b.doPlayerActions(AbstractMapAIRoutine.ACTION_DRAIN);
+                    b.doPlayerActions(AIRoutine.ACTION_DRAIN);
                 } else if (cmd.equals("Use Item") || cmd.equals("i")) {
                     // Use Item
-                    b.doPlayerActions(AbstractMapAIRoutine.ACTION_USE_ITEM);
+                    b.doPlayerActions(AIRoutine.ACTION_USE_ITEM);
                 }
             } catch (final Throwable t) {
                 FantastleReboot.logError(t);

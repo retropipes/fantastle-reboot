@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.ai.map.AbstractMapAIRoutine;
+import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.ai.map.AutoMapAI;
 import com.puttysoftware.fantastlereboot.ai.map.MapAIContext;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
@@ -199,9 +199,9 @@ public class MapTimeBattleLogic extends Battle {
             final BattleCharacter active = this.enemy;
             if (active.getTemplate().isAlive()) {
                 final int action = active.getTemplate().getMapAI()
-                        .getNextAction(this.enemyContext);
+                        .getNextAction(this.getEnemy(), this.enemyContext);
                 switch (action) {
-                case AbstractMapAIRoutine.ACTION_MOVE:
+                case AIRoutine.ACTION_MOVE:
                     final int x = active.getTemplate().getMapAI().getMoveX();
                     final int y = active.getTemplate().getMapAI().getMoveY();
                     this.lastAIActionResult = this.updatePositionInternal(x, y,
@@ -210,17 +210,17 @@ public class MapTimeBattleLogic extends Battle {
                     active.getTemplate().getMapAI()
                             .setLastResult(this.lastAIActionResult);
                     break;
-                case AbstractMapAIRoutine.ACTION_CAST_SPELL:
+                case AIRoutine.ACTION_CAST_SPELL:
                     this.lastAIActionResult = this.castEnemySpell();
                     active.getTemplate().getMapAI()
                             .setLastResult(this.lastAIActionResult);
                     break;
-                case AbstractMapAIRoutine.ACTION_DRAIN:
+                case AIRoutine.ACTION_DRAIN:
                     this.lastAIActionResult = this.enemyDrain();
                     active.getTemplate().getMapAI()
                             .setLastResult(this.lastAIActionResult);
                     break;
-                case AbstractMapAIRoutine.ACTION_STEAL:
+                case AIRoutine.ACTION_STEAL:
                     this.lastAIActionResult = this.enemySteal();
                     active.getTemplate().getMapAI()
                             .setLastResult(this.lastAIActionResult);
@@ -240,9 +240,9 @@ public class MapTimeBattleLogic extends Battle {
 
     private void executeAutoAI(final BattleCharacter acting,
             final BattleCharacter theEnemy, final MapAIContext theContext) {
-        final int action = this.auto.getNextAction(theContext);
+        final int action = this.auto.getNextAction(acting.getTemplate(), theContext);
         switch (action) {
-        case AbstractMapAIRoutine.ACTION_MOVE:
+        case AIRoutine.ACTION_MOVE:
             final int x = this.auto.getMoveX();
             final int y = this.auto.getMoveY();
             final int activeTID = acting.getTeamID();
@@ -1356,16 +1356,16 @@ public class MapTimeBattleLogic extends Battle {
     @Override
     public boolean doPlayerActions(final int action) {
         switch (action) {
-        case AbstractMapAIRoutine.ACTION_CAST_SPELL:
+        case AIRoutine.ACTION_CAST_SPELL:
             this.castSpell();
             break;
-        case AbstractMapAIRoutine.ACTION_DRAIN:
+        case AIRoutine.ACTION_DRAIN:
             this.drain();
             break;
-        case AbstractMapAIRoutine.ACTION_STEAL:
+        case AIRoutine.ACTION_STEAL:
             this.steal();
             break;
-        case AbstractMapAIRoutine.ACTION_USE_ITEM:
+        case AIRoutine.ACTION_USE_ITEM:
             this.useItem();
             break;
         default:

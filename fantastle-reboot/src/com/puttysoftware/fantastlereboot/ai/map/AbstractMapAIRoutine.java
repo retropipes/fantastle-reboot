@@ -5,21 +5,15 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ai.map;
 
+import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItem;
-import com.puttysoftware.fantastlereboot.spells.Spell;
 
-public abstract class AbstractMapAIRoutine {
+public abstract class AbstractMapAIRoutine extends AIRoutine {
     // Fields
-    protected Spell spell;
     private final CombatItem item;
     protected int moveX;
     protected int moveY;
     protected boolean lastResult;
-    public static final int ACTION_MOVE = 0;
-    public static final int ACTION_CAST_SPELL = 1;
-    public static final int ACTION_STEAL = 2;
-    public static final int ACTION_DRAIN = 3;
-    public static final int ACTION_USE_ITEM = 4;
     static final int ACTION_END_TURN = 5;
 
     // Constructor
@@ -31,9 +25,6 @@ public abstract class AbstractMapAIRoutine {
         this.lastResult = true;
     }
 
-    // Methods
-    public abstract int getNextAction(MapAIContext ac);
-
     public void newRoundHook() {
         // Do nothing
     }
@@ -44,10 +35,6 @@ public abstract class AbstractMapAIRoutine {
 
     public final int getMoveY() {
         return this.moveY;
-    }
-
-    public final Spell getSpellToCast() {
-        return this.spell;
     }
 
     public final CombatItem getItemToUse() {
