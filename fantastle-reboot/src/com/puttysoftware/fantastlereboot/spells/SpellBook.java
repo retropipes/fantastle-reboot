@@ -10,76 +10,74 @@ import java.util.Objects;
 
 public abstract class SpellBook {
     // Fields
-    private final ArrayList<Spell> spells;
-    private final ArrayList<Boolean> known;
+    private final ArrayList<SpellBookPage> pages;
 
     // Constructors
     protected SpellBook() {
         super();
-        this.spells = new ArrayList<>();
-        this.known = new ArrayList<>();
+        this.pages = new ArrayList<>();
+    }
+
+    protected final SpellBookPage addSpell(final Spell sp) {
+        SpellBookPage sbp = new SpellBookPage(sp);
+        this.pages.add(sbp);
+        return sbp;
     }
 
     protected final void addKnownSpell(final Spell sp) {
-        this.spells.add(sp);
-        this.known.add(true);
+        this.pages.add(new SpellBookPage(sp).learn());
     }
 
     protected final void addUnknownSpell(final Spell sp) {
-        this.spells.add(sp);
-        this.known.add(false);
+        this.pages.add(new SpellBookPage(sp).forget());
     }
 
     public abstract int getID();
 
     public final int getSpellCount() {
-        return this.spells.size();
+        return this.pages.size();
     }
 
     public final boolean isSpellKnown(final int ID) {
-        return this.known.get(ID);
+        return this.pages.get(ID).isKnown();
     }
 
     public final Spell getSpellByID(final int ID) {
-        return this.spells.get(ID);
+        return this.pages.get(ID).getSpell();
     }
 
     public final int getSpellsKnownCount() {
         int k = 0;
-        for (final boolean element : this.known) {
-            if (element) {
+        for (final SpellBookPage element : this.pages) {
+            if (element.isKnown()) {
                 k++;
             }
         }
         return k;
     }
 
-    public final int getMaximumSpellsKnownCount() {
-        return this.known.size();
-    }
-
     public String getNextSpellToLearnName() {
         final int numKnown = this.getSpellsKnownCount();
-        final int max = this.getMaximumSpellsKnownCount();
+        final int max = this.getSpellCount();
         if (numKnown == max) {
             return null;
         } else {
-            return this.spells.get(numKnown).getEffect().getName();
+            return this.pages.get(numKnown).getSpell().getEffect().getName();
         }
     }
 
     public final String[] getAllSpellsToLearnNames() {
         final int numKnown = this.getSpellsKnownCount();
-        final int max = this.getMaximumSpellsKnownCount();
+        final int max = this.getSpellCount();
         if (numKnown == max) {
             return null;
         } else {
             int counter = 0;
             final String[] res = new String[max - numKnown];
-            final int spellSize = this.spells.size();
-            for (int x = 0; x < spellSize; x++) {
-                if (!this.known.get(x)) {
-                    res[counter] = this.spells.get(x).getEffect().getName();
+            for (int x = 0; x < max; x++) {
+                SpellBookPage page = this.pages.get(x);
+                if (!page.isKnown()) {
+                    res[counter] = page.getSpell().getEffect().getName();
                     counter++;
                 }
             }
@@ -89,12 +87,13 @@ public abstract class SpellBook {
 
     final Spell getSpellByName(final String sname) {
         int x;
-        final int spellSize = this.spells.size();
+        final int spellSize = this.pages.size();
         for (x = 0; x < spellSize; x++) {
-            final String currName = this.spells.get(x).getEffect().getName();
+            final String currName = this.pages.get(x).getSpell().getEffect()
+                    .getName();
             if (currName.equals(sname)) {
                 // Found it
-                return this.spells.get(x);
+                return this.pages.get(x).getSpell();
             }
         }
         // Didn't find it
@@ -102,22 +101,20 @@ public abstract class SpellBook {
     }
 
     public final void learnSpellByID(final int ID) {
-        if (ID != -1) {
-            this.known.set(ID, true);
-        }
+        this.pages.get(ID).learn();
     }
 
     public final void learnAllSpells() {
-        final int spellSize = this.spells.size();
+        final int spellSize = this.pages.size();
         for (int x = 0; x < spellSize; x++) {
-            this.known.set(x, true);
+            this.pages.get(x).learn();
         }
     }
 
     public final void forgetAllSpells() {
-        final int spellSize = this.spells.size();
+        final int spellSize = this.pages.size();
         for (int x = 0; x < spellSize; x++) {
-            this.known.set(x, false);
+            this.pages.get(x).forget();
         }
     }
 
@@ -125,11 +122,12 @@ public abstract class SpellBook {
         int x;
         int k = 0;
         String[] names;
-        final int spellSize = this.spells.size();
+        final int spellSize = this.pages.size();
         final ArrayList<String> tempnames = new ArrayList<>();
         for (x = 0; x < spellSize; x++) {
-            if (this.known.get(x)) {
-                tempnames.add(this.spells.get(x).getEffect().getName());
+            SpellBookPage page = this.pages.get(x);
+            if (page.isKnown()) {
+                tempnames.add(page.getSpell().getEffect().getName());
                 k++;
             }
         }
@@ -137,8 +135,9 @@ public abstract class SpellBook {
             names = new String[k];
             k = 0;
             for (x = 0; x < spellSize; x++) {
-                if (this.known.get(x)) {
-                    names[k] = this.spells.get(x).getEffect().getName();
+                SpellBookPage page = this.pages.get(x);
+                if (page.isKnown()) {
+                    names[k] = page.getSpell().getEffect().getName();
                     k++;
                 }
             }
@@ -152,11 +151,12 @@ public abstract class SpellBook {
         int x;
         int k = 0;
         String[] names;
-        final int spellSize = this.spells.size();
+        final int spellSize = this.pages.size();
         final ArrayList<String> tempnames = new ArrayList<>();
         for (x = 0; x < spellSize; x++) {
-            if (this.known.get(x)) {
-                tempnames.add(this.spells.get(x).getEffect().getName());
+            SpellBookPage page = this.pages.get(x);
+            if (page.isKnown()) {
+                tempnames.add(page.getSpell().getEffect().getName());
                 k++;
             }
         }
@@ -164,8 +164,9 @@ public abstract class SpellBook {
             names = new String[k];
             k = 0;
             for (x = 0; x < spellSize; x++) {
-                if (this.known.get(x)) {
-                    names[k] = this.spells.get(x).getEffect().getName();
+                SpellBookPage page = this.pages.get(x);
+                if (page.isKnown()) {
+                    names[k] = page.getSpell().getEffect().getName();
                     k++;
                 }
             }
@@ -175,8 +176,9 @@ public abstract class SpellBook {
         if (names != null) {
             k = 0;
             for (x = 0; x < spellSize; x++) {
-                if (this.known.get(x)) {
-                    final int cost = this.spells.get(x).getCost();
+                SpellBookPage page = this.pages.get(x);
+                if (page.isKnown()) {
+                    final int cost = page.getSpell().getCost();
                     final String costStr = Integer.toString(cost);
                     names[k] += " (" + costStr + " MP)";
                     k++;
@@ -190,9 +192,9 @@ public abstract class SpellBook {
         int x;
         int k = 0;
         int[] costs;
-        final int spellSize = this.spells.size();
+        final int spellSize = this.pages.size();
         for (x = 0; x < spellSize; x++) {
-            if (this.known.get(x)) {
+            if (this.pages.get(x).isKnown()) {
                 k++;
             }
         }
@@ -200,8 +202,9 @@ public abstract class SpellBook {
             costs = new int[k];
             k = 0;
             for (x = 0; x < spellSize; x++) {
-                if (this.known.get(x)) {
-                    costs[k] = this.spells.get(x).getCost();
+                SpellBookPage page = this.pages.get(x);
+                if (page.isKnown()) {
+                    costs[k] = page.getSpell().getCost();
                     k++;
                 }
             }
@@ -213,9 +216,10 @@ public abstract class SpellBook {
 
     public final int getSpellIDByName(final String sname) {
         int x;
-        final int spellSize = this.spells.size();
+        final int spellSize = this.pages.size();
         for (x = 0; x < spellSize; x++) {
-            final String currName = this.spells.get(x).getEffect().getName();
+            final String currName = this.pages.get(x).getSpell().getEffect()
+                    .getName();
             if (currName.equals(sname)) {
                 // Found it
                 return x;
@@ -227,7 +231,7 @@ public abstract class SpellBook {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.known, this.spells);
+        return Objects.hash(this.pages);
     }
 
     @Override
@@ -239,7 +243,6 @@ public abstract class SpellBook {
             return false;
         }
         SpellBook other = (SpellBook) obj;
-        return Objects.equals(this.known, other.known)
-                && Objects.equals(this.spells, other.spells);
+        return Objects.equals(this.pages, other.pages);
     }
 }
