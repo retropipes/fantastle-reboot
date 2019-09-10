@@ -6,7 +6,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.battle.map;
 
 import com.puttysoftware.fantastlereboot.creatures.monsters.MonsterFactory;
-import com.puttysoftware.fantastlereboot.ttmaze.objects.BattleCharacter;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
 
 public class MapBattle {
     // Fields

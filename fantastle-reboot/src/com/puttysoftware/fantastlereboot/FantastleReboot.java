@@ -32,9 +32,9 @@ import javax.swing.WindowConstants;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.errorlogger.ErrorLogger;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
-import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
-import com.puttysoftware.fantastlereboot.loaders.old.ImageCache;
-import com.puttysoftware.fantastlereboot.loaders.old.MonsterImageCache;
+import com.puttysoftware.fantastlereboot.obsolete.loaders1.GraphicsManager;
+import com.puttysoftware.fantastlereboot.obsolete.loaders1.ImageCache;
+import com.puttysoftware.fantastlereboot.obsolete.loaders1.MonsterImageCache;
 import com.puttysoftware.integration.NativeIntegration;
 
 public class FantastleReboot {

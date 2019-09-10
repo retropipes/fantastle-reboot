@@ -13,7 +13,7 @@ import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
-import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
+import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 
 public class CombatItemChucker {
     // Fields

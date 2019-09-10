@@ -32,15 +32,15 @@ import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.obsolete.Application;
+import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Empty;
 import com.puttysoftware.fantastlereboot.spells.Spell;
 import com.puttysoftware.fantastlereboot.spells.SpellCaster;
-import com.puttysoftware.fantastlereboot.ttmain.Application;
-import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
-import com.puttysoftware.fantastlereboot.ttmaze.Maze;
-import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
-import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.ttmaze.objects.BattleCharacter;
-import com.puttysoftware.fantastlereboot.ttmaze.objects.Empty;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class MapTimeBattleLogic extends Battle {

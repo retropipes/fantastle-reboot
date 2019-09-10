@@ -22,8 +22,8 @@ import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
 import com.puttysoftware.fantastlereboot.battle.BossRewards;
-import com.puttysoftware.fantastlereboot.loaders.older.LogoManager;
-import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
+import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
+import com.puttysoftware.fantastlereboot.obsolete.loaders2.LogoManager;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class WindowTimeBattleGUI {

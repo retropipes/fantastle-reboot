@@ -47,14 +47,14 @@ import javax.swing.JProgressBar;
 import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 
-import com.puttysoftware.fantastlereboot.generic.MazeObject;
-import com.puttysoftware.fantastlereboot.maze.Extension;
-import com.puttysoftware.fantastlereboot.objects.Dirt;
-import com.puttysoftware.fantastlereboot.objects.Grass;
-import com.puttysoftware.fantastlereboot.objects.Sand;
-import com.puttysoftware.fantastlereboot.objects.Snow;
-import com.puttysoftware.fantastlereboot.objects.Tile;
-import com.puttysoftware.fantastlereboot.objects.Tundra;
+import com.puttysoftware.fantastlereboot.obsolete.generic.MazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze1.Extension;
+import com.puttysoftware.fantastlereboot.obsolete.objects.Dirt;
+import com.puttysoftware.fantastlereboot.obsolete.objects.Grass;
+import com.puttysoftware.fantastlereboot.obsolete.objects.Sand;
+import com.puttysoftware.fantastlereboot.obsolete.objects.Snow;
+import com.puttysoftware.fantastlereboot.obsolete.objects.Tile;
+import com.puttysoftware.fantastlereboot.obsolete.objects.Tundra;
 
 public class PreferencesManager implements PreferencesHandler {
     // Fields

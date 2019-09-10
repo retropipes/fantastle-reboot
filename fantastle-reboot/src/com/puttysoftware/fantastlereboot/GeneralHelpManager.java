@@ -24,7 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.loaders.HelpLoader;
-import com.puttysoftware.fantastlereboot.loaders.old.GraphicsManager;
+import com.puttysoftware.fantastlereboot.obsolete.loaders1.GraphicsManager;
 import com.puttysoftware.help.HTMLHelpViewer;
 
 public class GeneralHelpManager {

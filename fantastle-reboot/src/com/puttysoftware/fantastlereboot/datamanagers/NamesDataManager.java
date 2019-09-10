@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.oldnames.NamesConstants;
+import com.puttysoftware.fantastlereboot.obsolete.names.NamesConstants;
 import com.puttysoftware.fileutils.ResourceStreamReader;
 
 public class NamesDataManager {

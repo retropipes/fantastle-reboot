@@ -8,10 +8,10 @@ package com.puttysoftware.fantastlereboot.ai.map;
 import java.awt.Point;
 
 import com.puttysoftware.fantastlereboot.ai.AIContext;
-import com.puttysoftware.fantastlereboot.ttmaze.Maze;
-import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
-import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.ttmaze.objects.BattleCharacter;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
 
 public class MapAIContext extends AIContext {
     private final int[][] apCosts;

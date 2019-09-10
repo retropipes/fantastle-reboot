@@ -10,16 +10,16 @@ import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
-import com.puttysoftware.fantastlereboot.ttmain.Application;
-import com.puttysoftware.fantastlereboot.ttmain.TallerTower;
-import com.puttysoftware.fantastlereboot.ttmaze.Maze;
-import com.puttysoftware.fantastlereboot.ttmaze.MazeConstants;
-import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.ttmaze.abc.AbstractTransientObject;
-import com.puttysoftware.fantastlereboot.ttmaze.objects.Arrow;
-import com.puttysoftware.fantastlereboot.ttmaze.objects.BattleCharacter;
-import com.puttysoftware.fantastlereboot.ttmaze.objects.Empty;
-import com.puttysoftware.fantastlereboot.ttmaze.objects.Wall;
+import com.puttysoftware.fantastlereboot.obsolete.Application;
+import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractTransientObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Arrow;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Empty;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Wall;
 import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
 
 public class MapBattleArrowTask extends Thread {

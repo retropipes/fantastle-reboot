@@ -6,8 +6,8 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.items;
 
 import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
-import com.puttysoftware.fantastlereboot.oldnames.NamesConstants;
-import com.puttysoftware.fantastlereboot.oldnames.NamesManager;
+import com.puttysoftware.fantastlereboot.obsolete.names.NamesConstants;
+import com.puttysoftware.fantastlereboot.obsolete.names.NamesManager;
 
 public class WeaponConstants {
     // Constants

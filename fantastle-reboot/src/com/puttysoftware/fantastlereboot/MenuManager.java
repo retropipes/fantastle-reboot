@@ -30,8 +30,8 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
-import com.puttysoftware.fantastlereboot.loaders.old.ImageCache;
-import com.puttysoftware.fantastlereboot.loaders.old.MonsterImageCache;
+import com.puttysoftware.fantastlereboot.obsolete.loaders1.ImageCache;
+import com.puttysoftware.fantastlereboot.obsolete.loaders1.MonsterImageCache;
 
 public class MenuManager {
     // Fields

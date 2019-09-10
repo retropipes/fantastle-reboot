@@ -5,8 +5,8 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.items;
 
-import com.puttysoftware.fantastlereboot.oldnames.NamesConstants;
-import com.puttysoftware.fantastlereboot.oldnames.NamesManager;
+import com.puttysoftware.fantastlereboot.obsolete.names.NamesConstants;
+import com.puttysoftware.fantastlereboot.obsolete.names.NamesManager;
 
 public class EquipmentSlotConstants {
     static final int SLOT_SOCKS = -2;

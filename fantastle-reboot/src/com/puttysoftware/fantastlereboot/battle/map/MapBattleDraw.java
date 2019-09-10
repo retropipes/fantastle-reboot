@@ -5,8 +5,8 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import com.puttysoftware.fantastlereboot.loaders.older.BattleImageManager;
-import com.puttysoftware.fantastlereboot.ttmain.DrawGrid;
+import com.puttysoftware.fantastlereboot.obsolete.DrawGrid;
+import com.puttysoftware.fantastlereboot.obsolete.loaders2.BattleImageManager;
 
 public class MapBattleDraw extends JPanel {
     private static final long serialVersionUID = 35935343464625L;

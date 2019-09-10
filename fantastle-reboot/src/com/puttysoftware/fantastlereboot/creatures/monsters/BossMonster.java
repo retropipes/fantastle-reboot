@@ -14,7 +14,7 @@ import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
-import com.puttysoftware.fantastlereboot.loaders.older.BossImageManager;
+import com.puttysoftware.fantastlereboot.obsolete.loaders2.BossImageManager;
 import com.puttysoftware.fantastlereboot.spells.BossSpellBook;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
 import com.puttysoftware.images.BufferedImageIcon;

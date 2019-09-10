@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.personalities.PersonalityConstants;
-import com.puttysoftware.fantastlereboot.ttmaze.Extension;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.Extension;
 import com.puttysoftware.fileutils.ResourceStreamReader;
 
 public class PersonalityDataManager {

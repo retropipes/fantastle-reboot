@@ -8,7 +8,7 @@ package com.puttysoftware.fantastlereboot.creatures.characterfiles;
 import java.io.File;
 import java.io.FilenameFilter;
 
-import com.puttysoftware.fantastlereboot.ttmaze.Extension;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.Extension;
 
 class CharacterFilter implements FilenameFilter {
     @Override
