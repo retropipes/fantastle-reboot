@@ -4,11 +4,11 @@ import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
-import com.puttysoftware.fantastlereboot.generic.ArrowTypeConstants;
 import com.puttysoftware.fantastlereboot.generic.GenericDungeonObject;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
 import com.puttysoftware.fantastlereboot.generic.MazeObjectList;
-import com.puttysoftware.fantastlereboot.generic.TypeConstants;
+import com.puttysoftware.fantastlereboot.utilities.ArrowTypeConstants;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 

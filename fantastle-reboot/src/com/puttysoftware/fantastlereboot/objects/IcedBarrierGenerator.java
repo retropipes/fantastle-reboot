@@ -22,7 +22,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.generic.GenericWall;
-import com.puttysoftware.fantastlereboot.generic.TypeConstants;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public class IcedBarrierGenerator extends GenericWall {
     // Constants

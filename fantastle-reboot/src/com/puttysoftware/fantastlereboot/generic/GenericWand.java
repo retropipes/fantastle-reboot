@@ -20,6 +20,7 @@ package com.puttysoftware.fantastlereboot.generic;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public abstract class GenericWand extends GenericUsableObject {
     // Constructors

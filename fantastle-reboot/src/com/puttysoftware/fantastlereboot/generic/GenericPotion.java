@@ -27,6 +27,7 @@ import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objects.Empty;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 import com.puttysoftware.randomrange.RandomRange;
 
 public abstract class GenericPotion extends MazeObject

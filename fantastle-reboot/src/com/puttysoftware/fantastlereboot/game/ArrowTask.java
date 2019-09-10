@@ -22,7 +22,6 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
-import com.puttysoftware.fantastlereboot.generic.ArrowTypeConstants;
 import com.puttysoftware.fantastlereboot.generic.GenericTransientObject;
 import com.puttysoftware.fantastlereboot.generic.MazeObject;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
@@ -31,6 +30,7 @@ import com.puttysoftware.fantastlereboot.objects.Arrow;
 import com.puttysoftware.fantastlereboot.objects.Empty;
 import com.puttysoftware.fantastlereboot.objects.IceArrow;
 import com.puttysoftware.fantastlereboot.objects.Wall;
+import com.puttysoftware.fantastlereboot.utilities.ArrowTypeConstants;
 import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
 
 public class ArrowTask extends Thread {

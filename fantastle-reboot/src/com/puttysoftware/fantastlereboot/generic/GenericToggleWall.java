@@ -24,6 +24,7 @@ import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public abstract class GenericToggleWall extends MazeObject {
     // Constructors

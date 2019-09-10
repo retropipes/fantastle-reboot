@@ -25,6 +25,7 @@ import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objects.Empty;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public abstract class GenericGem extends MazeObject {
     // Constructors

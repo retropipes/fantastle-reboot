@@ -18,6 +18,8 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.generic;
 
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
+
 public abstract class GenericInfiniteLock extends GenericLock {
     protected GenericInfiniteLock(final GenericInfiniteKey mgk) {
         super(mgk);

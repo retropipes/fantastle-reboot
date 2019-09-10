@@ -30,11 +30,11 @@ import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;
 import com.puttysoftware.fantastlereboot.utilities.DirectionConstants;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
-public abstract class MazeObject implements TypeConstants,
-        ArrowTypeConstants, UniqueID5 {
+public abstract class MazeObject implements UniqueID5 {
     // Properties
     private SolidProperties sp;
     private MoveProperties mp;

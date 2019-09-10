@@ -20,6 +20,7 @@ package com.puttysoftware.fantastlereboot.generic;
 
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public abstract class GenericTrap extends MazeObject {
     // Constructors

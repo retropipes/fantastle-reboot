@@ -24,6 +24,7 @@ import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public abstract class GenericRandomInvisibleTeleport
         extends GenericRandomTeleport {

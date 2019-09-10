@@ -16,9 +16,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Any questions should be directed to the author via email at: fantastle@worldwizard.net
  */
-package com.puttysoftware.fantastlereboot.generic;
+package com.puttysoftware.fantastlereboot.utilities;
 
-public interface ArrowTypeConstants {
-    int ARROW_TYPE_PLAIN = 0;
-    int ARROW_TYPE_ICE = 1;
+public class ArrowTypeConstants {
+    public static final int ARROW_TYPE_PLAIN = 0;
+    public static final int ARROW_TYPE_ICE = 1;
 }

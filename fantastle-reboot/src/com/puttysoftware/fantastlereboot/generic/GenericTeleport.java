@@ -26,6 +26,7 @@ import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public abstract class GenericTeleport extends MazeObject {
     // Fields

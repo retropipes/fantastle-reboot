@@ -19,6 +19,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot.generic;
 
 import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public abstract class GenericGround extends MazeObject {
     // Constructors
