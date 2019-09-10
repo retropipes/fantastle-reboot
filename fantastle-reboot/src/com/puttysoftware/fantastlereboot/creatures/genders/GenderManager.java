@@ -1,11 +1,6 @@
-/*  TallerTower: An RPG
-Copyright (C) 2011-2012 Eric Ahnell
-
-Any questions should be directed to the author via email at: products@puttysoftware.com
- */
 package com.puttysoftware.fantastlereboot.creatures.genders;
 
-import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.Messager;
 
 public class GenderManager {
     private static boolean CACHE_CREATED = false;
@@ -14,8 +9,8 @@ public class GenderManager {
     public static Gender selectGender() {
         final String[] names = GenderConstants.GENDER_NAMES;
         String dialogResult = null;
-        dialogResult = CommonDialogs.showInputDialog("Select a Gender",
-                "Create Character", names, names[0]);
+        dialogResult = Messager.showInputDialog("Select a Gender",
+                "Select Gender", names, names[0]);
         if (dialogResult != null) {
             int index;
             for (index = 0; index < names.length; index++) {
