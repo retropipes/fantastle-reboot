@@ -73,8 +73,8 @@ public class Equipment extends Item {
 
     // Methods
     private final void initFaithPowers() {
-        this.faithPowersApplied = new int[FaithConstants.getFaithsCount()];
-        this.faithPowerName = new String[FaithConstants.getFaithsCount()];
+        this.faithPowersApplied = new int[FaithConstants.FAITHS_COUNT];
+        this.faithPowerName = new String[FaithConstants.FAITHS_COUNT];
         for (int z = 0; z < this.faithPowerName.length; z++) {
             this.faithPowerName[z] = "";
         }
@@ -132,7 +132,7 @@ public class Equipment extends Item {
     @Override
     public String getName() {
         final StringBuilder faithBuilder = new StringBuilder();
-        final int fc = FaithConstants.getFaithsCount();
+        final int fc = FaithConstants.FAITHS_COUNT;
         for (int z = 0; z < fc; z++) {
             if (!this.faithPowerName[z].isEmpty()) {
                 faithBuilder.append(this.faithPowerName[z]);
@@ -211,7 +211,7 @@ public class Equipment extends Item {
         ei.firstSlotUsed = dr.readInt();
         ei.secondSlotUsed = dr.readInt();
         ei.conditionalSlot = dr.readBoolean();
-        final int fc = FaithConstants.getFaithsCount();
+        final int fc = FaithConstants.FAITHS_COUNT;
         for (int z = 0; z < fc; z++) {
             ei.faithPowerName[z] = dr.readString();
             ei.faithPowersApplied[z] = dr.readInt();
@@ -226,7 +226,7 @@ public class Equipment extends Item {
         dw.writeInt(this.firstSlotUsed);
         dw.writeInt(this.secondSlotUsed);
         dw.writeBoolean(this.conditionalSlot);
-        final int fc = FaithConstants.getFaithsCount();
+        final int fc = FaithConstants.FAITHS_COUNT;
         for (int z = 0; z < fc; z++) {
             dw.writeString(this.faithPowerName[z]);
             dw.writeInt(this.faithPowersApplied[z]);

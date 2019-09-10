@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
-import com.puttysoftware.fantastlereboot.oldcreatures.faiths.FaithConstants;
+import com.puttysoftware.fantastlereboot.creatures.faiths.FaithConstants;
 import com.puttysoftware.fantastlereboot.oldcreatures.genders.GenderConstants;
 import com.puttysoftware.fantastlereboot.oldcreatures.personalities.PersonalityConstants;
 import com.puttysoftware.fantastlereboot.oldcreatures.races.RaceConstants;

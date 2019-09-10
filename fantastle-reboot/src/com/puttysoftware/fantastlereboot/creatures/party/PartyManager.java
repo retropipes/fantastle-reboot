@@ -149,7 +149,7 @@ public class PartyManager {
             if (race != null) {
                 final Caste caste = CasteManager.selectCaste();
                 if (caste != null) {
-                    final Faith faith = FaithManager.selectFaith(owner);
+                    final Faith faith = FaithManager.selectFaith();
                     if (faith != null) {
                         final Personality personality = PersonalityManager
                                 .selectPersonality(owner);

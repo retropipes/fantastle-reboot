@@ -88,7 +88,7 @@ class HardDamageEngine extends AbstractDamageEngine {
                     final int multiplier = rDamage.generate();
                     // Weapon Faith Power Boost
                     double faithMultiplier = CommonDamageEngineParts.FAITH_MULT_START;
-                    final int fc = FaithConstants.getFaithsCount();
+                    final int fc = FaithConstants.FAITHS_COUNT;
                     final Equipment mainHand = acting.getItems()
                             .getEquipmentInSlot(
                                     EquipmentSlotConstants.SLOT_MAINHAND);

@@ -1,134 +1,72 @@
-/*  TallerTower: An RPG
-Copyright (C) 2011-2012 Eric Ahnell
-
-Any questions should be directed to the author via email at: products@puttysoftware.com
- */
 package com.puttysoftware.fantastlereboot.creatures.faiths;
 
 import java.awt.Color;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.datamanagers.FaithDataManager;
-import com.puttysoftware.fantastlereboot.oldnames.NamesConstants;
-import com.puttysoftware.fantastlereboot.oldnames.NamesManager;
-import com.puttysoftware.fileutils.ResourceStreamReader;
 
 public class FaithConstants {
-    // Fields
-    private static int FAITHS_COUNT = -1;
-    private static String[] FAITH_NAMES = {};
-    private static String[] FAITH_DISPLAY_NAMES = null;
-    private static Color[] FAITH_COLORS = {};
-    private static boolean INITED = false;
-    private static final double[] LOOKUP_TABLE = { 0.0, 0.5, 1.0, 2.0 };
+    public static final int FAITH_BLEND = 0;
+    public static final int FAITH_FLAME = 1;
+    public static final int FAITH_STORM = 2;
+    public static final int FAITH_FLOOD = 3;
+    public static final int FAITH_SHOCK = 4;
+    public static final int FAITH_CHILL = 5;
+    public static final int FAITH_SOUND = 6;
+    public static final int FAITH_DEATH = 7;
+    public static final int FAITH_GLEAM = 8;
+    public static final int FAITH_QUAKE = 9;
+    public static final int FAITH_CHAOS = 10;
+    public static final int FAITH_PLANT = 11;
+    public static final int FAITH_ORDER = 12;
+    public static final int FAITH_SMOKE = 13;
+    public static final int FAITH_DRAIN = 14;
+    public static final int FAITH_BOOST = 15;
+    public static final int FAITH_HUMID = 16;
+    public static final int FAITH_HEART = 17;
+    public static final int FAITH_REACT = 18;
+    public static final int FAITH_TOXIN = 19;
+    public static final int FAITH_SMART = 20;
+    public static final int FAITH_CLOUD = 21;
+    public static final int FAITH_NAKED = 22;
+    public static final int FAITH_SWAMP = 23;
+    public static final int FAITH_GHOST = 24;
+    public static final int FAITHS_COUNT = 25;
+    public static final String[] FAITH_NAMES = { "Blend", "Flame", "Storm",
+            "Flood", "Shock", "Chill", "Sound", "Death", "Gleam", "Quake",
+            "Chaos", "Plant", "Order", "Smoke", "Drain", "Boost", "Humid",
+            "Heart", "React", "Toxin", "Smart", "Cloud", "Naked", "Swamp",
+            "Ghost" };
+    public static final String[] FAITH_DAMAGE_TYPES = { "Physical", "Hot",
+            "Wind", "Water", "Electric", "Cold", "Sonic", "Dark", "Light",
+            "Earth", "Chaos", "Plant", "Order", "Smoke", "Drain", "Boost",
+            "Sweat", "Love", "Chemical", "Poison", "Mental", "Cloud", "Sleaze",
+            "Swamp", "Fear" };
+    public static final String[][] FAITH_POWER_NAMES = { { "Physical" },
+            { "Hot" }, { "Wind" }, { "Water", "Electric" }, { "Cold" },
+            { "Sonic" }, { "Dark" }, { "Light" }, { "Earth" },
+            { "Chaos", "Plant" }, { "Order" }, { "Smoke" }, { "Drain" },
+            { "Boost" }, { "Sweat" }, { "Love", "Chemical" }, { "Poison" },
+            { "Mental" }, { "Cloud" }, { "Sleaze" }, { "Swamp", "Fear" } };
+    public static final Color[] FAITH_COLORS = { new Color(127, 127, 127),
+            new Color(255, 0, 0), new Color(0, 255, 0), new Color(0, 0, 255),
+            new Color(255, 255, 0), new Color(0, 255, 255),
+            new Color(255, 0, 255), new Color(0, 0, 0),
+            new Color(255, 255, 255), new Color(127, 63, 0),
+            new Color(127, 0, 0), new Color(0, 127, 0), new Color(0, 0, 127),
+            new Color(127, 127, 0), new Color(0, 127, 127),
+            new Color(127, 0, 127), new Color(255, 127, 0),
+            new Color(255, 0, 127), new Color(127, 255, 0),
+            new Color(0, 255, 127), new Color(127, 0, 255),
+            new Color(0, 127, 255), new Color(255, 127, 127),
+            new Color(127, 255, 127), new Color(127, 127, 255) };
+    public static final boolean[] FAITH_DARK_EYES = { false, false, true, false,
+            true, true, true, false, true, false, false, false, false, false,
+            false, false, false, false, true, true, false, false, true, true,
+            true };
 
-    // Private constructor
-    private FaithConstants() {
-        // Do nothing
+    public static String getFaithName(final int faithID) {
+        return FaithConstants.FAITH_NAMES[faithID];
     }
 
-    // Methods
-    public static int getFaithsCount() {
-        if (!INITED) {
-            FaithConstants.initFaiths();
-        }
-        return FaithConstants.FAITHS_COUNT;
-    }
-
-    static String[] getFaithNames() {
-        if (!INITED) {
-            FaithConstants.initFaiths();
-        }
-        return FaithConstants.FAITH_NAMES;
-    }
-
-    public static String getFaithName(final int f) {
-        if (!INITED) {
-            FaithConstants.initFaiths();
-        }
-        return FaithConstants.FAITH_DISPLAY_NAMES[f];
-    }
-
-    public static String getFaithPowerName(final int f, final int p) {
-        return NamesManager.getName(NamesConstants.SECTION_FAITH_POWERS_PREFIX
-                + FaithConstants.FAITH_NAMES[f],
-                NamesConstants.SECTION_ARRAY_FAITH_POWERS[p]);
-    }
-
-    public static Color getFaithColor(final int f) {
-        if (!INITED) {
-            FaithConstants.initFaiths();
-        }
-        return FaithConstants.FAITH_COLORS[f];
-    }
-
-    public static double getLookupTableEntry(final int entryNum) {
-        return FaithConstants.LOOKUP_TABLE[entryNum];
-    }
-
-    static boolean faithsReady() {
-        return FaithConstants.INITED;
-    }
-
-    static synchronized void initFaiths() {
-        if (!FaithConstants.INITED) {
-            try {
-                // Fetch data
-                final ArrayList<String> tempNames = new ArrayList<>();
-                try (final ResourceStreamReader rsr1 = new ResourceStreamReader(
-                        FaithDataManager.class
-                                .getResourceAsStream("/com/puttysoftware/tallertower/resources/data/faith/catalog.txt"))) {
-                    String input1 = "";
-                    while (input1 != null) {
-                        input1 = rsr1.readString();
-                        if (input1 != null) {
-                            tempNames.add(input1);
-                        }
-                    }
-                }
-                FaithConstants.FAITH_NAMES = tempNames
-                        .toArray(new String[tempNames.size()]);
-                FaithConstants.FAITHS_COUNT = FaithConstants.FAITH_NAMES.length;
-                final ArrayList<String> tempColors = new ArrayList<>();
-                try (final ResourceStreamReader rsr2 = new ResourceStreamReader(
-                        FaithDataManager.class
-                                .getResourceAsStream("/com/puttysoftware/tallertower/resources/data/faith/colors.txt"))) {
-                    String input2 = "";
-                    while (input2 != null) {
-                        input2 = rsr2.readString();
-                        if (input2 != null) {
-                            tempColors.add(input2);
-                        }
-                    }
-                }
-                final String[] tempColors2 = tempColors
-                        .toArray(new String[tempColors.size()]);
-                FaithConstants.FAITH_COLORS = new Color[tempColors2.length];
-                final int[][] tempColors3 = new int[tempColors2.length][3];
-                for (int x = 0; x < tempColors2.length; x++) {
-                    final String[] tempColorSplit = tempColors2[x].split(",");
-                    for (int y = 0; y < 3; y++) {
-                        tempColors3[x][y] = Integer.parseInt(tempColorSplit[y]);
-                    }
-                    FaithConstants.FAITH_COLORS[x] = new Color(
-                            tempColors3[x][0], tempColors3[x][1],
-                            tempColors3[x][2]);
-                }
-                if (FaithConstants.FAITH_DISPLAY_NAMES == null) {
-                    final String[] temp = new String[FaithConstants.FAITHS_COUNT];
-                    for (int x = 0; x < temp.length; x++) {
-                        temp[x] = NamesManager.getName(
-                                NamesConstants.SECTION_FAITHS,
-                                NamesConstants.SECTION_ARRAY_FAITHS[x]);
-                    }
-                    FaithConstants.FAITH_DISPLAY_NAMES = temp;
-                }
-                FaithConstants.INITED = true;
-            } catch (final IOException ioe) {
-                FantastleReboot.logError(ioe);
-            }
-        }
+    public static String getFaithPowerName(final int faithID, final int powerID) {
+        return FaithConstants.FAITH_POWER_NAMES[faithID][powerID];
     }
 }
