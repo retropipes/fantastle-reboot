@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithConstants;
 import com.puttysoftware.fantastlereboot.creatures.genders.GenderConstants;
-import com.puttysoftware.fantastlereboot.oldcreatures.personalities.PersonalityConstants;
+import com.puttysoftware.fantastlereboot.creatures.personalities.PersonalityConstants;
 import com.puttysoftware.fantastlereboot.oldcreatures.races.RaceConstants;
 import com.puttysoftware.fileutils.ResourceStreamReader;
 
@@ -144,7 +144,7 @@ public class DataLoader {
                         "/assets/data/personality/"
                                 + name + ".dat"))) {
             // Fetch data
-            final int[] rawData = new int[PersonalityConstants.PERSONALITY_ATTRIBUTE_COUNT];
+            final int[] rawData = new int[PersonalityConstants.PERSONALITY_ATTRIBUTES_COUNT];
             for (int x = 0; x < rawData.length; x++) {
                 try {
                     rawData[x] = rsr.readInt();

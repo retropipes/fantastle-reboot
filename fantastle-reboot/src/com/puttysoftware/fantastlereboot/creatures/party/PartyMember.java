@@ -107,16 +107,16 @@ public class PartyMember extends Creature {
     @Override
     public int getMapBattleActionsPerRound() {
         return Math
-                .max((int) (super.getMapBattleActionsPerRound() * this.personality
-                        .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_ACTION_MOD)),
+                .max(super.getMapBattleActionsPerRound() * this.personality
+                        .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_ACTION_MOD),
                         1);
     }
 
     @Override
     public int getWindowBattleActionsPerRound() {
         return Math
-                .max((int) (super.getWindowBattleActionsPerRound() * this.personality
-                        .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_ACTION_MOD)),
+                .max(super.getWindowBattleActionsPerRound() * this.personality
+                        .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_ACTION_MOD),
                         1);
     }
 
@@ -166,20 +166,20 @@ public class PartyMember extends Creature {
     public int getCapacity() {
         return Math
                 .max(StatConstants.MIN_CAPACITY,
-                        (int) (super.getCapacity() * this
+                        super.getCapacity() * this
                                 .getPersonality()
                                 .getAttribute(
-                                        PersonalityConstants.PERSONALITY_ATTRIBUTE_CAPACITY_MOD)));
+                                        PersonalityConstants.PERSONALITY_ATTRIBUTE_CAPACITY_MOD));
     }
 
     @Override
     public void offsetGold(final int value) {
         int fixedValue = value;
         if (value > 0) {
-            fixedValue = (int) (fixedValue * this
+            fixedValue = fixedValue * this
                     .getPersonality()
                     .getAttribute(
-                            PersonalityConstants.PERSONALITY_ATTRIBUTE_WEALTH_MOD));
+                            PersonalityConstants.PERSONALITY_ATTRIBUTE_WEALTH_MOD);
         }
         super.offsetGold(fixedValue);
     }
