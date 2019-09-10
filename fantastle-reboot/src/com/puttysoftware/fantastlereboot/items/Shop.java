@@ -50,8 +50,7 @@ public class Shop {
         final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         if (this.type == ShopTypes.BANK) {
             return "Gold on Hand: " + playerCharacter.getGold()
-                    + "\nGold in Bank: " + PartyManager.getGoldInBank()
-                    + "\n";
+                    + "\nGold in Bank: " + PartyManager.getGoldInBank() + "\n";
         } else {
             return "";
         }
@@ -290,7 +289,7 @@ public class Shop {
             return false;
         } else if (this.type == ShopTypes.SPELLS && playerCharacter
                 .getSpellBook().getSpellsKnownCount() == playerCharacter
-                        .getSpellBook().getMaximumSpellsKnownCount()) {
+                        .getSpellBook().getSpellCount()) {
             Messager.showDialog("There are no more spells to learn.");
             return false;
         }
@@ -477,18 +476,20 @@ public class Shop {
             if (this.typeResult.equals(this.typeChoices[0])) {
                 final Equipment bought = EquipmentFactory.createOneHandedWeapon(
                         this.index, playerCharacter.getCaste().getCasteID(), 0);
-                playerCharacter.getItems().equipOneHandedWeapon(playerCharacter, bought,
-                        this.handIndex, true);
+                playerCharacter.getItems().equipOneHandedWeapon(playerCharacter,
+                        bought, this.handIndex, true);
             } else {
                 final Equipment bought = EquipmentFactory.createTwoHandedWeapon(
                         this.index, playerCharacter.getCaste().getCasteID(), 0);
-                playerCharacter.getItems().equipTwoHandedWeapon(playerCharacter, bought, true);
+                playerCharacter.getItems().equipTwoHandedWeapon(playerCharacter,
+                        bought, true);
             }
         } else if (this.type == ShopTypes.ARMOR) {
             playerCharacter.offsetGold(-this.cost);
             final Equipment bought = EquipmentFactory.createArmor(this.index,
                     this.typeIndex, 0);
-            playerCharacter.getItems().equipArmor(playerCharacter, bought, true);
+            playerCharacter.getItems().equipArmor(playerCharacter, bought,
+                    true);
         } else if (this.type == ShopTypes.HEALER) {
             playerCharacter.offsetGold(-this.cost);
             playerCharacter.healPercentage((this.index + 1) * 10);
