@@ -26,7 +26,7 @@ import com.puttysoftware.fantastlereboot.objects.MovingBlock;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
-public interface Maze extends FormatConstants {
+public interface Maze {
     // Constants
     int LAYER_GROUND = 0;
     int LAYER_OBJECT = 1;

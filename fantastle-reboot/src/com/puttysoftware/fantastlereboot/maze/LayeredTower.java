@@ -30,6 +30,7 @@ import com.puttysoftware.fantastlereboot.objects.IcedMonster;
 import com.puttysoftware.fantastlereboot.objects.Monster;
 import com.puttysoftware.fantastlereboot.objects.MovingBlock;
 import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
+import com.puttysoftware.fantastlereboot.utilities.FormatConstants;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 import com.puttysoftware.randomrange.RandomRange;
 import com.puttysoftware.xio.XDataReader;

@@ -24,6 +24,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.utilities.FormatConstants;
 import com.puttysoftware.xio.XDataReader;
 
 public class LoadTask5 extends Thread {
