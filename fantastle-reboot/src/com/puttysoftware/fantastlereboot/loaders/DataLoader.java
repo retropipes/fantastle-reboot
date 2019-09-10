@@ -2,7 +2,9 @@ package com.puttysoftware.fantastlereboot.loaders;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithConstants;
 import com.puttysoftware.fantastlereboot.creatures.genders.GenderConstants;
@@ -19,8 +21,7 @@ public class DataLoader {
         final String name = CasteConstants.CASTE_NAMES[c].toLowerCase();
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
                 DataLoader.class.getResourceAsStream(
-                        "/assets/data/caste/"
-                                + name + ".dat"))) {
+                        "/assets/data/caste/" + name + ".dat"))) {
             // Fetch data
             final int[] rawData = new int[CasteConstants.CASTES_ATTRIBUTE_COUNT];
             for (int x = 0; x < rawData.length; x++) {
@@ -32,7 +33,8 @@ public class DataLoader {
             }
             rsr.close();
             return rawData;
-        } catch (final Exception e) {
+        } catch (final IOException e) {
+            FantastleReboot.logError(e);
             return null;
         }
     }
@@ -41,8 +43,7 @@ public class DataLoader {
         final String name = FaithConstants.FAITH_NAMES[f].toLowerCase();
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
                 DataLoader.class.getResourceAsStream(
-                        "/assets/data/faith/"
-                                + name + ".dat"))) {
+                        "/assets/data/faith/" + name + ".dat"))) {
             // Fetch data
             final int[] rawData = new int[FaithConstants.FAITHS_COUNT];
             for (int x = 0; x < rawData.length; x++) {
@@ -74,7 +75,36 @@ public class DataLoader {
                 finalData[x] = d;
             }
             return finalData;
-        } catch (final Exception e) {
+        } catch (final IOException e) {
+            FantastleReboot.logError(e);
+            return null;
+        }
+    }
+
+    public static Hashtable<Integer, String> loadFaithPowerData(final int f, final int p) {
+        try (final ResourceStreamReader rsr = new ResourceStreamReader(
+                DataLoader.class.getResourceAsStream(
+                        "/assets/data/faith/powers.dat"))) {
+            // Fetch data
+            final ArrayList<String> rawData = new ArrayList<>();
+            String line = "";
+            while (line != null) {
+                line = rsr.readString();
+                if (line != null) {
+                    rawData.add(line);
+                }
+            }
+            // Parse raw data
+            final Hashtable<Integer, String> finalData = new Hashtable<>();
+            for (String entry : rawData) {
+                String[] splitEntry = entry.split(" = ");
+                int key = Integer.parseInt(splitEntry[0]);
+                String value = splitEntry[1];
+                finalData.putIfAbsent(key, value);
+            }
+            return finalData;
+        } catch (final IOException e) {
+            FantastleReboot.logError(e);
             return null;
         }
     }
@@ -83,8 +113,7 @@ public class DataLoader {
         final String name = GenderConstants.GENDER_NAMES[g].toLowerCase();
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
                 DataLoader.class.getResourceAsStream(
-                        "/assets/data/gender/"
-                                + name + ".dat"))) {
+                        "/assets/data/gender/" + name + ".dat"))) {
             // Fetch data
             final int[] rawData = new int[GenderConstants.GENDERS_ATTRIBUTE_COUNT];
             for (int x = 0; x < rawData.length; x++) {
@@ -96,7 +125,8 @@ public class DataLoader {
             }
             rsr.close();
             return rawData;
-        } catch (final Exception e) {
+        } catch (final IOException e) {
+            FantastleReboot.logError(e);
             return null;
         }
     }
@@ -131,7 +161,8 @@ public class DataLoader {
                 }
             }
             return res;
-        } catch (final Exception e) {
+        } catch (final IOException e) {
+            FantastleReboot.logError(e);
             return null;
         }
     }
@@ -141,8 +172,7 @@ public class DataLoader {
                 .toLowerCase();
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
                 DataLoader.class.getResourceAsStream(
-                        "/assets/data/personality/"
-                                + name + ".dat"))) {
+                        "/assets/data/personality/" + name + ".dat"))) {
             // Fetch data
             final int[] rawData = new int[PersonalityConstants.PERSONALITY_ATTRIBUTES_COUNT];
             for (int x = 0; x < rawData.length; x++) {
@@ -154,7 +184,8 @@ public class DataLoader {
             }
             rsr.close();
             return rawData;
-        } catch (final Exception e) {
+        } catch (final IOException e) {
+            FantastleReboot.logError(e);
             return null;
         }
     }
@@ -163,8 +194,7 @@ public class DataLoader {
         final String name = RaceConstants.RACE_NAMES[c].toLowerCase();
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
                 DataLoader.class.getResourceAsStream(
-                        "/assets/data/race/"
-                                + name + ".dat"))) {
+                        "/assets/data/race/" + name + ".dat"))) {
             // Fetch data
             final int[] rawData = new int[RaceConstants.RACE_ATTRIBUTE_COUNT];
             for (int x = 0; x < rawData.length; x++) {
@@ -176,7 +206,8 @@ public class DataLoader {
             }
             rsr.close();
             return rawData;
-        } catch (final Exception e) {
+        } catch (final IOException e) {
+            FantastleReboot.logError(e);
             return null;
         }
     }
@@ -196,7 +227,8 @@ public class DataLoader {
             }
             return data.toArray(new String[data.size()]);
         } catch (final IOException e) {
-            return new String[0];
+            FantastleReboot.logError(e);
+            return null;
         }
     }
 }
