@@ -49,7 +49,7 @@ public class PartyManager {
             PartyMember pc = null;
             if (pickMembers == null) {
                 // No characters registered - must create one
-                pc = PartyManager.createNewPC(owner);
+                pc = PartyManager.createNewPC();
                 if (pc != null) {
                     CharacterRegistration.autoregisterCharacter(pc.getName());
                     CharacterLoader.saveCharacter(pc);
@@ -61,7 +61,7 @@ public class PartyManager {
                 if (response == 2) {
                     pc = PartyManager.pickOnePartyMemberCreate(pickMembers);
                 } else if (response == 1) {
-                    pc = PartyManager.createNewPC(owner);
+                    pc = PartyManager.createNewPC();
                     if (pc != null) {
                         CharacterRegistration
                                 .autoregisterCharacter(pc.getName());
@@ -141,11 +141,11 @@ public class PartyManager {
                 leader.getFaith(), leader.getPersonality(), leader.getGender());
     }
 
-    private static PartyMember createNewPC(final JFrame owner) {
+    private static PartyMember createNewPC() {
         final String name = CommonDialogs.showTextInputDialog("Character Name",
                 "Create Character");
         if (name != null) {
-            final Race race = RaceManager.selectRace(owner);
+            final Race race = RaceManager.selectRace();
             if (race != null) {
                 final Caste caste = CasteManager.selectCaste();
                 if (caste != null) {
