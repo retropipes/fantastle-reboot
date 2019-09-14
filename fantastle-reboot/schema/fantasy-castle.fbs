@@ -1,6 +1,6 @@
 include "object.fbs";
 
-namespace FantastleReboot.Worlds;
+namespace com.puttysoftware.fantastlereboot.world;
 
 table LayerCake {
 	ground:GameObject;
