@@ -1,0 +1,6 @@
+namespace FantastleReboot.Worlds;
+
+// Rest of the definitions go here...
+
+file_identifier "FACT";
+file_extension "fact";
