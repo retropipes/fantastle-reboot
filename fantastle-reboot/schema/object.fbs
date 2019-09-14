@@ -10,12 +10,6 @@ struct RandomRange {
 	y:uint8;
 }
 
-struct Vector3 {
-	x:int16;
-	y:int16;
-	z:int16;
-}
-
 table GameObject {
 	object_id:uint16 required;
 	solid_attributes:SolidAttributes;
@@ -50,7 +44,6 @@ table GameObject {
 	trigger_target:uint16 = 0;
 	on_trigger_destroy_switch:bool = true;
 	is_teleporter:bool = false;
-	teleporter_destination:Vector3;
 	is_teleporter_destination_relative:bool = false;
 	has_random_range:bool = false;
 	random_range:RandomRange;
