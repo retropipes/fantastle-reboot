@@ -1,0 +1,35 @@
+include "object.fbs";
+
+namespace FantastleReboot.Worlds;
+
+table LayerCake {
+	ground:GameObject;
+	object:GameObject;
+}
+
+table Row {
+	data:[LayerCake];
+	wraparound:bool = false;
+}
+
+table Column {
+	data:[Row];
+	wraparound:bool = false;
+}
+
+table Floor {
+	data:[Column];
+	wraparound:bool = false;
+}
+
+table Level {
+	data: [Floor];
+}
+
+table FantasyCastle {
+	data: [Level];
+}
+
+root_type FantasyCastle;
+file_identifier "FACT";
+file_extension "fact";
