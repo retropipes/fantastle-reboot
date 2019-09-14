@@ -1,9 +1,17 @@
 namespace FantastleReboot.Worlds;
 
-enum SolidAttributes : uint32 { InsideNorthwest, InsideNorth, InsideNortheast, InsideEast, InsideSoutheast, InsideSouth, InsideSouthwest, InsideWest, InsideUp, InsideDown, OutsideNorthwest, OutsideNorth, OutsideNortheast, OutsideEast, OutsideSoutheast, OutsideSouth, OutsideSouthwest, OutsideWest, OutsideUp, OutsideDown } bit_flags;
-enum PushAttributes : uint32 { InsideNorthwest, InsideNorth, InsideNortheast, InsideEast, InsideSoutheast, InsideSouth, InsideSouthwest, InsideWest, InsideUp, InsideDown, OutsideNorthwest, OutsideNorth, OutsideNortheast, OutsideEast, OutsideSoutheast, OutsideSouth, OutsideSouthwest, OutsideWest, OutsideUp, OutsideDown } bit_flags;
-enum PullAttributes : uint32 { InsideNorthwest, InsideNorth, InsideNortheast, InsideEast, InsideSoutheast, InsideSouth, InsideSouthwest, InsideWest, InsideUp, InsideDown, OutsideNorthwest, OutsideNorth, OutsideNortheast, OutsideEast, OutsideSoutheast, OutsideSouth, OutsideSouthwest, OutsideWest, OutsideUp, OutsideDown } bit_flags;
-enum ChainReactionAttributes : uint8 { Northwest, North, Northeast, East, Southeast, South, Southwest, West } bit_flags;
+enum SolidAttributes:uint32 {
+	InsideNorthwest, InsideNorth, InsideNortheast, InsideEast, InsideSoutheast, InsideSouth, InsideSouthwest, InsideWest, InsideUp, InsideDown, OutsideNorthwest, OutsideNorth, OutsideNortheast, OutsideEast, OutsideSoutheast, OutsideSouth, OutsideSouthwest, OutsideWest, OutsideUp, OutsideDown
+} bit_flags;
+enum PushAttributes:uint32 {
+	InsideNorthwest, InsideNorth, InsideNortheast, InsideEast, InsideSoutheast, InsideSouth, InsideSouthwest, InsideWest, InsideUp, InsideDown, OutsideNorthwest, OutsideNorth, OutsideNortheast, OutsideEast, OutsideSoutheast, OutsideSouth, OutsideSouthwest, OutsideWest, OutsideUp, OutsideDown
+} bit_flags;
+enum PullAttributes:uint32 {
+	InsideNorthwest, InsideNorth, InsideNortheast, InsideEast, InsideSoutheast, InsideSouth, InsideSouthwest, InsideWest, InsideUp, InsideDown, OutsideNorthwest, OutsideNorth, OutsideNortheast, OutsideEast, OutsideSoutheast, OutsideSouth, OutsideSouthwest, OutsideWest, OutsideUp, OutsideDown
+} bit_flags;
+enum ChainReactionAttributes:uint8 {
+	Northwest, North, Northeast, East, Southeast, South, Southwest, West
+} bit_flags;
 
 struct RandomRange {
 	x:uint8;
