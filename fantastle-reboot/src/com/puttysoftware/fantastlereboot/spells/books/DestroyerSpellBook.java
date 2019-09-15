@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.spells;
+package com.puttysoftware.fantastlereboot.spells.books;
 
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
@@ -7,10 +7,12 @@ import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
 import com.puttysoftware.fantastlereboot.effects.DamageEffect;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.effects.HealingEffect;
+import com.puttysoftware.fantastlereboot.spells.Spell;
+import com.puttysoftware.fantastlereboot.spells.SpellBook;
 
-public class CurerSpellBook extends SpellBook {
+public class DestroyerSpellBook extends SpellBook {
     // Constructor
-    public CurerSpellBook() {
+    public DestroyerSpellBook() {
         super();
         final DamageEffect spell0Effect = new DamageEffect("Fireball", 10, 1,
                 0.25, StatConstants.STAT_LEVEL, Effect.DEFAULT_DECAY_RATE);
@@ -74,6 +76,6 @@ public class CurerSpellBook extends SpellBook {
 
     @Override
     public int getID() {
-        return CasteConstants.CASTE_CURER;
+        return CasteConstants.CASTE_DESTROYER;
     }
 }

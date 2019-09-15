@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.spells;
+package com.puttysoftware.fantastlereboot.spells.books;
 
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
@@ -9,10 +9,12 @@ import com.puttysoftware.fantastlereboot.effects.DrainEffect;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.effects.HealingEffect;
 import com.puttysoftware.fantastlereboot.effects.RegeneratingEffect;
+import com.puttysoftware.fantastlereboot.spells.Spell;
+import com.puttysoftware.fantastlereboot.spells.SpellBook;
 
-public class GuruSpellBook extends SpellBook {
+public class KnightSpellBook extends SpellBook {
     // Constructor
-    public GuruSpellBook() {
+    public KnightSpellBook() {
         super();
         final RegeneratingEffect spell0Effect = new RegeneratingEffect("Focus",
                 1, 5, 0.2, StatConstants.STAT_MAXIMUM_MP,
@@ -79,6 +81,6 @@ public class GuruSpellBook extends SpellBook {
 
     @Override
     public int getID() {
-        return CasteConstants.CASTE_GURU;
+        return CasteConstants.CASTE_KNIGHT;
     }
 }

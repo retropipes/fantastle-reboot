@@ -1,20 +1,22 @@
-package com.puttysoftware.fantastlereboot.spells;
+package com.puttysoftware.fantastlereboot.spells.books;
 
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.effects.DamageEffect;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.effects.HealingEffect;
+import com.puttysoftware.fantastlereboot.spells.Spell;
+import com.puttysoftware.fantastlereboot.spells.SpellBook;
 
-public class BossSpellBook extends SpellBook {
+public class ToughLevelSpellBook extends SpellBook {
     // Constructor
-    public BossSpellBook() {
+    public ToughLevelSpellBook() {
         super();
         final DamageEffect spell0Effect = new DamageEffect("Lethally Poisoned",
                 10, 10, Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE,
                 1);
         spell0Effect.setMessage(Effect.MESSAGE_INITIAL,
-                "The Boss breathes extremely poisonous breath at you!");
+                "The enemy breathes extremely poisonous breath at you!");
         spell0Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "You lose a LOT of health from being poisoned!");
         spell0Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
@@ -25,9 +27,9 @@ public class BossSpellBook extends SpellBook {
                 100, 1, Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE,
                 Effect.DEFAULT_DECAY_RATE);
         spell1Effect.setMessage(Effect.MESSAGE_INITIAL,
-                "The Boss applies a very large bandage to its wounds!");
+                "The enemy applies a very large bandage to its wounds!");
         spell1Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
-                "The Boss regains a LOT of health!");
+                "The enemy regains a LOT of health!");
         final Spell spell1 = new Spell(spell1Effect, 4, BattleTarget.SELF);
         this.addKnownSpell(spell1);
         final Effect spell2Effect = new Effect("Ultra Weapon Drain", 10);
@@ -35,7 +37,7 @@ public class BossSpellBook extends SpellBook {
         spell2Effect.setEffect(Effect.EFFECT_MULTIPLY, 0.5,
                 Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE);
         spell2Effect.setMessage(Effect.MESSAGE_INITIAL,
-                "The Boss drains your weapon of half of its power!");
+                "The enemy drains your weapon of half of its power!");
         spell2Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "Your attack is significantly decreased!");
         spell2Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
@@ -47,7 +49,7 @@ public class BossSpellBook extends SpellBook {
         spell3Effect.setEffect(Effect.EFFECT_MULTIPLY, 0.5,
                 Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE);
         spell3Effect.setMessage(Effect.MESSAGE_INITIAL,
-                "The Boss drains your armor of half of its power!");
+                "The enemy drains your armor of half of its power!");
         spell3Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "Your defense is significantly decreased!");
         spell3Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
@@ -59,11 +61,11 @@ public class BossSpellBook extends SpellBook {
         spell4Effect.setEffect(Effect.EFFECT_MULTIPLY, 2,
                 Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE);
         spell4Effect.setMessage(Effect.MESSAGE_INITIAL,
-                "The Boss charges its weapon with godlike power!");
+                "The enemy charges its weapon with godlike power!");
         spell4Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
-                "The Boss's attack is drastically increased!");
+                "The enemy's attack is drastically increased!");
         spell4Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
-                "The Boss's weapon returns to normal!");
+                "The enemy's weapon returns to normal!");
         final Spell spell4 = new Spell(spell4Effect, 16, BattleTarget.SELF);
         this.addKnownSpell(spell4);
         final Effect spell5Effect = new Effect("Ultra Armor Charge", 10);
@@ -71,17 +73,17 @@ public class BossSpellBook extends SpellBook {
         spell5Effect.setEffect(Effect.EFFECT_MULTIPLY, 2,
                 Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE);
         spell5Effect.setMessage(Effect.MESSAGE_INITIAL,
-                "The Boss charges its armor with godlike power!");
+                "The enemy charges its armor with godlike power!");
         spell5Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
-                "The Boss's defense is drastically increased!");
+                "The enemy's defense is drastically increased!");
         spell5Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
-                "The Boss's armor returns to normal!");
+                "The enemy's armor returns to normal!");
         final Spell spell5 = new Spell(spell5Effect, 16, BattleTarget.SELF);
         this.addKnownSpell(spell5);
     }
 
     @Override
     public int getID() {
-        return 5;
+        return 4;
     }
 }

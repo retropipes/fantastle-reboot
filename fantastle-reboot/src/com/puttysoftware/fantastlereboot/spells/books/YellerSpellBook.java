@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.spells;
+package com.puttysoftware.fantastlereboot.spells.books;
 
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
@@ -7,6 +7,8 @@ import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
 import com.puttysoftware.fantastlereboot.effects.DamageEffect;
 import com.puttysoftware.fantastlereboot.effects.DrainEffect;
 import com.puttysoftware.fantastlereboot.effects.Effect;
+import com.puttysoftware.fantastlereboot.spells.Spell;
+import com.puttysoftware.fantastlereboot.spells.SpellBook;
 
 public class YellerSpellBook extends SpellBook {
     // Constructor

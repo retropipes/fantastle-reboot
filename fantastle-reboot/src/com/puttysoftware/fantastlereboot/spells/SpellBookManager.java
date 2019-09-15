@@ -1,6 +1,30 @@
 package com.puttysoftware.fantastlereboot.spells;
 
 import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
+import com.puttysoftware.fantastlereboot.spells.books.AssassinSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.BasherSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.CurerSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.DestroyerSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.EclecticSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.FoolSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.GuruSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.HighLevelSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.HunterSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.JumperSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.KnightSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.LocksmithSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.LowLevelSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.MidLevelSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.MonkSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.NinjaSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.OverseerSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.PickpocketSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.RogueSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.SpySpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.TeacherSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.ToughLevelSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.WarlockSpellBook;
+import com.puttysoftware.fantastlereboot.spells.books.YellerSpellBook;
 
 public class SpellBookManager {
     // Private Constructor
