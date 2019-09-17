@@ -36,7 +36,7 @@ import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.obsolete.game1.GameManager;
 import com.puttysoftware.fantastlereboot.obsolete.generic.MazeObjectList;
-import com.puttysoftware.fantastlereboot.obsolete.loaders2.LogoManager;
+import com.puttysoftware.fantastlereboot.obsolete.loaders.LogoManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.MazeManager;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.updater.ProductData;

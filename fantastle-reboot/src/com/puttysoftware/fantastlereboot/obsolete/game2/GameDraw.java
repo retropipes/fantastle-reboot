@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.obsolete.DrawGrid;
-import com.puttysoftware.fantastlereboot.obsolete.loaders2.ImageTransformer;
+import com.puttysoftware.fantastlereboot.obsolete.loaders.ImageTransformer;
 
 class GameDraw extends JPanel {
     private static final long serialVersionUID = 35935343464625L;

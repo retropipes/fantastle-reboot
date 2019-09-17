@@ -14,8 +14,8 @@ import javax.swing.SwingConstants;
 import com.puttysoftware.fantastlereboot.creatures.party.Party;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
-import com.puttysoftware.fantastlereboot.obsolete.loaders2.StatImageConstants;
-import com.puttysoftware.fantastlereboot.obsolete.loaders2.StatImageManager;
+import com.puttysoftware.fantastlereboot.obsolete.loaders.StatImageConstants;
+import com.puttysoftware.fantastlereboot.obsolete.loaders.StatImageManager;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class StatGUI {

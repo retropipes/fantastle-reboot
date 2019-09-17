@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.obsolete.loaders2;
+package com.puttysoftware.fantastlereboot.obsolete.loaders;
 
 import com.puttysoftware.fantastlereboot.datamanagers.MonsterDataManager;
 

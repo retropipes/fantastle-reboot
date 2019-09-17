@@ -8,7 +8,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze2.objects;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
-import com.puttysoftware.fantastlereboot.obsolete.loaders2.ObjectImageConstants;
+import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractTrap;
 
 public class HealTrap extends AbstractTrap {

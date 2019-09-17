@@ -12,8 +12,8 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import com.puttysoftware.fantastlereboot.obsolete.loaders2.StatImageConstants;
-import com.puttysoftware.fantastlereboot.obsolete.loaders2.StatImageManager;
+import com.puttysoftware.fantastlereboot.obsolete.loaders.StatImageConstants;
+import com.puttysoftware.fantastlereboot.obsolete.loaders.StatImageManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
 import com.puttysoftware.images.BufferedImageIcon;
 

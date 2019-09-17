@@ -21,7 +21,7 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
-import com.puttysoftware.fantastlereboot.obsolete.loaders2.LogoManager;
+import com.puttysoftware.fantastlereboot.obsolete.loaders.LogoManager;
 
 public class StatisticsViewer {
     // Fields

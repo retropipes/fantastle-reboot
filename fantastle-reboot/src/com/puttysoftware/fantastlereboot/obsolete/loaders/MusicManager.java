@@ -3,7 +3,7 @@ Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.obsolete.loaders2;
+package com.puttysoftware.fantastlereboot.obsolete.loaders;
 
 import java.io.File;
 import java.io.IOException;

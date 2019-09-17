@@ -22,7 +22,7 @@ import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.VersionException;
-import com.puttysoftware.fantastlereboot.obsolete.loaders2.BattleImageManager;
+import com.puttysoftware.fantastlereboot.obsolete.loaders.BattleImageManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.FormatConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.GenerateTask;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Player;

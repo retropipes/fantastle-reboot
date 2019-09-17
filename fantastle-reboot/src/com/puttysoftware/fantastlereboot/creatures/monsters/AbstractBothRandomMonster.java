@@ -6,8 +6,8 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.creatures.monsters;
 
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
-import com.puttysoftware.fantastlereboot.obsolete.loaders2.MonsterImageManager;
-import com.puttysoftware.fantastlereboot.obsolete.loaders2.MonsterNames;
+import com.puttysoftware.fantastlereboot.obsolete.loaders.MonsterImageManager;
+import com.puttysoftware.fantastlereboot.obsolete.loaders.MonsterNames;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.randomrange.RandomRange;
 
