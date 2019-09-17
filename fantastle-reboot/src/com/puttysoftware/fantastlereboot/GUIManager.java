@@ -27,7 +27,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-import com.puttysoftware.fantastlereboot.obsolete.loaders1.GraphicsManager;
+import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class GUIManager {
@@ -78,7 +78,7 @@ public class GUIManager {
     }
 
     public void updateLogo() {
-        final BufferedImageIcon logo = GraphicsManager.getLogo();
+        final BufferedImageIcon logo = ImageLoader.getLogo();
         this.logoLabel.setIcon(logo);
         this.guiFrame.pack();
     }

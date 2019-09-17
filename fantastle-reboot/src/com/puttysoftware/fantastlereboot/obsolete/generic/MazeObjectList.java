@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.obsolete.loaders1.GraphicsManager;
+import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.objects.*;
 import com.puttysoftware.fantastlereboot.utilities.FormatConstants;
@@ -275,7 +275,7 @@ public class MazeObjectList {
     public BufferedImageIcon[] getAllEditorAppearances() {
         final BufferedImageIcon[] allEditorAppearances = new BufferedImageIcon[this.allObjects.length];
         for (int x = 0; x < allEditorAppearances.length; x++) {
-            allEditorAppearances[x] = GraphicsManager
+            allEditorAppearances[x] = ImageLoader
                     .getTransformedImage(this.allObjects[x].getName());
         }
         return allEditorAppearances;
@@ -286,7 +286,7 @@ public class MazeObjectList {
         int objectCount = 0;
         for (int x = 0; x < this.allObjects.length; x++) {
             if (this.allObjects[x].getLayer() == Maze.LAYER_GROUND) {
-                tempAllGroundLayerEditorAppearances[x] = GraphicsManager
+                tempAllGroundLayerEditorAppearances[x] = ImageLoader
                         .getTransformedImage(this.allObjects[x].getName());
             }
         }
@@ -311,7 +311,7 @@ public class MazeObjectList {
         int objectCount = 0;
         for (int x = 0; x < this.allObjects.length; x++) {
             if (this.allObjects[x].getLayer() == Maze.LAYER_OBJECT) {
-                tempAllObjectLayerEditorAppearances[x] = GraphicsManager
+                tempAllObjectLayerEditorAppearances[x] = ImageLoader
                         .getTransformedImage(this.allObjects[x].getName());
             }
         }
@@ -336,7 +336,7 @@ public class MazeObjectList {
         int objectCount = 0;
         for (int x = 0; x < this.allObjects.length; x++) {
             if (this.allObjects[x].isOfType(TypeConstants.TYPE_CONTAINABLE)) {
-                tempAllContainableObjectEditorAppearances[x] = GraphicsManager
+                tempAllContainableObjectEditorAppearances[x] = ImageLoader
                         .getTransformedImage(this.allObjects[x].getName());
             }
         }

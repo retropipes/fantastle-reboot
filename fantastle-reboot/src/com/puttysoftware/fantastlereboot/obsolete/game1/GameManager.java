@@ -42,11 +42,11 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
+import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.obsolete.generic.GenericMovableObject;
 import com.puttysoftware.fantastlereboot.obsolete.generic.MazeObject;
 import com.puttysoftware.fantastlereboot.obsolete.generic.MazeObjectList;
-import com.puttysoftware.fantastlereboot.obsolete.loaders1.GraphicsManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.MazeManager;
 import com.puttysoftware.fantastlereboot.obsolete.objects.AnnihilationWand;
@@ -1076,19 +1076,19 @@ public class GameManager {
                                     .gameRenderHook(y, x,
                                             this.plMgr.getPlayerLocationZ(),
                                             this.plMgr.getPlayerLocationW());
-                            this.drawGrid[xFix][yFix].setIcon(GraphicsManager
+                            this.drawGrid[xFix][yFix].setIcon(ImageLoader
                                     .getCompositeImage(name1, name2));
                         } else {
                             this.drawGrid[xFix][yFix].setIcon(
-                                    GraphicsManager.getImage("Darkness"));
+                                    ImageLoader.getImage("Darkness"));
                         }
                     } catch (final ArrayIndexOutOfBoundsException ae) {
-                        this.drawGrid[xFix][yFix].setIcon(GraphicsManager
+                        this.drawGrid[xFix][yFix].setIcon(ImageLoader
                                 .getImage(new EmptyVoid().gameRenderHook(y, x,
                                         this.plMgr.getPlayerLocationZ(),
                                         this.plMgr.getPlayerLocationW())));
                     } catch (final NullPointerException np) {
-                        this.drawGrid[xFix][yFix].setIcon(GraphicsManager
+                        this.drawGrid[xFix][yFix].setIcon(ImageLoader
                                 .getImage(new EmptyVoid().gameRenderHook(y, x,
                                         this.plMgr.getPlayerLocationZ(),
                                         this.plMgr.getPlayerLocationW())));
@@ -1133,11 +1133,11 @@ public class GameManager {
                             .gameRenderHook(x, y,
                                     this.plMgr.getPlayerLocationZ(),
                                     this.plMgr.getPlayerLocationW());
-                    this.drawGrid[xFix][yFix].setIcon(GraphicsManager
+                    this.drawGrid[xFix][yFix].setIcon(ImageLoader
                             .getVirtualCompositeImage(name1, name2, name3));
                 } else {
                     this.drawGrid[xFix][yFix]
-                            .setIcon(GraphicsManager.getImage("Darkness"));
+                            .setIcon(ImageLoader.getImage("Darkness"));
                 }
                 this.drawGrid[xFix][yFix].repaint();
             } catch (final ArrayIndexOutOfBoundsException ae) {
@@ -1515,9 +1515,9 @@ public class GameManager {
                 - this.vwMgr.getOffsetFactorX();
         final int yOffset = this.vwMgr.getViewingWindowLocationY()
                 - this.vwMgr.getOffsetFactorY();
-        final int destX = x / GraphicsManager.getGraphicSize()
+        final int destX = x / ImageLoader.getGraphicSize()
                 + this.vwMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int destY = y / GraphicsManager.getGraphicSize()
+        final int destY = y / ImageLoader.getGraphicSize()
                 + this.vwMgr.getViewingWindowLocationY() + xOffset - yOffset;
         final int destZ = this.plMgr.getPlayerLocationZ();
         final int destW = this.plMgr.getPlayerLocationW();
@@ -1593,10 +1593,10 @@ public class GameManager {
                     - this.vwMgr.getOffsetFactorX();
             final int yOffset = this.vwMgr.getViewingWindowLocationY()
                     - this.vwMgr.getOffsetFactorY();
-            final int destX = x / GraphicsManager.getGraphicSize()
+            final int destX = x / ImageLoader.getGraphicSize()
                     + this.vwMgr.getViewingWindowLocationX() - xOffset
                     + yOffset;
-            final int destY = y / GraphicsManager.getGraphicSize()
+            final int destY = y / ImageLoader.getGraphicSize()
                     + this.vwMgr.getViewingWindowLocationY() + xOffset
                     - yOffset;
             final int destZ = this.plMgr.getPlayerLocationZ();
@@ -1618,9 +1618,9 @@ public class GameManager {
                 - this.vwMgr.getOffsetFactorX();
         final int yOffset = this.vwMgr.getViewingWindowLocationY()
                 - this.vwMgr.getOffsetFactorY();
-        final int destX = x / GraphicsManager.getGraphicSize()
+        final int destX = x / ImageLoader.getGraphicSize()
                 + this.vwMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int destY = y / GraphicsManager.getGraphicSize()
+        final int destY = y / ImageLoader.getGraphicSize()
                 + this.vwMgr.getViewingWindowLocationY() + xOffset - yOffset;
         final int destZ = this.plMgr.getPlayerLocationZ();
         final int destW = this.plMgr.getPlayerLocationW();

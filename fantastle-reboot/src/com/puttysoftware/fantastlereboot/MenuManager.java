@@ -30,8 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
-import com.puttysoftware.fantastlereboot.obsolete.loaders1.ImageCache;
-import com.puttysoftware.fantastlereboot.obsolete.loaders1.MonsterImageCache;
+import com.puttysoftware.fantastlereboot.loaders.ImageCache;
 
 public class MenuManager {
     // Fields
@@ -47,7 +46,7 @@ public class MenuManager {
     private JMenuItem playPlay, playEdit;
     private JMenuItem gameEquipment, gameInventory, gameUse, gameReset,
             gameShowScore, gameShowTable;
-    private JMenuItem debugViewImageCache, debugViewMonsterCache,
+    private JMenuItem debugViewImageCache,
             debugResetPreferences;
     private JMenuItem helpAbout, helpGeneralHelp, helpObjectHelp;
     private KeyStroke fileNewAccel, fileOpenAccel, fileCloseAccel,
@@ -467,7 +466,6 @@ public class MenuManager {
         this.gameShowTable = new JMenuItem("Show Score Table");
         this.gameShowTable.setAccelerator(this.gameShowTableAccel);
         this.debugViewImageCache = new JMenuItem("View Image Cache");
-        this.debugViewMonsterCache = new JMenuItem("View Monster Cache");
         this.debugResetPreferences = new JMenuItem("Reset Preferences");
         this.helpAbout = new JMenuItem("About Fantastle...");
         this.helpGeneralHelp = new JMenuItem("Fantastle Help");
@@ -505,7 +503,6 @@ public class MenuManager {
         this.gameShowScore.addActionListener(this.handler);
         this.gameShowTable.addActionListener(this.handler);
         this.debugViewImageCache.addActionListener(this.handler);
-        this.debugViewMonsterCache.addActionListener(this.handler);
         this.debugResetPreferences.addActionListener(this.handler);
         this.helpAbout.addActionListener(this.handler);
         this.helpGeneralHelp.addActionListener(this.handler);
@@ -548,7 +545,6 @@ public class MenuManager {
         this.gameMenu.add(this.gameShowScore);
         this.gameMenu.add(this.gameShowTable);
         this.debugMenu.add(this.debugViewImageCache);
-        this.debugMenu.add(this.debugViewMonsterCache);
         this.debugMenu.add(this.debugResetPreferences);
         if (!System.getProperty("os.name").equalsIgnoreCase("Mac OS X")) {
             this.helpMenu.add(this.helpAbout);
@@ -597,7 +593,6 @@ public class MenuManager {
         this.gameShowScore.setEnabled(false);
         this.gameShowTable.setEnabled(false);
         this.debugViewImageCache.setEnabled(true);
-        this.debugViewMonsterCache.setEnabled(true);
         this.debugResetPreferences.setEnabled(true);
         this.helpAbout.setEnabled(true);
         this.helpObjectHelp.setEnabled(true);
@@ -605,7 +600,7 @@ public class MenuManager {
 
     private class EventHandler implements ActionListener {
         public EventHandler() {
-            // TODO Auto-generated constructor stub
+            // Do nothing
         }
 
         // Handle menus
@@ -766,8 +761,6 @@ public class MenuManager {
                     app.getGameManager().showScoreTable();
                 } else if (cmd.equals("View Image Cache")) {
                     ImageCache.viewCache();
-                } else if (cmd.equals("View Monster Cache")) {
-                    MonsterImageCache.viewMonsterCache();
                 } else if (cmd.equals("Reset Preferences")) {
                     app.resetPreferences();
                     Messager.showDialog("Preferences reset to defaults.");

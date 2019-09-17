@@ -18,8 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot;
 
-import com.puttysoftware.fantastlereboot.obsolete.loaders1.ImageCache;
-import com.puttysoftware.fantastlereboot.obsolete.loaders1.MonsterImageCache;
+import com.puttysoftware.fantastlereboot.loaders.ImageCache;
 
 class CacheTask extends Thread {
     // Constructors
@@ -34,16 +33,13 @@ class CacheTask extends Thread {
         FantastleReboot.getBagOStuff().getPrefsManager().enterWaitMode();
         // Update Micro Logo
         FantastleReboot.getBagOStuff().updateMicroLogo();
-        FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(20);
+        FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(25);
         // Update GUI Logo
         FantastleReboot.getBagOStuff().getGUIManager().updateLogo();
-        FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(40);
+        FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(50);
         // Recreate image cache
         ImageCache.recreateCache();
-        FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(60);
-        // Recreate monster image cache
-        MonsterImageCache.recreateMonsterCache();
-        FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(80);
+        FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(75);
         // Update stat image cache
         FantastleReboot.getBagOStuff().getGameManager().getStatGUI().updateGUI();
         FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(100);

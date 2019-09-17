@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Any questions should be directed to the author via email at: fantastle@worldwizard.net
  */
-package com.puttysoftware.fantastlereboot.obsolete.loaders1;
+package com.puttysoftware.fantastlereboot.loaders;
 
 import java.awt.FlowLayout;
 
@@ -55,7 +55,7 @@ public class ImageCache {
             ImageCache.nameCache = list.getAllNamesForCache();
             ImageCache.cache = new BufferedImageIcon[ImageCache.nameCache.length];
             for (int x = 0; x < ImageCache.nameCache.length; x++) {
-                ImageCache.cache[x] = GraphicsManager
+                ImageCache.cache[x] = ImageLoader
                         .getUncachedImage(ImageCache.nameCache[x]);
             }
             ImageCache.cacheCreated = true;
@@ -72,8 +72,8 @@ public class ImageCache {
         viewFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         viewFrame.setLayout(new FlowLayout());
         viewFrame.add(cv.getHelp());
-        cv.setHelpSize(GraphicsManager.MAX_DESKTOP_WINDOW_SIZE,
-                GraphicsManager.MAX_DESKTOP_WINDOW_SIZE);
+        cv.setHelpSize(ImageLoader.MAX_DESKTOP_WINDOW_SIZE,
+                ImageLoader.MAX_DESKTOP_WINDOW_SIZE);
         viewFrame.pack();
         viewFrame.setResizable(false);
         viewFrame.setVisible(true);

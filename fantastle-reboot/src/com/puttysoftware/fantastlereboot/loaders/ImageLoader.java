@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Any questions should be directed to the author via email at: fantastle@worldwizard.net
  */
-package com.puttysoftware.fantastlereboot.obsolete.loaders1;
+package com.puttysoftware.fantastlereboot.loaders;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -30,7 +30,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.monsters.Element;
 import com.puttysoftware.images.BufferedImageIcon;
 
-public class GraphicsManager {
+public class ImageLoader {
     public static final int MAX_MOBILE_WINDOW_SIZE = 320;
     public static final int MAX_DESKTOP_WINDOW_SIZE = 700;
     private static final Color TRANSPARENT = new Color(200, 100, 100);
@@ -51,10 +51,9 @@ public class GraphicsManager {
             } else {
                 dm = "desktop";
             }
-            final String normalName = GraphicsManager.normalizeName(name);
-            final URL url = GraphicsManager.class.getResource(
-                    "/assets/graphics/" + dm
-                            + "/objects/" + normalName + ".png");
+            final String normalName = ImageLoader.normalizeName(name);
+            final URL url = ImageLoader.class.getResource("/assets/graphics/"
+                    + dm + "/objects/" + normalName + ".png");
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             return icon;
@@ -76,20 +75,18 @@ public class GraphicsManager {
             } else {
                 dm = "desktop";
             }
-            final String normalName = GraphicsManager.normalizeName(name);
-            final URL url = GraphicsManager.class.getResource(
-                    "/assets/graphics/" + dm
-                            + "/stats/" + normalName + ".png");
+            final String normalName = ImageLoader.normalizeName(name);
+            final URL url = ImageLoader.class.getResource(
+                    "/assets/graphics/" + dm + "/stats/" + normalName + ".png");
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             final BufferedImageIcon result = new BufferedImageIcon(icon);
-            for (int x = 0; x < GraphicsManager.getGraphicSize(); x++) {
-                for (int y = 0; y < GraphicsManager.getGraphicSize(); y++) {
+            for (int x = 0; x < ImageLoader.getGraphicSize(); x++) {
+                for (int y = 0; y < ImageLoader.getGraphicSize(); y++) {
                     final int pixel = icon.getRGB(x, y);
                     final Color c = new Color(pixel);
-                    if (c.equals(GraphicsManager.TRANSPARENT)) {
-                        result.setRGB(x, y,
-                                GraphicsManager.REPLACE_STAT.getRGB());
+                    if (c.equals(ImageLoader.TRANSPARENT)) {
+                        result.setRGB(x, y, ImageLoader.REPLACE_STAT.getRGB());
                     }
                 }
             }
@@ -104,20 +101,19 @@ public class GraphicsManager {
     }
 
     public static BufferedImageIcon getTransformedImage(final String name) {
-        if (GraphicsManager.REPLACE == null) {
-            GraphicsManager.defineReplacementColor();
+        if (ImageLoader.REPLACE == null) {
+            ImageLoader.defineReplacementColor();
         }
         try {
             final BufferedImageIcon icon = ImageCache.getCachedImage(name);
             final BufferedImageIcon result = new BufferedImageIcon(icon);
             if (icon != null) {
-                for (int x = 0; x < GraphicsManager.getGraphicSize(); x++) {
-                    for (int y = 0; y < GraphicsManager.getGraphicSize(); y++) {
+                for (int x = 0; x < ImageLoader.getGraphicSize(); x++) {
+                    for (int y = 0; y < ImageLoader.getGraphicSize(); y++) {
                         final int pixel = icon.getRGB(x, y);
                         final Color c = new Color(pixel);
-                        if (c.equals(GraphicsManager.TRANSPARENT)) {
-                            result.setRGB(x, y,
-                                    GraphicsManager.REPLACE.getRGB());
+                        if (c.equals(ImageLoader.TRANSPARENT)) {
+                            result.setRGB(x, y, ImageLoader.REPLACE.getRGB());
                         }
                     }
                 }
@@ -139,11 +135,11 @@ public class GraphicsManager {
             final BufferedImageIcon icon2 = ImageCache.getCachedImage(name2);
             final BufferedImageIcon result = new BufferedImageIcon(icon2);
             if (icon1 != null && icon2 != null) {
-                for (int x = 0; x < GraphicsManager.getGraphicSize(); x++) {
-                    for (int y = 0; y < GraphicsManager.getGraphicSize(); y++) {
+                for (int x = 0; x < ImageLoader.getGraphicSize(); x++) {
+                    for (int y = 0; y < ImageLoader.getGraphicSize(); y++) {
                         final int pixel = icon2.getRGB(x, y);
                         final Color c = new Color(pixel);
-                        if (c.equals(GraphicsManager.TRANSPARENT)) {
+                        if (c.equals(ImageLoader.TRANSPARENT)) {
                             result.setRGB(x, y, icon1.getRGB(x, y));
                         }
                     }
@@ -163,15 +159,15 @@ public class GraphicsManager {
             final String name2, final String name3) {
         try {
             final BufferedImageIcon icon3 = ImageCache.getCachedImage(name3);
-            final BufferedImageIcon icon2 = GraphicsManager
-                    .getCompositeImage(name1, name2);
+            final BufferedImageIcon icon2 = ImageLoader.getCompositeImage(name1,
+                    name2);
             final BufferedImageIcon result = new BufferedImageIcon(icon3);
             if (icon3 != null && icon2 != null) {
-                for (int x = 0; x < GraphicsManager.getGraphicSize(); x++) {
-                    for (int y = 0; y < GraphicsManager.getGraphicSize(); y++) {
+                for (int x = 0; x < ImageLoader.getGraphicSize(); x++) {
+                    for (int y = 0; y < ImageLoader.getGraphicSize(); y++) {
                         final int pixel = icon3.getRGB(x, y);
                         final Color c = new Color(pixel);
-                        if (c.equals(GraphicsManager.TRANSPARENT)) {
+                        if (c.equals(ImageLoader.TRANSPARENT)) {
                             result.setRGB(x, y, icon2.getRGB(x, y));
                         }
                     }
@@ -196,9 +192,8 @@ public class GraphicsManager {
             } else {
                 dm = "desktop";
             }
-            final URL url = GraphicsManager.class.getResource(
-                    "/assets/graphics/" + dm
-                            + "/logo/logo.png");
+            final URL url = ImageLoader.class
+                    .getResource("/assets/graphics/" + dm + "/logo/logo.png");
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             return icon;
@@ -211,8 +206,8 @@ public class GraphicsManager {
 
     public static BufferedImageIcon getLoadingLogo() {
         try {
-            final URL url = GraphicsManager.class.getResource(
-                    "/assets/graphics/loading/loading.png");
+            final URL url = ImageLoader.class
+                    .getResource("/assets/graphics/loading/loading.png");
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             return icon;
@@ -232,9 +227,8 @@ public class GraphicsManager {
             } else {
                 dm = "desktop";
             }
-            final URL url = GraphicsManager.class.getResource(
-                    "/assets/graphics/" + dm
-                            + "/logo/minilogo.png");
+            final URL url = ImageLoader.class.getResource(
+                    "/assets/graphics/" + dm + "/logo/minilogo.png");
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             return icon;
@@ -254,9 +248,8 @@ public class GraphicsManager {
             } else {
                 dm = "desktop";
             }
-            final URL url = GraphicsManager.class.getResource(
-                    "/assets/graphics/" + dm
-                            + "/logo/micrologo.png");
+            final URL url = ImageLoader.class.getResource(
+                    "/assets/graphics/" + dm + "/logo/micrologo.png");
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             return icon;
@@ -268,20 +261,19 @@ public class GraphicsManager {
     }
 
     public static BufferedImageIcon getBossImage() {
-        if (GraphicsManager.REPLACE == null) {
-            GraphicsManager.defineReplacementColor();
+        if (ImageLoader.REPLACE == null) {
+            ImageLoader.defineReplacementColor();
         }
         try {
-            final BufferedImageIcon icon = GraphicsManager.getBossTemplate();
+            final BufferedImageIcon icon = ImageLoader.getBossTemplate();
             final BufferedImageIcon result = new BufferedImageIcon(icon);
             if (icon != null) {
-                for (int x = 0; x < GraphicsManager.getGraphicSize(); x++) {
-                    for (int y = 0; y < GraphicsManager.getGraphicSize(); y++) {
+                for (int x = 0; x < ImageLoader.getGraphicSize(); x++) {
+                    for (int y = 0; y < ImageLoader.getGraphicSize(); y++) {
                         final int pixel = icon.getRGB(x, y);
                         final Color c = new Color(pixel);
-                        if (c.equals(GraphicsManager.TRANSPARENT)) {
-                            result.setRGB(x, y,
-                                    GraphicsManager.REPLACE.getRGB());
+                        if (c.equals(ImageLoader.TRANSPARENT)) {
+                            result.setRGB(x, y, ImageLoader.REPLACE.getRGB());
                         }
                     }
                 }
@@ -305,9 +297,8 @@ public class GraphicsManager {
             } else {
                 dm = "desktop";
             }
-            final URL url = GraphicsManager.class.getResource(
-                    "/assets/graphics/" + dm
-                            + "/boss/boss.png");
+            final URL url = ImageLoader.class
+                    .getResource("/assets/graphics/" + dm + "/boss/boss.png");
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             return icon;
@@ -322,10 +313,9 @@ public class GraphicsManager {
 
     public static BufferedImageIcon getMonsterImage(final String name,
             final Element element) {
-        final BufferedImageIcon template = MonsterImageCache
-                .getCachedMonsterImage(name);
+        final BufferedImageIcon template = ImageCache.getCachedImage(name);
         final BufferedImageIcon templateOut = new BufferedImageIcon(
-                MonsterImageCache.getCachedMonsterImage(name));
+                ImageCache.getCachedImage(name));
         if (template != null) {
             final int w = template.getWidth();
             final int h = template.getHeight();
@@ -346,7 +336,7 @@ public class GraphicsManager {
     }
 
     static BufferedImageIcon getUncachedMonsterImage(final String name) {
-        final BufferedImage template = GraphicsManager.getMonsterTemplate(name);
+        final BufferedImage template = ImageLoader.getMonsterTemplate(name);
         if (template != null) {
             return new BufferedImageIcon(template);
         } else {
@@ -363,10 +353,9 @@ public class GraphicsManager {
             } else {
                 dm = "desktop";
             }
-            final String normalName = GraphicsManager.normalizeName(name);
-            final URL url = GraphicsManager.class.getResource(
-                    "/assets/graphics/" + dm
-                            + "/monsters/" + normalName + ".png");
+            final String normalName = ImageLoader.normalizeName(name);
+            final URL url = ImageLoader.class.getResource("/assets/graphics/"
+                    + dm + "/monsters/" + normalName + ".png");
             final BufferedImage image = ImageIO.read(url);
             if (image != null) {
                 return image;
@@ -395,9 +384,9 @@ public class GraphicsManager {
 
     private static void defineReplacementColor() {
         if (System.getProperty("os.name").startsWith("Mac OS X")) {
-            GraphicsManager.REPLACE = UIManager.getColor("text");
+            ImageLoader.REPLACE = UIManager.getColor("text");
         } else {
-            GraphicsManager.REPLACE = UIManager.getColor("control");
+            ImageLoader.REPLACE = UIManager.getColor("control");
         }
     }
 

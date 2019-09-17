@@ -26,7 +26,7 @@ import javax.swing.SwingConstants;
 
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
-import com.puttysoftware.fantastlereboot.obsolete.loaders1.GraphicsManager;
+import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class StatGUI {
@@ -81,23 +81,23 @@ public class StatGUI {
     }
 
     public void updateGUI() {
-        final BufferedImageIcon hpImage = GraphicsManager
+        final BufferedImageIcon hpImage = ImageLoader
                 .getStatImage("health");
         this.hpLabel.setIcon(hpImage);
-        final BufferedImageIcon mpImage = GraphicsManager.getStatImage("magic");
+        final BufferedImageIcon mpImage = ImageLoader.getStatImage("magic");
         this.mpLabel.setIcon(mpImage);
-        final BufferedImageIcon mlImage = GraphicsManager.getStatImage("ml");
+        final BufferedImageIcon mlImage = ImageLoader.getStatImage("ml");
         this.mlLabel.setIcon(mlImage);
-        final BufferedImageIcon goldImage = GraphicsManager
+        final BufferedImageIcon goldImage = ImageLoader
                 .getStatImage("gold");
         this.goldLabel.setIcon(goldImage);
-        final BufferedImageIcon attackImage = GraphicsManager
+        final BufferedImageIcon attackImage = ImageLoader
                 .getStatImage("attack");
         this.attackLabel.setIcon(attackImage);
-        final BufferedImageIcon defenseImage = GraphicsManager
+        final BufferedImageIcon defenseImage = ImageLoader
                 .getStatImage("defense");
         this.defenseLabel.setIcon(defenseImage);
-        final BufferedImageIcon xpImage = GraphicsManager.getStatImage("xp");
+        final BufferedImageIcon xpImage = ImageLoader.getStatImage("xp");
         this.xpLabel.setIcon(xpImage);
     }
 }

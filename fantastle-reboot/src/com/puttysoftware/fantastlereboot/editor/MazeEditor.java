@@ -41,10 +41,10 @@ import javax.swing.border.EmptyBorder;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
+import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.obsolete.game1.GameManager;
 import com.puttysoftware.fantastlereboot.obsolete.generic.MazeObject;
 import com.puttysoftware.fantastlereboot.obsolete.generic.MazeObjectList;
-import com.puttysoftware.fantastlereboot.obsolete.loaders1.GraphicsManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze5;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.MazeManager;
@@ -295,13 +295,13 @@ public class MazeEditor {
                                     this.elMgr.getEditorLocationZ(),
                                     this.elMgr.getEditorLocationW());
                     this.drawGrid[xFix][yFix]
-                            .setIcon(GraphicsManager.getImage(name1));
+                            .setIcon(ImageLoader.getImage(name1));
                 } catch (final ArrayIndexOutOfBoundsException ae) {
                     this.drawGrid[xFix][yFix]
-                            .setIcon(GraphicsManager.getImage("Void"));
+                            .setIcon(ImageLoader.getImage("Void"));
                 } catch (final NullPointerException np) {
                     this.drawGrid[xFix][yFix]
-                            .setIcon(GraphicsManager.getImage("Void"));
+                            .setIcon(ImageLoader.getImage("Void"));
                 }
             }
         }
@@ -337,13 +337,13 @@ public class MazeEditor {
                                     this.elMgr.getEditorLocationZ(),
                                     this.elMgr.getEditorLocationW());
                     this.drawGrid[xFix][yFix].setIcon(
-                            GraphicsManager.getCompositeImage(name1, name2));
+                            ImageLoader.getCompositeImage(name1, name2));
                 } catch (final ArrayIndexOutOfBoundsException ae) {
                     this.drawGrid[xFix][yFix]
-                            .setIcon(GraphicsManager.getImage("Void"));
+                            .setIcon(ImageLoader.getImage("Void"));
                 } catch (final NullPointerException np) {
                     this.drawGrid[xFix][yFix]
-                            .setIcon(GraphicsManager.getImage("Void"));
+                            .setIcon(ImageLoader.getImage("Void"));
                 }
             }
         }
@@ -360,9 +360,9 @@ public class MazeEditor {
                 - this.vertScroll.getMinimum();
         final int yOffset = this.horzScroll.getValue()
                 - this.horzScroll.getMinimum();
-        final int gridX = x / GraphicsManager.getGraphicSize()
+        final int gridX = x / ImageLoader.getGraphicSize()
                 + this.evMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int gridY = y / GraphicsManager.getGraphicSize()
+        final int gridY = y / ImageLoader.getGraphicSize()
                 + this.evMgr.getViewingWindowLocationY() + xOffset - yOffset;
         try {
             app.getGameManager()
@@ -415,9 +415,9 @@ public class MazeEditor {
                 - this.vertScroll.getMinimum();
         final int yOffset = this.horzScroll.getValue()
                 - this.horzScroll.getMinimum();
-        final int gridX = x / GraphicsManager.getGraphicSize()
+        final int gridX = x / ImageLoader.getGraphicSize()
                 + this.evMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int gridY = y / GraphicsManager.getGraphicSize()
+        final int gridY = y / ImageLoader.getGraphicSize()
                 + this.evMgr.getViewingWindowLocationY() + xOffset - yOffset;
         try {
             final MazeObject mo = app.getMazeManager().getMaze().getCell(gridX,
@@ -442,9 +442,9 @@ public class MazeEditor {
                 - this.vertScroll.getMinimum();
         final int yOffset = this.horzScroll.getValue()
                 - this.horzScroll.getMinimum();
-        final int gridX = x / GraphicsManager.getGraphicSize()
+        final int gridX = x / ImageLoader.getGraphicSize()
                 + this.evMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int gridY = y / GraphicsManager.getGraphicSize()
+        final int gridY = y / ImageLoader.getGraphicSize()
                 + this.evMgr.getViewingWindowLocationY() + xOffset - yOffset;
         try {
             final MazeObject mo = app.getMazeManager().getMaze().getCell(gridX,
@@ -857,9 +857,9 @@ public class MazeEditor {
                 - this.vertScroll.getMinimum();
         final int yOffset = this.horzScroll.getValue()
                 - this.horzScroll.getMinimum();
-        final int destX = x / GraphicsManager.getGraphicSize()
+        final int destX = x / ImageLoader.getGraphicSize()
                 + this.evMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int destY = y / GraphicsManager.getGraphicSize()
+        final int destY = y / ImageLoader.getGraphicSize()
                 + this.evMgr.getViewingWindowLocationY() + xOffset - yOffset;
         final int destZ = this.elMgr.getEditorLocationZ();
         final int destW = this.elMgr.getEditorLocationW();
@@ -933,9 +933,9 @@ public class MazeEditor {
                 - this.vertScroll.getMinimum();
         final int yOffset = this.horzScroll.getValue()
                 - this.horzScroll.getMinimum();
-        final int destX = x / GraphicsManager.getGraphicSize()
+        final int destX = x / ImageLoader.getGraphicSize()
                 + this.evMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int destY = y / GraphicsManager.getGraphicSize()
+        final int destY = y / ImageLoader.getGraphicSize()
                 + this.evMgr.getViewingWindowLocationY() + xOffset - yOffset;
         final int destZ = this.elMgr.getEditorLocationZ();
         final int destW = this.elMgr.getEditorLocationW();
