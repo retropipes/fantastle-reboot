@@ -30,7 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
-import com.puttysoftware.fantastlereboot.loaders.ImageCache;
+import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 
 public class MenuManager {
     // Fields
@@ -760,7 +760,7 @@ public class MenuManager {
                 } else if (cmd.equals("Show Score Table")) {
                     app.getGameManager().showScoreTable();
                 } else if (cmd.equals("View Image Cache")) {
-                    ImageCache.viewCache();
+                    ImageLoader.viewCache();
                 } else if (cmd.equals("Reset Preferences")) {
                     app.resetPreferences();
                     Messager.showDialog("Preferences reset to defaults.");

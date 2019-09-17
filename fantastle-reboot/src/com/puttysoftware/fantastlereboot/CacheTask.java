@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot;
 
-import com.puttysoftware.fantastlereboot.loaders.ImageCache;
+import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 
 class CacheTask extends Thread {
     // Constructors
@@ -38,7 +38,7 @@ class CacheTask extends Thread {
         FantastleReboot.getBagOStuff().getGUIManager().updateLogo();
         FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(50);
         // Recreate image cache
-        ImageCache.recreateCache();
+        ImageLoader.recreateCache();
         FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(75);
         // Update stat image cache
         FantastleReboot.getBagOStuff().getGameManager().getStatGUI().updateGUI();

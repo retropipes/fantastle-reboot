@@ -19,15 +19,20 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot.loaders;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.monsters.Element;
+import com.puttysoftware.fantastlereboot.obsolete.generic.MazeObjectList;
+import com.puttysoftware.help.GraphicalHelpViewer;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class ImageLoader {
@@ -396,6 +401,63 @@ public class ImageLoader {
             return 24;
         } else {
             return 48;
+        }
+    }
+
+    public static void viewCache() {
+        if (!ImageCache.cacheCreated) {
+            ImageCache.createCache();
+        }
+        final GraphicalHelpViewer cv = new GraphicalHelpViewer(ImageCache.cache,
+                ImageCache.nameCache);
+        final JFrame viewFrame = new JFrame("Image Cache Viewer");
+        viewFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        viewFrame.setLayout(new FlowLayout());
+        viewFrame.add(cv.getHelp());
+        cv.setHelpSize(ImageLoader.MAX_DESKTOP_WINDOW_SIZE,
+                ImageLoader.MAX_DESKTOP_WINDOW_SIZE);
+        viewFrame.pack();
+        viewFrame.setResizable(false);
+        viewFrame.setVisible(true);
+    }
+
+    public static void recreateCache() {
+        ImageCache.cacheCreated = false;
+        ImageCache.createCache();
+    }
+
+    private static class ImageCache {
+        // Fields
+        private static BufferedImageIcon[] cache;
+        private static String[] nameCache;
+        private static boolean cacheCreated = false;
+
+        // Methods
+        public static BufferedImageIcon getCachedImage(final String name) {
+            if (!ImageCache.cacheCreated) {
+                ImageCache.createCache();
+            }
+            for (int x = 0; x < ImageCache.nameCache.length; x++) {
+                if (name.equals(ImageCache.nameCache[x])) {
+                    return ImageCache.cache[x];
+                }
+            }
+            return null;
+        }
+
+        private static void createCache() {
+            if (!ImageCache.cacheCreated) {
+                // Create the cache
+                final MazeObjectList list = FantastleReboot.getBagOStuff()
+                        .getObjects();
+                ImageCache.nameCache = list.getAllNamesForCache();
+                ImageCache.cache = new BufferedImageIcon[ImageCache.nameCache.length];
+                for (int x = 0; x < ImageCache.nameCache.length; x++) {
+                    ImageCache.cache[x] = ImageLoader
+                            .getUncachedImage(ImageCache.nameCache[x]);
+                }
+                ImageCache.cacheCreated = true;
+            }
         }
     }
 }

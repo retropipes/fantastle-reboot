@@ -32,7 +32,6 @@ import javax.swing.WindowConstants;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.errorlogger.ErrorLogger;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
-import com.puttysoftware.fantastlereboot.loaders.ImageCache;
 import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.integration.NativeIntegration;
 
@@ -128,7 +127,7 @@ public class FantastleReboot {
         FantastleReboot.getBagOStuff().getGUIManager().updateLogo();
         waitProgress.setValue(25);
         // Create image cache
-        ImageCache.recreateCache();
+        ImageLoader.recreateCache();
         waitProgress.setValue(50);
         // Create sound cache
         waitProgress.setValue(75);
