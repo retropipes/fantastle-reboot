@@ -31,6 +31,7 @@ import javax.swing.WindowConstants;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.errorlogger.ErrorLogger;
+import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.integration.NativeIntegration;
@@ -85,8 +86,7 @@ public class FantastleReboot {
             ni.configureLookAndFeel();
             ni.setOpenFileHandler(FantastleReboot.bag.getMazeManager());
             ni.setQuitHandler(FantastleReboot.bag.getMazeManager());
-            ni.setPreferencesHandler(
-                    FantastleReboot.bag.getPrefsManager());
+            ni.setPreferencesHandler(FantastleReboot.bag.getPrefsManager());
             ni.setAboutHandler(FantastleReboot.bag.getAboutDialog());
             // Load stuff
             FantastleReboot.showLoadingScreen();
@@ -103,7 +103,8 @@ public class FantastleReboot {
         final JFrame waitFrame = new JFrame("Loading...");
         final Container logoContainer = new Container();
         final Container textContainer = new Container();
-        final JLabel waitLogo = new JLabel("", ImageLoader.getLoadingLogo(),
+        final JLabel waitLogo = new JLabel("", ImageLoader
+                .loadUserInterfaceImage(GameUserInterfaceImage.LOADING),
                 SwingConstants.CENTER);
         final JLabel waitLabel = new JLabel("Creating Caches...");
         final JProgressBar waitProgress = new JProgressBar();

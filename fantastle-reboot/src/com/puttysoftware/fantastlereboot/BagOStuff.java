@@ -23,6 +23,7 @@ import java.awt.Image;
 import javax.swing.JFrame;
 
 import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.map.time.MapTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.map.turn.MapTurnBattleLogic;
@@ -119,7 +120,8 @@ public class BagOStuff {
         final Object extras = PluginLoader.loadPlugin("ExtrasPlugin");
         PluginLoader.addPluginMenus(extras);
         // Cache Micro Logo
-        this.microLogo = ImageLoader.getMicroLogo();
+        this.microLogo = ImageLoader
+                .loadUserInterfaceImage(GameUserInterfaceImage.MICRO_LOGO);
     }
 
     public void setInGUI(final boolean value) {
@@ -189,7 +191,7 @@ public class BagOStuff {
 
     public void updateMicroLogo() {
         // Cache Micro Logo
-        this.microLogo = ImageLoader.getMicroLogo();
+        this.microLogo = ImageLoader.loadUserInterfaceImage(GameUserInterfaceImage.MICRO_LOGO);
     }
 
     public MazeEditor getEditor() {

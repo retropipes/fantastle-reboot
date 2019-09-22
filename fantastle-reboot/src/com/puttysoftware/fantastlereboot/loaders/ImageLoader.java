@@ -23,6 +23,7 @@ import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Properties;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -30,6 +31,7 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
 import com.puttysoftware.fantastlereboot.creatures.monsters.Element;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObjectList;
 import com.puttysoftware.help.GraphicalHelpViewer;
@@ -41,6 +43,8 @@ public class ImageLoader {
     private static final Color TRANSPARENT = new Color(200, 100, 100);
     private static Color REPLACE = null;
     private static final Color REPLACE_STAT = new Color(0, 0, 0, 0);
+    private static String[] allUserInterfaceFilenames;
+    private static Properties fileExtensions;
 
     public static BufferedImageIcon getImage(final String name) {
         // Get it from the cache
@@ -188,81 +192,26 @@ public class ImageLoader {
         }
     }
 
-    public static BufferedImageIcon getLogo() {
-        try {
-            String dm;
-            if (FantastleReboot.getBagOStuff().getPrefsManager()
-                    .isMobileModeEnabled()) {
-                dm = "mobile";
-            } else {
-                dm = "desktop";
+    private static void ensureFileExtensions() {
+        if (fileExtensions == null) {
+            try {
+                fileExtensions = new Properties();
+                fileExtensions.load(SoundLoader.class.getResourceAsStream(
+                        "/assets/data/extensions/extensions.properties"));
+            } catch (IOException e) {
+                FantastleReboot.logError(e);
             }
-            final URL url = ImageLoader.class
-                    .getResource("/assets/graphics/" + dm + "/logo/logo.png");
-            final BufferedImage image = ImageIO.read(url);
-            final BufferedImageIcon icon = new BufferedImageIcon(image);
-            return icon;
-        } catch (final IOException ie) {
-            return null;
-        } catch (final NullPointerException np) {
-            return null;
         }
     }
 
-    public static BufferedImageIcon getLoadingLogo() {
-        try {
-            final URL url = ImageLoader.class
-                    .getResource("/assets/graphics/loading/loading.png");
-            final BufferedImage image = ImageIO.read(url);
-            final BufferedImageIcon icon = new BufferedImageIcon(image);
-            return icon;
-        } catch (final IOException ie) {
-            return null;
-        } catch (final NullPointerException np) {
-            return null;
+    public static BufferedImageIcon loadUserInterfaceImage(GameUserInterfaceImage image)
+    {
+        if (allUserInterfaceFilenames == null) {
+            allUserInterfaceFilenames = DataLoader.loadSoundData();
         }
-    }
-
-    public static BufferedImageIcon getMiniatureLogo() {
-        try {
-            String dm;
-            if (FantastleReboot.getBagOStuff().getPrefsManager()
-                    .isMobileModeEnabled()) {
-                dm = "mobile";
-            } else {
-                dm = "desktop";
-            }
-            final URL url = ImageLoader.class.getResource(
-                    "/assets/graphics/" + dm + "/logo/minilogo.png");
-            final BufferedImage image = ImageIO.read(url);
-            final BufferedImageIcon icon = new BufferedImageIcon(image);
-            return icon;
-        } catch (final IOException ie) {
-            return null;
-        } catch (final NullPointerException np) {
-            return null;
-        }
-    }
-
-    public static BufferedImageIcon getMicroLogo() {
-        try {
-            String dm;
-            if (FantastleReboot.getBagOStuff().getPrefsManager()
-                    .isMobileModeEnabled()) {
-                dm = "mobile";
-            } else {
-                dm = "desktop";
-            }
-            final URL url = ImageLoader.class.getResource(
-                    "/assets/graphics/" + dm + "/logo/micrologo.png");
-            final BufferedImage image = ImageIO.read(url);
-            final BufferedImageIcon icon = new BufferedImageIcon(image);
-            return icon;
-        } catch (final IOException ie) {
-            return null;
-        } catch (final NullPointerException np) {
-            return null;
-        }
+        ImageLoader.ensureFileExtensions();
+        String imageExt = fileExtensions.getProperty("images");
+        return ImageCache.getCachedImage(allUserInterfaceFilenames[image.ordinal()] + imageExt);
     }
 
     public static BufferedImageIcon getBossImage() {
@@ -396,12 +345,7 @@ public class ImageLoader {
     }
 
     public static int getGraphicSize() {
-        if (FantastleReboot.getBagOStuff().getPrefsManager()
-                .isMobileModeEnabled()) {
-            return 24;
-        } else {
-            return 48;
-        }
+        return 64;
     }
 
     public static void viewCache() {
