@@ -13,10 +13,12 @@ import javax.imageio.ImageIO;
 
 import com.puttysoftware.images.BufferedImageIcon;
 
+@Deprecated(forRemoval = true)
 public class StatImageManager {
     private static final String DEFAULT_LOAD_PATH = "/com/puttysoftware/tallertower/resources/graphics/stats/";
     private static String LOAD_PATH = StatImageManager.DEFAULT_LOAD_PATH;
     private static Class<?> LOAD_CLASS = StatImageManager.class;
+
 
     public static BufferedImageIcon getImage(final int imageID) {
         // Get it from the cache

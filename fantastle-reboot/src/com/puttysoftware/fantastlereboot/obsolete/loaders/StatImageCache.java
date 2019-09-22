@@ -7,6 +7,7 @@ package com.puttysoftware.fantastlereboot.obsolete.loaders;
 
 import com.puttysoftware.images.BufferedImageIcon;
 
+@Deprecated(forRemoval = true)
 public class StatImageCache {
     // Fields
     private static CacheEntry[] cache;

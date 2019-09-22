@@ -31,6 +31,7 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.assets.GameEffectImage;
 import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
 import com.puttysoftware.fantastlereboot.creatures.monsters.Element;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObjectList;
@@ -42,7 +43,7 @@ public class ImageLoader {
     public static final int MAX_DESKTOP_WINDOW_SIZE = 700;
     private static final Color TRANSPARENT = new Color(200, 100, 100);
     private static Color REPLACE = null;
-    private static final Color REPLACE_STAT = new Color(0, 0, 0, 0);
+    private static String[] allEffectFilenames;
     private static String[] allUserInterfaceFilenames;
     private static Properties fileExtensions;
 
@@ -66,40 +67,6 @@ public class ImageLoader {
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             return icon;
-        } catch (final IOException ie) {
-            return null;
-        } catch (final NullPointerException np) {
-            return null;
-        } catch (final IllegalArgumentException ia) {
-            return null;
-        }
-    }
-
-    public static BufferedImageIcon getStatImage(final String name) {
-        try {
-            String dm;
-            if (FantastleReboot.getBagOStuff().getPrefsManager()
-                    .isMobileModeEnabled()) {
-                dm = "mobile";
-            } else {
-                dm = "desktop";
-            }
-            final String normalName = ImageLoader.normalizeName(name);
-            final URL url = ImageLoader.class.getResource(
-                    "/assets/graphics/" + dm + "/stats/" + normalName + ".png");
-            final BufferedImage image = ImageIO.read(url);
-            final BufferedImageIcon icon = new BufferedImageIcon(image);
-            final BufferedImageIcon result = new BufferedImageIcon(icon);
-            for (int x = 0; x < ImageLoader.getGraphicSize(); x++) {
-                for (int y = 0; y < ImageLoader.getGraphicSize(); y++) {
-                    final int pixel = icon.getRGB(x, y);
-                    final Color c = new Color(pixel);
-                    if (c.equals(ImageLoader.TRANSPARENT)) {
-                        result.setRGB(x, y, ImageLoader.REPLACE_STAT.getRGB());
-                    }
-                }
-            }
-            return result;
         } catch (final IOException ie) {
             return null;
         } catch (final NullPointerException np) {
@@ -204,14 +171,25 @@ public class ImageLoader {
         }
     }
 
-    public static BufferedImageIcon loadUserInterfaceImage(GameUserInterfaceImage image)
-    {
-        if (allUserInterfaceFilenames == null) {
-            allUserInterfaceFilenames = DataLoader.loadSoundData();
+    public static BufferedImageIcon loadEffectImage(GameEffectImage image) {
+        if (allEffectFilenames == null) {
+            allEffectFilenames = DataLoader.loadEffectImageData();
         }
         ImageLoader.ensureFileExtensions();
         String imageExt = fileExtensions.getProperty("images");
-        return ImageCache.getCachedImage(allUserInterfaceFilenames[image.ordinal()] + imageExt);
+        return ImageCache
+                .getCachedImage(allEffectFilenames[image.ordinal()] + imageExt);
+    }
+
+    public static BufferedImageIcon loadUserInterfaceImage(
+            GameUserInterfaceImage image) {
+        if (allUserInterfaceFilenames == null) {
+            allUserInterfaceFilenames = DataLoader.loadUserInterfaceImageData();
+        }
+        ImageLoader.ensureFileExtensions();
+        String imageExt = fileExtensions.getProperty("images");
+        return ImageCache.getCachedImage(
+                allUserInterfaceFilenames[image.ordinal()] + imageExt);
     }
 
     public static BufferedImageIcon getBossImage() {

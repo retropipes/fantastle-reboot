@@ -2,6 +2,7 @@ package com.puttysoftware.fantastlereboot.obsolete.loaders;
 
 import com.puttysoftware.fantastlereboot.datamanagers.GraphicsDataManager;
 
+@Deprecated(forRemoval = true)
 public class StatImageConstants {
     public static final int STAT_IMAGE_ACTIONS = 0;
     public static final int STAT_IMAGE_ATTACK = 1;
