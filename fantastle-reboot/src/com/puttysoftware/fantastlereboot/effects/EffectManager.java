@@ -34,7 +34,7 @@ public class EffectManager {
     private final JLabel[] activeEffectMessages;
     private int newEffectIndex;
     private final int[] activeEffectIndices;
-    private static final int NUM_EFFECTS = 8;
+    private static final int NUM_EFFECTS = 9;
     private static final int MAX_ACTIVE_EFFECTS = 3;
 
     // Constructors
