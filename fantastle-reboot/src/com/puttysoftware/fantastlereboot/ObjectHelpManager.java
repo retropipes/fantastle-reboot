@@ -24,7 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
-import com.puttysoftware.fantastlereboot.obsolete.generic.MazeObjectList;
+import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObjectList;
 import com.puttysoftware.help.GraphicalHelpViewer;
 import com.puttysoftware.images.BufferedImageIcon;
 

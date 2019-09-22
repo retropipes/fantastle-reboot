@@ -21,7 +21,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze1;
 import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.obsolete.generic.MazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 

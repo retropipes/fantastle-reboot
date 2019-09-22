@@ -20,9 +20,9 @@ package com.puttysoftware.fantastlereboot.obsolete.maze1;
 
 import java.io.IOException;
 
-import com.puttysoftware.fantastlereboot.obsolete.generic.MazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.objects.Monster;
-import com.puttysoftware.fantastlereboot.obsolete.objects.MovingBlock;
+import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Monster;
+import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.MovingBlock;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
