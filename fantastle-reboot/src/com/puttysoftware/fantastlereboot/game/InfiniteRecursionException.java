@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.puttysoftware.fantastlereboot.obsolete.game1;
+package com.puttysoftware.fantastlereboot.game;
 
 /**
  *

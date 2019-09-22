@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.obsolete.game2;
+package com.puttysoftware.fantastlereboot.game;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

@@ -132,8 +132,7 @@ public class FantastleReboot {
         // Create sound cache
         waitProgress.setValue(75);
         // Create stat image cache
-        FantastleReboot.getBagOStuff().getGameManager().getStatGUI()
-                .updateGUI();
+        FantastleReboot.getBagOStuff().getGameManager().updateStatGUI();
         waitProgress.setValue(100);
         waitFrame.setVisible(false);
     }

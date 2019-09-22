@@ -19,7 +19,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot.obsolete.objects;
 
 import com.puttysoftware.fantastlereboot.Messager;
-import com.puttysoftware.fantastlereboot.obsolete.game1.ObjectInventory;
+import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.obsolete.generic.GenericTrap;
 
 public class ArrowTrap extends GenericTrap {

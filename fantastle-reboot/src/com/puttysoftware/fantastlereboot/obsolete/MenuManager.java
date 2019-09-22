@@ -19,9 +19,9 @@ import javax.swing.KeyStroke;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.characterfiles.CharacterRegistration;
-import com.puttysoftware.fantastlereboot.obsolete.game2.InventoryViewer;
-import com.puttysoftware.fantastlereboot.obsolete.game2.NoteManager;
-import com.puttysoftware.fantastlereboot.obsolete.game2.StatisticsViewer;
+import com.puttysoftware.fantastlereboot.game.InventoryViewer;
+import com.puttysoftware.fantastlereboot.game.NoteManager;
+import com.puttysoftware.fantastlereboot.game.StatisticsViewer;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.GenerateTask;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeManager;
 

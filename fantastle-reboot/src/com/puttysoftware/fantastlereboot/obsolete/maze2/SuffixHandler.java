@@ -2,8 +2,8 @@ package com.puttysoftware.fantastlereboot.obsolete.maze2;
 
 import java.io.IOException;
 
+import com.puttysoftware.fantastlereboot.game.FileHooks;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.game2.FileHooks;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 

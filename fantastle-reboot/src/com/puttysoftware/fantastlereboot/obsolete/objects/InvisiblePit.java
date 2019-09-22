@@ -21,7 +21,7 @@ package com.puttysoftware.fantastlereboot.obsolete.objects;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
-import com.puttysoftware.fantastlereboot.obsolete.game1.ObjectInventory;
+import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 
 public class InvisiblePit extends Pit {
     // Constructors

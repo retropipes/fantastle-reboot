@@ -3,7 +3,7 @@ Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.obsolete.game2;
+package com.puttysoftware.fantastlereboot.game;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 
@@ -25,6 +25,14 @@ public final class GameViewingWindowManager {
     }
 
     public int getViewingWindowLocationY() {
+        return this.locY;
+    }
+
+    public int getUpperLeftViewingWindowLocationX() {
+        return this.locX;
+    }
+
+    public int getUpperLeftViewingWindowLocationY() {
         return this.locY;
     }
 
@@ -60,6 +68,14 @@ public final class GameViewingWindowManager {
     public void restoreViewingWindow() {
         this.locX = this.oldLocX;
         this.locY = this.oldLocY;
+    }
+
+    public static int getViewingWindowSizeX() {
+        return FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize();
+    }
+
+    public static int getViewingWindowSizeY() {
+        return FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize();
     }
 
     public static int getOffsetFactorX() {

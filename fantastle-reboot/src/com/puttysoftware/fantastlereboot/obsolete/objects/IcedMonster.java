@@ -3,7 +3,7 @@ package com.puttysoftware.fantastlereboot.obsolete.objects;
 import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.obsolete.game1.ObjectInventory;
+import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.obsolete.generic.GenericDungeonObject;
 import com.puttysoftware.fantastlereboot.obsolete.generic.MazeObject;
 import com.puttysoftware.fantastlereboot.obsolete.generic.MazeObjectList;

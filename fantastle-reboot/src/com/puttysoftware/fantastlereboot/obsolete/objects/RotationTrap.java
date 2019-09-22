@@ -23,7 +23,7 @@ import java.io.IOException;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.obsolete.game1.ObjectInventory;
+import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.obsolete.generic.GenericTrap;
 import com.puttysoftware.fantastlereboot.obsolete.generic.MazeObject;
 import com.puttysoftware.xio.XDataReader;

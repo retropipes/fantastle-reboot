@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.obsolete.game2;
+package com.puttysoftware.fantastlereboot.game;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;

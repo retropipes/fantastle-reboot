@@ -20,7 +20,7 @@ package com.puttysoftware.fantastlereboot.obsolete.objects;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.obsolete.game1.ObjectInventory;
+import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.obsolete.generic.GenericInventoryModifier;
 
 public class NoBoots extends GenericInventoryModifier {

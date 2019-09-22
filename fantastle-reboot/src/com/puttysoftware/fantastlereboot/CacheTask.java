@@ -41,7 +41,7 @@ class CacheTask extends Thread {
         ImageLoader.recreateCache();
         FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(75);
         // Update stat image cache
-        FantastleReboot.getBagOStuff().getGameManager().getStatGUI().updateGUI();
+        FantastleReboot.getBagOStuff().getGameManager().updateStatGUI();
         FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(100);
         // Update Help
         FantastleReboot.getBagOStuff().getObjectHelpManager().updateHelpSize();

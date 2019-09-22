@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Any questions should be directed to the author via email at: fantastle@worldwizard.net
  */
-package com.puttysoftware.fantastlereboot.obsolete.game1;
+package com.puttysoftware.fantastlereboot.game;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -126,6 +126,10 @@ public class GameManager {
 
     public PlayerLocationManager getPlayerManager() {
         return this.plMgr;
+    }
+
+    public void updateStatGUI() {
+        this.sg.updateImages();
     }
 
     public StatGUI getStatGUI() {
@@ -917,10 +921,10 @@ public class GameManager {
                 this.plMgr.setPlayerLocation(x, y, z, w);
                 this.vwMgr.setViewingWindowLocationX(
                         this.plMgr.getPlayerLocationY()
-                                - this.vwMgr.getOffsetFactorX());
+                                - GameViewingWindowManager.getOffsetFactorX());
                 this.vwMgr.setViewingWindowLocationY(
                         this.plMgr.getPlayerLocationX()
-                                - this.vwMgr.getOffsetFactorY());
+                                - GameViewingWindowManager.getOffsetFactorY());
                 this.savedMazeObject = m.getCell(
                         this.plMgr.getPlayerLocationX(),
                         this.plMgr.getPlayerLocationY(),
@@ -970,10 +974,10 @@ public class GameManager {
                 this.plMgr.setPlayerLocation(x, y, z, w);
                 this.vwMgr.setViewingWindowLocationX(
                         this.plMgr.getPlayerLocationY()
-                                - this.vwMgr.getOffsetFactorX());
+                                - GameViewingWindowManager.getOffsetFactorX());
                 this.vwMgr.setViewingWindowLocationY(
                         this.plMgr.getPlayerLocationX()
-                                - this.vwMgr.getOffsetFactorY());
+                                - GameViewingWindowManager.getOffsetFactorY());
                 this.savedMazeObject = m.getCell(
                         this.plMgr.getPlayerLocationX(),
                         this.plMgr.getPlayerLocationY(),
@@ -1028,8 +1032,8 @@ public class GameManager {
             // Rebuild draw grid
             final EmptyBorder eb = new EmptyBorder(0, 0, 0, 0);
             this.outputPane.removeAll();
-            for (int x = 0; x < this.vwMgr.getViewingWindowSizeX(); x++) {
-                for (int y = 0; y < this.vwMgr.getViewingWindowSizeY(); y++) {
+            for (int x = 0; x < GameViewingWindowManager.getViewingWindowSizeX(); x++) {
+                for (int y = 0; y < GameViewingWindowManager.getViewingWindowSizeY(); y++) {
                     this.drawGrid[x][y] = new JLabel();
                     // Fix to make draw grid line up properly
                     this.drawGrid[x][y].setBorder(eb);
@@ -1173,9 +1177,9 @@ public class GameManager {
 
     public void resetViewingWindow() {
         this.vwMgr.setViewingWindowLocationX(this.plMgr.getPlayerLocationY()
-                - this.vwMgr.getOffsetFactorX());
+                - GameViewingWindowManager.getOffsetFactorX());
         this.vwMgr.setViewingWindowLocationY(this.plMgr.getPlayerLocationX()
-                - this.vwMgr.getOffsetFactorY());
+                - GameViewingWindowManager.getOffsetFactorY());
     }
 
     public void resetPlayerLocation() {
@@ -1512,9 +1516,9 @@ public class GameManager {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         final int xOffset = this.vwMgr.getViewingWindowLocationX()
-                - this.vwMgr.getOffsetFactorX();
+                - GameViewingWindowManager.getOffsetFactorX();
         final int yOffset = this.vwMgr.getViewingWindowLocationY()
-                - this.vwMgr.getOffsetFactorY();
+                - GameViewingWindowManager.getOffsetFactorY();
         final int destX = x / ImageLoader.getGraphicSize()
                 + this.vwMgr.getViewingWindowLocationX() - xOffset + yOffset;
         final int destY = y / ImageLoader.getGraphicSize()
@@ -1590,9 +1594,9 @@ public class GameManager {
     void controllableTeleportHandler(final int x, final int y) {
         if (this.teleporting) {
             final int xOffset = this.vwMgr.getViewingWindowLocationX()
-                    - this.vwMgr.getOffsetFactorX();
+                    - GameViewingWindowManager.getOffsetFactorX();
             final int yOffset = this.vwMgr.getViewingWindowLocationY()
-                    - this.vwMgr.getOffsetFactorY();
+                    - GameViewingWindowManager.getOffsetFactorY();
             final int destX = x / ImageLoader.getGraphicSize()
                     + this.vwMgr.getViewingWindowLocationX() - xOffset
                     + yOffset;
@@ -1615,9 +1619,9 @@ public class GameManager {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         final int xOffset = this.vwMgr.getViewingWindowLocationX()
-                - this.vwMgr.getOffsetFactorX();
+                - GameViewingWindowManager.getOffsetFactorX();
         final int yOffset = this.vwMgr.getViewingWindowLocationY()
-                - this.vwMgr.getOffsetFactorY();
+                - GameViewingWindowManager.getOffsetFactorY();
         final int destX = x / ImageLoader.getGraphicSize()
                 + this.vwMgr.getViewingWindowLocationX() - xOffset + yOffset;
         final int destY = y / ImageLoader.getGraphicSize()
@@ -1724,16 +1728,16 @@ public class GameManager {
         this.outputFrame
                 .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.outputPane
-                .setLayout(new GridLayout(this.vwMgr.getViewingWindowSizeX(),
-                        this.vwMgr.getViewingWindowSizeY()));
+                .setLayout(new GridLayout(GameViewingWindowManager.getViewingWindowSizeX(),
+                        GameViewingWindowManager.getViewingWindowSizeY()));
         this.outputFrame.setResizable(false);
         this.outputFrame.addKeyListener(this.handler);
         this.outputFrame.addWindowListener(this.handler);
         this.outputPane.addMouseListener(this.handler);
-        this.drawGrid = new JLabel[this.vwMgr
-                .getViewingWindowSizeX()][this.vwMgr.getViewingWindowSizeY()];
-        for (int x = 0; x < this.vwMgr.getViewingWindowSizeX(); x++) {
-            for (int y = 0; y < this.vwMgr.getViewingWindowSizeY(); y++) {
+        this.drawGrid = new JLabel[GameViewingWindowManager
+                .getViewingWindowSizeX()][GameViewingWindowManager.getViewingWindowSizeY()];
+        for (int x = 0; x < GameViewingWindowManager.getViewingWindowSizeX(); x++) {
+            for (int y = 0; y < GameViewingWindowManager.getViewingWindowSizeY(); y++) {
                 this.drawGrid[x][y] = new JLabel();
                 // Mac OS X-specific fix to make draw grid line up properly
                 if (System.getProperty("os.name").startsWith("Mac OS X")) {
