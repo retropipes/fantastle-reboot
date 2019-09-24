@@ -34,7 +34,6 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameBossImage;
 import com.puttysoftware.fantastlereboot.assets.GameEffectImage;
 import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
-import com.puttysoftware.fantastlereboot.creatures.monsters.Element;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObjectList;
 import com.puttysoftware.help.GraphicalHelpViewer;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -203,66 +202,6 @@ public class ImageLoader {
         String imageExt = fileExtensions.getProperty("images");
         return ImageCache.getCachedImage(
                 allUserInterfaceFilenames[image.ordinal()] + imageExt);
-    }
-
-    public static BufferedImageIcon getMonsterImage(final String name,
-            final Element element) {
-        final BufferedImageIcon template = ImageCache.getCachedImage(name);
-        final BufferedImageIcon templateOut = new BufferedImageIcon(
-                ImageCache.getCachedImage(name));
-        if (template != null) {
-            final int w = template.getWidth();
-            final int h = template.getHeight();
-            int pixel;
-            for (int x = 0; x < w; x++) {
-                for (int y = 0; y < h; y++) {
-                    pixel = template.getRGB(x, y);
-                    final Color old = new Color(pixel);
-                    final Color transformed = element.applyTransform(old);
-                    pixel = transformed.getRGB();
-                    templateOut.setRGB(x, y, pixel);
-                }
-            }
-            return templateOut;
-        } else {
-            return null;
-        }
-    }
-
-    static BufferedImageIcon getUncachedMonsterImage(final String name) {
-        final BufferedImage template = ImageLoader.getMonsterTemplate(name);
-        if (template != null) {
-            return new BufferedImageIcon(template);
-        } else {
-            return null;
-        }
-    }
-
-    private static BufferedImage getMonsterTemplate(final String name) {
-        try {
-            String dm;
-            if (FantastleReboot.getBagOStuff().getPrefsManager()
-                    .isMobileModeEnabled()) {
-                dm = "mobile";
-            } else {
-                dm = "desktop";
-            }
-            final String normalName = ImageLoader.normalizeName(name);
-            final URL url = ImageLoader.class.getResource("/assets/graphics/"
-                    + dm + "/monsters/" + normalName + ".png");
-            final BufferedImage image = ImageIO.read(url);
-            if (image != null) {
-                return image;
-            } else {
-                return null;
-            }
-        } catch (final IOException ie) {
-            return null;
-        } catch (final NullPointerException np) {
-            return null;
-        } catch (final IllegalArgumentException ia) {
-            return null;
-        }
     }
 
     private static String normalizeName(final String name) {
