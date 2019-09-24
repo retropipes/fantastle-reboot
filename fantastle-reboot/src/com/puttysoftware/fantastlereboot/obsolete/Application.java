@@ -5,13 +5,12 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.obsolete;
 
-import java.awt.Image;
-
 import javax.swing.JFrame;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.map.time.MapTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.map.turn.MapTurnBattleLogic;
@@ -20,8 +19,8 @@ import com.puttysoftware.fantastlereboot.battle.window.turn.WindowTurnBattleLogi
 import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.items.ShopTypes;
+import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.LogoManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeManager;
 import com.puttysoftware.fantastlereboot.utilities.MazeObjectList;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -165,11 +164,8 @@ public final class Application {
     }
 
     public static BufferedImageIcon getMicroLogo() {
-        return LogoManager.getMicroLogo();
-    }
-
-    public static Image getIconLogo() {
-        return LogoManager.getIconLogo();
+        return ImageLoader
+                .loadUserInterfaceImage(GameUserInterfaceImage.MICRO_LOGO);
     }
 
     public static void playLogoSound() {
@@ -184,14 +180,15 @@ public final class Application {
         } else {
             rt = "";
         }
-        return Application.VERSION_MAJOR + "." + Application.VERSION_MINOR
-                + "." + Application.VERSION_BUGFIX + rt;
+        return Application.VERSION_MAJOR + "." + Application.VERSION_MINOR + "."
+                + Application.VERSION_BUGFIX + rt;
     }
 
     public JFrame getOutputFrame() {
         try {
             if (this.getMode() == Application.STATUS_PREFS) {
-                return FantastleReboot.getBagOStuff().getPrefsManager().getPrefFrame();
+                return FantastleReboot.getBagOStuff().getPrefsManager()
+                        .getPrefFrame();
             } else if (this.getMode() == Application.STATUS_GUI) {
                 return this.getGUIManager().getGUIFrame();
             } else if (this.getMode() == Application.STATUS_GAME) {
@@ -240,14 +237,17 @@ public final class Application {
     }
 
     public Battle getBattle() {
-        if (FantastleReboot.getBagOStuff().getPrefsManager().useMapBattleEngine()) {
-            if (FantastleReboot.getBagOStuff().getPrefsManager().useTimeBattleEngine()) {
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
+                .useMapBattleEngine()) {
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
+                    .useTimeBattleEngine()) {
                 return this.mapTimeBattle;
             } else {
                 return this.mapTurnBattle;
             }
         } else {
-            if (FantastleReboot.getBagOStuff().getPrefsManager().useTimeBattleEngine()) {
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
+                    .useTimeBattleEngine()) {
                 return this.windowTimeBattle;
             } else {
                 return this.windowTurnBattle;

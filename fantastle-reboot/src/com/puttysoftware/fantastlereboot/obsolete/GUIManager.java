@@ -7,7 +7,6 @@ package com.puttysoftware.fantastlereboot.obsolete;
 
 import java.awt.Container;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
@@ -20,7 +19,8 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.LogoManager;
+import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
+import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeManager;
 import com.puttysoftware.fileutils.DirectoryUtilities;
@@ -35,8 +35,6 @@ public final class GUIManager {
     public GUIManager() {
         final CloseHandler cHandler = new CloseHandler();
         this.guiFrame = new JFrame("TallerTower");
-        final Image iconlogo = LogoManager.getIconLogo();
-        this.guiFrame.setIconImage(iconlogo);
         final Container guiPane = this.guiFrame.getContentPane();
         this.guiFrame
                 .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -75,10 +73,9 @@ public final class GUIManager {
     }
 
     public void updateLogo() {
-        final BufferedImageIcon logo = LogoManager.getLogo();
+        final BufferedImageIcon logo = ImageLoader
+                .loadUserInterfaceImage(GameUserInterfaceImage.LOGO);
         this.logoLabel.setIcon(logo);
-        final Image iconlogo = Application.getIconLogo();
-        this.guiFrame.setIconImage(iconlogo);
         this.guiFrame.pack();
     }
 

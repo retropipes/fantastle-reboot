@@ -9,7 +9,6 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,7 +19,8 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.LogoManager;
+import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
+import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 
 public class AboutDialog {
     // Fields
@@ -43,14 +43,13 @@ public class AboutDialog {
     private void setUpGUI(final String ver) {
         final EventHandler handler = new EventHandler();
         this.aboutFrame = new JFrame("About TallerTower");
-        final Image iconlogo = LogoManager.getIconLogo();
-        this.aboutFrame.setIconImage(iconlogo);
         final Container aboutPane = new Container();
         final Container textPane = new Container();
         final Container buttonPane = new Container();
         final Container logoPane = new Container();
         final JButton aboutOK = new JButton("OK");
-        final JLabel miniLabel = new JLabel("", LogoManager.getMiniatureLogo(),
+        final JLabel miniLabel = new JLabel("", ImageLoader
+                .loadUserInterfaceImage(GameUserInterfaceImage.MINI_LOGO),
                 SwingConstants.LEFT);
         miniLabel.setLabelFor(null);
         aboutOK.setDefaultCapable(true);

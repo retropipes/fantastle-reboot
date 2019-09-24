@@ -7,7 +7,6 @@ package com.puttysoftware.fantastlereboot.game;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -279,8 +278,6 @@ class GameGUIManager {
         this.messageLabel = new JLabel(" ");
         this.messageLabel.setOpaque(true);
         this.outputFrame = new JFrame("TallerTower");
-        final Image iconlogo = Application.getIconLogo();
-        this.outputFrame.setIconImage(iconlogo);
         this.drawGrid = new DrawGrid(FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize());
         this.outputPane = new GameDraw(this.drawGrid);
         this.outputFrame.setContentPane(this.borderPane);

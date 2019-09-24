@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -23,7 +22,6 @@ import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
 import com.puttysoftware.fantastlereboot.battle.BossRewards;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.LogoManager;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class WindowTimeBattleGUI {
@@ -38,8 +36,6 @@ public class WindowTimeBattleGUI {
     public WindowTimeBattleGUI() {
         // Initialize GUI
         this.battleFrame = new JFrame("Battle");
-        final Image iconlogo = LogoManager.getIconLogo();
-        this.battleFrame.setIconImage(iconlogo);
         Container holderPane, iconPane, messagePane, buttonPane, timerPane;
         holderPane = new Container();
         iconPane = new Container();

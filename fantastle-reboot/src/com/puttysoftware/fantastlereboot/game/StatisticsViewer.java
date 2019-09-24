@@ -8,7 +8,6 @@ package com.puttysoftware.fantastlereboot.game;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -21,7 +20,6 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.LogoManager;
 
 public class StatisticsViewer {
     // Fields
@@ -67,8 +65,6 @@ public class StatisticsViewer {
     private static void setUpGUI() {
         if (!inited) {
             statisticsFrame = new JFrame("Statistics");
-            final Image iconlogo = LogoManager.getIconLogo();
-            statisticsFrame.setIconImage(iconlogo);
             statisticsPane = new JPanel();
             statisticsPane.setLayout(new BorderLayout());
             contentPane = new JPanel();

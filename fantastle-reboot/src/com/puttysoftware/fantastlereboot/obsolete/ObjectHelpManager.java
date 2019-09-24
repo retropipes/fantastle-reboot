@@ -7,7 +7,6 @@ package com.puttysoftware.fantastlereboot.obsolete;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -50,8 +49,6 @@ public class ObjectHelpManager {
             final JButton export = new JButton("Export");
             export.addActionListener(buttonHandler);
             this.helpFrame = new JFrame("TallerTower Object Help");
-            final Image iconlogo = Application.getIconLogo();
-            this.helpFrame.setIconImage(iconlogo);
             this.helpFrame
                     .setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
             this.helpFrame.setLayout(new BorderLayout());

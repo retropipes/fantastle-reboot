@@ -13,7 +13,6 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.LogoManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
 import com.puttysoftware.randomrange.RandomRange;
@@ -28,7 +27,6 @@ public class GenerateTask extends Thread {
         this.scratch = startFromScratch;
         this.setName("Level Generator");
         this.generateFrame = new JFrame("Generating...");
-        this.generateFrame.setIconImage(LogoManager.getIconLogo());
         final JProgressBar loadBar = new JProgressBar();
         loadBar.setIndeterminate(true);
         this.generateFrame.getContentPane().add(loadBar);

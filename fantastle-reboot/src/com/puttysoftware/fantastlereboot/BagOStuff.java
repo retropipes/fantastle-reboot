@@ -18,8 +18,6 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot;
 
-import java.awt.Image;
-
 import javax.swing.JFrame;
 
 import com.puttysoftware.fantastlereboot.assets.GameSound;
@@ -36,7 +34,6 @@ import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.LogoManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.MazeManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObjectList;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -256,10 +253,6 @@ public class BagOStuff {
 
     public BufferedImageIcon getMicroLogo() {
         return this.microLogo;
-    }
-
-    public static Image getIconLogo() {
-        return LogoManager.getIconLogo();
     }
 
     public void playHighScoreSound() {

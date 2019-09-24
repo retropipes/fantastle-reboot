@@ -13,7 +13,6 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.LogoManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
@@ -28,7 +27,6 @@ public class LevelLoadTask extends Thread {
         this.level = offset;
         this.setName("Level Loader");
         this.loadFrame = new JFrame("Loading...");
-        this.loadFrame.setIconImage(LogoManager.getIconLogo());
         final JProgressBar loadBar = new JProgressBar();
         loadBar.setIndeterminate(true);
         this.loadFrame.getContentPane().add(loadBar);
