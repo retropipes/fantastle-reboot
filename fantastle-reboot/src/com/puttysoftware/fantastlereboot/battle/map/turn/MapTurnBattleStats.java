@@ -12,8 +12,8 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import com.puttysoftware.fantastlereboot.obsolete.loaders.StatImageConstants;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.StatImageManager;
+import com.puttysoftware.fantastlereboot.assets.GameEffectImage;
+import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
 import com.puttysoftware.images.BufferedImageIcon;
 
@@ -27,8 +27,6 @@ public class MapTurnBattleStats {
     private JLabel attLabel;
     private JLabel defLabel;
     private JLabel apLabel;
-    private JLabel attLeftLabel;
-    private JLabel splLabel;
 
     // Constructors
     public MapTurnBattleStats() {
@@ -49,8 +47,7 @@ public class MapTurnBattleStats {
         this.attLabel.setText(Integer.toString(bc.getTemplate().getAttack()));
         this.defLabel.setText(Integer.toString(bc.getTemplate().getDefense()));
         this.apLabel.setText(bc.getAPString());
-        this.attLeftLabel.setText(bc.getAttackString());
-        this.splLabel.setText(bc.getSpellString());
+        this.updateActionIcon(bc.getCurrentAP());
     }
 
     private void setUpGUI() {
@@ -63,8 +60,6 @@ public class MapTurnBattleStats {
         this.attLabel = new JLabel("", null, SwingConstants.LEFT);
         this.defLabel = new JLabel("", null, SwingConstants.LEFT);
         this.apLabel = new JLabel("", null, SwingConstants.LEFT);
-        this.attLeftLabel = new JLabel("", null, SwingConstants.LEFT);
-        this.splLabel = new JLabel("", null, SwingConstants.LEFT);
         this.statsPane.add(this.nameLabel);
         this.statsPane.add(this.teamLabel);
         this.statsPane.add(this.hpLabel);
@@ -72,37 +67,98 @@ public class MapTurnBattleStats {
         this.statsPane.add(this.attLabel);
         this.statsPane.add(this.defLabel);
         this.statsPane.add(this.apLabel);
-        this.statsPane.add(this.attLeftLabel);
-        this.statsPane.add(this.splLabel);
     }
 
     private void updateIcons() {
-        final BufferedImageIcon nameImage = StatImageManager
-                .getImage(StatImageConstants.STAT_IMAGE_NAME);
+        final BufferedImageIcon nameImage = ImageLoader
+                .loadEffectImage(GameEffectImage.CREATURE_ID);
         this.nameLabel.setIcon(nameImage);
-        final BufferedImageIcon teamImage = StatImageManager
-                .getImage(StatImageConstants.STAT_IMAGE_TEAM);
+        final BufferedImageIcon teamImage = ImageLoader
+                .loadEffectImage(GameEffectImage.CREATURE_TEAM);
         this.teamLabel.setIcon(teamImage);
-        final BufferedImageIcon hpImage = StatImageManager
-                .getImage(StatImageConstants.STAT_IMAGE_HEALTH);
+        final BufferedImageIcon hpImage = ImageLoader
+                .loadEffectImage(GameEffectImage.HEALTH);
         this.hpLabel.setIcon(hpImage);
-        final BufferedImageIcon mpImage = StatImageManager
-                .getImage(StatImageConstants.STAT_IMAGE_MAGIC);
+        final BufferedImageIcon mpImage = ImageLoader
+                .loadEffectImage(GameEffectImage.MAGIC);
         this.mpLabel.setIcon(mpImage);
-        final BufferedImageIcon attImage = StatImageManager
-                .getImage(StatImageConstants.STAT_IMAGE_ATTACK);
+        final BufferedImageIcon attImage = ImageLoader
+                .loadEffectImage(GameEffectImage.MELEE_ATTACK);
         this.attLabel.setIcon(attImage);
-        final BufferedImageIcon defImage = StatImageManager
-                .getImage(StatImageConstants.STAT_IMAGE_DEFENSE);
+        final BufferedImageIcon defImage = ImageLoader
+                .loadEffectImage(GameEffectImage.DEFENSE);
         this.defLabel.setIcon(defImage);
-        final BufferedImageIcon apImage = StatImageManager
-                .getImage(StatImageConstants.STAT_IMAGE_ACTIONS);
+        final BufferedImageIcon apImage = ImageLoader
+                .loadEffectImage(GameEffectImage.ACTIONS_00);
         this.apLabel.setIcon(apImage);
-        final BufferedImageIcon attLeftImage = StatImageManager
-                .getImage(StatImageConstants.STAT_IMAGE_ATTACKS);
-        this.attLeftLabel.setIcon(attLeftImage);
-        final BufferedImageIcon spImage = StatImageManager
-                .getImage(StatImageConstants.STAT_IMAGE_SPELLS);
-        this.splLabel.setIcon(spImage);
+    }
+
+    private void updateActionIcon(final int actionsLeft) {
+        GameEffectImage actionImageId;
+        switch (actionsLeft) {
+        case 1:
+            actionImageId = GameEffectImage.ACTIONS_01;
+            break;
+        case 2:
+            actionImageId = GameEffectImage.ACTIONS_02;
+            break;
+        case 3:
+            actionImageId = GameEffectImage.ACTIONS_03;
+            break;
+        case 4:
+            actionImageId = GameEffectImage.ACTIONS_04;
+            break;
+        case 5:
+            actionImageId = GameEffectImage.ACTIONS_05;
+            break;
+        case 6:
+            actionImageId = GameEffectImage.ACTIONS_06;
+            break;
+        case 7:
+            actionImageId = GameEffectImage.ACTIONS_07;
+            break;
+        case 8:
+            actionImageId = GameEffectImage.ACTIONS_08;
+            break;
+        case 9:
+            actionImageId = GameEffectImage.ACTIONS_09;
+            break;
+        case 10:
+            actionImageId = GameEffectImage.ACTIONS_10;
+            break;
+        case 11:
+            actionImageId = GameEffectImage.ACTIONS_11;
+            break;
+        case 12:
+            actionImageId = GameEffectImage.ACTIONS_12;
+            break;
+        case 13:
+            actionImageId = GameEffectImage.ACTIONS_13;
+            break;
+        case 14:
+            actionImageId = GameEffectImage.ACTIONS_14;
+            break;
+        case 15:
+            actionImageId = GameEffectImage.ACTIONS_15;
+            break;
+        case 16:
+            actionImageId = GameEffectImage.ACTIONS_16;
+            break;
+        case 17:
+            actionImageId = GameEffectImage.ACTIONS_17;
+            break;
+        case 18:
+            actionImageId = GameEffectImage.ACTIONS_18;
+            break;
+        case 19:
+            actionImageId = GameEffectImage.ACTIONS_19;
+            break;
+        default:
+            actionImageId = GameEffectImage.ACTIONS_00;
+            break;
+        }
+        final BufferedImageIcon apImage = ImageLoader
+                .loadEffectImage(actionImageId);
+        this.apLabel.setIcon(apImage);
     }
 }

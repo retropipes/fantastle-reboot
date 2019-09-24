@@ -11,11 +11,11 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import com.puttysoftware.fantastlereboot.assets.GameEffectImage;
 import com.puttysoftware.fantastlereboot.creatures.party.Party;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.StatImageConstants;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.StatImageManager;
+import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class StatGUI {
@@ -75,26 +75,26 @@ class StatGUI {
     }
 
     void updateImages() {
-        final BufferedImageIcon hpImage = StatImageManager
-                .getImage(StatImageConstants.STAT_IMAGE_HEALTH);
+        final BufferedImageIcon hpImage = ImageLoader
+                .loadEffectImage(GameEffectImage.HEALTH);
         this.hpLabel.setIcon(hpImage);
-        final BufferedImageIcon mpImage = StatImageManager
-                .getImage(StatImageConstants.STAT_IMAGE_MAGIC);
+        final BufferedImageIcon mpImage = ImageLoader
+                .loadEffectImage(GameEffectImage.MAGIC);
         this.mpLabel.setIcon(mpImage);
-        final BufferedImageIcon goldImage = StatImageManager
-                .getImage(StatImageConstants.STAT_IMAGE_GOLD);
+        final BufferedImageIcon goldImage = ImageLoader
+                .loadEffectImage(GameEffectImage.MONEY);
         this.goldLabel.setIcon(goldImage);
-        final BufferedImageIcon attackImage = StatImageManager
-                .getImage(StatImageConstants.STAT_IMAGE_ATTACK);
+        final BufferedImageIcon attackImage = ImageLoader
+                .loadEffectImage(GameEffectImage.MELEE_ATTACK);
         this.attackLabel.setIcon(attackImage);
-        final BufferedImageIcon defenseImage = StatImageManager
-                .getImage(StatImageConstants.STAT_IMAGE_DEFENSE);
+        final BufferedImageIcon defenseImage = ImageLoader
+                .loadEffectImage(GameEffectImage.DEFENSE);
         this.defenseLabel.setIcon(defenseImage);
-        final BufferedImageIcon xpImage = StatImageManager
-                .getImage(StatImageConstants.STAT_IMAGE_XP);
+        final BufferedImageIcon xpImage = ImageLoader
+                .loadEffectImage(GameEffectImage.EXPERIENCE);
         this.xpLabel.setIcon(xpImage);
-        final BufferedImageIcon levelImage = StatImageManager
-                .getImage(StatImageConstants.STAT_IMAGE_LEVEL);
+        final BufferedImageIcon levelImage = ImageLoader
+                .loadEffectImage(GameEffectImage.CREATURE_LEVEL);
         this.levelLabel.setIcon(levelImage);
     }
 }
