@@ -26,7 +26,6 @@ import javax.swing.WindowConstants;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleDraw;
@@ -36,8 +35,6 @@ import com.puttysoftware.fantastlereboot.obsolete.DrawGrid;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.BattleImageManager;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ImageTransformer;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.MusicConstants;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.MusicManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
@@ -127,20 +124,12 @@ class MapTimeBattleGUI {
     }
 
     void showBattle() {
-        FantastleReboot.getBagOStuff().getPrefsManager();
-        if (FantastleReboot.getBagOStuff().getPrefsManager().getMusicEnabled(PreferencesManager.MUSIC_BATTLE)) {
-            MusicManager.stopMusic();
-            MusicManager.playMusic(MusicConstants.MUSIC_BATTLE);
-        }
         this.battleFrame.setVisible(true);
         this.battleFrame.setJMenuBar(TallerTower.getApplication()
                 .getMenuManager().getMainMenuBar());
     }
 
     void hideBattle() {
-        if (MusicManager.isMusicPlaying()) {
-            MusicManager.stopMusic();
-        }
         if (this.battleFrame != null) {
             this.battleFrame.setVisible(false);
         }

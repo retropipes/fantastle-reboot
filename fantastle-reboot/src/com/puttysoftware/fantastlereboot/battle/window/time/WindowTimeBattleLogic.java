@@ -25,8 +25,6 @@ import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.MusicConstants;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.MusicManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
 import com.puttysoftware.fantastlereboot.spells.SpellCaster;
@@ -331,11 +329,6 @@ public class WindowTimeBattleLogic extends Battle {
             gm.stopMovement();
             this.enemy = MonsterFactory.getNewMonsterInstance();
             this.enemy.loadCreature();
-            FantastleReboot.getBagOStuff().getPrefsManager();
-            if (FantastleReboot.getBagOStuff().getPrefsManager()
-                    .getMusicEnabled(PreferencesManager.MUSIC_BATTLE)) {
-                MusicManager.playMusic(MusicConstants.MUSIC_BATTLE);
-            }
             this.battleGUI.setMaxPlayerActionBarValue(PartyManager.getParty()
                     .getLeader().getActionBarSpeed());
             this.battleGUI.setMaxEnemyActionBarValue(this.enemy
@@ -575,10 +568,6 @@ public class WindowTimeBattleLogic extends Battle {
 
     @Override
     public void doResult() {
-        FantastleReboot.getBagOStuff().getPrefsManager();
-        if (FantastleReboot.getBagOStuff().getPrefsManager().getMusicEnabled(PreferencesManager.MUSIC_BATTLE)) {
-            MusicManager.stopMusic();
-        }
         final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         final Creature m = this.enemy;
         boolean rewardsFlag = false;

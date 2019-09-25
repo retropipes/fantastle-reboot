@@ -20,14 +20,11 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.DrawGrid;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ImageTransformer;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.MusicConstants;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.MusicManager;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
@@ -52,8 +49,6 @@ class GameGUIManager {
     private boolean knm;
     private boolean deferredRedraw;
     boolean eventFlag;
-    private int lastExploringMusicID;
-    private int currExploringMusicID = 0;
     private static Darkness DARK = new Darkness();
     private static MazeNoteObject NOTE = new MazeNoteObject();
 
@@ -99,21 +94,6 @@ class GameGUIManager {
 
     public void showOutput() {
         final Application app = TallerTower.getApplication();
-        this.lastExploringMusicID = this.currExploringMusicID;
-        this.currExploringMusicID = MusicConstants
-                .getMusicID(MusicConstants.MUSIC_EXPLORING);
-        FantastleReboot.getBagOStuff().getPrefsManager();
-        if (FantastleReboot.getBagOStuff().getPrefsManager()
-                .getMusicEnabled(PreferencesManager.MUSIC_EXPLORING)) {
-            if (this.lastExploringMusicID != this.currExploringMusicID) {
-                MusicManager.stopMusic();
-                MusicManager.playMusic(MusicConstants.MUSIC_EXPLORING);
-            } else {
-                if (!MusicManager.isMusicPlaying()) {
-                    MusicManager.playMusic(MusicConstants.MUSIC_EXPLORING);
-                }
-            }
-        }
         if (!this.outputFrame.isVisible()) {
             app.getMenuManager().setGameMenus();
             this.outputFrame.setVisible(true);
@@ -127,13 +107,6 @@ class GameGUIManager {
     }
 
     public void hideOutput() {
-        FantastleReboot.getBagOStuff().getPrefsManager();
-        if (FantastleReboot.getBagOStuff().getPrefsManager()
-                .getMusicEnabled(PreferencesManager.MUSIC_EXPLORING)) {
-            if (MusicManager.isMusicPlaying()) {
-                MusicManager.stopMusic();
-            }
-        }
         if (this.outputFrame != null) {
             this.outputFrame.setVisible(false);
         }
