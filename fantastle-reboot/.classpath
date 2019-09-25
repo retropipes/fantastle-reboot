@@ -6,32 +6,27 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/lib-random-range">
+	<classpathentry kind="lib" path="lib/audio-wav.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/lib-java-storage">
+	<classpathentry kind="lib" path="lib/native-integration.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/lib-native-integration">
+	<classpathentry kind="lib" path="lib/puttysoftware-desktop.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/lib-puttysoftware-desktop">
+	<classpathentry kind="lib" path="lib/random-range.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/lib-audio-wav">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/lib-audio-mod">
+	<classpathentry kind="lib" path="lib/storage.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
