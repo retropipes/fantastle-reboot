@@ -1,7 +1,6 @@
 module com.puttysoftware.fantastlereboot {
     requires java.desktop;
     requires com.puttysoftware.audio.wav;
-    requires com.puttysoftware.audio.mod;
     requires com.puttysoftware.desktop;
     requires com.puttysoftware.integration;
     requires com.puttysoftware.randomrange;
