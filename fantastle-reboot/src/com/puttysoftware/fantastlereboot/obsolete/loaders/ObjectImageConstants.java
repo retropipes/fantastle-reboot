@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.obsolete.loaders;
 
-import com.puttysoftware.fantastlereboot.datamanagers.GraphicsDataManager;
+import com.puttysoftware.fantastlereboot.loaders.DataLoader;
 
 public class ObjectImageConstants {
     public static final int OBJECT_IMAGE_NONE = -1;
@@ -53,8 +53,8 @@ public class ObjectImageConstants {
     public static final int OBJECT_IMAGE_ARROW_SOUTHWEST = 48;
     public static final int OBJECT_IMAGE_ARROW_WEST = 49;
     public static final int OBJECT_IMAGE_ARROW_NORTHWEST = 50;
-    private static final String[] OBJECT_IMAGE_NAMES = GraphicsDataManager
-            .getObjectGraphicsData();
+    private static final String[] OBJECT_IMAGE_NAMES = DataLoader
+            .loadObjectImageData();
 
     static String getObjectImageName(final int ID) {
         if (ID == OBJECT_IMAGE_NONE) {
