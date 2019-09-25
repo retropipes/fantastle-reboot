@@ -29,9 +29,10 @@ public class DrunkTrap extends AbstractTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
-        TallerTower.getApplication().showMessage(
-                "You stumble around drunkenly!");
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
+        TallerTower.getApplication()
+                .showMessage("You stumble around drunkenly!");
         TallerTower.getApplication().getGameManager()
                 .activateEffect(EffectConstants.EFFECT_DRUNK);
         SoundLoader.playSound(GameSound.DRUNK);

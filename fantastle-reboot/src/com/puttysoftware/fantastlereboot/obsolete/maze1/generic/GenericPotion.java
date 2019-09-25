@@ -30,8 +30,7 @@ import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Empty;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 import com.puttysoftware.randomrange.RandomRange;
 
-public abstract class GenericPotion extends MazeObject
-        {
+public abstract class GenericPotion extends MazeObject {
     // Fields
     private int effectValue;
     private RandomRange effect;
@@ -93,16 +92,19 @@ public abstract class GenericPotion extends MazeObject
         if (this.effectValueIsPercentage) {
             if (this.statAffected == StatConstants.STAT_CURRENT_HP) {
                 if (this.effectValue >= 0) {
-                    PartyManager.getParty().getLeader().healPercentage(this.effectValue);
+                    PartyManager.getParty().getLeader()
+                            .healPercentage(this.effectValue);
                 } else {
-                    PartyManager.getParty().getLeader().doDamagePercentage(-this.effectValue);
+                    PartyManager.getParty().getLeader()
+                            .doDamagePercentage(-this.effectValue);
                 }
             } else if (this.statAffected == StatConstants.STAT_CURRENT_MP) {
                 if (this.effectValue >= 0) {
                     PartyManager.getParty().getLeader()
                             .regeneratePercentage(this.effectValue);
                 } else {
-                    PartyManager.getParty().getLeader().drainPercentage(-this.effectValue);
+                    PartyManager.getParty().getLeader()
+                            .drainPercentage(-this.effectValue);
                 }
             }
         } else {
@@ -110,25 +112,26 @@ public abstract class GenericPotion extends MazeObject
                 if (this.effectValue >= 0) {
                     PartyManager.getParty().getLeader().heal(this.effectValue);
                 } else {
-                    PartyManager.getParty().getLeader().doDamage(-this.effectValue);
+                    PartyManager.getParty().getLeader()
+                            .doDamage(-this.effectValue);
                 }
             } else if (this.statAffected == StatConstants.STAT_CURRENT_MP) {
                 if (this.effectValue >= 0) {
-                    PartyManager.getParty().getLeader().regenerate(this.effectValue);
+                    PartyManager.getParty().getLeader()
+                            .regenerate(this.effectValue);
                 } else {
-                    PartyManager.getParty().getLeader().drain(-this.effectValue);
+                    PartyManager.getParty().getLeader()
+                            .drain(-this.effectValue);
                 }
             }
         }
         FantastleReboot.getBagOStuff().getGameManager().decay();
         if (this.effectValue >= 0) {
-            FantastleReboot.getBagOStuff().getPrefsManager();
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 SoundLoader.playSound(GameSound.HEAL);
             }
         } else {
-            FantastleReboot.getBagOStuff().getPrefsManager();
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 SoundLoader.playSound(GameSound.HURT);
@@ -142,7 +145,6 @@ public abstract class GenericPotion extends MazeObject
             final int arrowType, final ObjectInventory inv) {
         FantastleReboot.getBagOStuff().getGameManager().morph(new Empty(), locX,
                 locY, locZ, locW);
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             SoundLoader.playSound(GameSound.CRUSH);

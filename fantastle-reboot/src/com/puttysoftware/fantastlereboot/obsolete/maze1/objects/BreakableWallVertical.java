@@ -36,7 +36,6 @@ public class BreakableWallVertical extends GenericWall {
     @Override
     public void chainReactionAction(final int x, final int y, final int z,
             final int w) {
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playChainReactSound();

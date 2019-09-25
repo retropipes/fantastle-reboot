@@ -15,8 +15,8 @@ import com.puttysoftware.fileutils.ResourceStreamReader;
 public class GraphicsDataManager {
     public static String[] getObjectGraphicsData() {
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
-                GraphicsDataManager.class
-                        .getResourceAsStream("/com/puttysoftware/tallertower/resources/data/graphics/objects.txt"))) {
+                GraphicsDataManager.class.getResourceAsStream(
+                        "/com/puttysoftware/tallertower/resources/data/graphics/objects.txt"))) {
             // Fetch data
             final ArrayList<String> rawData = new ArrayList<>();
             String line = "";
@@ -35,8 +35,8 @@ public class GraphicsDataManager {
 
     public static String[] getStatGraphicsData() {
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
-                GraphicsDataManager.class
-                        .getResourceAsStream("/com/puttysoftware/tallertower/resources/data/graphics/stats.txt"))) {
+                GraphicsDataManager.class.getResourceAsStream(
+                        "/com/puttysoftware/tallertower/resources/data/graphics/stats.txt"))) {
             // Fetch data
             final ArrayList<String> rawData = new ArrayList<>();
             String line = "";

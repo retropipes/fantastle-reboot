@@ -66,7 +66,8 @@ public class FaithConstants {
         return FaithConstants.FAITH_NAMES[faithID];
     }
 
-    public static String getFaithPowerName(final int faithID, final int powerID) {
+    public static String getFaithPowerName(final int faithID,
+            final int powerID) {
         return FaithConstants.FAITH_POWER_NAMES[faithID][powerID];
     }
 }

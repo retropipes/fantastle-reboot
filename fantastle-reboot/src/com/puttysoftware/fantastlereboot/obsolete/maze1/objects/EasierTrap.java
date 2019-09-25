@@ -53,7 +53,6 @@ public class EasierTrap extends GenericTrap {
             final ObjectInventory inv) {
         Messager.showMessage("The monsters get weaker...");
         PartyManager.getParty().decrementMonsterLevel();
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             SoundLoader.playSound(GameSound.EASIER);

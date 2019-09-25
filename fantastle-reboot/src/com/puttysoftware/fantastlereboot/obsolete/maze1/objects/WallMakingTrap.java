@@ -46,12 +46,12 @@ public class WallMakingTrap extends GenericTrap {
     @Override
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveSuccessSound();
         }
-        FantastleReboot.getBagOStuff().getGameManager().delayedDecayTo(new Wall());
+        FantastleReboot.getBagOStuff().getGameManager()
+                .delayedDecayTo(new Wall());
     }
 
     @Override

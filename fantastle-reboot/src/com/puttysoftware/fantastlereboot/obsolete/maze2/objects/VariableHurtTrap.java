@@ -34,7 +34,8 @@ public class VariableHurtTrap extends AbstractTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
         int maxDamage = PartyManager.getParty().getLeader().getMaximumHP() / 5;
         if (maxDamage < VariableHurtTrap.MIN_DAMAGE) {
             maxDamage = VariableHurtTrap.MIN_DAMAGE;

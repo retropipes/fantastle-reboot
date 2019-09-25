@@ -31,8 +31,7 @@ class EasyDamageEngine extends AbstractDamageEngine {
     private boolean fumble = false;
 
     @Override
-    public int computeDamage(final Creature enemy,
-            final Creature acting) {
+    public int computeDamage(final Creature enemy, final Creature acting) {
         // Compute Damage
         final double attack = acting.getEffectedAttack();
         final double defense = enemy
@@ -107,8 +106,8 @@ class EasyDamageEngine extends AbstractDamageEngine {
                                 faithMultiplier += FAITH_INCREMENT * fpl;
                             }
                         }
-                        if (offHand != null
-                                && offHand.getEquipCategory() == EquipmentCategoryConstants.EQUIPMENT_CATEGORY_ONE_HANDED_WEAPON) {
+                        if (offHand != null && offHand
+                                .getEquipCategory() == EquipmentCategoryConstants.EQUIPMENT_CATEGORY_ONE_HANDED_WEAPON) {
                             for (int z = 0; z < fc; z++) {
                                 final int fpl = offHand.getFaithPowerLevel(z);
                                 faithMultiplier += FAITH_INCREMENT * fpl;
@@ -126,14 +125,16 @@ class EasyDamageEngine extends AbstractDamageEngine {
                             faithDR -= fpl * FAITH_DR_INCREMENT;
                         }
                     }
-                    if (offHand != null
-                            && offHand.getEquipCategory() == EquipmentCategoryConstants.EQUIPMENT_CATEGORY_ARMOR) {
+                    if (offHand != null && offHand
+                            .getEquipCategory() == EquipmentCategoryConstants.EQUIPMENT_CATEGORY_ARMOR) {
                         for (int z = 0; z < fc; z++) {
                             final int fpl = offHand.getFaithPowerLevel(z);
                             faithDR -= fpl * FAITH_DR_INCREMENT;
                         }
                     }
-                    final int unadjustedDamage = (int) ((rawDamage * multiplier * faithMultiplier) / CommonDamageEngineParts.MULTIPLIER_DIVIDE);
+                    final int unadjustedDamage = (int) ((rawDamage * multiplier
+                            * faithMultiplier)
+                            / CommonDamageEngineParts.MULTIPLIER_DIVIDE);
                     return (int) (unadjustedDamage * faithDR);
                 }
             }

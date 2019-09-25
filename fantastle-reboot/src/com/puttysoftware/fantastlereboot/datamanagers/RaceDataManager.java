@@ -17,10 +17,9 @@ public class RaceDataManager {
     public static int[] getRaceData(final int r) {
         final String name = RaceConstants.getRaceName(r).toLowerCase();
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
-                RaceDataManager.class
-                        .getResourceAsStream("/com/puttysoftware/tallertower/resources/data/race/"
-                                + name
-                                + Extension
+                RaceDataManager.class.getResourceAsStream(
+                        "/com/puttysoftware/tallertower/resources/data/race/"
+                                + name + Extension
                                         .getInternalDataExtensionWithPeriod()))) {
             // Fetch data
             final int[] rawData = new int[RaceConstants.RACE_ATTRIBUTE_COUNT];

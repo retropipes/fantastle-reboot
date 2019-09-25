@@ -90,7 +90,8 @@ public class MapTurnBattleDefinitions {
         return this.findBattler(name, 0, this.battlers.length);
     }
 
-    private int findBattler(final String name, final int start, final int limit) {
+    private int findBattler(final String name, final int start,
+            final int limit) {
         for (int x = start; x < limit; x++) {
             if (this.battlers[x] != null) {
                 if (this.battlers[x].getName().equals(name)) {

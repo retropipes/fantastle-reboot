@@ -69,7 +69,8 @@ final class MovementTask extends Thread {
         }
     }
 
-    public synchronized void moveRelative(final int x, final int y, final int z) {
+    public synchronized void moveRelative(final int x, final int y,
+            final int z) {
         this.moveX = x;
         this.moveY = y;
         this.moveZ = z;
@@ -77,7 +78,8 @@ final class MovementTask extends Thread {
         this.notify();
     }
 
-    public synchronized void moveAbsolute(final int x, final int y, final int z) {
+    public synchronized void moveAbsolute(final int x, final int y,
+            final int z) {
         this.moveX = x;
         this.moveY = y;
         this.moveZ = z;
@@ -96,8 +98,8 @@ final class MovementTask extends Thread {
                     MazeConstants.LAYER_GROUND);
             final AbstractMazeObject nextAbove = m.getCell(x, y, z,
                     MazeConstants.LAYER_OBJECT);
-            return MovementTask.checkSolidAbsolute(this.saved, below,
-                    nextBelow, nextAbove);
+            return MovementTask.checkSolidAbsolute(this.saved, below, nextBelow,
+                    nextAbove);
         } catch (final ArrayIndexOutOfBoundsException ae) {
             return false;
         }
@@ -178,8 +180,8 @@ final class MovementTask extends Thread {
                     nextAbove = new Wall();
                 }
                 try {
-                    this.proceed = nextAbove.preMoveAction(true, px + fX, py
-                            + fY);
+                    this.proceed = nextAbove.preMoveAction(true, px + fX,
+                            py + fY);
                 } catch (final ArrayIndexOutOfBoundsException ae) {
                     this.proceed = true;
                 }
@@ -216,8 +218,8 @@ final class MovementTask extends Thread {
                                     MazeConstants.LAYER_GROUND);
                             if (groundInto.overridesDefaultPostMove()) {
                                 groundInto.postMoveAction(false, px, py);
-                                if (!this.saved
-                                        .isOfType(TypeConstants.TYPE_PASS_THROUGH)) {
+                                if (!this.saved.isOfType(
+                                        TypeConstants.TYPE_PASS_THROUGH)) {
                                     this.saved.postMoveAction(false, px, py);
                                 }
                             } else {
@@ -260,9 +262,8 @@ final class MovementTask extends Thread {
             final AbstractMazeObject nextAbove) {
         return this.proceed
                 && !this.em.isEffectActive(EffectConstants.EFFECT_STICKY)
-                && !nextBelow.hasFriction()
-                && MovementTask.checkSolid(this.saved, below, nextBelow,
-                        nextAbove);
+                && !nextBelow.hasFriction() && MovementTask
+                        .checkSolid(this.saved, below, nextBelow, nextAbove);
     }
 
     private static boolean checkSolid(final AbstractMazeObject inside,
@@ -348,8 +349,8 @@ final class MovementTask extends Thread {
     private static void checkGameOver() {
         if (!PartyManager.getParty().isAlive()) {
             SoundLoader.playSound(GameSound.GAME_OVER);
-            CommonDialogs
-                    .showDialog("You have died! You lose 10% of your experience and all your Gold, but you are healed fully.");
+            CommonDialogs.showDialog(
+                    "You have died! You lose 10% of your experience and all your Gold, but you are healed fully.");
             PartyManager.getParty().getLeader().onDeath(-10);
         }
     }

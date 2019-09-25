@@ -18,7 +18,8 @@ public abstract class AbstractWall extends AbstractMazeObject {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
         // Do nothing
     }
 

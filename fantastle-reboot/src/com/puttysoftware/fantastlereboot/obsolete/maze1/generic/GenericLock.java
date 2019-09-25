@@ -97,7 +97,6 @@ public abstract class GenericLock extends MazeObject {
         }
         final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getGameManager().decay();
-        FantastleReboot.getBagOStuff().getPrefsManager();
         // Play unlock sound, if it's enabled
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

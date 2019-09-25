@@ -29,14 +29,12 @@ public class CounterclockwiseRotationTrap extends AbstractTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
         SoundLoader.playSound(GameSound.CHANGE);
         TallerTower.getApplication().showMessage("Your controls are rotated!");
-        TallerTower
-                .getApplication()
-                .getGameManager()
-                .activateEffect(
-                        EffectConstants.EFFECT_ROTATED_COUNTERCLOCKWISE);
+        TallerTower.getApplication().getGameManager().activateEffect(
+                EffectConstants.EFFECT_ROTATED_COUNTERCLOCKWISE);
     }
 
     @Override

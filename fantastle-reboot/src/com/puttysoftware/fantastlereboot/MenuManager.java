@@ -46,8 +46,7 @@ public class MenuManager {
     private JMenuItem playPlay, playEdit;
     private JMenuItem gameEquipment, gameInventory, gameUse, gameReset,
             gameShowScore, gameShowTable;
-    private JMenuItem debugViewImageCache,
-            debugResetPreferences;
+    private JMenuItem debugViewImageCache, debugResetPreferences;
     private JMenuItem helpAbout, helpGeneralHelp, helpObjectHelp;
     private KeyStroke fileNewAccel, fileOpenAccel, fileCloseAccel,
             fileSaveAccel, fileSaveAsAccel;

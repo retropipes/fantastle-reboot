@@ -56,14 +56,15 @@ public class DamageTrap extends GenericTrap {
     @Override
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
-        this.maxDamage = PartyManager.getParty().getLeader().getMaximumHP() / 10;
+        this.maxDamage = PartyManager.getParty().getLeader().getMaximumHP()
+                / 10;
         if (this.maxDamage < DamageTrap.MIN_DAMAGE) {
             this.maxDamage = DamageTrap.MIN_DAMAGE;
         }
         this.damageDealt = new RandomRange(DamageTrap.MIN_DAMAGE,
                 this.maxDamage);
-        PartyManager.getParty().getLeader().doDamage(this.damageDealt.generate());
-        FantastleReboot.getBagOStuff().getPrefsManager();
+        PartyManager.getParty().getLeader()
+                .doDamage(this.damageDealt.generate());
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             SoundLoader.playSound(GameSound.BARRIER);

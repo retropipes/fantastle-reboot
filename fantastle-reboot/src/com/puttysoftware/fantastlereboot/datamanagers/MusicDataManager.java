@@ -15,8 +15,8 @@ import com.puttysoftware.fileutils.ResourceStreamReader;
 public class MusicDataManager {
     public static String[] getMusicData() {
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
-                MusicDataManager.class
-                        .getResourceAsStream("/com/puttysoftware/tallertower/resources/data/music/music.txt"))) {
+                MusicDataManager.class.getResourceAsStream(
+                        "/com/puttysoftware/tallertower/resources/data/music/music.txt"))) {
             // Fetch data
             final ArrayList<String> rawData = new ArrayList<>();
             String line = "";

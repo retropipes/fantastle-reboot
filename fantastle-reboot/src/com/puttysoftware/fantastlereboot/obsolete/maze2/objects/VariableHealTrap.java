@@ -34,7 +34,8 @@ public class VariableHealTrap extends AbstractTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
         int maxHealing = PartyManager.getParty().getLeader().getMaximumHP() / 5;
         if (maxHealing < VariableHealTrap.MIN_HEALING) {
             maxHealing = VariableHealTrap.MIN_HEALING;

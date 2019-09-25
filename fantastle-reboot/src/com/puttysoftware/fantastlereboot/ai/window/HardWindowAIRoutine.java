@@ -59,8 +59,8 @@ public class HardWindowAIRoutine extends AbstractWindowAIRoutine {
                 }
                 if (this.roundsRemaining[randomSpellID] == 0) {
                     this.spell = c.getSpellBook().getSpellByID(randomSpellID);
-                    this.roundsRemaining[randomSpellID] = this.spell
-                            .getEffect().getInitialRounds();
+                    this.roundsRemaining[randomSpellID] = this.spell.getEffect()
+                            .getInitialRounds();
                     return true;
                 } else {
                     // Spell selected already active

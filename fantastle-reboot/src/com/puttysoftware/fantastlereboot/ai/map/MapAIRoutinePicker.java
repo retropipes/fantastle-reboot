@@ -16,24 +16,20 @@ public final class MapAIRoutinePicker {
 
     // Methods
     public static AbstractMapAIRoutine getNextRoutine() {
-        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager().getGameDifficulty();
-        FantastleReboot.getBagOStuff().getPrefsManager();
+        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager()
+                .getGameDifficulty();
         if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
             return new VeryEasyMapAIRoutine();
         } else {
-            FantastleReboot.getBagOStuff().getPrefsManager();
             if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
                 return new EasyMapAIRoutine();
             } else {
-                FantastleReboot.getBagOStuff().getPrefsManager();
                 if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
                     return new NormalMapAIRoutine();
                 } else {
-                    FantastleReboot.getBagOStuff().getPrefsManager();
                     if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
                         return new HardMapAIRoutine();
                     } else {
-                        FantastleReboot.getBagOStuff().getPrefsManager();
                         if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
                             return new VeryHardMapAIRoutine();
                         } else {

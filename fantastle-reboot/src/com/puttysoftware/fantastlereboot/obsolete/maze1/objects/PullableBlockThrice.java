@@ -47,7 +47,6 @@ public class PullableBlockThrice extends GenericMovableObject {
             final int x, final int y, final int pushX, final int pushY) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getGameManager().updatePulledPosition(x, y, pushX, pushY, this);
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playPullSuccessSound();

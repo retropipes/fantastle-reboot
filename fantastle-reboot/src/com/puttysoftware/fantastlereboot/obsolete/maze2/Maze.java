@@ -153,8 +153,8 @@ public class Maze {
     }
 
     public boolean doesLevelExistOffset(final int level) {
-        return (this.activeLevel + level < this.levelCount && this.activeLevel
-                + level >= 0);
+        return (this.activeLevel + level < this.levelCount
+                && this.activeLevel + level >= 0);
     }
 
     public boolean addLevel(final int rows, final int cols, final int floors) {
@@ -315,8 +315,8 @@ public class Maze {
         m.basePath = this.basePath;
         int version = 0;
         // Create metafile reader
-        try (XDataReader metaReader = new XDataReader(m.basePath
-                + File.separator + "metafile.xml", "maze")) {
+        try (XDataReader metaReader = new XDataReader(
+                m.basePath + File.separator + "metafile.xml", "maze")) {
             // Read metafile
             version = m.readMazeMetafile(metaReader);
         } catch (final IOException ioe) {
@@ -360,22 +360,22 @@ public class Maze {
         this.readMazeLevel(reader, FormatConstants.MAZE_FORMAT_LATEST);
     }
 
-    private void readMazeLevel(final XDataReader reader, final int formatVersion)
-            throws IOException {
+    private void readMazeLevel(final XDataReader reader,
+            final int formatVersion) throws IOException {
         if (formatVersion == FormatConstants.MAZE_FORMAT_LATEST) {
             this.mazeData = LayeredTower.readLayeredTowerV1(reader);
             this.mazeData.readSavedTowerState(reader, formatVersion);
         } else {
-            throw new VersionException("Unknown maze format version: "
-                    + formatVersion + "!");
+            throw new VersionException(
+                    "Unknown maze format version: " + formatVersion + "!");
         }
     }
 
     public void writeMaze() throws IOException {
         try {
             // Create metafile writer
-            try (XDataWriter metaWriter = new XDataWriter(this.basePath
-                    + File.separator + "metafile.xml", "maze")) {
+            try (XDataWriter metaWriter = new XDataWriter(
+                    this.basePath + File.separator + "metafile.xml", "maze")) {
                 // Write metafile
                 this.writeMazeMetafile(metaWriter);
             }
@@ -394,7 +394,8 @@ public class Maze {
                 + this.activeLevel + ".xml", "level");
     }
 
-    private void writeMazeMetafile(final XDataWriter writer) throws IOException {
+    private void writeMazeMetafile(final XDataWriter writer)
+            throws IOException {
         if (this.prefixHandler != null) {
             this.prefixHandler.writePrefix(writer);
         }

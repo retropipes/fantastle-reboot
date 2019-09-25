@@ -13,5 +13,6 @@ public class GenderConstants {
     public static final int GENDER_ATTRIBUTE_INTELLIGENCE_MODIFIER = 4;
     public static final int GENDER_ATTRIBUTE_LUCK_MODIFIER = 5;
     public static final int GENDERS_ATTRIBUTE_COUNT = 6;
-    public static final String[] GENDER_NAMES = { "Male", "Female", "Neuter", "Fusion" };
+    public static final String[] GENDER_NAMES = { "Male", "Female", "Neuter",
+            "Fusion" };
 }

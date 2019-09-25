@@ -132,13 +132,11 @@ public class MetalButton extends GenericField {
                             this.getTargetFloor(), this.getTargetLevel());
                 }
             }
-            FantastleReboot.getBagOStuff().getPrefsManager();
             if (app.getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 this.playMoveSuccessSound();
             }
         } else {
-            FantastleReboot.getBagOStuff().getPrefsManager();
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 SoundLoader.playSound(GameSound.WALK);
@@ -186,7 +184,8 @@ public class MetalButton extends GenericField {
 
     @Override
     public MazeObject editorPropertiesHook() {
-        return FantastleReboot.getBagOStuff().getEditor().editMetalButtonTarget();
+        return FantastleReboot.getBagOStuff().getEditor()
+                .editMetalButtonTarget();
     }
 
     @Override

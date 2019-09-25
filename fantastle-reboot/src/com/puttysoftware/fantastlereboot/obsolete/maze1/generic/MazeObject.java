@@ -698,7 +698,6 @@ public abstract class MazeObject implements UniqueID5 {
      */
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
-        FantastleReboot.getBagOStuff().getPrefsManager();
         // Play move success sound, if it's enabled
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
@@ -715,7 +714,6 @@ public abstract class MazeObject implements UniqueID5 {
      */
     public void moveFailedAction(final boolean ie, final int dirX,
             final int dirY, final ObjectInventory inv) {
-        FantastleReboot.getBagOStuff().getPrefsManager();
         // Play move failed sound, if it's enabled
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
@@ -885,7 +883,6 @@ public abstract class MazeObject implements UniqueID5 {
      */
     public void pushFailedAction(final ObjectInventory inv, final int x,
             final int y, final int pushX, final int pushY) {
-        FantastleReboot.getBagOStuff().getPrefsManager();
         // Play push failed sound, if it's enabled
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
@@ -949,7 +946,6 @@ public abstract class MazeObject implements UniqueID5 {
      */
     public void pullFailedAction(final ObjectInventory inv, final int x,
             final int y, final int pullX, final int pullY) {
-        FantastleReboot.getBagOStuff().getPrefsManager();
         // Play pull failed sound, if it's enabled
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

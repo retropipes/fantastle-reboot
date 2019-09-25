@@ -153,7 +153,6 @@ public class Shop {
     }
 
     private boolean shopStage1() {
-        FantastleReboot.getBagOStuff().getPrefsManager();
         // Stage 1
         // Play enter shop sound
         if (FantastleReboot.getBagOStuff().getPrefsManager()
@@ -465,7 +464,6 @@ public class Shop {
     private void shopStage6() {
         // Stage 6
         final PartyMember playerCharacter = PartyManager.getParty().getLeader();
-        FantastleReboot.getBagOStuff().getPrefsManager();
         // Play transact sound
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_SHOP)) {

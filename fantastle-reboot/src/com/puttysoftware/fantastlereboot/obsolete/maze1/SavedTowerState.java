@@ -94,8 +94,8 @@ class SavedTowerState {
             for (y = 0; y < sts.r; y++) {
                 for (z = 0; z < sts.f; z++) {
                     for (e = 0; e < Maze.LAYER_COUNT; e++) {
-                        sts.saveData[x][y][z][e] = FantastleReboot.getBagOStuff()
-                                .getObjects()
+                        sts.saveData[x][y][z][e] = FantastleReboot
+                                .getBagOStuff().getObjects()
                                 .readMazeObject(reader, formatVersion);
                     }
                 }

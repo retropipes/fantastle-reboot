@@ -29,10 +29,10 @@ public class CasteConstants {
     public static final int CASTE_ATTRIBUTE_STEAL_SUCCESS_MODIFIER = 4;
     public static final int CASTE_ATTRIBUTE_DRAIN_SUCCESS_MODIFIER = 5;
     public static final int CASTES_ATTRIBUTE_COUNT = 6;
-    public static final String[] CASTE_NAMES = { "Assassin", "Basher", "Curer", "Destroyer",
-            "Eclectic", "Fool", "Guru", "Hunter", "Jumper", "Knight",
-            "Locksmith", "Monk", "Ninja", "Overseer", "Pickpocket", "Rogue",
-            "Spy", "Teacher", "Warlock", "Yeller" };
+    public static final String[] CASTE_NAMES = { "Assassin", "Basher", "Curer",
+            "Destroyer", "Eclectic", "Fool", "Guru", "Hunter", "Jumper",
+            "Knight", "Locksmith", "Monk", "Ninja", "Overseer", "Pickpocket",
+            "Rogue", "Spy", "Teacher", "Warlock", "Yeller" };
 
     private CasteConstants() {
         // Do nothing

@@ -58,7 +58,6 @@ public class DizzinessTrap extends GenericTrap {
         Messager.showMessage("You feel dizzy!");
         FantastleReboot.getBagOStuff().getGameManager().activateEffect(
                 EffectConstants.EFFECT_DIZZY, DizzinessTrap.EFFECT_DURATION);
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playDizzySound();

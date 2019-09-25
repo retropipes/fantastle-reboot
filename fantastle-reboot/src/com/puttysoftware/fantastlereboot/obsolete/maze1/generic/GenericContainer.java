@@ -110,7 +110,6 @@ public abstract class GenericContainer extends GenericLock {
         } else {
             app.getGameManager().decay();
         }
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveSuccessSound();

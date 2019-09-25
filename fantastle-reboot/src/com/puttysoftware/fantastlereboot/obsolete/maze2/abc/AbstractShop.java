@@ -27,9 +27,10 @@ public abstract class AbstractShop extends AbstractMazeObject {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
-        final Shop shop = TallerTower.getApplication().getGenericShop(
-                this.shopType);
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
+        final Shop shop = TallerTower.getApplication()
+                .getGenericShop(this.shopType);
         if (shop != null) {
             shop.showShop();
         }

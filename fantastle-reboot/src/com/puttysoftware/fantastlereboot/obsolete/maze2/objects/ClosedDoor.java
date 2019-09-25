@@ -40,7 +40,8 @@ public class ClosedDoor extends AbstractTrigger {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
         SoundLoader.playSound(GameSound.PICK_LOCK);
         final GameLogicManager glm = TallerTower.getApplication()
                 .getGameManager();

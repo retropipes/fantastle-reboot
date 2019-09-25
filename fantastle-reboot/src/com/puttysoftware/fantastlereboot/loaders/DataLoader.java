@@ -81,7 +81,8 @@ public class DataLoader {
         }
     }
 
-    public static Hashtable<Integer, String> loadFaithPowerData(final int f, final int p) {
+    public static Hashtable<Integer, String> loadFaithPowerData(final int f,
+            final int p) {
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
                 DataLoader.class.getResourceAsStream(
                         "/assets/data/faith/powers.dat"))) {
@@ -234,8 +235,8 @@ public class DataLoader {
 
     public static String[] loadBossImageData() {
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
-                DataLoader.class.getResourceAsStream(
-                        "/assets/data/images/boss.txt"))) {
+                DataLoader.class
+                        .getResourceAsStream("/assets/data/images/boss.txt"))) {
             // Fetch data
             final ArrayList<String> data = new ArrayList<>();
             String raw = "0";
@@ -274,8 +275,8 @@ public class DataLoader {
 
     public static String[] loadUserInterfaceImageData() {
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
-                DataLoader.class.getResourceAsStream(
-                        "/assets/data/images/ui.txt"))) {
+                DataLoader.class
+                        .getResourceAsStream("/assets/data/images/ui.txt"))) {
             // Fetch data
             final ArrayList<String> data = new ArrayList<>();
             String raw = "0";

@@ -77,25 +77,21 @@ public class BossMonster extends Creature {
 
     @Override
     public int getSpeed() {
-        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager().getGameDifficulty();
+        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager()
+                .getGameDifficulty();
         final int base = this.getBaseSpeed();
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
             return (int) (base * SPEED_ADJUST_SLOWEST);
         } else {
-            FantastleReboot.getBagOStuff().getPrefsManager();
             if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
                 return (int) (base * SPEED_ADJUST_SLOW);
             } else {
-                FantastleReboot.getBagOStuff().getPrefsManager();
                 if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
                     return (int) (base * SPEED_ADJUST_NORMAL);
                 } else {
-                    FantastleReboot.getBagOStuff().getPrefsManager();
                     if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
                         return (int) (base * SPEED_ADJUST_FAST);
                     } else {
-                        FantastleReboot.getBagOStuff().getPrefsManager();
                         if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
                             return (int) (base * SPEED_ADJUST_FASTEST);
                         } else {
@@ -129,43 +125,43 @@ public class BossMonster extends Creature {
 
     private int getInitialStrength() {
         final int min = getMinimumStatForDifficulty();
-        final RandomRange r = new RandomRange(min, Math.max(this.getLevel()
-                * getStatMultiplierForDifficulty(), min));
+        final RandomRange r = new RandomRange(min, Math
+                .max(this.getLevel() * getStatMultiplierForDifficulty(), min));
         return r.generate();
     }
 
     private int getInitialBlock() {
         final int min = getMinimumStatForDifficulty();
-        final RandomRange r = new RandomRange(min, Math.max(this.getLevel()
-                * getStatMultiplierForDifficulty(), min));
+        final RandomRange r = new RandomRange(min, Math
+                .max(this.getLevel() * getStatMultiplierForDifficulty(), min));
         return r.generate();
     }
 
     private int getInitialAgility() {
         final int min = getMinimumStatForDifficulty();
-        final RandomRange r = new RandomRange(min, Math.max(this.getLevel()
-                * getStatMultiplierForDifficulty(), min));
+        final RandomRange r = new RandomRange(min, Math
+                .max(this.getLevel() * getStatMultiplierForDifficulty(), min));
         return r.generate();
     }
 
     private int getInitialVitality() {
         final int min = getMinimumStatForDifficulty();
-        final RandomRange r = new RandomRange(min, Math.max(this.getLevel()
-                * getStatMultiplierForDifficulty(), min));
+        final RandomRange r = new RandomRange(min, Math
+                .max(this.getLevel() * getStatMultiplierForDifficulty(), min));
         return r.generate();
     }
 
     private int getInitialIntelligence() {
         final int min = getMinimumStatForDifficulty();
-        final RandomRange r = new RandomRange(min, Math.max(this.getLevel()
-                * getStatMultiplierForDifficulty(), min));
+        final RandomRange r = new RandomRange(min, Math
+                .max(this.getLevel() * getStatMultiplierForDifficulty(), min));
         return r.generate();
     }
 
     private int getInitialLuck() {
         final int min = getMinimumStatForDifficulty();
-        final RandomRange r = new RandomRange(min, Math.max(this.getLevel()
-                * getStatMultiplierForDifficulty(), min));
+        final RandomRange r = new RandomRange(min, Math
+                .max(this.getLevel() * getStatMultiplierForDifficulty(), min));
         return r.generate();
     }
 
@@ -174,24 +170,20 @@ public class BossMonster extends Creature {
     }
 
     private static int getStatMultiplierForDifficulty() {
-        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager().getGameDifficulty();
-        FantastleReboot.getBagOStuff().getPrefsManager();
+        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager()
+                .getGameDifficulty();
         if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
             return STAT_MULT_VERY_EASY;
         } else {
-            FantastleReboot.getBagOStuff().getPrefsManager();
             if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
                 return STAT_MULT_EASY;
             } else {
-                FantastleReboot.getBagOStuff().getPrefsManager();
                 if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
                     return STAT_MULT_NORMAL;
                 } else {
-                    FantastleReboot.getBagOStuff().getPrefsManager();
                     if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
                         return STAT_MULT_HARD;
                     } else {
-                        FantastleReboot.getBagOStuff().getPrefsManager();
                         if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
                             return STAT_MULT_VERY_HARD;
                         } else {
@@ -204,24 +196,20 @@ public class BossMonster extends Creature {
     }
 
     private static int getMinimumStatForDifficulty() {
-        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager().getGameDifficulty();
-        FantastleReboot.getBagOStuff().getPrefsManager();
+        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager()
+                .getGameDifficulty();
         if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
             return MINIMUM_STAT_VALUE_VERY_EASY;
         } else {
-            FantastleReboot.getBagOStuff().getPrefsManager();
             if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
                 return MINIMUM_STAT_VALUE_EASY;
             } else {
-                FantastleReboot.getBagOStuff().getPrefsManager();
                 if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
                     return MINIMUM_STAT_VALUE_NORMAL;
                 } else {
-                    FantastleReboot.getBagOStuff().getPrefsManager();
                     if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
                         return MINIMUM_STAT_VALUE_HARD;
                     } else {
-                        FantastleReboot.getBagOStuff().getPrefsManager();
                         if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
                             return MINIMUM_STAT_VALUE_VERY_HARD;
                         } else {

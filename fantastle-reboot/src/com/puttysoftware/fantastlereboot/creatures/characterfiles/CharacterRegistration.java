@@ -33,15 +33,15 @@ public class CharacterRegistration {
                 .getCharacterNameList();
         final String[] characterNames = new File(
                 CharacterRegistration.getBasePath())
-                .list(new CharacterFilter());
+                        .list(new CharacterFilter());
         if (characterNames != null && characterNames.length > 0) {
             // Strip extension
             final int stripCount = Extension.getCharacterExtensionWithPeriod()
                     .length();
             for (int x = 0; x < characterNames.length; x++) {
                 final String temp = characterNames[x];
-                characterNames[x] = temp.substring(0, temp.length()
-                        - stripCount);
+                characterNames[x] = temp.substring(0,
+                        temp.length() - stripCount);
             }
             // Pick character to register
             final String res = CommonDialogs.showInputDialog(
@@ -63,11 +63,12 @@ public class CharacterRegistration {
                     if (new File(CharacterRegistration.getBasePath()
                             + File.separator + res
                             + Extension.getCharacterExtensionWithPeriod())
-                            .exists()) {
+                                    .exists()) {
                         // Register it
                         if (CharacterRegistration.ANY_FOUND
                                 && characterNameList != null) {
-                            final String[] newCharacterList = new String[characterNameList.length + 1];
+                            final String[] newCharacterList = new String[characterNameList.length
+                                    + 1];
                             for (int x = 0; x < newCharacterList.length; x++) {
                                 if (x < characterNameList.length) {
                                     newCharacterList[x] = characterNameList[x];
@@ -78,16 +79,16 @@ public class CharacterRegistration {
                             CharacterRegistration
                                     .writeCharacterRegistry(newCharacterList);
                         } else {
-                            CharacterRegistration
-                                    .writeCharacterRegistry(new String[] { res });
+                            CharacterRegistration.writeCharacterRegistry(
+                                    new String[] { res });
                         }
                     } else {
-                        CommonDialogs
-                                .showDialog("The character to register is not a valid character.");
+                        CommonDialogs.showDialog(
+                                "The character to register is not a valid character.");
                     }
                 } else {
-                    CommonDialogs
-                            .showDialog("The character to register has been registered already.");
+                    CommonDialogs.showDialog(
+                            "The character to register has been registered already.");
                 }
             }
         } else {
@@ -122,7 +123,8 @@ public class CharacterRegistration {
                 // Unregister it
                 if (characterNameList.length > 1) {
                     characterNameList[index] = null;
-                    final String[] newCharacterList = new String[characterNameList.length - 1];
+                    final String[] newCharacterList = new String[characterNameList.length
+                            - 1];
                     int offset = 0;
                     for (int x = 0; x < characterNameList.length; x++) {
                         if (characterNameList[x] != null) {
@@ -168,7 +170,8 @@ public class CharacterRegistration {
                 // Unregister it
                 if (characterNameList.length > 1) {
                     characterNameList[index] = null;
-                    final String[] newCharacterList = new String[characterNameList.length - 1];
+                    final String[] newCharacterList = new String[characterNameList.length
+                            - 1];
                     int offset = 0;
                     for (int x = 0; x < characterNameList.length; x++) {
                         if (characterNameList[x] != null) {
@@ -210,7 +213,8 @@ public class CharacterRegistration {
                 // Unregister it
                 if (characterNameList.length > 1) {
                     characterNameList[index] = null;
-                    final String[] newCharacterList = new String[characterNameList.length - 1];
+                    final String[] newCharacterList = new String[characterNameList.length
+                            - 1];
                     int offset = 0;
                     for (int x = 0; x < characterNameList.length; x++) {
                         if (characterNameList[x] != null) {
@@ -303,7 +307,8 @@ public class CharacterRegistration {
             if (!alreadyRegistered) {
                 // Register it
                 if (characterNameList != null) {
-                    final String[] newCharacterList = new String[characterNameList.length + 1];
+                    final String[] newCharacterList = new String[characterNameList.length
+                            + 1];
                     for (int x = 0; x < newCharacterList.length; x++) {
                         if (x < characterNameList.length) {
                             newCharacterList[x] = characterNameList[x];
@@ -325,9 +330,9 @@ public class CharacterRegistration {
         final String basePath = CharacterRegistration.getBasePath();
         // Load character registry file
         final ArrayList<String> registeredNames = new ArrayList<>();
-        try (FileInputStream fis = new FileInputStream(basePath
-                + File.separator + "CharacterRegistry"
-                + Extension.getRegistryExtensionWithPeriod());
+        try (FileInputStream fis = new FileInputStream(
+                basePath + File.separator + "CharacterRegistry"
+                        + Extension.getRegistryExtensionWithPeriod());
                 ResourceStreamReader rsr = new ResourceStreamReader(fis)) {
             String input = "";
             while (input != null) {
@@ -343,12 +348,13 @@ public class CharacterRegistration {
         return registeredNames;
     }
 
-    private static void writeCharacterRegistry(final String... newCharacterList) {
+    private static void writeCharacterRegistry(
+            final String... newCharacterList) {
         final String basePath = CharacterRegistration.getBasePath();
         // Check if registry is writable
-        final File regFile = new File(basePath + File.separator
-                + "CharacterRegistry"
-                + Extension.getRegistryExtensionWithPeriod());
+        final File regFile = new File(
+                basePath + File.separator + "CharacterRegistry"
+                        + Extension.getRegistryExtensionWithPeriod());
         if (!regFile.exists()) {
             // Not writable, probably because needed folders don't exist
             final File regParent = regFile.getParentFile();

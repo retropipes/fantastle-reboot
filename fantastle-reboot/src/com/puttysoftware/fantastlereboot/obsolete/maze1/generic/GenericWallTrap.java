@@ -77,7 +77,6 @@ public abstract class GenericWallTrap extends MazeObject {
                     .findAllMatchingObjectsAndDecay(currLevel, this.trigger);
         }
         FantastleReboot.getBagOStuff().getGameManager().redrawMaze();
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playWallTrapSound();

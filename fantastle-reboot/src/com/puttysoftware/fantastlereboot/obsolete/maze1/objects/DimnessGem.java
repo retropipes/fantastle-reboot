@@ -52,7 +52,6 @@ public class DimnessGem extends GenericGem {
                 .getPlayerManager().getPlayerLocationW();
         FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                 .decrementVisionRadius(currLevel);
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playDarknessSound();

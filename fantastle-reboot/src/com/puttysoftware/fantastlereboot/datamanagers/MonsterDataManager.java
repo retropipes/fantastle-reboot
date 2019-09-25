@@ -15,8 +15,8 @@ import com.puttysoftware.fileutils.ResourceStreamReader;
 public class MonsterDataManager {
     public static String[] getMonsterData() {
         try (final ResourceStreamReader rsr = new ResourceStreamReader(
-                MonsterDataManager.class
-                        .getResourceAsStream("/com/puttysoftware/tallertower/resources/data/monsters/monsters.txt"))) {
+                MonsterDataManager.class.getResourceAsStream(
+                        "/com/puttysoftware/tallertower/resources/data/monsters/monsters.txt"))) {
             // Fetch data
             final ArrayList<String> rawData = new ArrayList<>();
             String line = "";

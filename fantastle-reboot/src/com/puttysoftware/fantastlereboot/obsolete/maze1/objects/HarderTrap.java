@@ -53,7 +53,6 @@ public class HarderTrap extends GenericTrap {
             final ObjectInventory inv) {
         Messager.showMessage("The monsters get stronger...");
         PartyManager.getParty().incrementMonsterLevel();
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             SoundLoader.playSound(GameSound.HARDER);

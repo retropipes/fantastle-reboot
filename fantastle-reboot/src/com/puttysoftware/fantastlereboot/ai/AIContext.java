@@ -41,7 +41,8 @@ public abstract class AIContext {
         return this.isEnemyNearby(1, 1);
     }
 
-    public abstract Point isEnemyNearby(final int minRadius, final int maxRadius);
+    public abstract Point isEnemyNearby(final int minRadius,
+            final int maxRadius);
 
     public abstract Point runAway();
 }

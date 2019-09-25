@@ -179,8 +179,7 @@ public class MapTimeBattleLogic extends Battle {
             currResult = BattleResults.WON;
         } else if (!this.isTeamAlive(Creature.TEAM_PARTY)
                 && !this.isTeamGone(Creature.TEAM_PARTY)
-                && !this.areTeamEnemiesDeadOrGone(
-                        Creature.TEAM_PARTY)) {
+                && !this.areTeamEnemiesDeadOrGone(Creature.TEAM_PARTY)) {
             currResult = BattleResults.LOST;
         } else if (this.areTeamEnemiesGone(Creature.TEAM_PARTY)) {
             currResult = BattleResults.ENEMY_FLED;
@@ -240,7 +239,8 @@ public class MapTimeBattleLogic extends Battle {
 
     private void executeAutoAI(final BattleCharacter acting,
             final BattleCharacter theEnemy, final MapAIContext theContext) {
-        final int action = this.auto.getNextAction(acting.getTemplate(), theContext);
+        final int action = this.auto.getNextAction(acting.getTemplate(),
+                theContext);
         switch (action) {
         case AIRoutine.ACTION_MOVE:
             final int x = this.auto.getMoveX();
@@ -258,11 +258,9 @@ public class MapTimeBattleLogic extends Battle {
     }
 
     private void displayRoundResults(final Creature theEnemy,
-            final Creature active,
-            final AbstractDamageEngine activeDE) {
+            final Creature active, final AbstractDamageEngine activeDE) {
         // Display round results
-        final boolean isParty = active
-                .getTeamID() == Creature.TEAM_PARTY;
+        final boolean isParty = active.getTeamID() == Creature.TEAM_PARTY;
         final String activeName = active.getName();
         final String enemyName = theEnemy.getName();
         String damageString = Integer.toString(this.damage);
@@ -351,8 +349,7 @@ public class MapTimeBattleLogic extends Battle {
         this.setStatusMessage(displayDamageString);
     }
 
-    private void computeDamage(final Creature theEnemy,
-            final Creature acting,
+    private void computeDamage(final Creature theEnemy, final Creature acting,
             final AbstractDamageEngine activeDE) {
         // Compute Damage
         this.damage = 0;
@@ -769,16 +766,14 @@ public class MapTimeBattleLogic extends Battle {
                             active.getTemplate(), activeDE);
                     // Handle low health for party members
                     if (theEnemy.getTemplate().isAlive()
-                            && theEnemy
-                                    .getTeamID() == Creature.TEAM_PARTY
+                            && theEnemy.getTeamID() == Creature.TEAM_PARTY
                             && theEnemy.getTemplate().getCurrentHP() <= theEnemy
                                     .getTemplate().getMaximumHP() * 3 / 10) {
                         SoundLoader.playSound(GameSound.LOW_HEALTH);
                     }
                     // Handle enemy death
                     if (!theEnemy.getTemplate().isAlive()) {
-                        if (theEnemy
-                                .getTeamID() != Creature.TEAM_PARTY) {
+                        if (theEnemy.getTeamID() != Creature.TEAM_PARTY) {
                             // Update victory spoils
                             this.battleExp = theEnemy.getTemplate()
                                     .getExperience();
@@ -1399,8 +1394,8 @@ public class MapTimeBattleLogic extends Battle {
                 } else if (this.result == BattleResults.DRAW) {
                     this.setStatusMessage(
                             "The Boss battle was a draw. You are fully healed!");
-                    PartyManager.getParty().getLeader().healPercentage(
-                            Creature.FULL_HEAL_PERCENTAGE);
+                    PartyManager.getParty().getLeader()
+                            .healPercentage(Creature.FULL_HEAL_PERCENTAGE);
                     PartyManager.getParty().getLeader().regeneratePercentage(
                             Creature.FULL_HEAL_PERCENTAGE);
                 } else if (this.result == BattleResults.FLED) {

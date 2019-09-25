@@ -24,8 +24,7 @@ import com.puttysoftware.randomrange.RandomRange;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
-public abstract class AbstractMazeObject implements
-        RandomGenerationRule {
+public abstract class AbstractMazeObject implements RandomGenerationRule {
     // Properties
     private boolean solid;
     private boolean friction;
@@ -252,7 +251,8 @@ public abstract class AbstractMazeObject implements
      * @param y
      * @param z
      */
-    public void determineCurrentAppearance(final int x, final int y, final int z) {
+    public void determineCurrentAppearance(final int x, final int y,
+            final int z) {
         // Do nothing
     }
 
@@ -397,9 +397,7 @@ public abstract class AbstractMazeObject implements
         if (ident.equals(this.getIdentifier())) {
             final String savedIdent = reader.readString();
             if (!savedIdent.equals("NULL")) {
-                this.saved = TallerTower
-                        .getApplication()
-                        .getObjects()
+                this.saved = TallerTower.getApplication().getObjects()
                         .readSavedMazeObject(reader, savedIdent,
                                 FormatConstants.MAZE_FORMAT_LATEST);
             }

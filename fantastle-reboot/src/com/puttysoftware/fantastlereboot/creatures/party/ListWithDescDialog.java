@@ -102,8 +102,9 @@ class ListWithDescDialog extends JDialog implements ActionListener {
                     @Override
                     public void valueChanged(final ListSelectionEvent e) {
                         // Update description text
-                        descArea.setText(ListWithDescDialog.descs[ListWithDescDialog.list
-                                .getSelectedIndex()]);
+                        descArea.setText(
+                                ListWithDescDialog.descs[ListWithDescDialog.list
+                                        .getSelectedIndex()]);
                     }
                 });
         final JScrollPane listScroller = new JScrollPane(
@@ -145,8 +146,8 @@ class ListWithDescDialog extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(final ActionEvent e) {
         if ("OK".equals(e.getActionCommand())) {
-            ListWithDescDialog.setValue(ListWithDescDialog.list
-                    .getSelectedValue());
+            ListWithDescDialog
+                    .setValue(ListWithDescDialog.list.getSelectedValue());
         } else if ("Cancel".equals(e.getActionCommand())) {
             ListWithDescDialog.setValue(null);
         }

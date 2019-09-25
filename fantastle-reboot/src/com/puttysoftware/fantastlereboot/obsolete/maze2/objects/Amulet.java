@@ -30,7 +30,8 @@ public class Amulet extends AbstractTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
         TallerTower.getApplication().showMessage("You no longer slide on ice!");
         final GameLogicManager glm = TallerTower.getApplication()
                 .getGameManager();

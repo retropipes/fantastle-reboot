@@ -28,7 +28,8 @@ public class HealTrap extends AbstractTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
         int healing = PartyManager.getParty().getLeader().getMaximumHP() / 10;
         if (healing < 1) {
             healing = 1;

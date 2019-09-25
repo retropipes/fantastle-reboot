@@ -1,6 +1,5 @@
 package com.puttysoftware.fantastlereboot.creatures.races;
 
-
 public class RaceConstants {
     public static final int RACE_CYBORG = 0;
     public static final int RACE_DEMON = 1;
@@ -30,9 +29,10 @@ public class RaceConstants {
     public static final int RACE_ATTRIBUTE_INTELLIGENCE_PER_LEVEL = 4;
     public static final int RACE_ATTRIBUTE_LUCK_PER_LEVEL = 5;
     public static final int RACE_ATTRIBUTE_COUNT = 6;
-    public static final String[] RACE_NAMES = { "Cyborg", "Demon", "Dwarf", "Eagle", "Elf", "Ghost",
-            "Gnome", "Goblin", "Human", "Lizard", "Mush", "Orc", "Penguin",
-            "Pixie", "Robot", "Shade", "Slime", "Troll", "Turtle", "Wolf" };
+    public static final String[] RACE_NAMES = { "Cyborg", "Demon", "Dwarf",
+            "Eagle", "Elf", "Ghost", "Gnome", "Goblin", "Human", "Lizard",
+            "Mush", "Orc", "Penguin", "Pixie", "Robot", "Shade", "Slime",
+            "Troll", "Turtle", "Wolf" };
 
     public static final String getRaceName(final int index) {
         return RaceConstants.RACE_NAMES[index];

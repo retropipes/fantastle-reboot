@@ -37,11 +37,13 @@ public final class GameViewingWindowManager {
     }
 
     public int getLowerRightViewingWindowLocationX() {
-        return this.locX + FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize() - 1;
+        return this.locX + FantastleReboot.getBagOStuff().getPrefsManager()
+                .getViewingWindowSize() - 1;
     }
 
     public int getLowerRightViewingWindowLocationY() {
-        return this.locY + FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize() - 1;
+        return this.locY + FantastleReboot.getBagOStuff().getPrefsManager()
+                .getViewingWindowSize() - 1;
     }
 
     public void setViewingWindowLocationX(final int val) {
@@ -71,18 +73,22 @@ public final class GameViewingWindowManager {
     }
 
     public static int getViewingWindowSizeX() {
-        return FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize();
+        return FantastleReboot.getBagOStuff().getPrefsManager()
+                .getViewingWindowSize();
     }
 
     public static int getViewingWindowSizeY() {
-        return FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize();
+        return FantastleReboot.getBagOStuff().getPrefsManager()
+                .getViewingWindowSize();
     }
 
     public static int getOffsetFactorX() {
-        return FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize() / 2;
+        return FantastleReboot.getBagOStuff().getPrefsManager()
+                .getViewingWindowSize() / 2;
     }
 
     public static int getOffsetFactorY() {
-        return FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize() / 2;
+        return FantastleReboot.getBagOStuff().getPrefsManager()
+                .getViewingWindowSize() / 2;
     }
 }

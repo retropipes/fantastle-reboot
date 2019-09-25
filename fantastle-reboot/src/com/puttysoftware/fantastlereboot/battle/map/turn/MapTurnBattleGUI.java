@@ -85,8 +85,8 @@ class MapTurnBattleGUI {
 
     void showBattle() {
         this.battleFrame.setVisible(true);
-        this.battleFrame.setJMenuBar(TallerTower.getApplication()
-                .getMenuManager().getMainMenuBar());
+        this.battleFrame.setJMenuBar(
+                TallerTower.getApplication().getMenuManager().getMainMenuBar());
     }
 
     void hideBattle() {
@@ -115,8 +115,8 @@ class MapTurnBattleGUI {
                         final BufferedImageIcon icon2 = bd.getBattleMaze()
                                 .getCell(y, x, 0, MazeConstants.LAYER_OBJECT)
                                 .battleRenderHook();
-                        this.drawGrid.setImageCell(ImageTransformer
-                                .getCompositeImage(icon1, icon2,
+                        this.drawGrid.setImageCell(
+                                ImageTransformer.getCompositeImage(icon1, icon2,
                                         BattleImageManager.getGraphicSize()),
                                 xFix, yFix);
                     } catch (final ArrayIndexOutOfBoundsException ae) {
@@ -152,10 +152,10 @@ class MapTurnBattleGUI {
                         .getCell(x, y, 0, MazeConstants.LAYER_OBJECT)
                         .battleRenderHook();
                 final BufferedImageIcon icon3 = obj3.battleRenderHook();
-                this.drawGrid.setImageCell(ImageTransformer
-                        .getVirtualCompositeImage(icon1, icon2, icon3,
-                                BattleImageManager.getGraphicSize()), xFix,
-                        yFix);
+                this.drawGrid.setImageCell(
+                        ImageTransformer.getVirtualCompositeImage(icon1, icon2,
+                                icon3, BattleImageManager.getGraphicSize()),
+                        xFix, yFix);
                 this.battlePane.repaint();
             } catch (final ArrayIndexOutOfBoundsException ae) {
                 // Do nothing
@@ -210,17 +210,17 @@ class MapTurnBattleGUI {
         this.spell.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
                 KeyStroke.getKeyStroke(KeyEvent.VK_C, modKey), "Cast Spell");
         this.spell.getActionMap().put("Cast Spell", handler);
-        this.steal.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_T, modKey), "Steal");
+        this.steal.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_T, modKey), "Steal");
         this.steal.getActionMap().put("Steal", handler);
-        this.drain.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_D, modKey), "Drain");
+        this.drain.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_D, modKey), "Drain");
         this.drain.getActionMap().put("Drain", handler);
-        this.item.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_I, modKey), "Use Item");
+        this.item.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_I, modKey), "Use Item");
         this.item.getActionMap().put("Use Item", handler);
-        this.end.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_E, modKey), "End Turn");
+        this.end.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_E, modKey), "End Turn");
         this.end.getActionMap().put("End Turn", handler);
         this.battleFrame
                 .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -231,12 +231,11 @@ class MapTurnBattleGUI {
                 .getViewingWindowSize(); x++) {
             for (int y = 0; y < MapBattleViewingWindowManager
                     .getViewingWindowSize(); y++) {
-                final AbstractMazeObject dark = new Darkness().gameRenderHook(
-                        y, x, 0);
-                this.drawGrid.setImageCell(
-                        BattleImageManager.getImage(dark.getName(),
-                                dark.getGameBaseID(),
-                                AbstractMazeObject.getTemplateColor()), x, y);
+                final AbstractMazeObject dark = new Darkness().gameRenderHook(y,
+                        x, 0);
+                this.drawGrid.setImageCell(BattleImageManager.getImage(
+                        dark.getName(), dark.getGameBaseID(),
+                        AbstractMazeObject.getTemplateColor()), x, y);
             }
         }
         this.battlePane = new MapBattleDraw(this.drawGrid);
@@ -281,8 +280,7 @@ class MapTurnBattleGUI {
         public void actionPerformed(final ActionEvent e) {
             try {
                 final String cmd = e.getActionCommand();
-                final Battle b = TallerTower.getApplication()
-                        .getBattle();
+                final Battle b = TallerTower.getApplication().getBattle();
                 // Do Player Actions
                 if (cmd.equals("Cast Spell") || cmd.equals("c")) {
                     // Cast Spell
@@ -334,7 +332,8 @@ class MapTurnBattleGUI {
 
         private void handleMovement(final KeyEvent e) {
             try {
-                if (System.getProperty("os.name").equalsIgnoreCase("Mac OS X")) {
+                if (System.getProperty("os.name")
+                        .equalsIgnoreCase("Mac OS X")) {
                     if (e.isMetaDown()) {
                         return;
                     }
@@ -343,8 +342,7 @@ class MapTurnBattleGUI {
                         return;
                     }
                 }
-                final Battle bl = TallerTower.getApplication()
-                        .getBattle();
+                final Battle bl = TallerTower.getApplication().getBattle();
                 final MapTurnBattleGUI bg = MapTurnBattleGUI.this;
                 if (bg.eventHandlersOn) {
                     final int keyCode = e.getKeyCode();
@@ -406,7 +404,8 @@ class MapTurnBattleGUI {
 
         private void handleArrows(final KeyEvent e) {
             try {
-                if (System.getProperty("os.name").equalsIgnoreCase("Mac OS X")) {
+                if (System.getProperty("os.name")
+                        .equalsIgnoreCase("Mac OS X")) {
                     if (e.isMetaDown()) {
                         return;
                     }
@@ -415,8 +414,7 @@ class MapTurnBattleGUI {
                         return;
                     }
                 }
-                final Battle bl = TallerTower.getApplication()
-                        .getBattle();
+                final Battle bl = TallerTower.getApplication().getBattle();
                 final MapTurnBattleGUI bg = MapTurnBattleGUI.this;
                 if (bg.eventHandlersOn) {
                     final int keyCode = e.getKeyCode();

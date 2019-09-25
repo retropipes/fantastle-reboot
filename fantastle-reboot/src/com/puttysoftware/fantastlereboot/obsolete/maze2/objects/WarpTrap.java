@@ -30,7 +30,8 @@ public class WarpTrap extends AbstractTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
         RandomRange rr, rc, rf;
         final Application app = TallerTower.getApplication();
         int maxRow, maxCol, maxFloor, rRow, rCol, rFloor;

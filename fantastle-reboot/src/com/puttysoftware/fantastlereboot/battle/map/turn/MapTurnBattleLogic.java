@@ -213,8 +213,9 @@ public class MapTurnBattleLogic extends Battle {
             final BattleCharacter active = this.bd.getActiveCharacter();
             if (active.getTemplate().isAlive()) {
                 final int action = active.getTemplate().getMapAI()
-                        .getNextAction(this.bd.getActiveCharacter().getTemplate(), this.bd
-                                .getBattlerAIContexts()[this.activeIndex]);
+                        .getNextAction(
+                                this.bd.getActiveCharacter().getTemplate(),
+                                this.bd.getBattlerAIContexts()[this.activeIndex]);
                 switch (action) {
                 case AIRoutine.ACTION_MOVE:
                     final int x = active.getTemplate().getMapAI().getMoveX();
@@ -256,8 +257,8 @@ public class MapTurnBattleLogic extends Battle {
 
     private void executeAutoAI(final BattleCharacter acting) {
         final int index = this.bd.findBattler(acting.getName());
-        final int action = this.auto
-                .getNextAction(acting.getTemplate(), this.bd.getBattlerAIContexts()[index]);
+        final int action = this.auto.getNextAction(acting.getTemplate(),
+                this.bd.getBattlerAIContexts()[index]);
         switch (action) {
         case AIRoutine.ACTION_MOVE:
             final int x = this.auto.getMoveX();

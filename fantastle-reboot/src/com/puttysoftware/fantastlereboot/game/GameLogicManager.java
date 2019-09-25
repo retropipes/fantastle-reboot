@@ -222,8 +222,8 @@ public final class GameLogicManager {
             target2.determineCurrentAppearance(destX, destY, destZ);
             final String gameName1 = target1.getGameName();
             final String gameName2 = target2.getGameName();
-            TallerTower.getApplication().showMessage(
-                    gameName2 + " on " + gameName1);
+            TallerTower.getApplication()
+                    .showMessage(gameName2 + " on " + gameName1);
             SoundLoader.playSound(GameSound.IDENTIFY);
         } catch (final ArrayIndexOutOfBoundsException ae) {
             final EmptyVoid ev = new EmptyVoid();
@@ -241,10 +241,8 @@ public final class GameLogicManager {
             app.getGUIManager().hideGUI();
             if (this.stateChanged) {
                 // Initialize only if the maze state has changed
-                app.getMazeManager()
-                        .getMaze()
-                        .switchLevel(
-                                app.getMazeManager().getMaze().getStartLevel());
+                app.getMazeManager().getMaze().switchLevel(
+                        app.getMazeManager().getMaze().getStartLevel());
                 this.stateChanged = false;
             }
             // Make sure message area is attached to the border pane

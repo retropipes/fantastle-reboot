@@ -127,7 +127,8 @@ public class PlayerLocationManager {
     }
 
     private void fixLocationZ() {
-        final Maze m = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
+        final Maze m = FantastleReboot.getBagOStuff().getMazeManager()
+                .getMaze();
         if (m.is3rdDimensionWraparoundEnabled(this.locW)) {
             if (this.locZ < 0) {
                 this.locZ = m.getFloors(this.locW) - 1;

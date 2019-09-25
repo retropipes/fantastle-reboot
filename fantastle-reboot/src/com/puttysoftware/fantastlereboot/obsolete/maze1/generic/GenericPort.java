@@ -56,7 +56,6 @@ public abstract class GenericPort extends GenericInfiniteLock {
             fill = "a";
         }
         Messager.showMessage("You need " + fill + " " + this.letter + " plug");
-        FantastleReboot.getBagOStuff().getPrefsManager();
         // Play move failed sound, if it's enabled
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

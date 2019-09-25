@@ -85,17 +85,17 @@ public class CharacterLoader {
                 if (showResults) {
                     CommonDialogs.showDialog("Character removal failed!");
                 } else {
-                    CommonDialogs.showDialog("Character " + name
-                            + " failed to autoremove!");
+                    CommonDialogs.showDialog(
+                            "Character " + name + " failed to autoremove!");
                 }
             }
         } else {
             if (showResults) {
-                CommonDialogs
-                        .showDialog("The character to be removed does not have a corresponding file.");
+                CommonDialogs.showDialog(
+                        "The character to be removed does not have a corresponding file.");
             } else {
-                CommonDialogs
-                        .showDialog("The character to be autoremoved does not have a corresponding file.");
+                CommonDialogs.showDialog(
+                        "The character to be autoremoved does not have a corresponding file.");
             }
         }
     }

@@ -40,7 +40,8 @@ public class Monster extends GenericDungeonObject {
     @Override
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
-        if (FantastleReboot.getBagOStuff().getMode() != BagOStuff.STATUS_BATTLE) {
+        if (FantastleReboot.getBagOStuff()
+                .getMode() != BagOStuff.STATUS_BATTLE) {
             FantastleReboot.getBagOStuff().getBattle().doBattle();
             FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                     .postBattle(this, dirX, dirY, true);

@@ -17,7 +17,8 @@ public abstract class AbstractPassThroughObject extends AbstractMazeObject {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
         SoundLoader.playSound(GameSound.WALK);
     }
 

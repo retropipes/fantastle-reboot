@@ -281,7 +281,8 @@ public class ObjectInventory implements Cloneable {
 
     public static ObjectInventory readInventory(final XDataReader reader,
             final int formatVersion) throws IOException {
-        final MazeObjectList objects = FantastleReboot.getBagOStuff().getObjects();
+        final MazeObjectList objects = FantastleReboot.getBagOStuff()
+                .getObjects();
         final ObjectInventory i = new ObjectInventory();
         i.boots = (GenericBoots) objects.readMazeObject(reader, formatVersion);
         if (i.boots == null) {

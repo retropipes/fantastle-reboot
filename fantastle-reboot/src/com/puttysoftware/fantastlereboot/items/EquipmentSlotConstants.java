@@ -12,9 +12,9 @@ public class EquipmentSlotConstants {
     public static final int SLOT_OFFHAND = 1;
     public static final int SLOT_BODY = 2;
     static final int MAX_SLOTS = 3;
-    private static final String[] SLOT_NAMES = { "Helmet", "Necklace", "Main Hand", "Off-Hand",
-            "Robe", "Cape", "Shirt", "Bracers", "Gloves", "Ring", "Belt",
-            "Pants", "Boots" };
+    private static final String[] SLOT_NAMES = { "Helmet", "Necklace",
+            "Main Hand", "Off-Hand", "Robe", "Cape", "Shirt", "Bracers",
+            "Gloves", "Ring", "Belt", "Pants", "Boots" };
     private static String[] ARMOR_SLOT_NAMES = null;
 
     static synchronized String[] getSlotNames() {

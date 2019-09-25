@@ -37,7 +37,8 @@ public class StairsUp extends AbstractTeleport {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
         final Application app = TallerTower.getApplication();
         app.getGameManager().goToLevelOffset(1);
         SoundLoader.playSound(GameSound.UP);

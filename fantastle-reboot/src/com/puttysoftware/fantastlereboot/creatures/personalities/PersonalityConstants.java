@@ -38,16 +38,16 @@ public class PersonalityConstants {
     public static final int PERSONALITY_ATTRIBUTE_CAPACITY_MOD = 8;
     public static final int PERSONALITY_ATTRIBUTE_WEALTH_MOD = 9;
     public static final int PERSONALITY_ATTRIBUTES_COUNT = 10;
-    public static final String[] PERSONALITY_NAMES = { "Agile", "Bully", "Carefree", "Cautious",
-            "Daring", "Flippant", "Glutton", "Honest", "Impulsive", "Jealous",
-            "Kindly", "Logical", "Lucky", "Ordinary", "Proud", "Quiet", "Rebel",
-            "Romantic", "Silly", "Smart", "Tough", "Unique", "Valiant", "Weepy",
-            "Zealous" };
+    public static final String[] PERSONALITY_NAMES = { "Agile", "Bully",
+            "Carefree", "Cautious", "Daring", "Flippant", "Glutton", "Honest",
+            "Impulsive", "Jealous", "Kindly", "Logical", "Lucky", "Ordinary",
+            "Proud", "Quiet", "Rebel", "Romantic", "Silly", "Smart", "Tough",
+            "Unique", "Valiant", "Weepy", "Zealous" };
     private static final double[] LOOKUP_TABLE = { 0.5, 0.54, 0.58, 0.63, 0.67,
             0.71, 0.75, 0.79, 0.83, 0.88, 0.92, 0.96, 1.0, 1.08, 1.17, 1.25,
             1.33, 1.42, 1.5, 1.58, 1.67, 1.75, 1.83, 1.92, 2.0 };
 
- // Private constructor
+    // Private constructor
     private PersonalityConstants() {
         // Do nothing
     }

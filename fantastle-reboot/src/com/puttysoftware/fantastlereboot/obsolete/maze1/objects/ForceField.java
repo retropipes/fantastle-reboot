@@ -39,7 +39,6 @@ public class ForceField extends GenericField {
             final int dirY, final ObjectInventory inv) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         Messager.showMessage("You'll get zapped");
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveFailedSound();

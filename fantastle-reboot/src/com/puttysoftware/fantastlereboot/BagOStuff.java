@@ -188,7 +188,8 @@ public class BagOStuff {
 
     public void updateMicroLogo() {
         // Cache Micro Logo
-        this.microLogo = ImageLoader.loadUserInterfaceImage(GameUserInterfaceImage.MICRO_LOGO);
+        this.microLogo = ImageLoader
+                .loadUserInterfaceImage(GameUserInterfaceImage.MICRO_LOGO);
     }
 
     public MazeEditor getEditor() {

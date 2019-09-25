@@ -111,8 +111,8 @@ public class WindowTurnBattleLogic extends Battle {
 
     @Override
     public final void executeNextAIAction() {
-        final int actionToPerform = this.enemy.getWindowAI().getNextAction(
-                this.enemy);
+        final int actionToPerform = this.enemy.getWindowAI()
+                .getNextAction(this.enemy);
         if (actionToPerform == AbstractWindowAIRoutine.ACTION_ATTACK) {
             final int actions = this.enemy.getWindowBattleActionsPerRound();
             for (int x = 0; x < actions; x++) {
@@ -135,8 +135,8 @@ public class WindowTurnBattleLogic extends Battle {
         }
     }
 
-    private void computeDamage(final Creature theEnemy,
-            final Creature acting, final AbstractDamageEngine activeDE) {
+    private void computeDamage(final Creature theEnemy, final Creature acting,
+            final AbstractDamageEngine activeDE) {
         // Compute Damage
         this.damage = 0;
         final int actual = activeDE.computeDamage(theEnemy, acting);
@@ -158,8 +158,7 @@ public class WindowTurnBattleLogic extends Battle {
             } else if (this.damage < 0) {
                 this.enemyDidDamage = true;
             }
-        } else if (acting instanceof Monster
-                || acting instanceof BossMonster) {
+        } else if (acting instanceof Monster || acting instanceof BossMonster) {
             if (this.damage > 0) {
                 this.enemyDidDamage = true;
             } else if (this.damage < 0) {
@@ -183,13 +182,13 @@ public class WindowTurnBattleLogic extends Battle {
     final int computeRunChance() {
         return WindowTurnBattleLogic.BASE_RUN_CHANCE
                 - this.enemy.getLevelDifference()
-                * WindowTurnBattleLogic.RUN_CHANCE_DIFF_FACTOR;
+                        * WindowTurnBattleLogic.RUN_CHANCE_DIFF_FACTOR;
     }
 
     final int computeEnemyRunChance() {
         return WindowTurnBattleLogic.ENEMY_BASE_RUN_CHANCE
                 + this.enemy.getLevelDifference()
-                * WindowTurnBattleLogic.ENEMY_RUN_CHANCE_DIFF_FACTOR;
+                        * WindowTurnBattleLogic.ENEMY_RUN_CHANCE_DIFF_FACTOR;
     }
 
     @Override
@@ -479,7 +478,8 @@ public class WindowTurnBattleLogic extends Battle {
     }
 
     final void updateMessageAreaEnemyFleeFailed() {
-        this.setStatusMessage("The enemy tries to run away, but doesn't quite make it!");
+        this.setStatusMessage(
+                "The enemy tries to run away, but doesn't quite make it!");
     }
 
     final void updateMessageAreaPostSteal() {
@@ -535,11 +535,13 @@ public class WindowTurnBattleLogic extends Battle {
     }
 
     final void updateMessageAreaStealFailed() {
-        this.setStatusMessage("You try to steal money from the enemy, but the attempt fails!");
+        this.setStatusMessage(
+                "You try to steal money from the enemy, but the attempt fails!");
     }
 
     final void updateMessageAreaDrainFailed() {
-        this.setStatusMessage("You try to drain the enemy's MP, but the attempt fails!");
+        this.setStatusMessage(
+                "You try to drain the enemy's MP, but the attempt fails!");
     }
 
     @Override
@@ -566,13 +568,14 @@ public class WindowTurnBattleLogic extends Battle {
                 SoundLoader.playSound(GameSound.GAME_OVER);
                 PartyManager.getParty().getLeader().onDeath(-10);
             } else if (this.result == BattleResults.ANNIHILATED) {
-                this.setStatusMessage("The Boss defeated you without suffering damage... you were annihilated!");
+                this.setStatusMessage(
+                        "The Boss defeated you without suffering damage... you were annihilated!");
                 SoundLoader.playSound(GameSound.GAME_OVER);
                 PartyManager.getParty().getLeader().onDeath(-20);
             } else if (this.result == BattleResults.DRAW) {
-                this.setStatusMessage("The Boss battle was a draw. You are fully healed!");
-                playerCharacter
-                        .healPercentage(Creature.FULL_HEAL_PERCENTAGE);
+                this.setStatusMessage(
+                        "The Boss battle was a draw. You are fully healed!");
+                playerCharacter.healPercentage(Creature.FULL_HEAL_PERCENTAGE);
                 playerCharacter
                         .regeneratePercentage(Creature.FULL_HEAL_PERCENTAGE);
             } else if (this.result == BattleResults.FLED) {
@@ -593,28 +596,30 @@ public class WindowTurnBattleLogic extends Battle {
                         + m.getPerfectBonusGold()
                         + " extra gold for a perfect fight!");
                 playerCharacter.offsetExperience(m.getExperience());
-                playerCharacter.offsetGold(m.getGold()
-                        + m.getPerfectBonusGold());
+                playerCharacter
+                        .offsetGold(m.getGold() + m.getPerfectBonusGold());
                 SoundLoader.playSound(GameSound.VICTORY);
             } else if (this.result == BattleResults.LOST) {
                 this.setStatusMessage("You lost...");
                 SoundLoader.playSound(GameSound.GAME_OVER);
                 PartyManager.getParty().getLeader().onDeath(-10);
             } else if (this.result == BattleResults.ANNIHILATED) {
-                this.setStatusMessage("You lost without hurting your foe... you were annihilated!");
+                this.setStatusMessage(
+                        "You lost without hurting your foe... you were annihilated!");
                 SoundLoader.playSound(GameSound.GAME_OVER);
                 PartyManager.getParty().getLeader().onDeath(-20);
             } else if (this.result == BattleResults.DRAW) {
-                this.setStatusMessage("The battle was a draw. You are fully healed!");
-                playerCharacter
-                        .healPercentage(Creature.FULL_HEAL_PERCENTAGE);
+                this.setStatusMessage(
+                        "The battle was a draw. You are fully healed!");
+                playerCharacter.healPercentage(Creature.FULL_HEAL_PERCENTAGE);
                 playerCharacter
                         .regeneratePercentage(Creature.FULL_HEAL_PERCENTAGE);
             } else if (this.result == BattleResults.FLED) {
                 this.setStatusMessage("You ran away successfully!");
             } else if (this.result == BattleResults.ENEMY_FLED) {
                 this.setStatusMessage("The enemy runs away!");
-                this.setStatusMessage("Since the enemy ran away, you gain nothing for this battle.");
+                this.setStatusMessage(
+                        "Since the enemy ran away, you gain nothing for this battle.");
             }
         }
         // Cleanup
@@ -624,11 +629,12 @@ public class WindowTurnBattleLogic extends Battle {
         // Level Up Check
         if (playerCharacter.checkLevelUp()) {
             playerCharacter.levelUp();
-            if (FantastleReboot.getBagOStuff().getPrefsManager().getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
+            if (FantastleReboot.getBagOStuff().getPrefsManager()
+                    .getSoundEnabled(PreferencesManager.SOUNDS_BATTLE)) {
                 SoundLoader.playSound(GameSound.LEVEL_UP);
             }
-            this.setStatusMessage("You reached level "
-                    + playerCharacter.getLevel() + ".");
+            this.setStatusMessage(
+                    "You reached level " + playerCharacter.getLevel() + ".");
         }
         // Final Cleanup
         this.battleGUI.doResultFinalCleanup(rewardsFlag);

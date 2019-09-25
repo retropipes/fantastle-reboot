@@ -95,16 +95,19 @@ public class MapBattleArrowTask extends Thread {
                 final Battle bl = app.getBattle();
                 if (mult == 0) {
                     hit.getTemplate().doDamage(1);
-                    bl.setStatusMessage("Ow, you got shot! It didn't hurt much.");
+                    bl.setStatusMessage(
+                            "Ow, you got shot! It didn't hurt much.");
                 } else if (mult == 5) {
                     hit.getTemplate().doDamage(3);
-                    bl.setStatusMessage("Ow, you got shot! It hurt a little bit.");
+                    bl.setStatusMessage(
+                            "Ow, you got shot! It hurt a little bit.");
                 } else if (mult == 10) {
                     hit.getTemplate().doDamage(5);
                     bl.setStatusMessage("Ow, you got shot! It hurt somewhat.");
                 } else if (mult == 20) {
                     hit.getTemplate().doDamage(8);
-                    bl.setStatusMessage("Ow, you got shot! It hurt significantly!");
+                    bl.setStatusMessage(
+                            "Ow, you got shot! It hurt significantly!");
                 }
             }
             // Arrow has died

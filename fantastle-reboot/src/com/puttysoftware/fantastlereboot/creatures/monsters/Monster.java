@@ -79,23 +79,18 @@ public abstract class Monster extends Creature {
         final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager()
                 .getGameDifficulty();
         final int base = this.getBaseSpeed();
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
             return (int) (base * SPEED_ADJUST_SLOWEST);
         } else {
-            FantastleReboot.getBagOStuff().getPrefsManager();
             if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
                 return (int) (base * SPEED_ADJUST_SLOW);
             } else {
-                FantastleReboot.getBagOStuff().getPrefsManager();
                 if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
                     return (int) (base * SPEED_ADJUST_NORMAL);
                 } else {
-                    FantastleReboot.getBagOStuff().getPrefsManager();
                     if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
                         return (int) (base * SPEED_ADJUST_FAST);
                     } else {
-                        FantastleReboot.getBagOStuff().getPrefsManager();
                         if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
                             return (int) (base * SPEED_ADJUST_FASTEST);
                         } else {

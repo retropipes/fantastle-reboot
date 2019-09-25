@@ -29,9 +29,10 @@ public class UTurnTrap extends AbstractTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
-        TallerTower.getApplication().showMessage(
-                "Your controls are turned around!");
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
+        TallerTower.getApplication()
+                .showMessage("Your controls are turned around!");
         TallerTower.getApplication().getGameManager()
                 .activateEffect(EffectConstants.EFFECT_U_TURNED);
         SoundLoader.playSound(GameSound.CHANGE);

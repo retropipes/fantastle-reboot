@@ -42,7 +42,8 @@ public class DarkGem extends AbstractMPModifier {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
         TallerTower.getApplication().showMessage("Your power withers!");
         TallerTower.getApplication().getGameManager()
                 .activateEffect(EffectConstants.EFFECT_POWER_WITHER);

@@ -58,7 +58,6 @@ public class DrunkTrap extends GenericTrap {
         Messager.showMessage("You stumble around drunkenly!");
         FantastleReboot.getBagOStuff().getGameManager().activateEffect(
                 EffectConstants.EFFECT_DRUNK, DrunkTrap.EFFECT_DURATION);
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playDrunkSound();

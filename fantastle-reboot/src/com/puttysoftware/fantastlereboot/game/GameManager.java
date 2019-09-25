@@ -120,7 +120,8 @@ public class GameManager {
         if (this.savedGameFlag) {
             return true;
         } else {
-            return PartyManager.createParty(FantastleReboot.getBagOStuff().getOutputFrame());
+            return PartyManager.createParty(
+                    FantastleReboot.getBagOStuff().getOutputFrame());
         }
     }
 
@@ -337,7 +338,8 @@ public class GameManager {
     }
 
     public void doClockwiseRotate(final int r) {
-        final Maze m = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
+        final Maze m = FantastleReboot.getBagOStuff().getMazeManager()
+                .getMaze();
         boolean b = false;
         if (this.actingRemotely) {
             b = m.rotateRadiusClockwise(this.remoteCoords[0],
@@ -359,7 +361,8 @@ public class GameManager {
 
     public void findPlayerAndAdjust() {
         // Find the player, adjust player location
-        final Maze m = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
+        final Maze m = FantastleReboot.getBagOStuff().getMazeManager()
+                .getMaze();
         final int w = this.plMgr.getPlayerLocationW();
         m.findPlayerOnLevel(w);
         this.plMgr.setPlayerLocation(m.getFindResultColumn(w),
@@ -369,7 +372,8 @@ public class GameManager {
     }
 
     public void doCounterclockwiseRotate(final int r) {
-        final Maze m = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
+        final Maze m = FantastleReboot.getBagOStuff().getMazeManager()
+                .getMaze();
         boolean b = false;
         if (this.actingRemotely) {
             b = m.rotateRadiusCounterclockwise(this.remoteCoords[0],
@@ -630,7 +634,8 @@ public class GameManager {
     }
 
     public void backUpPlayer() {
-        final Maze m = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
+        final Maze m = FantastleReboot.getBagOStuff().getMazeManager()
+                .getMaze();
         final int pz = this.plMgr.getPlayerLocationZ();
         final int pw = this.plMgr.getPlayerLocationW();
         this.plMgr.restorePlayerLocation();
@@ -1032,8 +1037,10 @@ public class GameManager {
             // Rebuild draw grid
             final EmptyBorder eb = new EmptyBorder(0, 0, 0, 0);
             this.outputPane.removeAll();
-            for (int x = 0; x < GameViewingWindowManager.getViewingWindowSizeX(); x++) {
-                for (int y = 0; y < GameViewingWindowManager.getViewingWindowSizeY(); y++) {
+            for (int x = 0; x < GameViewingWindowManager
+                    .getViewingWindowSizeX(); x++) {
+                for (int y = 0; y < GameViewingWindowManager
+                        .getViewingWindowSizeY(); y++) {
                     this.drawGrid[x][y] = new JLabel();
                     // Fix to make draw grid line up properly
                     this.drawGrid[x][y].setBorder(eb);
@@ -1083,8 +1090,8 @@ public class GameManager {
                             this.drawGrid[xFix][yFix].setIcon(ImageLoader
                                     .getCompositeImage(name1, name2));
                         } else {
-                            this.drawGrid[xFix][yFix].setIcon(
-                                    ImageLoader.getImage("Darkness"));
+                            this.drawGrid[xFix][yFix]
+                                    .setIcon(ImageLoader.getImage("Darkness"));
                         }
                     } catch (final ArrayIndexOutOfBoundsException ae) {
                         this.drawGrid[xFix][yFix].setIcon(ImageLoader
@@ -1275,7 +1282,6 @@ public class GameManager {
     }
 
     private void gameOver() {
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
             SoundLoader.playSound(GameSound.GAME_OVER);
@@ -1335,8 +1341,8 @@ public class GameManager {
 
     public void decayTo(final MazeObject obj) {
         if (this.actingRemotely) {
-            FantastleReboot.getBagOStuff().getMazeManager().getMaze().setCell(obj,
-                    this.remoteCoords[0], this.remoteCoords[1],
+            FantastleReboot.getBagOStuff().getMazeManager().getMaze().setCell(
+                    obj, this.remoteCoords[0], this.remoteCoords[1],
                     this.remoteCoords[2], this.remoteCoords[3],
                     Maze.LAYER_OBJECT);
         } else {
@@ -1448,8 +1454,8 @@ public class GameManager {
     }
 
     public void showEquipmentDialog() {
-        final String[] equipString = PartyManager.getParty().getLeader().getItems()
-                .generateEquipmentStringArray();
+        final String[] equipString = PartyManager.getParty().getLeader()
+                .getItems().generateEquipmentStringArray();
         Messager.showInputDialog("Equipment", "Equipment", equipString,
                 equipString[0]);
     }
@@ -1457,8 +1463,8 @@ public class GameManager {
     public void showInventoryDialog() {
         final String[] inv1String = this.objectInv
                 .generateInventoryStringArray();
-        final String[] inv2String = PartyManager.getParty().getLeader().getItems()
-                .generateInventoryStringArray(inv1String.length);
+        final String[] inv2String = PartyManager.getParty().getLeader()
+                .getItems().generateInventoryStringArray(inv1String.length);
         final String[] invString = new String[inv1String.length
                 + inv2String.length];
         for (int x = 0; x < inv1String.length + inv2String.length; x++) {
@@ -1606,7 +1612,6 @@ public class GameManager {
             final int destZ = this.plMgr.getPlayerLocationZ();
             final int destW = this.plMgr.getPlayerLocationW();
             this.updatePositionAbsolute(destX, destY, destZ, destW);
-            FantastleReboot.getBagOStuff().getPrefsManager();
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 SoundLoader.playSound(GameSound.TELEPORT);
@@ -1638,7 +1643,6 @@ public class GameManager {
             final String gameName1 = target1.getGameName();
             final String gameName2 = target2.getGameName();
             Messager.showMessage(gameName2 + " on " + gameName1);
-            FantastleReboot.getBagOStuff().getPrefsManager();
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 MazeObject.playIdentifySound();
@@ -1647,7 +1651,6 @@ public class GameManager {
             final EmptyVoid ev = new EmptyVoid();
             ev.determineCurrentAppearance(destX, destY, destZ, destW);
             Messager.showMessage(ev.getGameName());
-            FantastleReboot.getBagOStuff().getPrefsManager();
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 MazeObject.playIdentifySound();
@@ -1655,8 +1658,8 @@ public class GameManager {
         }
     }
 
-    public void loadGameHook(final XDataReader mazeFile, final int formatVersion)
-            throws IOException {
+    public void loadGameHook(final XDataReader mazeFile,
+            final int formatVersion) throws IOException {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         this.objectInv = ObjectInventory.readInventory(mazeFile, formatVersion);
         app.getMazeManager().getMaze().readSavedMazeState(mazeFile,
@@ -1727,17 +1730,20 @@ public class GameManager {
         this.outputFrame.setContentPane(this.borderPane);
         this.outputFrame
                 .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        this.outputPane
-                .setLayout(new GridLayout(GameViewingWindowManager.getViewingWindowSizeX(),
+        this.outputPane.setLayout(
+                new GridLayout(GameViewingWindowManager.getViewingWindowSizeX(),
                         GameViewingWindowManager.getViewingWindowSizeY()));
         this.outputFrame.setResizable(false);
         this.outputFrame.addKeyListener(this.handler);
         this.outputFrame.addWindowListener(this.handler);
         this.outputPane.addMouseListener(this.handler);
         this.drawGrid = new JLabel[GameViewingWindowManager
-                .getViewingWindowSizeX()][GameViewingWindowManager.getViewingWindowSizeY()];
-        for (int x = 0; x < GameViewingWindowManager.getViewingWindowSizeX(); x++) {
-            for (int y = 0; y < GameViewingWindowManager.getViewingWindowSizeY(); y++) {
+                .getViewingWindowSizeX()][GameViewingWindowManager
+                        .getViewingWindowSizeY()];
+        for (int x = 0; x < GameViewingWindowManager
+                .getViewingWindowSizeX(); x++) {
+            for (int y = 0; y < GameViewingWindowManager
+                    .getViewingWindowSizeY(); y++) {
                 this.drawGrid[x][y] = new JLabel();
                 // Mac OS X-specific fix to make draw grid line up properly
                 if (System.getProperty("os.name").startsWith("Mac OS X")) {
@@ -1760,7 +1766,8 @@ public class GameManager {
         @Override
         public void keyPressed(final KeyEvent e) {
             if (!GameManager.this.arrowActive) {
-                if (!FantastleReboot.getBagOStuff().getPrefsManager().oneMove()) {
+                if (!FantastleReboot.getBagOStuff().getPrefsManager()
+                        .oneMove()) {
                     if (e.isAltDown()) {
                         this.handleArrows(e);
                     } else {
@@ -1773,7 +1780,8 @@ public class GameManager {
         @Override
         public void keyReleased(final KeyEvent e) {
             if (!GameManager.this.arrowActive) {
-                if (FantastleReboot.getBagOStuff().getPrefsManager().oneMove()) {
+                if (FantastleReboot.getBagOStuff().getPrefsManager()
+                        .oneMove()) {
                     if (e.isAltDown()) {
                         this.handleArrows(e);
                     } else {

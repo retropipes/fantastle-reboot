@@ -15,8 +15,10 @@ public class Monster extends AbstractMovingObject {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
-        if (TallerTower.getApplication().getMode() != Application.STATUS_BATTLE) {
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
+        if (TallerTower.getApplication()
+                .getMode() != Application.STATUS_BATTLE) {
             TallerTower.getApplication().getBattle().doBattle();
             TallerTower.getApplication().getMazeManager().getMaze()
                     .postBattle(this, dirX, dirY, true);

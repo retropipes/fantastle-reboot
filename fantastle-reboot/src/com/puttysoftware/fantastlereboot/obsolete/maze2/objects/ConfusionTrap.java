@@ -29,7 +29,8 @@ public class ConfusionTrap extends AbstractTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
         TallerTower.getApplication().showMessage("You are confused!");
         TallerTower.getApplication().getGameManager()
                 .activateEffect(EffectConstants.EFFECT_CONFUSED);

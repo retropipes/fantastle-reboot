@@ -72,8 +72,8 @@ public class ItemInventory {
         return 0;
     }
 
-    public void equipOneHandedWeapon(final Creature pc,
-            final Equipment ei, final boolean useFirst, final boolean playSound) {
+    public void equipOneHandedWeapon(final Creature pc, final Equipment ei,
+            final boolean useFirst, final boolean playSound) {
         // Fix character load, changing weapons
         if (this.equipment[EquipmentSlotConstants.SLOT_MAINHAND] != null
                 && useFirst) {
@@ -106,8 +106,8 @@ public class ItemInventory {
         }
     }
 
-    public void equipTwoHandedWeapon(final Creature pc,
-            final Equipment ei, final boolean playSound) {
+    public void equipTwoHandedWeapon(final Creature pc, final Equipment ei,
+            final boolean playSound) {
         // Fix character load, changing weapons
         if (this.equipment[EquipmentSlotConstants.SLOT_MAINHAND] != null) {
             pc.offsetLoad(-this.equipment[EquipmentSlotConstants.SLOT_MAINHAND]
@@ -135,8 +135,9 @@ public class ItemInventory {
                 if (this.equipment[EquipmentSlotConstants.SLOT_MAINHAND] != null) {
                     if (this.equipment[EquipmentSlotConstants.SLOT_MAINHAND]
                             .getEquipCategory() == EquipmentCategoryConstants.EQUIPMENT_CATEGORY_TWO_HANDED_WEAPON) {
-                        pc.offsetLoad(-this.equipment[EquipmentSlotConstants.SLOT_MAINHAND]
-                                .getEffectiveWeight());
+                        pc.offsetLoad(
+                                -this.equipment[EquipmentSlotConstants.SLOT_MAINHAND]
+                                        .getEffectiveWeight());
                     }
                 }
             }

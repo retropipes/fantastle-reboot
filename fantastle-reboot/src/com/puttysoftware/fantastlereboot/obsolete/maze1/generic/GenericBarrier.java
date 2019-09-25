@@ -44,14 +44,14 @@ public abstract class GenericBarrier extends GenericWall {
         // Display impassable barrier message
         final BagOStuff app = FantastleReboot.getBagOStuff();
         Messager.showMessage("The barrier is impassable!");
-        FantastleReboot.getBagOStuff().getPrefsManager();
         // Play move failed sound, if it's enabled
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveFailedSound();
         }
         // Hurt the player a little for attempting to cross the barrier
-        PartyManager.getParty().getLeader().doDamagePercentage(GenericBarrier.BARRIER_DAMAGE);
+        PartyManager.getParty().getLeader()
+                .doDamagePercentage(GenericBarrier.BARRIER_DAMAGE);
     }
 
     @Override

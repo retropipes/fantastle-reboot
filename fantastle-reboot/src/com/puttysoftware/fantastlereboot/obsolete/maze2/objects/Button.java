@@ -41,7 +41,8 @@ public class Button extends AbstractTrigger {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
         SoundLoader.playSound(GameSound.BUTTON);
         final Application app = TallerTower.getApplication();
         app.getMazeManager().getMaze().fullScanButton(this.getLayer());

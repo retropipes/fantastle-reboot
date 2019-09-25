@@ -87,8 +87,9 @@ public class GenerateTask extends Thread {
             }
             gameMaze.save();
             // Final cleanup
-            AbstractMazeObject.setTemplateColor(ImageColorConstants
-                    .getColorForLevel(PartyManager.getParty().getMonsterLevel()));
+            AbstractMazeObject
+                    .setTemplateColor(ImageColorConstants.getColorForLevel(
+                            PartyManager.getParty().getMonsterLevel()));
             if (this.scratch) {
                 app.getGameManager().stateChanged();
                 app.getGameManager().playMaze();

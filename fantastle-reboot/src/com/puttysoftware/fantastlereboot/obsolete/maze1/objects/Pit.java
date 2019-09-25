@@ -91,7 +91,6 @@ public class Pit extends StairsDown {
         app.getGameManager().updatePositionAbsolute(this.getDestinationRow(),
                 this.getDestinationColumn(), this.getDestinationFloor(),
                 this.getDestinationLevel());
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playFallSound();
@@ -109,14 +108,12 @@ public class Pit extends StairsDown {
                 final GenericMovableObject pushedInto = (GenericMovableObject) pushed;
                 app.getGameManager().updatePushedIntoPositionAbsolute(x, y,
                         z - 1, w, x, y, z, w, pushedInto, this);
-                FantastleReboot.getBagOStuff().getPrefsManager();
                 if (app.getPrefsManager()
                         .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                     MazeObject.playFallSound();
                 }
             }
         } catch (final InfiniteRecursionException ir) {
-            FantastleReboot.getBagOStuff().getPrefsManager();
             if (app.getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 MazeObject.playFallSound();

@@ -33,16 +33,15 @@ public class CombatItemChucker {
         return result;
     }
 
-    public static boolean useItem(final CombatItem used,
-            final Creature user) {
+    public static boolean useItem(final CombatItem used, final Creature user) {
         if (used != null) {
             final Effect e = used.getEffect();
             // Play item's associated sound effect, if it has one
             final GameSound snd = used.getSound();
             SoundLoader.playSound(snd);
             e.resetEffect();
-            final Creature target = CombatItemChucker.resolveTarget(
-                    used, user.getTeamID());
+            final Creature target = CombatItemChucker.resolveTarget(used,
+                    user.getTeamID());
             used.use();
             if (target.isEffectActive(e)) {
                 target.extendEffect(e, e.getInitialRounds());
@@ -102,20 +101,18 @@ public class CombatItemChucker {
                     if (ii.getUses(i) > 0) {
                         return i;
                     } else {
-                        CommonDialogs
-                                .showErrorDialog(
-                                        "You try to use an item, but realize you've run out!",
-                                        "Select Item");
+                        CommonDialogs.showErrorDialog(
+                                "You try to use an item, but realize you've run out!",
+                                "Select Item");
                         return null;
                     }
                 } else {
                     return null;
                 }
             } else {
-                CommonDialogs
-                        .showErrorDialog(
-                                "You try to use an item, but realize you don't have any!",
-                                "Select Item");
+                CommonDialogs.showErrorDialog(
+                        "You try to use an item, but realize you don't have any!",
+                        "Select Item");
                 return null;
             }
         } else {

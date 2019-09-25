@@ -11,8 +11,7 @@ import com.puttysoftware.fantastlereboot.creatures.Creature;
 
 public abstract class AbstractDamageEngine {
     // Methods
-    public abstract int computeDamage(Creature enemy,
-            Creature acting);
+    public abstract int computeDamage(Creature enemy, Creature acting);
 
     public abstract boolean enemyDodged();
 
@@ -25,24 +24,20 @@ public abstract class AbstractDamageEngine {
     public abstract boolean weaponFumble();
 
     public static AbstractDamageEngine getPlayerInstance() {
-        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager().getGameDifficulty();
-        FantastleReboot.getBagOStuff().getPrefsManager();
+        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager()
+                .getGameDifficulty();
         if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
             return new VeryEasyDamageEngine();
         } else {
-            FantastleReboot.getBagOStuff().getPrefsManager();
             if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
                 return new EasyDamageEngine();
             } else {
-                FantastleReboot.getBagOStuff().getPrefsManager();
                 if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
                     return new NormalDamageEngine();
                 } else {
-                    FantastleReboot.getBagOStuff().getPrefsManager();
                     if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
                         return new HardDamageEngine();
                     } else {
-                        FantastleReboot.getBagOStuff().getPrefsManager();
                         if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
                             return new VeryHardDamageEngine();
                         } else {
@@ -55,24 +50,20 @@ public abstract class AbstractDamageEngine {
     }
 
     public static AbstractDamageEngine getEnemyInstance() {
-        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager().getGameDifficulty();
-        FantastleReboot.getBagOStuff().getPrefsManager();
+        final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager()
+                .getGameDifficulty();
         if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
             return new VeryHardDamageEngine();
         } else {
-            FantastleReboot.getBagOStuff().getPrefsManager();
             if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
                 return new HardDamageEngine();
             } else {
-                FantastleReboot.getBagOStuff().getPrefsManager();
                 if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
                     return new NormalDamageEngine();
                 } else {
-                    FantastleReboot.getBagOStuff().getPrefsManager();
                     if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
                         return new EasyDamageEngine();
                     } else {
-                        FantastleReboot.getBagOStuff().getPrefsManager();
                         if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
                             return new VeryEasyDamageEngine();
                         } else {

@@ -70,7 +70,6 @@ public class WarpTrap extends GenericTrap {
         } while (!app.getGameManager().tryUpdatePositionAbsolute(rRow, rCol,
                 rFloor));
         app.getGameManager().updatePositionAbsolute(rRow, rCol, rFloor, pw);
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveSuccessSound();

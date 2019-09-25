@@ -80,7 +80,8 @@ class NormalMapAIRoutine extends AbstractMapAIRoutine {
                     return AIRoutine.ACTION_MOVE;
                 } else {
                     // Look further
-                    for (int x = CommonMapAIRoutines.MIN_VISION + 1; x <= MAX_VISION; x++) {
+                    for (int x = CommonMapAIRoutines.MIN_VISION
+                            + 1; x <= MAX_VISION; x++) {
                         there = ac.isEnemyNearby(x, x);
                         if (there != null) {
                             // Found something hostile, move towards it
@@ -99,8 +100,8 @@ class NormalMapAIRoutine extends AbstractMapAIRoutine {
                                     there = CommonMapAIRoutines.turnRight45(
                                             this.moveX, this.moveY);
                                 } else {
-                                    there = CommonMapAIRoutines.turnLeft45(
-                                            this.moveX, this.moveY);
+                                    there = CommonMapAIRoutines
+                                            .turnLeft45(this.moveX, this.moveY);
                                 }
                                 this.moveX = there.x;
                                 this.moveY = there.y;
@@ -140,13 +141,16 @@ class NormalMapAIRoutine extends AbstractMapAIRoutine {
             if (maxIndex > -1) {
                 if (ac.getCharacter().getCurrentSP() > 0) {
                     // Select a random spell to cast
-                    final RandomRange randomSpell = new RandomRange(0, maxIndex);
+                    final RandomRange randomSpell = new RandomRange(0,
+                            maxIndex);
                     final int randomSpellID = randomSpell.generate();
                     if (randomSpellID == CommonMapAIRoutines.SPELL_INDEX_HEAL) {
                         // Healing spell was selected - is healing needed?
-                        if (ac.getCharacter().getTemplate().getCurrentHP() > ac
-                                .getCharacter().getTemplate().getMaximumHP()
-                                * NormalMapAIRoutine.HEAL_THRESHOLD / 100) {
+                        if (ac.getCharacter().getTemplate()
+                                .getCurrentHP() > ac.getCharacter()
+                                        .getTemplate().getMaximumHP()
+                                        * NormalMapAIRoutine.HEAL_THRESHOLD
+                                        / 100) {
                             // Do not need healing
                             return false;
                         }

@@ -52,7 +52,6 @@ public class LightnessGem extends GenericGem {
                 .getPlayerManager().getPlayerLocationW();
         FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                 .incrementVisionRadius(currLevel);
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playLightSound();

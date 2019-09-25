@@ -660,8 +660,8 @@ class LayeredTower {
     }
 
     private void fillNulls() {
-        final MazeObject bottom = FantastleReboot.getBagOStuff().getPrefsManager()
-                .getEditorDefaultFill();
+        final MazeObject bottom = FantastleReboot.getBagOStuff()
+                .getPrefsManager().getEditorDefaultFill();
         final MazeObject top = new Empty();
         int x, y, z, e;
         for (x = 0; x < this.getColumns(); x++) {
@@ -711,7 +711,8 @@ class LayeredTower {
 
     public void updateMonsterPosition(final int move, final int xLoc,
             final int yLoc, final Monster monster) {
-        final int[] dirMove = DirectionResolver.unresolveRelativeDirection(move);
+        final int[] dirMove = DirectionResolver
+                .unresolveRelativeDirection(move);
         final int zLoc = FantastleReboot.getBagOStuff().getGameManager()
                 .getPlayerManager().getPlayerLocationZ();
         try {
@@ -721,7 +722,8 @@ class LayeredTower {
                     yLoc + dirMove[1], zLoc, Maze.LAYER_GROUND);
             if (!there.isSolid() && !there.getName().equals("Monster")) {
                 if (there.getName().equals("Player")) {
-                    if (FantastleReboot.getBagOStuff().getMode() != BagOStuff.STATUS_BATTLE) {
+                    if (FantastleReboot.getBagOStuff()
+                            .getMode() != BagOStuff.STATUS_BATTLE) {
                         FantastleReboot.getBagOStuff().getBattle().doBattle();
                         this.postBattle(monster, xLoc, yLoc, false);
                     }
@@ -747,7 +749,8 @@ class LayeredTower {
 
     public void updateMovingBlockPosition(final int move, final int xLoc,
             final int yLoc, final MovingBlock block) {
-        final int[] dirMove = DirectionResolver.unresolveRelativeDirection(move);
+        final int[] dirMove = DirectionResolver
+                .unresolveRelativeDirection(move);
         final int zLoc = FantastleReboot.getBagOStuff().getGameManager()
                 .getPlayerManager().getPlayerLocationZ();
         try {
@@ -1019,8 +1022,8 @@ class LayeredTower {
             for (y = 0; y < lt.getRows(); y++) {
                 for (z = 0; z < lt.getFloors(); z++) {
                     for (e = 0; e < Maze.LAYER_COUNT; e++) {
-                        lt.towerData[x][y][z][e] = FantastleReboot.getBagOStuff()
-                                .getObjects()
+                        lt.towerData[x][y][z][e] = FantastleReboot
+                                .getBagOStuff().getObjects()
                                 .readMazeObject(reader, formatVersion);
                         if (lt.towerData[x][y][z][e] == null) {
                             return null;

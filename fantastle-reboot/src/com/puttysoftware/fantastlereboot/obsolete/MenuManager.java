@@ -31,8 +31,8 @@ public class MenuManager {
     private JMenuItem fileOpenGame, fileClose, fileSaveGame, filePreferences,
             fileExit;
     private JMenuItem gameNewGame, gameEquipment, gameInventory,
-            gameRegisterCharacter, gameUnregisterCharacter,
-            gameRemoveCharacter, gameEditNote, gameViewStats;
+            gameRegisterCharacter, gameUnregisterCharacter, gameRemoveCharacter,
+            gameEditNote, gameViewStats;
     private JMenuItem helpAbout, helpObjectHelp;
     private KeyStroke fileOpenGameAccel, fileCloseAccel, fileSaveGameAccel,
             filePreferencesAccel;
@@ -281,7 +281,8 @@ public class MenuManager {
                     }
                 } else if (cmd.equals("Preferences...")) {
                     // Show preferences dialog
-                    FantastleReboot.getBagOStuff().getPrefsManager().showPrefs();
+                    FantastleReboot.getBagOStuff().getPrefsManager()
+                            .showPrefs();
                 } else if (cmd.equals("New Game")) {
                     // Start a new game
                     final boolean proceed = app.getGameManager().newGame();

@@ -16,7 +16,8 @@ class GameDraw extends JPanel {
     public GameDraw(final DrawGrid grid) {
         super();
         this.drawGrid = grid;
-        final int vSize = FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize();
+        final int vSize = FantastleReboot.getBagOStuff().getPrefsManager()
+                .getViewingWindowSize();
         final int gSize = ImageTransformer.getGraphicSize();
         this.setPreferredSize(new Dimension(vSize * gSize, vSize * gSize));
     }
@@ -26,11 +27,12 @@ class GameDraw extends JPanel {
         super.paintComponent(g);
         if (this.drawGrid != null) {
             final int gSize = ImageTransformer.getGraphicSize();
-            final int vSize = FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize();
+            final int vSize = FantastleReboot.getBagOStuff().getPrefsManager()
+                    .getViewingWindowSize();
             for (int x = 0; x < vSize; x++) {
                 for (int y = 0; y < vSize; y++) {
-                    g.drawImage(this.drawGrid.getImageCell(y, x), x * gSize, y
-                            * gSize, gSize, gSize, null);
+                    g.drawImage(this.drawGrid.getImageCell(y, x), x * gSize,
+                            y * gSize, gSize, gSize, null);
                 }
             }
         }

@@ -58,7 +58,6 @@ public class UTurnTrap extends GenericTrap {
         Messager.showMessage("Your controls are turned around!");
         FantastleReboot.getBagOStuff().getGameManager().activateEffect(
                 EffectConstants.EFFECT_U_TURNED, UTurnTrap.EFFECT_DURATION);
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             MazeObject.playRotatedSound();

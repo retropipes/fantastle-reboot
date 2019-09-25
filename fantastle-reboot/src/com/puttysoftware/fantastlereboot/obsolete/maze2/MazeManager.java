@@ -81,8 +81,8 @@ public final class MazeManager {
             // Not in the game or editor, so abort
             return JOptionPane.NO_OPTION;
         }
-        return CommonDialogs.showYNCConfirmDialog("Do you want to save your "
-                + type + "?", source);
+        return CommonDialogs.showYNCConfirmDialog(
+                "Do you want to save your " + type + "?", source);
     }
 
     public boolean getLoaded() {
@@ -172,16 +172,14 @@ public final class MazeManager {
     }
 
     private static void loadFile(final String filename) {
-        if (!FilenameChecker
-                .isFilenameOK(MazeManager.getNameWithoutExtension(MazeManager
-                        .getFileNameOnly(filename)))) {
-            CommonDialogs
-                    .showErrorDialog(
-                            "The file you selected contains illegal characters in its\n"
-                                    + "name. These characters are not allowed: /?<>\\:|\"\n"
-                                    + "Files named con, nul, or prn are illegal, as are files\n"
-                                    + "named com1 through com9 and lpt1 through lpt9.",
-                            "Load");
+        if (!FilenameChecker.isFilenameOK(MazeManager.getNameWithoutExtension(
+                MazeManager.getFileNameOnly(filename)))) {
+            CommonDialogs.showErrorDialog(
+                    "The file you selected contains illegal characters in its\n"
+                            + "name. These characters are not allowed: /?<>\\:|\"\n"
+                            + "Files named con, nul, or prn are illegal, as are files\n"
+                            + "named com1 through com9 and lpt1 through lpt9.",
+                    "Load");
         } else {
             final GameLoadTask llt = new GameLoadTask(filename);
             llt.start();
@@ -196,25 +194,23 @@ public final class MazeManager {
             returnVal = CommonDialogs.showTextInputDialog("Name?", "Save Game");
             if (returnVal != null) {
                 extension = Extension.getGameExtensionWithPeriod();
-                final File file = new File(MazeManager.getGameDirectory()
-                        + returnVal + extension);
+                final File file = new File(
+                        MazeManager.getGameDirectory() + returnVal + extension);
                 filename = file.getAbsolutePath();
                 if (!FilenameChecker.isFilenameOK(returnVal)) {
-                    CommonDialogs
-                            .showErrorDialog(
-                                    "The file name you entered contains illegal characters.\n"
-                                            + "These characters are not allowed: /?<>\\:|\"\n"
-                                            + "Files named con, nul, or prn are illegal, as are files\n"
-                                            + "named com1 through com9 and lpt1 through lpt9.",
-                                    "Save Game");
+                    CommonDialogs.showErrorDialog(
+                            "The file name you entered contains illegal characters.\n"
+                                    + "These characters are not allowed: /?<>\\:|\"\n"
+                                    + "Files named con, nul, or prn are illegal, as are files\n"
+                                    + "named com1 through com9 and lpt1 through lpt9.",
+                            "Save Game");
                 } else {
                     // Make sure folder exists
                     if (!file.getParentFile().exists()) {
                         final boolean okay = file.getParentFile().mkdirs();
                         if (!okay) {
-                            FantastleReboot.logError(
-                                    new IOException(
-                                            "Cannot create game folder!"));
+                            FantastleReboot.logError(new IOException(
+                                    "Cannot create game folder!"));
                         }
                     }
                     MazeManager.saveFile(filename);

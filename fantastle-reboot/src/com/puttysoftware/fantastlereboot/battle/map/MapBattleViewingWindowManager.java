@@ -70,7 +70,8 @@ public class MapBattleViewingWindowManager {
     }
 
     public static int getViewingWindowSize() {
-        return (FantastleReboot.getBagOStuff().getPrefsManager().getViewingWindowSize() * VIEWING_WINDOW_SIZE_MULTIPLIER)
+        return (FantastleReboot.getBagOStuff().getPrefsManager()
+                .getViewingWindowSize() * VIEWING_WINDOW_SIZE_MULTIPLIER)
                 + VIEWING_WINDOW_SIZE_ADDITION;
     }
 }

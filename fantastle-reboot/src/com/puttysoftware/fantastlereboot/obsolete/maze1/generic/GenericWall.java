@@ -51,7 +51,6 @@ public abstract class GenericWall extends MazeObject {
             final int dirY, final ObjectInventory inv) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         Messager.showMessage("Can't go that way");
-        FantastleReboot.getBagOStuff().getPrefsManager();
         // Play move failed sound, if it's enabled
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

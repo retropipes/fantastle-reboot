@@ -79,23 +79,23 @@ public class WindowTurnBattleGUI {
         this.drain.addActionListener(handler);
         this.item.addActionListener(handler);
         this.done.addActionListener(handler);
-        this.attack.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), "Attack");
+        this.attack.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), "Attack");
         this.attack.getActionMap().put("Attack", handler);
-        this.flee.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_F, 0), "Flee");
+        this.flee.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_F, 0), "Flee");
         this.flee.getActionMap().put("Flee", handler);
-        this.spell.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_C, 0), "Cast Spell");
+        this.spell.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0), "Cast Spell");
         this.spell.getActionMap().put("Cast Spell", handler);
-        this.steal.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_S, 0), "Steal");
+        this.steal.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0), "Steal");
         this.steal.getActionMap().put("Steal", handler);
-        this.drain.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_D, 0), "Drain");
+        this.drain.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0), "Drain");
         this.drain.getActionMap().put("Drain", handler);
-        this.item.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_I, 0), "Use Item");
+        this.item.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0), "Use Item");
         this.item.getActionMap().put("Use Item", handler);
     }
 
@@ -175,8 +175,7 @@ public class WindowTurnBattleGUI {
                 boolean success = true;
                 final String cmd = e.getActionCommand();
                 final WindowTurnBattleGUI wbg = WindowTurnBattleGUI.this;
-                final Battle b = TallerTower.getApplication()
-                        .getBattle();
+                final Battle b = TallerTower.getApplication().getBattle();
                 // Clear Message Area
                 wbg.clearMessageArea();
                 // Display Beginning Stats
@@ -186,12 +185,12 @@ public class WindowTurnBattleGUI {
                 // Do Player Actions
                 if (cmd.equals("Attack") || cmd.equals("a")) {
                     // Attack
-                    success = b
-                            .doPlayerActions(AbstractWindowAIRoutine.ACTION_ATTACK);
+                    success = b.doPlayerActions(
+                            AbstractWindowAIRoutine.ACTION_ATTACK);
                 } else if (cmd.equals("Flee") || cmd.equals("f")) {
                     // Try to Flee
-                    success = b
-                            .doPlayerActions(AbstractWindowAIRoutine.ACTION_FLEE);
+                    success = b.doPlayerActions(
+                            AbstractWindowAIRoutine.ACTION_FLEE);
                     if (success) {
                         // Strip Extra Newline Character
                         wbg.stripExtraNewLine();
@@ -201,8 +200,8 @@ public class WindowTurnBattleGUI {
                         b.doResult();
                         return;
                     } else {
-                        success = b
-                                .doPlayerActions(AbstractWindowAIRoutine.ACTION_ATTACK);
+                        success = b.doPlayerActions(
+                                AbstractWindowAIRoutine.ACTION_ATTACK);
                     }
                 } else if (cmd.equals("Continue")) {
                     // Battle Done
@@ -210,8 +209,8 @@ public class WindowTurnBattleGUI {
                     return;
                 } else if (cmd.equals("Cast Spell") || cmd.equals("c")) {
                     // Cast Spell
-                    success = b
-                            .doPlayerActions(AbstractWindowAIRoutine.ACTION_CAST_SPELL);
+                    success = b.doPlayerActions(
+                            AbstractWindowAIRoutine.ACTION_CAST_SPELL);
                     if (!success) {
                         // Strip Two Extra Newline Characters
                         wbg.stripExtraNewLine();
@@ -223,16 +222,16 @@ public class WindowTurnBattleGUI {
                     }
                 } else if (cmd.equals("Steal") || cmd.equals("s")) {
                     // Steal Money
-                    success = b
-                            .doPlayerActions(AbstractWindowAIRoutine.ACTION_STEAL);
+                    success = b.doPlayerActions(
+                            AbstractWindowAIRoutine.ACTION_STEAL);
                 } else if (cmd.equals("Drain") || cmd.equals("d")) {
                     // Drain Enemy
-                    success = b
-                            .doPlayerActions(AbstractWindowAIRoutine.ACTION_DRAIN);
+                    success = b.doPlayerActions(
+                            AbstractWindowAIRoutine.ACTION_DRAIN);
                 } else if (cmd.equals("Use Item") || cmd.equals("i")) {
                     // Use Item
-                    success = b
-                            .doPlayerActions(AbstractWindowAIRoutine.ACTION_USE_ITEM);
+                    success = b.doPlayerActions(
+                            AbstractWindowAIRoutine.ACTION_USE_ITEM);
                     if (!success) {
                         // Strip Two Extra Newline Characters
                         wbg.stripExtraNewLine();

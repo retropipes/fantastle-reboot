@@ -50,7 +50,6 @@ public class RandomInvisibleOneShotTeleport extends RandomInvisibleTeleport {
         } while (!app.getGameManager().tryUpdatePositionRelative(dr, dc));
         app.getGameManager().updatePositionRelative(dr, dc);
         Messager.showMessage("Invisible Teleport!");
-        FantastleReboot.getBagOStuff().getPrefsManager();
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             this.playMoveSuccessSound();

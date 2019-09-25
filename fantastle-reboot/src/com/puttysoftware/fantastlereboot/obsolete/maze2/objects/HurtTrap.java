@@ -28,7 +28,8 @@ public class HurtTrap extends AbstractTrap {
     }
 
     @Override
-    public void postMoveAction(final boolean ie, final int dirX, final int dirY) {
+    public void postMoveAction(final boolean ie, final int dirX,
+            final int dirY) {
         int damage = PartyManager.getParty().getLeader().getMaximumHP() / 10;
         if (damage < 1) {
             damage = 1;
