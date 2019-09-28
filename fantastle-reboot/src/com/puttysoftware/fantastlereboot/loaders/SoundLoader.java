@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
 
-import com.puttysoftware.audio.wav.WAVFactory;
+import com.puttysoftware.audio.wav.WAVPlayer;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.randomrange.RandomRange;
@@ -45,7 +45,7 @@ public class SoundLoader {
             final String filename = getSoundFilename(sound);
             final URL url = SoundLoader.class
                     .getResource("/assets/sounds/" + filename);
-            WAVFactory.playResource(url);
+            WAVPlayer.play(url);
         } catch (IOException e) {
             FantastleReboot.logError(e);
         }
