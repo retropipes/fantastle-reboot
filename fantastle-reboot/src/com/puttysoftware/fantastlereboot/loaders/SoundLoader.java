@@ -50,17 +50,13 @@ public class SoundLoader {
     }
 
     public static void playSound(final GameSound sound) {
-        try {
-            final String filename = getSoundFilename(sound);
-            final URL url = SoundLoader.class
-                    .getResource("/assets/sounds/" + filename);
-            SoundLoader.playWAV(url);
-        } catch (IOException e) {
-            FantastleReboot.logError(e);
-        }
+        final String filename = getSoundFilename(sound);
+        final URL url = SoundLoader.class
+                .getResource("/assets/sounds/" + filename);
+        SoundLoader.playWAV(url);
     }
 
-    private static void playWAV(final URL soundURL) throws IOException {
+    private static void playWAV(final URL soundURL) {
         new Thread() {
             @Override
             public void run() {
