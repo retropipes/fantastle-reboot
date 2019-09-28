@@ -42,15 +42,12 @@ public class UserInterfaceImageLoader {
     static BufferedImageIcon loadUncached(final String name) {
         try {
             final URL url = UserInterfaceImageLoader.class
-                    .getResource("/assets/images/" + "/ui/" + name);
+                    .getResource("/assets/images/ui/" + name);
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             return icon;
         } catch (final IOException ie) {
-            return null;
-        } catch (final NullPointerException np) {
-            return null;
-        } catch (final IllegalArgumentException ia) {
+            FantastleReboot.logError(ie);
             return null;
         }
     }
@@ -81,8 +78,8 @@ public class UserInterfaceImageLoader {
         if (!ImageCache.cacheCreated) {
             ImageCache.createCache();
         }
-        final GraphicalHelpViewer cv = new GraphicalHelpViewer(ImageCache.images(),
-                ImageCache.names());
+        final GraphicalHelpViewer cv = new GraphicalHelpViewer(
+                ImageCache.images(), ImageCache.names());
         final JFrame viewFrame = new JFrame("Image Cache Viewer");
         viewFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         viewFrame.setLayout(new FlowLayout());
@@ -116,7 +113,8 @@ public class UserInterfaceImageLoader {
                 }
             }
             // Not found: Add to cache
-            BufferedImageIcon newImage = UserInterfaceImageLoader.loadUncached(name);
+            BufferedImageIcon newImage = UserInterfaceImageLoader
+                    .loadUncached(name);
             ImageCacheEntry newEntry = new ImageCacheEntry(newImage, name);
             ImageCache.cache.add(newEntry);
             return newImage;
