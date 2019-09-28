@@ -1327,7 +1327,7 @@ public class MazeEditor {
 
     public void showOutput() {
         final BagOStuff app = FantastleReboot.getBagOStuff();
-        this.outputFrame.setJMenuBar(app.getMenuManager().getMainMenuBar());
+        app.getMenuManager().attachMenus();
         app.getMenuManager().setEditorMenus();
         this.outputFrame.setVisible(true);
     }

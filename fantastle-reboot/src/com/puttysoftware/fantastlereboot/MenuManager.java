@@ -70,8 +70,12 @@ public class MenuManager {
     }
 
     // Methods
-    public JMenuBar getMainMenuBar() {
-        return this.mainMenuBar;
+    public void appendNewMenu(JMenu newMenu) {
+        this.mainMenuBar.add(newMenu);
+    }
+
+    public void attachMenus() {
+        FantastleReboot.attachMenus(this.mainMenuBar);
     }
 
     public void setGameMenus() {

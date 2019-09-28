@@ -299,7 +299,7 @@ public class PreferencesManager implements PreferencesHandler {
         if (FantastleReboot.inFantastleReboot()) {
             final BagOStuff app = FantastleReboot.getBagOStuff();
             app.setInPrefs(true);
-            this.prefFrame.setJMenuBar(app.getMenuManager().getMainMenuBar());
+            app.getMenuManager().attachMenus();
             app.getMenuManager().setPrefMenus();
             this.prefFrame.setVisible(true);
             if (app.getMode() == BagOStuff.STATUS_BATTLE) {

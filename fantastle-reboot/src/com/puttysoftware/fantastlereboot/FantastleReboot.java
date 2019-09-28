@@ -25,6 +25,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -48,7 +49,8 @@ public class FantastleReboot {
     private static final String ERROR_TITLE = "Fantastle Error";
     private static final ErrorLogger debug = new ErrorLogger(
             FantastleReboot.PROGRAM_NAME);
-    private static boolean IN_FANTASTLE_5 = true;
+    private static final NativeIntegration NATIVITY = new NativeIntegration();
+    private static boolean IN_FANTASTLE = true;
     private static final int BATTLE_MAZE_SIZE = 16;
 
     // Methods
@@ -67,11 +69,15 @@ public class FantastleReboot {
     }
 
     public static boolean inFantastleReboot() {
-        return FantastleReboot.IN_FANTASTLE_5;
+        return FantastleReboot.IN_FANTASTLE;
     }
 
     public static void leaveFantastleReboot() {
-        FantastleReboot.IN_FANTASTLE_5 = false;
+        FantastleReboot.IN_FANTASTLE = false;
+    }
+
+    public static void attachMenus(JMenuBar defaultMenuBar) {
+        NATIVITY.setDefaultMenuBar(defaultMenuBar);
     }
 
     public static void main(final String[] args) {
@@ -83,12 +89,12 @@ public class FantastleReboot {
             FantastleReboot.bag = new BagOStuff();
             FantastleReboot.bag.postConstruct();
             // OS Integration
-            NativeIntegration ni = new NativeIntegration();
-            ni.configureLookAndFeel();
-            ni.setOpenFileHandler(FantastleReboot.bag.getMazeManager());
-            ni.setQuitHandler(FantastleReboot.bag.getMazeManager());
-            ni.setPreferencesHandler(FantastleReboot.bag.getPrefsManager());
-            ni.setAboutHandler(FantastleReboot.bag.getAboutDialog());
+            NATIVITY.configureLookAndFeel();
+            NATIVITY.setOpenFileHandler(FantastleReboot.bag.getMazeManager());
+            NATIVITY.setQuitHandler(FantastleReboot.bag.getMazeManager());
+            NATIVITY.setPreferencesHandler(
+                    FantastleReboot.bag.getPrefsManager());
+            NATIVITY.setAboutHandler(FantastleReboot.bag.getAboutDialog());
             // Load stuff
             FantastleReboot.showLoadingScreen();
             // Done loading

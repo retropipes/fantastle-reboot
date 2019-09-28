@@ -1709,7 +1709,7 @@ public class GameManager {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getMenuManager().setGameMenus();
         this.outputFrame.setVisible(true);
-        this.outputFrame.setJMenuBar(app.getMenuManager().getMainMenuBar());
+        app.getMenuManager().attachMenus();
     }
 
     public void hideOutput() {

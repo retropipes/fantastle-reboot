@@ -30,7 +30,7 @@ public class PluginLoader {
                 final MenuManager mm = FantastleReboot.getBagOStuff()
                         .getMenuManager();
                 for (final JMenu newMenu : newMenus) {
-                    mm.getMainMenuBar().add(newMenu);
+                    mm.appendNewMenu(newMenu);
                 }
             } catch (final Exception e) {
                 e.printStackTrace();
