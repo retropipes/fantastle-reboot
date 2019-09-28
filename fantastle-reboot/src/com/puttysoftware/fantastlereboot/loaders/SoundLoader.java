@@ -51,12 +51,8 @@ public class SoundLoader {
 
     public static void playSound(final GameSound sound) {
         final String filename = getSoundFilename(sound);
-        final URL url = SoundLoader.class
+        final URL soundURL = SoundLoader.class
                 .getResource("/assets/sounds/" + filename);
-        SoundLoader.playWAV(url);
-    }
-
-    private static void playWAV(final URL soundURL) {
         new Thread() {
             @Override
             public void run() {
