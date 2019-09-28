@@ -34,6 +34,7 @@ import com.puttysoftware.errorlogger.ErrorLogger;
 import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
+import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.integration.NativeIntegration;
 
 public class FantastleReboot {
@@ -103,8 +104,8 @@ public class FantastleReboot {
         final JFrame waitFrame = new JFrame("Loading...");
         final Container logoContainer = new Container();
         final Container textContainer = new Container();
-        final JLabel waitLogo = new JLabel("", ImageLoader
-                .loadUserInterfaceImage(GameUserInterfaceImage.LOADING),
+        final JLabel waitLogo = new JLabel("",
+                UserInterfaceImageLoader.load(GameUserInterfaceImage.LOADING),
                 SwingConstants.CENTER);
         final JLabel waitLabel = new JLabel("Creating Caches...");
         final JProgressBar waitProgress = new JProgressBar();

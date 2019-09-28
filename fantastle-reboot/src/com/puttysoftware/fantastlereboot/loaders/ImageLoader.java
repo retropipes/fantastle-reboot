@@ -33,7 +33,6 @@ import javax.swing.WindowConstants;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameBossImage;
 import com.puttysoftware.fantastlereboot.assets.GameEffectImage;
-import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObjectList;
 import com.puttysoftware.help.GraphicalHelpViewer;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -45,7 +44,6 @@ public class ImageLoader {
     private static Color REPLACE = null;
     private static String bossFilename;
     private static String[] allEffectFilenames;
-    private static String[] allUserInterfaceFilenames;
     private static Properties fileExtensions;
 
     public static BufferedImageIcon getImage(final String name) {
@@ -191,17 +189,6 @@ public class ImageLoader {
         String imageExt = fileExtensions.getProperty("images");
         return ImageCache
                 .getCachedImage(allEffectFilenames[image.ordinal()] + imageExt);
-    }
-
-    public static BufferedImageIcon loadUserInterfaceImage(
-            GameUserInterfaceImage image) {
-        if (allUserInterfaceFilenames == null) {
-            allUserInterfaceFilenames = DataLoader.loadUserInterfaceImageData();
-        }
-        ImageLoader.ensureFileExtensions();
-        String imageExt = fileExtensions.getProperty("images");
-        return ImageCache.getCachedImage(
-                allUserInterfaceFilenames[image.ordinal()] + imageExt);
     }
 
     private static String normalizeName(final String name) {

@@ -20,7 +20,7 @@ import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
-import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
+import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 
 public class AboutDialog {
     // Fields
@@ -48,8 +48,8 @@ public class AboutDialog {
         final Container buttonPane = new Container();
         final Container logoPane = new Container();
         final JButton aboutOK = new JButton("OK");
-        final JLabel miniLabel = new JLabel("", ImageLoader
-                .loadUserInterfaceImage(GameUserInterfaceImage.MINI_LOGO),
+        final JLabel miniLabel = new JLabel("",
+                UserInterfaceImageLoader.load(GameUserInterfaceImage.MINI_LOGO),
                 SwingConstants.LEFT);
         miniLabel.setLabelFor(null);
         aboutOK.setDefaultCapable(true);

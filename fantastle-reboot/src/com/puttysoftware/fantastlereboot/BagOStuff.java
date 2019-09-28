@@ -32,8 +32,8 @@ import com.puttysoftware.fantastlereboot.game.GameManager;
 import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
-import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.MazeManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObjectList;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -117,8 +117,8 @@ public class BagOStuff {
         final Object extras = PluginLoader.loadPlugin("ExtrasPlugin");
         PluginLoader.addPluginMenus(extras);
         // Cache Micro Logo
-        this.microLogo = ImageLoader
-                .loadUserInterfaceImage(GameUserInterfaceImage.MICRO_LOGO);
+        this.microLogo = UserInterfaceImageLoader
+                .load(GameUserInterfaceImage.MICRO_LOGO);
     }
 
     public void setInGUI(final boolean value) {
@@ -188,8 +188,8 @@ public class BagOStuff {
 
     public void updateMicroLogo() {
         // Cache Micro Logo
-        this.microLogo = ImageLoader
-                .loadUserInterfaceImage(GameUserInterfaceImage.MICRO_LOGO);
+        this.microLogo = UserInterfaceImageLoader
+                .load(GameUserInterfaceImage.MICRO_LOGO);
     }
 
     public MazeEditor getEditor() {
