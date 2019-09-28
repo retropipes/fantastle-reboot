@@ -14,12 +14,12 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 
-public abstract class WAVPlayer {
+public class WAVPlayer {
     // Constants
-    protected static final int EXTERNAL_BUFFER_SIZE = 4096; // 4Kb
+    private static final int EXTERNAL_BUFFER_SIZE = 4096; // 4Kb
 
     // Constructor
-    protected WAVPlayer() {
+    private WAVPlayer() {
         super();
     }
 
