@@ -52,7 +52,8 @@ public class BagOStuff {
     private GUIManager guiMgr;
     private final MazeObjectList objects;
     private final CombatItemList combatItems;
-    private Shop weapons, armor, healer, bank, regenerator, spells, items;
+    private Shop weapons, armor, healer, bank, regenerator, spells, items,
+    socks, enhancements, faiths;
     private BufferedImageIcon microLogo;
     private WindowTurnBattleLogic windowTurnBattle;
     private WindowTimeBattleLogic windowTimeBattle;
@@ -113,6 +114,9 @@ public class BagOStuff {
         this.regenerator = new Shop(ShopTypes.REGENERATOR);
         this.spells = new Shop(ShopTypes.SPELLS);
         this.items = new Shop(ShopTypes.ITEMS);
+        this.socks = new Shop(ShopTypes.SOCKS);
+        this.enhancements = new Shop(ShopTypes.ENHANCEMENTS);
+        this.faiths = new Shop(ShopTypes.FAITH_POWERS);
         // Attempt to load extras
         final Object extras = PluginLoader.loadPlugin("ExtrasPlugin");
         PluginLoader.addPluginMenus(extras);
@@ -198,6 +202,34 @@ public class BagOStuff {
 
     public AboutDialog getAboutDialog() {
         return this.about;
+    }
+
+    public Shop getShop(final int shopType) {
+        switch (shopType) {
+        case ShopTypes.ARMOR:
+            return this.armor;
+        case ShopTypes.BANK:
+            return this.bank;
+        case ShopTypes.ENHANCEMENTS:
+            return this.enhancements;
+        case ShopTypes.FAITH_POWERS:
+            return this.faiths;
+        case ShopTypes.HEALER:
+            return this.healer;
+        case ShopTypes.ITEMS:
+            return this.items;
+        case ShopTypes.REGENERATOR:
+            return this.regenerator;
+        case ShopTypes.SOCKS:
+            return this.socks;
+        case ShopTypes.SPELLS:
+            return this.spells;
+        case ShopTypes.WEAPONS:
+            return this.weapons;
+        default:
+            // Invalid shop type
+            return null;
+        }
     }
 
     public Shop getArmor() {

@@ -9,57 +9,26 @@ import javax.swing.JFrame;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.GUIManager;
 import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
 import com.puttysoftware.fantastlereboot.battle.Battle;
-import com.puttysoftware.fantastlereboot.battle.map.time.MapTimeBattleLogic;
-import com.puttysoftware.fantastlereboot.battle.map.turn.MapTurnBattleLogic;
-import com.puttysoftware.fantastlereboot.battle.window.time.WindowTimeBattleLogic;
-import com.puttysoftware.fantastlereboot.battle.window.turn.WindowTurnBattleLogic;
 import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.items.Shop;
-import com.puttysoftware.fantastlereboot.items.ShopTypes;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeManager;
 import com.puttysoftware.fantastlereboot.utilities.MazeObjectList;
 import com.puttysoftware.images.BufferedImageIcon;
-import com.puttysoftware.updater.ProductData;
 
 public final class Application {
     // Fields
-    private AboutDialog about;
     private GameLogicManager gameMgr;
     private MazeManager mazeMgr;
     private MenuManager menuMgr;
     private ObjectHelpManager oHelpMgr;
     private GUIManager guiMgr;
     private final MazeObjectList objects;
-    private Shop weapons, armor, healer, bank, regenerator, spells, items,
-            socks, enhancements, faiths;
-    private WindowTurnBattleLogic windowTurnBattle;
-    private WindowTimeBattleLogic windowTimeBattle;
-    private MapTurnBattleLogic mapTurnBattle;
-    private MapTimeBattleLogic mapTimeBattle;
     private int currentMode;
     private int formerMode;
-    private static final String UPDATE_SITE = "http://update.puttysoftware.com/tallertower/";
-    private static final String NEW_VERSION_SITE = "http://www.puttysoftware.com/tallertower/";
-    private static final String PRODUCT_NAME = "TallerTower";
-    private static final String COMPANY_NAME = "Putty Software";
-    private static final String RDNS_COMPANY_NAME = "com.puttysoftware.tallertower";
-    private static final ProductData pd = new ProductData(
-            Application.UPDATE_SITE, Application.UPDATE_SITE,
-            Application.NEW_VERSION_SITE, Application.RDNS_COMPANY_NAME,
-            Application.COMPANY_NAME, Application.PRODUCT_NAME,
-            Application.VERSION_MAJOR, Application.VERSION_MINOR,
-            Application.VERSION_BUGFIX, Application.VERSION_CODE,
-            Application.VERSION_PRERELEASE);
-    private static final int VERSION_MAJOR = 5;
-    private static final int VERSION_MINOR = 1;
-    private static final int VERSION_BUGFIX = 0;
-    private static final int VERSION_CODE = ProductData.CODE_BETA;
-    private static final int VERSION_PRERELEASE = 2;
     public static final int STATUS_GUI = 0;
     public static final int STATUS_GAME = 1;
     public static final int STATUS_BATTLE = 2;
@@ -76,24 +45,9 @@ public final class Application {
     // Methods
     void postConstruct() {
         // Create Managers
-        this.about = new AboutDialog(Application.getVersionString());
         this.guiMgr = new GUIManager();
         this.menuMgr = new MenuManager();
         this.oHelpMgr = new ObjectHelpManager();
-        this.windowTurnBattle = new WindowTurnBattleLogic();
-        this.windowTimeBattle = new WindowTimeBattleLogic();
-        this.mapTurnBattle = new MapTurnBattleLogic();
-        this.mapTimeBattle = new MapTimeBattleLogic();
-        this.weapons = new Shop(ShopTypes.WEAPONS);
-        this.armor = new Shop(ShopTypes.ARMOR);
-        this.healer = new Shop(ShopTypes.HEALER);
-        this.bank = new Shop(ShopTypes.BANK);
-        this.regenerator = new Shop(ShopTypes.REGENERATOR);
-        this.spells = new Shop(ShopTypes.SPELLS);
-        this.items = new Shop(ShopTypes.ITEMS);
-        this.socks = new Shop(ShopTypes.SOCKS);
-        this.enhancements = new Shop(ShopTypes.ENHANCEMENTS);
-        this.faiths = new Shop(ShopTypes.FAITH_POWERS);
         // Cache Logo
         this.guiMgr.updateLogo();
     }
@@ -137,8 +91,9 @@ public final class Application {
         return this.menuMgr;
     }
 
+    @SuppressWarnings("static-method")
     public GUIManager getGUIManager() {
-        return this.guiMgr;
+        return FantastleReboot.getBagOStuff().getGUIManager();
     }
 
     public GameLogicManager getGameManager() {
@@ -159,28 +114,8 @@ public final class Application {
         return this.oHelpMgr;
     }
 
-    public AboutDialog getAboutDialog() {
-        return this.about;
-    }
-
     public static BufferedImageIcon getMicroLogo() {
         return UserInterfaceImageLoader.load(GameUserInterfaceImage.MICRO_LOGO);
-    }
-
-    public static void playLogoSound() {
-        SoundLoader.playSound(GameSound.LOGO);
-    }
-
-    private static String getVersionString() {
-        final int code = pd.getCodeVersion();
-        String rt;
-        if (code < ProductData.CODE_STABLE) {
-            rt = "-beta" + Application.VERSION_PRERELEASE;
-        } else {
-            rt = "";
-        }
-        return Application.VERSION_MAJOR + "." + Application.VERSION_MINOR + "."
-                + Application.VERSION_BUGFIX + rt;
     }
 
     public JFrame getOutputFrame() {
@@ -208,56 +143,16 @@ public final class Application {
 
     public Shop getGenericShop(final int shopType) {
         this.getGameManager().stopMovement();
-        switch (shopType) {
-        case ShopTypes.ARMOR:
-            return this.armor;
-        case ShopTypes.BANK:
-            return this.bank;
-        case ShopTypes.ENHANCEMENTS:
-            return this.enhancements;
-        case ShopTypes.FAITH_POWERS:
-            return this.faiths;
-        case ShopTypes.HEALER:
-            return this.healer;
-        case ShopTypes.ITEMS:
-            return this.items;
-        case ShopTypes.REGENERATOR:
-            return this.regenerator;
-        case ShopTypes.SOCKS:
-            return this.socks;
-        case ShopTypes.SPELLS:
-            return this.spells;
-        case ShopTypes.WEAPONS:
-            return this.weapons;
-        default:
-            // Invalid shop type
-            return null;
-        }
+        return FantastleReboot.getBagOStuff().getShop(shopType);
     }
 
+    @SuppressWarnings("static-method")
     public Battle getBattle() {
-        if (FantastleReboot.getBagOStuff().getPrefsManager()
-                .useMapBattleEngine()) {
-            if (FantastleReboot.getBagOStuff().getPrefsManager()
-                    .useTimeBattleEngine()) {
-                return this.mapTimeBattle;
-            } else {
-                return this.mapTurnBattle;
-            }
-        } else {
-            if (FantastleReboot.getBagOStuff().getPrefsManager()
-                    .useTimeBattleEngine()) {
-                return this.windowTimeBattle;
-            } else {
-                return this.windowTurnBattle;
-            }
-        }
+        return FantastleReboot.getBagOStuff().getBattle();
     }
 
+    @SuppressWarnings("static-method")
     public void resetBattleGUI() {
-        this.mapTimeBattle.resetGUI();
-        this.windowTimeBattle.resetGUI();
-        this.mapTurnBattle.resetGUI();
-        this.windowTurnBattle.resetGUI();
+        FantastleReboot.getBagOStuff().resetBattleGUI();
     }
 }

@@ -276,9 +276,7 @@ public class MenuManager {
                     }
                 } else if (cmd.equals("Exit")) {
                     // Exit program
-                    if (app.getGUIManager().quitHandler()) {
-                        System.exit(0);
-                    }
+                    System.exit(0);
                 } else if (cmd.equals("Preferences...")) {
                     // Show preferences dialog
                     FantastleReboot.getBagOStuff().getPrefsManager()
@@ -315,8 +313,6 @@ public class MenuManager {
                 } else if (cmd.equals("View Statistics...")) {
                     // View Statistics
                     StatisticsViewer.viewStatistics();
-                } else if (cmd.equals("About TallerTower...")) {
-                    app.getAboutDialog().showAboutDialog();
                 } else if (cmd.equals("TallerTower Object Help")) {
                     app.getObjectHelpManager().showHelp();
                 }
