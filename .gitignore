@@ -27,4 +27,3 @@ fantastle-reboot/bin/
 fantastle-reboot/target/
 
 # Exclusions
-!fantastle-reboot/lib/*.jar
