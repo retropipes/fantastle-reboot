@@ -20,7 +20,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze1.objects;
 
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericGround;
 
 public class Ice extends GenericGround {
@@ -45,7 +45,7 @@ public class Ice extends GenericGround {
 
     @Override
     public void playMoveSuccessSound() {
-        SoundLoader.playSound(GameSound.WALK_ICE);
+        SoundPlayer.playSound(GameSound.WALK_ICE);
     }
 
     @Override

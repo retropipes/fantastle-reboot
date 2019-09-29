@@ -32,7 +32,7 @@ import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
@@ -136,7 +136,7 @@ public class MapTimeBattleLogic extends Battle {
         // Start Battle
         this.battleGUI.getViewManager().setViewingWindowCenterX(this.me.getY());
         this.battleGUI.getViewManager().setViewingWindowCenterY(this.me.getX());
-        SoundLoader.playSound(GameSound.DRAW_SWORD);
+        SoundPlayer.playSound(GameSound.DRAW_SWORD);
         this.showBattle();
         this.updateStatsAndEffects();
         this.redrawBattle();
@@ -271,15 +271,15 @@ public class MapTimeBattleLogic extends Battle {
             if (activeDE.weaponMissed()) {
                 displayDamageString = activeName + " tries to hit " + enemyName
                         + ", but MISSES!";
-                SoundLoader.playSound(GameSound.MISSED);
+                SoundPlayer.playSound(GameSound.MISSED);
             } else if (activeDE.enemyDodged()) {
                 displayDamageString = activeName + " tries to hit " + enemyName
                         + ", but " + enemyName + " AVOIDS the attack!";
-                SoundLoader.playSound(GameSound.MISSED);
+                SoundPlayer.playSound(GameSound.MISSED);
             } else {
                 displayDamageString = activeName + " tries to hit " + enemyName
                         + ", but the attack is BLOCKED!";
-                SoundLoader.playSound(GameSound.MISSED);
+                SoundPlayer.playSound(GameSound.MISSED);
             }
         } else if (this.damage < 0) {
             damageString = Integer.toString(-this.damage);
@@ -287,34 +287,34 @@ public class MapTimeBattleLogic extends Battle {
             if (activeDE.weaponCrit() && activeDE.weaponPierce()) {
                 displayDamagePrefix = "PIERCING CRITICAL HIT! ";
                 if (isParty) {
-                    SoundLoader.playSound(GameSound.PARTY_COUNTER);
+                    SoundPlayer.playSound(GameSound.PARTY_COUNTER);
                 } else {
-                    SoundLoader.playSound(GameSound.MONSTER_COUNTER);
+                    SoundPlayer.playSound(GameSound.MONSTER_COUNTER);
                 }
-                SoundLoader.playSound(GameSound.CRITICAL);
+                SoundPlayer.playSound(GameSound.CRITICAL);
             } else if (activeDE.weaponCrit()) {
                 displayDamagePrefix = "CRITICAL HIT! ";
-                SoundLoader.playSound(GameSound.CRITICAL);
+                SoundPlayer.playSound(GameSound.CRITICAL);
             } else if (activeDE.weaponPierce()) {
                 displayDamagePrefix = "PIERCING HIT! ";
                 if (isParty) {
-                    SoundLoader.playSound(GameSound.PARTY_COUNTER);
+                    SoundPlayer.playSound(GameSound.PARTY_COUNTER);
                 } else {
-                    SoundLoader.playSound(GameSound.MONSTER_COUNTER);
+                    SoundPlayer.playSound(GameSound.MONSTER_COUNTER);
                 }
             }
             displayDamageString = displayDamagePrefix + activeName
                     + " tries to hit " + enemyName + ", but " + enemyName
                     + " RIPOSTES for " + damageString + " damage!";
             if (isParty) {
-                SoundLoader.playSound(GameSound.PARTY_COUNTER);
+                SoundPlayer.playSound(GameSound.PARTY_COUNTER);
             } else {
-                SoundLoader.playSound(GameSound.MONSTER_COUNTER);
+                SoundPlayer.playSound(GameSound.MONSTER_COUNTER);
             }
         } else {
             String displayDamagePrefix = "";
             if (activeDE.weaponFumble()) {
-                SoundLoader.playSound(GameSound.FUMBLE);
+                SoundPlayer.playSound(GameSound.FUMBLE);
                 displayDamageString = "FUMBLE! " + activeName
                         + " drops their weapon on themselves, doing "
                         + damageString + " damage!";
@@ -322,29 +322,29 @@ public class MapTimeBattleLogic extends Battle {
                 if (activeDE.weaponCrit() && activeDE.weaponPierce()) {
                     displayDamagePrefix = "PIERCING CRITICAL HIT! ";
                     if (isParty) {
-                        SoundLoader.playSound(GameSound.PARTY_COUNTER);
+                        SoundPlayer.playSound(GameSound.PARTY_COUNTER);
                     } else {
-                        SoundLoader.playSound(GameSound.MONSTER_COUNTER);
+                        SoundPlayer.playSound(GameSound.MONSTER_COUNTER);
                     }
-                    SoundLoader.playSound(GameSound.CRITICAL);
+                    SoundPlayer.playSound(GameSound.CRITICAL);
                 } else if (activeDE.weaponCrit()) {
                     displayDamagePrefix = "CRITICAL HIT! ";
-                    SoundLoader.playSound(GameSound.CRITICAL);
+                    SoundPlayer.playSound(GameSound.CRITICAL);
                 } else if (activeDE.weaponPierce()) {
                     displayDamagePrefix = "PIERCING HIT! ";
                     if (isParty) {
-                        SoundLoader.playSound(GameSound.PARTY_COUNTER);
+                        SoundPlayer.playSound(GameSound.PARTY_COUNTER);
                     } else {
-                        SoundLoader.playSound(GameSound.MONSTER_COUNTER);
+                        SoundPlayer.playSound(GameSound.MONSTER_COUNTER);
                     }
                 }
                 displayDamageString = displayDamagePrefix + activeName
                         + " hits " + enemyName + " for " + damageString
                         + " damage!";
                 if (isParty) {
-                    SoundLoader.playSound(GameSound.PARTY_HIT);
+                    SoundPlayer.playSound(GameSound.PARTY_HIT);
                 } else {
-                    SoundLoader.playSound(GameSound.MONSTER_HIT);
+                    SoundPlayer.playSound(GameSound.MONSTER_HIT);
                 }
             }
         }
@@ -746,7 +746,7 @@ public class MapTimeBattleLogic extends Battle {
                 active.setSavedObject(
                         m.getCell(px, py, 0, MazeConstants.LAYER_OBJECT));
                 m.setCell(active, px, py, 0, MazeConstants.LAYER_OBJECT);
-                SoundLoader.playSound(GameSound.WALK);
+                SoundPlayer.playSound(GameSound.WALK);
             } else {
                 if (next instanceof BattleCharacter) {
                     // Attack
@@ -771,7 +771,7 @@ public class MapTimeBattleLogic extends Battle {
                             && theEnemy.getTeamID() == Creature.TEAM_PARTY
                             && theEnemy.getTemplate().getCurrentHP() <= theEnemy
                                     .getTemplate().getMaximumHP() * 3 / 10) {
-                        SoundLoader.playSound(GameSound.LOW_HEALTH);
+                        SoundPlayer.playSound(GameSound.LOW_HEALTH);
                     }
                     // Handle enemy death
                     if (!theEnemy.getTemplate().isAlive()) {
@@ -809,7 +809,7 @@ public class MapTimeBattleLogic extends Battle {
         } else {
             // Confirm Flee
             if (!active.getTemplate().hasMapAI()) {
-                SoundLoader.playSound(GameSound.SPECIAL);
+                SoundPlayer.playSound(GameSound.SPECIAL);
                 final int confirm = CommonDialogs
                         .showConfirmDialog("Embrace Cowardice?", "Battle");
                 if (confirm != JOptionPane.YES_OPTION) {
@@ -1254,7 +1254,7 @@ public class MapTimeBattleLogic extends Battle {
                         && active.getTeamID() == Creature.TEAM_PARTY
                         && active.getCurrentHP() <= active.getMaximumHP() * 3
                                 / 10) {
-                    SoundLoader.playSound(GameSound.LOW_HEALTH);
+                    SoundPlayer.playSound(GameSound.LOW_HEALTH);
                 }
                 // Cull Inactive Effects
                 active.cullInactiveEffects();
@@ -1299,7 +1299,7 @@ public class MapTimeBattleLogic extends Battle {
                         && active.getTeamID() == Creature.TEAM_PARTY
                         && active.getCurrentHP() <= active.getMaximumHP() * 3
                                 / 10) {
-                    SoundLoader.playSound(GameSound.LOW_HEALTH);
+                    SoundPlayer.playSound(GameSound.LOW_HEALTH);
                 }
                 // Cull Inactive Effects
                 active.cullInactiveEffects();
@@ -1382,16 +1382,16 @@ public class MapTimeBattleLogic extends Battle {
                 if (this.result == BattleResults.WON
                         || this.result == BattleResults.PERFECT) {
                     this.setStatusMessage("You defeated the Boss!");
-                    SoundLoader.playSound(GameSound.VICTORY);
+                    SoundPlayer.playSound(GameSound.VICTORY);
                     rewardsFlag = true;
                 } else if (this.result == BattleResults.LOST) {
                     this.setStatusMessage("The Boss defeated you...");
-                    SoundLoader.playSound(GameSound.GAME_OVER);
+                    SoundPlayer.playSound(GameSound.GAME_OVER);
                     PartyManager.getParty().getLeader().onDeath(-10);
                 } else if (this.result == BattleResults.ANNIHILATED) {
                     this.setStatusMessage(
                             "The Boss defeated you without suffering damage... you were annihilated!");
-                    SoundLoader.playSound(GameSound.GAME_OVER);
+                    SoundPlayer.playSound(GameSound.GAME_OVER);
                     PartyManager.getParty().getLeader().onDeath(-20);
                 } else if (this.result == BattleResults.DRAW) {
                     this.setStatusMessage(
@@ -1407,7 +1407,7 @@ public class MapTimeBattleLogic extends Battle {
                 }
             } else {
                 if (this.result == BattleResults.WON) {
-                    SoundLoader.playSound(GameSound.VICTORY);
+                    SoundPlayer.playSound(GameSound.VICTORY);
                     CommonDialogs.showTitledDialog("The party is victorious!",
                             "Victory!");
                     PartyManager.getParty().getLeader()
@@ -1471,7 +1471,7 @@ public class MapTimeBattleLogic extends Battle {
                         gui.turnEventHandlersOff();
                         gui.updatePlayerActionBarValue();
                         if (gui.isPlayerActionBarFull()) {
-                            SoundLoader.playSound(GameSound.PLAYER_UP);
+                            SoundPlayer.playSound(GameSound.PLAYER_UP);
                             gui.turnEventHandlersOn();
                         }
                     } else {

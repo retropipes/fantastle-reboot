@@ -24,7 +24,7 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericTrap;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
 
@@ -66,7 +66,7 @@ public class ConfusionTrap extends GenericTrap {
 
     @Override
     public void playMoveSuccessSound() {
-        SoundLoader.playSound(GameSound.CONFUSED);
+        SoundPlayer.playSound(GameSound.CONFUSED);
     }
 
     @Override

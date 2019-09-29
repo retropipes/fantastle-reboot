@@ -6,7 +6,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.obsolete.maze2.abc;
 
 import com.puttysoftware.fantastlereboot.assets.GameSound;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
@@ -76,7 +76,7 @@ public abstract class AbstractTeleport extends AbstractMazeObject {
         final Application app = TallerTower.getApplication();
         app.getGameManager().updatePositionAbsolute(this.getDestinationRow(),
                 this.getDestinationColumn(), this.getDestinationFloor());
-        SoundLoader.playSound(GameSound.TELEPORT);
+        SoundPlayer.playSound(GameSound.TELEPORT);
     }
 
     @Override

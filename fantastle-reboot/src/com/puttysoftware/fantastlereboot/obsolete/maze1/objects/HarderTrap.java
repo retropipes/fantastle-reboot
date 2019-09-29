@@ -24,7 +24,7 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericTrap;
 
 public class HarderTrap extends GenericTrap {
@@ -55,7 +55,7 @@ public class HarderTrap extends GenericTrap {
         PartyManager.getParty().incrementMonsterLevel();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-            SoundLoader.playSound(GameSound.HARDER);
+            SoundPlayer.playSound(GameSound.HARDER);
         }
     }
 

@@ -12,7 +12,7 @@ import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 
 public class CombatItemChucker {
@@ -38,7 +38,7 @@ public class CombatItemChucker {
             final Effect e = used.getEffect();
             // Play item's associated sound effect, if it has one
             final GameSound snd = used.getSound();
-            SoundLoader.playSound(snd);
+            SoundPlayer.playSound(snd);
             e.resetEffect();
             final Creature target = CombatItemChucker.resolveTarget(used,
                     user.getTeamID());
@@ -84,7 +84,7 @@ public class CombatItemChucker {
                     .generateCombatUsableDisplayStringArray();
             if (names != null && displayNames != null) {
                 // Play using item sound
-                SoundLoader.playSound(GameSound.PARTY_SPELL);
+                SoundPlayer.playSound(GameSound.PARTY_SPELL);
                 String dialogResult = null;
                 dialogResult = CommonDialogs.showInputDialog(
                         "Select an Item to Use", "Select Item", displayNames,

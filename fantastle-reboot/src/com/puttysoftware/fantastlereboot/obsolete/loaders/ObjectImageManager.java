@@ -12,8 +12,8 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import com.puttysoftware.fantastlereboot.loaders.ColorShader;
-import com.puttysoftware.fantastlereboot.loaders.ImageShader;
+import com.puttysoftware.diane.loaders.ColorShader;
+import com.puttysoftware.diane.loaders.ImageShader;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class ObjectImageManager {

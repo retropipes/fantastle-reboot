@@ -24,7 +24,7 @@ import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericTeleport;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
 
@@ -74,7 +74,7 @@ public class OneShotControllableTeleport extends GenericTeleport {
 
     @Override
     public void playMoveSuccessSound() {
-        SoundLoader.playSound(GameSound.WALK);
+        SoundPlayer.playSound(GameSound.WALK);
     }
 
     @Override

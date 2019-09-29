@@ -9,7 +9,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.effects.EffectConstants;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractTrap;
@@ -37,7 +37,7 @@ public class ConfusionTrap extends AbstractTrap {
         bag.showMessage("You are confused!");
         TallerTower.getApplication().getGameManager()
                 .activateEffect(EffectConstants.EFFECT_CONFUSED);
-        SoundLoader.playSound(GameSound.CONFUSED);
+        SoundPlayer.playSound(GameSound.CONFUSED);
     }
 
     @Override

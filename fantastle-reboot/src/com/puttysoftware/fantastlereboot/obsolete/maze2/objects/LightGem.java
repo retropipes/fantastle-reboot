@@ -10,7 +10,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.game.GameLogicManager;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
@@ -50,7 +50,7 @@ public class LightGem extends AbstractMPModifier {
         bag.showMessage("Your power gathers!");
         TallerTower.getApplication().getGameManager()
                 .activateEffect(EffectConstants.EFFECT_POWER_GATHER);
-        SoundLoader.playSound(GameSound.FOCUS);
+        SoundPlayer.playSound(GameSound.FOCUS);
         GameLogicManager.decay();
     }
 

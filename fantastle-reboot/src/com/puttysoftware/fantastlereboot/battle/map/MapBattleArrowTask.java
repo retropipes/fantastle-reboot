@@ -9,7 +9,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
@@ -61,7 +61,7 @@ public class MapBattleArrowTask extends Thread {
             final int newDir = DirectionResolver.resolveRelativeDirection(incX,
                     incY);
             a.setDirection(newDir);
-            SoundLoader.playSound(GameSound.ARROW_SHOOT);
+            SoundPlayer.playSound(GameSound.ARROW_SHOOT);
             while (res) {
                 res = o.arrowHitBattleCheck();
                 if (!res) {
@@ -111,7 +111,7 @@ public class MapBattleArrowTask extends Thread {
                 }
             }
             // Arrow has died
-            SoundLoader.playSound(GameSound.ARROW_DIE);
+            SoundPlayer.playSound(GameSound.ARROW_DIE);
             app.getBattle().arrowDone(hit);
         } catch (final Throwable t) {
             FantastleReboot.logError(t);

@@ -58,6 +58,10 @@ public class FantastleReboot {
         return FantastleReboot.bag;
     }
 
+    public static ErrorLogger getErrorHandler() {
+        return FantastleReboot.debug;
+    }
+
     public static void logError(final Throwable t) {
         CommonDialogs.showErrorDialog(FantastleReboot.ERROR_MESSAGE,
                 FantastleReboot.ERROR_TITLE);

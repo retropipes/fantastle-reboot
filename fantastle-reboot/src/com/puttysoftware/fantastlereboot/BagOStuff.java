@@ -33,7 +33,7 @@ import com.puttysoftware.fantastlereboot.game.GameManager;
 import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.MazeManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObjectList;
@@ -295,19 +295,19 @@ public class BagOStuff {
 
     public void playHighScoreSound() {
         if (this.prefsMgr.getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
-            SoundLoader.playSound(GameSound.HIGH_SCORE);
+            SoundPlayer.playSound(GameSound.HIGH_SCORE);
         }
     }
 
     public void playLogoSound() {
         if (this.prefsMgr.getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
-            SoundLoader.playSound(GameSound.LOGO);
+            SoundPlayer.playSound(GameSound.LOGO);
         }
     }
 
     public void playStartSound() {
         if (this.prefsMgr.getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
-            SoundLoader.playSound(GameSound.GET_READY);
+            SoundPlayer.playSound(GameSound.GET_READY);
         }
     }
 

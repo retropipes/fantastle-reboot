@@ -23,7 +23,7 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericTrap;
 import com.puttysoftware.randomrange.RandomRange;
 
@@ -67,7 +67,7 @@ public class DamageTrap extends GenericTrap {
                 .doDamage(this.damageDealt.generate());
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-            SoundLoader.playSound(GameSound.BARRIER);
+            SoundPlayer.playSound(GameSound.BARRIER);
         }
         FantastleReboot.getBagOStuff().getGameManager().decay();
     }

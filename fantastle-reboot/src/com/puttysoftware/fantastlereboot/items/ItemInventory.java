@@ -14,7 +14,7 @@ import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.FormatConstants;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
@@ -102,7 +102,7 @@ public class ItemInventory {
             this.equipment[ei.getSecondSlotUsed()] = ei;
         }
         if (playSound) {
-            SoundLoader.playSound(GameSound.EQUIP);
+            SoundPlayer.playSound(GameSound.EQUIP);
         }
     }
 
@@ -119,7 +119,7 @@ public class ItemInventory {
         // Equip it in second slot
         this.equipment[ei.getSecondSlotUsed()] = ei;
         if (playSound) {
-            SoundLoader.playSound(GameSound.EQUIP);
+            SoundPlayer.playSound(GameSound.EQUIP);
         }
     }
 
@@ -162,7 +162,7 @@ public class ItemInventory {
             this.equipment[ei.getFirstSlotUsed()] = ei;
         }
         if (playSound) {
-            SoundLoader.playSound(GameSound.EQUIP);
+            SoundPlayer.playSound(GameSound.EQUIP);
         }
     }
 

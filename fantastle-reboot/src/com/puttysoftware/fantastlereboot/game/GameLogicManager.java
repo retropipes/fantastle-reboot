@@ -14,7 +14,7 @@ import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.GenerateTask;
@@ -227,12 +227,12 @@ public final class GameLogicManager {
             final String gameName1 = target1.getGameName();
             final String gameName2 = target2.getGameName();
             bag.showMessage(gameName2 + " on " + gameName1);
-            SoundLoader.playSound(GameSound.IDENTIFY);
+            SoundPlayer.playSound(GameSound.IDENTIFY);
         } catch (final ArrayIndexOutOfBoundsException ae) {
             final EmptyVoid ev = new EmptyVoid();
             ev.determineCurrentAppearance(destX, destY, destZ);
             bag.showMessage(ev.getGameName());
-            SoundLoader.playSound(GameSound.IDENTIFY);
+            SoundPlayer.playSound(GameSound.IDENTIFY);
         }
     }
 

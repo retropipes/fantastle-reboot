@@ -24,7 +24,7 @@ import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericField;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
@@ -91,7 +91,7 @@ public class Water extends GenericField {
 
     @Override
     public void playMoveSuccessSound() {
-        SoundLoader.playSound(GameSound.WALK_WATER);
+        SoundPlayer.playSound(GameSound.WALK_WATER);
     }
 
     @Override

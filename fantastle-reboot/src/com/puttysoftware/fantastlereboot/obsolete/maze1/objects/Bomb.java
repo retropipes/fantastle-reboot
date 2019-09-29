@@ -22,7 +22,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericUsableObject;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
@@ -89,6 +89,6 @@ public class Bomb extends GenericUsableObject {
 
     @Override
     public void playUseSound() {
-        SoundLoader.playSound(GameSound.EXPLODE);
+        SoundPlayer.playSound(GameSound.EXPLODE);
     }
 }

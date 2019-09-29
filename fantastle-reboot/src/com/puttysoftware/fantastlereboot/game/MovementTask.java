@@ -12,7 +12,7 @@ import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
@@ -350,7 +350,7 @@ final class MovementTask extends Thread {
 
     private static void checkGameOver() {
         if (!PartyManager.getParty().isAlive()) {
-            SoundLoader.playSound(GameSound.GAME_OVER);
+            SoundPlayer.playSound(GameSound.GAME_OVER);
             CommonDialogs.showDialog(
                     "You have died! You lose 10% of your experience and all your Gold, but you are healed fully.");
             PartyManager.getParty().getLeader().onDeath(-10);

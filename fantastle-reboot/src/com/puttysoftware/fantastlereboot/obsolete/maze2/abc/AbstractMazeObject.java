@@ -11,7 +11,7 @@ import java.util.BitSet;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageManager;
@@ -200,7 +200,7 @@ public abstract class AbstractMazeObject implements RandomGenerationRule {
      */
     public void moveFailedAction(final boolean ie, final int dirX,
             final int dirY) {
-        SoundLoader.playSound(GameSound.WALK_FAILED);
+        SoundPlayer.playSound(GameSound.WALK_FAILED);
         final BagOStuff bag = FantastleReboot.getBagOStuff();
         bag.showMessage("Can't go that way");
     }

@@ -22,7 +22,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericWall;
 
 public class DamageableWall extends GenericWall {
@@ -73,7 +73,7 @@ public class DamageableWall extends GenericWall {
 
     @Override
     public void playMoveFailedSound() {
-        SoundLoader.playSound(GameSound.CRACK);
+        SoundPlayer.playSound(GameSound.CRACK);
     }
 
     @Override

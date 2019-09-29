@@ -27,7 +27,7 @@ import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.utilities.DirectionConstants;
 import com.puttysoftware.fantastlereboot.utilities.FormatConstants;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
@@ -750,27 +750,27 @@ public abstract class MazeObject implements UniqueID5 {
     }
 
     public void playMoveFailedSound() {
-        SoundLoader.playSound(GameSound.OOF);
+        SoundPlayer.playSound(GameSound.OOF);
     }
 
     public void playMoveSuccessSound() {
-        SoundLoader.playSound(GameSound.WALK);
+        SoundPlayer.playSound(GameSound.WALK);
     }
 
     public final static void playPushSuccessSound() {
-        SoundLoader.playSound(GameSound.PUSH);
+        SoundPlayer.playSound(GameSound.PUSH);
     }
 
     public final static void playPushFailedSound() {
-        SoundLoader.playSound(GameSound.PUSH_PULL_FAILED);
+        SoundPlayer.playSound(GameSound.PUSH_PULL_FAILED);
     }
 
     public final static void playPullFailedSound() {
-        SoundLoader.playSound(GameSound.PUSH_PULL_FAILED);
+        SoundPlayer.playSound(GameSound.PUSH_PULL_FAILED);
     }
 
     public final static void playPullSuccessSound() {
-        SoundLoader.playSound(GameSound.PULL);
+        SoundPlayer.playSound(GameSound.PULL);
     }
 
     public void playUseSound() {
@@ -782,51 +782,51 @@ public abstract class MazeObject implements UniqueID5 {
     }
 
     public final static void playIdentifySound() {
-        SoundLoader.playSound(GameSound.IDENTIFY);
+        SoundPlayer.playSound(GameSound.IDENTIFY);
     }
 
     public final static void playRotatedSound() {
-        SoundLoader.playSound(GameSound.ROTATED);
+        SoundPlayer.playSound(GameSound.ROTATED);
     }
 
     public final static void playFallSound() {
-        SoundLoader.playSound(GameSound.FALLING);
+        SoundPlayer.playSound(GameSound.FALLING);
     }
 
     public final static void playButtonSound() {
-        SoundLoader.playSound(GameSound.BUTTON);
+        SoundPlayer.playSound(GameSound.BUTTON);
     }
 
     public final static void playConfusedSound() {
-        SoundLoader.playSound(GameSound.CONFUSED);
+        SoundPlayer.playSound(GameSound.CONFUSED);
     }
 
     public final static void playDarknessSound() {
-        SoundLoader.playSound(GameSound.DARKNESS);
+        SoundPlayer.playSound(GameSound.DARKNESS);
     }
 
     public final static void playDizzySound() {
-        SoundLoader.playSound(GameSound.DIZZY);
+        SoundPlayer.playSound(GameSound.DIZZY);
     }
 
     public final static void playDrunkSound() {
-        SoundLoader.playSound(GameSound.DRUNK);
+        SoundPlayer.playSound(GameSound.DRUNK);
     }
 
     public final static void playFinishSound() {
-        SoundLoader.playSound(GameSound.FINISH);
+        SoundPlayer.playSound(GameSound.FINISH);
     }
 
     public final static void playLightSound() {
-        SoundLoader.playSound(GameSound.LIGHT);
+        SoundPlayer.playSound(GameSound.LIGHT);
     }
 
     public final static void playSinkBlockSound() {
-        SoundLoader.playSound(GameSound.SINK);
+        SoundPlayer.playSound(GameSound.SINK);
     }
 
     public final static void playWallTrapSound() {
-        SoundLoader.playSound(GameSound.TRAP);
+        SoundPlayer.playSound(GameSound.TRAP);
     }
 
     /**

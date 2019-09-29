@@ -10,7 +10,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.game.GameLogicManager;
-import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractTrap;
@@ -39,7 +39,7 @@ public class Amulet extends AbstractTrap {
         final GameLogicManager glm = TallerTower.getApplication()
                 .getGameManager();
         glm.activateEffect(EffectConstants.EFFECT_STICKY);
-        SoundLoader.playSound(GameSound.GRAB);
+        SoundPlayer.playSound(GameSound.GRAB);
         GameLogicManager.decay();
     }
 

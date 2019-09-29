@@ -59,7 +59,7 @@ public class ObjectImageLoader {
         if (fileExtensions == null) {
             try {
                 fileExtensions = new Properties();
-                fileExtensions.load(SoundLoader.class.getResourceAsStream(
+                fileExtensions.load(SoundPlayer.class.getResourceAsStream(
                         "/assets/data/extensions/extensions.properties"));
             } catch (IOException e) {
                 FantastleReboot.logError(e);
