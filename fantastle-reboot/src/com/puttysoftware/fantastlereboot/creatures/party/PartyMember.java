@@ -20,12 +20,11 @@ import com.puttysoftware.fantastlereboot.creatures.personalities.PersonalityCons
 import com.puttysoftware.fantastlereboot.creatures.races.Race;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
+import com.puttysoftware.fantastlereboot.loaders.AvatarImageLoader;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.VersionException;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.BattleImageManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.FormatConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.GenerateTask;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Player;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.page.Page;
@@ -45,9 +44,11 @@ public class PartyMember extends Creature {
     private int permanentHP;
     private int permanentMP;
     private int kills;
+    private int avatarFamilyID;
+    private int avatarHairID;
+    private int avatarSkinID;
     private static final int START_GOLD = 0;
     private static final double BASE_COEFF = 10.0;
-    private static final Player ME = new Player();
 
     // Constructors
     PartyMember(final Race r, final Caste c, final Faith f, final Personality p,
@@ -64,6 +65,9 @@ public class PartyMember extends Creature {
         this.permanentHP = 0;
         this.permanentMP = 0;
         this.kills = 0;
+        this.avatarFamilyID = 0;
+        this.avatarHairID = 0;
+        this.avatarSkinID = 0;
         this.setLevel(1);
         this.setStrength(StatConstants.GAIN_STRENGTH + this.race
                 .getAttribute(RaceConstants.RACE_ATTRIBUTE_STRENGTH_PER_LEVEL));
@@ -423,8 +427,7 @@ public class PartyMember extends Creature {
 
     @Override
     protected BufferedImageIcon getInitialImage() {
-        return BattleImageManager.getImage(ME.getName(), ME.getBaseID(),
-                this.faith.getColor().getRGB());
+        return AvatarImageLoader.load(this.avatarFamilyID, this.avatarSkinID, this.avatarHairID);
     }
 
     @Override
