@@ -77,8 +77,8 @@ public class ImageLoader {
             final BufferedImageIcon icon = ImageCache.getCachedImage(name);
             final BufferedImageIcon result = new BufferedImageIcon(icon);
             if (icon != null) {
-                for (int x = 0; x < ImageLoader.getGraphicSize(); x++) {
-                    for (int y = 0; y < ImageLoader.getGraphicSize(); y++) {
+                for (int x = 0; x < ImageLoader.getImageSize(); x++) {
+                    for (int y = 0; y < ImageLoader.getImageSize(); y++) {
                         final int pixel = icon.getRGB(x, y);
                         final Color c = new Color(pixel);
                         if (c.equals(ImageLoader.TRANSPARENT)) {
@@ -104,8 +104,8 @@ public class ImageLoader {
             final BufferedImageIcon icon2 = ImageCache.getCachedImage(name2);
             final BufferedImageIcon result = new BufferedImageIcon(icon2);
             if (icon1 != null && icon2 != null) {
-                for (int x = 0; x < ImageLoader.getGraphicSize(); x++) {
-                    for (int y = 0; y < ImageLoader.getGraphicSize(); y++) {
+                for (int x = 0; x < ImageLoader.getImageSize(); x++) {
+                    for (int y = 0; y < ImageLoader.getImageSize(); y++) {
                         final int pixel = icon2.getRGB(x, y);
                         final Color c = new Color(pixel);
                         if (c.equals(ImageLoader.TRANSPARENT)) {
@@ -132,8 +132,8 @@ public class ImageLoader {
                     name2);
             final BufferedImageIcon result = new BufferedImageIcon(icon3);
             if (icon3 != null && icon2 != null) {
-                for (int x = 0; x < ImageLoader.getGraphicSize(); x++) {
-                    for (int y = 0; y < ImageLoader.getGraphicSize(); y++) {
+                for (int x = 0; x < ImageLoader.getImageSize(); x++) {
+                    for (int y = 0; y < ImageLoader.getImageSize(); y++) {
                         final int pixel = icon3.getRGB(x, y);
                         final Color c = new Color(pixel);
                         if (c.equals(ImageLoader.TRANSPARENT)) {
@@ -171,7 +171,7 @@ public class ImageLoader {
         }
     }
 
-    public static int getGraphicSize() {
+    public static int getImageSize() {
         return 64;
     }
 

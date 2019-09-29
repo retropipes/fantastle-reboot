@@ -1525,9 +1525,9 @@ public class GameManager {
                 - GameViewingWindowManager.getOffsetFactorX();
         final int yOffset = this.vwMgr.getViewingWindowLocationY()
                 - GameViewingWindowManager.getOffsetFactorY();
-        final int destX = x / ImageLoader.getGraphicSize()
+        final int destX = x / ImageLoader.getImageSize()
                 + this.vwMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int destY = y / ImageLoader.getGraphicSize()
+        final int destY = y / ImageLoader.getImageSize()
                 + this.vwMgr.getViewingWindowLocationY() + xOffset - yOffset;
         final int destZ = this.plMgr.getPlayerLocationZ();
         final int destW = this.plMgr.getPlayerLocationW();
@@ -1603,10 +1603,10 @@ public class GameManager {
                     - GameViewingWindowManager.getOffsetFactorX();
             final int yOffset = this.vwMgr.getViewingWindowLocationY()
                     - GameViewingWindowManager.getOffsetFactorY();
-            final int destX = x / ImageLoader.getGraphicSize()
+            final int destX = x / ImageLoader.getImageSize()
                     + this.vwMgr.getViewingWindowLocationX() - xOffset
                     + yOffset;
-            final int destY = y / ImageLoader.getGraphicSize()
+            final int destY = y / ImageLoader.getImageSize()
                     + this.vwMgr.getViewingWindowLocationY() + xOffset
                     - yOffset;
             final int destZ = this.plMgr.getPlayerLocationZ();
@@ -1627,9 +1627,9 @@ public class GameManager {
                 - GameViewingWindowManager.getOffsetFactorX();
         final int yOffset = this.vwMgr.getViewingWindowLocationY()
                 - GameViewingWindowManager.getOffsetFactorY();
-        final int destX = x / ImageLoader.getGraphicSize()
+        final int destX = x / ImageLoader.getImageSize()
                 + this.vwMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int destY = y / ImageLoader.getGraphicSize()
+        final int destY = y / ImageLoader.getImageSize()
                 + this.vwMgr.getViewingWindowLocationY() + xOffset - yOffset;
         final int destZ = this.plMgr.getPlayerLocationZ();
         final int destW = this.plMgr.getPlayerLocationW();

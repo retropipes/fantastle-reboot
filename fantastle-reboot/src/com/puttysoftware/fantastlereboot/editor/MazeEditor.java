@@ -360,9 +360,9 @@ public class MazeEditor {
                 - this.vertScroll.getMinimum();
         final int yOffset = this.horzScroll.getValue()
                 - this.horzScroll.getMinimum();
-        final int gridX = x / ImageLoader.getGraphicSize()
+        final int gridX = x / ImageLoader.getImageSize()
                 + this.evMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int gridY = y / ImageLoader.getGraphicSize()
+        final int gridY = y / ImageLoader.getImageSize()
                 + this.evMgr.getViewingWindowLocationY() + xOffset - yOffset;
         try {
             app.getGameManager()
@@ -415,9 +415,9 @@ public class MazeEditor {
                 - this.vertScroll.getMinimum();
         final int yOffset = this.horzScroll.getValue()
                 - this.horzScroll.getMinimum();
-        final int gridX = x / ImageLoader.getGraphicSize()
+        final int gridX = x / ImageLoader.getImageSize()
                 + this.evMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int gridY = y / ImageLoader.getGraphicSize()
+        final int gridY = y / ImageLoader.getImageSize()
                 + this.evMgr.getViewingWindowLocationY() + xOffset - yOffset;
         try {
             final MazeObject mo = app.getMazeManager().getMaze().getCell(gridX,
@@ -442,9 +442,9 @@ public class MazeEditor {
                 - this.vertScroll.getMinimum();
         final int yOffset = this.horzScroll.getValue()
                 - this.horzScroll.getMinimum();
-        final int gridX = x / ImageLoader.getGraphicSize()
+        final int gridX = x / ImageLoader.getImageSize()
                 + this.evMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int gridY = y / ImageLoader.getGraphicSize()
+        final int gridY = y / ImageLoader.getImageSize()
                 + this.evMgr.getViewingWindowLocationY() + xOffset - yOffset;
         try {
             final MazeObject mo = app.getMazeManager().getMaze().getCell(gridX,
@@ -857,9 +857,9 @@ public class MazeEditor {
                 - this.vertScroll.getMinimum();
         final int yOffset = this.horzScroll.getValue()
                 - this.horzScroll.getMinimum();
-        final int destX = x / ImageLoader.getGraphicSize()
+        final int destX = x / ImageLoader.getImageSize()
                 + this.evMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int destY = y / ImageLoader.getGraphicSize()
+        final int destY = y / ImageLoader.getImageSize()
                 + this.evMgr.getViewingWindowLocationY() + xOffset - yOffset;
         final int destZ = this.elMgr.getEditorLocationZ();
         final int destW = this.elMgr.getEditorLocationW();
@@ -933,9 +933,9 @@ public class MazeEditor {
                 - this.vertScroll.getMinimum();
         final int yOffset = this.horzScroll.getValue()
                 - this.horzScroll.getMinimum();
-        final int destX = x / ImageLoader.getGraphicSize()
+        final int destX = x / ImageLoader.getImageSize()
                 + this.evMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int destY = y / ImageLoader.getGraphicSize()
+        final int destY = y / ImageLoader.getImageSize()
                 + this.evMgr.getViewingWindowLocationY() + xOffset - yOffset;
         final int destZ = this.elMgr.getEditorLocationZ();
         final int destW = this.elMgr.getEditorLocationW();
