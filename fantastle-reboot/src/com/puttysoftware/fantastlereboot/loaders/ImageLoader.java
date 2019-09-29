@@ -36,7 +36,7 @@ import com.puttysoftware.images.BufferedImageIcon;
 
 public class ImageLoader {
     public static final int MAX_MOBILE_WINDOW_SIZE = 320;
-    public static final int MAX_DESKTOP_WINDOW_SIZE = 700;
+    public static final int MAX_WINDOW_SIZE = 700;
     private static final Color TRANSPARENT = new Color(200, 100, 100);
     private static Color REPLACE = null;
 
@@ -185,8 +185,8 @@ public class ImageLoader {
         viewFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         viewFrame.setLayout(new FlowLayout());
         viewFrame.add(cv.getHelp());
-        cv.setHelpSize(ImageLoader.MAX_DESKTOP_WINDOW_SIZE,
-                ImageLoader.MAX_DESKTOP_WINDOW_SIZE);
+        cv.setHelpSize(ImageLoader.MAX_WINDOW_SIZE,
+                ImageLoader.MAX_WINDOW_SIZE);
         viewFrame.pack();
         viewFrame.setResizable(false);
         viewFrame.setVisible(true);

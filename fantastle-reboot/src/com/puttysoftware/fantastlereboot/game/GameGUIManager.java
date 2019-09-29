@@ -21,10 +21,10 @@ import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
+import com.puttysoftware.fantastlereboot.loaders.ImageCompositor;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.DrawGrid;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ImageTransformer;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
@@ -174,11 +174,10 @@ class GameGUIManager {
                                                 obj3.getGameBaseID(),
                                                 AbstractMazeObject
                                                         .getTemplateColor());
-                                this.drawGrid.setImageCell(ImageTransformer
-                                        .getVirtualCompositeImage(img1, img2,
-                                                img3,
-                                                ImageTransformer
-                                                        .getGraphicSize()),
+                                String cacheName = generateCacheName(obj1, obj2,
+                                        obj3);
+                                this.drawGrid.setImageCell(ImageCompositor
+                                        .composite(cacheName, img1, img2, img3),
                                         xFix, yFix);
                             } else if (m.hasNote(x, y,
                                     m.getPlayerLocationZ())) {
@@ -190,19 +189,19 @@ class GameGUIManager {
                                                 obj3.getGameBaseID(),
                                                 AbstractMazeObject
                                                         .getTemplateColor());
-                                this.drawGrid.setImageCell(ImageTransformer
-                                        .getVirtualCompositeImage(img1, img2,
-                                                img3,
-                                                ImageTransformer
-                                                        .getGraphicSize()),
+                                String cacheName = generateCacheName(obj1, obj2,
+                                        obj3);
+                                this.drawGrid.setImageCell(ImageCompositor
+                                        .composite(cacheName, img1, img2, img3),
                                         xFix, yFix);
                             } else {
-                                this.drawGrid.setImageCell(
-                                        ImageTransformer.getCompositeImage(img1,
-                                                img2,
-                                                ImageTransformer
-                                                        .getGraphicSize()),
-                                        xFix, yFix);
+                                String cacheName = generateCacheName(obj1,
+                                        obj2);
+                                this.drawGrid
+                                        .setImageCell(
+                                                ImageCompositor.composite(
+                                                        cacheName, img1, img2),
+                                                xFix, yFix);
                             }
                         } else {
                             this.drawGrid.setImageCell(
@@ -239,6 +238,17 @@ class GameGUIManager {
             this.outputFrame.pack();
             this.showOutput();
         }
+    }
+
+    private static String generateCacheName(
+            final AbstractMazeObject... objects) {
+        StringBuilder result = new StringBuilder();
+        for (AbstractMazeObject object : objects) {
+            result.append(object.getGameBaseID());
+            result.append("_");
+        }
+        result.append("cache");
+        return result.toString();
     }
 
     public void keepNextMessage() {

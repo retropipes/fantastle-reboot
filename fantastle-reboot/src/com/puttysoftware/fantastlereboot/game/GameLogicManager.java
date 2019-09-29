@@ -11,10 +11,10 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
+import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ImageTransformer;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.GenerateTask;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
@@ -208,9 +208,9 @@ public final class GameLogicManager {
                 - GameViewingWindowManager.getOffsetFactorX();
         final int yOffset = this.vwMgr.getViewingWindowLocationY()
                 - GameViewingWindowManager.getOffsetFactorY();
-        final int destX = x / ImageTransformer.getGraphicSize()
+        final int destX = x / ImageLoader.getImageSize()
                 + this.vwMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int destY = y / ImageTransformer.getGraphicSize()
+        final int destY = y / ImageLoader.getImageSize()
                 + this.vwMgr.getViewingWindowLocationY() + xOffset - yOffset;
         final int destZ = m.getPlayerLocationZ();
         try {

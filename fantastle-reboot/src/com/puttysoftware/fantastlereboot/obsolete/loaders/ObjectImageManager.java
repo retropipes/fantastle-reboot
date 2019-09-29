@@ -11,6 +11,7 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class ObjectImageManager {
@@ -19,7 +20,7 @@ public class ObjectImageManager {
     private static Class<?> LOAD_CLASS = ObjectImageManager.class;
 
     /**
-     * 
+     *
      * @param name
      * @param baseID
      * @param transformColor
@@ -32,7 +33,7 @@ public class ObjectImageManager {
         final BufferedImageIcon bii = ObjectImageCache.getCachedImage(name,
                 baseName);
         return ImageTransformer.templateTransformImage(bii, transformColor,
-                ImageTransformer.getGraphicSize());
+                ImageLoader.getImageSize());
     }
 
     static BufferedImageIcon getUncachedImage(final String name) {

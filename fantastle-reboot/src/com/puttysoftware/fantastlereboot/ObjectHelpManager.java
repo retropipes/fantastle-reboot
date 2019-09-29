@@ -52,8 +52,8 @@ public class ObjectHelpManager {
             this.hv.setHelpSize(ImageLoader.MAX_MOBILE_WINDOW_SIZE,
                     ImageLoader.MAX_MOBILE_WINDOW_SIZE);
         } else {
-            this.hv.setHelpSize(ImageLoader.MAX_DESKTOP_WINDOW_SIZE,
-                    ImageLoader.MAX_DESKTOP_WINDOW_SIZE);
+            this.hv.setHelpSize(ImageLoader.MAX_WINDOW_SIZE,
+                    ImageLoader.MAX_WINDOW_SIZE);
         }
         this.helpFrame.pack();
         this.helpFrame.setResizable(false);
@@ -70,8 +70,8 @@ public class ObjectHelpManager {
             this.hv.setHelpSize(ImageLoader.MAX_MOBILE_WINDOW_SIZE,
                     ImageLoader.MAX_MOBILE_WINDOW_SIZE);
         } else {
-            this.hv.setHelpSize(ImageLoader.MAX_DESKTOP_WINDOW_SIZE,
-                    ImageLoader.MAX_DESKTOP_WINDOW_SIZE);
+            this.hv.setHelpSize(ImageLoader.MAX_WINDOW_SIZE,
+                    ImageLoader.MAX_WINDOW_SIZE);
         }
         this.helpFrame.pack();
     }

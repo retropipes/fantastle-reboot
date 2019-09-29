@@ -80,8 +80,8 @@ public class ObjectImageLoader {
         viewFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         viewFrame.setLayout(new FlowLayout());
         viewFrame.add(cv.getHelp());
-        cv.setHelpSize(ImageLoader.MAX_DESKTOP_WINDOW_SIZE,
-                ImageLoader.MAX_DESKTOP_WINDOW_SIZE);
+        cv.setHelpSize(ImageLoader.MAX_WINDOW_SIZE,
+                ImageLoader.MAX_WINDOW_SIZE);
         viewFrame.pack();
         viewFrame.setResizable(false);
         viewFrame.setVisible(true);

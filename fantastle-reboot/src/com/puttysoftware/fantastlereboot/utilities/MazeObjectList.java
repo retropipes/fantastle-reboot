@@ -10,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ImageTransformer;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.FormatConstants;
@@ -104,7 +105,7 @@ public class MazeObjectList {
                     ObjectImageManager.getImage(objects[x].getName(),
                             objects[x].getBaseID(),
                             AbstractMazeObject.getTemplateColor()),
-                    ImageTransformer.getGraphicSize());
+                    ImageLoader.getImageSize());
         }
         return allEditorAppearances;
     }

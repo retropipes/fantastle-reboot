@@ -31,10 +31,10 @@ import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleDraw;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleEffects;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleViewingWindowManager;
+import com.puttysoftware.fantastlereboot.loaders.ImageCompositor;
 import com.puttysoftware.fantastlereboot.obsolete.DrawGrid;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.BattleImageManager;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ImageTransformer;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
@@ -149,16 +149,15 @@ class MapTimeBattleGUI {
                     xFix = x - xView;
                     yFix = y - yView;
                     try {
-                        final BufferedImageIcon icon1 = battleMaze
-                                .getCell(y, x, 0, MazeConstants.LAYER_GROUND)
-                                .battleRenderHook();
-                        final BufferedImageIcon icon2 = battleMaze
-                                .getCell(y, x, 0, MazeConstants.LAYER_OBJECT)
-                                .battleRenderHook();
-                        this.drawGrid.setImageCell(
-                                ImageTransformer.getCompositeImage(icon1, icon2,
-                                        BattleImageManager.getGraphicSize()),
-                                xFix, yFix);
+                        final AbstractMazeObject obj1 = battleMaze.getCell(y, x,
+                                0, MazeConstants.LAYER_GROUND);
+                        final AbstractMazeObject obj2 = battleMaze.getCell(y, x,
+                                0, MazeConstants.LAYER_OBJECT);
+                        String cacheName = generateCacheName(obj1, obj2);
+                        final BufferedImageIcon icon1 = obj1.battleRenderHook();
+                        final BufferedImageIcon icon2 = obj2.battleRenderHook();
+                        this.drawGrid.setImageCell(ImageCompositor.composite(
+                                cacheName, icon1, icon2), xFix, yFix);
                     } catch (final ArrayIndexOutOfBoundsException ae) {
                         final EmptyVoid ev = new EmptyVoid();
                         this.drawGrid.setImageCell(ev.battleRenderHook(), xFix,
@@ -185,17 +184,16 @@ class MapTimeBattleGUI {
                 final int yView = this.vwMgr.getViewingWindowLocationY();
                 xFix = y - xView;
                 yFix = x - yView;
-                final BufferedImageIcon icon1 = battleMaze
-                        .getCell(x, y, 0, MazeConstants.LAYER_GROUND)
-                        .battleRenderHook();
-                final BufferedImageIcon icon2 = battleMaze
-                        .getCell(x, y, 0, MazeConstants.LAYER_OBJECT)
-                        .battleRenderHook();
+                final AbstractMazeObject obj1 = battleMaze.getCell(y, x, 0,
+                        MazeConstants.LAYER_GROUND);
+                final AbstractMazeObject obj2 = battleMaze.getCell(y, x, 0,
+                        MazeConstants.LAYER_OBJECT);
+                String cacheName = generateCacheName(obj1, obj2);
+                final BufferedImageIcon icon1 = obj1.battleRenderHook();
+                final BufferedImageIcon icon2 = obj2.battleRenderHook();
                 final BufferedImageIcon icon3 = obj3.battleRenderHook();
-                this.drawGrid.setImageCell(
-                        ImageTransformer.getVirtualCompositeImage(icon1, icon2,
-                                icon3, BattleImageManager.getGraphicSize()),
-                        xFix, yFix);
+                this.drawGrid.setImageCell(ImageCompositor.composite(cacheName,
+                        icon1, icon2, icon3), xFix, yFix);
                 this.battlePane.repaint();
             } catch (final ArrayIndexOutOfBoundsException ae) {
                 // Do nothing
@@ -204,6 +202,16 @@ class MapTimeBattleGUI {
             }
             this.battleFrame.pack();
         }
+    }
+
+    private static String generateCacheName(final AbstractMazeObject... objects) {
+        StringBuilder result = new StringBuilder();
+        for (AbstractMazeObject object : objects) {
+            result.append(object.getBattleBaseID());
+            result.append("_");
+        }
+        result.append("cache");
+        return result.toString();
     }
 
     void updateStatsAndEffects(final BattleCharacter active) {
