@@ -90,7 +90,7 @@ public class MonsterImageLoader {
         }
         final GraphicalHelpViewer cv = new GraphicalHelpViewer(
                 ImageCache.images(), ImageCache.names());
-        final JFrame viewFrame = new JFrame("Boss Image Cache Viewer");
+        final JFrame viewFrame = new JFrame("Monster Image Cache Viewer");
         viewFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         viewFrame.setLayout(new FlowLayout());
         viewFrame.add(cv.getHelp());
