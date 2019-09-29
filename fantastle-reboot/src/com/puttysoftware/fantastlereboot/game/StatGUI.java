@@ -15,7 +15,7 @@ import com.puttysoftware.fantastlereboot.assets.GameEffectImage;
 import com.puttysoftware.fantastlereboot.creatures.party.Party;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
-import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
+import com.puttysoftware.fantastlereboot.loaders.EffectImageLoader;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class StatGUI {
@@ -75,26 +75,26 @@ class StatGUI {
     }
 
     void updateImages() {
-        final BufferedImageIcon hpImage = ImageLoader
-                .loadEffectImage(GameEffectImage.HEALTH);
+        final BufferedImageIcon hpImage = EffectImageLoader
+                .load(GameEffectImage.HEALTH);
         this.hpLabel.setIcon(hpImage);
-        final BufferedImageIcon mpImage = ImageLoader
-                .loadEffectImage(GameEffectImage.MAGIC);
+        final BufferedImageIcon mpImage = EffectImageLoader
+                .load(GameEffectImage.MAGIC);
         this.mpLabel.setIcon(mpImage);
-        final BufferedImageIcon goldImage = ImageLoader
-                .loadEffectImage(GameEffectImage.MONEY);
+        final BufferedImageIcon goldImage = EffectImageLoader
+                .load(GameEffectImage.MONEY);
         this.goldLabel.setIcon(goldImage);
-        final BufferedImageIcon attackImage = ImageLoader
-                .loadEffectImage(GameEffectImage.MELEE_ATTACK);
+        final BufferedImageIcon attackImage = EffectImageLoader
+                .load(GameEffectImage.MELEE_ATTACK);
         this.attackLabel.setIcon(attackImage);
-        final BufferedImageIcon defenseImage = ImageLoader
-                .loadEffectImage(GameEffectImage.DEFENSE);
+        final BufferedImageIcon defenseImage = EffectImageLoader
+                .load(GameEffectImage.DEFENSE);
         this.defenseLabel.setIcon(defenseImage);
-        final BufferedImageIcon xpImage = ImageLoader
-                .loadEffectImage(GameEffectImage.EXPERIENCE);
+        final BufferedImageIcon xpImage = EffectImageLoader
+                .load(GameEffectImage.EXPERIENCE);
         this.xpLabel.setIcon(xpImage);
-        final BufferedImageIcon levelImage = ImageLoader
-                .loadEffectImage(GameEffectImage.CREATURE_LEVEL);
+        final BufferedImageIcon levelImage = EffectImageLoader
+                .load(GameEffectImage.CREATURE_LEVEL);
         this.levelLabel.setIcon(levelImage);
     }
 }

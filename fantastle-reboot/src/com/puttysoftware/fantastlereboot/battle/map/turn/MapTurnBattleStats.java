@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import com.puttysoftware.fantastlereboot.assets.GameEffectImage;
-import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
+import com.puttysoftware.fantastlereboot.loaders.EffectImageLoader;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
 import com.puttysoftware.images.BufferedImageIcon;
 
@@ -70,26 +70,26 @@ public class MapTurnBattleStats {
     }
 
     private void updateIcons() {
-        final BufferedImageIcon nameImage = ImageLoader
-                .loadEffectImage(GameEffectImage.CREATURE_ID);
+        final BufferedImageIcon nameImage = EffectImageLoader
+                .load(GameEffectImage.CREATURE_ID);
         this.nameLabel.setIcon(nameImage);
-        final BufferedImageIcon teamImage = ImageLoader
-                .loadEffectImage(GameEffectImage.CREATURE_TEAM);
+        final BufferedImageIcon teamImage = EffectImageLoader
+                .load(GameEffectImage.CREATURE_TEAM);
         this.teamLabel.setIcon(teamImage);
-        final BufferedImageIcon hpImage = ImageLoader
-                .loadEffectImage(GameEffectImage.HEALTH);
+        final BufferedImageIcon hpImage = EffectImageLoader
+                .load(GameEffectImage.HEALTH);
         this.hpLabel.setIcon(hpImage);
-        final BufferedImageIcon mpImage = ImageLoader
-                .loadEffectImage(GameEffectImage.MAGIC);
+        final BufferedImageIcon mpImage = EffectImageLoader
+                .load(GameEffectImage.MAGIC);
         this.mpLabel.setIcon(mpImage);
-        final BufferedImageIcon attImage = ImageLoader
-                .loadEffectImage(GameEffectImage.MELEE_ATTACK);
+        final BufferedImageIcon attImage = EffectImageLoader
+                .load(GameEffectImage.MELEE_ATTACK);
         this.attLabel.setIcon(attImage);
-        final BufferedImageIcon defImage = ImageLoader
-                .loadEffectImage(GameEffectImage.DEFENSE);
+        final BufferedImageIcon defImage = EffectImageLoader
+                .load(GameEffectImage.DEFENSE);
         this.defLabel.setIcon(defImage);
-        final BufferedImageIcon apImage = ImageLoader
-                .loadEffectImage(GameEffectImage.ACTIONS_00);
+        final BufferedImageIcon apImage = EffectImageLoader
+                .load(GameEffectImage.ACTIONS_00);
         this.apLabel.setIcon(apImage);
     }
 
@@ -157,8 +157,8 @@ public class MapTurnBattleStats {
             actionImageId = GameEffectImage.ACTIONS_00;
             break;
         }
-        final BufferedImageIcon apImage = ImageLoader
-                .loadEffectImage(actionImageId);
+        final BufferedImageIcon apImage = EffectImageLoader
+                .load(actionImageId);
         this.apLabel.setIcon(apImage);
     }
 }

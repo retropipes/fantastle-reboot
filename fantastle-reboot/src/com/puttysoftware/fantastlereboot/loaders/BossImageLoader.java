@@ -31,18 +31,18 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
+import com.puttysoftware.fantastlereboot.assets.GameBossImage;
 import com.puttysoftware.help.GraphicalHelpViewer;
 import com.puttysoftware.images.BufferedImageIcon;
 
-public class UserInterfaceImageLoader {
+public class BossImageLoader {
     private static String[] allFilenames;
     private static Properties fileExtensions;
 
     static BufferedImageIcon loadUncached(final String name) {
         try {
-            final URL url = UserInterfaceImageLoader.class
-                    .getResource("/assets/images/ui/" + name);
+            final URL url = BossImageLoader.class
+                    .getResource("/assets/images/boss/" + name);
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             return icon;
@@ -52,9 +52,9 @@ public class UserInterfaceImageLoader {
         }
     }
 
-    public static BufferedImageIcon load(GameUserInterfaceImage image) {
+    public static BufferedImageIcon load() {
         if (allFilenames == null) {
-            allFilenames = DataLoader.loadUserInterfaceImageData();
+            allFilenames = DataLoader.loadBossImageData();
         }
         if (fileExtensions == null) {
             try {
@@ -66,6 +66,7 @@ public class UserInterfaceImageLoader {
             }
         }
         String imageExt = fileExtensions.getProperty("images");
+        GameBossImage image = GameBossImage.BOSS;
         return ImageCache
                 .getCachedImage(allFilenames[image.ordinal()] + imageExt);
     }
@@ -76,7 +77,7 @@ public class UserInterfaceImageLoader {
         }
         final GraphicalHelpViewer cv = new GraphicalHelpViewer(
                 ImageCache.images(), ImageCache.names());
-        final JFrame viewFrame = new JFrame("UI Image Cache Viewer");
+        final JFrame viewFrame = new JFrame("Boss Image Cache Viewer");
         viewFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         viewFrame.setLayout(new FlowLayout());
         viewFrame.add(cv.getHelp());
@@ -109,8 +110,7 @@ public class UserInterfaceImageLoader {
                 }
             }
             // Not found: Add to cache
-            BufferedImageIcon newImage = UserInterfaceImageLoader
-                    .loadUncached(name);
+            BufferedImageIcon newImage = BossImageLoader.loadUncached(name);
             ImageCacheEntry newEntry = new ImageCacheEntry(newImage, name);
             ImageCache.cache.add(newEntry);
             return newImage;

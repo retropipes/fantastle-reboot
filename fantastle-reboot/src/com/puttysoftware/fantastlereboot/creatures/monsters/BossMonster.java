@@ -14,7 +14,7 @@ import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
-import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
+import com.puttysoftware.fantastlereboot.loaders.BossImageLoader;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
 import com.puttysoftware.fantastlereboot.spells.books.BossSpellBook;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -72,7 +72,7 @@ public class BossMonster extends Creature {
 
     @Override
     protected BufferedImageIcon getInitialImage() {
-        return ImageLoader.loadBossImage();
+        return BossImageLoader.load();
     }
 
     @Override
