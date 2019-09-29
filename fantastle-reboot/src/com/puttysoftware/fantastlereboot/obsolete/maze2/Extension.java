@@ -8,17 +8,11 @@ package com.puttysoftware.fantastlereboot.obsolete.maze2;
 public class Extension {
     // Constants
     private static final String GAME_EXTENSION = "ttgame";
-    private static final String PREFERENCES_EXTENSION = "ttpref";
     private static final String CHARACTER_EXTENSION = "ttchar";
     private static final String REGISTRY_EXTENSION = "ttregi";
     private static final String INTERNAL_DATA_EXTENSION = "dat";
-    private static final String MUSIC_EXTENSION = "tttune";
 
     // Methods
-    public static String getPreferencesExtension() {
-        return Extension.PREFERENCES_EXTENSION;
-    }
-
     public static String getGameExtension() {
         return Extension.GAME_EXTENSION;
     }
@@ -41,9 +35,5 @@ public class Extension {
 
     public static String getInternalDataExtensionWithPeriod() {
         return "." + Extension.INTERNAL_DATA_EXTENSION;
-    }
-
-    public static String getMusicExtensionWithPeriod() {
-        return "." + Extension.MUSIC_EXTENSION;
     }
 }

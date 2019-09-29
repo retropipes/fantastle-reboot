@@ -10,14 +10,11 @@ import javax.swing.JFrame;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.GUIManager;
-import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.items.Shop;
-import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeManager;
 import com.puttysoftware.fantastlereboot.utilities.MazeObjectList;
-import com.puttysoftware.images.BufferedImageIcon;
 
 public final class Application {
     // Fields
@@ -25,7 +22,6 @@ public final class Application {
     private MazeManager mazeMgr;
     private MenuManager menuMgr;
     private ObjectHelpManager oHelpMgr;
-    private GUIManager guiMgr;
     private final MazeObjectList objects;
     private int currentMode;
     private int formerMode;
@@ -40,18 +36,11 @@ public final class Application {
         this.objects = new MazeObjectList();
         this.currentMode = Application.STATUS_NULL;
         this.formerMode = Application.STATUS_NULL;
+        this.menuMgr = new MenuManager();
+        this.oHelpMgr = new ObjectHelpManager();
     }
 
     // Methods
-    void postConstruct() {
-        // Create Managers
-        this.guiMgr = new GUIManager();
-        this.menuMgr = new MenuManager();
-        this.oHelpMgr = new ObjectHelpManager();
-        // Cache Logo
-        this.guiMgr.updateLogo();
-    }
-
     public void setMode(final int newMode) {
         this.formerMode = this.currentMode;
         this.currentMode = newMode;
@@ -71,10 +60,6 @@ public final class Application {
 
     public void saveFormerMode() {
         this.formerMode = this.currentMode;
-    }
-
-    public void restoreFormerMode() {
-        this.currentMode = this.formerMode;
     }
 
     public void showMessage(final String msg) {
@@ -114,10 +99,6 @@ public final class Application {
         return this.oHelpMgr;
     }
 
-    public static BufferedImageIcon getMicroLogo() {
-        return UserInterfaceImageLoader.load(GameUserInterfaceImage.MICRO_LOGO);
-    }
-
     public JFrame getOutputFrame() {
         try {
             if (this.getMode() == Application.STATUS_PREFS) {
@@ -149,10 +130,5 @@ public final class Application {
     @SuppressWarnings("static-method")
     public Battle getBattle() {
         return FantastleReboot.getBagOStuff().getBattle();
-    }
-
-    @SuppressWarnings("static-method")
-    public void resetBattleGUI() {
-        FantastleReboot.getBagOStuff().resetBattleGUI();
     }
 }

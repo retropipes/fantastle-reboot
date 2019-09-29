@@ -44,7 +44,6 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
     private String lastUsedMazeFile;
     private String lastUsedGameFile;
     private boolean maze3CompatibleModeEnabled;
-    private boolean maze4CompatibleModeEnabled;
 
     // Constructors
     public MazeManager() {
@@ -54,16 +53,11 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
         this.lastUsedGameFile = "";
         this.scoresFileName = "";
         this.maze3CompatibleModeEnabled = false;
-        this.maze4CompatibleModeEnabled = false;
     }
 
     // Methods
     public boolean maze3Compatible() {
         return this.maze3CompatibleModeEnabled;
-    }
-
-    public boolean maze4Compatible() {
-        return this.maze4CompatibleModeEnabled;
     }
 
     public Maze getMaze() {
@@ -83,7 +77,6 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
             this.setDirty(false);
         }
         this.maze3CompatibleModeEnabled = false;
-        this.maze4CompatibleModeEnabled = false;
         FantastleReboot.getBagOStuff().getMenuManager().checkFlags();
     }
 
@@ -340,17 +333,14 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
             final int formatVersion) {
         if (formatVersion == FormatConstants.MAZE_FORMAT_5) {
             this.maze3CompatibleModeEnabled = false;
-            this.maze4CompatibleModeEnabled = false;
             final LoadTask5 lt5 = new LoadTask5(filename, isSavedGame);
             lt5.start();
         } else if (formatVersion == FormatConstants.MAZE_FORMAT_4) {
             this.maze3CompatibleModeEnabled = false;
-            this.maze4CompatibleModeEnabled = true;
             final LoadTask4 lt4 = new LoadTask4(filename);
             lt4.start();
         } else {
             this.maze3CompatibleModeEnabled = true;
-            this.maze4CompatibleModeEnabled = false;
             final LoadTask3 lt3 = new LoadTask3(filename);
             lt3.start();
         }
