@@ -18,14 +18,19 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.loaders;
 
-import java.net.URL;
+import com.puttysoftware.help.HTMLHelpViewer;
 
 public class HelpLoader {
+    private static HTMLHelpViewer helpViewer;
+
     private HelpLoader() {
         // Do nothing
     }
 
-    public static URL getHelpURL() {
-        return HelpLoader.class.getResource("/assets/help/help.html");
+    public static HTMLHelpViewer getHelpViewer() {
+        if (HelpLoader.helpViewer == null) {
+            HelpLoader.helpViewer = new HTMLHelpViewer(HelpLoader.class.getResource("/assets/help/help.html"));
+        }
+        return HelpLoader.helpViewer;
     }
 }
