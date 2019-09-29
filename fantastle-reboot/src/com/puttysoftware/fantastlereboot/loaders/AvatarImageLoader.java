@@ -66,7 +66,9 @@ public class AvatarImageLoader {
             }
         }
         String imageExt = fileExtensions.getProperty("images");
-        return ImageCache.getCachedImage(familyID + skinID + hairID + imageExt);
+        return ImageCache.getCachedImage(
+                Integer.toString(familyID) + Integer.toString(skinID)
+                        + Integer.toString(hairID) + imageExt);
     }
 
     public static void viewCache() {
