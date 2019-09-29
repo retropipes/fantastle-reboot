@@ -25,17 +25,17 @@ import javax.swing.WindowConstants;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
+import com.puttysoftware.fantastlereboot.assets.GameObjectImage;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleDraw;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleEffects;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleViewingWindowManager;
 import com.puttysoftware.fantastlereboot.loaders.ImageCompositor;
+import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.fantastlereboot.obsolete.DrawGrid;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.BattleImageManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Darkness;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.EmptyVoid;
 import com.puttysoftware.images.BufferedImageIcon;
 
@@ -236,15 +236,13 @@ class MapTurnBattleGUI {
         this.battleFrame.setResizable(false);
         this.drawGrid = new DrawGrid(
                 MapBattleViewingWindowManager.getViewingWindowSize());
+        BufferedImageIcon darknessImage = ObjectImageLoader
+                .load(GameObjectImage.DARKNESS);
         for (int x = 0; x < MapBattleViewingWindowManager
                 .getViewingWindowSize(); x++) {
             for (int y = 0; y < MapBattleViewingWindowManager
                     .getViewingWindowSize(); y++) {
-                final AbstractMazeObject dark = new Darkness().gameRenderHook(y,
-                        x, 0);
-                this.drawGrid.setImageCell(BattleImageManager.getImage(
-                        dark.getName(), dark.getGameBaseID(),
-                        AbstractMazeObject.getTemplateColor()), x, y);
+                this.drawGrid.setImageCell(darknessImage, x, y);
             }
         }
         this.battlePane = new MapBattleDraw(this.drawGrid);
