@@ -13,21 +13,11 @@ public class ColorShader {
     // Fields
     private final Color shadeColor;
     private final String shadeName;
-    private static final int MIN_SHADE = 0;
-    private static final int MAX_SHADE = 255;
 
     // Constructor
-    public ColorShader(final String name, final int red, final int green,
-            final int blue) {
-        float fixedRed = Math.max(ColorShader.MIN_SHADE, red)
-                % ColorShader.MAX_SHADE / (float) 255.0;
-        float fixedGreen = Math.max(ColorShader.MIN_SHADE, green)
-                % ColorShader.MAX_SHADE / (float) 255.0;
-        float fixedBlue = Math.max(ColorShader.MIN_SHADE, blue)
-                % ColorShader.MAX_SHADE / (float) 255.0;
-        this.shadeColor = new Color(
-                ColorSpace.getInstance(ColorSpace.CS_sRGB),
-                new float[] { fixedRed, fixedGreen, fixedBlue }, (float) 1.0);
+    public ColorShader(final String name, final Color shade) {
+        this.shadeColor = new Color(ColorSpace.getInstance(ColorSpace.CS_sRGB),
+                shade.getColorComponents(null), (float) 1.0);
         this.shadeName = name;
     }
 
@@ -47,7 +37,8 @@ public class ColorShader {
         return ColorShader.convertFromLinearRGB(outputColor);
     }
 
-    private static float[] doColorMath(float[] inputColor, float[] linearShade) {
+    private static float[] doColorMath(float[] inputColor,
+            float[] linearShade) {
         float[] outputColor = new float[3];
         for (int c = 0; c < 3; c++) {
             outputColor[c] = inputColor[c] * (1 - linearShade[c]);
@@ -56,11 +47,12 @@ public class ColorShader {
     }
 
     private static Color convertFromLinearRGB(final float[] colorvalue) {
-        ColorSpace sourceSpace = ColorSpace.getInstance(ColorSpace.CS_LINEAR_RGB);
+        ColorSpace sourceSpace = ColorSpace
+                .getInstance(ColorSpace.CS_LINEAR_RGB);
         float[] colorvalueCIEXYZ = sourceSpace.toCIEXYZ(colorvalue);
         ColorSpace targetSpace = ColorSpace.getInstance(ColorSpace.CS_sRGB);
         float[] colorvalueTarget = targetSpace.fromCIEXYZ(colorvalueCIEXYZ);
-        return new Color(targetSpace, colorvalueTarget, (float)1.0);
+        return new Color(targetSpace, colorvalueTarget, (float) 1.0);
     }
 
     @Override

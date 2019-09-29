@@ -10,8 +10,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ImageTransformer;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.FormatConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
@@ -101,11 +99,9 @@ public class MazeObjectList {
         final AbstractMazeObject[] objects = this.getAllObjects();
         final BufferedImageIcon[] allEditorAppearances = new BufferedImageIcon[objects.length];
         for (int x = 0; x < allEditorAppearances.length; x++) {
-            allEditorAppearances[x] = ImageTransformer.getTransformedImage(
-                    ObjectImageManager.getImage(objects[x].getName(),
-                            objects[x].getBaseID(),
-                            AbstractMazeObject.getTemplateColor()),
-                    ImageLoader.getImageSize());
+            allEditorAppearances[x] = ObjectImageManager.getImage(
+                    objects[x].getName(), objects[x].getBaseID(),
+                    AbstractMazeObject.getTemplateColor());
         }
         return allEditorAppearances;
     }

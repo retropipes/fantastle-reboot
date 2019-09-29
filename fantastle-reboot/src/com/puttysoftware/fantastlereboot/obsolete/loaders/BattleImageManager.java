@@ -5,12 +5,15 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.obsolete.loaders;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import com.puttysoftware.fantastlereboot.loaders.ColorShader;
+import com.puttysoftware.fantastlereboot.loaders.ImageShader;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class BattleImageManager {
@@ -19,7 +22,7 @@ public class BattleImageManager {
     private static Class<?> LOAD_CLASS = BattleImageManager.class;
 
     /**
-     * 
+     *
      * @param name
      * @param baseID
      * @param transformColor
@@ -31,13 +34,13 @@ public class BattleImageManager {
         final String baseName = ObjectImageConstants.getObjectImageName(baseID);
         final BufferedImageIcon bii = BattleImageCache.getCachedImage(name,
                 baseName);
-        return ImageTransformer.templateTransformImage(bii, transformColor,
-                BattleImageManager.getGraphicSize());
+        return ImageShader.shade(baseName, bii,
+                new ColorShader(baseName, new Color(transformColor, false)));
     }
 
     static BufferedImageIcon getUncachedImage(final String name) {
         try {
-            final String normalName = ImageTransformer.normalizeName(name);
+            final String normalName = normalizeName(name);
             final URL url = BattleImageManager.LOAD_CLASS.getResource(
                     BattleImageManager.LOAD_PATH + normalName + ".png");
             final BufferedImage image = ImageIO.read(url);
@@ -51,7 +54,14 @@ public class BattleImageManager {
         }
     }
 
-    public static int getGraphicSize() {
-        return 64;
+    private static String normalizeName(final String name) {
+        final StringBuilder sb = new StringBuilder(name);
+        for (int x = 0; x < sb.length(); x++) {
+            if (!Character.isLetter(sb.charAt(x))
+                    && !Character.isDigit(sb.charAt(x))) {
+                sb.setCharAt(x, '_');
+            }
+        }
+        return sb.toString().toLowerCase();
     }
 }
