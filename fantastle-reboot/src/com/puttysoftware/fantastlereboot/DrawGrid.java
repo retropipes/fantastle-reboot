@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.obsolete;
+package com.puttysoftware.fantastlereboot;
 
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.storage.ObjectStorage;

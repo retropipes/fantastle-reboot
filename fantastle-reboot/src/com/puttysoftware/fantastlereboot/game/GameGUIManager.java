@@ -19,11 +19,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
+import com.puttysoftware.fantastlereboot.DrawGrid;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.loaders.ImageCompositor;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
-import com.puttysoftware.fantastlereboot.obsolete.DrawGrid;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
@@ -97,7 +97,7 @@ class GameGUIManager {
         if (!this.outputFrame.isVisible()) {
             app.getMenuManager().setGameMenus();
             this.outputFrame.setVisible(true);
-            this.outputFrame.setJMenuBar(app.getMenuManager().getMainMenuBar());
+            app.getMenuManager().attachMenus();
             if (this.deferredRedraw) {
                 this.deferredRedraw = false;
                 this.redrawMaze();

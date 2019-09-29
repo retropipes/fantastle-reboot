@@ -10,8 +10,8 @@ import java.io.IOException;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.VersionException;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
-import com.puttysoftware.fantastlereboot.obsolete.VersionException;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Extension;
 import com.puttysoftware.xio.UnexpectedTagException;
 import com.puttysoftware.xio.XDataReader;

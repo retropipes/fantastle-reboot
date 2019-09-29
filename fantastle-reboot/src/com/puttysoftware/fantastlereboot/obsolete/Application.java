@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.GUIManager;
+import com.puttysoftware.fantastlereboot.MenuManager;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.items.Shop;
@@ -20,7 +21,6 @@ public final class Application {
     // Fields
     private GameLogicManager gameMgr;
     private MazeManager mazeMgr;
-    private MenuManager menuMgr;
     private ObjectHelpManager oHelpMgr;
     private final MazeObjectList objects;
     private int currentMode;
@@ -36,7 +36,6 @@ public final class Application {
         this.objects = new MazeObjectList();
         this.currentMode = Application.STATUS_NULL;
         this.formerMode = Application.STATUS_NULL;
-        this.menuMgr = new MenuManager();
         this.oHelpMgr = new ObjectHelpManager();
     }
 
@@ -72,8 +71,9 @@ public final class Application {
         }
     }
 
+    @SuppressWarnings("static-method")
     public MenuManager getMenuManager() {
-        return this.menuMgr;
+        return FantastleReboot.getBagOStuff().getMenuManager();
     }
 
     @SuppressWarnings("static-method")

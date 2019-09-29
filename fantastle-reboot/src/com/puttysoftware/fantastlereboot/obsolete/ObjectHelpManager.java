@@ -58,12 +58,6 @@ public class ObjectHelpManager {
                     ImageLoader.MAX_WINDOW_SIZE);
             this.helpFrame.pack();
             this.helpFrame.setResizable(false);
-            // Mac OS X-specific fixes
-            if (System.getProperty("os.name").startsWith("Mac OS X")) {
-                final MenuManager menu = new MenuManager();
-                menu.setHelpMenus();
-                this.helpFrame.setJMenuBar(menu.getMainMenuBar());
-            }
             this.inited = true;
         }
     }

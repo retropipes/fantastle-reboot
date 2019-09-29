@@ -29,8 +29,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.creatures.characterfiles.CharacterRegistration;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
+import com.puttysoftware.fantastlereboot.game.NoteManager;
+import com.puttysoftware.fantastlereboot.game.StatisticsViewer;
 import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.GenerateTask;
 
 public class MenuManager {
     // Fields
@@ -44,8 +49,10 @@ public class MenuManager {
             editUpOneLevel, editDownOneLevel, editAddLevel, editRemoveLevel,
             editResizeLevel, editToggleLayer, editMazePreferences;
     private JMenuItem playPlay, playEdit;
-    private JMenuItem gameEquipment, gameInventory, gameUse, gameReset,
-            gameShowScore, gameShowTable;
+    private JMenuItem gameNewGame, gameEquipment, gameInventory, gameUse,
+            gameReset, gameShowScore, gameShowTable, gameRegisterCharacter,
+            gameUnregisterCharacter, gameRemoveCharacter, gameEditNote,
+            gameViewStats;
     private JMenuItem debugViewImageCache, debugResetPreferences;
     private JMenuItem helpAbout, helpGeneralHelp, helpObjectHelp;
     private KeyStroke fileNewAccel, fileOpenAccel, fileCloseAccel,
@@ -57,7 +64,7 @@ public class MenuManager {
             editDownOneFloorAccel, editUpOneLevelAccel, editDownOneLevelAccel,
             editToggleLayerAccel;
     private KeyStroke playPlayMazeAccel, playEditMazeAccel;
-    private KeyStroke gameInventoryAccel, gameUseAccel, gameResetAccel,
+    private KeyStroke gameNewGameAccel, gameInventoryAccel, gameUseAccel, gameResetAccel,
             gameShowScoreAccel, gameShowTableAccel;
     private final EventHandler handler;
 
@@ -106,6 +113,8 @@ public class MenuManager {
         this.gameReset.setEnabled(true);
         this.gameShowScore.setEnabled(true);
         this.gameShowTable.setEnabled(true);
+        this.gameEditNote.setEnabled(true);
+        this.gameViewStats.setEnabled(true);
         this.checkFlags();
     }
 
@@ -128,6 +137,8 @@ public class MenuManager {
         this.gameReset.setEnabled(false);
         this.gameShowScore.setEnabled(false);
         this.gameShowTable.setEnabled(false);
+        this.gameEditNote.setEnabled(false);
+        this.gameViewStats.setEnabled(false);
         this.checkFlags();
     }
 
@@ -162,6 +173,8 @@ public class MenuManager {
         this.gameReset.setEnabled(false);
         this.gameShowScore.setEnabled(false);
         this.gameShowTable.setEnabled(false);
+        this.gameEditNote.setEnabled(false);
+        this.gameViewStats.setEnabled(false);
     }
 
     public void setMainMenus() {
@@ -192,6 +205,8 @@ public class MenuManager {
         this.gameReset.setEnabled(false);
         this.gameShowScore.setEnabled(false);
         this.gameShowTable.setEnabled(false);
+        this.gameEditNote.setEnabled(false);
+        this.gameViewStats.setEnabled(false);
         this.checkFlags();
     }
 
@@ -383,6 +398,7 @@ public class MenuManager {
                 modKey | InputEvent.SHIFT_DOWN_MASK);
         this.playPlayMazeAccel = KeyStroke.getKeyStroke(KeyEvent.VK_P, modKey);
         this.playEditMazeAccel = KeyStroke.getKeyStroke(KeyEvent.VK_E, modKey);
+        this.gameNewGameAccel = KeyStroke.getKeyStroke(KeyEvent.VK_N, modKey | InputEvent.SHIFT_DOWN_MASK);
         this.gameInventoryAccel = KeyStroke.getKeyStroke(KeyEvent.VK_I, modKey);
         this.gameUseAccel = KeyStroke.getKeyStroke(KeyEvent.VK_U, modKey);
         this.gameResetAccel = KeyStroke.getKeyStroke(KeyEvent.VK_R, modKey);
@@ -457,6 +473,8 @@ public class MenuManager {
         this.playPlay.setAccelerator(this.playPlayMazeAccel);
         this.playEdit = new JMenuItem("Edit");
         this.playEdit.setAccelerator(this.playEditMazeAccel);
+        this.gameNewGame = new JMenuItem("New Game");
+        this.gameNewGame.setAccelerator(this.gameNewGameAccel);
         this.gameEquipment = new JMenuItem("Show Equipment...");
         this.gameInventory = new JMenuItem("Show Inventory...");
         this.gameInventory.setAccelerator(this.gameInventoryAccel);
@@ -468,6 +486,11 @@ public class MenuManager {
         this.gameShowScore.setAccelerator(this.gameShowScoreAccel);
         this.gameShowTable = new JMenuItem("Show Score Table");
         this.gameShowTable.setAccelerator(this.gameShowTableAccel);
+        this.gameRegisterCharacter = new JMenuItem("Register Character...");
+        this.gameUnregisterCharacter = new JMenuItem("Unregister Character...");
+        this.gameRemoveCharacter = new JMenuItem("Remove Character...");
+        this.gameEditNote = new JMenuItem("Edit Note...");
+        this.gameViewStats = new JMenuItem("View Statistics...");
         this.debugViewImageCache = new JMenuItem("View Image Cache");
         this.debugResetPreferences = new JMenuItem("Reset Preferences");
         this.helpAbout = new JMenuItem("About Fantastle...");
@@ -505,6 +528,12 @@ public class MenuManager {
         this.gameReset.addActionListener(this.handler);
         this.gameShowScore.addActionListener(this.handler);
         this.gameShowTable.addActionListener(this.handler);
+        this.gameNewGame.addActionListener(this.handler);
+        this.gameRegisterCharacter.addActionListener(this.handler);
+        this.gameUnregisterCharacter.addActionListener(this.handler);
+        this.gameRemoveCharacter.addActionListener(this.handler);
+        this.gameEditNote.addActionListener(this.handler);
+        this.gameViewStats.addActionListener(this.handler);
         this.debugViewImageCache.addActionListener(this.handler);
         this.debugResetPreferences.addActionListener(this.handler);
         this.helpAbout.addActionListener(this.handler);
@@ -541,12 +570,18 @@ public class MenuManager {
         this.editMenu.add(this.editMazePreferences);
         this.playMenu.add(this.playPlay);
         this.playMenu.add(this.playEdit);
+        this.gameMenu.add(this.gameNewGame);
         this.gameMenu.add(this.gameEquipment);
         this.gameMenu.add(this.gameInventory);
         this.gameMenu.add(this.gameUse);
         this.gameMenu.add(this.gameReset);
         this.gameMenu.add(this.gameShowScore);
         this.gameMenu.add(this.gameShowTable);
+        this.gameMenu.add(this.gameRegisterCharacter);
+        this.gameMenu.add(this.gameUnregisterCharacter);
+        this.gameMenu.add(this.gameRemoveCharacter);
+        this.gameMenu.add(this.gameEditNote);
+        this.gameMenu.add(this.gameViewStats);
         this.debugMenu.add(this.debugViewImageCache);
         this.debugMenu.add(this.debugResetPreferences);
         if (!System.getProperty("os.name").equalsIgnoreCase("Mac OS X")) {
@@ -589,12 +624,16 @@ public class MenuManager {
         this.editMazePreferences.setEnabled(false);
         this.playPlay.setEnabled(false);
         this.playEdit.setEnabled(false);
+        this.gameNewGame.setEnabled(true);
         this.gameEquipment.setEnabled(false);
         this.gameInventory.setEnabled(false);
         this.gameUse.setEnabled(false);
         this.gameReset.setEnabled(false);
         this.gameShowScore.setEnabled(false);
         this.gameShowTable.setEnabled(false);
+        this.gameRegisterCharacter.setEnabled(true);
+        this.gameUnregisterCharacter.setEnabled(true);
+        this.gameRemoveCharacter.setEnabled(true);
         this.debugViewImageCache.setEnabled(true);
         this.debugResetPreferences.setEnabled(true);
         this.helpAbout.setEnabled(true);
@@ -727,6 +766,12 @@ public class MenuManager {
                 } else if (cmd.equals("Maze Preferences...")) {
                     // Set Maze Preferences
                     me.setMazePrefs();
+                } else if (cmd.equals("New Game")) {
+                    // Start a new game
+                    final boolean proceed = app.getGameManager().newGame();
+                    if (proceed) {
+                        new GenerateTask(true).start();
+                    }
                 } else if (cmd.equals("Play")) {
                     // Play the current maze
                     final boolean proceed = app.getGameManager().newGame();
@@ -762,6 +807,28 @@ public class MenuManager {
                     app.getGameManager().showCurrentScore();
                 } else if (cmd.equals("Show Score Table")) {
                     app.getGameManager().showScoreTable();
+                } else if (cmd.equals("Register Character...")) {
+                    // Register Character
+                    CharacterRegistration.registerCharacter();
+                } else if (cmd.equals("Unregister Character...")) {
+                    // Unregister Character
+                    CharacterRegistration.unregisterCharacter();
+                } else if (cmd.equals("Remove Character...")) {
+                    // Confirm
+                    final int confirm = CommonDialogs.showConfirmDialog(
+                            "WARNING: This will DELETE the character from disk,\n"
+                                    + "and CANNOT be undone! Proceed anyway?",
+                            "Remove Character");
+                    if (confirm == CommonDialogs.YES_OPTION) {
+                        // Remove Character
+                        CharacterRegistration.removeCharacter();
+                    }
+                } else if (cmd.equals("Edit Note...")) {
+                    // Edit Note
+                    NoteManager.editNote();
+                } else if (cmd.equals("View Statistics...")) {
+                    // View Statistics
+                    StatisticsViewer.viewStatistics();
                 } else if (cmd.equals("View Image Cache")) {
                     ImageLoader.viewCache();
                 } else if (cmd.equals("Reset Preferences")) {

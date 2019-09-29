@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.obsolete;
+package com.puttysoftware.fantastlereboot;
 
 import java.io.IOException;
 
