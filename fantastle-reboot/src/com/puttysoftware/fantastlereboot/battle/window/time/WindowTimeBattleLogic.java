@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import javax.swing.JFrame;
 
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
@@ -317,13 +318,14 @@ public class WindowTimeBattleLogic extends Battle {
     // Methods
     @Override
     public void doBattle() {
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
+        final Application app = TallerTower.getApplication();
         try {
-            final Application app = TallerTower.getApplication();
             final GameLogicManager gm = app.getGameManager();
-            if (app.getMode() != Application.STATUS_BATTLE) {
+            if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
                 SoundLoader.playSound(GameSound.DRAW_SWORD);
             }
-            app.setMode(Application.STATUS_BATTLE);
+            bag.setInBattle();
             gm.hideOutput();
             gm.stopMovement();
             this.enemy = MonsterFactory.getNewMonsterInstance();
@@ -344,6 +346,7 @@ public class WindowTimeBattleLogic extends Battle {
 
     @Override
     public void doBattleByProxy() {
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
         this.enemy = MonsterFactory.getNewMonsterInstance();
         this.enemy.loadCreature();
         final PartyMember playerCharacter = PartyManager.getParty().getLeader();
@@ -354,7 +357,7 @@ public class WindowTimeBattleLogic extends Battle {
         if (playerCharacter.checkLevelUp()) {
             playerCharacter.levelUp();
             TallerTower.getApplication().getGameManager().keepNextMessage();
-            TallerTower.getApplication().showMessage(
+            bag.showMessage(
                     "You reached level " + playerCharacter.getLevel() + ".");
         }
     }
@@ -732,8 +735,9 @@ public class WindowTimeBattleLogic extends Battle {
         public void run() {
             try {
                 final Application app = TallerTower.getApplication();
+                final BagOStuff bag = FantastleReboot.getBagOStuff();
                 final Battle b = app.getBattle();
-                if (app.getMode() == Application.STATUS_BATTLE
+                if (bag.getMode() == BagOStuff.STATUS_BATTLE
                         && b instanceof WindowTimeBattleLogic) {
                     final WindowTimeBattleLogic logic = WindowTimeBattleLogic.this;
                     final WindowTimeBattleGUI gui = logic.battleGUI;
@@ -763,8 +767,9 @@ public class WindowTimeBattleLogic extends Battle {
         public void run() {
             try {
                 final Application app = TallerTower.getApplication();
+                final BagOStuff bag = FantastleReboot.getBagOStuff();
                 final Battle b = app.getBattle();
-                if (app.getMode() == Application.STATUS_BATTLE
+                if (bag.getMode() == BagOStuff.STATUS_BATTLE
                         && b instanceof WindowTimeBattleLogic) {
                     final WindowTimeBattleLogic logic = WindowTimeBattleLogic.this;
                     final WindowTimeBattleGUI gui = logic.battleGUI;

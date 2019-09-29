@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ai.AIContext;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
@@ -31,7 +32,6 @@ import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItem;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
-import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
@@ -88,6 +88,7 @@ public class MapTurnBattleLogic extends Battle {
 
     @Override
     public void doBattleByProxy() {
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
         final Creature m = MonsterFactory.getNewMonsterInstance();
         final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         playerCharacter.offsetExperience(m.getExperience());
@@ -96,15 +97,16 @@ public class MapTurnBattleLogic extends Battle {
         if (playerCharacter.checkLevelUp()) {
             playerCharacter.levelUp();
             TallerTower.getApplication().getGameManager().keepNextMessage();
-            TallerTower.getApplication().showMessage(
+            bag.showMessage(
                     "You reached level " + playerCharacter.getLevel() + ".");
         }
     }
 
     private void doBattleInternal(final Maze bMaze, final MapBattle b) {
         // Initialize Battle
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
         TallerTower.getApplication().getGameManager().hideOutput();
-        TallerTower.getApplication().setMode(Application.STATUS_BATTLE);
+        bag.setInBattle();
         this.bd = new MapTurnBattleDefinitions();
         this.bd.setBattleMaze(bMaze);
         this.pde = AbstractDamageEngine.getPlayerInstance();
@@ -156,7 +158,6 @@ public class MapTurnBattleLogic extends Battle {
     public void battleDone() {
         // Leave Battle
         this.hideBattle();
-        TallerTower.getApplication().setMode(Application.STATUS_GAME);
         // Return to whence we came
         TallerTower.getApplication().getGameManager().showOutput();
         TallerTower.getApplication().getGameManager().redrawMaze();

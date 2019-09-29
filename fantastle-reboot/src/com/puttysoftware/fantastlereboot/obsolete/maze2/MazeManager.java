@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
@@ -72,9 +73,9 @@ public final class MazeManager {
 
     public static int showSaveDialog() {
         String type, source;
-        final Application app = TallerTower.getApplication();
-        final int mode = app.getMode();
-        if (mode == Application.STATUS_GAME) {
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
+        final int mode = bag.getMode();
+        if (mode == BagOStuff.STATUS_GAME) {
             type = "game";
             source = "TallerTower";
         } else {
@@ -100,14 +101,14 @@ public final class MazeManager {
     }
 
     public void setDirty(final boolean newDirty) {
-        final Application app = TallerTower.getApplication();
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
         this.isDirty = newDirty;
-        final JFrame frame = app.getOutputFrame();
+        final JFrame frame = bag.getOutputFrame();
         if (frame != null) {
             frame.getRootPane().putClientProperty("Window.documentModified",
                     Boolean.valueOf(newDirty));
         }
-        app.getMenuManager().checkFlags();
+        bag.getMenuManager().checkFlags();
     }
 
     public boolean loadGame() {
@@ -223,8 +224,9 @@ public final class MazeManager {
     }
 
     private static void saveFile(final String filename) {
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
         final String sg = "Saved Game";
-        TallerTower.getApplication().showMessage("Saving " + sg + " file...");
+        bag.showMessage("Saving " + sg + " file...");
         final GameSaveTask lst = new GameSaveTask(filename);
         lst.start();
     }

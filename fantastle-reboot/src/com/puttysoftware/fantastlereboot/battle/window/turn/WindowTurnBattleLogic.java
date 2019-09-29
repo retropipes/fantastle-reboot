@@ -2,6 +2,7 @@ package com.puttysoftware.fantastlereboot.battle.window.turn;
 
 import javax.swing.JFrame;
 
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
@@ -307,11 +308,12 @@ public class WindowTurnBattleLogic extends Battle {
     public void doBattle() {
         try {
             final Application app = TallerTower.getApplication();
+            final BagOStuff bag = FantastleReboot.getBagOStuff();
             final GameLogicManager gm = app.getGameManager();
-            if (app.getMode() != Application.STATUS_BATTLE) {
+            if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
                 SoundLoader.playSound(GameSound.DRAW_SWORD);
             }
-            app.setMode(Application.STATUS_BATTLE);
+            bag.setInBattle();
             gm.hideOutput();
             gm.stopMovement();
             this.enemy = MonsterFactory.getNewMonsterInstance();
@@ -328,6 +330,7 @@ public class WindowTurnBattleLogic extends Battle {
 
     @Override
     public void doBattleByProxy() {
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
         this.enemy = MonsterFactory.getNewMonsterInstance();
         this.enemy.loadCreature();
         final PartyMember playerCharacter = PartyManager.getParty().getLeader();
@@ -338,7 +341,7 @@ public class WindowTurnBattleLogic extends Battle {
         if (playerCharacter.checkLevelUp()) {
             playerCharacter.levelUp();
             TallerTower.getApplication().getGameManager().keepNextMessage();
-            TallerTower.getApplication().showMessage(
+            bag.showMessage(
                     "You reached level " + playerCharacter.getLevel() + ".");
         }
     }

@@ -8,6 +8,8 @@ package com.puttysoftware.fantastlereboot.game;
 import javax.swing.JFrame;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.BagOStuff;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
@@ -44,7 +46,8 @@ public final class GameLogicManager {
 
     // Methods
     public boolean newGame() {
-        final JFrame owner = TallerTower.getApplication().getOutputFrame();
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
+        final JFrame owner = bag.getOutputFrame();
         this.em.deactivateAllEffects();
         if (this.savedGameFlag) {
             if (PartyManager.getParty() != null) {
@@ -203,6 +206,7 @@ public final class GameLogicManager {
 
     public void identifyObject(final int x, final int y) {
         final Application app = TallerTower.getApplication();
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         final int xOffset = this.vwMgr.getViewingWindowLocationX()
                 - GameViewingWindowManager.getOffsetFactorX();
@@ -222,13 +226,12 @@ public final class GameLogicManager {
             target2.determineCurrentAppearance(destX, destY, destZ);
             final String gameName1 = target1.getGameName();
             final String gameName2 = target2.getGameName();
-            TallerTower.getApplication()
-                    .showMessage(gameName2 + " on " + gameName1);
+            bag.showMessage(gameName2 + " on " + gameName1);
             SoundLoader.playSound(GameSound.IDENTIFY);
         } catch (final ArrayIndexOutOfBoundsException ae) {
             final EmptyVoid ev = new EmptyVoid();
             ev.determineCurrentAppearance(destX, destY, destZ);
-            TallerTower.getApplication().showMessage(ev.getGameName());
+            bag.showMessage(ev.getGameName());
             SoundLoader.playSound(GameSound.IDENTIFY);
         }
     }
@@ -260,11 +263,14 @@ public final class GameLogicManager {
     }
 
     public void showOutput() {
-        TallerTower.getApplication().setMode(Application.STATUS_GAME);
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
+        bag.setInGame(true);
         this.gui.showOutput();
     }
 
     public void hideOutput() {
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
+        bag.setInGame(false);
         this.stopMovement();
         this.gui.hideOutput();
     }

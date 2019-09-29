@@ -5,6 +5,8 @@ Any questions should be directed to the author via email at: TallerTower@worldwi
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze2.objects;
 
+import com.puttysoftware.fantastlereboot.BagOStuff;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.game.GameLogicManager;
@@ -32,7 +34,8 @@ public class Amulet extends AbstractTrap {
     @Override
     public void postMoveAction(final boolean ie, final int dirX,
             final int dirY) {
-        TallerTower.getApplication().showMessage("You no longer slide on ice!");
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
+        bag.showMessage("You no longer slide on ice!");
         final GameLogicManager glm = TallerTower.getApplication()
                 .getGameManager();
         glm.activateEffect(EffectConstants.EFFECT_STICKY);

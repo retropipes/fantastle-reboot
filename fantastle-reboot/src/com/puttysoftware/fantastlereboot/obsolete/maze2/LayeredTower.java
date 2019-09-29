@@ -8,6 +8,8 @@ package com.puttysoftware.fantastlereboot.obsolete.maze2;
 import java.io.IOException;
 import java.util.Arrays;
 
+import com.puttysoftware.fantastlereboot.BagOStuff;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
@@ -87,6 +89,7 @@ final class LayeredTower implements Cloneable {
     public void updateMonsterPosition(final int move, final int xLoc,
             final int yLoc, final Monster monster) {
         final Application app = TallerTower.getApplication();
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
         final int[] dirMove = DirectionResolver
                 .unresolveRelativeDirection(move);
         final int pLocX = this.getPlayerRow();
@@ -99,7 +102,7 @@ final class LayeredTower implements Cloneable {
                     yLoc + dirMove[1], zLoc, MazeConstants.LAYER_GROUND);
             if (!there.isSolid() && !there.getName().equals("Monster")) {
                 if (LayeredTower.radialScan(xLoc, yLoc, 0, pLocX, pLocY)) {
-                    if (app.getMode() != Application.STATUS_BATTLE) {
+                    if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
                         app.getGameManager().stopMovement();
                         app.getBattle().doBattle();
                         this.postBattle(monster, xLoc, yLoc, false);

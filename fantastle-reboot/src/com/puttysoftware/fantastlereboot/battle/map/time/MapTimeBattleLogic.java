@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.ai.map.AutoMapAI;
@@ -87,6 +88,7 @@ public class MapTimeBattleLogic extends Battle {
 
     @Override
     public void doBattleByProxy() {
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
         final Creature m = MonsterFactory.getNewMonsterInstance();
         final PartyMember playerCharacter = PartyManager.getParty().getLeader();
         playerCharacter.offsetExperience(m.getExperience());
@@ -95,15 +97,16 @@ public class MapTimeBattleLogic extends Battle {
         if (playerCharacter.checkLevelUp()) {
             playerCharacter.levelUp();
             TallerTower.getApplication().getGameManager().keepNextMessage();
-            TallerTower.getApplication().showMessage(
+            bag.showMessage(
                     "You reached level " + playerCharacter.getLevel() + ".");
         }
     }
 
     private void doBattleInternal(final Maze bMaze, final MapBattle b) {
         // Initialize Battle
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
         TallerTower.getApplication().getGameManager().hideOutput();
-        TallerTower.getApplication().setMode(Application.STATUS_BATTLE);
+        bag.setInBattle();
         this.battleMaze = bMaze;
         this.pde = AbstractDamageEngine.getPlayerInstance();
         this.ede = AbstractDamageEngine.getEnemyInstance();
@@ -143,7 +146,6 @@ public class MapTimeBattleLogic extends Battle {
     public void battleDone() {
         // Leave Battle
         this.hideBattle();
-        TallerTower.getApplication().setMode(Application.STATUS_GAME);
         // Return to whence we came
         TallerTower.getApplication().getGameManager().showOutput();
         TallerTower.getApplication().getGameManager().redrawMaze();
@@ -1459,8 +1461,9 @@ public class MapTimeBattleLogic extends Battle {
         public void run() {
             try {
                 final Application app = TallerTower.getApplication();
+                final BagOStuff bag = FantastleReboot.getBagOStuff();
                 final Battle b = app.getBattle();
-                if (app.getMode() == Application.STATUS_BATTLE
+                if (bag.getMode() == BagOStuff.STATUS_BATTLE
                         && b instanceof MapTimeBattleLogic) {
                     final MapTimeBattleLogic logic = MapTimeBattleLogic.this;
                     final MapTimeBattleGUI gui = logic.battleGUI;
@@ -1490,8 +1493,9 @@ public class MapTimeBattleLogic extends Battle {
         public void run() {
             try {
                 final Application app = TallerTower.getApplication();
+                final BagOStuff bag = FantastleReboot.getBagOStuff();
                 final Battle b = app.getBattle();
-                if (app.getMode() == Application.STATUS_BATTLE
+                if (bag.getMode() == BagOStuff.STATUS_BATTLE
                         && b instanceof MapTimeBattleLogic) {
                     final MapTimeBattleLogic logic = MapTimeBattleLogic.this;
                     final MapTimeBattleGUI gui = logic.battleGUI;

@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
@@ -35,6 +36,7 @@ public class GameSaveTask extends Thread {
         final String sg = "Game";
         try {
             final Application app = TallerTower.getApplication();
+            final BagOStuff bag = FantastleReboot.getBagOStuff();
             // filename check
             final boolean hasExtension = GameSaveTask
                     .hasExtension(this.filename);
@@ -60,7 +62,7 @@ public class GameSaveTask extends Thread {
             if (!delSuccess) {
                 throw new IOException("Failed to delete temporary file!");
             }
-            app.showMessage(sg + " saved.");
+            bag.showMessage(sg + " saved.");
         } catch (final FileNotFoundException fnfe) {
             CommonDialogs.showDialog("Writing the " + sg.toLowerCase()
                     + " failed, probably due to illegal characters in the file name.");

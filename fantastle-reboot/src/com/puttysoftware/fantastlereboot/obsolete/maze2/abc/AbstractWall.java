@@ -5,9 +5,10 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze2.abc;
 
+import com.puttysoftware.fantastlereboot.BagOStuff;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
@@ -26,7 +27,8 @@ public abstract class AbstractWall extends AbstractMazeObject {
     @Override
     public void moveFailedAction(final boolean ie, final int dirX,
             final int dirY) {
-        TallerTower.getApplication().showMessage("Can't go that way");
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
+        bag.showMessage("Can't go that way");
         // Play move failed sound, if it's enabled
         SoundLoader.playSound(GameSound.WALK_FAILED);
     }

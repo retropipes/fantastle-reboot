@@ -1,6 +1,7 @@
 package com.puttysoftware.fantastlereboot.obsolete.maze2.objects;
 
-import com.puttysoftware.fantastlereboot.obsolete.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMovingObject;
@@ -17,9 +18,10 @@ public class Monster extends AbstractMovingObject {
     @Override
     public void postMoveAction(final boolean ie, final int dirX,
             final int dirY) {
-        if (TallerTower.getApplication()
-                .getMode() != Application.STATUS_BATTLE) {
-            TallerTower.getApplication().getBattle().doBattle();
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
+        if (bag
+                .getMode() != BagOStuff.STATUS_BATTLE) {
+            bag.getBattle().doBattle();
             TallerTower.getApplication().getMazeManager().getMaze()
                     .postBattle(this, dirX, dirY, true);
         }

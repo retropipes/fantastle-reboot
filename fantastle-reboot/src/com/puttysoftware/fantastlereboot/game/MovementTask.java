@@ -6,6 +6,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.game;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
@@ -146,6 +147,7 @@ final class MovementTask extends Thread {
     private void updatePositionRelative(final int dirX, final int dirY,
             final int dirZ) {
         final Application app = TallerTower.getApplication();
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         int px = m.getPlayerLocationX();
         int py = m.getPlayerLocationY();
@@ -204,11 +206,10 @@ final class MovementTask extends Thread {
                         this.vwMgr.offsetViewingWindowLocationX(fY);
                         this.vwMgr.offsetViewingWindowLocationY(fX);
                         app.getMazeManager().setDirty(true);
-                        app.saveFormerMode();
                         this.fireStepActions();
                         this.decayEffects();
                         this.redrawMaze();
-                        if (app.modeChanged()) {
+                        if (bag.modeChanged()) {
                             this.proceed = false;
                         }
                         if (this.proceed) {
@@ -238,7 +239,7 @@ final class MovementTask extends Thread {
                     m.restorePlayerLocation();
                     // Move failed - attempted to go outside the maze
                     nextAbove.moveFailedAction(false, px, py);
-                    app.showMessage("Can't go that way");
+                    bag.showMessage("Can't go that way");
                     nextAbove = new Empty();
                     this.decayEffects();
                     this.proceed = false;
@@ -304,6 +305,7 @@ final class MovementTask extends Thread {
 
     private void updatePositionAbsolute(final int x, final int y, final int z) {
         final Application app = TallerTower.getApplication();
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
             m.getCell(x, y, z, MazeConstants.LAYER_OBJECT).preMoveAction(true,
@@ -338,11 +340,11 @@ final class MovementTask extends Thread {
         } catch (final ArrayIndexOutOfBoundsException ae) {
             m.restorePlayerLocation();
             this.vwMgr.restoreViewingWindow();
-            app.showMessage("Can't go outside the maze");
+            bag.showMessage("Can't go outside the maze");
         } catch (final NullPointerException np) {
             m.restorePlayerLocation();
             this.vwMgr.restoreViewingWindow();
-            app.showMessage("Can't go outside the maze");
+            bag.showMessage("Can't go outside the maze");
         }
     }
 

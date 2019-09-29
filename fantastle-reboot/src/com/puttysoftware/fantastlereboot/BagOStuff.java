@@ -20,6 +20,7 @@ package com.puttysoftware.fantastlereboot;
 
 import javax.swing.JFrame;
 
+import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
 import com.puttysoftware.fantastlereboot.battle.Battle;
@@ -156,6 +157,10 @@ public class BagOStuff {
 
     public int getFormerMode() {
         return this.formerMode;
+    }
+
+    public boolean modeChanged() {
+        return this.formerMode != this.currentMode;
     }
 
     public MenuManager getMenuManager() {
@@ -333,6 +338,16 @@ public class BagOStuff {
             }
         } catch (final NullPointerException npe) {
             return null;
+        }
+    }
+
+    public void showMessage(final String msg) {
+        if (this.currentMode == BagOStuff.STATUS_GAME) {
+            this.getGameManager().setStatusMessage(msg);
+        } else if (this.currentMode == BagOStuff.STATUS_BATTLE) {
+            this.getBattle().setStatusMessage(msg);
+        } else {
+            CommonDialogs.showDialog(msg);
         }
     }
 
