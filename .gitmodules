@@ -1,0 +1,3 @@
+[submodule "fantastle-reboot/diane-game-engine"]
+	path = fantastle-reboot/diane-game-engine
+	url = https://github.com/PuttySoftware/diane-game-engine.git
