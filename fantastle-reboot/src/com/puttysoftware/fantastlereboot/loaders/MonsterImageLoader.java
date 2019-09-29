@@ -37,6 +37,7 @@ import com.puttysoftware.help.GraphicalHelpViewer;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class MonsterImageLoader {
+    private static String[] allFilenames;
     private static Properties fileExtensions;
 
     static BufferedImageIcon loadUncached(final String name,
@@ -66,6 +67,9 @@ public class MonsterImageLoader {
 
     public static BufferedImageIcon load(final int imageID,
             final Element elem) {
+        if (allFilenames == null) {
+            allFilenames = DataLoader.loadMonsterImageData();
+        }
         if (fileExtensions == null) {
             try {
                 fileExtensions = new Properties();
@@ -76,7 +80,8 @@ public class MonsterImageLoader {
             }
         }
         String imageExt = fileExtensions.getProperty("images");
-        return ImageCache.getCachedImage("monster_" + imageID + imageExt, elem);
+        return ImageCache.getCachedImage(allFilenames[imageID] + imageExt,
+                elem);
     }
 
     public static void viewCache() {
