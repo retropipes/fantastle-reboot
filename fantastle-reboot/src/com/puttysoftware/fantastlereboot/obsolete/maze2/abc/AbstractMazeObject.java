@@ -11,8 +11,8 @@ import java.util.BitSet;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.BattleImageManager;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
+import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.FormatConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
@@ -229,7 +229,7 @@ public abstract class AbstractMazeObject implements RandomGenerationRule {
     }
 
     public BufferedImageIcon battleRenderHook() {
-        return BattleImageManager.getImage(this.getName(),
+        return ObjectImageManager.getImage(this.getName(),
                 this.getBattleBaseID(), AbstractMazeObject.getTemplateColor());
     }
 
