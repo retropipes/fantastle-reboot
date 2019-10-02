@@ -40,8 +40,10 @@ public class SoundPlayer {
     }
 
     public static void playSound(final GameSound sound) {
-        final String filename = getSoundFilename(sound);
-        SoundLoader.play("/assets/sounds/" + filename, SoundPlayer.class,
-                FantastleReboot.getErrorHandler());
+        if (sound != GameSound._NONE) {
+            final String filename = getSoundFilename(sound);
+            SoundLoader.play("/assets/sounds/" + filename, SoundPlayer.class,
+                    FantastleReboot.getErrorHandler());
+        }
     }
 }

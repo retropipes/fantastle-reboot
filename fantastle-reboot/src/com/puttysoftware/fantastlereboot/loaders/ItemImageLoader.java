@@ -31,18 +31,18 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.assets.GameEffectImage;
+import com.puttysoftware.fantastlereboot.assets.GameItemImage;
 import com.puttysoftware.help.GraphicalHelpViewer;
 import com.puttysoftware.images.BufferedImageIcon;
 
-public class EffectImageLoader {
+public class ItemImageLoader {
     private static String[] allFilenames;
     private static Properties fileExtensions;
 
     static BufferedImageIcon loadUncached(final String name) {
         try {
-            final URL url = EffectImageLoader.class
-                    .getResource("/assets/images/effects/" + name);
+            final URL url = ItemImageLoader.class
+                    .getResource("/assets/images/items/" + name);
             final BufferedImage image = ImageIO.read(url);
             final BufferedImageIcon icon = new BufferedImageIcon(image);
             return icon;
@@ -52,10 +52,10 @@ public class EffectImageLoader {
         }
     }
 
-    public static BufferedImageIcon load(GameEffectImage image) {
-        if (image != GameEffectImage._NONE) {
+    public static BufferedImageIcon load(GameItemImage image) {
+        if (image != GameItemImage._NONE) {
             if (allFilenames == null) {
-                allFilenames = DataLoader.loadEffectImageData();
+                allFilenames = DataLoader.loadItemImageData();
             }
             if (fileExtensions == null) {
                 try {
@@ -79,7 +79,7 @@ public class EffectImageLoader {
         }
         final GraphicalHelpViewer cv = new GraphicalHelpViewer(
                 ImageCache.images(), ImageCache.names());
-        final JFrame viewFrame = new JFrame("Effect Image Cache Viewer");
+        final JFrame viewFrame = new JFrame("Item Image Cache Viewer");
         viewFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         viewFrame.setLayout(new FlowLayout());
         viewFrame.add(cv.getHelp());
@@ -112,7 +112,7 @@ public class EffectImageLoader {
                 }
             }
             // Not found: Add to cache
-            BufferedImageIcon newImage = EffectImageLoader.loadUncached(name);
+            BufferedImageIcon newImage = ItemImageLoader.loadUncached(name);
             ImageCacheEntry newEntry = new ImageCacheEntry(newImage, name);
             ImageCache.cache.add(newEntry);
             return newImage;

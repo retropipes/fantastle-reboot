@@ -53,21 +53,24 @@ public class ObjectImageLoader {
     }
 
     public static BufferedImageIcon load(GameObjectImage image) {
-        if (allFilenames == null) {
-            allFilenames = DataLoader.loadObjectImageData();
-        }
-        if (fileExtensions == null) {
-            try {
-                fileExtensions = new Properties();
-                fileExtensions.load(SoundPlayer.class.getResourceAsStream(
-                        "/assets/data/extensions/extensions.properties"));
-            } catch (IOException e) {
-                FantastleReboot.logError(e);
+        if (image != GameObjectImage._NONE) {
+            if (allFilenames == null) {
+                allFilenames = DataLoader.loadObjectImageData();
             }
+            if (fileExtensions == null) {
+                try {
+                    fileExtensions = new Properties();
+                    fileExtensions.load(SoundPlayer.class.getResourceAsStream(
+                            "/assets/data/extensions/extensions.properties"));
+                } catch (IOException e) {
+                    FantastleReboot.logError(e);
+                }
+            }
+            String imageExt = fileExtensions.getProperty("images");
+            return ImageCache
+                    .getCachedImage(allFilenames[image.ordinal()] + imageExt);
         }
-        String imageExt = fileExtensions.getProperty("images");
-        return ImageCache
-                .getCachedImage(allFilenames[image.ordinal()] + imageExt);
+        return null;
     }
 
     public static void viewCache() {
