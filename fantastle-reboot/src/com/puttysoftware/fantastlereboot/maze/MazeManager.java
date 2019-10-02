@@ -129,7 +129,7 @@ public final class MazeManager implements OpenFilesHandler, QuitHandler {
         FantastleReboot.getBagOStuff().getMenuManager().checkFlags();
     }
 
-    public AbstractMazeObject getMazeObject(final int x, final int y,
+    public AbstractMazeObject getAbstractMazeObject(final int x, final int y,
             final int z, final int e) {
         try {
             return this.gameMaze.getCell(x, y, z, e);

@@ -21,8 +21,8 @@ package com.puttysoftware.fantastlereboot.obsolete.maze1;
 import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Monster;
+import com.puttysoftware.fantastlereboot.creatures.monsters.Monster;
+import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.MovingBlock;
 import com.puttysoftware.fantastlereboot.utilities.FormatConstants;
 import com.puttysoftware.xio.XDataReader;
@@ -133,7 +133,7 @@ public class Maze5 implements Maze {
     }
 
     @Override
-    public MazeObject getCell(final int row, final int col, final int floor,
+    public AbstractMazeObject getCell(final int row, final int col, final int floor,
             final int level, final int extra) {
         return this.mazeData[level].getCell(row, col, floor, extra);
     }
@@ -236,24 +236,24 @@ public class Maze5 implements Maze {
     }
 
     @Override
-    public boolean findNthMazeObjectOnLevel(final int level,
-            final MazeObject obj, final int N) {
+    public boolean findNthAbstractMazeObjectOnLevel(final int level,
+            final AbstractMazeObject obj, final int N) {
         if (level > this.levelCount) {
             return false;
         } else {
-            return this.mazeData[level].findNthMazeObject(obj, N);
+            return this.mazeData[level].findNthAbstractMazeObject(obj, N);
         }
     }
 
     @Override
-    public void findAllObjectPairsAndSwap(final int level, final MazeObject o1,
-            final MazeObject o2) {
+    public void findAllObjectPairsAndSwap(final int level, final AbstractMazeObject o1,
+            final AbstractMazeObject o2) {
         this.mazeData[level].findAllObjectPairsAndSwap(o1, o2);
     }
 
     @Override
     public void findAllMatchingObjectsAndDecay(final int level,
-            final MazeObject o) {
+            final AbstractMazeObject o) {
         this.mazeData[level].findAllMatchingObjectsAndDecay(o);
     }
 
@@ -329,7 +329,7 @@ public class Maze5 implements Maze {
     }
 
     @Override
-    public void setCell(final MazeObject mo, final int row, final int col,
+    public void setCell(final AbstractMazeObject mo, final int row, final int col,
             final int floor, final int level, final int extra) {
         this.mazeData[level].setCell(mo, row, col, floor, extra);
     }
@@ -375,7 +375,7 @@ public class Maze5 implements Maze {
     }
 
     @Override
-    public void fill(final MazeObject bottom, final MazeObject top) {
+    public void fill(final AbstractMazeObject bottom, final AbstractMazeObject top) {
         int x;
         for (x = 0; x < this.levelCount; x++) {
             this.mazeData[x].fill(bottom, top);
@@ -383,8 +383,8 @@ public class Maze5 implements Maze {
     }
 
     @Override
-    public void fillLevel(final int level, final MazeObject bottom,
-            final MazeObject top) {
+    public void fillLevel(final int level, final AbstractMazeObject bottom,
+            final AbstractMazeObject top) {
         this.mazeData[level].fill(bottom, top);
     }
 
@@ -446,7 +446,7 @@ public class Maze5 implements Maze {
     }
 
     @Override
-    public void warpObject(final MazeObject mo, final int x, final int y,
+    public void warpObject(final AbstractMazeObject mo, final int x, final int y,
             final int z, final int w, final int l) {
         this.mazeData[w].warpObject(mo, x, y, z, l);
     }

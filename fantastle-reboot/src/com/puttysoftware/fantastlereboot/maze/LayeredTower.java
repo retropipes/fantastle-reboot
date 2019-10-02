@@ -10,19 +10,20 @@ import java.util.Arrays;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.creatures.monsters.Monster;
 import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.maze.objects.Empty;
-import com.puttysoftware.fantastlereboot.maze.objects.Monster;
 import com.puttysoftware.fantastlereboot.maze.objects.Tile;
 import com.puttysoftware.fantastlereboot.maze.objects.WallOff;
 import com.puttysoftware.fantastlereboot.maze.objects.WallOn;
-import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
 import com.puttysoftware.fantastlereboot.utilities.MazeObjectList;
+import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
 import com.puttysoftware.fantastlereboot.utilities.RandomGenerationRule;
 import com.puttysoftware.randomrange.RandomRange;
 import com.puttysoftware.storage.FlagStorage;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
+
+
 
 final class LayeredTower implements Cloneable {
     // Properties
@@ -647,7 +648,7 @@ final class LayeredTower implements Cloneable {
 
     public void tickTimers(final int floor) {
         int x, y;
-        // Tick all MazeObject timers
+        // Tick all AbstractMazeObject timers
         for (x = 0; x < this.getColumns(); x++) {
             for (y = 0; y < this.getRows(); y++) {
                 final AbstractMazeObject mo = this.getCell(y, x, floor,
@@ -689,7 +690,7 @@ final class LayeredTower implements Cloneable {
             for (y = 0; y < this.getRows(); y++) {
                 for (z = 0; z < this.getFloors(); z++) {
                     for (e = 0; e < MazeConstants.LAYER_COUNT; e++) {
-                        this.getCell(y, x, z, e).writeMazeObject(writer);
+                        this.getCell(y, x, z, e).writeAbstractMazeObject(writer);
                     }
                     writer.writeBoolean(this.visionData.getCell(y, x, z));
                     final boolean hasNote = this.noteData.getNote(y, x,
@@ -731,7 +732,7 @@ final class LayeredTower implements Cloneable {
                 for (z = 0; z < lt.getFloors(); z++) {
                     for (e = 0; e < MazeConstants.LAYER_COUNT; e++) {
                         lt.setCell(FantastleReboot.getBagOStuff().getObjects()
-                                .readMazeObject(reader,
+                                .readAbstractMazeObject(reader,
                                         FormatConstants.MAZE_FORMAT_LATEST),
                                 y, x, z, e);
                         if (lt.getCell(y, x, z, e) == null) {
@@ -776,7 +777,7 @@ final class LayeredTower implements Cloneable {
                 for (z = 0; z < this.getFloors(); z++) {
                     for (e = 0; e < MazeConstants.LAYER_COUNT; e++) {
                         this.savedTowerState.getCell(y, x, z, e)
-                                .writeMazeObject(writer);
+                                .writeAbstractMazeObject(writer);
                     }
                 }
             }
@@ -797,7 +798,7 @@ final class LayeredTower implements Cloneable {
                     for (e = 0; e < MazeConstants.LAYER_COUNT; e++) {
                         this.savedTowerState.setCell(
                                 FantastleReboot.getBagOStuff().getObjects()
-                                        .readMazeObject(reader, formatVersion),
+                                        .readAbstractMazeObject(reader, formatVersion),
                                 y, x, z, e);
                     }
                 }

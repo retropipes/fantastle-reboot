@@ -42,13 +42,10 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.game.GameManager;
-
+import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze5;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.MazeManager;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObjectList;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Empty;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.EmptyVoid;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.FinishTo;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.InvisibleOneShotTeleport;
@@ -64,9 +61,12 @@ import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.StairsUp;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Teleport;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.TreasureChest;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.TwoWayTeleport;
+import com.puttysoftware.fantastlereboot.utilities.MazeObjectList;
 import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.picturepicker.PicturePicker;
+
+
 
 public class MazeEditor {
     // Declarations
@@ -87,12 +87,12 @@ public class MazeEditor {
     private final MazeObjectList objectList;
     private final String[] groundNames;
     private final String[] objectNames;
-    private final MazeObject[] groundObjects;
-    private final MazeObject[] objectObjects;
+    private final AbstractMazeObject[] groundObjects;
+    private final AbstractMazeObject[] objectObjects;
     private final BufferedImageIcon[] groundEditorAppearances;
     private final BufferedImageIcon[] objectEditorAppearances;
     private final String[] containableNames;
-    private final MazeObject[] containableObjects;
+    private final AbstractMazeObject[] containableObjects;
     private final BufferedImageIcon[] containableEditorAppearances;
     private int TELEPORT_TYPE;
     private int currentObjectIndex;
@@ -367,27 +367,27 @@ public class MazeEditor {
                 + this.evMgr.getViewingWindowLocationY() + xOffset - yOffset;
         try {
             app.getGameManager()
-                    .setSavedMazeObject(app.getMazeManager().getMaze().getCell(
+                    .setSavedAbstractMazeObject(app.getMazeManager().getMaze().getCell(
                             gridX, gridY, this.elMgr.getEditorLocationZ(),
                             this.elMgr.getEditorLocationW(),
                             this.elMgr.getEditorLocationE()));
         } catch (final ArrayIndexOutOfBoundsException ae) {
             return;
         }
-        MazeObject[] choices = null;
+        AbstractMazeObject[] choices = null;
         if (this.elMgr.getEditorLocationE() == Maze.LAYER_GROUND) {
             choices = this.groundObjects;
         } else {
             choices = this.objectObjects;
         }
-        final MazeObject mo = choices[this.currentObjectIndex];
+        final AbstractMazeObject mo = choices[this.currentObjectIndex];
         this.elMgr.setEditorLocationX(gridX);
         this.elMgr.setEditorLocationY(gridY);
         mo.editorPlaceHook();
         try {
             this.checkTwoWayTeleportPair(this.elMgr.getEditorLocationZ(),
                     this.elMgr.getEditorLocationW());
-            this.updateUndoHistory(app.getGameManager().getSavedMazeObject(),
+            this.updateUndoHistory(app.getGameManager().getSavedAbstractMazeObject(),
                     gridX, gridY, this.elMgr.getEditorLocationZ(),
                     this.elMgr.getEditorLocationW(),
                     this.elMgr.getEditorLocationE());
@@ -402,7 +402,7 @@ public class MazeEditor {
             this.redrawEditor();
         } catch (final ArrayIndexOutOfBoundsException aioob) {
             app.getMazeManager().getMaze().setCell(
-                    app.getGameManager().getSavedMazeObject(), gridX, gridY,
+                    app.getGameManager().getSavedAbstractMazeObject(), gridX, gridY,
                     this.elMgr.getEditorLocationZ(),
                     this.elMgr.getEditorLocationW(),
                     this.elMgr.getEditorLocationE());
@@ -421,7 +421,7 @@ public class MazeEditor {
         final int gridY = y / ImageConstants.SIZE
                 + this.evMgr.getViewingWindowLocationY() + xOffset - yOffset;
         try {
-            final MazeObject mo = app.getMazeManager().getMaze().getCell(gridX,
+            final AbstractMazeObject mo = app.getMazeManager().getMaze().getCell(gridX,
                     gridY, this.elMgr.getEditorLocationZ(),
                     this.elMgr.getEditorLocationW(),
                     this.elMgr.getEditorLocationE());
@@ -448,14 +448,14 @@ public class MazeEditor {
         final int gridY = y / ImageConstants.SIZE
                 + this.evMgr.getViewingWindowLocationY() + xOffset - yOffset;
         try {
-            final MazeObject mo = app.getMazeManager().getMaze().getCell(gridX,
+            final AbstractMazeObject mo = app.getMazeManager().getMaze().getCell(gridX,
                     gridY, this.elMgr.getEditorLocationZ(),
                     this.elMgr.getEditorLocationW(),
                     this.elMgr.getEditorLocationE());
             this.elMgr.setEditorLocationX(gridX);
             this.elMgr.setEditorLocationY(gridY);
             if (!mo.defersSetProperties()) {
-                final MazeObject mo2 = mo.editorPropertiesHook();
+                final AbstractMazeObject mo2 = mo.editorPropertiesHook();
                 if (mo2 == null) {
                     Messager.showMessage("This object has no properties");
                 } else {
@@ -463,7 +463,7 @@ public class MazeEditor {
                             this.elMgr.getEditorLocationZ(),
                             this.elMgr.getEditorLocationW());
                     this.updateUndoHistory(
-                            app.getGameManager().getSavedMazeObject(), gridX,
+                            app.getGameManager().getSavedAbstractMazeObject(), gridX,
                             gridY, this.elMgr.getEditorLocationZ(),
                             this.elMgr.getEditorLocationW(),
                             this.elMgr.getEditorLocationE());
@@ -486,13 +486,13 @@ public class MazeEditor {
 
     private void checkStairPair(final int z, final int w) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
-        final MazeObject mo1 = app.getMazeManager().getMaze().getCell(
+        final AbstractMazeObject mo1 = app.getMazeManager().getMaze().getCell(
                 this.elMgr.getEditorLocationX(),
                 this.elMgr.getEditorLocationY(), z, w, Maze.LAYER_OBJECT);
         final String name1 = mo1.getName();
         String name2, name3;
         try {
-            final MazeObject mo2 = app.getMazeManager().getMaze().getCell(
+            final AbstractMazeObject mo2 = app.getMazeManager().getMaze().getCell(
                     this.elMgr.getEditorLocationX(),
                     this.elMgr.getEditorLocationY(), z + 1, w,
                     Maze.LAYER_OBJECT);
@@ -501,7 +501,7 @@ public class MazeEditor {
             name2 = "";
         }
         try {
-            final MazeObject mo3 = app.getMazeManager().getMaze().getCell(
+            final AbstractMazeObject mo3 = app.getMazeManager().getMaze().getCell(
                     this.elMgr.getEditorLocationX(),
                     this.elMgr.getEditorLocationY(), z - 1, w,
                     Maze.LAYER_OBJECT);
@@ -522,13 +522,13 @@ public class MazeEditor {
 
     private void reverseCheckStairPair(final int z, final int w) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
-        final MazeObject mo1 = app.getMazeManager().getMaze().getCell(
+        final AbstractMazeObject mo1 = app.getMazeManager().getMaze().getCell(
                 this.elMgr.getEditorLocationX(),
                 this.elMgr.getEditorLocationY(), z, w, Maze.LAYER_OBJECT);
         final String name1 = mo1.getName();
         String name2, name3;
         try {
-            final MazeObject mo2 = app.getMazeManager().getMaze().getCell(
+            final AbstractMazeObject mo2 = app.getMazeManager().getMaze().getCell(
                     this.elMgr.getEditorLocationX(),
                     this.elMgr.getEditorLocationY(), z + 1, w,
                     Maze.LAYER_OBJECT);
@@ -537,7 +537,7 @@ public class MazeEditor {
             name2 = "";
         }
         try {
-            final MazeObject mo3 = app.getMazeManager().getMaze().getCell(
+            final AbstractMazeObject mo3 = app.getMazeManager().getMaze().getCell(
                     this.elMgr.getEditorLocationX(),
                     this.elMgr.getEditorLocationY(), z - 1, w,
                     Maze.LAYER_OBJECT);
@@ -644,7 +644,7 @@ public class MazeEditor {
 
     private void checkTwoWayTeleportPair(final int z, final int w) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
-        final MazeObject mo1 = app.getMazeManager().getMaze().getCell(
+        final AbstractMazeObject mo1 = app.getMazeManager().getMaze().getCell(
                 this.elMgr.getEditorLocationX(),
                 this.elMgr.getEditorLocationY(), z, w, Maze.LAYER_OBJECT);
         final String name1 = mo1.getName();
@@ -656,7 +656,7 @@ public class MazeEditor {
             destY = twt.getDestinationColumn();
             destZ = twt.getDestinationFloor();
             destW = twt.getDestinationLevel();
-            final MazeObject mo2 = app.getMazeManager().getMaze().getCell(destX,
+            final AbstractMazeObject mo2 = app.getMazeManager().getMaze().getCell(destX,
                     destY, destZ, destW, Maze.LAYER_OBJECT);
             name2 = mo2.getName();
             if (name2.equals("Two-Way Teleport")) {
@@ -667,7 +667,7 @@ public class MazeEditor {
 
     private void reverseCheckTwoWayTeleportPair(final int z, final int w) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
-        final MazeObject mo1 = app.getMazeManager().getMaze().getCell(
+        final AbstractMazeObject mo1 = app.getMazeManager().getMaze().getCell(
                 this.elMgr.getEditorLocationX(),
                 this.elMgr.getEditorLocationY(), z, w, Maze.LAYER_OBJECT);
         final String name1 = mo1.getName();
@@ -679,7 +679,7 @@ public class MazeEditor {
             destY = twt.getDestinationColumn();
             destZ = twt.getDestinationFloor();
             destW = twt.getDestinationLevel();
-            final MazeObject mo2 = app.getMazeManager().getMaze().getCell(destX,
+            final AbstractMazeObject mo2 = app.getMazeManager().getMaze().getCell(destX,
                     destY, destZ, destW, Maze.LAYER_OBJECT);
             name2 = mo2.getName();
             if (!name2.equals("Two-Way Teleport")) {
@@ -705,7 +705,7 @@ public class MazeEditor {
                 destW, Maze.LAYER_OBJECT);
     }
 
-    public MazeObject editTeleportDestination(final int type) {
+    public AbstractMazeObject editTeleportDestination(final int type) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         String input1 = null, input2 = null;
         this.TELEPORT_TYPE = type;
@@ -786,7 +786,7 @@ public class MazeEditor {
         return null;
     }
 
-    public MazeObject editMetalButtonTarget() {
+    public AbstractMazeObject editMetalButtonTarget() {
         Messager.showMessage("Click to set metal button target");
         final BagOStuff app = FantastleReboot.getBagOStuff();
         this.horzScroll.removeAdjustmentListener(this.mhandler);
@@ -802,7 +802,7 @@ public class MazeEditor {
         return null;
     }
 
-    public MazeObject editTreasureChestContents() {
+    public AbstractMazeObject editTreasureChestContents() {
         Messager.showMessage("Pick treasure chest contents");
         this.setDefaultContents();
         this.disableOutput();
@@ -812,11 +812,11 @@ public class MazeEditor {
 
     private void setDefaultContents() {
         TreasureChest tc = null;
-        MazeObject contents = null;
+        AbstractMazeObject contents = null;
         int contentsIndex = 0;
         final BagOStuff app = FantastleReboot.getBagOStuff();
         try {
-            tc = (TreasureChest) app.getMazeManager().getMazeObject(
+            tc = (TreasureChest) app.getMazeManager().getAbstractMazeObject(
                     this.elMgr.getEditorLocationX(),
                     this.elMgr.getEditorLocationY(), this.elMgr.getCameFromZ(),
                     this.elMgr.getCameFromW(), Maze.LAYER_OBJECT);
@@ -836,7 +836,7 @@ public class MazeEditor {
         this.treasurePicker.selectLastPickedChoice(contentsIndex);
     }
 
-    public MazeObject editFinishToDestination() {
+    public AbstractMazeObject editFinishToDestination() {
         String input1 = null;
         int destW = 0;
         input1 = Messager.showTextInputDialog("Destination Level:", "Editor");
@@ -972,7 +972,7 @@ public class MazeEditor {
     public void setTreasureChestContents() {
         this.enableOutput();
         final BagOStuff app = FantastleReboot.getBagOStuff();
-        final MazeObject contents = this.containableObjects[this.treasurePicker
+        final AbstractMazeObject contents = this.containableObjects[this.treasurePicker
                 .getPicked()];
         app.getMazeManager().getMaze().setCell(new TreasureChest(contents),
                 this.elMgr.getEditorLocationX(),
@@ -1443,7 +1443,7 @@ public class MazeEditor {
     public void undo() {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         this.engine.undo();
-        final MazeObject obj = this.engine.getObject();
+        final AbstractMazeObject obj = this.engine.getObject();
         final int x = this.engine.getX();
         final int y = this.engine.getY();
         final int z = this.engine.getZ();
@@ -1454,7 +1454,7 @@ public class MazeEditor {
         this.elMgr.setCameFromZ(z);
         this.elMgr.setCameFromW(w);
         if (x != -1 && y != -1 && z != -1 && w != -1) {
-            final MazeObject oldObj = app.getMazeManager().getMazeObject(x, y,
+            final AbstractMazeObject oldObj = app.getMazeManager().getAbstractMazeObject(x, y,
                     z, w, e);
             if (!obj.getName().equals(new StairsUp().getName())
                     && !obj.getName().equals(new StairsDown().getName())) {
@@ -1482,7 +1482,7 @@ public class MazeEditor {
     public void redo() {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         this.engine.redo();
-        final MazeObject obj = this.engine.getObject();
+        final AbstractMazeObject obj = this.engine.getObject();
         final int x = this.engine.getX();
         final int y = this.engine.getY();
         final int z = this.engine.getZ();
@@ -1493,7 +1493,7 @@ public class MazeEditor {
         this.elMgr.setCameFromZ(z);
         this.elMgr.setCameFromW(w);
         if (x != -1 && y != -1 && z != -1 && w != -1) {
-            final MazeObject oldObj = app.getMazeManager().getMazeObject(x, y,
+            final AbstractMazeObject oldObj = app.getMazeManager().getAbstractMazeObject(x, y,
                     z, w, e);
             if (!obj.getName().equals(new StairsUp().getName())
                     && !obj.getName().equals(new StairsDown().getName())) {
@@ -1523,12 +1523,12 @@ public class MazeEditor {
         this.checkMenus();
     }
 
-    private void updateUndoHistory(final MazeObject obj, final int x,
+    private void updateUndoHistory(final AbstractMazeObject obj, final int x,
             final int y, final int z, final int w, final int e) {
         this.engine.updateUndoHistory(obj, x, y, z, w, e);
     }
 
-    private void updateRedoHistory(final MazeObject obj, final int x,
+    private void updateRedoHistory(final AbstractMazeObject obj, final int x,
             final int y, final int z, final int w, final int e) {
         this.engine.updateRedoHistory(obj, x, y, z, w, e);
     }

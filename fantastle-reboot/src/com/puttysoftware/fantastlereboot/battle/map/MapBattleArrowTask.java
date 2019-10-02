@@ -17,9 +17,10 @@ import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.maze.abc.AbstractTransientObject;
 import com.puttysoftware.fantastlereboot.maze.objects.Arrow;
 import com.puttysoftware.fantastlereboot.maze.objects.BattleCharacter;
-import com.puttysoftware.fantastlereboot.maze.objects.Empty;
 import com.puttysoftware.fantastlereboot.maze.objects.Wall;
 import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
+
+
 
 public class MapBattleArrowTask extends Thread {
     // Fields

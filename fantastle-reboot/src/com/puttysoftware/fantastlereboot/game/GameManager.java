@@ -43,34 +43,24 @@ import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-
+import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.MazeManager;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericMovableObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObjectList;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.AnnihilationWand;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.DisarmTrapWand;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Empty;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.EmptyVoid;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.FinishMakingWand;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Player;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.TeleportWand;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Wall;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.WallBreakingWand;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.WallMakingWand;
+import com.puttysoftware.fantastlereboot.utilities.MazeObjectList;
 import com.puttysoftware.fantastlereboot.utilities.ArrowTypeConstants;
 import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
+
+
 public class GameManager {
     // Fields
     private JFrame outputFrame;
     private Container outputPane, borderPane;
     private JLabel messageLabel;
-    private MazeObject savedMazeObject, objectBeingUsed;
+    private AbstractMazeObject savedAbstractMazeObject, objectBeingUsed;
     private EventHandler handler;
     private ObjectInventory objectInv, savedObjectInv;
     private boolean pullInProgress;
@@ -86,7 +76,7 @@ public class GameManager {
     private final EffectManager em;
     private JLabel[][] drawGrid;
     private boolean delayedDecayActive;
-    private MazeObject delayedDecayObject;
+    private AbstractMazeObject delayedDecayObject;
     private boolean actingRemotely;
     boolean arrowActive;
     boolean teleporting;
@@ -103,7 +93,7 @@ public class GameManager {
         this.setUpGUI();
         this.setPullInProgress(false);
         this.setUsingAnItem(false);
-        this.savedMazeObject = new Empty();
+        this.savedAbstractMazeObject = new Empty();
         this.lastUsedObjectIndex = 0;
         this.knm = false;
         this.savedGameFlag = false;
@@ -159,12 +149,12 @@ public class GameManager {
         this.activeArrowType = ArrowTypeConstants.ARROW_TYPE_PLAIN;
     }
 
-    public MazeObject getSavedMazeObject() {
-        return this.savedMazeObject;
+    public AbstractMazeObject getSavedAbstractMazeObject() {
+        return this.savedAbstractMazeObject;
     }
 
-    public void setSavedMazeObject(final MazeObject newSavedObject) {
-        this.savedMazeObject = newSavedObject;
+    public void setSavedAbstractMazeObject(final AbstractMazeObject newSavedObject) {
+        this.savedAbstractMazeObject = newSavedObject;
     }
 
     public boolean isFloorBelow() {
@@ -330,8 +320,8 @@ public class GameManager {
     public void doRemoteAction(final int x, final int y, final int z,
             final int w) {
         this.setRemoteAction(x, y, z, w);
-        final MazeObject acted = FantastleReboot.getBagOStuff().getMazeManager()
-                .getMazeObject(x, y, z, w, Maze.LAYER_OBJECT);
+        final AbstractMazeObject acted = FantastleReboot.getBagOStuff().getMazeManager()
+                .getAbstractMazeObject(x, y, z, w, Maze.LAYER_OBJECT);
         acted.postMoveAction(false, x, y, this.objectInv);
         if (acted.doesChainReact()) {
             acted.chainReactionAction(x, y, z, w);
@@ -413,15 +403,15 @@ public class GameManager {
         final Maze m = app.getMazeManager().getMaze();
         m.tickTimers(pw, pz);
         boolean proceed = false;
-        MazeObject o = new Empty();
-        MazeObject acted = new Empty();
-        MazeObject groundInto = new Empty();
-        MazeObject below = null;
-        MazeObject previousBelow = null;
-        MazeObject nextBelow = null;
-        MazeObject nextAbove = null;
-        MazeObject nextNextBelow = null;
-        MazeObject nextNextAbove = null;
+        AbstractMazeObject o = new Empty();
+        AbstractMazeObject acted = new Empty();
+        AbstractMazeObject groundInto = new Empty();
+        AbstractMazeObject below = null;
+        AbstractMazeObject previousBelow = null;
+        AbstractMazeObject nextBelow = null;
+        AbstractMazeObject nextAbove = null;
+        AbstractMazeObject nextNextBelow = null;
+        AbstractMazeObject nextNextAbove = null;
         final boolean isXNonZero = x != 0;
         final boolean isYNonZero = y != 0;
         int pullX = 0, pullY = 0, pushX = 0, pushY = 0;
@@ -493,12 +483,12 @@ public class GameManager {
                 this.plMgr.savePlayerLocation();
                 this.vwMgr.saveViewingWindow();
                 try {
-                    if (this.checkSolid(x + px, y + py, this.savedMazeObject,
+                    if (this.checkSolid(x + px, y + py, this.savedAbstractMazeObject,
                             below, nextBelow, nextAbove)) {
                         if (this.delayedDecayActive) {
                             this.doDelayedDecay();
                         }
-                        m.setCell(this.savedMazeObject, px, py, pz, pw,
+                        m.setCell(this.savedAbstractMazeObject, px, py, pz, pw,
                                 Maze.LAYER_OBJECT);
                         acted = new Empty();
                         try {
@@ -510,7 +500,7 @@ public class GameManager {
                         if (acted.isPullable() && this.isPullInProgress()) {
                             if (!this.checkPull(x, y, pullX, pullY, acted,
                                     previousBelow, below,
-                                    this.savedMazeObject)) {
+                                    this.savedAbstractMazeObject)) {
                                 // Pull failed - object can't move that way
                                 acted.pullFailedAction(this.objectInv, x, y,
                                         pullX, pullY);
@@ -531,7 +521,7 @@ public class GameManager {
                         py += y;
                         this.vwMgr.offsetViewingWindowLocationX(y);
                         this.vwMgr.offsetViewingWindowLocationY(x);
-                        this.savedMazeObject = m.getCell(px, py, pz, pw,
+                        this.savedAbstractMazeObject = m.getCell(px, py, pz, pw,
                                 Maze.LAYER_OBJECT);
                         groundInto = m.getCell(px, py, pz, pw,
                                 Maze.LAYER_GROUND);
@@ -546,7 +536,7 @@ public class GameManager {
                                 groundInto.postMoveAction(false, px, py,
                                         this.objectInv);
                             } else {
-                                this.savedMazeObject.postMoveAction(false, px,
+                                this.savedAbstractMazeObject.postMoveAction(false, px,
                                         py, this.objectInv);
                             }
                         }
@@ -560,7 +550,7 @@ public class GameManager {
                                 if (this.delayedDecayActive) {
                                     this.doDelayedDecay();
                                 }
-                                m.setCell(this.savedMazeObject, px, py, pz, pw,
+                                m.setCell(this.savedAbstractMazeObject, px, py, pz, pw,
                                         Maze.LAYER_OBJECT);
                                 this.plMgr.offsetPlayerLocationX(x);
                                 this.plMgr.offsetPlayerLocationY(y);
@@ -568,7 +558,7 @@ public class GameManager {
                                 py += y;
                                 this.vwMgr.offsetViewingWindowLocationX(y);
                                 this.vwMgr.offsetViewingWindowLocationY(x);
-                                this.savedMazeObject = m.getCell(px, py, pz, pw,
+                                this.savedAbstractMazeObject = m.getCell(px, py, pz, pw,
                                         Maze.LAYER_OBJECT);
                                 groundInto = m.getCell(px, py, pz, pw,
                                         Maze.LAYER_GROUND);
@@ -583,7 +573,7 @@ public class GameManager {
                                         groundInto.postMoveAction(false, px, py,
                                                 this.objectInv);
                                     } else {
-                                        this.savedMazeObject.postMoveAction(
+                                        this.savedAbstractMazeObject.postMoveAction(
                                                 false, px, py, this.objectInv);
                                     }
                                 }
@@ -600,7 +590,7 @@ public class GameManager {
                         } else {
                             // Move failed - object is solid in that direction
                             this.fireMoveFailedActions(px + x, py + y,
-                                    this.savedMazeObject, below, nextBelow,
+                                    this.savedAbstractMazeObject, below, nextBelow,
                                     nextAbove);
                             this.decayEffects();
                             this.st.deductStep();
@@ -629,7 +619,7 @@ public class GameManager {
             }
         } while (proceed
                 && !groundInto.hasFrictionConditionally(this.objectInv, false)
-                && this.checkSolid(x, y, this.savedMazeObject, below, nextBelow,
+                && this.checkSolid(x, y, this.savedAbstractMazeObject, below, nextBelow,
                         nextAbove));
         this.updateStats();
     }
@@ -643,14 +633,14 @@ public class GameManager {
         this.vwMgr.restoreViewingWindow();
         final int opx = this.plMgr.getPlayerLocationX();
         final int opy = this.plMgr.getPlayerLocationY();
-        this.savedMazeObject = m.getCell(opx, opy, pz, pw, Maze.LAYER_OBJECT);
+        this.savedAbstractMazeObject = m.getCell(opx, opy, pz, pw, Maze.LAYER_OBJECT);
         m.setCell(new Player(), opx, opy, pz, pw, Maze.LAYER_OBJECT);
         this.redrawMaze();
     }
 
     private boolean checkSolid(final int x, final int y,
-            final MazeObject inside, final MazeObject below,
-            final MazeObject nextBelow, final MazeObject nextAbove) {
+            final AbstractMazeObject inside, final AbstractMazeObject below,
+            final AbstractMazeObject nextBelow, final AbstractMazeObject nextAbove) {
         final int px = this.plMgr.getPlayerLocationX();
         final int py = this.plMgr.getPlayerLocationY();
         final boolean insideSolid = inside.isConditionallyDirectionallySolid(
@@ -670,9 +660,9 @@ public class GameManager {
         }
     }
 
-    private boolean checkSolidAbsolute(final MazeObject inside,
-            final MazeObject below, final MazeObject nextBelow,
-            final MazeObject nextAbove) {
+    private boolean checkSolidAbsolute(final AbstractMazeObject inside,
+            final AbstractMazeObject below, final AbstractMazeObject nextBelow,
+            final AbstractMazeObject nextAbove) {
         final boolean insideSolid = inside.isConditionallySolid(this.objectInv);
         final boolean belowSolid = below.isConditionallySolid(this.objectInv);
         final boolean nextBelowSolid = nextBelow
@@ -687,8 +677,8 @@ public class GameManager {
     }
 
     private void fireMoveFailedActions(final int x, final int y,
-            final MazeObject inside, final MazeObject below,
-            final MazeObject nextBelow, final MazeObject nextAbove) {
+            final AbstractMazeObject inside, final AbstractMazeObject below,
+            final AbstractMazeObject nextBelow, final AbstractMazeObject nextAbove) {
         final int px = this.plMgr.getPlayerLocationX();
         final int py = this.plMgr.getPlayerLocationY();
         final boolean insideSolid = inside.isConditionallyDirectionallySolid(
@@ -716,8 +706,8 @@ public class GameManager {
     }
 
     private boolean checkPush(final int x, final int y, final int pushX,
-            final int pushY, final MazeObject acted, final MazeObject nextBelow,
-            final MazeObject nextNextBelow, final MazeObject nextNextAbove) {
+            final int pushY, final AbstractMazeObject acted, final AbstractMazeObject nextBelow,
+            final AbstractMazeObject nextNextBelow, final AbstractMazeObject nextNextAbove) {
         final int px = this.plMgr.getPlayerLocationX();
         final int py = this.plMgr.getPlayerLocationY();
         final int pz = this.plMgr.getPlayerLocationZ();
@@ -740,9 +730,9 @@ public class GameManager {
     }
 
     private boolean checkPull(final int x, final int y, final int pullX,
-            final int pullY, final MazeObject acted,
-            final MazeObject previousBelow, final MazeObject below,
-            final MazeObject above) {
+            final int pullY, final AbstractMazeObject acted,
+            final AbstractMazeObject previousBelow, final AbstractMazeObject below,
+            final AbstractMazeObject above) {
         final int px = this.plMgr.getPlayerLocationX();
         final int py = this.plMgr.getPlayerLocationY();
         final int pz = this.plMgr.getPlayerLocationZ();
@@ -765,12 +755,12 @@ public class GameManager {
     }
 
     public void updatePushedPosition(final int x, final int y, final int pushX,
-            final int pushY, final MazeObject o) {
+            final int pushY, final AbstractMazeObject o) {
         final int xInc = (int) Math.signum(x), yInc = (int) Math.signum(y);
         int cumPushX = pushX, cumPushY = pushY, cumX = x, cumY = y;
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final MazeManager mm = app.getMazeManager();
-        MazeObject there = mm.getMazeObject(
+        AbstractMazeObject there = mm.getAbstractMazeObject(
                 this.plMgr.getPlayerLocationX() + cumX,
                 this.plMgr.getPlayerLocationY() + cumY,
                 this.plMgr.getPlayerLocationZ(),
@@ -783,7 +773,7 @@ public class GameManager {
                 cumY += yInc;
                 cumPushX += xInc;
                 cumPushY += yInc;
-                there = mm.getMazeObject(this.plMgr.getPlayerLocationX() + cumX,
+                there = mm.getAbstractMazeObject(this.plMgr.getPlayerLocationX() + cumX,
                         this.plMgr.getPlayerLocationY() + cumY,
                         this.plMgr.getPlayerLocationZ(),
                         this.plMgr.getPlayerLocationW(), Maze.LAYER_GROUND);
@@ -795,8 +785,8 @@ public class GameManager {
     }
 
     private void movePushedObjectPosition(final int x, final int y,
-            final int pushX, final int pushY, final MazeObject o,
-            final MazeObject g) {
+            final int pushX, final int pushY, final AbstractMazeObject o,
+            final AbstractMazeObject g) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
@@ -818,7 +808,7 @@ public class GameManager {
     }
 
     public void updatePulledPosition(final int x, final int y, final int pullX,
-            final int pullY, final MazeObject o) {
+            final int pullY, final AbstractMazeObject o) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
@@ -838,13 +828,13 @@ public class GameManager {
     public void updatePushedIntoPositionAbsolute(final int x, final int y,
             final int z, final int w, final int x2, final int y2, final int z2,
             final int w2, final GenericMovableObject pushedInto,
-            final MazeObject source) {
+            final AbstractMazeObject source) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
             if (!m.getCell(x, y, z, w, Maze.LAYER_OBJECT)
                     .isConditionallySolid(this.objectInv)) {
-                final MazeObject saved = m.getCell(x, y, z, w,
+                final AbstractMazeObject saved = m.getCell(x, y, z, w,
                         Maze.LAYER_OBJECT);
                 m.setCell(pushedInto, x, y, z, w, Maze.LAYER_OBJECT);
                 m.setCell(source, x2, y2, z2, w2, Maze.LAYER_OBJECT);
@@ -862,21 +852,21 @@ public class GameManager {
         try {
             final BagOStuff app = FantastleReboot.getBagOStuff();
             final Maze m = app.getMazeManager().getMaze();
-            final MazeObject below = m.getCell(this.plMgr.getPlayerLocationX(),
+            final AbstractMazeObject below = m.getCell(this.plMgr.getPlayerLocationX(),
                     this.plMgr.getPlayerLocationY(),
                     this.plMgr.getPlayerLocationZ(),
                     this.plMgr.getPlayerLocationW(), Maze.LAYER_GROUND);
-            final MazeObject nextBelow = m.getCell(
+            final AbstractMazeObject nextBelow = m.getCell(
                     this.plMgr.getPlayerLocationX() + x,
                     this.plMgr.getPlayerLocationY() + y,
                     this.plMgr.getPlayerLocationZ(),
                     this.plMgr.getPlayerLocationW(), Maze.LAYER_GROUND);
-            final MazeObject nextAbove = m.getCell(
+            final AbstractMazeObject nextAbove = m.getCell(
                     this.plMgr.getPlayerLocationX() + x,
                     this.plMgr.getPlayerLocationY() + y,
                     this.plMgr.getPlayerLocationZ(),
                     this.plMgr.getPlayerLocationW(), Maze.LAYER_OBJECT);
-            return this.checkSolid(x, y, this.savedMazeObject, below, nextBelow,
+            return this.checkSolid(x, y, this.savedAbstractMazeObject, below, nextBelow,
                     nextAbove);
         } catch (final ArrayIndexOutOfBoundsException ae) {
             return false;
@@ -888,15 +878,15 @@ public class GameManager {
         try {
             final BagOStuff app = FantastleReboot.getBagOStuff();
             final Maze m = app.getMazeManager().getMaze();
-            final MazeObject below = m.getCell(this.plMgr.getPlayerLocationX(),
+            final AbstractMazeObject below = m.getCell(this.plMgr.getPlayerLocationX(),
                     this.plMgr.getPlayerLocationY(),
                     this.plMgr.getPlayerLocationZ(),
                     this.plMgr.getPlayerLocationW(), Maze.LAYER_GROUND);
-            final MazeObject nextBelow = m.getCell(x, y, z,
+            final AbstractMazeObject nextBelow = m.getCell(x, y, z,
                     this.plMgr.getPlayerLocationW(), Maze.LAYER_GROUND);
-            final MazeObject nextAbove = m.getCell(x, y, z,
+            final AbstractMazeObject nextAbove = m.getCell(x, y, z,
                     this.plMgr.getPlayerLocationW(), Maze.LAYER_OBJECT);
-            return this.checkSolidAbsolute(this.savedMazeObject, below,
+            return this.checkSolidAbsolute(this.savedAbstractMazeObject, below,
                     nextBelow, nextAbove);
         } catch (final ArrayIndexOutOfBoundsException ae) {
             return false;
@@ -920,7 +910,7 @@ public class GameManager {
         try {
             if (!m.getCell(x, y, z, w, Maze.LAYER_OBJECT)
                     .isConditionallySolid(this.objectInv)) {
-                m.setCell(this.savedMazeObject, this.plMgr.getPlayerLocationX(),
+                m.setCell(this.savedAbstractMazeObject, this.plMgr.getPlayerLocationX(),
                         this.plMgr.getPlayerLocationY(),
                         this.plMgr.getPlayerLocationZ(),
                         this.plMgr.getPlayerLocationW(), Maze.LAYER_OBJECT);
@@ -931,7 +921,7 @@ public class GameManager {
                 this.vwMgr.setViewingWindowLocationY(
                         this.plMgr.getPlayerLocationX()
                                 - GameViewingWindowManager.getOffsetFactorY());
-                this.savedMazeObject = m.getCell(
+                this.savedAbstractMazeObject = m.getCell(
                         this.plMgr.getPlayerLocationX(),
                         this.plMgr.getPlayerLocationY(),
                         this.plMgr.getPlayerLocationZ(),
@@ -942,7 +932,7 @@ public class GameManager {
                         this.plMgr.getPlayerLocationW(), Maze.LAYER_OBJECT);
                 this.redrawMaze();
                 app.getMazeManager().setDirty(true);
-                this.savedMazeObject.postMoveAction(false, x, y,
+                this.savedAbstractMazeObject.postMoveAction(false, x, y,
                         this.objectInv);
             }
         } catch (final ArrayIndexOutOfBoundsException ae) {
@@ -973,7 +963,7 @@ public class GameManager {
         try {
             if (!m.getCell(x, y, z, w, Maze.LAYER_OBJECT)
                     .isConditionallySolid(this.objectInv)) {
-                m.setCell(this.savedMazeObject, this.plMgr.getPlayerLocationX(),
+                m.setCell(this.savedAbstractMazeObject, this.plMgr.getPlayerLocationX(),
                         this.plMgr.getPlayerLocationY(),
                         this.plMgr.getPlayerLocationZ(),
                         this.plMgr.getPlayerLocationW(), Maze.LAYER_OBJECT);
@@ -984,7 +974,7 @@ public class GameManager {
                 this.vwMgr.setViewingWindowLocationY(
                         this.plMgr.getPlayerLocationX()
                                 - GameViewingWindowManager.getOffsetFactorY());
-                this.savedMazeObject = m.getCell(
+                this.savedAbstractMazeObject = m.getCell(
                         this.plMgr.getPlayerLocationX(),
                         this.plMgr.getPlayerLocationY(),
                         this.plMgr.getPlayerLocationZ(),
@@ -1336,18 +1326,18 @@ public class GameManager {
                     this.remoteCoords[2], this.remoteCoords[3],
                     Maze.LAYER_OBJECT);
         } else {
-            this.savedMazeObject = new Empty();
+            this.savedAbstractMazeObject = new Empty();
         }
     }
 
-    public void decayTo(final MazeObject obj) {
+    public void decayTo(final AbstractMazeObject obj) {
         if (this.actingRemotely) {
             FantastleReboot.getBagOStuff().getMazeManager().getMaze().setCell(
                     obj, this.remoteCoords[0], this.remoteCoords[1],
                     this.remoteCoords[2], this.remoteCoords[3],
                     Maze.LAYER_OBJECT);
         } else {
-            this.savedMazeObject = obj;
+            this.savedAbstractMazeObject = obj;
         }
     }
 
@@ -1358,17 +1348,17 @@ public class GameManager {
                     this.remoteCoords[1], this.remoteCoords[2],
                     this.remoteCoords[3], Maze.LAYER_OBJECT);
         } else {
-            this.savedMazeObject = this.delayedDecayObject;
+            this.savedAbstractMazeObject = this.delayedDecayObject;
         }
         this.delayedDecayActive = false;
     }
 
-    public void delayedDecayTo(final MazeObject obj) {
+    public void delayedDecayTo(final AbstractMazeObject obj) {
         this.delayedDecayActive = true;
         this.delayedDecayObject = obj;
     }
 
-    public void morph(final MazeObject morphInto, final int x, final int y,
+    public void morph(final AbstractMazeObject morphInto, final int x, final int y,
             final int z, final int w) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
@@ -1383,7 +1373,7 @@ public class GameManager {
         }
     }
 
-    public void morph(final MazeObject morphInto, final int x, final int y,
+    public void morph(final AbstractMazeObject morphInto, final int x, final int y,
             final int z, final int w, final String msg) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
@@ -1400,7 +1390,7 @@ public class GameManager {
         }
     }
 
-    public void morph(final MazeObject morphInto, final int x, final int y,
+    public void morph(final AbstractMazeObject morphInto, final int x, final int y,
             final int z, final int w, final int e) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
@@ -1415,7 +1405,7 @@ public class GameManager {
         }
     }
 
-    public void morph(final MazeObject morphInto, final int x, final int y,
+    public void morph(final AbstractMazeObject morphInto, final int x, final int y,
             final int z, final int w, final int e, final String msg) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
@@ -1432,7 +1422,7 @@ public class GameManager {
         }
     }
 
-    public void morphOther(final MazeObject morphInto, final int x, final int y,
+    public void morphOther(final AbstractMazeObject morphInto, final int x, final int y,
             final int e) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
@@ -1482,7 +1472,7 @@ public class GameManager {
     public void showUseDialog() {
         int x;
         final MazeObjectList list = FantastleReboot.getBagOStuff().getObjects();
-        final MazeObject[] choices = list.getAllUsableObjects();
+        final AbstractMazeObject[] choices = list.getAllUsableObjects();
         final String[] userChoices = this.objectInv.generateUseStringArray();
         final String result = Messager.showInputDialog("Use which item?",
                 "Fantastle", userChoices,
@@ -1539,7 +1529,7 @@ public class GameManager {
                                 this.plMgr.getPlayerLocationY(), destX, destY,
                                 this.plMgr.getPlayerLocationW());
                 try {
-                    final MazeObject target = m.getCell(destX, destY, destZ,
+                    final AbstractMazeObject target = m.getCell(destX, destY, destZ,
                             destW, Maze.LAYER_OBJECT);
                     final String name = this.objectBeingUsed.getName();
                     if ((target.isSolid() || !visible)
@@ -1635,9 +1625,9 @@ public class GameManager {
         final int destZ = this.plMgr.getPlayerLocationZ();
         final int destW = this.plMgr.getPlayerLocationW();
         try {
-            final MazeObject target1 = m.getCell(destX, destY, destZ, destW,
+            final AbstractMazeObject target1 = m.getCell(destX, destY, destZ, destW,
                     Maze.LAYER_GROUND);
-            final MazeObject target2 = m.getCell(destX, destY, destZ, destW,
+            final AbstractMazeObject target2 = m.getCell(destX, destY, destZ, destW,
                     Maze.LAYER_OBJECT);
             target1.determineCurrentAppearance(destX, destY, destZ, destW);
             target2.determineCurrentAppearance(destX, destY, destZ, destW);
@@ -1646,7 +1636,7 @@ public class GameManager {
             Messager.showMessage(gameName2 + " on " + gameName1);
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-                MazeObject.playIdentifySound();
+                AbstractMazeObject.playIdentifySound();
             }
         } catch (final ArrayIndexOutOfBoundsException ae) {
             final EmptyVoid ev = new EmptyVoid();
@@ -1654,7 +1644,7 @@ public class GameManager {
             Messager.showMessage(ev.getGameName());
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-                MazeObject.playIdentifySound();
+                AbstractMazeObject.playIdentifySound();
             }
         }
     }
@@ -1685,7 +1675,7 @@ public class GameManager {
         if (app.getMazeManager().getLoaded()) {
             app.getGUIManager().hideGUI();
             app.setInGame(true);
-            this.savedMazeObject = new Empty();
+            this.savedAbstractMazeObject = new Empty();
             if (this.savedGameFlag) {
                 this.st.setScoreFile(app.getMazeManager().getScoresFileName());
             } else {

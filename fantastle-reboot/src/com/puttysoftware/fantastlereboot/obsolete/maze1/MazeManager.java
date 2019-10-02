@@ -18,11 +18,6 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze1;
 
-import java.awt.desktop.OpenFilesEvent;
-import java.awt.desktop.OpenFilesHandler;
-import java.awt.desktop.QuitEvent;
-import java.awt.desktop.QuitHandler;
-import java.awt.desktop.QuitResponse;
 import java.io.File;
 
 import javax.swing.JFileChooser;
@@ -33,7 +28,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
+import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.utilities.FormatConstants;
 
 public class MazeManager {
@@ -80,7 +75,7 @@ public class MazeManager {
         FantastleReboot.getBagOStuff().getMenuManager().checkFlags();
     }
 
-    public MazeObject getMazeObject(final int x, final int y, final int z,
+    public AbstractMazeObject getAbstractMazeObject(final int x, final int y, final int z,
             final int w, final int e) {
         try {
             return this.gameMaze.getCell(x, y, z, w, e);

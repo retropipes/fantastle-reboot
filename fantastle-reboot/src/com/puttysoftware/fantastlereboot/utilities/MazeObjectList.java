@@ -5,54 +5,20 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.utilities;
 
+import java.awt.Button;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.creatures.monsters.Monster;
 import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;
 import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.maze.objects.Amulet;
-import com.puttysoftware.fantastlereboot.maze.objects.ArmorShop;
-import com.puttysoftware.fantastlereboot.maze.objects.Bank;
-import com.puttysoftware.fantastlereboot.maze.objects.Button;
-import com.puttysoftware.fantastlereboot.maze.objects.ClockwiseRotationTrap;
-import com.puttysoftware.fantastlereboot.maze.objects.ClosedDoor;
-import com.puttysoftware.fantastlereboot.maze.objects.ConfusionTrap;
-import com.puttysoftware.fantastlereboot.maze.objects.CounterclockwiseRotationTrap;
-import com.puttysoftware.fantastlereboot.maze.objects.DarkGem;
-import com.puttysoftware.fantastlereboot.maze.objects.DizzinessTrap;
-import com.puttysoftware.fantastlereboot.maze.objects.DrunkTrap;
-import com.puttysoftware.fantastlereboot.maze.objects.Empty;
-import com.puttysoftware.fantastlereboot.maze.objects.EmptyVoid;
-import com.puttysoftware.fantastlereboot.maze.objects.EnhancementShop;
-import com.puttysoftware.fantastlereboot.maze.objects.FaithPowerShop;
-import com.puttysoftware.fantastlereboot.maze.objects.HealShop;
-import com.puttysoftware.fantastlereboot.maze.objects.HealTrap;
-import com.puttysoftware.fantastlereboot.maze.objects.HurtTrap;
-import com.puttysoftware.fantastlereboot.maze.objects.Ice;
-import com.puttysoftware.fantastlereboot.maze.objects.ItemShop;
-import com.puttysoftware.fantastlereboot.maze.objects.LightGem;
-import com.puttysoftware.fantastlereboot.maze.objects.Monster;
-import com.puttysoftware.fantastlereboot.maze.objects.OpenDoor;
-import com.puttysoftware.fantastlereboot.maze.objects.Regenerator;
-import com.puttysoftware.fantastlereboot.maze.objects.SealingWall;
-import com.puttysoftware.fantastlereboot.maze.objects.SocksShop;
-import com.puttysoftware.fantastlereboot.maze.objects.SpellShop;
-import com.puttysoftware.fantastlereboot.maze.objects.StairsDown;
-import com.puttysoftware.fantastlereboot.maze.objects.StairsUp;
-import com.puttysoftware.fantastlereboot.maze.objects.Tile;
-import com.puttysoftware.fantastlereboot.maze.objects.UTurnTrap;
-import com.puttysoftware.fantastlereboot.maze.objects.VariableHealTrap;
-import com.puttysoftware.fantastlereboot.maze.objects.VariableHurtTrap;
-import com.puttysoftware.fantastlereboot.maze.objects.Wall;
-import com.puttysoftware.fantastlereboot.maze.objects.WallOff;
-import com.puttysoftware.fantastlereboot.maze.objects.WallOn;
-import com.puttysoftware.fantastlereboot.maze.objects.WarpTrap;
-import com.puttysoftware.fantastlereboot.maze.objects.WeaponsShop;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.xio.XDataReader;
+
+
 
 public class MazeObjectList {
     // Fields
