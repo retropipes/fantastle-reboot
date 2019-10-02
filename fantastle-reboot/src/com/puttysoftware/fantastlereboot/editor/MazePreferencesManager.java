@@ -36,7 +36,7 @@ import javax.swing.JLabel;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
+import com.puttysoftware.fantastlereboot.maze.Maze;
 
 public class MazePreferencesManager {
     // Fields

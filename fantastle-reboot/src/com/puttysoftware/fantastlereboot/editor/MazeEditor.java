@@ -41,30 +41,17 @@ import javax.swing.border.EmptyBorder;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
-import com.puttysoftware.fantastlereboot.game.GameManager;
+import com.puttysoftware.fantastlereboot.game.GameLogicManager;
+import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze5;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.MazeManager;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.EmptyVoid;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.FinishTo;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.InvisibleOneShotTeleport;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.InvisibleTeleport;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.MetalButton;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.OneShotTeleport;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.RandomInvisibleOneShotTeleport;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.RandomInvisibleTeleport;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.RandomOneShotTeleport;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.RandomTeleport;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.StairsDown;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.StairsUp;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Teleport;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.TreasureChest;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.TwoWayTeleport;
-import com.puttysoftware.fantastlereboot.utilities.MazeObjectList;
 import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
+import com.puttysoftware.fantastlereboot.utilities.MazeObjectList;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.picturepicker.PicturePicker;
+
+import sun.invoke.empty.Empty;
 
 
 
@@ -1362,7 +1349,7 @@ public class MazeEditor {
         // Hide the editor
         this.hideOutput();
         final MazeManager mm = app.getMazeManager();
-        final GameManager gm = app.getGameManager();
+        final GameLogicManager gm = app.getGameManager();
         // Save the entire level
         mm.getMaze().save();
         // Reset the viewing window

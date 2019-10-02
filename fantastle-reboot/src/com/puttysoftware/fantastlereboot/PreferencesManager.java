@@ -49,12 +49,12 @@ import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Extension;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Dirt;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Grass;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Sand;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Snow;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Tile;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Tundra;
+
+
+
+
+
+
 
 public class PreferencesManager implements PreferencesHandler {
     // Fields

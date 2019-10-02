@@ -23,7 +23,7 @@ import java.io.IOException;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.monsters.Monster;
 import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.MovingBlock;
+
 import com.puttysoftware.fantastlereboot.utilities.FormatConstants;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
