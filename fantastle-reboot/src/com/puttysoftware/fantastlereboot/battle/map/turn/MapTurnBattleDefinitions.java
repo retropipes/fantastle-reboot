@@ -7,7 +7,6 @@ package com.puttysoftware.fantastlereboot.battle.map.turn;
 
 import com.puttysoftware.fantastlereboot.ai.map.MapAIContext;
 import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.objects.BattleCharacter;
 
 public class MapTurnBattleDefinitions {
     // Fields

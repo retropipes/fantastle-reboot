@@ -28,10 +28,6 @@ import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeConstants;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.maze.objects.Darkness;
-import com.puttysoftware.fantastlereboot.maze.objects.EmptyVoid;
-import com.puttysoftware.fantastlereboot.maze.objects.MazeNoteObject;
-import com.puttysoftware.fantastlereboot.maze.objects.Player;
 import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
 import com.puttysoftware.images.BufferedImageIcon;
 

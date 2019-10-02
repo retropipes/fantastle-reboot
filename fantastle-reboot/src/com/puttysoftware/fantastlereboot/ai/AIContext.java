@@ -8,7 +8,6 @@ package com.puttysoftware.fantastlereboot.ai;
 import java.awt.Point;
 
 import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.objects.BattleCharacter;
 
 public abstract class AIContext {
     protected final BattleCharacter aiCreature;

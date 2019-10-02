@@ -11,7 +11,6 @@ import com.puttysoftware.fantastlereboot.ai.AIContext;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeConstants;
 import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.maze.objects.BattleCharacter;
 
 public class MapAIContext extends AIContext {
     private final int[][] apCosts;

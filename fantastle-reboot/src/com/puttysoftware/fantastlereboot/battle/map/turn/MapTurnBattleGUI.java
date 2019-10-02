@@ -35,7 +35,6 @@ import com.puttysoftware.fantastlereboot.battle.map.MapBattleViewingWindowManage
 import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.fantastlereboot.maze.MazeConstants;
 import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.maze.objects.EmptyVoid;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class MapTurnBattleGUI {

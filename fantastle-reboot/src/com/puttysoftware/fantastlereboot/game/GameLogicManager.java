@@ -18,7 +18,6 @@ import com.puttysoftware.fantastlereboot.maze.GenerateTask;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeConstants;
 import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.maze.objects.EmptyVoid;
 import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 
 

@@ -11,7 +11,6 @@ import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 
-import com.puttysoftware.fantastlereboot.maze.objects.BattleCharacter;
 
 public class MapBattleEffects {
     // Fields

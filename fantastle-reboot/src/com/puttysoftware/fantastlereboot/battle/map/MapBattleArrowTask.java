@@ -15,9 +15,6 @@ import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeConstants;
 import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.maze.abc.AbstractTransientObject;
-import com.puttysoftware.fantastlereboot.maze.objects.Arrow;
-import com.puttysoftware.fantastlereboot.maze.objects.BattleCharacter;
-import com.puttysoftware.fantastlereboot.maze.objects.Wall;
 import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
 
 

@@ -14,7 +14,6 @@ import javax.swing.SwingConstants;
 
 import com.puttysoftware.fantastlereboot.assets.GameEffectImage;
 import com.puttysoftware.fantastlereboot.loaders.EffectImageLoader;
-import com.puttysoftware.fantastlereboot.maze.objects.BattleCharacter;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class MapTimeBattleStats {

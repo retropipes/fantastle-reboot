@@ -13,7 +13,6 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.VersionException;
 import com.puttysoftware.fantastlereboot.creatures.monsters.Monster;
 import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.maze.objects.Tile;
 import com.puttysoftware.randomrange.RandomLongRange;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
