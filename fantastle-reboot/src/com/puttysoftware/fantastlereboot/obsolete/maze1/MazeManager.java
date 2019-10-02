@@ -18,6 +18,11 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze1;
 
+import java.awt.desktop.OpenFilesEvent;
+import java.awt.desktop.OpenFilesHandler;
+import java.awt.desktop.QuitEvent;
+import java.awt.desktop.QuitHandler;
+import java.awt.desktop.QuitResponse;
 import java.io.File;
 
 import javax.swing.JFileChooser;
@@ -28,10 +33,10 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
 import com.puttysoftware.fantastlereboot.utilities.FormatConstants;
 
-public class MazeManager {
+public class MazeManager implements OpenFilesHandler, QuitHandler {
     // Fields
     private Maze gameMaze;
     private boolean loaded, isDirty;
@@ -75,12 +80,34 @@ public class MazeManager {
         FantastleReboot.getBagOStuff().getMenuManager().checkFlags();
     }
 
-    public AbstractMazeObject getAbstractMazeObject(final int x, final int y, final int z,
+    public MazeObject getMazeObject(final int x, final int y, final int z,
             final int w, final int e) {
         try {
             return this.gameMaze.getCell(x, y, z, w, e);
         } catch (final ArrayIndexOutOfBoundsException ae) {
             return null;
+        }
+    }
+
+    @Override
+    public void handleQuitRequestWith(QuitEvent inE, QuitResponse inResponse) {
+        boolean saved = true;
+        int status = JOptionPane.DEFAULT_OPTION;
+        if (this.getDirty()) {
+            status = this.showSaveDialog();
+            if (status == JOptionPane.YES_OPTION) {
+                saved = this.saveMaze();
+            } else if (status == JOptionPane.CANCEL_OPTION) {
+                saved = false;
+            } else {
+                this.setDirty(false);
+            }
+        }
+        if (saved) {
+            FantastleReboot.getBagOStuff().getPrefsManager().writePrefs();
+            inResponse.performQuit();
+        } else {
+            inResponse.cancelQuit();
         }
     }
 
@@ -261,6 +288,45 @@ public class MazeManager {
             }
         }
         return false;
+    }
+
+    @Override
+    public void openFiles(OpenFilesEvent inE) {
+        final String infilename = inE.getFiles().get(0).getAbsolutePath();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
+        if (!this.loaded) {
+            String extension;
+            final File file = new File(infilename);
+            final String filename = file.getAbsolutePath();
+            extension = MazeManager.getExtension(file);
+            app.getGameManager().resetObjectInventory();
+            if (extension.equals(Extension.getGameExtension())) {
+                this.lastUsedGameFile = filename;
+                this.loadFile(filename, true, FormatConstants.MAZE_FORMAT_5);
+            } else if (extension.equals(Extension.getMaze2Extension())
+                    || extension.equals(Extension.getMaze3Extension())) {
+                this.lastUsedMazeFile = filename;
+                this.scoresFileName = MazeManager
+                        .getNameWithoutExtension(file.getName());
+                this.loadFile(filename, false, FormatConstants.MAZE_FORMAT_3);
+            } else if (extension.equals(Extension.getMaze4Extension())) {
+                this.lastUsedMazeFile = filename;
+                this.scoresFileName = MazeManager
+                        .getNameWithoutExtension(file.getName());
+                this.loadFile(filename, false, FormatConstants.MAZE_FORMAT_4);
+            } else if (extension.equals(Extension.getMaze5Extension())) {
+                this.lastUsedMazeFile = filename;
+                this.scoresFileName = MazeManager
+                        .getNameWithoutExtension(file.getName());
+                this.loadFile(filename, false, FormatConstants.MAZE_FORMAT_5);
+            } else if (extension.equals(Extension.getScoresExtension())) {
+                Messager.showDialog(
+                        "You double-clicked a scores file. These are automatically loaded when their associated maze is loaded, and need not be double-clicked.");
+            } else if (extension.equals(Extension.getPreferencesExtension())) {
+                Messager.showDialog(
+                        "You double-clicked a preferences file. These are automatically loaded when the program is loaded, and need not be double-clicked.");
+            }
+        }
     }
 
     private void loadFile(final String filename, final boolean isSavedGame,

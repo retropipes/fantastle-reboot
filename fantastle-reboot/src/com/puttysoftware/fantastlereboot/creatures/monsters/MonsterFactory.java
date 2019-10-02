@@ -7,7 +7,7 @@ package com.puttysoftware.fantastlereboot.creatures.monsters;
 
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
-import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 
 public class MonsterFactory {
     private MonsterFactory() {

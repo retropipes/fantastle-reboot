@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.utilities;
 
-import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 
 public interface RandomGenerationRule {
     public static final int NO_LIMIT = 0;

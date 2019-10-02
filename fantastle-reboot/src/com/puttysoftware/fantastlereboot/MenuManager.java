@@ -34,8 +34,7 @@ import com.puttysoftware.fantastlereboot.creatures.characterfiles.CharacterRegis
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.NoteManager;
 import com.puttysoftware.fantastlereboot.game.StatisticsViewer;
-import com.puttysoftware.fantastlereboot.maze.GenerateTask;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.GenerateTask;
 
 public class MenuManager {
     // Fields
@@ -663,8 +662,7 @@ public class MenuManager {
                         boolean saved = true;
                         int status = 0;
                         if (app.getMazeManager().getDirty()) {
-                            app.getMazeManager();
-                            status = MazeManager.showSaveDialog();
+                            status = app.getMazeManager().showSaveDialog();
                             if (status == JOptionPane.YES_OPTION) {
                                 saved = app.getMazeManager().saveMaze();
                             } else if (status == JOptionPane.CANCEL_OPTION) {

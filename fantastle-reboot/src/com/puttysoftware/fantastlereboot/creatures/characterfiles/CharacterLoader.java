@@ -12,7 +12,7 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.VersionException;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
-import com.puttysoftware.fantastlereboot.maze.Extension;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.Extension;
 import com.puttysoftware.xio.UnexpectedTagException;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;

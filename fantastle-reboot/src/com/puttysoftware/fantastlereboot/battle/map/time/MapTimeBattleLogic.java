@@ -33,14 +33,16 @@ import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeConstants;
-import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.Application;
+import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Empty;
 import com.puttysoftware.fantastlereboot.spells.Spell;
 import com.puttysoftware.fantastlereboot.spells.SpellCaster;
 import com.puttysoftware.randomrange.RandomRange;
-
-
 
 public class MapTimeBattleLogic extends Battle {
     // Fields
@@ -94,7 +96,7 @@ public class MapTimeBattleLogic extends Battle {
         // Level Up Check
         if (playerCharacter.checkLevelUp()) {
             playerCharacter.levelUp();
-            FantastleReboot.getBagOStuff().getGameManager().keepNextMessage();
+            TallerTower.getApplication().getGameManager().keepNextMessage();
             bag.showMessage(
                     "You reached level " + playerCharacter.getLevel() + ".");
         }
@@ -103,7 +105,7 @@ public class MapTimeBattleLogic extends Battle {
     private void doBattleInternal(final Maze bMaze, final MapBattle b) {
         // Initialize Battle
         final BagOStuff bag = FantastleReboot.getBagOStuff();
-        FantastleReboot.getBagOStuff().getGameManager().hideOutput();
+        TallerTower.getApplication().getGameManager().hideOutput();
         bag.setInBattle();
         this.battleMaze = bMaze;
         this.pde = AbstractDamageEngine.getPlayerInstance();
@@ -145,8 +147,8 @@ public class MapTimeBattleLogic extends Battle {
         // Leave Battle
         this.hideBattle();
         // Return to whence we came
-        FantastleReboot.getBagOStuff().getGameManager().showOutput();
-        FantastleReboot.getBagOStuff().getGameManager().redrawMaze();
+        TallerTower.getApplication().getGameManager().showOutput();
+        TallerTower.getApplication().getGameManager().redrawMaze();
     }
 
     private void clearStatusMessage() {
@@ -1458,7 +1460,7 @@ public class MapTimeBattleLogic extends Battle {
         @Override
         public void run() {
             try {
-                final BagOStuff app = FantastleReboot.getBagOStuff();
+                final Application app = TallerTower.getApplication();
                 final BagOStuff bag = FantastleReboot.getBagOStuff();
                 final Battle b = app.getBattle();
                 if (bag.getMode() == BagOStuff.STATUS_BATTLE
@@ -1490,7 +1492,7 @@ public class MapTimeBattleLogic extends Battle {
         @Override
         public void run() {
             try {
-                final BagOStuff app = FantastleReboot.getBagOStuff();
+                final Application app = TallerTower.getApplication();
                 final BagOStuff bag = FantastleReboot.getBagOStuff();
                 final Battle b = app.getBattle();
                 if (bag.getMode() == BagOStuff.STATUS_BATTLE

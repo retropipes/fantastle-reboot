@@ -6,7 +6,6 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.items.combat;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
-import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
@@ -14,6 +13,7 @@ import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
+import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 
 public class CombatItemChucker {
     // Fields
@@ -63,11 +63,11 @@ public class CombatItemChucker {
             if (teamID == Creature.TEAM_PARTY) {
                 return PartyManager.getParty().getLeader();
             } else {
-                return FantastleReboot.getBagOStuff().getBattle().getEnemy();
+                return TallerTower.getApplication().getBattle().getEnemy();
             }
         case ENEMY:
             if (teamID == Creature.TEAM_PARTY) {
-                return FantastleReboot.getBagOStuff().getBattle().getEnemy();
+                return TallerTower.getApplication().getBattle().getEnemy();
             } else {
                 return PartyManager.getParty().getLeader();
             }

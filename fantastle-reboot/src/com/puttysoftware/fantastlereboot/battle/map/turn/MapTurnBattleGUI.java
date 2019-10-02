@@ -33,8 +33,10 @@ import com.puttysoftware.fantastlereboot.battle.map.MapBattleDraw;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleEffects;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleViewingWindowManager;
 import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
-import com.puttysoftware.fantastlereboot.maze.MazeConstants;
-import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.EmptyVoid;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class MapTurnBattleGUI {
@@ -284,7 +286,7 @@ class MapTurnBattleGUI {
         public void actionPerformed(final ActionEvent e) {
             try {
                 final String cmd = e.getActionCommand();
-                final Battle b = FantastleReboot.getBagOStuff().getBattle();
+                final Battle b = TallerTower.getApplication().getBattle();
                 // Do Player Actions
                 if (cmd.equals("Cast Spell") || cmd.equals("c")) {
                     // Cast Spell
@@ -346,7 +348,7 @@ class MapTurnBattleGUI {
                         return;
                     }
                 }
-                final Battle bl = FantastleReboot.getBagOStuff().getBattle();
+                final Battle bl = TallerTower.getApplication().getBattle();
                 final MapTurnBattleGUI bg = MapTurnBattleGUI.this;
                 if (bg.eventHandlersOn) {
                     final int keyCode = e.getKeyCode();
@@ -418,7 +420,7 @@ class MapTurnBattleGUI {
                         return;
                     }
                 }
-                final Battle bl = FantastleReboot.getBagOStuff().getBattle();
+                final Battle bl = TallerTower.getApplication().getBattle();
                 final MapTurnBattleGUI bg = MapTurnBattleGUI.this;
                 if (bg.eventHandlersOn) {
                     final int keyCode = e.getKeyCode();

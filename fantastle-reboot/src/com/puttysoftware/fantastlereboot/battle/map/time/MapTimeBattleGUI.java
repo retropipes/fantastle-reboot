@@ -35,9 +35,12 @@ import com.puttysoftware.fantastlereboot.battle.map.MapBattleDraw;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleEffects;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleViewingWindowManager;
 import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
-import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeConstants;
-import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.EmptyVoid;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class MapTimeBattleGUI {
@@ -324,7 +327,7 @@ class MapTimeBattleGUI {
         public void actionPerformed(final ActionEvent e) {
             try {
                 final String cmd = e.getActionCommand();
-                final Battle b = FantastleReboot.getBagOStuff().getBattle();
+                final Battle b = TallerTower.getApplication().getBattle();
                 // Do Player Actions
                 if (cmd.equals("Cast Spell") || cmd.equals("c")) {
                     // Cast Spell
@@ -383,7 +386,7 @@ class MapTimeBattleGUI {
                         return;
                     }
                 }
-                final Battle bl = FantastleReboot.getBagOStuff().getBattle();
+                final Battle bl = TallerTower.getApplication().getBattle();
                 final MapTimeBattleGUI bg = MapTimeBattleGUI.this;
                 if (bg.eventHandlersOn) {
                     final int keyCode = e.getKeyCode();
@@ -456,7 +459,7 @@ class MapTimeBattleGUI {
                         return;
                     }
                 }
-                final Battle bl = FantastleReboot.getBagOStuff().getBattle();
+                final Battle bl = TallerTower.getApplication().getBattle();
                 final MapTimeBattleGUI bg = MapTimeBattleGUI.this;
                 if (bg.eventHandlersOn) {
                     final int keyCode = e.getKeyCode();

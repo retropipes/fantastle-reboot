@@ -21,18 +21,18 @@ package com.puttysoftware.fantastlereboot.obsolete.maze1;
 import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
 class SavedTowerState {
     // Properties
     private final int r, c, f;
-    private final AbstractMazeObject[][][][] saveData;
+    private final MazeObject[][][][] saveData;
 
     // Constructors
     public SavedTowerState(final int rows, final int cols, final int floors) {
-        this.saveData = new AbstractMazeObject[cols][rows][floors][Maze.LAYER_COUNT];
+        this.saveData = new MazeObject[cols][rows][floors][Maze.LAYER_COUNT];
         this.c = cols;
         this.r = rows;
         this.f = floors;
@@ -56,12 +56,12 @@ class SavedTowerState {
         return copy;
     }
 
-    public AbstractMazeObject getDataCell(final int x, final int y, final int z,
+    public MazeObject getDataCell(final int x, final int y, final int z,
             final int e) {
         return this.saveData[x][y][z][e];
     }
 
-    public void setDataCell(final AbstractMazeObject newData, final int x, final int y,
+    public void setDataCell(final MazeObject newData, final int x, final int y,
             final int z, final int e) {
         this.saveData[x][y][z][e] = newData;
     }
@@ -76,7 +76,7 @@ class SavedTowerState {
             for (y = 0; y < this.r; y++) {
                 for (z = 0; z < this.f; z++) {
                     for (e = 0; e < Maze.LAYER_COUNT; e++) {
-                        this.saveData[x][y][z][e].writeAbstractMazeObject(writer);
+                        this.saveData[x][y][z][e].writeMazeObject(writer);
                     }
                 }
             }
@@ -96,7 +96,7 @@ class SavedTowerState {
                     for (e = 0; e < Maze.LAYER_COUNT; e++) {
                         sts.saveData[x][y][z][e] = FantastleReboot
                                 .getBagOStuff().getObjects()
-                                .readAbstractMazeObject(reader, formatVersion);
+                                .readMazeObject(reader, formatVersion);
                     }
                 }
             }

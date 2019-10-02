@@ -23,7 +23,7 @@ import java.awt.FlowLayout;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import com.puttysoftware.fantastlereboot.utilities.MazeObjectList;
+import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObjectList;
 import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 import com.puttysoftware.help.GraphicalHelpViewer;
 import com.puttysoftware.images.BufferedImageIcon;

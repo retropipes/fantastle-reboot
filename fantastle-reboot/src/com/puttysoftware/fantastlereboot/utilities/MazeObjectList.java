@@ -5,20 +5,54 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.utilities;
 
-import java.awt.Button;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.creatures.monsters.Monster;
-import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
-import com.puttysoftware.fantastlereboot.maze.FormatConstants;
-import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageManager;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.FormatConstants;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Amulet;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.ArmorShop;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Bank;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Button;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.ClockwiseRotationTrap;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.ClosedDoor;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.ConfusionTrap;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.CounterclockwiseRotationTrap;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.DarkGem;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.DizzinessTrap;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.DrunkTrap;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Empty;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.EmptyVoid;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.EnhancementShop;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.FaithPowerShop;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.HealShop;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.HealTrap;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.HurtTrap;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Ice;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.ItemShop;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.LightGem;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Monster;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.OpenDoor;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Regenerator;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.SealingWall;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.SocksShop;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.SpellShop;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.StairsDown;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.StairsUp;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Tile;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.UTurnTrap;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.VariableHealTrap;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.VariableHurtTrap;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Wall;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.WallOff;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.WallOn;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.WarpTrap;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.WeaponsShop;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.xio.XDataReader;
-
-
 
 public class MazeObjectList {
     // Fields
@@ -65,7 +99,9 @@ public class MazeObjectList {
         final AbstractMazeObject[] objects = this.getAllObjects();
         final BufferedImageIcon[] allEditorAppearances = new BufferedImageIcon[objects.length];
         for (int x = 0; x < allEditorAppearances.length; x++) {
-            allEditorAppearances[x] = ObjectImageLoader.load(objects[x].getBaseID());
+            allEditorAppearances[x] = ObjectImageManager.getImage(
+                    objects[x].getName(), objects[x].getBaseID(),
+                    AbstractMazeObject.getTemplateColor());
         }
         return allEditorAppearances;
     }
@@ -140,7 +176,7 @@ public class MazeObjectList {
         }
     }
 
-    public AbstractMazeObject readObject(final XDataReader reader,
+    public AbstractMazeObject readMazeObject(final XDataReader reader,
             final int formatVersion) throws IOException {
         final AbstractMazeObject[] objects = this.getAllObjects();
         AbstractMazeObject o = null;
@@ -153,7 +189,7 @@ public class MazeObjectList {
                 AbstractMazeObject instance;
                 instance = objects[x].getClass().getConstructor().newInstance();
                 if (formatVersion == FormatConstants.MAZE_FORMAT_LATEST) {
-                    o = instance.readObject(reader, UID);
+                    o = instance.readMazeObjectV1(reader, UID);
                     if (o != null) {
                         return o;
                     }
@@ -167,7 +203,7 @@ public class MazeObjectList {
         return null;
     }
 
-    public AbstractMazeObject readSavedObject(final XDataReader reader,
+    public AbstractMazeObject readSavedMazeObject(final XDataReader reader,
             final String UID, final int formatVersion) throws IOException {
         final AbstractMazeObject[] objects = this.getAllObjects();
         AbstractMazeObject o = null;
@@ -176,7 +212,7 @@ public class MazeObjectList {
                 AbstractMazeObject instance;
                 instance = objects[x].getClass().getConstructor().newInstance();
                 if (formatVersion == FormatConstants.MAZE_FORMAT_LATEST) {
-                    o = instance.readObject(reader, UID);
+                    o = instance.readMazeObjectV1(reader, UID);
                     if (o != null) {
                         return o;
                     }

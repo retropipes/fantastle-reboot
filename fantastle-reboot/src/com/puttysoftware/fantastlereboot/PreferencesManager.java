@@ -47,14 +47,14 @@ import javax.swing.JProgressBar;
 import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 
-import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Extension;
-
-
-
-
-
-
+import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Dirt;
+import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Grass;
+import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Sand;
+import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Snow;
+import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Tile;
+import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Tundra;
 
 public class PreferencesManager implements PreferencesHandler {
     // Fields
@@ -243,7 +243,7 @@ public class PreferencesManager implements PreferencesHandler {
         }
     }
 
-    public AbstractMazeObject getEditorDefaultFill() {
+    public MazeObject getEditorDefaultFill() {
         final String choice = this.editorFillChoiceArray[this.editorFill];
         if (choice.equals("Tile")) {
             return new Tile();

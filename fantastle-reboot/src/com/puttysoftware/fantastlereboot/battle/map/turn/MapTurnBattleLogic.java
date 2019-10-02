@@ -32,14 +32,15 @@ import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItem;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeConstants;
-import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Empty;
 import com.puttysoftware.fantastlereboot.spells.Spell;
 import com.puttysoftware.fantastlereboot.spells.SpellCaster;
 import com.puttysoftware.randomrange.RandomRange;
-
-
 
 public class MapTurnBattleLogic extends Battle {
     // Fields
@@ -95,7 +96,7 @@ public class MapTurnBattleLogic extends Battle {
         // Level Up Check
         if (playerCharacter.checkLevelUp()) {
             playerCharacter.levelUp();
-            FantastleReboot.getBagOStuff().getGameManager().keepNextMessage();
+            TallerTower.getApplication().getGameManager().keepNextMessage();
             bag.showMessage(
                     "You reached level " + playerCharacter.getLevel() + ".");
         }
@@ -104,7 +105,7 @@ public class MapTurnBattleLogic extends Battle {
     private void doBattleInternal(final Maze bMaze, final MapBattle b) {
         // Initialize Battle
         final BagOStuff bag = FantastleReboot.getBagOStuff();
-        FantastleReboot.getBagOStuff().getGameManager().hideOutput();
+        TallerTower.getApplication().getGameManager().hideOutput();
         bag.setInBattle();
         this.bd = new MapTurnBattleDefinitions();
         this.bd.setBattleMaze(bMaze);
@@ -158,8 +159,8 @@ public class MapTurnBattleLogic extends Battle {
         // Leave Battle
         this.hideBattle();
         // Return to whence we came
-        FantastleReboot.getBagOStuff().getGameManager().showOutput();
-        FantastleReboot.getBagOStuff().getGameManager().redrawMaze();
+        TallerTower.getApplication().getGameManager().showOutput();
+        TallerTower.getApplication().getGameManager().redrawMaze();
     }
 
     private void clearStatusMessage() {

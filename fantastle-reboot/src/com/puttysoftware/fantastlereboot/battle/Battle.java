@@ -8,7 +8,8 @@ package com.puttysoftware.fantastlereboot.battle;
 import javax.swing.JFrame;
 
 import com.puttysoftware.fantastlereboot.creatures.Creature;
-import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
 
 public abstract class Battle {
     // Constructors

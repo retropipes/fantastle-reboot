@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 
 import com.puttysoftware.fantastlereboot.assets.GameEffectImage;
 import com.puttysoftware.fantastlereboot.loaders.EffectImageLoader;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class MapTurnBattleStats {
@@ -156,7 +157,8 @@ public class MapTurnBattleStats {
             actionImageId = GameEffectImage.ACTIONS_00;
             break;
         }
-        final BufferedImageIcon apImage = EffectImageLoader.load(actionImageId);
+        final BufferedImageIcon apImage = EffectImageLoader
+                .load(actionImageId);
         this.apLabel.setIcon(apImage);
     }
 }

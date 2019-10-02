@@ -20,14 +20,20 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.diane.loaders.ImageCompositor;
-import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.DrawGrid;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
-import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeConstants;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
-import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.Application;
+import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
+import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageManager;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeManager;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Darkness;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.EmptyVoid;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.MazeNoteObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Player;
 import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
 import com.puttysoftware.images.BufferedImageIcon;
 
@@ -70,7 +76,7 @@ class GameGUIManager {
 
     void initViewManager() {
         if (this.vwMgr == null) {
-            this.vwMgr = FantastleReboot.getBagOStuff().getGameManager()
+            this.vwMgr = TallerTower.getApplication().getGameManager()
                     .getViewManager();
             this.setUpGUI();
         }
@@ -87,7 +93,7 @@ class GameGUIManager {
     }
 
     public void showOutput() {
-        final BagOStuff app = FantastleReboot.getBagOStuff();
+        final Application app = TallerTower.getApplication();
         if (!this.outputFrame.isVisible()) {
             app.getMenuManager().setGameMenus();
             this.outputFrame.setVisible(true);
@@ -121,7 +127,7 @@ class GameGUIManager {
     public void redrawMaze() {
         // Draw the maze, if it is visible
         if (this.outputFrame.isVisible()) {
-            final BagOStuff app = FantastleReboot.getBagOStuff();
+            final Application app = TallerTower.getApplication();
             final Maze m = app.getMazeManager().getMaze();
             int x, y, u, v;
             int xFix, yFix;
@@ -307,7 +313,7 @@ class GameGUIManager {
 
         public void handleMovement(final KeyEvent e) {
             try {
-                final GameLogicManager glm = FantastleReboot.getBagOStuff()
+                final GameLogicManager glm = TallerTower.getApplication()
                         .getGameManager();
                 final int keyCode = e.getKeyCode();
                 switch (keyCode) {
@@ -402,7 +408,7 @@ class GameGUIManager {
         @Override
         public void windowClosing(final WindowEvent we) {
             try {
-                final BagOStuff app = FantastleReboot.getBagOStuff();
+                final Application app = TallerTower.getApplication();
                 boolean success = false;
                 int status = 0;
                 if (app.getMazeManager().getDirty()) {
@@ -459,7 +465,7 @@ class GameGUIManager {
         @Override
         public void mouseClicked(final MouseEvent e) {
             try {
-                final GameLogicManager gm = FantastleReboot.getBagOStuff()
+                final GameLogicManager gm = TallerTower.getApplication()
                         .getGameManager();
                 if (e.isShiftDown()) {
                     final int x = e.getX();

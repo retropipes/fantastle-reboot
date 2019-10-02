@@ -20,9 +20,9 @@ package com.puttysoftware.fantastlereboot.obsolete.maze1;
 
 import java.io.IOException;
 
-import com.puttysoftware.fantastlereboot.creatures.monsters.Monster;
-import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
-
+import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Monster;
+import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.MovingBlock;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
@@ -54,7 +54,7 @@ public interface Maze {
 
     boolean removeLevel(int level);
 
-    AbstractMazeObject getCell(final int row, final int col, final int floor,
+    MazeObject getCell(final int row, final int col, final int floor,
             final int level, final int extra);
 
     int getFindResultRow(int level);
@@ -93,13 +93,13 @@ public interface Maze {
 
     boolean findPlayerOnLevel(final int level);
 
-    boolean findNthAbstractMazeObjectOnLevel(final int level, final AbstractMazeObject obj,
+    boolean findNthMazeObjectOnLevel(final int level, final MazeObject obj,
             final int N);
 
-    void findAllObjectPairsAndSwap(final int level, final AbstractMazeObject o1,
-            final AbstractMazeObject o2);
+    void findAllObjectPairsAndSwap(final int level, final MazeObject o1,
+            final MazeObject o2);
 
-    void findAllMatchingObjectsAndDecay(final int level, final AbstractMazeObject o);
+    void findAllMatchingObjectsAndDecay(final int level, final MazeObject o);
 
     void masterTrapTrigger(final int level);
 
@@ -134,7 +134,7 @@ public interface Maze {
 
     boolean isSquareVisible(int x1, int y1, int x2, int y2, int w);
 
-    void setCell(final AbstractMazeObject mo, final int row, final int col,
+    void setCell(final MazeObject mo, final int row, final int col,
             final int floor, final int level, final int extra);
 
     void setStartRow(final int level, final int newStartRow);
@@ -153,9 +153,9 @@ public interface Maze {
 
     void decrementVisionRadius(int level);
 
-    void fill(AbstractMazeObject bottom, AbstractMazeObject top);
+    void fill(MazeObject bottom, MazeObject top);
 
-    void fillLevel(int level, AbstractMazeObject bottom, AbstractMazeObject top);
+    void fillLevel(int level, MazeObject bottom, MazeObject top);
 
     void save();
 
@@ -176,7 +176,7 @@ public interface Maze {
 
     void generateOneMonster();
 
-    void warpObject(AbstractMazeObject mo, int x, int y, int z, int w, int l);
+    void warpObject(MazeObject mo, int x, int y, int z, int w, int l);
 
     void enableHorizontalWraparound(int level);
 

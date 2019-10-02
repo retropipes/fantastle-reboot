@@ -24,7 +24,10 @@ import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.Application;
+import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
 import com.puttysoftware.fantastlereboot.spells.SpellCaster;
 import com.puttysoftware.randomrange.RandomRange;
 
@@ -316,7 +319,7 @@ public class WindowTimeBattleLogic extends Battle {
     @Override
     public void doBattle() {
         final BagOStuff bag = FantastleReboot.getBagOStuff();
-        final BagOStuff app = FantastleReboot.getBagOStuff();
+        final Application app = TallerTower.getApplication();
         try {
             final GameLogicManager gm = app.getGameManager();
             if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
@@ -353,7 +356,7 @@ public class WindowTimeBattleLogic extends Battle {
         // Level Up Check
         if (playerCharacter.checkLevelUp()) {
             playerCharacter.levelUp();
-            FantastleReboot.getBagOStuff().getGameManager().keepNextMessage();
+            TallerTower.getApplication().getGameManager().keepNextMessage();
             bag.showMessage(
                     "You reached level " + playerCharacter.getLevel() + ".");
         }
@@ -664,7 +667,7 @@ public class WindowTimeBattleLogic extends Battle {
     @Override
     public final void battleDone() {
         this.battleGUI.getOutputFrame().setVisible(false);
-        final GameLogicManager gm = FantastleReboot.getBagOStuff()
+        final GameLogicManager gm = TallerTower.getApplication()
                 .getGameManager();
         gm.showOutput();
         gm.redrawMaze();
@@ -731,7 +734,7 @@ public class WindowTimeBattleLogic extends Battle {
         @Override
         public void run() {
             try {
-                final BagOStuff app = FantastleReboot.getBagOStuff();
+                final Application app = TallerTower.getApplication();
                 final BagOStuff bag = FantastleReboot.getBagOStuff();
                 final Battle b = app.getBattle();
                 if (bag.getMode() == BagOStuff.STATUS_BATTLE
@@ -763,7 +766,7 @@ public class WindowTimeBattleLogic extends Battle {
         @Override
         public void run() {
             try {
-                final BagOStuff app = FantastleReboot.getBagOStuff();
+                final Application app = TallerTower.getApplication();
                 final BagOStuff bag = FantastleReboot.getBagOStuff();
                 final Battle b = app.getBattle();
                 if (bag.getMode() == BagOStuff.STATUS_BATTLE
