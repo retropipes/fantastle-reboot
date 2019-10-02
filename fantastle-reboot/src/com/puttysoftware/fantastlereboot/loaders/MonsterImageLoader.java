@@ -19,7 +19,6 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot.loaders;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -28,13 +27,9 @@ import java.util.Objects;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.monsters.Element;
-import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
-import com.puttysoftware.help.GraphicalHelpViewer;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class MonsterImageLoader {
@@ -81,28 +76,6 @@ public class MonsterImageLoader {
                 elem);
     }
 
-    public static void viewCache() {
-        if (!ImageCache.cacheCreated) {
-            ImageCache.createCache();
-        }
-        final GraphicalHelpViewer cv = new GraphicalHelpViewer(
-                ImageCache.images(), ImageCache.names());
-        final JFrame viewFrame = new JFrame("Monster Image Cache Viewer");
-        viewFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        viewFrame.setLayout(new FlowLayout());
-        viewFrame.add(cv.getHelp());
-        cv.setHelpSize(ImageConstants.MAX_WINDOW_SIZE,
-                ImageConstants.MAX_WINDOW_SIZE);
-        viewFrame.pack();
-        viewFrame.setResizable(false);
-        viewFrame.setVisible(true);
-    }
-
-    public static void recreateCache() {
-        ImageCache.cacheCreated = false;
-        ImageCache.createCache();
-    }
-
     private static class ImageCache {
         // Fields
         private static ArrayList<ImageCacheEntry> cache;
@@ -128,24 +101,6 @@ public class MonsterImageLoader {
                     elem.getName());
             ImageCache.cache.add(newEntry);
             return newImage;
-        }
-
-        public static BufferedImageIcon[] images() {
-            int limit = ImageCache.cache.size();
-            BufferedImageIcon[] result = new BufferedImageIcon[limit];
-            for (int x = 0; x < limit; x++) {
-                result[x] = ImageCache.cache.get(x).image();
-            }
-            return result;
-        }
-
-        public static String[] names() {
-            int limit = ImageCache.cache.size();
-            String[] result = new String[limit];
-            for (int x = 0; x < limit; x++) {
-                result[x] = ImageCache.cache.get(x).name();
-            }
-            return result;
         }
 
         private static void createCache() {
