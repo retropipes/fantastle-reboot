@@ -7,7 +7,7 @@ package com.puttysoftware.fantastlereboot.creatures.monsters;
 
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.loaders.MonsterImageLoader;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.MonsterNames;
+import com.puttysoftware.fantastlereboot.loaders.MonsterNames;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.randomrange.RandomRange;
 

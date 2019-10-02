@@ -1,13 +1,13 @@
-package com.puttysoftware.fantastlereboot.obsolete.loaders;
-
-import com.puttysoftware.fantastlereboot.datamanagers.MonsterDataManager;
+package com.puttysoftware.fantastlereboot.loaders;
 
 public class MonsterNames {
     // Package-Protected Constants
-    private static final String[] MONSTER_NAMES = MonsterDataManager
-            .getMonsterData();
+    private static String[] MONSTER_NAMES = null;
 
     public static final String[] getAllNames() {
+        if (MONSTER_NAMES == null) {
+            MONSTER_NAMES = DataLoader.loadMonsterData();
+        }
         return MONSTER_NAMES;
     }
 
