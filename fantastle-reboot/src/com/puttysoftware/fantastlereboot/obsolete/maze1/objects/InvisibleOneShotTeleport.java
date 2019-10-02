@@ -23,6 +23,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
+import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericInvisibleTeleport;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
@@ -45,7 +46,8 @@ public class InvisibleOneShotTeleport extends GenericInvisibleTeleport {
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
-        app.getGameManager().decay();
+        app.getGameManager();
+        GameLogicManager.decay();
         app.getGameManager().updatePositionAbsolute(this.getDestinationRow(),
                 this.getDestinationColumn(), this.getDestinationFloor(),
                 this.getDestinationLevel());

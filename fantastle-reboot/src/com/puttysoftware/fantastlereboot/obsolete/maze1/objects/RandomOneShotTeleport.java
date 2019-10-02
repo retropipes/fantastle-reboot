@@ -22,6 +22,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
+import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
 
@@ -41,7 +42,8 @@ public class RandomOneShotTeleport extends RandomTeleport {
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
-        app.getGameManager().decay();
+        app.getGameManager();
+        GameLogicManager.decay();
         int dr, dc;
         do {
             dr = this.getDestinationRow();

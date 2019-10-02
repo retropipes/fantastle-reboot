@@ -20,6 +20,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze1.objects;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericInventoryModifier;
 
@@ -47,7 +48,8 @@ public class NoBoots extends GenericInventoryModifier {
     @Override
     public void postMoveAction(final boolean ie, final int dirX, final int dirY,
             final ObjectInventory inv) {
-        FantastleReboot.getBagOStuff().getGameManager().decay();
+        FantastleReboot.getBagOStuff().getGameManager();
+        GameLogicManager.decay();
         inv.removeAllBoots();
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

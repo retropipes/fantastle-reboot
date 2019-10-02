@@ -23,6 +23,7 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
@@ -125,7 +126,8 @@ public abstract class GenericPotion extends MazeObject {
                 }
             }
         }
-        FantastleReboot.getBagOStuff().getGameManager().decay();
+        FantastleReboot.getBagOStuff().getGameManager();
+        GameLogicManager.decay();
         if (this.effectValue >= 0) {
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

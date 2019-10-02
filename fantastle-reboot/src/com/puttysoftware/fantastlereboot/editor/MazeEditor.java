@@ -1051,7 +1051,8 @@ public class MazeEditor {
         boolean saved = true;
         int status = 0;
         if (app.getMazeManager().getDirty()) {
-            status = app.getMazeManager().showSaveDialog();
+            app.getMazeManager();
+            status = com.puttysoftware.fantastlereboot.maze.MazeManager.showSaveDialog();
             if (status == JOptionPane.YES_OPTION) {
                 saved = app.getMazeManager().saveMaze();
             } else if (status == JOptionPane.CANCEL_OPTION) {
@@ -1555,7 +1556,8 @@ public class MazeEditor {
             boolean success = false;
             int status = JOptionPane.DEFAULT_OPTION;
             if (app.getMazeManager().getDirty()) {
-                status = app.getMazeManager().showSaveDialog();
+                app.getMazeManager();
+                status = com.puttysoftware.fantastlereboot.maze.MazeManager.showSaveDialog();
                 if (status == JOptionPane.YES_OPTION) {
                     success = app.getMazeManager().saveMaze();
                     if (success) {

@@ -22,6 +22,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
@@ -96,7 +97,8 @@ public abstract class GenericLock extends MazeObject {
             inv.removeItem(this.key);
         }
         final BagOStuff app = FantastleReboot.getBagOStuff();
-        app.getGameManager().decay();
+        app.getGameManager();
+        GameLogicManager.decay();
         // Play unlock sound, if it's enabled
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

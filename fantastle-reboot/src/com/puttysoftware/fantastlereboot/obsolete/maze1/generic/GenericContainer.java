@@ -24,6 +24,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 import com.puttysoftware.xio.XDataReader;
@@ -108,7 +109,8 @@ public abstract class GenericContainer extends GenericLock {
         if (this.inside != null) {
             app.getGameManager().morph(this.inside, dirX, dirY, pz, pw);
         } else {
-            app.getGameManager().decay();
+            app.getGameManager();
+            GameLogicManager.decay();
         }
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

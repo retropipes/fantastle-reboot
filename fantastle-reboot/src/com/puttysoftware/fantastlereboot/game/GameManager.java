@@ -1981,7 +1981,8 @@ public class GameManager {
                 boolean success = false;
                 int status = 0;
                 if (app.getMazeManager().getDirty()) {
-                    status = app.getMazeManager().showSaveDialog();
+                    app.getMazeManager();
+                    status = com.puttysoftware.fantastlereboot.maze.MazeManager.showSaveDialog();
                     if (status == JOptionPane.YES_OPTION) {
                         success = app.getMazeManager().saveMaze();
                         if (success) {
