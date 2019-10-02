@@ -10,7 +10,12 @@ import java.util.BitSet;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.Messager;
+import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.GameObjectImage;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.game.ObjectInventory;
+import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;
 import com.puttysoftware.fantastlereboot.maze.Maze;
@@ -25,46 +30,55 @@ import com.puttysoftware.xio.XDataWriter;
 
 public abstract class AbstractMazeObject implements RandomGenerationRule {
     // Properties
-    private boolean solid;
-    private boolean friction;
+    private SolidProperties sp;
+    private MoveProperties mp;
+    private final boolean friction;
     private final boolean blocksLOS;
     private static int templateColor = ImageColorConstants.COLOR_NONE;
     private int timerValue;
-    private int initialTimerValue;
+    private final int initialTimerValue;
     private boolean timerActive;
+    private final boolean usable;
+    private int uses;
+    private final boolean destroyable;
+    private final boolean chainReacts;
+    private final boolean isInventoryable;
     protected BitSet type;
     private AbstractMazeObject saved;
     public static final int DEFAULT_CUSTOM_VALUE = 0;
     protected static final int CUSTOM_FORMAT_MANUAL_OVERRIDE = -1;
 
     // Constructors
-    public AbstractMazeObject(final boolean isSolid, final boolean sightBlock) {
-        this.solid = isSolid;
-        this.friction = true;
-        this.blocksLOS = sightBlock;
-        this.type = new BitSet(TypeConstants.TYPES_COUNT);
-        this.timerValue = 0;
-        this.initialTimerValue = 0;
-        this.timerActive = false;
-        this.setTypes();
-    }
-
-    public AbstractMazeObject(final boolean isSolid, final boolean hasFriction,
-            final boolean sightBlock) {
-        this.solid = isSolid;
-        this.friction = hasFriction;
-        this.blocksLOS = sightBlock;
-        this.type = new BitSet(TypeConstants.TYPES_COUNT);
-        this.timerValue = 0;
-        this.initialTimerValue = 0;
-        this.timerActive = false;
-        this.setTypes();
-    }
-
     public AbstractMazeObject() {
-        this.solid = false;
+        this.sp = new SolidProperties();
+        this.mp = new MoveProperties();
         this.friction = true;
         this.blocksLOS = false;
+        this.usable = false;
+        this.uses = 0;
+        this.destroyable = true;
+        this.chainReacts = false;
+        this.isInventoryable = false;
+        this.type = new BitSet(TypeConstants.TYPES_COUNT);
+        this.timerValue = 0;
+        this.initialTimerValue = 0;
+        this.timerActive = false;
+        this.setTypes();
+    }
+
+    public AbstractMazeObject(final boolean hasFriction,
+            final boolean sightBlock, final boolean isUsable,
+            final int startingUses, final boolean destroy, final boolean chain,
+            final boolean inventory) {
+        this.sp = new SolidProperties();
+        this.mp = new MoveProperties();
+        this.friction = hasFriction;
+        this.blocksLOS = sightBlock;
+        this.usable = isUsable;
+        this.uses = startingUses;
+        this.destroyable = destroy;
+        this.chainReacts = chain;
+        this.isInventoryable = inventory;
         this.type = new BitSet(TypeConstants.TYPES_COUNT);
         this.timerValue = 0;
         this.initialTimerValue = 0;
@@ -73,56 +87,6 @@ public abstract class AbstractMazeObject implements RandomGenerationRule {
     }
 
     // Methods
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (this.friction ? 1231 : 1237);
-        result = prime * result + (this.solid ? 1231 : 1237);
-        result = prime * result + this.timerValue;
-        result = prime * result + this.initialTimerValue;
-        result = prime * result + (this.timerActive ? 1231 : 1237);
-        return prime * result
-                + ((this.type == null) ? 0 : this.type.hashCode());
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (!(obj instanceof AbstractMazeObject)) {
-            return false;
-        }
-        final AbstractMazeObject other = (AbstractMazeObject) obj;
-        if (this.friction != other.friction) {
-            return false;
-        }
-        if (this.solid != other.solid) {
-            return false;
-        }
-        if (this.type == null) {
-            if (other.type != null) {
-                return false;
-            }
-        } else if (!this.type.equals(other.type)) {
-            return false;
-        }
-        if (this.timerActive != other.timerActive) {
-            return false;
-        }
-        if (this.timerValue != other.timerValue) {
-            return false;
-        }
-        if (this.initialTimerValue != other.initialTimerValue) {
-            return false;
-        }
-        return true;
-    }
-
     public AbstractMazeObject getSavedObject() {
         if (this.saved == null) {
             throw new NullPointerException("Saved object == NULL!");
@@ -137,10 +101,6 @@ public abstract class AbstractMazeObject implements RandomGenerationRule {
         this.saved = newSaved;
     }
 
-    public boolean isSolid() {
-        return this.solid;
-    }
-
     public boolean isSolidInBattle() {
         if (this.enabledInBattle()) {
             return this.isSolid();
@@ -151,16 +111,6 @@ public abstract class AbstractMazeObject implements RandomGenerationRule {
 
     public boolean isSightBlocking() {
         return this.blocksLOS;
-    }
-
-    public boolean isOfType(final int testType) {
-        return this.type.get(testType);
-    }
-
-    protected abstract void setTypes();
-
-    public boolean hasFriction() {
-        return this.friction;
     }
 
     public static int getTemplateColor() {
@@ -223,26 +173,13 @@ public abstract class AbstractMazeObject implements RandomGenerationRule {
      * @param z
      * @return
      */
-    public AbstractMazeObject gameRenderHook(final int x, final int y,
+    public BufferedImageIcon gameRenderHook(final int x, final int y,
             final int z) {
-        return this;
+        return ObjectImageLoader.load(this.getGameBaseID());
     }
 
     public BufferedImageIcon battleRenderHook() {
-        return ObjectImageManager.getImage(this.getName(),
-                this.getBattleBaseID(), AbstractMazeObject.getTemplateColor());
-    }
-
-    public boolean defersSetProperties() {
-        return false;
-    }
-
-    public boolean overridesDefaultPostMove() {
-        return false;
-    }
-
-    public String getGameName() {
-        return this.getName();
+        return ObjectImageLoader.load(this.getBattleBaseID());
     }
 
     /**
@@ -259,7 +196,6 @@ public abstract class AbstractMazeObject implements RandomGenerationRule {
     public final void activateTimer(final int ticks) {
         this.timerActive = true;
         this.timerValue = ticks;
-        this.initialTimerValue = ticks;
     }
 
     public final void tickTimer(final int dirX, final int dirY) {
@@ -267,34 +203,22 @@ public abstract class AbstractMazeObject implements RandomGenerationRule {
             this.timerValue--;
             if (this.timerValue == 0) {
                 this.timerActive = false;
-                this.initialTimerValue = 0;
                 this.timerExpiredAction(dirX, dirY);
             }
         }
     }
 
-    /**
-     *
-     * @param dirX
-     * @param dirY
-     */
-    public void timerExpiredAction(final int dirX, final int dirY) {
-        // Do nothing
-    }
+    public abstract GameObjectImage getBaseID();
 
-    abstract public String getName();
-
-    public abstract int getBaseID();
-
-    public int getGameBaseID() {
+    public GameObjectImage getGameBaseID() {
         return this.getBaseID();
     }
 
-    public int getBattleBaseID() {
+    public GameObjectImage getBattleBaseID() {
         if (this.enabledInBattle()) {
             return this.getGameBaseID();
         } else {
-            return ObjectImageConstants.OBJECT_IMAGE_NONE;
+            return GameObjectImage._NONE;
         }
     }
 
@@ -304,20 +228,6 @@ public abstract class AbstractMazeObject implements RandomGenerationRule {
 
     public final String getIdentifier() {
         return this.getName();
-    }
-
-    abstract public String getPluralName();
-
-    abstract public String getDescription();
-
-    abstract public int getLayer();
-
-    abstract public int getCustomProperty(int propID);
-
-    abstract public void setCustomProperty(int propID, int value);
-
-    public int getCustomFormat() {
-        return 0;
     }
 
     @Override
@@ -373,17 +283,16 @@ public abstract class AbstractMazeObject implements RandomGenerationRule {
         return false;
     }
 
-    public final void writeMazeObject(final XDataWriter writer)
-            throws IOException {
+    public final void writeObject(final XDataWriter writer) throws IOException {
         writer.writeString(this.getIdentifier());
         if (this.saved == null) {
             writer.writeString("NULL");
         } else {
-            this.saved.writeMazeObject(writer);
+            this.saved.writeObject(writer);
         }
         final int cc = this.getCustomFormat();
         if (cc == AbstractMazeObject.CUSTOM_FORMAT_MANUAL_OVERRIDE) {
-            this.writeMazeObjectHook(writer);
+            this.writeObjectHook(writer);
         } else {
             for (int x = 0; x < cc; x++) {
                 final int cx = this.getCustomProperty(x + 1);
@@ -392,18 +301,18 @@ public abstract class AbstractMazeObject implements RandomGenerationRule {
         }
     }
 
-    public final AbstractMazeObject readMazeObjectV1(final XDataReader reader,
+    public final AbstractMazeObject readObject(final XDataReader reader,
             final String ident) throws IOException {
         if (ident.equals(this.getIdentifier())) {
             final String savedIdent = reader.readString();
             if (!savedIdent.equals("NULL")) {
                 this.saved = FantastleReboot.getBagOStuff().getObjects()
-                        .readSavedMazeObject(reader, savedIdent,
+                        .readSavedObject(reader, savedIdent,
                                 FormatConstants.MAZE_FORMAT_LATEST);
             }
             final int cc = this.getCustomFormat();
             if (cc == AbstractMazeObject.CUSTOM_FORMAT_MANUAL_OVERRIDE) {
-                return this.readMazeObjectHook(reader,
+                return this.readObjectHook(reader,
                         FormatConstants.MAZE_FORMAT_LATEST);
             } else {
                 for (int x = 0; x < cc; x++) {
@@ -422,7 +331,7 @@ public abstract class AbstractMazeObject implements RandomGenerationRule {
      * @param writer
      * @throws IOException
      */
-    protected void writeMazeObjectHook(final XDataWriter writer)
+    protected void writeObjectHook(final XDataWriter writer)
             throws IOException {
         // Do nothing - but let subclasses override
     }
@@ -434,7 +343,7 @@ public abstract class AbstractMazeObject implements RandomGenerationRule {
      * @return
      * @throws IOException
      */
-    protected AbstractMazeObject readMazeObjectHook(final XDataReader reader,
+    protected AbstractMazeObject readObjectHook(final XDataReader reader,
             final int formatVersion) throws IOException {
         // Dummy implementation, subclasses can override
         return this;
@@ -442,5 +351,746 @@ public abstract class AbstractMazeObject implements RandomGenerationRule {
 
     public boolean isMoving() {
         return false;
+    }
+
+    /**
+     *
+     * @param inv
+     * @return
+     */
+    public boolean isConditionallySolid(final ObjectInventory inv) {
+        return this.sp.isSolid();
+    }
+
+    /**
+     *
+     * @param ie
+     * @param dirX
+     * @param dirY
+     * @param inv
+     * @return
+     */
+    public boolean isConditionallyDirectionallySolid(final boolean ie,
+            final int dirX, final int dirY, final ObjectInventory inv) {
+        return this.sp.isDirectionallySolid(ie, dirX, dirY);
+    }
+
+    public boolean isSolid() {
+        return this.sp.isSolid();
+    }
+
+    public boolean isDirectionallySolid(final boolean ie, final int dirX,
+            final int dirY) {
+        return this.sp.isDirectionallySolid(ie, dirX, dirY);
+    }
+
+    protected void setSolid(final boolean value) {
+        this.sp.setSolid(value);
+    }
+
+    protected void setDirectionallySolid(final boolean ie, final int dir,
+            final boolean value) {
+        this.sp.setDirectionallySolid(ie, dir, value);
+    }
+
+    public boolean isOfType(final int testType) {
+        return this.type.get(testType);
+    }
+
+    protected abstract void setTypes();
+
+    /**
+     *
+     * @param inv
+     * @return
+     */
+    public boolean isConditionallyPushable(final ObjectInventory inv) {
+        return this.mp.isPushable();
+    }
+
+    /**
+     *
+     * @param dirX
+     * @param dirY
+     * @param inv
+     * @return
+     */
+    public boolean isConditionallyDirectionallyPushable(final int dirX,
+            final int dirY, final ObjectInventory inv) {
+        return this.mp.isDirectionallyPushable(dirX, dirY);
+    }
+
+    /**
+     *
+     * @param inv
+     * @return
+     */
+    public boolean isConditionallyPullable(final ObjectInventory inv) {
+        return this.mp.isPullable();
+    }
+
+    /**
+     *
+     * @param dirX
+     * @param dirY
+     * @param inv
+     * @return
+     */
+    public boolean isConditionallyDirectionallyPullable(final int dirX,
+            final int dirY, final ObjectInventory inv) {
+        return this.mp.isDirectionallyPullable(dirX, dirY);
+    }
+
+    /**
+     *
+     * @param inv
+     * @return
+     */
+    public boolean isConditionallyPullableInto(final ObjectInventory inv) {
+        return this.mp.isPullableInto();
+    }
+
+    /**
+     *
+     * @param inv
+     * @return
+     */
+    public boolean isConditionallyPushableInto(final ObjectInventory inv) {
+        return this.mp.isPushableInto();
+    }
+
+    /**
+     *
+     * @param dirX
+     * @param dirY
+     * @param inv
+     * @return
+     */
+    public boolean isConditionallyDirectionallyPushableInto(final int dirX,
+            final int dirY, final ObjectInventory inv) {
+        return this.mp.isDirectionallyPushableInto(dirX, dirY);
+    }
+
+    /**
+     *
+     * @param dirX
+     * @param dirY
+     * @param inv
+     * @return
+     */
+    public boolean isConditionallyDirectionallyPullableInto(final int dirX,
+            final int dirY, final ObjectInventory inv) {
+        return this.mp.isDirectionallyPullableInto(dirX, dirY);
+    }
+
+    /**
+     *
+     * @param inv
+     * @return
+     */
+    public boolean isConditionallyPullableOut(final ObjectInventory inv) {
+        return this.mp.isPullableOut();
+    }
+
+    /**
+     *
+     * @param inv
+     * @return
+     */
+    public boolean isConditionallyPushableOut(final ObjectInventory inv) {
+        return this.mp.isPushableOut();
+    }
+
+    /**
+     *
+     * @param dirX
+     * @param dirY
+     * @param inv
+     * @return
+     */
+    public boolean isConditionallyDirectionallyPushableOut(final int dirX,
+            final int dirY, final ObjectInventory inv) {
+        return this.mp.isDirectionallyPushableOut(dirX, dirY);
+    }
+
+    /**
+     *
+     * @param dirX
+     * @param dirY
+     * @param inv
+     * @return
+     */
+    public boolean isConditionallyDirectionallyPullableOut(final int dirX,
+            final int dirY, final ObjectInventory inv) {
+        return this.mp.isDirectionallyPullableOut(dirX, dirY);
+    }
+
+    public boolean isPushable() {
+        return this.mp.isPushable();
+    }
+
+    public boolean isDirectionallyPushable(final int dirX, final int dirY) {
+        return this.mp.isDirectionallyPushable(dirX, dirY);
+    }
+
+    public boolean isPullable() {
+        return this.mp.isPullable();
+    }
+
+    public boolean isDirectionallyPullable(final int dirX, final int dirY) {
+        return this.mp.isDirectionallyPullable(dirX, dirY);
+    }
+
+    public boolean isPullableInto() {
+        return this.mp.isPullableInto();
+    }
+
+    public boolean isPushableInto() {
+        return this.mp.isPushableInto();
+    }
+
+    public boolean isDirectionallyPushableInto(final int dirX, final int dirY) {
+        return this.mp.isDirectionallyPushableInto(dirX, dirY);
+    }
+
+    public boolean isDirectionallyPullableInto(final int dirX, final int dirY) {
+        return this.mp.isDirectionallyPullableInto(dirX, dirY);
+    }
+
+    public boolean isPullableOut() {
+        return this.mp.isPullableOut();
+    }
+
+    public boolean isPushableOut() {
+        return this.mp.isPushableOut();
+    }
+
+    public boolean isDirectionallyPushableOut(final int dirX, final int dirY) {
+        return this.mp.isDirectionallyPushableOut(dirX, dirY);
+    }
+
+    public boolean isDirectionallyPullableOut(final int dirX, final int dirY) {
+        return this.mp.isDirectionallyPullableOut(dirX, dirY);
+    }
+
+    protected void setPushable(final boolean value) {
+        this.mp.setPushable(value);
+    }
+
+    protected void setDirectionallyPushable(final int dir,
+            final boolean value) {
+        this.mp.setDirectionallyPushable(dir, value);
+    }
+
+    protected void setPullable(final boolean value) {
+        this.mp.setPullable(value);
+    }
+
+    protected void setDirectionallyPullable(final int dir,
+            final boolean value) {
+        this.mp.setDirectionallyPullable(dir, value);
+    }
+
+    protected void setPushableInto(final boolean value) {
+        this.mp.setPushableInto(value);
+    }
+
+    protected void setDirectionallyPushableInto(final int dir,
+            final boolean value) {
+        this.mp.setDirectionallyPushableInto(dir, value);
+    }
+
+    protected void setPullableInto(final boolean value) {
+        this.mp.setPullableInto(value);
+    }
+
+    protected void setDirectionallyPullableInto(final int dir,
+            final boolean value) {
+        this.mp.setDirectionallyPullableInto(dir, value);
+    }
+
+    protected void setPushableOut(final boolean value) {
+        this.mp.setPushableOut(value);
+    }
+
+    protected void setDirectionallyPushableOut(final int dir,
+            final boolean value) {
+        this.mp.setDirectionallyPushableOut(dir, value);
+    }
+
+    protected void setPullableOut(final boolean value) {
+        this.mp.setPullableOut(value);
+    }
+
+    protected void setDirectionallyPullableOut(final int dir,
+            final boolean value) {
+        this.mp.setDirectionallyPullableOut(dir, value);
+    }
+
+    public boolean hasFriction() {
+        return this.friction;
+    }
+
+    public boolean isUsable() {
+        return this.usable;
+    }
+
+    public int getUses() {
+        return this.uses;
+    }
+
+    public boolean isDestroyable() {
+        return this.destroyable;
+    }
+
+    public boolean doesChainReact() {
+        return this.chainReacts;
+    }
+
+    public boolean isInventoryable() {
+        return this.isInventoryable;
+    }
+
+    /**
+     *
+     * @param ie
+     * @param dirX
+     * @param dirY
+     * @param inv
+     * @return
+     */
+    public boolean preMoveAction(final boolean ie, final int dirX,
+            final int dirY, final ObjectInventory inv) {
+        return true;
+    }
+
+    /**
+     *
+     * @param ie
+     * @param dirX
+     * @param dirY
+     * @param inv
+     */
+    public void postMoveAction(final boolean ie, final int dirX, final int dirY,
+            final ObjectInventory inv) {
+        // Play move success sound, if it's enabled
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
+            this.playMoveSuccessSound();
+        }
+    }
+
+    /**
+     *
+     * @param ie
+     * @param dirX
+     * @param dirY
+     * @param inv
+     */
+    public void moveFailedAction(final boolean ie, final int dirX,
+            final int dirY, final ObjectInventory inv) {
+        // Play move failed sound, if it's enabled
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
+            this.playMoveFailedSound();
+        }
+        Messager.showMessage("Can't go that way");
+    }
+
+    /**
+     *
+     * @param inv
+     * @param moving
+     * @return
+     */
+    public boolean hasFrictionConditionally(final ObjectInventory inv,
+            final boolean moving) {
+        return this.hasFriction();
+    }
+
+    public void gameProbeHook() {
+        Messager.showMessage(this.getName());
+    }
+
+    public void editorPlaceHook() {
+        // Do nothing
+    }
+
+    public void editorProbeHook() {
+        Messager.showMessage(this.getName());
+    }
+
+    public AbstractMazeObject editorPropertiesHook() {
+        return null;
+    }
+
+    public void playMoveFailedSound() {
+        SoundPlayer.playSound(GameSound.OOF);
+    }
+
+    public void playMoveSuccessSound() {
+        SoundPlayer.playSound(GameSound.WALK);
+    }
+
+    public final static void playPushSuccessSound() {
+        SoundPlayer.playSound(GameSound.PUSH);
+    }
+
+    public final static void playPushFailedSound() {
+        SoundPlayer.playSound(GameSound.PUSH_PULL_FAILED);
+    }
+
+    public final static void playPullFailedSound() {
+        SoundPlayer.playSound(GameSound.PUSH_PULL_FAILED);
+    }
+
+    public final static void playPullSuccessSound() {
+        SoundPlayer.playSound(GameSound.PULL);
+    }
+
+    public void playUseSound() {
+        // Do nothing
+    }
+
+    public void playChainReactSound() {
+        // Do nothing
+    }
+
+    public final static void playIdentifySound() {
+        SoundPlayer.playSound(GameSound.IDENTIFY);
+    }
+
+    public final static void playRotatedSound() {
+        SoundPlayer.playSound(GameSound.ROTATED);
+    }
+
+    public final static void playFallSound() {
+        SoundPlayer.playSound(GameSound.FALLING);
+    }
+
+    public final static void playButtonSound() {
+        SoundPlayer.playSound(GameSound.BUTTON);
+    }
+
+    public final static void playConfusedSound() {
+        SoundPlayer.playSound(GameSound.CONFUSED);
+    }
+
+    public final static void playDarknessSound() {
+        SoundPlayer.playSound(GameSound.DARKNESS);
+    }
+
+    public final static void playDizzySound() {
+        SoundPlayer.playSound(GameSound.DIZZY);
+    }
+
+    public final static void playDrunkSound() {
+        SoundPlayer.playSound(GameSound.DRUNK);
+    }
+
+    public final static void playFinishSound() {
+        SoundPlayer.playSound(GameSound.FINISH);
+    }
+
+    public final static void playLightSound() {
+        SoundPlayer.playSound(GameSound.LIGHT);
+    }
+
+    public final static void playSinkBlockSound() {
+        SoundPlayer.playSound(GameSound.SINK);
+    }
+
+    public final static void playWallTrapSound() {
+        SoundPlayer.playSound(GameSound.TRAP);
+    }
+
+    /**
+     *
+     * @param inv
+     * @param mo
+     * @param x
+     * @param y
+     * @param pushX
+     * @param pushY
+     */
+    public void pushAction(final ObjectInventory inv,
+            final AbstractMazeObject mo, final int x, final int y,
+            final int pushX, final int pushY) {
+        // Do nothing
+    }
+
+    /**
+     *
+     * @param inv
+     * @param pushed
+     * @param x
+     * @param y
+     * @param z
+     * @param w
+     */
+    public void pushIntoAction(final ObjectInventory inv,
+            final AbstractMazeObject pushed, final int x, final int y,
+            final int z, final int w) {
+        // Do nothing
+    }
+
+    /**
+     *
+     * @param inv
+     * @param pushed
+     * @param x
+     * @param y
+     * @param z
+     * @param w
+     */
+    public void pushOutAction(final ObjectInventory inv,
+            final AbstractMazeObject pushed, final int x, final int y,
+            final int z, final int w) {
+        // Do nothing
+    }
+
+    /**
+     *
+     * @param inv
+     * @param x
+     * @param y
+     * @param pushX
+     * @param pushY
+     */
+    public void pushFailedAction(final ObjectInventory inv, final int x,
+            final int y, final int pushX, final int pushY) {
+        // Play push failed sound, if it's enabled
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
+            AbstractMazeObject.playPushFailedSound();
+        }
+        FantastleReboot.getBagOStuff().getGameManager().keepNextMessage();
+        Messager.showMessage("Can't push that");
+    }
+
+    /**
+     *
+     * @param inv
+     * @param mo
+     * @param x
+     * @param y
+     * @param pullX
+     * @param pullY
+     */
+    public void pullAction(final ObjectInventory inv,
+            final AbstractMazeObject mo, final int x, final int y,
+            final int pullX, final int pullY) {
+        // Do nothing
+    }
+
+    /**
+     *
+     * @param inv
+     * @param pulled
+     * @param x
+     * @param y
+     * @param z
+     * @param w
+     */
+    public void pullIntoAction(final ObjectInventory inv,
+            final AbstractMazeObject pulled, final int x, final int y,
+            final int z, final int w) {
+        // Do nothing
+    }
+
+    /**
+     *
+     * @param inv
+     * @param pulled
+     * @param x
+     * @param y
+     * @param z
+     * @param w
+     */
+    public void pullOutAction(final ObjectInventory inv,
+            final AbstractMazeObject pulled, final int x, final int y,
+            final int z, final int w) {
+        // Do nothing
+    }
+
+    /**
+     *
+     * @param inv
+     * @param x
+     * @param y
+     * @param pullX
+     * @param pullY
+     */
+    public void pullFailedAction(final ObjectInventory inv, final int x,
+            final int y, final int pullX, final int pullY) {
+        // Play pull failed sound, if it's enabled
+        if (FantastleReboot.getBagOStuff().getPrefsManager()
+                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
+            AbstractMazeObject.playPullFailedSound();
+        }
+        FantastleReboot.getBagOStuff().getGameManager().keepNextMessage();
+        Messager.showMessage("Can't pull that");
+    }
+
+    /**
+     *
+     * @param mo
+     * @param x
+     * @param y
+     * @param z
+     * @param w
+     */
+    public void useAction(final AbstractMazeObject mo, final int x, final int y,
+            final int z, final int w) {
+        // Do nothing
+    }
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @param w
+     */
+    public void useHelper(final int x, final int y, final int z, final int w) {
+        // Do nothing
+    }
+
+    public final boolean isTimerActive() {
+        return this.timerActive;
+    }
+
+    public final void extendTimer(final int ticks) {
+        if (this.timerActive) {
+            this.timerValue += ticks;
+        }
+    }
+
+    public final void extendTimerByInitialValue() {
+        if (this.timerActive) {
+            this.timerValue += this.initialTimerValue;
+        }
+    }
+
+    /**
+     *
+     * @param dirX
+     * @param dirY
+     */
+    public void timerExpiredAction(final int dirX, final int dirY) {
+        // Do nothing
+    }
+
+    /**
+     *
+     * @param locX
+     * @param locY
+     * @param locZ
+     * @param locW
+     * @param dirX
+     * @param dirY
+     * @param arrowType
+     * @param inv
+     * @return
+     */
+    public boolean arrowHitAction(final int locX, final int locY,
+            final int locZ, final int locW, final int dirX, final int dirY,
+            final int arrowType, final ObjectInventory inv) {
+        // Default do-nothing, return true
+        return true;
+    }
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @param w
+     * @return
+     */
+    public String gameRenderHook(final int x, final int y, final int z,
+            final int w) {
+        return this.getGameName();
+    }
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @param w
+     * @return
+     */
+    public String editorRenderHook(final int x, final int y, final int z,
+            final int w) {
+        return this.getName();
+    }
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @param w
+     */
+    public void chainReactionAction(final int x, final int y, final int z,
+            final int w) {
+        // Do nothing
+    }
+
+    public boolean defersSetProperties() {
+        return false;
+    }
+
+    public boolean hasAdditionalProperties() {
+        return false;
+    }
+
+    public boolean overridesDefaultPostMove() {
+        return false;
+    }
+
+    public String getGameName() {
+        return this.getName();
+    }
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @param w
+     */
+    public void determineCurrentAppearance(final int x, final int y,
+            final int z, final int w) {
+        // Do nothing
+    }
+
+    public void stepAction() {
+        // Do nothing
+    }
+
+    abstract public String getName();
+
+    public String getIdentifier4() {
+        return this.getName();
+    }
+
+    abstract public String getPluralName();
+
+    abstract public String getDescription();
+
+    abstract public byte getGroupID();
+
+    abstract public byte getObjectID();
+
+    abstract public int getLayer();
+
+    abstract public int getCustomProperty(int propID);
+
+    abstract public void setCustomProperty(int propID, int value);
+
+    public int getCustomFormat() {
+        return 0;
     }
 }

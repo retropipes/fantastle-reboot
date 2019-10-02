@@ -10,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;
 import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.maze.objects.Amulet;
@@ -98,9 +99,7 @@ public class MazeObjectList {
         final AbstractMazeObject[] objects = this.getAllObjects();
         final BufferedImageIcon[] allEditorAppearances = new BufferedImageIcon[objects.length];
         for (int x = 0; x < allEditorAppearances.length; x++) {
-            allEditorAppearances[x] = ObjectImageManager.getImage(
-                    objects[x].getName(), objects[x].getBaseID(),
-                    AbstractMazeObject.getTemplateColor());
+            allEditorAppearances[x] = ObjectImageLoader.load(objects[x].getBaseID());
         }
         return allEditorAppearances;
     }
@@ -175,7 +174,7 @@ public class MazeObjectList {
         }
     }
 
-    public AbstractMazeObject readMazeObject(final XDataReader reader,
+    public AbstractMazeObject readObject(final XDataReader reader,
             final int formatVersion) throws IOException {
         final AbstractMazeObject[] objects = this.getAllObjects();
         AbstractMazeObject o = null;
@@ -188,7 +187,7 @@ public class MazeObjectList {
                 AbstractMazeObject instance;
                 instance = objects[x].getClass().getConstructor().newInstance();
                 if (formatVersion == FormatConstants.MAZE_FORMAT_LATEST) {
-                    o = instance.readMazeObjectV1(reader, UID);
+                    o = instance.readObject(reader, UID);
                     if (o != null) {
                         return o;
                     }
@@ -202,7 +201,7 @@ public class MazeObjectList {
         return null;
     }
 
-    public AbstractMazeObject readSavedMazeObject(final XDataReader reader,
+    public AbstractMazeObject readSavedObject(final XDataReader reader,
             final String UID, final int formatVersion) throws IOException {
         final AbstractMazeObject[] objects = this.getAllObjects();
         AbstractMazeObject o = null;
@@ -211,7 +210,7 @@ public class MazeObjectList {
                 AbstractMazeObject instance;
                 instance = objects[x].getClass().getConstructor().newInstance();
                 if (formatVersion == FormatConstants.MAZE_FORMAT_LATEST) {
-                    o = instance.readMazeObjectV1(reader, UID);
+                    o = instance.readObject(reader, UID);
                     if (o != null) {
                         return o;
                     }

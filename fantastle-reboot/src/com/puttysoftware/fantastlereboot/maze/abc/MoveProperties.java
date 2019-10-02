@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Any questions should be directed to the author via email at: fantastle@worldwizard.net
  */
-package com.puttysoftware.fantastlereboot.obsolete.maze1.generic;
+package com.puttysoftware.fantastlereboot.maze.abc;
 
 import java.util.Arrays;
 
