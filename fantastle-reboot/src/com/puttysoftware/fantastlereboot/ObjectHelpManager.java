@@ -23,8 +23,8 @@ import java.awt.FlowLayout;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObjectList;
+import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 import com.puttysoftware.help.GraphicalHelpViewer;
 import com.puttysoftware.images.BufferedImageIcon;
 
@@ -49,11 +49,11 @@ public class ObjectHelpManager {
         this.helpFrame.add(this.hv.getHelp());
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .isMobileModeEnabled()) {
-            this.hv.setHelpSize(ImageLoader.MAX_MOBILE_WINDOW_SIZE,
-                    ImageLoader.MAX_MOBILE_WINDOW_SIZE);
+            this.hv.setHelpSize(ImageConstants.MAX_MOBILE_WINDOW_SIZE,
+                    ImageConstants.MAX_MOBILE_WINDOW_SIZE);
         } else {
-            this.hv.setHelpSize(ImageLoader.MAX_WINDOW_SIZE,
-                    ImageLoader.MAX_WINDOW_SIZE);
+            this.hv.setHelpSize(ImageConstants.MAX_WINDOW_SIZE,
+                    ImageConstants.MAX_WINDOW_SIZE);
         }
         this.helpFrame.pack();
         this.helpFrame.setResizable(false);
@@ -67,11 +67,11 @@ public class ObjectHelpManager {
     public void updateHelpSize() {
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .isMobileModeEnabled()) {
-            this.hv.setHelpSize(ImageLoader.MAX_MOBILE_WINDOW_SIZE,
-                    ImageLoader.MAX_MOBILE_WINDOW_SIZE);
+            this.hv.setHelpSize(ImageConstants.MAX_MOBILE_WINDOW_SIZE,
+                    ImageConstants.MAX_MOBILE_WINDOW_SIZE);
         } else {
-            this.hv.setHelpSize(ImageLoader.MAX_WINDOW_SIZE,
-                    ImageLoader.MAX_WINDOW_SIZE);
+            this.hv.setHelpSize(ImageConstants.MAX_WINDOW_SIZE,
+                    ImageConstants.MAX_WINDOW_SIZE);
         }
         this.helpFrame.pack();
     }

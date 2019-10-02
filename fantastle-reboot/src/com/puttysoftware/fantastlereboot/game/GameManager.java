@@ -42,8 +42,8 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
-import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
+import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.MazeManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericMovableObject;
@@ -60,6 +60,7 @@ import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Wall;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.WallBreakingWand;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.WallMakingWand;
 import com.puttysoftware.fantastlereboot.utilities.ArrowTypeConstants;
+import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
@@ -1087,19 +1088,19 @@ public class GameManager {
                                     .gameRenderHook(y, x,
                                             this.plMgr.getPlayerLocationZ(),
                                             this.plMgr.getPlayerLocationW());
-                            this.drawGrid[xFix][yFix].setIcon(ImageLoader
+                            this.drawGrid[xFix][yFix].setIcon(ObjectImageManager
                                     .getCompositeImage(name1, name2));
                         } else {
                             this.drawGrid[xFix][yFix]
-                                    .setIcon(ImageLoader.getImage("Darkness"));
+                                    .setIcon(ObjectImageManager.getImage("Darkness"));
                         }
                     } catch (final ArrayIndexOutOfBoundsException ae) {
-                        this.drawGrid[xFix][yFix].setIcon(ImageLoader
+                        this.drawGrid[xFix][yFix].setIcon(ObjectImageManager
                                 .getImage(new EmptyVoid().gameRenderHook(y, x,
                                         this.plMgr.getPlayerLocationZ(),
                                         this.plMgr.getPlayerLocationW())));
                     } catch (final NullPointerException np) {
-                        this.drawGrid[xFix][yFix].setIcon(ImageLoader
+                        this.drawGrid[xFix][yFix].setIcon(ObjectImageManager
                                 .getImage(new EmptyVoid().gameRenderHook(y, x,
                                         this.plMgr.getPlayerLocationZ(),
                                         this.plMgr.getPlayerLocationW())));
@@ -1144,11 +1145,11 @@ public class GameManager {
                             .gameRenderHook(x, y,
                                     this.plMgr.getPlayerLocationZ(),
                                     this.plMgr.getPlayerLocationW());
-                    this.drawGrid[xFix][yFix].setIcon(ImageLoader
+                    this.drawGrid[xFix][yFix].setIcon(ObjectImageManager
                             .getVirtualCompositeImage(name1, name2, name3));
                 } else {
                     this.drawGrid[xFix][yFix]
-                            .setIcon(ImageLoader.getImage("Darkness"));
+                            .setIcon(ObjectImageManager.getImage("Darkness"));
                 }
                 this.drawGrid[xFix][yFix].repaint();
             } catch (final ArrayIndexOutOfBoundsException ae) {
@@ -1525,9 +1526,9 @@ public class GameManager {
                 - GameViewingWindowManager.getOffsetFactorX();
         final int yOffset = this.vwMgr.getViewingWindowLocationY()
                 - GameViewingWindowManager.getOffsetFactorY();
-        final int destX = x / ImageLoader.getImageSize()
+        final int destX = x / ImageConstants.SIZE
                 + this.vwMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int destY = y / ImageLoader.getImageSize()
+        final int destY = y / ImageConstants.SIZE
                 + this.vwMgr.getViewingWindowLocationY() + xOffset - yOffset;
         final int destZ = this.plMgr.getPlayerLocationZ();
         final int destW = this.plMgr.getPlayerLocationW();
@@ -1603,10 +1604,10 @@ public class GameManager {
                     - GameViewingWindowManager.getOffsetFactorX();
             final int yOffset = this.vwMgr.getViewingWindowLocationY()
                     - GameViewingWindowManager.getOffsetFactorY();
-            final int destX = x / ImageLoader.getImageSize()
+            final int destX = x / ImageConstants.SIZE
                     + this.vwMgr.getViewingWindowLocationX() - xOffset
                     + yOffset;
-            final int destY = y / ImageLoader.getImageSize()
+            final int destY = y / ImageConstants.SIZE
                     + this.vwMgr.getViewingWindowLocationY() + xOffset
                     - yOffset;
             final int destZ = this.plMgr.getPlayerLocationZ();
@@ -1627,9 +1628,9 @@ public class GameManager {
                 - GameViewingWindowManager.getOffsetFactorX();
         final int yOffset = this.vwMgr.getViewingWindowLocationY()
                 - GameViewingWindowManager.getOffsetFactorY();
-        final int destX = x / ImageLoader.getImageSize()
+        final int destX = x / ImageConstants.SIZE
                 + this.vwMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int destY = y / ImageLoader.getImageSize()
+        final int destY = y / ImageConstants.SIZE
                 + this.vwMgr.getViewingWindowLocationY() + xOffset - yOffset;
         final int destZ = this.plMgr.getPlayerLocationZ();
         final int destW = this.plMgr.getPlayerLocationW();

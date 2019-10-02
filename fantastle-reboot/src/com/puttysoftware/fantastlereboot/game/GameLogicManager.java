@@ -13,7 +13,6 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
-import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
@@ -23,6 +22,7 @@ import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Empty;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.EmptyVoid;
+import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 
 public final class GameLogicManager {
     // Fields
@@ -212,9 +212,9 @@ public final class GameLogicManager {
                 - GameViewingWindowManager.getOffsetFactorX();
         final int yOffset = this.vwMgr.getViewingWindowLocationY()
                 - GameViewingWindowManager.getOffsetFactorY();
-        final int destX = x / ImageLoader.getImageSize()
+        final int destX = x / ImageConstants.SIZE
                 + this.vwMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int destY = y / ImageLoader.getImageSize()
+        final int destY = y / ImageConstants.SIZE
                 + this.vwMgr.getViewingWindowLocationY() + xOffset - yOffset;
         final int destZ = m.getPlayerLocationZ();
         try {

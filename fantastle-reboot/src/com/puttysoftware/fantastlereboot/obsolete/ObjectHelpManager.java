@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
+import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 import com.puttysoftware.fantastlereboot.utilities.MazeObjectList;
 import com.puttysoftware.help.GraphicalHelpViewer;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -54,8 +54,8 @@ public class ObjectHelpManager {
             this.helpFrame.setLayout(new BorderLayout());
             this.helpFrame.add(this.hv.getHelp(), BorderLayout.CENTER);
             this.helpFrame.add(export, BorderLayout.SOUTH);
-            this.hv.setHelpSize(ImageLoader.MAX_WINDOW_SIZE,
-                    ImageLoader.MAX_WINDOW_SIZE);
+            this.hv.setHelpSize(ImageConstants.MAX_WINDOW_SIZE,
+                    ImageConstants.MAX_WINDOW_SIZE);
             this.helpFrame.pack();
             this.helpFrame.setResizable(false);
             this.inited = true;

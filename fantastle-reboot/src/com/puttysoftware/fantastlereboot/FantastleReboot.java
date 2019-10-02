@@ -34,7 +34,6 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.errorlogger.ErrorLogger;
 import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
-import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.integration.NativeIntegration;
 
@@ -137,12 +136,7 @@ public class FantastleReboot {
         waitFrame.setVisible(true);
         // Create logo cache
         FantastleReboot.getBagOStuff().getGUIManager().updateLogo();
-        waitProgress.setValue(25);
-        // Create image cache
-        ImageLoader.recreateCache();
         waitProgress.setValue(50);
-        // Create sound cache
-        waitProgress.setValue(75);
         // Create stat image cache
         FantastleReboot.getBagOStuff().getGameManager().updateStatGUI();
         waitProgress.setValue(100);

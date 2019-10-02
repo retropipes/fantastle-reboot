@@ -32,6 +32,7 @@ import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
+import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 import com.puttysoftware.help.GraphicalHelpViewer;
 import com.puttysoftware.images.BufferedImageIcon;
 
@@ -80,8 +81,8 @@ public class UserInterfaceImageLoader {
         viewFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         viewFrame.setLayout(new FlowLayout());
         viewFrame.add(cv.getHelp());
-        cv.setHelpSize(ImageLoader.MAX_WINDOW_SIZE,
-                ImageLoader.MAX_WINDOW_SIZE);
+        cv.setHelpSize(ImageConstants.MAX_WINDOW_SIZE,
+                ImageConstants.MAX_WINDOW_SIZE);
         viewFrame.pack();
         viewFrame.setResizable(false);
         viewFrame.setVisible(true);

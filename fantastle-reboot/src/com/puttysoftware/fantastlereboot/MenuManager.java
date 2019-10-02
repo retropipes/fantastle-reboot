@@ -34,7 +34,6 @@ import com.puttysoftware.fantastlereboot.creatures.characterfiles.CharacterRegis
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.NoteManager;
 import com.puttysoftware.fantastlereboot.game.StatisticsViewer;
-import com.puttysoftware.fantastlereboot.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.GenerateTask;
 
 public class MenuManager {
@@ -53,7 +52,7 @@ public class MenuManager {
             gameReset, gameShowScore, gameShowTable, gameRegisterCharacter,
             gameUnregisterCharacter, gameRemoveCharacter, gameEditNote,
             gameViewStats;
-    private JMenuItem debugViewImageCache, debugResetPreferences;
+    private JMenuItem debugResetPreferences;
     private JMenuItem helpAbout, helpGeneralHelp, helpObjectHelp;
     private KeyStroke fileNewAccel, fileOpenAccel, fileCloseAccel,
             fileSaveAccel, fileSaveAsAccel;
@@ -491,7 +490,6 @@ public class MenuManager {
         this.gameRemoveCharacter = new JMenuItem("Remove Character...");
         this.gameEditNote = new JMenuItem("Edit Note...");
         this.gameViewStats = new JMenuItem("View Statistics...");
-        this.debugViewImageCache = new JMenuItem("View Image Cache");
         this.debugResetPreferences = new JMenuItem("Reset Preferences");
         this.helpAbout = new JMenuItem("About Fantastle...");
         this.helpGeneralHelp = new JMenuItem("Fantastle Help");
@@ -534,7 +532,6 @@ public class MenuManager {
         this.gameRemoveCharacter.addActionListener(this.handler);
         this.gameEditNote.addActionListener(this.handler);
         this.gameViewStats.addActionListener(this.handler);
-        this.debugViewImageCache.addActionListener(this.handler);
         this.debugResetPreferences.addActionListener(this.handler);
         this.helpAbout.addActionListener(this.handler);
         this.helpGeneralHelp.addActionListener(this.handler);
@@ -582,7 +579,6 @@ public class MenuManager {
         this.gameMenu.add(this.gameRemoveCharacter);
         this.gameMenu.add(this.gameEditNote);
         this.gameMenu.add(this.gameViewStats);
-        this.debugMenu.add(this.debugViewImageCache);
         this.debugMenu.add(this.debugResetPreferences);
         if (!System.getProperty("os.name").equalsIgnoreCase("Mac OS X")) {
             this.helpMenu.add(this.helpAbout);
@@ -634,7 +630,6 @@ public class MenuManager {
         this.gameRegisterCharacter.setEnabled(true);
         this.gameUnregisterCharacter.setEnabled(true);
         this.gameRemoveCharacter.setEnabled(true);
-        this.debugViewImageCache.setEnabled(true);
         this.debugResetPreferences.setEnabled(true);
         this.helpAbout.setEnabled(true);
         this.helpObjectHelp.setEnabled(true);
@@ -829,8 +824,6 @@ public class MenuManager {
                 } else if (cmd.equals("View Statistics...")) {
                     // View Statistics
                     StatisticsViewer.viewStatistics();
-                } else if (cmd.equals("View Image Cache")) {
-                    ImageLoader.viewCache();
                 } else if (cmd.equals("Reset Preferences")) {
                     app.resetPreferences();
                     Messager.showDialog("Preferences reset to defaults.");
