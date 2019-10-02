@@ -26,7 +26,6 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
@@ -38,7 +37,6 @@ public class ImageLoader {
     public static final int MAX_MOBILE_WINDOW_SIZE = 320;
     public static final int MAX_WINDOW_SIZE = 700;
     private static final Color TRANSPARENT = new Color(200, 100, 100);
-    private static Color REPLACE = null;
 
     public static BufferedImageIcon getImage(final String name) {
         // Get it from the cache
@@ -62,34 +60,6 @@ public class ImageLoader {
             return icon;
         } catch (final IOException ie) {
             return null;
-        } catch (final NullPointerException np) {
-            return null;
-        } catch (final IllegalArgumentException ia) {
-            return null;
-        }
-    }
-
-    public static BufferedImageIcon getTransformedImage(final String name) {
-        if (ImageLoader.REPLACE == null) {
-            ImageLoader.defineReplacementColor();
-        }
-        try {
-            final BufferedImageIcon icon = ImageCache.getCachedImage(name);
-            final BufferedImageIcon result = new BufferedImageIcon(icon);
-            if (icon != null) {
-                for (int x = 0; x < ImageLoader.getImageSize(); x++) {
-                    for (int y = 0; y < ImageLoader.getImageSize(); y++) {
-                        final int pixel = icon.getRGB(x, y);
-                        final Color c = new Color(pixel);
-                        if (c.equals(ImageLoader.TRANSPARENT)) {
-                            result.setRGB(x, y, ImageLoader.REPLACE.getRGB());
-                        }
-                    }
-                }
-                return result;
-            } else {
-                return null;
-            }
         } catch (final NullPointerException np) {
             return null;
         } catch (final IllegalArgumentException ia) {
@@ -161,14 +131,6 @@ public class ImageLoader {
             }
         }
         return sb.toString().toLowerCase();
-    }
-
-    private static void defineReplacementColor() {
-        if (System.getProperty("os.name").startsWith("Mac OS X")) {
-            ImageLoader.REPLACE = UIManager.getColor("text");
-        } else {
-            ImageLoader.REPLACE = UIManager.getColor("control");
-        }
     }
 
     public static int getImageSize() {
