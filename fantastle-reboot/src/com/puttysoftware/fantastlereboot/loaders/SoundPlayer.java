@@ -42,7 +42,8 @@ public class SoundPlayer {
     public static void playSound(final GameSound sound) {
         if (sound != GameSound._NONE) {
             final String filename = getSoundFilename(sound);
-            SoundLoader.play("/assets/sounds/" + filename, SoundPlayer.class,
+            SoundLoader.play(
+                    SoundPlayer.class.getResource("/assets/sounds/" + filename),
                     FantastleReboot.getErrorHandler());
         }
     }
