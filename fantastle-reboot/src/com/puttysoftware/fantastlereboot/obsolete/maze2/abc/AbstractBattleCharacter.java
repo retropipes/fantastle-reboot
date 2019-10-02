@@ -8,7 +8,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze2.abc;
 
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
+
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Empty;
 import com.puttysoftware.images.BufferedImageIcon;

@@ -10,8 +10,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
+
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractTrap;
 
 public class CounterclockwiseRotationTrap extends AbstractTrap {
@@ -36,7 +35,7 @@ public class CounterclockwiseRotationTrap extends AbstractTrap {
         SoundPlayer.playSound(GameSound.CHANGE);
         final BagOStuff bag = FantastleReboot.getBagOStuff();
         bag.showMessage("Your controls are rotated!");
-        TallerTower.getApplication().getGameManager().activateEffect(
+        FantastleReboot.getBagOStuff().getGameManager().activateEffect(
                 EffectConstants.EFFECT_ROTATED_COUNTERCLOCKWISE);
     }
 

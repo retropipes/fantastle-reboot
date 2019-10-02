@@ -9,10 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 import javax.swing.WindowConstants;
 
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
-import com.puttysoftware.fantastlereboot.obsolete.Application;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
 import com.puttysoftware.randomrange.RandomRange;
@@ -41,7 +40,7 @@ public class GenerateTask extends Thread {
     public void run() {
         try {
             this.generateFrame.setVisible(true);
-            final Application app = TallerTower.getApplication();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             Maze gameMaze = app.getMazeManager().getMaze();
             if (!this.scratch) {
                 app.getGameManager().disableEvents();

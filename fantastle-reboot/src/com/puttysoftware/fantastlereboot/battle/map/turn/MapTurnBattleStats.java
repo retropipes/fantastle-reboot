@@ -157,8 +157,7 @@ public class MapTurnBattleStats {
             actionImageId = GameEffectImage.ACTIONS_00;
             break;
         }
-        final BufferedImageIcon apImage = EffectImageLoader
-                .load(actionImageId);
+        final BufferedImageIcon apImage = EffectImageLoader.load(actionImageId);
         this.apLabel.setIcon(apImage);
     }
 }

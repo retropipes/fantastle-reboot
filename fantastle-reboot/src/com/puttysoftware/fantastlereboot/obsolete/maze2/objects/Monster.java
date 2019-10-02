@@ -2,8 +2,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze2.objects;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
+
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMovingObject;
 import com.puttysoftware.randomrange.RandomRange;
 
@@ -19,10 +18,9 @@ public class Monster extends AbstractMovingObject {
     public void postMoveAction(final boolean ie, final int dirX,
             final int dirY) {
         final BagOStuff bag = FantastleReboot.getBagOStuff();
-        if (bag
-                .getMode() != BagOStuff.STATUS_BATTLE) {
+        if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
             bag.getBattle().doBattle();
-            TallerTower.getApplication().getMazeManager().getMaze()
+            FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                     .postBattle(this, dirX, dirY, true);
         }
     }
@@ -32,7 +30,7 @@ public class Monster extends AbstractMovingObject {
         // Move the monster
         final RandomRange r = new RandomRange(0, 7);
         final int move = r.generate();
-        TallerTower.getApplication().getMazeManager().getMaze()
+        FantastleReboot.getBagOStuff().getMazeManager().getMaze()
                 .updateMonsterPosition(move, dirX, dirY, this);
         this.activateTimer(1);
     }

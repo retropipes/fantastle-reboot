@@ -20,12 +20,11 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.diane.loaders.ImageCompositor;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.DrawGrid;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
-import com.puttysoftware.fantastlereboot.obsolete.Application;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageManager;
+
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeManager;
@@ -76,7 +75,7 @@ class GameGUIManager {
 
     void initViewManager() {
         if (this.vwMgr == null) {
-            this.vwMgr = TallerTower.getApplication().getGameManager()
+            this.vwMgr = FantastleReboot.getBagOStuff().getGameManager()
                     .getViewManager();
             this.setUpGUI();
         }
@@ -93,7 +92,7 @@ class GameGUIManager {
     }
 
     public void showOutput() {
-        final Application app = TallerTower.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         if (!this.outputFrame.isVisible()) {
             app.getMenuManager().setGameMenus();
             this.outputFrame.setVisible(true);
@@ -127,7 +126,7 @@ class GameGUIManager {
     public void redrawMaze() {
         // Draw the maze, if it is visible
         if (this.outputFrame.isVisible()) {
-            final Application app = TallerTower.getApplication();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             final Maze m = app.getMazeManager().getMaze();
             int x, y, u, v;
             int xFix, yFix;
@@ -313,7 +312,7 @@ class GameGUIManager {
 
         public void handleMovement(final KeyEvent e) {
             try {
-                final GameLogicManager glm = TallerTower.getApplication()
+                final GameLogicManager glm = FantastleReboot.getBagOStuff()
                         .getGameManager();
                 final int keyCode = e.getKeyCode();
                 switch (keyCode) {
@@ -408,7 +407,7 @@ class GameGUIManager {
         @Override
         public void windowClosing(final WindowEvent we) {
             try {
-                final Application app = TallerTower.getApplication();
+                final BagOStuff app = FantastleReboot.getBagOStuff();
                 boolean success = false;
                 int status = 0;
                 if (app.getMazeManager().getDirty()) {
@@ -465,7 +464,7 @@ class GameGUIManager {
         @Override
         public void mouseClicked(final MouseEvent e) {
             try {
-                final GameLogicManager gm = TallerTower.getApplication()
+                final GameLogicManager gm = FantastleReboot.getBagOStuff()
                         .getGameManager();
                 if (e.isShiftDown()) {
                     final int x = e.getX();

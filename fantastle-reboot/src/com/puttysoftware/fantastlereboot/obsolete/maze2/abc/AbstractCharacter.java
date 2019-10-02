@@ -7,7 +7,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze2.abc;
 
 import java.io.IOException;
 
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Empty;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
@@ -68,7 +68,7 @@ public abstract class AbstractCharacter extends AbstractMazeObject {
     @Override
     protected AbstractMazeObject readMazeObjectHook(final XDataReader reader,
             final int formatVersion) throws IOException {
-        this.savedObject = TallerTower.getApplication().getObjects()
+        this.savedObject = FantastleReboot.getBagOStuff().getObjects()
                 .readMazeObject(reader, formatVersion);
         return this;
     }

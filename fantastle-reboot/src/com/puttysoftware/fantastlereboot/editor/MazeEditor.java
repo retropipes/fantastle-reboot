@@ -42,7 +42,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.game.GameManager;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageManager;
+
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze5;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.MazeManager;

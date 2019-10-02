@@ -12,9 +12,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageManager;
+
 import com.puttysoftware.fantastlereboot.obsolete.maze2.FormatConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
@@ -400,7 +398,7 @@ public abstract class AbstractMazeObject implements RandomGenerationRule {
         if (ident.equals(this.getIdentifier())) {
             final String savedIdent = reader.readString();
             if (!savedIdent.equals("NULL")) {
-                this.saved = TallerTower.getApplication().getObjects()
+                this.saved = FantastleReboot.getBagOStuff().getObjects()
                         .readSavedMazeObject(reader, savedIdent,
                                 FormatConstants.MAZE_FORMAT_LATEST);
             }

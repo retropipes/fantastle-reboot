@@ -9,10 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 import javax.swing.WindowConstants;
 
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
-import com.puttysoftware.fantastlereboot.obsolete.Application;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
@@ -41,7 +40,7 @@ public class LevelLoadTask extends Thread {
     public void run() {
         try {
             this.loadFrame.setVisible(true);
-            final Application app = TallerTower.getApplication();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             final Maze gameMaze = app.getMazeManager().getMaze();
             app.getGameManager().disableEvents();
             gameMaze.switchLevelOffset(this.level);

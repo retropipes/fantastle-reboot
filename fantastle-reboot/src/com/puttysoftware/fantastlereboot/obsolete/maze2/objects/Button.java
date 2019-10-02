@@ -5,11 +5,11 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze2.objects;
 
+import com.puttysoftware.fantastlereboot.BagOStuff;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.obsolete.Application;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
+
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractTrigger;
 import com.puttysoftware.randomrange.RandomRange;
@@ -44,7 +44,7 @@ public class Button extends AbstractTrigger {
     public void postMoveAction(final boolean ie, final int dirX,
             final int dirY) {
         SoundPlayer.playSound(GameSound.BUTTON);
-        final Application app = TallerTower.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         app.getMazeManager().getMaze().fullScanButton(this.getLayer());
         app.getGameManager().redrawMaze();
     }

@@ -5,12 +5,12 @@ Any questions should be directed to the author via email at: TallerTower@worldwi
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze2.objects;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
+
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractTrap;
 import com.puttysoftware.randomrange.RandomRange;
 
@@ -44,7 +44,7 @@ public class VariableHurtTrap extends AbstractTrap {
                 VariableHurtTrap.MIN_DAMAGE, maxDamage);
         PartyManager.getParty().getLeader().doDamage(damageDealt.generate());
         SoundPlayer.playSound(GameSound.BARRIER);
-        TallerTower.getApplication().getGameManager();
+        FantastleReboot.getBagOStuff().getGameManager();
         GameLogicManager.decay();
     }
 

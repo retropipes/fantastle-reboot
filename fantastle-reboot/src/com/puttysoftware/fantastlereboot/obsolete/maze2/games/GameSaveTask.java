@@ -12,8 +12,6 @@ import java.io.IOException;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.obsolete.Application;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Extension;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.PrefixHandler;
@@ -35,7 +33,7 @@ public class GameSaveTask extends Thread {
         boolean success = true;
         final String sg = "Game";
         try {
-            final Application app = TallerTower.getApplication();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             final BagOStuff bag = FantastleReboot.getBagOStuff();
             // filename check
             final boolean hasExtension = GameSaveTask
@@ -70,7 +68,7 @@ public class GameSaveTask extends Thread {
         } catch (final Exception ex) {
             FantastleReboot.logError(ex);
         }
-        TallerTower.getApplication().getMazeManager()
+        FantastleReboot.getBagOStuff().getMazeManager()
                 .handleDeferredSuccess(success, false, null);
     }
 

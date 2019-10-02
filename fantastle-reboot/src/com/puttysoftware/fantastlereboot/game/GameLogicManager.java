@@ -14,8 +14,6 @@ import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.obsolete.Application;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.GenerateTask;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
@@ -126,7 +124,7 @@ public final class GameLogicManager {
     }
 
     public void resetViewingWindow() {
-        final Application app = TallerTower.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         if (m != null && this.vwMgr != null) {
             this.vwMgr.setViewingWindowLocationX(m.getPlayerLocationY()
@@ -141,7 +139,7 @@ public final class GameLogicManager {
     }
 
     public static void resetPlayerLocation(final int level) {
-        final Application app = TallerTower.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         if (m != null) {
             m.switchLevel(level);
@@ -150,7 +148,7 @@ public final class GameLogicManager {
     }
 
     public void goToLevelOffset(final int level) {
-        final Application app = TallerTower.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         final boolean levelExists = m.doesLevelExistOffset(level);
         this.stopMovement();
@@ -163,7 +161,7 @@ public final class GameLogicManager {
 
     public void exitGame() {
         this.stateChanged = true;
-        final Application app = TallerTower.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         // Restore the maze
         m.restore();
@@ -187,14 +185,14 @@ public final class GameLogicManager {
     }
 
     public static void decay() {
-        final Application app = TallerTower.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         m.setCell(new Empty(), m.getPlayerLocationX(), m.getPlayerLocationY(),
                 m.getPlayerLocationZ(), MazeConstants.LAYER_OBJECT);
     }
 
     public static void morph(final AbstractMazeObject morphInto) {
-        final Application app = TallerTower.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         m.setCell(morphInto, m.getPlayerLocationX(), m.getPlayerLocationY(),
                 m.getPlayerLocationZ(), morphInto.getLayer());
@@ -205,7 +203,7 @@ public final class GameLogicManager {
     }
 
     public void identifyObject(final int x, final int y) {
-        final Application app = TallerTower.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final BagOStuff bag = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         final int xOffset = this.vwMgr.getViewingWindowLocationX()
@@ -237,7 +235,7 @@ public final class GameLogicManager {
     }
 
     public void playMaze() {
-        final Application app = TallerTower.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         if (app.getMazeManager().getLoaded()) {
             this.gui.initViewManager();

@@ -1,7 +1,7 @@
 package com.puttysoftware.fantastlereboot.game;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeNote;
 
@@ -11,7 +11,8 @@ public class NoteManager {
     }
 
     public static void editNote() {
-        final Maze m = TallerTower.getApplication().getMazeManager().getMaze();
+        final Maze m = FantastleReboot.getBagOStuff().getMazeManager()
+                .getMaze();
         final int x = m.getPlayerLocationX();
         final int y = m.getPlayerLocationY();
         final int z = m.getPlayerLocationZ();

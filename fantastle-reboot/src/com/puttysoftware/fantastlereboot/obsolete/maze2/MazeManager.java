@@ -14,8 +14,6 @@ import javax.swing.JOptionPane;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.obsolete.Application;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.games.GameFinder;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.games.GameLoadTask;
@@ -58,8 +56,8 @@ public final class MazeManager {
             triedToLoad.delete();
         }
         this.setDirty(false);
-        TallerTower.getApplication().getGameManager().stateChanged();
-        TallerTower.getApplication().getMenuManager().checkFlags();
+        FantastleReboot.getBagOStuff().getGameManager().stateChanged();
+        FantastleReboot.getBagOStuff().getMenuManager().checkFlags();
     }
 
     public AbstractMazeObject getMazeObject(final int x, final int y,
@@ -91,7 +89,7 @@ public final class MazeManager {
     }
 
     public void setLoaded(final boolean status) {
-        final Application app = TallerTower.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         this.loaded = status;
         app.getMenuManager().checkFlags();
     }

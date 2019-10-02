@@ -5,8 +5,8 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze2.abc;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.items.Shop;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
@@ -29,7 +29,7 @@ public abstract class AbstractShop extends AbstractMazeObject {
     @Override
     public void postMoveAction(final boolean ie, final int dirX,
             final int dirY) {
-        final Shop shop = TallerTower.getApplication()
+        final Shop shop = FantastleReboot.getBagOStuff()
                 .getGenericShop(this.shopType);
         if (shop != null) {
             shop.showShop();

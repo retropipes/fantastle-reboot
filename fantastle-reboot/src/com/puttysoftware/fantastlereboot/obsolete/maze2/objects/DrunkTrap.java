@@ -10,8 +10,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
+
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractTrap;
 
 public class DrunkTrap extends AbstractTrap {
@@ -35,7 +34,7 @@ public class DrunkTrap extends AbstractTrap {
             final int dirY) {
         final BagOStuff bag = FantastleReboot.getBagOStuff();
         bag.showMessage("You stumble around drunkenly!");
-        TallerTower.getApplication().getGameManager()
+        FantastleReboot.getBagOStuff().getGameManager()
                 .activateEffect(EffectConstants.EFFECT_DRUNK);
         SoundPlayer.playSound(GameSound.DRUNK);
     }

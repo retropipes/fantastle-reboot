@@ -22,7 +22,6 @@ import com.puttysoftware.fantastlereboot.creatures.races.Race;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.loaders.AvatarImageLoader;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.FormatConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.GenerateTask;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
@@ -258,7 +257,7 @@ public class PartyMember extends Creature {
         this.setGold(PartyMember.START_GOLD);
         this.setExperience(0L);
         this.getItems().resetInventory();
-        TallerTower.getApplication().getGameManager().deactivateAllEffects();
+        FantastleReboot.getBagOStuff().getGameManager().deactivateAllEffects();
         final Page nextLevelEquation = new Page(3, 1, 0, true);
         final double value = BASE_COEFF * this.personality.getAttribute(
                 PersonalityConstants.PERSONALITY_ATTRIBUTE_LEVEL_UP_SPEED);
@@ -427,7 +426,8 @@ public class PartyMember extends Creature {
 
     @Override
     protected BufferedImageIcon getInitialImage() {
-        return AvatarImageLoader.load(this.avatarFamilyID, this.avatarSkinID, this.avatarHairID);
+        return AvatarImageLoader.load(this.avatarFamilyID, this.avatarSkinID,
+                this.avatarHairID);
     }
 
     @Override

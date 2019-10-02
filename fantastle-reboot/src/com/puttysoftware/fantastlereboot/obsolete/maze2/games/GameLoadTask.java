@@ -14,11 +14,10 @@ import javax.swing.JProgressBar;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.VersionException;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
-import com.puttysoftware.fantastlereboot.obsolete.Application;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.PrefixHandler;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.SuffixHandler;
@@ -52,7 +51,7 @@ public class GameLoadTask extends Thread {
         final File mazeFile = new File(this.filename);
         try {
             this.loadFrame.setVisible(true);
-            final Application app = TallerTower.getApplication();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             int startW;
             app.getGameManager().setSavedGameFlag(false);
             final File tempLock = new File(
@@ -95,17 +94,17 @@ public class GameLoadTask extends Thread {
         } catch (final VersionException ve) {
             CommonDialogs.showDialog("Loading the " + sg.toLowerCase()
                     + " failed, due to the format version being unsupported.");
-            TallerTower.getApplication().getMazeManager()
+            FantastleReboot.getBagOStuff().getMazeManager()
                     .handleDeferredSuccess(false, true, mazeFile);
         } catch (final FileNotFoundException fnfe) {
             CommonDialogs.showDialog("Loading the " + sg.toLowerCase()
                     + " failed, probably due to illegal characters in the file name.");
-            TallerTower.getApplication().getMazeManager()
+            FantastleReboot.getBagOStuff().getMazeManager()
                     .handleDeferredSuccess(false, false, null);
         } catch (final IOException ie) {
             CommonDialogs.showDialog("Loading the " + sg.toLowerCase()
                     + " failed, due to some other type of I/O error.");
-            TallerTower.getApplication().getMazeManager()
+            FantastleReboot.getBagOStuff().getMazeManager()
                     .handleDeferredSuccess(false, false, null);
         } catch (final Exception ex) {
             FantastleReboot.logError(ex);

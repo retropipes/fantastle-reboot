@@ -43,7 +43,7 @@ import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageManager;
+
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.MazeManager;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericMovableObject;
@@ -1091,8 +1091,8 @@ public class GameManager {
                             this.drawGrid[xFix][yFix].setIcon(ObjectImageManager
                                     .getCompositeImage(name1, name2));
                         } else {
-                            this.drawGrid[xFix][yFix]
-                                    .setIcon(ObjectImageManager.getImage("Darkness"));
+                            this.drawGrid[xFix][yFix].setIcon(
+                                    ObjectImageManager.getImage("Darkness"));
                         }
                     } catch (final ArrayIndexOutOfBoundsException ae) {
                         this.drawGrid[xFix][yFix].setIcon(ObjectImageManager

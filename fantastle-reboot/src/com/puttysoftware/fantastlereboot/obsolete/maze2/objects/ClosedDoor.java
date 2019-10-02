@@ -5,11 +5,11 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze2.objects;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
+
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractTrigger;
 
 public class ClosedDoor extends AbstractTrigger {
@@ -43,7 +43,7 @@ public class ClosedDoor extends AbstractTrigger {
     public void postMoveAction(final boolean ie, final int dirX,
             final int dirY) {
         SoundPlayer.playSound(GameSound.PICK_LOCK);
-        final GameLogicManager glm = TallerTower.getApplication()
+        final GameLogicManager glm = FantastleReboot.getBagOStuff()
                 .getGameManager();
         GameLogicManager.morph(new OpenDoor());
         glm.redrawMaze();

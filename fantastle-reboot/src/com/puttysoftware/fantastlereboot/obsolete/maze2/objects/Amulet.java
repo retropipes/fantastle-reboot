@@ -11,8 +11,7 @@ import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
+
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractTrap;
 
 public class Amulet extends AbstractTrap {
@@ -36,7 +35,7 @@ public class Amulet extends AbstractTrap {
             final int dirY) {
         final BagOStuff bag = FantastleReboot.getBagOStuff();
         bag.showMessage("You no longer slide on ice!");
-        final GameLogicManager glm = TallerTower.getApplication()
+        final GameLogicManager glm = FantastleReboot.getBagOStuff()
                 .getGameManager();
         glm.activateEffect(EffectConstants.EFFECT_STICKY);
         SoundPlayer.playSound(GameSound.GRAB);

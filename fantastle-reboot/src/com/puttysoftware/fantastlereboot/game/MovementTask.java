@@ -13,8 +13,6 @@ import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.obsolete.Application;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
@@ -90,7 +88,7 @@ final class MovementTask extends Thread {
 
     public boolean tryAbsolute(final int x, final int y, final int z) {
         try {
-            final Application app = TallerTower.getApplication();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             final Maze m = app.getMazeManager().getMaze();
             final AbstractMazeObject below = m.getCell(m.getPlayerLocationX(),
                     m.getPlayerLocationY(), m.getPlayerLocationZ(),
@@ -111,7 +109,8 @@ final class MovementTask extends Thread {
     }
 
     void fireStepActions() {
-        final Maze m = TallerTower.getApplication().getMazeManager().getMaze();
+        final Maze m = FantastleReboot.getBagOStuff().getMazeManager()
+                .getMaze();
         final int px = m.getPlayerLocationX();
         final int py = m.getPlayerLocationY();
         final int pz = m.getPlayerLocationZ();
@@ -146,7 +145,7 @@ final class MovementTask extends Thread {
 
     private void updatePositionRelative(final int dirX, final int dirY,
             final int dirZ) {
-        final Application app = TallerTower.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final BagOStuff bag = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         int px = m.getPlayerLocationX();
@@ -304,7 +303,7 @@ final class MovementTask extends Thread {
     }
 
     private void updatePositionAbsolute(final int x, final int y, final int z) {
-        final Application app = TallerTower.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final BagOStuff bag = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
