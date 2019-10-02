@@ -11,14 +11,14 @@ import com.puttysoftware.fantastlereboot.assets.GameSound;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractTransientObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Arrow;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Empty;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Wall;
+import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.maze.MazeConstants;
+import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.maze.abc.AbstractTransientObject;
+import com.puttysoftware.fantastlereboot.maze.objects.Arrow;
+import com.puttysoftware.fantastlereboot.maze.objects.BattleCharacter;
+import com.puttysoftware.fantastlereboot.maze.objects.Empty;
+import com.puttysoftware.fantastlereboot.maze.objects.Wall;
 import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
 
 public class MapBattleArrowTask extends Thread {

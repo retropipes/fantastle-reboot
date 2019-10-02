@@ -13,11 +13,11 @@ import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Empty;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Wall;
+import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.maze.MazeConstants;
+import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.maze.objects.Empty;
+import com.puttysoftware.fantastlereboot.maze.objects.Wall;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 final class MovementTask extends Thread {

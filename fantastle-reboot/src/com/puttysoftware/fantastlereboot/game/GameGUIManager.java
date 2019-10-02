@@ -24,15 +24,14 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.DrawGrid;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
-
-import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeManager;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Darkness;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.EmptyVoid;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.MazeNoteObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Player;
+import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.maze.MazeConstants;
+import com.puttysoftware.fantastlereboot.maze.MazeManager;
+import com.puttysoftware.fantastlereboot.maze.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.maze.objects.Darkness;
+import com.puttysoftware.fantastlereboot.maze.objects.EmptyVoid;
+import com.puttysoftware.fantastlereboot.maze.objects.MazeNoteObject;
+import com.puttysoftware.fantastlereboot.maze.objects.Player;
 import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
 import com.puttysoftware.images.BufferedImageIcon;
 

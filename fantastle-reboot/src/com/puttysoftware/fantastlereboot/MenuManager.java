@@ -34,7 +34,7 @@ import com.puttysoftware.fantastlereboot.creatures.characterfiles.CharacterRegis
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.NoteManager;
 import com.puttysoftware.fantastlereboot.game.StatisticsViewer;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.GenerateTask;
+import com.puttysoftware.fantastlereboot.maze.GenerateTask;
 
 public class MenuManager {
     // Fields

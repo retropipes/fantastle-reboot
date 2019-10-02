@@ -138,7 +138,6 @@ public class FantastleReboot {
         FantastleReboot.getBagOStuff().getGUIManager().updateLogo();
         waitProgress.setValue(50);
         // Create stat image cache
-        FantastleReboot.getBagOStuff().getGameManager().updateStatGUI();
         waitProgress.setValue(100);
         waitFrame.setVisible(false);
     }

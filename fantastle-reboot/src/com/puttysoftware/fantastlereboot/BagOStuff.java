@@ -29,21 +29,21 @@ import com.puttysoftware.fantastlereboot.battle.map.turn.MapTurnBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.window.time.WindowTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.window.turn.WindowTurnBattleLogic;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
-import com.puttysoftware.fantastlereboot.game.GameManager;
+import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.MazeManager;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObjectList;
+import com.puttysoftware.fantastlereboot.maze.MazeManager;
+import com.puttysoftware.fantastlereboot.utilities.MazeObjectList;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.updater.ProductData;
 
 public class BagOStuff {
     // Fields
     private AboutDialog about;
-    private GameManager gameMgr;
+    private GameLogicManager gameMgr;
     private MazeManager mazeMgr;
     private MenuManager menuMgr;
     private PreferencesManager prefsMgr;
@@ -98,7 +98,7 @@ public class BagOStuff {
         this.prefsMgr = new PreferencesManager();
         this.about = new AboutDialog(BagOStuff.getVersionString());
         this.guiMgr = new GUIManager();
-        this.gameMgr = new GameManager();
+        this.gameMgr = new GameLogicManager();
         this.mazeMgr = new MazeManager();
         this.menuMgr = new MenuManager();
         this.gHelpMgr = new GeneralHelpManager();
@@ -179,7 +179,7 @@ public class BagOStuff {
         this.prefsMgr.resetPrefs();
     }
 
-    public GameManager getGameManager() {
+    public GameLogicManager getGameManager() {
         return this.gameMgr;
     }
 
