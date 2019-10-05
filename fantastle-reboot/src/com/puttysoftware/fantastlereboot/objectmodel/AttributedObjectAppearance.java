@@ -3,7 +3,7 @@
  * This code is licensed under the terms of the
  * GPLv3, or at your option, any later version.
  */
-package com.puttysoftware.fantastlereboot.objects;
+package com.puttysoftware.fantastlereboot.objectmodel;
 
 import com.puttysoftware.diane.loaders.ColorShader;
 import com.puttysoftware.diane.loaders.ImageCompositor;
