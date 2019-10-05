@@ -1454,13 +1454,6 @@ public class GameManager {
         this.keepNextMessage = true;
     }
 
-    public void showEquipmentDialog() {
-        final String[] equipString = PartyManager.getParty().getLeader()
-                .getItems().generateEquipmentStringArray();
-        Messager.showInputDialog("Equipment", "Equipment", equipString,
-                equipString[0]);
-    }
-
     public void showInventoryDialog() {
         final String[] inv1String = this.objectInv
                 .generateInventoryStringArray();

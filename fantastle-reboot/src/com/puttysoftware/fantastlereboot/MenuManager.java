@@ -32,6 +32,7 @@ import javax.swing.KeyStroke;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.creatures.characterfiles.CharacterRegistration;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
+import com.puttysoftware.fantastlereboot.game.InventoryViewer;
 import com.puttysoftware.fantastlereboot.game.NoteManager;
 import com.puttysoftware.fantastlereboot.game.StatisticsViewer;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.GenerateTask;
@@ -778,7 +779,7 @@ public class MenuManager {
                     me.editMaze();
                 } else if (cmd.equals("Show Equipment...")) {
                     if (!app.getGameManager().usingAnItem()) {
-                        app.getGameManager().showEquipmentDialog();
+                        InventoryViewer.showEquipmentDialog();
                     }
                 } else if (cmd.equals("Show Inventory...")) {
                     if (!app.getGameManager().usingAnItem()) {
