@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.assets;
 
-public enum GameAttributeImage implements GameImage {
+public enum AttributeImageIndex implements ImageIndex {
     BOMBABLE, BREAKABLE_BOTH, BREAKABLE_HORIZONTAL, BREAKABLE_VERTICAL, CLOAKED,
     CRACKED, CRUMBLING, DAMAGEABLE, DAMAGED, EXPLODING, FADING, FAKE, INVISIBLE,
     LARGE_ALL, LARGE_ANY, LARGE_NUMBER_0, LARGE_NUMBER_1, LARGE_NUMBER_10,

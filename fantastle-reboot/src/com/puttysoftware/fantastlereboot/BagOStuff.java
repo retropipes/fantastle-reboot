@@ -21,8 +21,8 @@ package com.puttysoftware.fantastlereboot;
 import javax.swing.JFrame;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
-import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
+import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.map.time.MapTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.map.turn.MapTurnBattleLogic;
@@ -123,7 +123,7 @@ public class BagOStuff {
         PluginLoader.addPluginMenus(extras);
         // Cache Micro Logo
         this.microLogo = UserInterfaceImageLoader
-                .load(GameUserInterfaceImage.MICRO_LOGO);
+                .load(UserInterfaceImageIndex.MICRO_LOGO);
     }
 
     public void setInGUI(final boolean value) {
@@ -198,7 +198,7 @@ public class BagOStuff {
     public void updateMicroLogo() {
         // Cache Micro Logo
         this.microLogo = UserInterfaceImageLoader
-                .load(GameUserInterfaceImage.MICRO_LOGO);
+                .load(UserInterfaceImageIndex.MICRO_LOGO);
     }
 
     public MazeEditor getEditor() {
@@ -295,19 +295,19 @@ public class BagOStuff {
 
     public void playHighScoreSound() {
         if (this.prefsMgr.getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
-            SoundPlayer.playSound(GameSound.HIGH_SCORE);
+            SoundPlayer.playSound(SoundIndex.HIGH_SCORE);
         }
     }
 
     public void playLogoSound() {
         if (this.prefsMgr.getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
-            SoundPlayer.playSound(GameSound.LOGO);
+            SoundPlayer.playSound(SoundIndex.LOGO);
         }
     }
 
     public void playStartSound() {
         if (this.prefsMgr.getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
-            SoundPlayer.playSound(GameSound.GET_READY);
+            SoundPlayer.playSound(SoundIndex.GET_READY);
         }
     }
 

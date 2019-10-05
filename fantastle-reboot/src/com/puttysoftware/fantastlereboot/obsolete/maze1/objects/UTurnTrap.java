@@ -21,7 +21,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze1.objects;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
@@ -66,7 +66,7 @@ public class UTurnTrap extends GenericTrap {
 
     @Override
     public void playMoveSuccessSound() {
-        SoundPlayer.playSound(GameSound.CHANGE);
+        SoundPlayer.playSound(SoundIndex.CHANGE);
     }
 
     @Override

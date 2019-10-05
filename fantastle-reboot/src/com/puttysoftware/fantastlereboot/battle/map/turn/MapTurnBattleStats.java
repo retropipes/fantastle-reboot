@@ -12,7 +12,7 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import com.puttysoftware.fantastlereboot.assets.GameEffectImage;
+import com.puttysoftware.fantastlereboot.assets.EffectImageIndex;
 import com.puttysoftware.fantastlereboot.loaders.EffectImageLoader;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -71,90 +71,90 @@ public class MapTurnBattleStats {
 
     private void updateIcons() {
         final BufferedImageIcon nameImage = EffectImageLoader
-                .load(GameEffectImage.CREATURE_ID);
+                .load(EffectImageIndex.CREATURE_ID);
         this.nameLabel.setIcon(nameImage);
         final BufferedImageIcon teamImage = EffectImageLoader
-                .load(GameEffectImage.CREATURE_TEAM);
+                .load(EffectImageIndex.CREATURE_TEAM);
         this.teamLabel.setIcon(teamImage);
         final BufferedImageIcon hpImage = EffectImageLoader
-                .load(GameEffectImage.HEALTH);
+                .load(EffectImageIndex.HEALTH);
         this.hpLabel.setIcon(hpImage);
         final BufferedImageIcon mpImage = EffectImageLoader
-                .load(GameEffectImage.MAGIC);
+                .load(EffectImageIndex.MAGIC);
         this.mpLabel.setIcon(mpImage);
         final BufferedImageIcon attImage = EffectImageLoader
-                .load(GameEffectImage.MELEE_ATTACK);
+                .load(EffectImageIndex.MELEE_ATTACK);
         this.attLabel.setIcon(attImage);
         final BufferedImageIcon defImage = EffectImageLoader
-                .load(GameEffectImage.DEFENSE);
+                .load(EffectImageIndex.DEFENSE);
         this.defLabel.setIcon(defImage);
         final BufferedImageIcon apImage = EffectImageLoader
-                .load(GameEffectImage.ACTIONS_00);
+                .load(EffectImageIndex.ACTIONS_00);
         this.apLabel.setIcon(apImage);
     }
 
     private void updateActionIcon(final int actionsLeft) {
-        GameEffectImage actionImageId;
+        EffectImageIndex actionImageId;
         switch (actionsLeft) {
         case 1:
-            actionImageId = GameEffectImage.ACTIONS_01;
+            actionImageId = EffectImageIndex.ACTIONS_01;
             break;
         case 2:
-            actionImageId = GameEffectImage.ACTIONS_02;
+            actionImageId = EffectImageIndex.ACTIONS_02;
             break;
         case 3:
-            actionImageId = GameEffectImage.ACTIONS_03;
+            actionImageId = EffectImageIndex.ACTIONS_03;
             break;
         case 4:
-            actionImageId = GameEffectImage.ACTIONS_04;
+            actionImageId = EffectImageIndex.ACTIONS_04;
             break;
         case 5:
-            actionImageId = GameEffectImage.ACTIONS_05;
+            actionImageId = EffectImageIndex.ACTIONS_05;
             break;
         case 6:
-            actionImageId = GameEffectImage.ACTIONS_06;
+            actionImageId = EffectImageIndex.ACTIONS_06;
             break;
         case 7:
-            actionImageId = GameEffectImage.ACTIONS_07;
+            actionImageId = EffectImageIndex.ACTIONS_07;
             break;
         case 8:
-            actionImageId = GameEffectImage.ACTIONS_08;
+            actionImageId = EffectImageIndex.ACTIONS_08;
             break;
         case 9:
-            actionImageId = GameEffectImage.ACTIONS_09;
+            actionImageId = EffectImageIndex.ACTIONS_09;
             break;
         case 10:
-            actionImageId = GameEffectImage.ACTIONS_10;
+            actionImageId = EffectImageIndex.ACTIONS_10;
             break;
         case 11:
-            actionImageId = GameEffectImage.ACTIONS_11;
+            actionImageId = EffectImageIndex.ACTIONS_11;
             break;
         case 12:
-            actionImageId = GameEffectImage.ACTIONS_12;
+            actionImageId = EffectImageIndex.ACTIONS_12;
             break;
         case 13:
-            actionImageId = GameEffectImage.ACTIONS_13;
+            actionImageId = EffectImageIndex.ACTIONS_13;
             break;
         case 14:
-            actionImageId = GameEffectImage.ACTIONS_14;
+            actionImageId = EffectImageIndex.ACTIONS_14;
             break;
         case 15:
-            actionImageId = GameEffectImage.ACTIONS_15;
+            actionImageId = EffectImageIndex.ACTIONS_15;
             break;
         case 16:
-            actionImageId = GameEffectImage.ACTIONS_16;
+            actionImageId = EffectImageIndex.ACTIONS_16;
             break;
         case 17:
-            actionImageId = GameEffectImage.ACTIONS_17;
+            actionImageId = EffectImageIndex.ACTIONS_17;
             break;
         case 18:
-            actionImageId = GameEffectImage.ACTIONS_18;
+            actionImageId = EffectImageIndex.ACTIONS_18;
             break;
         case 19:
-            actionImageId = GameEffectImage.ACTIONS_19;
+            actionImageId = EffectImageIndex.ACTIONS_19;
             break;
         default:
-            actionImageId = GameEffectImage.ACTIONS_00;
+            actionImageId = EffectImageIndex.ACTIONS_00;
             break;
         }
         final BufferedImageIcon apImage = EffectImageLoader

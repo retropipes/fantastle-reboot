@@ -33,7 +33,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
-import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
+import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 
 public class AboutDialog implements AboutHandler {
@@ -77,7 +77,7 @@ public class AboutDialog implements AboutHandler {
         this.logoPane.setLayout(new FlowLayout());
         this.logoPane.add(new JLabel("",
                 UserInterfaceImageLoader.load(
-                        GameUserInterfaceImage.MINI_LOGO),
+                        UserInterfaceImageIndex.MINI_LOGO),
                 SwingConstants.LEFT));
         this.textPane.setLayout(new GridLayout(4, 1));
         this.textPane.add(new JLabel("Fantastle Version: " + ver));

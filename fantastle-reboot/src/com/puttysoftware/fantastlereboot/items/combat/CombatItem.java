@@ -7,7 +7,7 @@ package com.puttysoftware.fantastlereboot.items.combat;
 
 import java.util.Objects;
 
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.Item;
@@ -16,7 +16,7 @@ public class CombatItem extends Item {
     // Fields
     private final BattleTarget target;
     protected Effect e;
-    protected GameSound sound;
+    protected SoundIndex sound;
 
     // Constructors
     public CombatItem(final String itemName, final int itemBuyPrice,
@@ -37,7 +37,7 @@ public class CombatItem extends Item {
         return this.e;
     }
 
-    final GameSound getSound() {
+    final SoundIndex getSound() {
         return this.sound;
     }
 

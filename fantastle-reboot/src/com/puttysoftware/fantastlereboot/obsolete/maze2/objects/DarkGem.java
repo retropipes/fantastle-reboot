@@ -7,7 +7,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze2.objects;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
@@ -50,7 +50,7 @@ public class DarkGem extends AbstractMPModifier {
         bag.showMessage("Your power withers!");
         TallerTower.getApplication().getGameManager()
                 .activateEffect(EffectConstants.EFFECT_POWER_WITHER);
-        SoundPlayer.playSound(GameSound.FOCUS);
+        SoundPlayer.playSound(SoundIndex.FOCUS);
         GameLogicManager.decay();
     }
 

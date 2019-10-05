@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze2.abc;
 
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
@@ -19,7 +19,7 @@ public abstract class AbstractPassThroughObject extends AbstractMazeObject {
     @Override
     public void postMoveAction(final boolean ie, final int dirX,
             final int dirY) {
-        SoundPlayer.playSound(GameSound.WALK);
+        SoundPlayer.playSound(SoundIndex.WALK);
     }
 
     @Override

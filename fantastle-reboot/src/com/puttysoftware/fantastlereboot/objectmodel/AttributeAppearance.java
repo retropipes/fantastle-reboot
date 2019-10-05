@@ -7,23 +7,23 @@ package com.puttysoftware.fantastlereboot.objectmodel;
 
 import com.puttysoftware.diane.loaders.ColorShader;
 import com.puttysoftware.diane.loaders.ImageShader;
-import com.puttysoftware.fantastlereboot.assets.GameAttributeImage;
+import com.puttysoftware.fantastlereboot.assets.AttributeImageIndex;
 import com.puttysoftware.fantastlereboot.loaders.AttributeImageLoader;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class AttributeAppearance extends Appearance {
     public AttributeAppearance(final String name,
-            final GameAttributeImage inImageIndex) {
+            final AttributeImageIndex inImageIndex) {
         super(name, inImageIndex);
     }
 
     public AttributeAppearance(final String name,
-            final GameAttributeImage inImageIndex, final ColorShader inShader) {
+            final AttributeImageIndex inImageIndex, final ColorShader inShader) {
         super(name, inImageIndex, inShader);
     }
 
-    private GameAttributeImage getWhichAttributeImage() {
-        return (GameAttributeImage) super.getWhichImage();
+    private AttributeImageIndex getWhichAttributeImage() {
+        return (AttributeImageIndex) super.getWhichImage();
     }
 
     @Override

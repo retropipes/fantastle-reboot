@@ -1,5 +1,5 @@
 package com.puttysoftware.fantastlereboot.assets;
 
-public enum GameBossImage {
+public enum BossImageIndex {
     BOSS
 }

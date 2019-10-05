@@ -21,7 +21,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze1.objects;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
@@ -124,7 +124,7 @@ public class BarrierGenerator extends GenericWall {
         if (flag) {
             if (app.getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-                SoundPlayer.playSound(GameSound.GENERATE);
+                SoundPlayer.playSound(SoundIndex.GENERATE);
             }
             this.activateTimer(BarrierGenerator.TIMER_DELAY);
             app.getGameManager().redrawMazeNoRebuild();
@@ -220,7 +220,7 @@ public class BarrierGenerator extends GenericWall {
         if (flag) {
             if (app.getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-                SoundPlayer.playSound(GameSound.GENERATE);
+                SoundPlayer.playSound(SoundIndex.GENERATE);
             }
         }
     }

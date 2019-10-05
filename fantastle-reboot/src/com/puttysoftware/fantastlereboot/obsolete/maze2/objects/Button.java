@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze2.objects;
 
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
@@ -43,7 +43,7 @@ public class Button extends AbstractTrigger {
     @Override
     public void postMoveAction(final boolean ie, final int dirX,
             final int dirY) {
-        SoundPlayer.playSound(GameSound.BUTTON);
+        SoundPlayer.playSound(SoundIndex.BUTTON);
         final Application app = TallerTower.getApplication();
         app.getMazeManager().getMaze().fullScanButton(this.getLayer());
         app.getGameManager().redrawMaze();

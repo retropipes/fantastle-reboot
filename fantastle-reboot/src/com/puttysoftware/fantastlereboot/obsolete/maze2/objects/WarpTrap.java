@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: TallerTower@worldwi
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze2.objects;
 
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
@@ -49,7 +49,7 @@ public class WarpTrap extends AbstractTrap {
         } while (app.getGameManager().tryUpdatePositionAbsolute(rRow, rCol,
                 rFloor));
         app.getGameManager().updatePositionAbsolute(rRow, rCol, rFloor);
-        SoundPlayer.playSound(GameSound.TELEPORT);
+        SoundPlayer.playSound(SoundIndex.TELEPORT);
     }
 
     @Override

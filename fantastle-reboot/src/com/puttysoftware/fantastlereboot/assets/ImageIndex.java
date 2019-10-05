@@ -1,4 +1,4 @@
 package com.puttysoftware.fantastlereboot.assets;
 
-public interface GameImage {
+public interface ImageIndex {
 }

@@ -22,7 +22,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericWand;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
@@ -102,7 +102,7 @@ public class RotationWand extends GenericWand {
 
     @Override
     public void playUseSound() {
-        SoundPlayer.playSound(GameSound.ROTATED);
+        SoundPlayer.playSound(SoundIndex.ROTATED);
     }
 
     @Override

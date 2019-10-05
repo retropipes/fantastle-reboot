@@ -39,7 +39,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
@@ -1285,7 +1285,7 @@ public class GameManager {
     private void gameOver() {
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
-            SoundPlayer.playSound(GameSound.GAME_OVER);
+            SoundPlayer.playSound(SoundIndex.GAME_OVER);
         }
         if (this.gameOverMessage == null) {
             Messager.showDialog("You have died - Game Over!");
@@ -1608,7 +1608,7 @@ public class GameManager {
             this.updatePositionAbsolute(destX, destY, destZ, destW);
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-                SoundPlayer.playSound(GameSound.TELEPORT);
+                SoundPlayer.playSound(SoundIndex.TELEPORT);
             }
             this.isTeleporting = false;
         }

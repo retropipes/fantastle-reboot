@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.assets;
 
-public enum GameSound {
+public enum SoundIndex {
     ACTION_FAILED, ALERT, ARROW_DIE, ARROW_HIT, ARROW_SHOOT, AXE_CRIT, AXE_HIT,
     BARRIER, BITE, BLOCKED, BOLT, BOSS_DIE, BREAK, BUBBLE, BUFF_1, BUFF_2,
     BUFF_3, BUFF_4, BUFF_5, BUTTON, CHANGE, CLAW, CLICK, CLUB_CRIT, CLUB_HIT,

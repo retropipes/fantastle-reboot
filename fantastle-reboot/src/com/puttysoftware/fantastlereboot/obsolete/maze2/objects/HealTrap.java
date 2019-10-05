@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: TallerTower@worldwi
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze2.objects;
 
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
@@ -35,7 +35,7 @@ public class HealTrap extends AbstractTrap {
             healing = 1;
         }
         PartyManager.getParty().getLeader().heal(healing);
-        SoundPlayer.playSound(GameSound.HEAL);
+        SoundPlayer.playSound(SoundIndex.HEAL);
     }
 
     @Override

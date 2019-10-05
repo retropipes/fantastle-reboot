@@ -23,14 +23,14 @@ import java.util.Properties;
 
 import com.puttysoftware.diane.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.assets.GameUserInterfaceImage;
+import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class UserInterfaceImageLoader {
     private static String[] allFilenames;
     private static Properties fileExtensions;
 
-    public static BufferedImageIcon load(GameUserInterfaceImage image) {
+    public static BufferedImageIcon load(UserInterfaceImageIndex image) {
         if (allFilenames == null) {
             allFilenames = DataLoader.loadUserInterfaceImageData();
         }

@@ -23,7 +23,7 @@ import java.util.Properties;
 
 import com.puttysoftware.diane.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.assets.GameBossImage;
+import com.puttysoftware.fantastlereboot.assets.BossImageIndex;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class BossImageLoader {
@@ -44,7 +44,7 @@ public class BossImageLoader {
             }
         }
         String imageExt = fileExtensions.getProperty("images");
-        GameBossImage image = GameBossImage.BOSS;
+        BossImageIndex image = BossImageIndex.BOSS;
         String name = "/assets/images/boss/" + allFilenames[image.ordinal()]
                 + imageExt;
         return ImageLoader.load(name, BossImageLoader.class.getResource(name),

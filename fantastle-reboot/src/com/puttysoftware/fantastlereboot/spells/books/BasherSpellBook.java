@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.spells.books;
 
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
@@ -22,7 +22,7 @@ public class BasherSpellBook extends SpellBook {
         spell0Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "The enemy is no longer poisoned!");
         final Spell spell0 = new Spell(spell0Effect, 1, BattleTarget.ENEMY,
-                GameSound.SLIME);
+                SoundIndex.SLIME);
         this.addKnownSpell(spell0);
         final Effect spell1Effect = new Effect("Turtle Shell", 5);
         spell1Effect.setAffectedStat(StatConstants.STAT_DEFENSE);
@@ -35,7 +35,7 @@ public class BasherSpellBook extends SpellBook {
         spell1Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "The shell has dissipated!");
         final Spell spell1 = new Spell(spell1Effect, 1, BattleTarget.SELF,
-                GameSound.BUFF_1);
+                SoundIndex.BUFF_1);
         this.addKnownSpell(spell1);
         final Effect spell2Effect = new Effect("Charged Up", 5);
         spell2Effect.setAffectedStat(StatConstants.STAT_ATTACK);
@@ -48,7 +48,7 @@ public class BasherSpellBook extends SpellBook {
         spell2Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "The charge has dissipated!");
         final Spell spell2 = new Spell(spell2Effect, 2, BattleTarget.SELF,
-                GameSound.BUFF_2);
+                SoundIndex.BUFF_2);
         this.addKnownSpell(spell2);
         final DamageEffect spell3Effect = new DamageEffect("Ghostly Axe", 20, 5,
                 Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE, 4.0);
@@ -58,7 +58,7 @@ public class BasherSpellBook extends SpellBook {
                 "The axe attacks the enemy, hurting it somewhat!");
         spell3Effect.setMessage(Effect.MESSAGE_WEAR_OFF, "The axe disappears!");
         final Spell spell3 = new Spell(spell3Effect, 4, BattleTarget.ENEMY,
-                GameSound.PUNCH);
+                SoundIndex.PUNCH);
         this.addKnownSpell(spell3);
         final Effect spell4Effect = new Effect("Armor Bind", 5);
         spell4Effect.setAffectedStat(StatConstants.STAT_DEFENSE);
@@ -70,7 +70,7 @@ public class BasherSpellBook extends SpellBook {
                 "The enemy is unable to defend!");
         spell4Effect.setMessage(Effect.MESSAGE_WEAR_OFF, "The binding breaks!");
         final Spell spell4 = new Spell(spell4Effect, 7, BattleTarget.ENEMY,
-                GameSound.DEBUFF_1);
+                SoundIndex.DEBUFF_1);
         this.addKnownSpell(spell4);
         final Effect spell5Effect = new Effect("Supercharged", 10);
         spell5Effect.setAffectedStat(StatConstants.STAT_ATTACK);
@@ -83,7 +83,7 @@ public class BasherSpellBook extends SpellBook {
         spell5Effect.setMessage(Effect.MESSAGE_WEAR_OFF,
                 "The supercharge has dissipated!");
         final Spell spell5 = new Spell(spell5Effect, 10, BattleTarget.SELF,
-                GameSound.BUFF_2);
+                SoundIndex.BUFF_2);
         this.addKnownSpell(spell5);
     }
 

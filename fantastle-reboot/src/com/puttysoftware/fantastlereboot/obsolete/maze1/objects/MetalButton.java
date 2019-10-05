@@ -22,7 +22,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
@@ -139,7 +139,7 @@ public class MetalButton extends GenericField {
         } else {
             if (FantastleReboot.getBagOStuff().getPrefsManager()
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-                SoundPlayer.playSound(GameSound.WALK);
+                SoundPlayer.playSound(SoundIndex.WALK);
             }
         }
     }
@@ -203,7 +203,7 @@ public class MetalButton extends GenericField {
 
     @Override
     public void playMoveSuccessSound() {
-        SoundPlayer.playSound(GameSound.BUTTON);
+        SoundPlayer.playSound(SoundIndex.BUTTON);
     }
 
     @Override

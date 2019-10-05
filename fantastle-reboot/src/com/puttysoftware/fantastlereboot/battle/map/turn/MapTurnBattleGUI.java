@@ -27,7 +27,7 @@ import com.puttysoftware.diane.loaders.ImageCompositor;
 import com.puttysoftware.fantastlereboot.DrawGrid;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
-import com.puttysoftware.fantastlereboot.assets.GameObjectImage;
+import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleDraw;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleEffects;
@@ -236,7 +236,7 @@ class MapTurnBattleGUI {
         this.drawGrid = new DrawGrid(
                 MapBattleViewingWindowManager.getViewingWindowSize());
         BufferedImageIcon darknessImage = ObjectImageLoader
-                .load(GameObjectImage.DARKNESS);
+                .load(ObjectImageIndex.DARKNESS);
         for (int x = 0; x < MapBattleViewingWindowManager
                 .getViewingWindowSize(); x++) {
             for (int y = 0; y < MapBattleViewingWindowManager

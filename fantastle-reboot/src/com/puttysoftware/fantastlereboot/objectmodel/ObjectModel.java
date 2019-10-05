@@ -6,8 +6,8 @@
 package com.puttysoftware.fantastlereboot.objectmodel;
 
 import com.puttysoftware.diane.loaders.ColorShader;
-import com.puttysoftware.fantastlereboot.assets.GameAttributeImage;
-import com.puttysoftware.fantastlereboot.assets.GameObjectImage;
+import com.puttysoftware.fantastlereboot.assets.AttributeImageIndex;
+import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class ObjectModel {
@@ -19,7 +19,7 @@ public class ObjectModel {
     private final OtherCounters oc;
 
     // Constructors
-    public ObjectModel(final String cacheName, final GameObjectImage image) {
+    public ObjectModel(final String cacheName, final ObjectImageIndex image) {
         this.tile = new Tile(new ObjectAppearance(cacheName, image));
         this.sp = new SolidProperties();
         this.mp = new MoveProperties();
@@ -27,7 +27,7 @@ public class ObjectModel {
         this.oc = new OtherCounters();
     }
 
-    public ObjectModel(final String cacheName, final GameObjectImage image,
+    public ObjectModel(final String cacheName, final ObjectImageIndex image,
             final ColorShader shader) {
         this.tile = new Tile(new ObjectAppearance(cacheName, image, shader));
         this.sp = new SolidProperties();
@@ -37,8 +37,8 @@ public class ObjectModel {
     }
 
     public ObjectModel(final String cacheObjectName,
-            final GameObjectImage objectImage, final String cacheAttributeName,
-            final GameAttributeImage attributeImage,
+            final ObjectImageIndex objectImage, final String cacheAttributeName,
+            final AttributeImageIndex attributeImage,
             final ColorShader attributeShader) {
         this.tile = new Tile(
                 new AttributedObjectAppearance(
@@ -52,9 +52,9 @@ public class ObjectModel {
     }
 
     public ObjectModel(final String cacheObjectName,
-            final GameObjectImage objectImage, final ColorShader objectShader,
+            final ObjectImageIndex objectImage, final ColorShader objectShader,
             final String cacheAttributeName,
-            final GameAttributeImage attributeImage,
+            final AttributeImageIndex attributeImage,
             final ColorShader attributeShader) {
         this.tile = new Tile(new AttributedObjectAppearance(
                 new AttributeAppearance(cacheAttributeName, attributeImage,
@@ -106,18 +106,18 @@ public class ObjectModel {
     }
 
     protected final void setGameLook(final String cacheName,
-            final GameObjectImage image) {
+            final ObjectImageIndex image) {
         this.tile.setGameLook(new ObjectAppearance(cacheName, image));
     }
 
     protected final void setGameLook(final String cacheName,
-            final GameObjectImage image, final ColorShader shader) {
+            final ObjectImageIndex image, final ColorShader shader) {
         this.tile.setGameLook(new ObjectAppearance(cacheName, image, shader));
     }
 
     protected final void setGameLook(final String cacheObjectName,
-            final GameObjectImage objectImage, final String cacheAttributeName,
-            final GameAttributeImage attributeImage,
+            final ObjectImageIndex objectImage, final String cacheAttributeName,
+            final AttributeImageIndex attributeImage,
             final ColorShader attributeShader) {
         this.tile
                 .setGameLook(new AttributedObjectAppearance(
@@ -127,9 +127,9 @@ public class ObjectModel {
     }
 
     protected final void setGameLook(final String cacheObjectName,
-            final GameObjectImage objectImage, final ColorShader objectShader,
+            final ObjectImageIndex objectImage, final ColorShader objectShader,
             final String cacheAttributeName,
-            final GameAttributeImage attributeImage,
+            final AttributeImageIndex attributeImage,
             final ColorShader attributeShader) {
         this.tile.setGameLook(new AttributedObjectAppearance(
                 new AttributeAppearance(cacheAttributeName, attributeImage,
@@ -138,18 +138,18 @@ public class ObjectModel {
     }
 
     protected final void setEditorLook(final String cacheName,
-            final GameObjectImage image) {
+            final ObjectImageIndex image) {
         this.tile.setEditorLook(new ObjectAppearance(cacheName, image));
     }
 
     protected final void setEditorLook(final String cacheName,
-            final GameObjectImage image, final ColorShader shader) {
+            final ObjectImageIndex image, final ColorShader shader) {
         this.tile.setEditorLook(new ObjectAppearance(cacheName, image, shader));
     }
 
     protected final void setEditorLook(final String cacheObjectName,
-            final GameObjectImage objectImage, final String cacheAttributeName,
-            final GameAttributeImage attributeImage,
+            final ObjectImageIndex objectImage, final String cacheAttributeName,
+            final AttributeImageIndex attributeImage,
             final ColorShader attributeShader) {
         this.tile
                 .setEditorLook(new AttributedObjectAppearance(
@@ -159,9 +159,9 @@ public class ObjectModel {
     }
 
     protected final void setEditorLook(final String cacheObjectName,
-            final GameObjectImage objectImage, final ColorShader objectShader,
+            final ObjectImageIndex objectImage, final ColorShader objectShader,
             final String cacheAttributeName,
-            final GameAttributeImage attributeImage,
+            final AttributeImageIndex attributeImage,
             final ColorShader attributeShader) {
         this.tile.setEditorLook(new AttributedObjectAppearance(
                 new AttributeAppearance(cacheAttributeName, attributeImage,
@@ -170,18 +170,18 @@ public class ObjectModel {
     }
 
     protected final void setBattleLook(final String cacheName,
-            final GameObjectImage image) {
+            final ObjectImageIndex image) {
         this.tile.setBattleLook(new ObjectAppearance(cacheName, image));
     }
 
     protected final void setBattleLook(final String cacheName,
-            final GameObjectImage image, final ColorShader shader) {
+            final ObjectImageIndex image, final ColorShader shader) {
         this.tile.setBattleLook(new ObjectAppearance(cacheName, image, shader));
     }
 
     protected final void setBattleLook(final String cacheObjectName,
-            final GameObjectImage objectImage, final String cacheAttributeName,
-            final GameAttributeImage attributeImage,
+            final ObjectImageIndex objectImage, final String cacheAttributeName,
+            final AttributeImageIndex attributeImage,
             final ColorShader attributeShader) {
         this.tile
                 .setBattleLook(new AttributedObjectAppearance(
@@ -191,9 +191,9 @@ public class ObjectModel {
     }
 
     protected final void setBattleLook(final String cacheObjectName,
-            final GameObjectImage objectImage, final ColorShader objectShader,
+            final ObjectImageIndex objectImage, final ColorShader objectShader,
             final String cacheAttributeName,
-            final GameAttributeImage attributeImage,
+            final AttributeImageIndex attributeImage,
             final ColorShader attributeShader) {
         this.tile.setBattleLook(new AttributedObjectAppearance(
                 new AttributeAppearance(cacheAttributeName, attributeImage,

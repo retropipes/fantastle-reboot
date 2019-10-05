@@ -21,7 +21,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze1.objects;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericTrap;
@@ -83,6 +83,6 @@ public class WarpTrap extends GenericTrap {
 
     @Override
     public void playMoveSuccessSound() {
-        SoundPlayer.playSound(GameSound.TELEPORT);
+        SoundPlayer.playSound(SoundIndex.TELEPORT);
     }
 }

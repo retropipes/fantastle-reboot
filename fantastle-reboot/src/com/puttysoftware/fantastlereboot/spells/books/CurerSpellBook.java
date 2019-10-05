@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.spells.books;
 
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
@@ -21,7 +21,7 @@ public class CurerSpellBook extends SpellBook {
         spell0Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "The enemy loses a little health from being burned!");
         final Spell spell0 = new Spell(spell0Effect, 1, BattleTarget.ENEMY,
-                GameSound.FIREBALL);
+                SoundIndex.FIREBALL);
         this.addKnownSpell(spell0);
         final HealingEffect spell1Effect = new HealingEffect("Minor Heal", 15,
                 1, 0.25, StatConstants.STAT_LEVEL, Effect.DEFAULT_DECAY_RATE);
@@ -30,7 +30,7 @@ public class CurerSpellBook extends SpellBook {
         spell1Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "You gain some health!");
         final Spell spell1 = new Spell(spell1Effect, 2, BattleTarget.SELF,
-                GameSound.HEAL);
+                SoundIndex.HEAL);
         this.addKnownSpell(spell1);
         final DamageEffect spell2Effect = new DamageEffect("Ice Shard", 10, 1,
                 0.4, StatConstants.STAT_LEVEL, Effect.DEFAULT_DECAY_RATE);
@@ -39,7 +39,7 @@ public class CurerSpellBook extends SpellBook {
         spell2Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "The enemy loses some health from being frozen!");
         final Spell spell2 = new Spell(spell2Effect, 4, BattleTarget.ENEMY,
-                GameSound.FREEZE);
+                SoundIndex.FREEZE);
         this.addKnownSpell(spell2);
         final Effect spell3Effect = new Effect("Weapon Bind", 5);
         spell3Effect.setAffectedStat(StatConstants.STAT_ATTACK);
@@ -51,7 +51,7 @@ public class CurerSpellBook extends SpellBook {
                 "The enemy is unable to attack!");
         spell3Effect.setMessage(Effect.MESSAGE_WEAR_OFF, "The binding breaks!");
         final Spell spell3 = new Spell(spell3Effect, 7, BattleTarget.ENEMY,
-                GameSound.DEBUFF_1);
+                SoundIndex.DEBUFF_1);
         this.addKnownSpell(spell3);
         final HealingEffect spell4Effect = new HealingEffect("Major Heal", 10,
                 1, 0.75, StatConstants.STAT_LEVEL, Effect.DEFAULT_DECAY_RATE);
@@ -60,7 +60,7 @@ public class CurerSpellBook extends SpellBook {
         spell4Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "You gain a LOT of health!");
         final Spell spell4 = new Spell(spell4Effect, 15, BattleTarget.SELF,
-                GameSound.HEAL);
+                SoundIndex.HEAL);
         this.addKnownSpell(spell4);
         final DamageEffect spell5Effect = new DamageEffect("Lightning Bolt", 1,
                 1, 0.8, StatConstants.STAT_MAXIMUM_HP,
@@ -70,7 +70,7 @@ public class CurerSpellBook extends SpellBook {
         spell5Effect.setMessage(Effect.MESSAGE_SUBSEQUENT,
                 "The enemy loses a LOT of health from being shocked!");
         final Spell spell5 = new Spell(spell5Effect, 30, BattleTarget.ENEMY,
-                GameSound.BOLT);
+                SoundIndex.BOLT);
         this.addKnownSpell(spell5);
     }
 

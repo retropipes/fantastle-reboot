@@ -5,7 +5,7 @@ import java.util.Properties;
 
 import com.puttysoftware.diane.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class SoundPlayer {
@@ -16,7 +16,7 @@ public class SoundPlayer {
     private static String[] allFilenames;
     private static Properties fileExtensions;
 
-    private static String getSoundFilename(final GameSound sound) {
+    private static String getSoundFilename(final SoundIndex sound) {
         if (allFilenames == null && fileExtensions == null) {
             allFilenames = DataLoader.loadSoundData();
             try {
@@ -28,19 +28,19 @@ public class SoundPlayer {
             }
         }
         String soundExt = fileExtensions.getProperty("sounds");
-        if (sound == GameSound.WALK || sound == GameSound.WALK_2
-                || sound == GameSound.WALK_3 || sound == GameSound.WALK_4
-                || sound == GameSound.WALK_5 || sound == GameSound.WALK_6) {
+        if (sound == SoundIndex.WALK || sound == SoundIndex.WALK_2
+                || sound == SoundIndex.WALK_3 || sound == SoundIndex.WALK_4
+                || sound == SoundIndex.WALK_5 || sound == SoundIndex.WALK_6) {
             // Pick a random walk sound and play it
-            int base = GameSound.WALK.ordinal();
+            int base = SoundIndex.WALK.ordinal();
             int offset = RandomRange.generate(0, 5);
             return allFilenames[base + offset] + soundExt;
         }
         return allFilenames[sound.ordinal()] + soundExt;
     }
 
-    public static void playSound(final GameSound sound) {
-        if (sound != GameSound._NONE) {
+    public static void playSound(final SoundIndex sound) {
+        if (sound != SoundIndex._NONE) {
             final String filename = getSoundFilename(sound);
             SoundLoader.play(
                     SoundPlayer.class.getResource("/assets/sounds/" + filename),

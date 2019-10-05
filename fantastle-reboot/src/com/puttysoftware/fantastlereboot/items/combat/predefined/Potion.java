@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.items.combat.predefined;
 
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.effects.Effect;
@@ -18,7 +18,7 @@ public class Potion extends CombatItem {
 
     @Override
     protected void defineFields() {
-        this.sound = GameSound.HEAL;
+        this.sound = SoundIndex.HEAL;
         this.e = new Effect("Potion", 1);
         this.e.setAffectedStat(StatConstants.STAT_CURRENT_HP);
         this.e.setEffect(Effect.EFFECT_ADD, 5);

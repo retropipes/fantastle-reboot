@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.assets;
 
-public enum GameObjectImage implements GameImage {
+public enum ObjectImageIndex implements ImageIndex {
     A_PLUG, A_PORT, ALL_BUTTON, ALL_DOOR, ARMOR_SHOP, ARROW_EAST, ARROW_NORTH,
     ARROW_NORTHEAST, ARROW_NORTHWEST, ARROW_SOUTH, ARROW_SOUTHEAST,
     ARROW_SOUTHWEST, ARROW_WEST, AXE, B_PLUG, B_PORT, BANK_SHOP, BEAM_GENERATOR,

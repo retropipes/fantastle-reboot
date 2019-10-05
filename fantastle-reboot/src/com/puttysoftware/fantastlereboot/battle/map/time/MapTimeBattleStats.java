@@ -12,7 +12,7 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import com.puttysoftware.fantastlereboot.assets.GameEffectImage;
+import com.puttysoftware.fantastlereboot.assets.EffectImageIndex;
 import com.puttysoftware.fantastlereboot.loaders.EffectImageLoader;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -66,22 +66,22 @@ public class MapTimeBattleStats {
 
     private void updateIcons() {
         final BufferedImageIcon nameImage = EffectImageLoader
-                .load(GameEffectImage.CREATURE_ID);
+                .load(EffectImageIndex.CREATURE_ID);
         this.nameLabel.setIcon(nameImage);
         final BufferedImageIcon teamImage = EffectImageLoader
-                .load(GameEffectImage.CREATURE_TEAM);
+                .load(EffectImageIndex.CREATURE_TEAM);
         this.teamLabel.setIcon(teamImage);
         final BufferedImageIcon hpImage = EffectImageLoader
-                .load(GameEffectImage.HEALTH);
+                .load(EffectImageIndex.HEALTH);
         this.hpLabel.setIcon(hpImage);
         final BufferedImageIcon mpImage = EffectImageLoader
-                .load(GameEffectImage.MAGIC);
+                .load(EffectImageIndex.MAGIC);
         this.mpLabel.setIcon(mpImage);
         final BufferedImageIcon attImage = EffectImageLoader
-                .load(GameEffectImage.MELEE_ATTACK);
+                .load(EffectImageIndex.MELEE_ATTACK);
         this.attLabel.setIcon(attImage);
         final BufferedImageIcon defImage = EffectImageLoader
-                .load(GameEffectImage.DEFENSE);
+                .load(EffectImageIndex.DEFENSE);
         this.defLabel.setIcon(defImage);
     }
 }

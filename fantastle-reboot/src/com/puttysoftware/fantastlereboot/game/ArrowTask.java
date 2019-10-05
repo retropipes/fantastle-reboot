@@ -21,7 +21,7 @@ package com.puttysoftware.fantastlereboot.game;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericTransientObject;
@@ -77,7 +77,7 @@ public class ArrowTask extends Thread {
         a.setNameSuffix(suffix);
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-            SoundPlayer.playSound(GameSound.ARROW_SHOOT);
+            SoundPlayer.playSound(SoundIndex.ARROW_SHOOT);
         }
         while (!o.isConditionallyDirectionallySolid(true, incX, incY, inv)) {
             res = o.arrowHitAction(px + cumX, py + cumY, pz, pw, incX, incY,
@@ -107,7 +107,7 @@ public class ArrowTask extends Thread {
         }
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-            SoundPlayer.playSound(GameSound.ARROW_DIE);
+            SoundPlayer.playSound(SoundIndex.ARROW_DIE);
         }
         app.getGameManager().arrowDone();
     }

@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: TallerTower@worldwi
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze2.objects;
 
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
@@ -43,7 +43,7 @@ public class VariableHealTrap extends AbstractTrap {
         final RandomRange healingGiven = new RandomRange(
                 VariableHealTrap.MIN_HEALING, maxHealing);
         PartyManager.getParty().getLeader().heal(healingGiven.generate());
-        SoundPlayer.playSound(GameSound.HEAL);
+        SoundPlayer.playSound(SoundIndex.HEAL);
         TallerTower.getApplication().getGameManager();
         GameLogicManager.decay();
     }

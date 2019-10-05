@@ -20,7 +20,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze1.objects;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
@@ -63,7 +63,7 @@ public class DrainTrap extends GenericTrap {
                 .regenerate(this.amountDrained.generate());
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-            SoundPlayer.playSound(GameSound.DRAIN);
+            SoundPlayer.playSound(SoundIndex.DRAIN);
         }
         FantastleReboot.getBagOStuff().getGameManager().decay();
     }

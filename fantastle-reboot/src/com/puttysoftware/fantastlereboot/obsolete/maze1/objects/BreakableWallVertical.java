@@ -21,7 +21,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze1.objects;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericWall;
@@ -107,6 +107,6 @@ public class BreakableWallVertical extends GenericWall {
 
     @Override
     public void playChainReactSound() {
-        SoundPlayer.playSound(GameSound.BREAK);
+        SoundPlayer.playSound(SoundIndex.BREAK);
     }
 }

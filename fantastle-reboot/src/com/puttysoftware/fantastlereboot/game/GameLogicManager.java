@@ -12,7 +12,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
@@ -509,12 +509,12 @@ public final class GameLogicManager {
             final String gameName1 = target1.getGameName();
             final String gameName2 = target2.getGameName();
             bag.showMessage(gameName2 + " on " + gameName1);
-            SoundPlayer.playSound(GameSound.IDENTIFY);
+            SoundPlayer.playSound(SoundIndex.IDENTIFY);
         } catch (final ArrayIndexOutOfBoundsException ae) {
             final EmptyVoid ev = new EmptyVoid();
             ev.determineCurrentAppearance(destX, destY, destZ);
             bag.showMessage(ev.getGameName());
-            SoundPlayer.playSound(GameSound.IDENTIFY);
+            SoundPlayer.playSound(SoundIndex.IDENTIFY);
         }
     }
 
@@ -637,7 +637,7 @@ public final class GameLogicManager {
     private void gameOver() {
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
-            SoundPlayer.playSound(GameSound.GAME_OVER);
+            SoundPlayer.playSound(SoundIndex.GAME_OVER);
         }
         if (this.gameOverMessage == null) {
             Messager.showDialog("You have died - Game Over!");

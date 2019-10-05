@@ -6,7 +6,7 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
@@ -157,7 +157,7 @@ public class Shop {
         // Play enter shop sound
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_SHOP)) {
-            SoundPlayer.playSound(GameSound.SHOP);
+            SoundPlayer.playSound(SoundIndex.SHOP);
         }
         if (this.type == ShopTypes.WEAPONS) {
             this.typeChoices = WeaponConstants.getWeaponChoices();
@@ -467,7 +467,7 @@ public class Shop {
         // Play transact sound
         if (FantastleReboot.getBagOStuff().getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_SHOP)) {
-            SoundPlayer.playSound(GameSound.TRANSACT);
+            SoundPlayer.playSound(SoundIndex.TRANSACT);
         }
         if (this.type == ShopTypes.WEAPONS) {
             playerCharacter.offsetGold(-this.cost);

@@ -7,7 +7,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze2.abc;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
@@ -30,7 +30,7 @@ public abstract class AbstractWall extends AbstractMazeObject {
         final BagOStuff bag = FantastleReboot.getBagOStuff();
         bag.showMessage("Can't go that way");
         // Play move failed sound, if it's enabled
-        SoundPlayer.playSound(GameSound.WALK_FAILED);
+        SoundPlayer.playSound(SoundIndex.WALK_FAILED);
     }
 
     @Override

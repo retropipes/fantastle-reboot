@@ -11,7 +11,7 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import com.puttysoftware.fantastlereboot.assets.GameEffectImage;
+import com.puttysoftware.fantastlereboot.assets.EffectImageIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.Party;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
@@ -76,25 +76,25 @@ class StatGUI {
 
     void updateImages() {
         final BufferedImageIcon hpImage = EffectImageLoader
-                .load(GameEffectImage.HEALTH);
+                .load(EffectImageIndex.HEALTH);
         this.hpLabel.setIcon(hpImage);
         final BufferedImageIcon mpImage = EffectImageLoader
-                .load(GameEffectImage.MAGIC);
+                .load(EffectImageIndex.MAGIC);
         this.mpLabel.setIcon(mpImage);
         final BufferedImageIcon goldImage = EffectImageLoader
-                .load(GameEffectImage.MONEY);
+                .load(EffectImageIndex.MONEY);
         this.goldLabel.setIcon(goldImage);
         final BufferedImageIcon attackImage = EffectImageLoader
-                .load(GameEffectImage.MELEE_ATTACK);
+                .load(EffectImageIndex.MELEE_ATTACK);
         this.attackLabel.setIcon(attackImage);
         final BufferedImageIcon defenseImage = EffectImageLoader
-                .load(GameEffectImage.DEFENSE);
+                .load(EffectImageIndex.DEFENSE);
         this.defenseLabel.setIcon(defenseImage);
         final BufferedImageIcon xpImage = EffectImageLoader
-                .load(GameEffectImage.EXPERIENCE);
+                .load(EffectImageIndex.EXPERIENCE);
         this.xpLabel.setIcon(xpImage);
         final BufferedImageIcon levelImage = EffectImageLoader
-                .load(GameEffectImage.CREATURE_LEVEL);
+                .load(EffectImageIndex.CREATURE_LEVEL);
         this.levelLabel.setIcon(levelImage);
     }
 }

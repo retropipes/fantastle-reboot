@@ -20,7 +20,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze1.objects;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
@@ -91,6 +91,6 @@ public class SmokeBomb extends GenericUsableObject {
 
     @Override
     public void playUseSound() {
-        SoundPlayer.playSound(GameSound.EXPLODE);
+        SoundPlayer.playSound(SoundIndex.EXPLODE);
     }
 }

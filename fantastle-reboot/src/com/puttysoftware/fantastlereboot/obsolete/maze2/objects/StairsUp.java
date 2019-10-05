@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze2.objects;
 
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
@@ -41,7 +41,7 @@ public class StairsUp extends AbstractTeleport {
             final int dirY) {
         final Application app = TallerTower.getApplication();
         app.getGameManager().goToLevelOffset(1);
-        SoundPlayer.playSound(GameSound.UP);
+        SoundPlayer.playSound(SoundIndex.UP);
     }
 
     @Override

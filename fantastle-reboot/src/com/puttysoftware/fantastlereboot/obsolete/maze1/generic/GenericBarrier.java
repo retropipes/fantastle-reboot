@@ -22,7 +22,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
@@ -75,6 +75,6 @@ public abstract class GenericBarrier extends GenericWall {
 
     @Override
     public void playMoveFailedSound() {
-        SoundPlayer.playSound(GameSound.BARRIER);
+        SoundPlayer.playSound(SoundIndex.BARRIER);
     }
 }

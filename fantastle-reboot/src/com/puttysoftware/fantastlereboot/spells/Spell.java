@@ -2,7 +2,7 @@ package com.puttysoftware.fantastlereboot.spells;
 
 import java.util.Objects;
 
-import com.puttysoftware.fantastlereboot.assets.GameSound;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 
@@ -11,7 +11,7 @@ public class Spell {
     private final Effect effect;
     private final int cost;
     private final BattleTarget target;
-    private final GameSound soundEffect;
+    private final SoundIndex soundEffect;
 
     // Constructors
     public Spell(final Effect newEffect, final int newCost,
@@ -23,7 +23,7 @@ public class Spell {
     }
 
     public Spell(final Effect newEffect, final int newCost,
-            final BattleTarget newTarget, final GameSound sfx) {
+            final BattleTarget newTarget, final SoundIndex sfx) {
         this.effect = newEffect;
         this.cost = newCost;
         this.target = newTarget;
@@ -42,7 +42,7 @@ public class Spell {
         return this.target;
     }
 
-    public GameSound getSound() {
+    public SoundIndex getSound() {
         return this.soundEffect;
     }
 
