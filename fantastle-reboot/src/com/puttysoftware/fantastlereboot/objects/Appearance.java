@@ -1,10 +1,15 @@
+/*  Fantastle Reboot
+ * A maze-solving RPG
+ * This code is licensed under the terms of the
+ * GPLv3, or at your option, any later version.
+ */
 package com.puttysoftware.fantastlereboot.objects;
 
 import com.puttysoftware.diane.loaders.ColorShader;
 import com.puttysoftware.fantastlereboot.assets.GameImage;
 import com.puttysoftware.images.BufferedImageIcon;
 
-public abstract class Appearance {
+abstract class Appearance {
     private final String cacheName;
     private final GameImage whichImage;
     private final ColorShader shading;

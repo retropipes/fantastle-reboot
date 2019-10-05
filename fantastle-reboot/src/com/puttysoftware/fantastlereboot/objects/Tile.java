@@ -1,45 +1,50 @@
+/*  Fantastle Reboot
+ * A maze-solving RPG
+ * This code is licensed under the terms of the
+ * GPLv3, or at your option, any later version.
+ */
 package com.puttysoftware.fantastlereboot.objects;
 
 import com.puttysoftware.images.BufferedImageIcon;
 
-public abstract class Tile {
+final class Tile {
     private Appearance editorAppearance;
     private Appearance gameAppearance;
     private Appearance battleAppearance;
     private final Appearance appearance;
 
-    protected Tile(final Appearance look) {
+    public Tile(final Appearance look) {
         super();
         this.appearance = look;
     }
 
-    protected final void setGameLook(final Appearance look) {
+    public void setGameLook(final Appearance look) {
         this.gameAppearance = look;
     }
 
-    protected final void setEditorLook(final Appearance look) {
+    public void setEditorLook(final Appearance look) {
         this.editorAppearance = look;
     }
 
-    protected final void setBattleLook(final Appearance look) {
+    public void setBattleLook(final Appearance look) {
         this.battleAppearance = look;
     }
 
-    public final BufferedImageIcon getImage() {
+    public BufferedImageIcon getImage() {
         return this.appearance.getImage();
     }
 
-    public final BufferedImageIcon getGameImage() {
+    public BufferedImageIcon getGameImage() {
         return this.gameAppearance != null ? this.gameAppearance.getImage()
                 : this.getImage();
     }
 
-    public final BufferedImageIcon getEditorImage() {
+    public BufferedImageIcon getEditorImage() {
         return this.editorAppearance != null ? this.editorAppearance.getImage()
                 : this.getGameImage();
     }
 
-    public final BufferedImageIcon getBattleImage() {
+    public BufferedImageIcon getBattleImage() {
         return this.battleAppearance != null ? this.battleAppearance.getImage()
                 : this.getGameImage();
     }
