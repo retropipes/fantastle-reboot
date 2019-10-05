@@ -76,20 +76,20 @@ public class GameManager {
     private boolean pullInProgress;
     private boolean using;
     private int lastUsedObjectIndex;
-    private boolean knm;
+    private boolean keepNextMessage;
     private boolean savedGameFlag;
     private int activeArrowType;
     private final PlayerLocationManager plMgr;
     private final GameViewingWindowManager vwMgr;
-    private final ScoreTracker st;
+    private final ScoreTracker scorer;
     private final StatGUI sg;
     private final EffectManager em;
     private JLabel[][] drawGrid;
     private boolean delayedDecayActive;
     private MazeObject delayedDecayObject;
     private boolean actingRemotely;
-    boolean arrowActive;
-    boolean teleporting;
+    private boolean arrowActive;
+    private boolean isTeleporting;
     private int[] remoteCoords;
     private String gameOverMessage;
 
@@ -97,7 +97,7 @@ public class GameManager {
     public GameManager() {
         this.plMgr = new PlayerLocationManager();
         this.vwMgr = new GameViewingWindowManager();
-        this.st = new ScoreTracker();
+        this.scorer = new ScoreTracker();
         this.sg = new StatGUI();
         this.em = new EffectManager();
         this.setUpGUI();
@@ -105,14 +105,14 @@ public class GameManager {
         this.setUsingAnItem(false);
         this.savedMazeObject = new Empty();
         this.lastUsedObjectIndex = 0;
-        this.knm = false;
+        this.keepNextMessage = false;
         this.savedGameFlag = false;
         this.delayedDecayActive = false;
         this.delayedDecayObject = null;
         this.actingRemotely = false;
         this.remoteCoords = new int[4];
         this.arrowActive = false;
-        this.teleporting = false;
+        this.isTeleporting = false;
         this.activeArrowType = ArrowTypeConstants.ARROW_TYPE_PLAIN;
     }
 
@@ -139,7 +139,7 @@ public class GameManager {
     }
 
     public ScoreTracker getScoreTracker() {
-        return this.st;
+        return this.scorer;
     }
 
     public GameViewingWindowManager getViewManager() {
@@ -281,24 +281,24 @@ public class GameManager {
         }
     }
 
-    public boolean usingAnItem() {
-        return this.using;
+    public boolean isTeleporting() {
+        return this.isTeleporting;
     }
 
-    public boolean isTeleporting() {
-        return this.teleporting;
+    public boolean usingAnItem() {
+        return this.using;
     }
 
     public void setUsingAnItem(final boolean isUsing) {
         this.using = isUsing;
     }
 
-    public void setPullInProgress(final boolean pulling) {
-        this.pullInProgress = pulling;
-    }
-
     public boolean isPullInProgress() {
         return this.pullInProgress;
+    }
+
+    public void setPullInProgress(final boolean pulling) {
+        this.pullInProgress = pulling;
     }
 
     public void setStatusMessage(final String msg) {
@@ -514,7 +514,7 @@ public class GameManager {
                                 // Pull failed - object can't move that way
                                 acted.pullFailedAction(this.objectInv, x, y,
                                         pullX, pullY);
-                                this.st.deductStep();
+                                this.scorer.deductStep();
                                 this.decayEffects();
                             }
                         } else if (!acted.isPullable()
@@ -522,7 +522,7 @@ public class GameManager {
                             // Pull failed - object not pullable
                             acted.pullFailedAction(this.objectInv, x, y, pullX,
                                     pullY);
-                            this.st.deductStep();
+                            this.scorer.deductStep();
                             this.decayEffects();
                         }
                         this.plMgr.offsetPlayerLocationX(x);
@@ -540,7 +540,7 @@ public class GameManager {
                         this.decayEffects();
                         this.redrawMaze();
                         app.getMazeManager().setDirty(true);
-                        this.st.deductStep();
+                        this.scorer.deductStep();
                         if (app.getMode() != BagOStuff.STATUS_BATTLE) {
                             if (groundInto.overridesDefaultPostMove()) {
                                 groundInto.postMoveAction(false, px, py,
@@ -577,7 +577,7 @@ public class GameManager {
                                 this.decayEffects();
                                 this.redrawMaze();
                                 app.getMazeManager().setDirty(true);
-                                this.st.deductStep();
+                                this.scorer.deductStep();
                                 if (app.getMode() != BagOStuff.STATUS_BATTLE) {
                                     if (groundInto.overridesDefaultPostMove()) {
                                         groundInto.postMoveAction(false, px, py,
@@ -593,7 +593,7 @@ public class GameManager {
                                 acted.pushFailedAction(this.objectInv, x, y,
                                         pushX, pushY);
                                 this.decayEffects();
-                                this.st.deductStep();
+                                this.scorer.deductStep();
                             }
                         } else if (acted.doesChainReact()) {
                             acted.chainReactionAction(px + x, py + y, pz, pw);
@@ -603,7 +603,7 @@ public class GameManager {
                                     this.savedMazeObject, below, nextBelow,
                                     nextAbove);
                             this.decayEffects();
-                            this.st.deductStep();
+                            this.scorer.deductStep();
                         }
                     }
                 } catch (final ArrayIndexOutOfBoundsException ae) {
@@ -617,7 +617,7 @@ public class GameManager {
                     o.moveFailedAction(false, this.plMgr.getPlayerLocationX(),
                             this.plMgr.getPlayerLocationY(), this.objectInv);
                     this.decayEffects();
-                    this.st.deductStep();
+                    this.scorer.deductStep();
                     Messager.showMessage("Can't go outside the maze");
                     o = new Empty();
                 }
@@ -625,7 +625,7 @@ public class GameManager {
                 // Move failed - pre-move check failed
                 o.moveFailedAction(false, px + x, py + y, this.objectInv);
                 this.decayEffects();
-                this.st.deductStep();
+                this.scorer.deductStep();
             }
         } while (proceed
                 && !groundInto.hasFrictionConditionally(this.objectInv, false)
@@ -1016,19 +1016,19 @@ public class GameManager {
     }
 
     public void invalidateScore() {
-        this.st.invalidateScore();
+        this.scorer.invalidateScore();
     }
 
     public void showCurrentScore() {
-        this.st.showCurrentScore();
+        this.scorer.showCurrentScore();
     }
 
     public void showScoreTable() {
-        this.st.showScoreTable();
+        this.scorer.showScoreTable();
     }
 
     public void validateScore() {
-        this.st.validateScore();
+        this.scorer.validateScore();
     }
 
     public void redrawMaze() {
@@ -1107,8 +1107,8 @@ public class GameManager {
                     }
                 }
             }
-            if (this.knm) {
-                this.knm = false;
+            if (this.keepNextMessage) {
+                this.keepNextMessage = false;
             } else {
                 this.setStatusMessage(" ");
             }
@@ -1212,7 +1212,7 @@ public class GameManager {
         app.getMazeManager().setDirty(false);
         m.restore();
         this.setSavedGameFlag(false);
-        this.st.resetScore(app.getMazeManager().getScoresFileName());
+        this.scorer.resetScore(app.getMazeManager().getScoresFileName());
         this.decay();
         this.objectInv = new ObjectInventory();
         this.savedObjectInv = new ObjectInventory();
@@ -1236,7 +1236,7 @@ public class GameManager {
         m.restoreLevel(level);
         final boolean playerExists = m.findPlayerOnLevel(level);
         if (playerExists) {
-            this.st.resetScore(app.getMazeManager().getScoresFileName());
+            this.scorer.resetScore(app.getMazeManager().getScoresFileName());
             this.resetPlayerLocation(level);
             this.resetViewingWindow();
             m.setVisionRadiusToMaximum(level);
@@ -1317,10 +1317,10 @@ public class GameManager {
         // Reset saved game flag
         this.savedGameFlag = false;
         app.getMazeManager().setDirty(false);
-        if (this.st.checkScore()) {
+        if (this.scorer.checkScore()) {
             app.playHighScoreSound();
         }
-        this.st.commitScore();
+        this.scorer.commitScore();
         this.hideOutput();
         app.getGUIManager().showGUI();
     }
@@ -1451,7 +1451,7 @@ public class GameManager {
     }
 
     public void keepNextMessage() {
-        this.knm = true;
+        this.keepNextMessage = true;
     }
 
     public void showEquipmentDialog() {
@@ -1594,12 +1594,12 @@ public class GameManager {
     }
 
     public void controllableTeleport() {
-        this.teleporting = true;
+        this.isTeleporting = true;
         Messager.showMessage("Click to set destination");
     }
 
     void controllableTeleportHandler(final int x, final int y) {
-        if (this.teleporting) {
+        if (this.isTeleporting) {
             final int xOffset = this.vwMgr.getViewingWindowLocationX()
                     - GameViewingWindowManager.getOffsetFactorX();
             final int yOffset = this.vwMgr.getViewingWindowLocationY()
@@ -1617,7 +1617,7 @@ public class GameManager {
                     .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
                 SoundPlayer.playSound(GameSound.TELEPORT);
             }
-            this.teleporting = false;
+            this.isTeleporting = false;
         }
     }
 
@@ -1668,7 +1668,7 @@ public class GameManager {
         this.savedObjectInv = ObjectInventory.readInventory(mazeFile,
                 formatVersion);
         app.getMazeManager().setScoresFileName(mazeFile.readString());
-        this.st.setScore(mazeFile.readLong());
+        this.scorer.setScore(mazeFile.readLong());
     }
 
     public void saveGameHook(final XDataWriter mazeFile) throws IOException {
@@ -1677,7 +1677,7 @@ public class GameManager {
         app.getMazeManager().getMaze().writeSavedMazeState(mazeFile);
         this.savedObjectInv.writeInventory(mazeFile);
         mazeFile.writeString(app.getMazeManager().getScoresFileName());
-        mazeFile.writeLong(this.st.getScore());
+        mazeFile.writeLong(this.scorer.getScore());
     }
 
     public void playMaze() {
@@ -1687,10 +1687,10 @@ public class GameManager {
             app.setInGame(true);
             this.savedMazeObject = new Empty();
             if (this.savedGameFlag) {
-                this.st.setScoreFile(app.getMazeManager().getScoresFileName());
+                this.scorer.setScoreFile(app.getMazeManager().getScoresFileName());
             } else {
                 this.saveObjectInventory();
-                this.st.resetScore(app.getMazeManager().getScoresFileName());
+                this.scorer.resetScore(app.getMazeManager().getScoresFileName());
             }
             // Make sure message area is attached to the border pane
             this.borderPane.removeAll();
@@ -1868,7 +1868,7 @@ public class GameManager {
                         gm.setUsingAnItem(false);
                         Messager.showMessage(" ");
                     } else if (gm.isTeleporting()) {
-                        gm.teleporting = false;
+                        gm.isTeleporting = false;
                         Messager.showMessage(" ");
                     }
                     break;
@@ -1948,7 +1948,7 @@ public class GameManager {
                         gm.setUsingAnItem(false);
                         Messager.showMessage(" ");
                     } else if (gm.isTeleporting()) {
-                        gm.teleporting = false;
+                        gm.isTeleporting = false;
                         Messager.showMessage(" ");
                     }
                     break;
