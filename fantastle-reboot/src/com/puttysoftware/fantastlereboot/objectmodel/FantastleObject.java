@@ -10,7 +10,11 @@ import com.puttysoftware.diane.objectmodel.GameObject;
 import com.puttysoftware.fantastlereboot.assets.AttributeImageIndex;
 import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 
-public abstract class FantastleObject extends GameObject implements FantastleObjectModel {
+public abstract class FantastleObject extends GameObject
+        implements FantastleObjectModel {
+    // Properties
+    private FantastleObject savedObject = null;
+
     // Constructors
     public FantastleObject(final int objectID, final String cacheName,
             final ObjectImageIndex image) {
@@ -26,10 +30,11 @@ public abstract class FantastleObject extends GameObject implements FantastleObj
             final ObjectImageIndex objectImage, final String cacheAttributeName,
             final AttributeImageIndex attributeImage,
             final ColorShader attributeShader) {
-        super(objectID, new AttributedObjectAppearance(
-                new AttributeAppearance(cacheAttributeName,
-                        attributeImage, attributeShader),
-                cacheObjectName, objectImage));
+        super(objectID,
+                new AttributedObjectAppearance(
+                        new AttributeAppearance(cacheAttributeName,
+                                attributeImage, attributeShader),
+                        cacheObjectName, objectImage));
     }
 
     public FantastleObject(final int objectID, final String cacheObjectName,
@@ -37,9 +42,26 @@ public abstract class FantastleObject extends GameObject implements FantastleObj
             final String cacheAttributeName,
             final AttributeImageIndex attributeImage,
             final ColorShader attributeShader) {
-        super(objectID, new AttributedObjectAppearance(
-                new AttributeAppearance(cacheAttributeName, attributeImage,
-                        attributeShader),
-                cacheObjectName, objectImage, objectShader));
+        super(objectID,
+                new AttributedObjectAppearance(
+                        new AttributeAppearance(cacheAttributeName,
+                                attributeImage, attributeShader),
+                        cacheObjectName, objectImage, objectShader));
+    }
+
+    // Methods
+    @Override
+    public final FantastleObject getSavedObject() {
+        return this.savedObject;
+    }
+
+    @Override
+    public final boolean hasSavedObject() {
+        return this.savedObject != null;
+    }
+
+    @Override
+    public final void setSavedObject(final FantastleObject newSavedObject) {
+        this.savedObject = newSavedObject;
     }
 }
