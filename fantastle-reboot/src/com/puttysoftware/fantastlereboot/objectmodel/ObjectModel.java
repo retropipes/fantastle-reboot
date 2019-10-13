@@ -49,8 +49,6 @@ public interface ObjectModel {
 
     int getUses();
 
-    void setUses(int value);
-
     void use();
 
     boolean isDestroyable();

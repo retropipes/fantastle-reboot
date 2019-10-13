@@ -500,8 +500,7 @@ public abstract class GameObject implements ObjectModel {
         return this.oc.getUses();
     }
 
-    @Override
-    public final void setUses(final int value) {
+    protected final void setUses(final int value) {
         this.oc.setUses(value);
     }
 
