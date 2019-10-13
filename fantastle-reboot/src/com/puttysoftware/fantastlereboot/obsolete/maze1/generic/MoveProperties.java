@@ -20,8 +20,8 @@ package com.puttysoftware.fantastlereboot.obsolete.maze1.generic;
 
 import java.util.Arrays;
 
-import com.puttysoftware.fantastlereboot.utilities.DirectionConstants;
-import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
+import com.puttysoftware.diane.utilties.DirectionResolver;
+import com.puttysoftware.diane.utilties.Directions;
 
 class MoveProperties {
     // Properties
@@ -34,12 +34,12 @@ class MoveProperties {
 
     // Constructors
     public MoveProperties() {
-        this.push = new boolean[DirectionConstants.DIRECTION_COUNT];
-        this.pull = new boolean[DirectionConstants.DIRECTION_COUNT];
-        this.pushInto = new boolean[DirectionConstants.DIRECTION_COUNT];
-        this.pullInto = new boolean[DirectionConstants.DIRECTION_COUNT];
-        this.pushOut = new boolean[DirectionConstants.DIRECTION_COUNT];
-        this.pullOut = new boolean[DirectionConstants.DIRECTION_COUNT];
+        this.push = new boolean[Directions.COUNT];
+        this.pull = new boolean[Directions.COUNT];
+        this.pushInto = new boolean[Directions.COUNT];
+        this.pullInto = new boolean[Directions.COUNT];
+        this.pushOut = new boolean[Directions.COUNT];
+        this.pullOut = new boolean[Directions.COUNT];
     }
 
     // Methods
@@ -101,16 +101,16 @@ class MoveProperties {
 
     public boolean isPushable() {
         boolean result = true;
-        for (int x = 0; x < DirectionConstants.DIRECTION_COUNT; x++) {
+        for (int x = 0; x < Directions.COUNT; x++) {
             result = result && this.push[x];
         }
         return result;
     }
 
     public boolean isDirectionallyPushable(final int dirX, final int dirY) {
-        final int dir = DirectionResolver.resolveRelativeDirection(dirX, dirY);
+        final int dir = DirectionResolver.resolve(dirX, dirY);
         try {
-            if (dir != DirectionConstants.DIRECTION_NONE) {
+            if (dir != Directions.NONE) {
                 return this.push[dir];
             } else {
                 return false;
@@ -122,16 +122,16 @@ class MoveProperties {
 
     public boolean isPullable() {
         boolean result = true;
-        for (int x = 0; x < DirectionConstants.DIRECTION_COUNT; x++) {
+        for (int x = 0; x < Directions.COUNT; x++) {
             result = result && this.pull[x];
         }
         return result;
     }
 
     public boolean isDirectionallyPullable(final int dirX, final int dirY) {
-        final int dir = DirectionResolver.resolveRelativeDirection(dirX, dirY);
+        final int dir = DirectionResolver.resolve(dirX, dirY);
         try {
-            if (dir != DirectionConstants.DIRECTION_NONE) {
+            if (dir != Directions.NONE) {
                 return this.pull[dir];
             } else {
                 return false;
@@ -143,16 +143,16 @@ class MoveProperties {
 
     public boolean isPushableInto() {
         boolean result = true;
-        for (int x = 0; x < DirectionConstants.DIRECTION_COUNT; x++) {
+        for (int x = 0; x < Directions.COUNT; x++) {
             result = result && this.pushInto[x];
         }
         return result;
     }
 
     public boolean isDirectionallyPushableInto(final int dirX, final int dirY) {
-        final int dir = DirectionResolver.resolveRelativeDirection(dirX, dirY);
+        final int dir = DirectionResolver.resolve(dirX, dirY);
         try {
-            if (dir != DirectionConstants.DIRECTION_NONE) {
+            if (dir != Directions.NONE) {
                 return this.pushInto[dir];
             } else {
                 return false;
@@ -164,16 +164,16 @@ class MoveProperties {
 
     public boolean isPullableInto() {
         boolean result = true;
-        for (int x = 0; x < DirectionConstants.DIRECTION_COUNT; x++) {
+        for (int x = 0; x < Directions.COUNT; x++) {
             result = result && this.pullInto[x];
         }
         return result;
     }
 
     public boolean isDirectionallyPullableInto(final int dirX, final int dirY) {
-        final int dir = DirectionResolver.resolveRelativeDirection(dirX, dirY);
+        final int dir = DirectionResolver.resolve(dirX, dirY);
         try {
-            if (dir != DirectionConstants.DIRECTION_NONE) {
+            if (dir != Directions.NONE) {
                 return this.pullInto[dir];
             } else {
                 return false;
@@ -185,16 +185,16 @@ class MoveProperties {
 
     public boolean isPushableOut() {
         boolean result = true;
-        for (int x = 0; x < DirectionConstants.DIRECTION_COUNT; x++) {
+        for (int x = 0; x < Directions.COUNT; x++) {
             result = result && this.pushOut[x];
         }
         return result;
     }
 
     public boolean isDirectionallyPushableOut(final int dirX, final int dirY) {
-        final int dir = DirectionResolver.resolveRelativeDirection(dirX, dirY);
+        final int dir = DirectionResolver.resolve(dirX, dirY);
         try {
-            if (dir != DirectionConstants.DIRECTION_NONE) {
+            if (dir != Directions.NONE) {
                 return this.pushOut[dir];
             } else {
                 return false;
@@ -206,16 +206,16 @@ class MoveProperties {
 
     public boolean isPullableOut() {
         boolean result = true;
-        for (int x = 0; x < DirectionConstants.DIRECTION_COUNT; x++) {
+        for (int x = 0; x < Directions.COUNT; x++) {
             result = result && this.pullOut[x];
         }
         return result;
     }
 
     public boolean isDirectionallyPullableOut(final int dirX, final int dirY) {
-        final int dir = DirectionResolver.resolveRelativeDirection(dirX, dirY);
+        final int dir = DirectionResolver.resolve(dirX, dirY);
         try {
-            if (dir != DirectionConstants.DIRECTION_NONE) {
+            if (dir != Directions.NONE) {
                 return this.pullOut[dir];
             } else {
                 return false;
@@ -226,7 +226,7 @@ class MoveProperties {
     }
 
     public void setPushable(final boolean value) {
-        for (int x = 0; x < DirectionConstants.DIRECTION_COUNT; x++) {
+        for (int x = 0; x < Directions.COUNT; x++) {
             this.push[x] = value;
         }
     }
@@ -240,7 +240,7 @@ class MoveProperties {
     }
 
     public void setPullable(final boolean value) {
-        for (int x = 0; x < DirectionConstants.DIRECTION_COUNT; x++) {
+        for (int x = 0; x < Directions.COUNT; x++) {
             this.pull[x] = value;
         }
     }
@@ -254,7 +254,7 @@ class MoveProperties {
     }
 
     public void setPushableInto(final boolean value) {
-        for (int x = 0; x < DirectionConstants.DIRECTION_COUNT; x++) {
+        for (int x = 0; x < Directions.COUNT; x++) {
             this.pushInto[x] = value;
         }
     }
@@ -269,7 +269,7 @@ class MoveProperties {
     }
 
     public void setPullableInto(final boolean value) {
-        for (int x = 0; x < DirectionConstants.DIRECTION_COUNT; x++) {
+        for (int x = 0; x < Directions.COUNT; x++) {
             this.pullInto[x] = value;
         }
     }
@@ -284,7 +284,7 @@ class MoveProperties {
     }
 
     public void setPushableOut(final boolean value) {
-        for (int x = 0; x < DirectionConstants.DIRECTION_COUNT; x++) {
+        for (int x = 0; x < Directions.COUNT; x++) {
             this.pushOut[x] = value;
         }
     }
@@ -299,7 +299,7 @@ class MoveProperties {
     }
 
     public void setPullableOut(final boolean value) {
-        for (int x = 0; x < DirectionConstants.DIRECTION_COUNT; x++) {
+        for (int x = 0; x < Directions.COUNT; x++) {
             this.pullOut[x] = value;
         }
     }

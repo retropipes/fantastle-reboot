@@ -20,6 +20,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze1;
 
 import java.io.IOException;
 
+import com.puttysoftware.diane.utilties.DirectionResolver;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
@@ -29,7 +30,6 @@ import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.IcedBarrierGener
 import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.IcedMonster;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Monster;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.MovingBlock;
-import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
 import com.puttysoftware.fantastlereboot.utilities.FormatConstants;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 import com.puttysoftware.randomrange.RandomRange;
@@ -711,8 +711,7 @@ class LayeredTower {
 
     public void updateMonsterPosition(final int move, final int xLoc,
             final int yLoc, final Monster monster) {
-        final int[] dirMove = DirectionResolver
-                .unresolveRelativeDirection(move);
+        final int[] dirMove = DirectionResolver.unresolve(move);
         final int zLoc = FantastleReboot.getBagOStuff().getGameManager()
                 .getPlayerManager().getPlayerLocationZ();
         try {
@@ -749,8 +748,7 @@ class LayeredTower {
 
     public void updateMovingBlockPosition(final int move, final int xLoc,
             final int yLoc, final MovingBlock block) {
-        final int[] dirMove = DirectionResolver
-                .unresolveRelativeDirection(move);
+        final int[] dirMove = DirectionResolver.unresolve(move);
         final int zLoc = FantastleReboot.getBagOStuff().getGameManager()
                 .getPlayerManager().getPlayerLocationZ();
         try {

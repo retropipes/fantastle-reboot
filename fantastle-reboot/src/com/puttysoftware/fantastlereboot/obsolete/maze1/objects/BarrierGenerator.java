@@ -18,6 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze1.objects;
 
+import com.puttysoftware.diane.utilties.Directions;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
@@ -28,7 +29,6 @@ import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericWall;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
 import com.puttysoftware.fantastlereboot.utilities.ArrowTypeConstants;
-import com.puttysoftware.fantastlereboot.utilities.DirectionConstants;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public class BarrierGenerator extends GenericWall {
@@ -86,37 +86,37 @@ public class BarrierGenerator extends GenericWall {
             mo8Name = invalidName;
         }
         if (mo2Name.equals(horzName)) {
-            scanResult = this.scan(DirectionConstants.DIRECTION_WEST, dirX,
+            scanResult = this.scan(Directions.WEST, dirX,
                     dirY, pz, pw, BarrierGenerator.SCAN_LIMIT, false);
             if (scanResult) {
-                this.generate(DirectionConstants.DIRECTION_WEST, dirX, dirY, pz,
+                this.generate(Directions.WEST, dirX, dirY, pz,
                         pw, BarrierGenerator.SCAN_LIMIT, false);
                 flag = true;
             }
         }
         if (mo4Name.equals(vertName)) {
-            scanResult = this.scan(DirectionConstants.DIRECTION_NORTH, dirX,
+            scanResult = this.scan(Directions.NORTH, dirX,
                     dirY, pz, pw, BarrierGenerator.SCAN_LIMIT, false);
             if (scanResult) {
-                this.generate(DirectionConstants.DIRECTION_NORTH, dirX, dirY,
+                this.generate(Directions.NORTH, dirX, dirY,
                         pz, pw, BarrierGenerator.SCAN_LIMIT, false);
                 flag = true;
             }
         }
         if (mo6Name.equals(vertName)) {
-            scanResult = this.scan(DirectionConstants.DIRECTION_SOUTH, dirX,
+            scanResult = this.scan(Directions.SOUTH, dirX,
                     dirY, pz, pw, BarrierGenerator.SCAN_LIMIT, false);
             if (scanResult) {
-                this.generate(DirectionConstants.DIRECTION_SOUTH, dirX, dirY,
+                this.generate(Directions.SOUTH, dirX, dirY,
                         pz, pw, BarrierGenerator.SCAN_LIMIT, false);
                 flag = true;
             }
         }
         if (mo8Name.equals(horzName)) {
-            scanResult = this.scan(DirectionConstants.DIRECTION_EAST, dirX,
+            scanResult = this.scan(Directions.EAST, dirX,
                     dirY, pz, pw, BarrierGenerator.SCAN_LIMIT, false);
             if (scanResult) {
-                this.generate(DirectionConstants.DIRECTION_EAST, dirX, dirY, pz,
+                this.generate(Directions.EAST, dirX, dirY, pz,
                         pw, BarrierGenerator.SCAN_LIMIT, false);
                 flag = true;
             }
@@ -182,37 +182,37 @@ public class BarrierGenerator extends GenericWall {
             mo8Name = invalidName;
         }
         if (!mo2Name.equals(horzName)) {
-            scanResult = this.scan(DirectionConstants.DIRECTION_WEST, dirX,
+            scanResult = this.scan(Directions.WEST, dirX,
                     dirY, pz, pw, BarrierGenerator.SCAN_LIMIT, true);
             if (scanResult) {
-                this.generate(DirectionConstants.DIRECTION_WEST, dirX, dirY, pz,
+                this.generate(Directions.WEST, dirX, dirY, pz,
                         pw, BarrierGenerator.SCAN_LIMIT, true);
                 flag = true;
             }
         }
         if (!mo4Name.equals(vertName)) {
-            scanResult = this.scan(DirectionConstants.DIRECTION_NORTH, dirX,
+            scanResult = this.scan(Directions.NORTH, dirX,
                     dirY, pz, pw, BarrierGenerator.SCAN_LIMIT, true);
             if (scanResult) {
-                this.generate(DirectionConstants.DIRECTION_NORTH, dirX, dirY,
+                this.generate(Directions.NORTH, dirX, dirY,
                         pz, pw, BarrierGenerator.SCAN_LIMIT, true);
                 flag = true;
             }
         }
         if (!mo6Name.equals(vertName)) {
-            scanResult = this.scan(DirectionConstants.DIRECTION_SOUTH, dirX,
+            scanResult = this.scan(Directions.SOUTH, dirX,
                     dirY, pz, pw, BarrierGenerator.SCAN_LIMIT, true);
             if (scanResult) {
-                this.generate(DirectionConstants.DIRECTION_SOUTH, dirX, dirY,
+                this.generate(Directions.SOUTH, dirX, dirY,
                         pz, pw, BarrierGenerator.SCAN_LIMIT, true);
                 flag = true;
             }
         }
         if (!mo8Name.equals(horzName)) {
-            scanResult = this.scan(DirectionConstants.DIRECTION_EAST, dirX,
+            scanResult = this.scan(Directions.EAST, dirX,
                     dirY, pz, pw, BarrierGenerator.SCAN_LIMIT, true);
             if (scanResult) {
-                this.generate(DirectionConstants.DIRECTION_EAST, dirX, dirY, pz,
+                this.generate(Directions.EAST, dirX, dirY, pz,
                         pw, BarrierGenerator.SCAN_LIMIT, true);
                 flag = true;
             }
@@ -229,7 +229,7 @@ public class BarrierGenerator extends GenericWall {
             final int w, final int limit, final boolean o) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final String invalidName = new EmptyVoid().getName();
-        if (dir == DirectionConstants.DIRECTION_EAST) {
+        if (dir == Directions.EAST) {
             for (int l = 1; l < limit; l++) {
                 final MazeObject mo = app.getMazeManager().getMazeObject(x + l,
                         y, z, w, Maze.LAYER_OBJECT);
@@ -251,7 +251,7 @@ public class BarrierGenerator extends GenericWall {
                     }
                 }
             }
-        } else if (dir == DirectionConstants.DIRECTION_NORTH) {
+        } else if (dir == Directions.NORTH) {
             for (int l = 1; l < limit; l++) {
                 final MazeObject mo = app.getMazeManager().getMazeObject(x,
                         y - l, z, w, Maze.LAYER_OBJECT);
@@ -273,7 +273,7 @@ public class BarrierGenerator extends GenericWall {
                     }
                 }
             }
-        } else if (dir == DirectionConstants.DIRECTION_SOUTH) {
+        } else if (dir == Directions.SOUTH) {
             for (int l = 1; l < limit; l++) {
                 final MazeObject mo = app.getMazeManager().getMazeObject(x,
                         y + l, z, w, Maze.LAYER_OBJECT);
@@ -295,7 +295,7 @@ public class BarrierGenerator extends GenericWall {
                     }
                 }
             }
-        } else if (dir == DirectionConstants.DIRECTION_WEST) {
+        } else if (dir == Directions.WEST) {
             for (int l = 1; l < limit; l++) {
                 final MazeObject mo = app.getMazeManager().getMazeObject(x - l,
                         y, z, w, Maze.LAYER_OBJECT);
@@ -325,7 +325,7 @@ public class BarrierGenerator extends GenericWall {
             final int w, final int limit, final boolean o) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final String invalidName = new EmptyVoid().getName();
-        if (dir == DirectionConstants.DIRECTION_EAST) {
+        if (dir == Directions.EAST) {
             for (int l = 1; l < limit; l++) {
                 final MazeObject mo = app.getMazeManager().getMazeObject(x + l,
                         y, z, w, Maze.LAYER_OBJECT);
@@ -366,7 +366,7 @@ public class BarrierGenerator extends GenericWall {
                     }
                 }
             }
-        } else if (dir == DirectionConstants.DIRECTION_NORTH) {
+        } else if (dir == Directions.NORTH) {
             for (int l = 1; l < limit; l++) {
                 final MazeObject mo = app.getMazeManager().getMazeObject(x,
                         y - l, z, w, Maze.LAYER_OBJECT);
@@ -407,7 +407,7 @@ public class BarrierGenerator extends GenericWall {
                     }
                 }
             }
-        } else if (dir == DirectionConstants.DIRECTION_SOUTH) {
+        } else if (dir == Directions.SOUTH) {
             for (int l = 1; l < limit; l++) {
                 final MazeObject mo = app.getMazeManager().getMazeObject(x,
                         y + l, z, w, Maze.LAYER_OBJECT);
@@ -448,7 +448,7 @@ public class BarrierGenerator extends GenericWall {
                     }
                 }
             }
-        } else if (dir == DirectionConstants.DIRECTION_WEST) {
+        } else if (dir == Directions.WEST) {
             for (int l = 1; l < limit; l++) {
                 final MazeObject mo = app.getMazeManager().getMazeObject(x - l,
                         y, z, w, Maze.LAYER_OBJECT);

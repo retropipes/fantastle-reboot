@@ -7,8 +7,8 @@ package com.puttysoftware.fantastlereboot.objectmodel;
 
 import java.util.Objects;
 
-import com.puttysoftware.fantastlereboot.utilities.DirectionConstants;
-import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
+import com.puttysoftware.diane.utilties.DirectionResolver;
+import com.puttysoftware.diane.utilties.Directions;
 import com.puttysoftware.storage.FlagStorage;
 
 class SolidProperties {
@@ -30,7 +30,7 @@ class SolidProperties {
     // Constructors
     public SolidProperties() {
         this.solidData = new FlagStorage(SolidProperties.SOLID_DATA_TYPES,
-                DirectionConstants.DIRECTION_COUNT);
+                Directions.COUNT);
     }
 
     // Methods
@@ -58,7 +58,7 @@ class SolidProperties {
 
     public boolean isSolid() {
         boolean result = false;
-        for (int dir = 0; dir < DirectionConstants.DIRECTION_COUNT; dir++) {
+        for (int dir = 0; dir < Directions.COUNT; dir++) {
             result = result || this.solidData
                     .getCell(SolidDataTypes.EXTERNAL.index, dir);
         }
@@ -67,7 +67,7 @@ class SolidProperties {
 
     public boolean isInternallySolid() {
         boolean result = false;
-        for (int dir = 0; dir < DirectionConstants.DIRECTION_COUNT; dir++) {
+        for (int dir = 0; dir < Directions.COUNT; dir++) {
             result = result || this.solidData
                     .getCell(SolidDataTypes.INTERNAL.index, dir);
         }
@@ -75,24 +75,24 @@ class SolidProperties {
     }
 
     public boolean isDirectionallySolid(final int dirX, final int dirY) {
-        final int dir = DirectionResolver.resolveRelativeDirection(dirX, dirY);
+        final int dir = DirectionResolver.resolve(dirX, dirY);
         return this.solidData.getCell(SolidDataTypes.EXTERNAL.index, dir);
     }
 
     public boolean isInternallyDirectionallySolid(final int dirX,
             final int dirY) {
-        final int dir = DirectionResolver.resolveRelativeDirection(dirX, dirY);
+        final int dir = DirectionResolver.resolve(dirX, dirY);
         return this.solidData.getCell(SolidDataTypes.INTERNAL.index, dir);
     }
 
     public void setSolid(final boolean value) {
-        for (int dir = 0; dir < DirectionConstants.DIRECTION_COUNT; dir++) {
+        for (int dir = 0; dir < Directions.COUNT; dir++) {
             this.solidData.setCell(value, SolidDataTypes.EXTERNAL.index, dir);
         }
     }
 
     public void setInternallySolid(final boolean value) {
-        for (int dir = 0; dir < DirectionConstants.DIRECTION_COUNT; dir++) {
+        for (int dir = 0; dir < Directions.COUNT; dir++) {
             this.solidData.setCell(value, SolidDataTypes.INTERNAL.index, dir);
         }
     }

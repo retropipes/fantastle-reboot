@@ -18,6 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.game;
 
+import com.puttysoftware.diane.utilties.DirectionResolver;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
@@ -31,7 +32,7 @@ import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Empty;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.IceArrow;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Wall;
 import com.puttysoftware.fantastlereboot.utilities.ArrowTypeConstants;
-import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
+import com.puttysoftware.fantastlereboot.utilities.DirectionNameResolver;
 
 public class ArrowTask extends Thread {
     // Fields
@@ -72,8 +73,8 @@ public class ArrowTask extends Thread {
             o = new Wall();
         }
         final GenericTransientObject a = ArrowTask.createArrowForType(this.at);
-        final String suffix = DirectionResolver.resolveDirectionConstantToName(
-                DirectionResolver.resolveRelativeDirection(incX, incY));
+        final String suffix = DirectionNameResolver.resolveToName(
+                DirectionResolver.resolve(incX, incY));
         a.setNameSuffix(suffix);
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {

@@ -5,10 +5,10 @@ Any questions should be directed to the author via email at: mazer5d@worldwizard
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze2.abc;
 
+import com.puttysoftware.diane.utilties.Directions;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
-import com.puttysoftware.fantastlereboot.utilities.DirectionConstants;
-import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
+import com.puttysoftware.fantastlereboot.utilities.DirectionNameResolver;
 
 public abstract class AbstractTransientObject extends AbstractMazeObject {
     // Fields
@@ -19,7 +19,7 @@ public abstract class AbstractTransientObject extends AbstractMazeObject {
     protected AbstractTransientObject(final String newName) {
         super(true, false);
         this.name = newName;
-        this.dir = DirectionConstants.DIRECTION_NONE;
+        this.dir = Directions.NONE;
     }
 
     // Methods
@@ -32,21 +32,21 @@ public abstract class AbstractTransientObject extends AbstractMazeObject {
     @Override
     public final int getBaseID() {
         switch (this.dir) {
-        case DirectionConstants.DIRECTION_NORTH:
+        case Directions.NORTH:
             return ObjectImageConstants.OBJECT_IMAGE_ARROW_NORTH;
-        case DirectionConstants.DIRECTION_NORTHEAST:
+        case Directions.NORTHEAST:
             return ObjectImageConstants.OBJECT_IMAGE_ARROW_NORTHEAST;
-        case DirectionConstants.DIRECTION_EAST:
+        case Directions.EAST:
             return ObjectImageConstants.OBJECT_IMAGE_ARROW_EAST;
-        case DirectionConstants.DIRECTION_SOUTHEAST:
+        case Directions.SOUTHEAST:
             return ObjectImageConstants.OBJECT_IMAGE_ARROW_SOUTHEAST;
-        case DirectionConstants.DIRECTION_SOUTH:
+        case Directions.SOUTH:
             return ObjectImageConstants.OBJECT_IMAGE_ARROW_SOUTH;
-        case DirectionConstants.DIRECTION_SOUTHWEST:
+        case Directions.SOUTHWEST:
             return ObjectImageConstants.OBJECT_IMAGE_ARROW_SOUTHWEST;
-        case DirectionConstants.DIRECTION_WEST:
+        case Directions.WEST:
             return ObjectImageConstants.OBJECT_IMAGE_ARROW_WEST;
-        case DirectionConstants.DIRECTION_NORTHWEST:
+        case Directions.NORTHWEST:
             return ObjectImageConstants.OBJECT_IMAGE_ARROW_NORTHWEST;
         default:
             return ObjectImageConstants.OBJECT_IMAGE_EMPTY;
@@ -56,13 +56,13 @@ public abstract class AbstractTransientObject extends AbstractMazeObject {
     @Override
     public final String getName() {
         return this.name + " "
-                + DirectionResolver.resolveDirectionConstantToName(this.dir);
+                + DirectionNameResolver.resolveToName(this.dir);
     }
 
     @Override
     public String getPluralName() {
         return this.name + "s "
-                + DirectionResolver.resolveDirectionConstantToName(this.dir);
+                + DirectionNameResolver.resolveToName(this.dir);
     }
 
     @Override

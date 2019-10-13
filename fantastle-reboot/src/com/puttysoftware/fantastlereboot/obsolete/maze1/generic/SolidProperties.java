@@ -20,8 +20,8 @@ package com.puttysoftware.fantastlereboot.obsolete.maze1.generic;
 
 import java.util.Arrays;
 
-import com.puttysoftware.fantastlereboot.utilities.DirectionConstants;
-import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
+import com.puttysoftware.diane.utilties.DirectionResolver;
+import com.puttysoftware.diane.utilties.Directions;
 
 class SolidProperties {
     // Properties
@@ -30,8 +30,8 @@ class SolidProperties {
 
     // Constructors
     public SolidProperties() {
-        this.solidX = new boolean[DirectionConstants.DIRECTION_COUNT];
-        this.solidI = new boolean[DirectionConstants.DIRECTION_COUNT];
+        this.solidX = new boolean[Directions.COUNT];
+        this.solidI = new boolean[Directions.COUNT];
     }
 
     // Methods
@@ -71,7 +71,7 @@ class SolidProperties {
 
     public boolean isSolid() {
         boolean result = false;
-        for (int x = 0; x < DirectionConstants.DIRECTION_COUNT; x++) {
+        for (int x = 0; x < Directions.COUNT; x++) {
             result = result || this.solidX[x];
             result = result || this.solidI[x];
         }
@@ -80,10 +80,10 @@ class SolidProperties {
 
     public boolean isDirectionallySolid(final boolean ie, final int dirX,
             final int dirY) {
-        final int dir = DirectionResolver.resolveRelativeDirection(dirX, dirY);
+        final int dir = DirectionResolver.resolve(dirX, dirY);
         if (ie) {
             try {
-                if (dir != DirectionConstants.DIRECTION_NONE) {
+                if (dir != Directions.NONE) {
                     return this.solidX[dir];
                 } else {
                     return false;
@@ -93,7 +93,7 @@ class SolidProperties {
             }
         } else {
             try {
-                if (dir != DirectionConstants.DIRECTION_NONE) {
+                if (dir != Directions.NONE) {
                     return this.solidI[dir];
                 } else {
                     return false;
@@ -105,7 +105,7 @@ class SolidProperties {
     }
 
     public void setSolid(final boolean value) {
-        for (int x = 0; x < DirectionConstants.DIRECTION_COUNT; x++) {
+        for (int x = 0; x < Directions.COUNT; x++) {
             this.solidX[x] = value;
             this.solidI[x] = value;
         }

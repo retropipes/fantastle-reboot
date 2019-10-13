@@ -8,6 +8,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze2;
 import java.io.IOException;
 import java.util.Arrays;
 
+import com.puttysoftware.diane.utilties.DirectionResolver;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
@@ -18,7 +19,6 @@ import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Monster;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Tile;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.WallOff;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.WallOn;
-import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
 import com.puttysoftware.fantastlereboot.utilities.MazeObjectList;
 import com.puttysoftware.fantastlereboot.utilities.RandomGenerationRule;
 import com.puttysoftware.randomrange.RandomRange;
@@ -90,8 +90,7 @@ final class LayeredTower implements Cloneable {
             final int yLoc, final Monster monster) {
         final Application app = TallerTower.getApplication();
         final BagOStuff bag = FantastleReboot.getBagOStuff();
-        final int[] dirMove = DirectionResolver
-                .unresolveRelativeDirection(move);
+        final int[] dirMove = DirectionResolver.unresolve(move);
         final int pLocX = this.getPlayerRow();
         final int pLocY = this.getPlayerColumn();
         final int zLoc = this.getPlayerFloor();

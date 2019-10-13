@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.effects;
 
-import com.puttysoftware.fantastlereboot.utilities.DirectionConstants;
+import com.puttysoftware.diane.utilties.Directions;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class Confused extends Effect {
@@ -67,40 +67,40 @@ public class Confused extends Effect {
     @Override
     public int modifyMove1(final int arg) {
         switch (arg) {
-        case DirectionConstants.DIRECTION_NORTH:
+        case Directions.NORTH:
             switch (this.state) {
             case CONFUSED_STATE_UDRL:
             case CONFUSED_STATE_ULDR:
             case CONFUSED_STATE_ULRD:
             case CONFUSED_STATE_URDL:
             case CONFUSED_STATE_URLD:
-                return DirectionConstants.DIRECTION_NORTH;
+                return Directions.NORTH;
             case CONFUSED_STATE_DULR:
             case CONFUSED_STATE_DURL:
             case CONFUSED_STATE_DLUR:
             case CONFUSED_STATE_DLRU:
             case CONFUSED_STATE_DRUL:
             case CONFUSED_STATE_DRLU:
-                return DirectionConstants.DIRECTION_SOUTH;
+                return Directions.SOUTH;
             case CONFUSED_STATE_LDUR:
             case CONFUSED_STATE_LDRU:
             case CONFUSED_STATE_LUDR:
             case CONFUSED_STATE_LURD:
             case CONFUSED_STATE_LRDU:
             case CONFUSED_STATE_LRUD:
-                return DirectionConstants.DIRECTION_WEST;
+                return Directions.WEST;
             case CONFUSED_STATE_RDLU:
             case CONFUSED_STATE_RDUL:
             case CONFUSED_STATE_RLDU:
             case CONFUSED_STATE_RLUD:
             case CONFUSED_STATE_RUDL:
             case CONFUSED_STATE_RULD:
-                return DirectionConstants.DIRECTION_EAST;
+                return Directions.EAST;
             default:
                 break;
             }
             break;
-        case DirectionConstants.DIRECTION_SOUTH:
+        case Directions.SOUTH:
             switch (this.state) {
             case CONFUSED_STATE_DULR:
             case CONFUSED_STATE_DURL:
@@ -108,32 +108,32 @@ public class Confused extends Effect {
             case CONFUSED_STATE_LURD:
             case CONFUSED_STATE_RUDL:
             case CONFUSED_STATE_RULD:
-                return DirectionConstants.DIRECTION_NORTH;
+                return Directions.NORTH;
             case CONFUSED_STATE_UDRL:
             case CONFUSED_STATE_LDUR:
             case CONFUSED_STATE_LDRU:
             case CONFUSED_STATE_RDLU:
             case CONFUSED_STATE_RDUL:
-                return DirectionConstants.DIRECTION_SOUTH;
+                return Directions.SOUTH;
             case CONFUSED_STATE_ULDR:
             case CONFUSED_STATE_ULRD:
             case CONFUSED_STATE_DLUR:
             case CONFUSED_STATE_DLRU:
             case CONFUSED_STATE_RLDU:
             case CONFUSED_STATE_RLUD:
-                return DirectionConstants.DIRECTION_WEST;
+                return Directions.WEST;
             case CONFUSED_STATE_URDL:
             case CONFUSED_STATE_URLD:
             case CONFUSED_STATE_DRUL:
             case CONFUSED_STATE_DRLU:
             case CONFUSED_STATE_LRDU:
             case CONFUSED_STATE_LRUD:
-                return DirectionConstants.DIRECTION_EAST;
+                return Directions.EAST;
             default:
                 break;
             }
             break;
-        case DirectionConstants.DIRECTION_WEST:
+        case Directions.WEST:
             switch (this.state) {
             case CONFUSED_STATE_DLUR:
             case CONFUSED_STATE_DRUL:
@@ -141,32 +141,32 @@ public class Confused extends Effect {
             case CONFUSED_STATE_LRUD:
             case CONFUSED_STATE_RDUL:
             case CONFUSED_STATE_RLUD:
-                return DirectionConstants.DIRECTION_NORTH;
+                return Directions.NORTH;
             case CONFUSED_STATE_ULDR:
             case CONFUSED_STATE_URDL:
             case CONFUSED_STATE_LUDR:
             case CONFUSED_STATE_LRDU:
             case CONFUSED_STATE_RLDU:
             case CONFUSED_STATE_RUDL:
-                return DirectionConstants.DIRECTION_SOUTH;
+                return Directions.SOUTH;
             case CONFUSED_STATE_URLD:
             case CONFUSED_STATE_DULR:
             case CONFUSED_STATE_DRLU:
             case CONFUSED_STATE_RDLU:
             case CONFUSED_STATE_RULD:
-                return DirectionConstants.DIRECTION_WEST;
+                return Directions.WEST;
             case CONFUSED_STATE_DURL:
             case CONFUSED_STATE_DLRU:
             case CONFUSED_STATE_UDRL:
             case CONFUSED_STATE_ULRD:
             case CONFUSED_STATE_LDRU:
             case CONFUSED_STATE_LURD:
-                return DirectionConstants.DIRECTION_EAST;
+                return Directions.EAST;
             default:
                 break;
             }
             break;
-        case DirectionConstants.DIRECTION_EAST:
+        case Directions.EAST:
             switch (this.state) {
             case CONFUSED_STATE_DLRU:
             case CONFUSED_STATE_DRLU:
@@ -174,65 +174,65 @@ public class Confused extends Effect {
             case CONFUSED_STATE_LRDU:
             case CONFUSED_STATE_RDLU:
             case CONFUSED_STATE_RLDU:
-                return DirectionConstants.DIRECTION_NORTH;
+                return Directions.NORTH;
             case CONFUSED_STATE_ULRD:
             case CONFUSED_STATE_URLD:
             case CONFUSED_STATE_LURD:
             case CONFUSED_STATE_LRUD:
             case CONFUSED_STATE_RLUD:
             case CONFUSED_STATE_RULD:
-                return DirectionConstants.DIRECTION_SOUTH;
+                return Directions.SOUTH;
             case CONFUSED_STATE_UDRL:
             case CONFUSED_STATE_URDL:
             case CONFUSED_STATE_DURL:
             case CONFUSED_STATE_DRUL:
             case CONFUSED_STATE_RDUL:
             case CONFUSED_STATE_RUDL:
-                return DirectionConstants.DIRECTION_WEST;
+                return Directions.WEST;
             case CONFUSED_STATE_ULDR:
             case CONFUSED_STATE_DULR:
             case CONFUSED_STATE_DLUR:
             case CONFUSED_STATE_LDUR:
             case CONFUSED_STATE_LUDR:
-                return DirectionConstants.DIRECTION_EAST;
+                return Directions.EAST;
             default:
                 break;
             }
             break;
-        case DirectionConstants.DIRECTION_NORTHWEST:
+        case Directions.NORTHWEST:
             switch (this.state) {
             case CONFUSED_STATE_UDRL:
             case CONFUSED_STATE_ULDR:
             case CONFUSED_STATE_ULRD:
             case CONFUSED_STATE_URDL:
             case CONFUSED_STATE_URLD:
-                return DirectionConstants.DIRECTION_NORTHWEST;
+                return Directions.NORTHWEST;
             case CONFUSED_STATE_DULR:
             case CONFUSED_STATE_DURL:
             case CONFUSED_STATE_DLUR:
             case CONFUSED_STATE_DLRU:
             case CONFUSED_STATE_DRUL:
             case CONFUSED_STATE_DRLU:
-                return DirectionConstants.DIRECTION_SOUTHEAST;
+                return Directions.SOUTHEAST;
             case CONFUSED_STATE_LDUR:
             case CONFUSED_STATE_LDRU:
             case CONFUSED_STATE_LUDR:
             case CONFUSED_STATE_LURD:
             case CONFUSED_STATE_LRDU:
             case CONFUSED_STATE_LRUD:
-                return DirectionConstants.DIRECTION_SOUTHWEST;
+                return Directions.SOUTHWEST;
             case CONFUSED_STATE_RDLU:
             case CONFUSED_STATE_RDUL:
             case CONFUSED_STATE_RLDU:
             case CONFUSED_STATE_RLUD:
             case CONFUSED_STATE_RUDL:
             case CONFUSED_STATE_RULD:
-                return DirectionConstants.DIRECTION_NORTHEAST;
+                return Directions.NORTHEAST;
             default:
                 break;
             }
             break;
-        case DirectionConstants.DIRECTION_NORTHEAST:
+        case Directions.NORTHEAST:
             switch (this.state) {
             case CONFUSED_STATE_DULR:
             case CONFUSED_STATE_DURL:
@@ -240,32 +240,32 @@ public class Confused extends Effect {
             case CONFUSED_STATE_LURD:
             case CONFUSED_STATE_RUDL:
             case CONFUSED_STATE_RULD:
-                return DirectionConstants.DIRECTION_NORTHWEST;
+                return Directions.NORTHWEST;
             case CONFUSED_STATE_UDRL:
             case CONFUSED_STATE_LDUR:
             case CONFUSED_STATE_LDRU:
             case CONFUSED_STATE_RDLU:
             case CONFUSED_STATE_RDUL:
-                return DirectionConstants.DIRECTION_SOUTHEAST;
+                return Directions.SOUTHEAST;
             case CONFUSED_STATE_ULDR:
             case CONFUSED_STATE_ULRD:
             case CONFUSED_STATE_DLUR:
             case CONFUSED_STATE_DLRU:
             case CONFUSED_STATE_RLDU:
             case CONFUSED_STATE_RLUD:
-                return DirectionConstants.DIRECTION_SOUTHWEST;
+                return Directions.SOUTHWEST;
             case CONFUSED_STATE_URDL:
             case CONFUSED_STATE_URLD:
             case CONFUSED_STATE_DRUL:
             case CONFUSED_STATE_DRLU:
             case CONFUSED_STATE_LRDU:
             case CONFUSED_STATE_LRUD:
-                return DirectionConstants.DIRECTION_NORTHEAST;
+                return Directions.NORTHEAST;
             default:
                 break;
             }
             break;
-        case DirectionConstants.DIRECTION_SOUTHWEST:
+        case Directions.SOUTHWEST:
             switch (this.state) {
             case CONFUSED_STATE_DLUR:
             case CONFUSED_STATE_DRUL:
@@ -273,32 +273,32 @@ public class Confused extends Effect {
             case CONFUSED_STATE_LRUD:
             case CONFUSED_STATE_RDUL:
             case CONFUSED_STATE_RLUD:
-                return DirectionConstants.DIRECTION_NORTHWEST;
+                return Directions.NORTHWEST;
             case CONFUSED_STATE_ULDR:
             case CONFUSED_STATE_URDL:
             case CONFUSED_STATE_LUDR:
             case CONFUSED_STATE_LRDU:
             case CONFUSED_STATE_RLDU:
             case CONFUSED_STATE_RUDL:
-                return DirectionConstants.DIRECTION_SOUTHEAST;
+                return Directions.SOUTHEAST;
             case CONFUSED_STATE_URLD:
             case CONFUSED_STATE_DULR:
             case CONFUSED_STATE_DRLU:
             case CONFUSED_STATE_RDLU:
             case CONFUSED_STATE_RULD:
-                return DirectionConstants.DIRECTION_SOUTHWEST;
+                return Directions.SOUTHWEST;
             case CONFUSED_STATE_DURL:
             case CONFUSED_STATE_DLRU:
             case CONFUSED_STATE_UDRL:
             case CONFUSED_STATE_ULRD:
             case CONFUSED_STATE_LDRU:
             case CONFUSED_STATE_LURD:
-                return DirectionConstants.DIRECTION_NORTHEAST;
+                return Directions.NORTHEAST;
             default:
                 break;
             }
             break;
-        case DirectionConstants.DIRECTION_SOUTHEAST:
+        case Directions.SOUTHEAST:
             switch (this.state) {
             case CONFUSED_STATE_DLRU:
             case CONFUSED_STATE_DRLU:
@@ -306,27 +306,27 @@ public class Confused extends Effect {
             case CONFUSED_STATE_LRDU:
             case CONFUSED_STATE_RDLU:
             case CONFUSED_STATE_RLDU:
-                return DirectionConstants.DIRECTION_NORTHWEST;
+                return Directions.NORTHWEST;
             case CONFUSED_STATE_ULRD:
             case CONFUSED_STATE_URLD:
             case CONFUSED_STATE_LURD:
             case CONFUSED_STATE_LRUD:
             case CONFUSED_STATE_RLUD:
             case CONFUSED_STATE_RULD:
-                return DirectionConstants.DIRECTION_SOUTHEAST;
+                return Directions.SOUTHEAST;
             case CONFUSED_STATE_UDRL:
             case CONFUSED_STATE_URDL:
             case CONFUSED_STATE_DURL:
             case CONFUSED_STATE_DRUL:
             case CONFUSED_STATE_RDUL:
             case CONFUSED_STATE_RUDL:
-                return DirectionConstants.DIRECTION_SOUTHWEST;
+                return Directions.SOUTHWEST;
             case CONFUSED_STATE_ULDR:
             case CONFUSED_STATE_DULR:
             case CONFUSED_STATE_DLUR:
             case CONFUSED_STATE_LDUR:
             case CONFUSED_STATE_LUDR:
-                return DirectionConstants.DIRECTION_NORTHEAST;
+                return Directions.NORTHEAST;
             default:
                 break;
             }

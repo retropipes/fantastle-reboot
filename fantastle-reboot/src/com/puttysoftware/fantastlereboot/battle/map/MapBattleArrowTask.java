@@ -5,6 +5,7 @@ Any questions should be directed to the author via email at: mazer5d@worldwizard
  */
 package com.puttysoftware.fantastlereboot.battle.map;
 
+import com.puttysoftware.diane.utilties.DirectionResolver;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
@@ -20,7 +21,6 @@ import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Arrow;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Empty;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Wall;
-import com.puttysoftware.fantastlereboot.utilities.DirectionResolver;
 
 public class MapBattleArrowTask extends Thread {
     // Fields
@@ -58,7 +58,7 @@ public class MapBattleArrowTask extends Thread {
                 o = new Wall();
             }
             final AbstractTransientObject a = MapBattleArrowTask.createArrow();
-            final int newDir = DirectionResolver.resolveRelativeDirection(incX,
+            final int newDir = DirectionResolver.resolve(incX,
                     incY);
             a.setDirection(newDir);
             SoundPlayer.playSound(SoundIndex.ARROW_SHOOT);

@@ -22,13 +22,13 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.BitSet;
 
+import com.puttysoftware.diane.utilties.Directions;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.game.ObjectInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.utilities.DirectionConstants;
 import com.puttysoftware.fantastlereboot.utilities.FormatConstants;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 import com.puttysoftware.xio.XDataReader;
@@ -89,38 +89,38 @@ public abstract class MazeObject implements UniqueID5 {
             final boolean isSolidIN, final boolean isSolidIS,
             final boolean isSolidIE, final boolean isSolidIW) {
         this.sp = new SolidProperties();
-        this.sp.setDirectionallySolid(true, DirectionConstants.DIRECTION_NORTH,
+        this.sp.setDirectionallySolid(true, Directions.NORTH,
                 isSolidXN);
-        this.sp.setDirectionallySolid(true, DirectionConstants.DIRECTION_SOUTH,
+        this.sp.setDirectionallySolid(true, Directions.SOUTH,
                 isSolidXS);
-        this.sp.setDirectionallySolid(true, DirectionConstants.DIRECTION_EAST,
+        this.sp.setDirectionallySolid(true, Directions.EAST,
                 isSolidXE);
-        this.sp.setDirectionallySolid(true, DirectionConstants.DIRECTION_WEST,
+        this.sp.setDirectionallySolid(true, Directions.WEST,
                 isSolidXW);
-        this.sp.setDirectionallySolid(false, DirectionConstants.DIRECTION_NORTH,
+        this.sp.setDirectionallySolid(false, Directions.NORTH,
                 isSolidIN);
-        this.sp.setDirectionallySolid(false, DirectionConstants.DIRECTION_SOUTH,
+        this.sp.setDirectionallySolid(false, Directions.SOUTH,
                 isSolidIS);
-        this.sp.setDirectionallySolid(false, DirectionConstants.DIRECTION_EAST,
+        this.sp.setDirectionallySolid(false, Directions.EAST,
                 isSolidIE);
-        this.sp.setDirectionallySolid(false, DirectionConstants.DIRECTION_WEST,
+        this.sp.setDirectionallySolid(false, Directions.WEST,
                 isSolidIW);
         this.sp.setDirectionallySolid(true,
-                DirectionConstants.DIRECTION_NORTHEAST, true);
+                Directions.NORTHEAST, true);
         this.sp.setDirectionallySolid(true,
-                DirectionConstants.DIRECTION_SOUTHEAST, true);
+                Directions.SOUTHEAST, true);
         this.sp.setDirectionallySolid(true,
-                DirectionConstants.DIRECTION_NORTHWEST, true);
+                Directions.NORTHWEST, true);
         this.sp.setDirectionallySolid(true,
-                DirectionConstants.DIRECTION_SOUTHWEST, true);
+                Directions.SOUTHWEST, true);
         this.sp.setDirectionallySolid(false,
-                DirectionConstants.DIRECTION_NORTHEAST, true);
+                Directions.NORTHEAST, true);
         this.sp.setDirectionallySolid(false,
-                DirectionConstants.DIRECTION_SOUTHEAST, true);
+                Directions.SOUTHEAST, true);
         this.sp.setDirectionallySolid(false,
-                DirectionConstants.DIRECTION_NORTHWEST, true);
+                Directions.NORTHWEST, true);
         this.sp.setDirectionallySolid(false,
-                DirectionConstants.DIRECTION_SOUTHWEST, true);
+                Directions.SOUTHWEST, true);
         this.mp = new MoveProperties();
         this.friction = true;
         this.usable = false;
@@ -143,38 +143,38 @@ public abstract class MazeObject implements UniqueID5 {
             final boolean isSolidINW, final boolean isSolidISE,
             final boolean isSolidINE, final boolean isSolidISW) {
         this.sp = new SolidProperties();
-        this.sp.setDirectionallySolid(true, DirectionConstants.DIRECTION_NORTH,
+        this.sp.setDirectionallySolid(true, Directions.NORTH,
                 isSolidXN);
-        this.sp.setDirectionallySolid(true, DirectionConstants.DIRECTION_SOUTH,
+        this.sp.setDirectionallySolid(true, Directions.SOUTH,
                 isSolidXS);
-        this.sp.setDirectionallySolid(true, DirectionConstants.DIRECTION_EAST,
+        this.sp.setDirectionallySolid(true, Directions.EAST,
                 isSolidXE);
-        this.sp.setDirectionallySolid(true, DirectionConstants.DIRECTION_WEST,
+        this.sp.setDirectionallySolid(true, Directions.WEST,
                 isSolidXW);
-        this.sp.setDirectionallySolid(false, DirectionConstants.DIRECTION_NORTH,
+        this.sp.setDirectionallySolid(false, Directions.NORTH,
                 isSolidIN);
-        this.sp.setDirectionallySolid(false, DirectionConstants.DIRECTION_SOUTH,
+        this.sp.setDirectionallySolid(false, Directions.SOUTH,
                 isSolidIS);
-        this.sp.setDirectionallySolid(false, DirectionConstants.DIRECTION_EAST,
+        this.sp.setDirectionallySolid(false, Directions.EAST,
                 isSolidIE);
-        this.sp.setDirectionallySolid(false, DirectionConstants.DIRECTION_WEST,
+        this.sp.setDirectionallySolid(false, Directions.WEST,
                 isSolidIW);
         this.sp.setDirectionallySolid(true,
-                DirectionConstants.DIRECTION_NORTHEAST, isSolidXNE);
+                Directions.NORTHEAST, isSolidXNE);
         this.sp.setDirectionallySolid(true,
-                DirectionConstants.DIRECTION_SOUTHEAST, isSolidXSE);
+                Directions.SOUTHEAST, isSolidXSE);
         this.sp.setDirectionallySolid(true,
-                DirectionConstants.DIRECTION_NORTHWEST, isSolidXNW);
+                Directions.NORTHWEST, isSolidXNW);
         this.sp.setDirectionallySolid(true,
-                DirectionConstants.DIRECTION_SOUTHWEST, isSolidXSW);
+                Directions.SOUTHWEST, isSolidXSW);
         this.sp.setDirectionallySolid(false,
-                DirectionConstants.DIRECTION_NORTHEAST, isSolidINE);
+                Directions.NORTHEAST, isSolidINE);
         this.sp.setDirectionallySolid(false,
-                DirectionConstants.DIRECTION_SOUTHEAST, isSolidISE);
+                Directions.SOUTHEAST, isSolidISE);
         this.sp.setDirectionallySolid(false,
-                DirectionConstants.DIRECTION_NORTHWEST, isSolidINW);
+                Directions.NORTHWEST, isSolidINW);
         this.sp.setDirectionallySolid(false,
-                DirectionConstants.DIRECTION_SOUTHWEST, isSolidISW);
+                Directions.SOUTHWEST, isSolidISW);
         this.mp = new MoveProperties();
         this.friction = true;
         this.usable = false;
