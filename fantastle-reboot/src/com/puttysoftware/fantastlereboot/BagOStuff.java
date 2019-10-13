@@ -51,8 +51,8 @@ public class BagOStuff {
     private ObjectHelpManager oHelpMgr;
     private MazeEditor editor;
     private GUIManager guiMgr;
-    private final MazeObjectList objects;
-    private final CombatItemList combatItems;
+    private MazeObjectList objects;
+    private CombatItemList combatItems;
     private Shop weapons, armor, healer, bank, regenerator, spells, items,
     socks, enhancements, faiths;
     private BufferedImageIcon microLogo;
@@ -87,8 +87,8 @@ public class BagOStuff {
 
     // Constructors
     public BagOStuff() {
-        this.objects = new MazeObjectList();
-        this.combatItems = new CombatItemList();
+//        this.objects = new MazeObjectList();
+//        this.combatItems = new CombatItemList();
         this.currentMode = BagOStuff.STATUS_NULL;
         this.formerMode = BagOStuff.STATUS_NULL;
     }
@@ -98,16 +98,16 @@ public class BagOStuff {
         this.prefsMgr = new PreferencesManager();
         this.about = new AboutDialog(BagOStuff.getVersionString());
         this.guiMgr = new GUIManager();
-        this.gameMgr = new GameManager();
+        // this.gameMgr = new GameManager();
         this.mazeMgr = new MazeManager();
         this.menuMgr = new MenuManager();
         this.gHelpMgr = new GeneralHelpManager();
-        this.oHelpMgr = new ObjectHelpManager();
+        // this.oHelpMgr = new ObjectHelpManager();
         this.windowTurnBattle = new WindowTurnBattleLogic();
         this.windowTimeBattle = new WindowTimeBattleLogic();
         this.mapTurnBattle = new MapTurnBattleLogic();
         this.mapTimeBattle = new MapTimeBattleLogic();
-        this.editor = new MazeEditor();
+        // this.editor = new MazeEditor();
         this.weapons = new Shop(ShopTypes.WEAPONS);
         this.armor = new Shop(ShopTypes.ARMOR);
         this.healer = new Shop(ShopTypes.HEALER);

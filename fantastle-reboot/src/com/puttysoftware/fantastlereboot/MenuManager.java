@@ -26,17 +26,17 @@ import java.awt.event.KeyEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.creatures.characterfiles.CharacterRegistration;
-import com.puttysoftware.fantastlereboot.editor.MazeEditor;
-import com.puttysoftware.fantastlereboot.game.InventoryViewer;
-import com.puttysoftware.fantastlereboot.game.NoteManager;
-import com.puttysoftware.fantastlereboot.game.StatisticsViewer;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.MazeManager;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.GenerateTask;
+//import com.puttysoftware.fantastlereboot.editor.MazeEditor;
+//import com.puttysoftware.fantastlereboot.game.InventoryViewer;
+//import com.puttysoftware.fantastlereboot.game.NoteManager;
+//import com.puttysoftware.fantastlereboot.game.StatisticsViewer;
+//import com.puttysoftware.fantastlereboot.obsolete.maze1.MazeManager;
+//import com.puttysoftware.fantastlereboot.obsolete.maze2.GenerateTask;
 
 public class MenuManager {
     // Fields
@@ -647,160 +647,189 @@ public class MenuManager {
         public void actionPerformed(final ActionEvent e) {
             try {
                 final BagOStuff app = FantastleReboot.getBagOStuff();
-                final MazeEditor me = app.getEditor();
-                boolean loaded = false;
+//                final MazeEditor me = app.getEditor();
+//                boolean loaded = false;
                 final String cmd = e.getActionCommand();
                 if (cmd.equals("New...")) {
-                    loaded = me.newMaze();
-                    app.getMazeManager().setLoaded(loaded);
+                    Messager.showDialog("Disabled!");
+//                    loaded = me.newMaze();
+//                    app.getMazeManager().setLoaded(loaded);
                 } else if (cmd.equals("Open...")) {
-                    loaded = app.getMazeManager().loadMaze();
-                    app.getMazeManager().setLoaded(loaded);
+                    Messager.showDialog("Disabled!");
+//                    loaded = app.getMazeManager().loadMaze();
+//                    app.getMazeManager().setLoaded(loaded);
                 } else if (cmd.equals("Close")) {
                     // Close the window
-                    if (app.getMode() == BagOStuff.STATUS_EDITOR) {
-                        app.getEditor().handleCloseWindow();
-                    } else if (app.getMode() == BagOStuff.STATUS_GAME) {
-                        boolean saved = true;
-                        int status = 0;
-                        if (app.getMazeManager().getDirty()) {
-                            app.getMazeManager();
-                            status = MazeManager.showSaveDialog();
-                            if (status == JOptionPane.YES_OPTION) {
-                                saved = app.getMazeManager().saveMaze();
-                            } else if (status == JOptionPane.CANCEL_OPTION) {
-                                saved = false;
-                            } else {
-                                app.getMazeManager().setDirty(false);
-                            }
-                        }
-                        if (saved) {
-                            app.getGameManager().hideOutput();
-                            app.getGUIManager().showGUI();
-                        }
-                    }
+                    Messager.showDialog("Disabled!");
+//                    if (app.getMode() == BagOStuff.STATUS_EDITOR) {
+//                        app.getEditor().handleCloseWindow();
+//                    } else if (app.getMode() == BagOStuff.STATUS_GAME) {
+//                        boolean saved = true;
+//                        int status = 0;
+//                        if (app.getMazeManager().getDirty()) {
+//                            app.getMazeManager();
+//                            status = MazeManager.showSaveDialog();
+//                            if (status == JOptionPane.YES_OPTION) {
+//                                saved = app.getMazeManager().saveMaze();
+//                            } else if (status == JOptionPane.CANCEL_OPTION) {
+//                                saved = false;
+//                            } else {
+//                                app.getMazeManager().setDirty(false);
+//                            }
+//                        }
+//                        if (saved) {
+//                            app.getGameManager().hideOutput();
+//                            app.getGUIManager().showGUI();
+//                        }
+//                    }
                 } else if (cmd.equals("Save")) {
-                    if (app.getMazeManager().getLoaded()) {
-                        app.getMazeManager().saveMaze();
-                    } else {
-                        Messager.showDialog("No Maze Opened");
-                    }
+                    Messager.showDialog("Disabled!");
+//                    if (app.getMazeManager().getLoaded()) {
+//                        app.getMazeManager().saveMaze();
+//                    } else {
+//                        Messager.showDialog("No Maze Opened");
+//                    }
                 } else if (cmd.equals("Save As...")) {
-                    if (app.getMazeManager().getLoaded()) {
-                        app.getMazeManager().saveMazeAs();
-                    } else {
-                        Messager.showDialog("No Maze Opened");
-                    }
+                    Messager.showDialog("Disabled!");
+//                    if (app.getMazeManager().getLoaded()) {
+//                        app.getMazeManager().saveMazeAs();
+//                    } else {
+//                        Messager.showDialog("No Maze Opened");
+//                    }
                 } else if (cmd.equals("Exit")) {
                     // Exit program
                     System.exit(0);
                 } else if (cmd.equals("Undo")) {
                     // Undo most recent action
-                    me.undo();
+                    Messager.showDialog("Disabled!");
+                    // me.undo();
                 } else if (cmd.equals("Redo")) {
                     // Redo most recent undone action
-                    me.redo();
+                    Messager.showDialog("Disabled!");
+                    //me.redo();
                 } else if (cmd.equals("Cut Level")) {
                     // Cut Level
-                    final int level = app.getEditor().getLocationManager()
-                            .getEditorLocationW();
-                    app.getMazeManager().getMaze().cutLevel(level);
-                    app.getEditor().fixLimits();
-                    app.getEditor().updateEditorLevelAbsolute(level);
+                    Messager.showDialog("Disabled!");
+//                    final int level = app.getEditor().getLocationManager()
+//                            .getEditorLocationW();
+//                    app.getMazeManager().getMaze().cutLevel(level);
+//                    app.getEditor().fixLimits();
+//                    app.getEditor().updateEditorLevelAbsolute(level);
                 } else if (cmd.equals("Copy Level")) {
                     // Copy Level
-                    final int level = app.getEditor().getLocationManager()
-                            .getEditorLocationW();
-                    app.getMazeManager().getMaze().copyLevel(level);
+                    Messager.showDialog("Disabled!");
+//                    final int level = app.getEditor().getLocationManager()
+//                            .getEditorLocationW();
+//                    app.getMazeManager().getMaze().copyLevel(level);
                 } else if (cmd.equals("Paste Level")) {
                     // Paste Level
-                    final int level = app.getEditor().getLocationManager()
-                            .getEditorLocationW();
-                    app.getMazeManager().getMaze().pasteLevel(level);
-                    app.getEditor().fixLimits();
-                    me.redrawEditor();
+                    Messager.showDialog("Disabled!");
+//                    final int level = app.getEditor().getLocationManager()
+//                            .getEditorLocationW();
+//                    app.getMazeManager().getMaze().pasteLevel(level);
+//                    app.getEditor().fixLimits();
+//                    me.redrawEditor();
                 } else if (cmd.equals("Insert Level From Clipboard")) {
                     // Insert Level From Clipboard
-                    app.getMazeManager().getMaze().insertLevelFromClipboard();
-                    app.getEditor().fixLimits();
+                    Messager.showDialog("Disabled!");
+//                    app.getMazeManager().getMaze().insertLevelFromClipboard();
+//                    app.getEditor().fixLimits();
                 } else if (cmd.equals("Preferences...")) {
                     // Show preferences dialog
                     app.getPrefsManager().showPrefs();
                 } else if (cmd.equals("Clear History")) {
                     // Clear undo/redo history, confirm first
-                    final int res = Messager.showConfirmDialog(
-                            "Are you sure you want to clear the history?",
-                            "Editor");
-                    if (res == JOptionPane.YES_OPTION) {
-                        me.clearHistory();
-                    }
+                    Messager.showDialog("Disabled!");
+//                    final int res = Messager.showConfirmDialog(
+//                            "Are you sure you want to clear the history?",
+//                            "Editor");
+//                    if (res == JOptionPane.YES_OPTION) {
+//                        me.clearHistory();
+//                    }
                 } else if (cmd.equals("Go To...")) {
                     // Go To
-                    me.goToHandler();
+                    Messager.showDialog("Disabled!");
+                    // me.goToHandler();
                 } else if (cmd.equals("Up One Floor")) {
                     // Go up one floor
-                    me.updateEditorPosition(0, 0, 1, 0);
+                    Messager.showDialog("Disabled!");
+                    // me.updateEditorPosition(0, 0, 1, 0);
                 } else if (cmd.equals("Down One Floor")) {
                     // Go down one floor
-                    me.updateEditorPosition(0, 0, -1, 0);
+                    Messager.showDialog("Disabled!");
+                    // me.updateEditorPosition(0, 0, -1, 0);
                 } else if (cmd.equals("Up One Level")) {
                     // Go up one level
-                    me.updateEditorPosition(0, 0, 0, 1);
+                    Messager.showDialog("Disabled!");
+                    // me.updateEditorPosition(0, 0, 0, 1);
                 } else if (cmd.equals("Down One Level")) {
                     // Go down one level
-                    me.updateEditorPosition(0, 0, 0, -1);
+                    Messager.showDialog("Disabled!");
+                    // me.updateEditorPosition(0, 0, 0, -1);
                 } else if (cmd.equals("Add a Level...")) {
                     // Add a level
-                    me.addLevel();
+                    Messager.showDialog("Disabled!");
+                    // me.addLevel();
                 } else if (cmd.equals("Remove a Level...")) {
                     // Remove a level
-                    me.removeLevel();
+                    Messager.showDialog("Disabled!");
+                    //me.removeLevel();
                 } else if (cmd.equals("Resize Current Level...")) {
                     // Resize level
-                    me.resizeLevel();
+                    Messager.showDialog("Disabled!");
+                    //me.resizeLevel();
                 } else if (cmd.equals("Toggle Layer")) {
                     // Toggle current layer
-                    me.toggleLayer();
+                    Messager.showDialog("Disabled!");
+                    //me.toggleLayer();
                 } else if (cmd.equals("Maze Preferences...")) {
                     // Set Maze Preferences
-                    me.setMazePrefs();
+                    Messager.showDialog("Disabled!");
+                    //me.setMazePrefs();
                 } else if (cmd.equals("New Game")) {
                     // Start a new game
-                    final boolean proceed = app.getGameManager().newGame();
-                    if (proceed) {
-                        new GenerateTask(true).start();
-                    }
+                    Messager.showDialog("Disabled!");
+//                    final boolean proceed = app.getGameManager().newGame();
+//                    if (proceed) {
+//                        new GenerateTask(true).start();
+//                    }
                 } else if (cmd.equals("Play")) {
                     // Play the current maze
-                    final boolean proceed = app.getGameManager().newGame();
-                    if (proceed) {
-                        app.getGameManager().playMaze();
-                    }
+                    Messager.showDialog("Disabled!");
+//                    final boolean proceed = app.getGameManager().newGame();
+//                    if (proceed) {
+//                        app.getGameManager().playMaze();
+//                    }
                 } else if (cmd.equals("Edit")) {
                     // Edit the current maze
-                    me.editMaze();
+                    Messager.showDialog("Disabled!");
+                    //me.editMaze();
                 } else if (cmd.equals("Show Equipment...")) {
-                    if (!app.getGameManager().usingAnItem()) {
-                        InventoryViewer.showEquipmentDialog();
-                    }
+                    Messager.showDialog("Disabled!");
+//                    if (!app.getGameManager().usingAnItem()) {
+//                        InventoryViewer.showEquipmentDialog();
+//                    }
                 } else if (cmd.equals("Show Inventory...")) {
-                    if (!app.getGameManager().usingAnItem()) {
-                        app.getGameManager().showInventoryDialog();
-                    }
+                    Messager.showDialog("Disabled!");
+//                    if (!app.getGameManager().usingAnItem()) {
+//                        app.getGameManager().showInventoryDialog();
+//                    }
                 } else if (cmd.equals("Use an Item...")) {
-                    if (!app.getGameManager().usingAnItem()) {
-                        app.getGameManager().setUsingAnItem(true);
-                        app.getGameManager().showUseDialog();
-                    }
+                    Messager.showDialog("Disabled!");
+//                    if (!app.getGameManager().usingAnItem()) {
+//                        app.getGameManager().setUsingAnItem(true);
+//                        app.getGameManager().showUseDialog();
+//                    }
                 } else if (cmd.equals("Reset Current Level")) {
-                    if (!app.getGameManager().usingAnItem()) {
-                        final int result = Messager.showConfirmDialog(
-                                "Are you sure you want to reset the current level?",
-                                "Fantastle");
-                        if (result == JOptionPane.YES_OPTION) {
-                            app.getGameManager().resetCurrentLevel();
-                        }
-                    }
+                    Messager.showDialog("Disabled!");
+//                    if (!app.getGameManager().usingAnItem()) {
+//                        final int result = Messager.showConfirmDialog(
+//                                "Are you sure you want to reset the current level?",
+//                                "Fantastle");
+//                        if (result == JOptionPane.YES_OPTION) {
+//                            app.getGameManager().resetCurrentLevel();
+//                        }
+//                    }
                 } else if (cmd.equals("Show Current Score")) {
                     app.getGameManager().showCurrentScore();
                 } else if (cmd.equals("Show Score Table")) {
@@ -823,10 +852,12 @@ public class MenuManager {
                     }
                 } else if (cmd.equals("Edit Note...")) {
                     // Edit Note
-                    NoteManager.editNote();
+                    //NoteManager.editNote();
+                    Messager.showDialog("Disabled!");
                 } else if (cmd.equals("View Statistics...")) {
                     // View Statistics
-                    StatisticsViewer.viewStatistics();
+                    //StatisticsViewer.viewStatistics();
+                    Messager.showDialog("Disabled!");
                 } else if (cmd.equals("Reset Preferences")) {
                     app.resetPreferences();
                     Messager.showDialog("Preferences reset to defaults.");
@@ -835,7 +866,8 @@ public class MenuManager {
                 } else if (cmd.equals("Fantastle Help")) {
                     app.getGeneralHelpManager().showHelp();
                 } else if (cmd.equals("Fantastle Object Help")) {
-                    app.getObjectHelpManager().showHelp();
+                    //app.getObjectHelpManager().showHelp();
+                    Messager.showDialog("Disabled!");
                 }
                 MenuManager.this.checkFlags();
             } catch (final Exception ex) {
