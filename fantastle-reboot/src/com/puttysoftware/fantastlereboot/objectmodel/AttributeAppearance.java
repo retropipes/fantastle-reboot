@@ -7,6 +7,7 @@ package com.puttysoftware.fantastlereboot.objectmodel;
 
 import com.puttysoftware.diane.loaders.ColorShader;
 import com.puttysoftware.diane.loaders.ImageShader;
+import com.puttysoftware.diane.objectmodel.Appearance;
 import com.puttysoftware.fantastlereboot.assets.AttributeImageIndex;
 import com.puttysoftware.fantastlereboot.loaders.AttributeImageLoader;
 import com.puttysoftware.images.BufferedImageIcon;

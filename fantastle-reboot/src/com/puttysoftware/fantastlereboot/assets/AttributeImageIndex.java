@@ -1,5 +1,7 @@
 package com.puttysoftware.fantastlereboot.assets;
 
+import com.puttysoftware.diane.assets.ImageIndex;
+
 public enum AttributeImageIndex implements ImageIndex {
     BOMBABLE, BREAKABLE_BOTH, BREAKABLE_HORIZONTAL, BREAKABLE_VERTICAL, CLOAKED,
     CRACKED, CRUMBLING, DAMAGEABLE, DAMAGED, EXPLODING, FADING, FAKE, INVISIBLE,

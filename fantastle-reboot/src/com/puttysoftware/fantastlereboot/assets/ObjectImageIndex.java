@@ -1,5 +1,7 @@
 package com.puttysoftware.fantastlereboot.assets;
 
+import com.puttysoftware.diane.assets.ImageIndex;
+
 public enum ObjectImageIndex implements ImageIndex {
     A_PLUG, A_PORT, ALL_BUTTON, ALL_DOOR, ARMOR_SHOP, ARROW_EAST, ARROW_NORTH,
     ARROW_NORTHEAST, ARROW_NORTHWEST, ARROW_SOUTH, ARROW_SOUTHEAST,
