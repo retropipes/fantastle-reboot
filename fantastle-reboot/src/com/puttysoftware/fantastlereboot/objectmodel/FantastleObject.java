@@ -16,6 +16,10 @@ public abstract class FantastleObject extends GameObject
     private FantastleObject savedObject = null;
 
     // Constructors
+    public FantastleObject(final int objectID) {
+        super(objectID);
+    }
+
     public FantastleObject(final int objectID, final String cacheName,
             final ObjectImageIndex image) {
         super(objectID, new ObjectAppearance(cacheName, image));
