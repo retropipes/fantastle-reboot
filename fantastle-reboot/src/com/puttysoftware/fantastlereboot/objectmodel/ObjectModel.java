@@ -5,41 +5,58 @@
  */
 package com.puttysoftware.fantastlereboot.objectmodel;
 
+import java.util.Objects;
+import java.util.Optional;
+
 import com.puttysoftware.diane.loaders.ColorShader;
 import com.puttysoftware.fantastlereboot.assets.AttributeImageIndex;
 import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 import com.puttysoftware.images.BufferedImageIcon;
 
-public class ObjectModel {
+public abstract class ObjectModel {
     // Properties
+    private final int uniqueID;
     private final Tile tile;
     private final SolidProperties sp;
     private final MoveProperties mp;
     private final OtherProperties op;
     private final OtherCounters oc;
+    private final CustomCounters cc;
+    private final CustomFlags cf;
+    private final CustomTexts ct;
 
     // Constructors
-    public ObjectModel(final String cacheName, final ObjectImageIndex image) {
+    public ObjectModel(final int objectID, final String cacheName,
+            final ObjectImageIndex image) {
+        this.uniqueID = objectID;
         this.tile = new Tile(new ObjectAppearance(cacheName, image));
         this.sp = new SolidProperties();
         this.mp = new MoveProperties();
         this.op = new OtherProperties();
         this.oc = new OtherCounters();
+        this.cc = new CustomCounters();
+        this.cf = new CustomFlags();
+        this.ct = new CustomTexts();
     }
 
-    public ObjectModel(final String cacheName, final ObjectImageIndex image,
-            final ColorShader shader) {
+    public ObjectModel(final int objectID, final String cacheName,
+            final ObjectImageIndex image, final ColorShader shader) {
+        this.uniqueID = objectID;
         this.tile = new Tile(new ObjectAppearance(cacheName, image, shader));
         this.sp = new SolidProperties();
         this.mp = new MoveProperties();
         this.op = new OtherProperties();
         this.oc = new OtherCounters();
+        this.cc = new CustomCounters();
+        this.cf = new CustomFlags();
+        this.ct = new CustomTexts();
     }
 
-    public ObjectModel(final String cacheObjectName,
+    public ObjectModel(final int objectID, final String cacheObjectName,
             final ObjectImageIndex objectImage, final String cacheAttributeName,
             final AttributeImageIndex attributeImage,
             final ColorShader attributeShader) {
+        this.uniqueID = objectID;
         this.tile = new Tile(
                 new AttributedObjectAppearance(
                         new AttributeAppearance(cacheAttributeName,
@@ -49,13 +66,17 @@ public class ObjectModel {
         this.mp = new MoveProperties();
         this.op = new OtherProperties();
         this.oc = new OtherCounters();
+        this.cc = new CustomCounters();
+        this.cf = new CustomFlags();
+        this.ct = new CustomTexts();
     }
 
-    public ObjectModel(final String cacheObjectName,
+    public ObjectModel(final int objectID, final String cacheObjectName,
             final ObjectImageIndex objectImage, final ColorShader objectShader,
             final String cacheAttributeName,
             final AttributeImageIndex attributeImage,
             final ColorShader attributeShader) {
+        this.uniqueID = objectID;
         this.tile = new Tile(new AttributedObjectAppearance(
                 new AttributeAppearance(cacheAttributeName, attributeImage,
                         attributeShader),
@@ -64,45 +85,39 @@ public class ObjectModel {
         this.mp = new MoveProperties();
         this.op = new OtherProperties();
         this.oc = new OtherCounters();
+        this.cc = new CustomCounters();
+        this.cf = new CustomFlags();
+        this.ct = new CustomTexts();
     }
 
     // Methods
     @Override
-    public boolean equals(final Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (this.getClass() != obj.getClass()) {
-            return false;
-        }
-        final ObjectModel other = (ObjectModel) obj;
-        if (this.sp != other.sp
-                && (this.sp == null || !this.sp.equals(other.sp))) {
-            return false;
-        }
-        if (this.mp != other.mp
-                && (this.mp == null || !this.mp.equals(other.mp))) {
-            return false;
-        }
-        if (this.op != other.op
-                && (this.op == null || !this.op.equals(other.op))) {
-            return false;
-        }
-        if (this.oc != other.oc
-                && (this.oc == null || !this.oc.equals(other.oc))) {
-            return false;
-        }
-        return true;
+    public final int hashCode() {
+        return Objects.hash(this.mp, this.oc, this.op, this.sp, this.cc,
+                this.cf, this.ct, this.uniqueID);
     }
 
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + (this.sp != null ? this.sp.hashCode() : 0);
-        hash = 59 * hash + (this.mp != null ? this.mp.hashCode() : 0);
-        hash = 59 * hash + (this.op != null ? this.op.hashCode() : 0);
-        hash = 59 * hash + (this.oc != null ? this.oc.hashCode() : 0);
-        return hash;
+    public final boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof ObjectModel)) {
+            return false;
+        }
+        ObjectModel other = (ObjectModel) obj;
+        return Objects.equals(this.mp, other.mp)
+                && Objects.equals(this.oc, other.oc)
+                && Objects.equals(this.op, other.op)
+                && Objects.equals(this.sp, other.sp)
+                && Objects.equals(this.cc, other.cc)
+                && Objects.equals(this.cf, other.cf)
+                && Objects.equals(this.ct, other.ct)
+                && this.uniqueID == other.uniqueID;
+    }
+
+    public final int getUniqueID() {
+        return this.uniqueID;
     }
 
     protected final void setGameLook(final String cacheName,
@@ -215,6 +230,96 @@ public class ObjectModel {
 
     public final BufferedImageIcon getBattleImage() {
         return this.tile.getBattleImage();
+    }
+
+    protected final int customCountersLength() {
+        return this.cc.length();
+    }
+
+    protected final boolean addCustomCounter(final int count) {
+        return this.cc.add(count);
+    }
+
+    protected final void appendCustomCounter(final int count) {
+        this.cc.append(count);
+    }
+
+    protected final void appendOneCustomCounter() {
+        this.cc.appendOne();
+    }
+
+    protected final Optional<Integer> getCustomCounter(final int index) {
+        return this.cc.get(index);
+    }
+
+    protected final boolean decrementCustomCounter(final int index) {
+        return this.cc.decrement(index);
+    }
+
+    protected final boolean incrementCustomCounter(final int index) {
+        return this.cc.increment(index);
+    }
+
+    protected final boolean offsetCustomCounter(final int index,
+            final int value) {
+        return this.cc.offset(index, value);
+    }
+
+    protected final boolean setCustomCounter(final int index, final int value) {
+        return this.cc.set(index, value);
+    }
+
+    protected final int customFlagsLength() {
+        return this.cf.length();
+    }
+
+    protected final boolean addCustomFlag(final int count) {
+        return this.cf.add(count);
+    }
+
+    protected final void appendCustomFlag(final int count) {
+        this.cf.append(count);
+    }
+
+    protected final void appendOneCustomFlag() {
+        this.cf.appendOne();
+    }
+
+    protected final Optional<Boolean> getCustomFlag(final int index) {
+        return this.cf.get(index);
+    }
+
+    protected final boolean toggleCustomFlag(final int index) {
+        return this.cf.toggle(index);
+    }
+
+    protected final boolean setCustomFlag(final int index,
+            final boolean value) {
+        return this.cf.set(index, value);
+    }
+
+    protected final int customTextsLength() {
+        return this.ct.length();
+    }
+
+    protected final boolean addCustomText(final int count) {
+        return this.ct.add(count);
+    }
+
+    protected final void appendCustomText(final int count) {
+        this.ct.append(count);
+    }
+
+    protected final void appendOneCustomText() {
+        this.ct.appendOne();
+    }
+
+    protected final Optional<String> getCustomText(final int index) {
+        return this.ct.get(index);
+    }
+
+    protected final boolean setCustomText(final int index, final String value) {
+        return this.ct.set(index, value);
     }
 
     public final boolean isSolid() {
