@@ -68,4 +68,10 @@ public abstract class FantastleObject extends GameObject
     public final void setSavedObject(final FantastleObject newSavedObject) {
         this.savedObject = newSavedObject;
     }
+
+    abstract public int getLayer();
+
+    public String getName() {
+        return "";
+    }
 }
