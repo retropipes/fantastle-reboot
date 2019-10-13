@@ -836,7 +836,7 @@ public class MazeEditor {
         this.treasurePicker.selectLastPickedChoice(contentsIndex);
     }
 
-    public MazeObject editFinishToDestination() {
+    public static MazeObject editFinishToDestination() {
         String input1 = null;
         int destW = 0;
         input1 = Messager.showTextInputDialog("Destination Level:", "Editor");
@@ -1051,7 +1051,8 @@ public class MazeEditor {
         boolean saved = true;
         int status = 0;
         if (app.getMazeManager().getDirty()) {
-            status = app.getMazeManager().showSaveDialog();
+            app.getMazeManager();
+            status = MazeManager.showSaveDialog();
             if (status == JOptionPane.YES_OPTION) {
                 saved = app.getMazeManager().saveMaze();
             } else if (status == JOptionPane.CANCEL_OPTION) {
@@ -1143,10 +1144,10 @@ public class MazeEditor {
                                     .getMaze().getLevels();
                             if (!flag) {
                                 this.evMgr.setViewingWindowLocationX(
-                                        0 - (this.evMgr.getViewingWindowSizeX()
+                                        0 - (EditorViewingWindowManager.getViewingWindowSizeX()
                                                 - 1) / 2);
                                 this.evMgr.setViewingWindowLocationY(
-                                        0 - (this.evMgr.getViewingWindowSizeY()
+                                        0 - (EditorViewingWindowManager.getViewingWindowSizeY()
                                                 - 1) / 2);
                             }
                             app.getMazeManager().getMaze().fillLevel(
@@ -1225,9 +1226,9 @@ public class MazeEditor {
                                 this.elMgr.getEditorLocationW());
                         this.fixLimits();
                         this.evMgr.setViewingWindowLocationX(0
-                                - (this.evMgr.getViewingWindowSizeX() - 1) / 2);
+                                - (EditorViewingWindowManager.getViewingWindowSizeX() - 1) / 2);
                         this.evMgr.setViewingWindowLocationY(0
-                                - (this.evMgr.getViewingWindowSizeY() - 1) / 2);
+                                - (EditorViewingWindowManager.getViewingWindowSizeY() - 1) / 2);
                         // Save the entire level
                         app.getMazeManager().getMaze()
                                 .saveLevel(this.elMgr.getEditorLocationW());
@@ -1383,10 +1384,10 @@ public class MazeEditor {
         this.outputFrame.setContentPane(this.borderPane);
         this.outputFrame
                 .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        this.drawGrid = new JLabel[this.evMgr
-                .getViewingWindowSizeX()][this.evMgr.getViewingWindowSizeY()];
-        for (int x = 0; x < this.evMgr.getViewingWindowSizeX(); x++) {
-            for (int y = 0; y < this.evMgr.getViewingWindowSizeY(); y++) {
+        this.drawGrid = new JLabel[EditorViewingWindowManager
+                .getViewingWindowSizeX()][EditorViewingWindowManager.getViewingWindowSizeY()];
+        for (int x = 0; x < EditorViewingWindowManager.getViewingWindowSizeX(); x++) {
+            for (int y = 0; y < EditorViewingWindowManager.getViewingWindowSizeY(); y++) {
                 this.drawGrid[x][y] = new JLabel();
                 // Mac OS X-specific fix to make draw grid line up properly
                 if (System.getProperty("os.name").startsWith("Mac OS X")) {
@@ -1404,17 +1405,17 @@ public class MazeEditor {
         this.outputFrame.setResizable(false);
         this.c.fill = GridBagConstraints.BOTH;
         this.secondaryPane
-                .setLayout(new GridLayout(this.evMgr.getViewingWindowSizeX(),
-                        this.evMgr.getViewingWindowSizeY()));
+                .setLayout(new GridLayout(EditorViewingWindowManager.getViewingWindowSizeX(),
+                        EditorViewingWindowManager.getViewingWindowSizeY()));
         this.horzScroll = new JScrollBar(Adjustable.HORIZONTAL,
-                this.evMgr.getMinimumViewingWindowLocationY(),
-                this.evMgr.getViewingWindowSizeY(),
-                this.evMgr.getMinimumViewingWindowLocationY(),
+                EditorViewingWindowManager.getMinimumViewingWindowLocationY(),
+                EditorViewingWindowManager.getViewingWindowSizeY(),
+                EditorViewingWindowManager.getMinimumViewingWindowLocationY(),
                 this.evMgr.getMaximumViewingWindowLocationY());
         this.vertScroll = new JScrollBar(Adjustable.VERTICAL,
-                this.evMgr.getMinimumViewingWindowLocationX(),
-                this.evMgr.getViewingWindowSizeX(),
-                this.evMgr.getMinimumViewingWindowLocationX(),
+                EditorViewingWindowManager.getMinimumViewingWindowLocationX(),
+                EditorViewingWindowManager.getViewingWindowSizeX(),
+                EditorViewingWindowManager.getMinimumViewingWindowLocationX(),
                 this.evMgr.getMaximumViewingWindowLocationX());
         this.c.gridx = 0;
         this.c.gridy = 0;
@@ -1555,7 +1556,8 @@ public class MazeEditor {
             boolean success = false;
             int status = JOptionPane.DEFAULT_OPTION;
             if (app.getMazeManager().getDirty()) {
-                status = app.getMazeManager().showSaveDialog();
+                app.getMazeManager();
+                status = MazeManager.showSaveDialog();
                 if (status == JOptionPane.YES_OPTION) {
                     success = app.getMazeManager().saveMaze();
                     if (success) {

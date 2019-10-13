@@ -97,19 +97,19 @@ public class EditorViewingWindowManager {
         this.locY = this.oldLocY;
     }
 
-    public int getViewingWindowSizeX() {
+    public static int getViewingWindowSizeX() {
         return EditorViewingWindowManager.VIEWING_WINDOW_SIZE_X;
     }
 
-    public int getViewingWindowSizeY() {
+    public static int getViewingWindowSizeY() {
         return EditorViewingWindowManager.VIEWING_WINDOW_SIZE_Y;
     }
 
-    public int getMinimumViewingWindowLocationX() {
+    public static int getMinimumViewingWindowLocationX() {
         return EditorViewingWindowManager.MIN_VIEWING_WINDOW_X;
     }
 
-    public int getMinimumViewingWindowLocationY() {
+    public static int getMinimumViewingWindowLocationY() {
         return EditorViewingWindowManager.MIN_VIEWING_WINDOW_Y;
     }
 
@@ -133,26 +133,26 @@ public class EditorViewingWindowManager {
 
     public void halfOffsetMaximumViewingWindowLocationsFromMaze(final Maze m) {
         for (int x = 0; x < m.getLevels(); x++) {
-            this.MAX_VIEWING_WINDOW_X = m.getRows(x) + this.getOffsetFactorX();
+            this.MAX_VIEWING_WINDOW_X = m.getRows(x) + EditorViewingWindowManager.getOffsetFactorX();
             this.MAX_VIEWING_WINDOW_Y = m.getColumns(x)
-                    + this.getOffsetFactorY();
+                    + EditorViewingWindowManager.getOffsetFactorY();
         }
     }
 
     public void halfOffsetMaximumViewingWindowLocation(final int valueX,
             final int valueY) {
-        this.MAX_VIEWING_WINDOW_X = valueX + this.getOffsetFactorX();
-        this.MAX_VIEWING_WINDOW_Y = valueY + this.getOffsetFactorY();
+        this.MAX_VIEWING_WINDOW_X = valueX + EditorViewingWindowManager.getOffsetFactorX();
+        this.MAX_VIEWING_WINDOW_Y = valueY + EditorViewingWindowManager.getOffsetFactorY();
         this.checkViewingWindow();
     }
 
     public void halfOffsetMaximumViewingWindowLocationX(final int value) {
-        this.MAX_VIEWING_WINDOW_X = value + this.getOffsetFactorX();
+        this.MAX_VIEWING_WINDOW_X = value + EditorViewingWindowManager.getOffsetFactorX();
         this.checkViewingWindow();
     }
 
     public void halfOffsetMaximumViewingWindowLocationY(final int value) {
-        this.MAX_VIEWING_WINDOW_Y = value + this.getOffsetFactorY();
+        this.MAX_VIEWING_WINDOW_Y = value + EditorViewingWindowManager.getOffsetFactorY();
         this.checkViewingWindow();
     }
 
@@ -166,11 +166,11 @@ public class EditorViewingWindowManager {
         this.checkViewingWindow();
     }
 
-    public int getOffsetFactorX() {
+    public static int getOffsetFactorX() {
         return (EditorViewingWindowManager.VIEWING_WINDOW_SIZE_X - 1) / 2;
     }
 
-    public int getOffsetFactorY() {
+    public static int getOffsetFactorY() {
         return (EditorViewingWindowManager.VIEWING_WINDOW_SIZE_Y - 1) / 2;
     }
 

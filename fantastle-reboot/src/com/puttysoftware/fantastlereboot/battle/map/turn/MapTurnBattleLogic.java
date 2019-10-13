@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.AIContext;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.ai.map.AutoMapAI;
@@ -1354,8 +1355,9 @@ public class MapTurnBattleLogic extends Battle {
                     if (!message.equals(Effect.getNullMessage())) {
                         this.setStatusMessage(message);
                         try {
-                            Thread.sleep(FantastleReboot.getBagOStuff()
-                                    .getPrefsManager().getBattleSpeed());
+                            FantastleReboot.getBagOStuff()
+                                    .getPrefsManager();
+                            Thread.sleep(PreferencesManager.getBattleSpeed());
                         } catch (final InterruptedException ie) {
                             // Ignore
                         }

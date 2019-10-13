@@ -146,7 +146,7 @@ public class PreferencesManager implements PreferencesHandler {
     }
 
     // Methods
-    public int getBattleSpeed() {
+    public static int getBattleSpeed() {
         return PreferencesManager.BATTLE_SPEED;
     }
 
@@ -499,7 +499,8 @@ public class PreferencesManager implements PreferencesHandler {
         this.miscPane
                 .setLayout(new GridLayout(PreferencesManager.GRID_LENGTH, 1));
         this.miscPane.add(this.checkUpdatesStartup);
-        if (FantastleReboot.getBagOStuff().isBetaModeEnabled()) {
+        FantastleReboot.getBagOStuff();
+        if (BagOStuff.isBetaModeEnabled()) {
             this.miscPane.add(this.checkBetaUpdatesStartup);
         }
         this.miscPane.add(this.moveOneAtATime);

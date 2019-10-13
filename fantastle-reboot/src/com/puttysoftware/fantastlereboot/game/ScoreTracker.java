@@ -122,7 +122,7 @@ public class ScoreTracker {
         this.score = newScore;
     }
 
-    public String getScoreUnits() {
+    public static String getScoreUnits() {
         return "points";
     }
 

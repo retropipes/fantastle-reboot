@@ -78,9 +78,7 @@ public class FinishTo extends Finish {
 
     @Override
     public MazeObject editorPropertiesHook() {
-        final MazeEditor me = FantastleReboot.getBagOStuff().getEditor();
-        final MazeObject mo = me.editFinishToDestination();
-        return mo;
+        return MazeEditor.editFinishToDestination();
     }
 
     @Override

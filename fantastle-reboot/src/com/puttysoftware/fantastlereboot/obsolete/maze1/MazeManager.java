@@ -94,7 +94,7 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
         boolean saved = true;
         int status = JOptionPane.DEFAULT_OPTION;
         if (this.getDirty()) {
-            status = this.showSaveDialog();
+            status = MazeManager.showSaveDialog();
             if (status == JOptionPane.YES_OPTION) {
                 saved = this.saveMaze();
             } else if (status == JOptionPane.CANCEL_OPTION) {
@@ -111,7 +111,7 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
         }
     }
 
-    public int showSaveDialog() {
+    public static int showSaveDialog() {
         String type, source;
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final int mode = app.getMode();
@@ -194,7 +194,7 @@ public class MazeManager implements OpenFilesHandler, QuitHandler {
         final Maze5Filter m5f = new Maze5Filter();
         final GameFilter gf = new GameFilter();
         if (this.getDirty()) {
-            status = this.showSaveDialog();
+            status = MazeManager.showSaveDialog();
             if (status == JOptionPane.YES_OPTION) {
                 saved = this.saveMaze();
             } else if (status == JOptionPane.CANCEL_OPTION) {

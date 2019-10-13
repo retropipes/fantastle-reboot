@@ -359,7 +359,7 @@ public class BagOStuff {
         return this.combatItems;
     }
 
-    public boolean isBetaModeEnabled() {
+    public static boolean isBetaModeEnabled() {
         return BagOStuff.VERSION_PRERELEASE > 0;
     }
 }

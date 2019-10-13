@@ -6,6 +6,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.battle.map.time;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.PreferencesManager;
 
 class MapTimeBattleSpeed {
     // Constants
@@ -18,7 +19,8 @@ class MapTimeBattleSpeed {
 
     // Method
     static int getSpeed() {
-        return FantastleReboot.getBagOStuff().getPrefsManager().getBattleSpeed()
+        FantastleReboot.getBagOStuff().getPrefsManager();
+        return PreferencesManager.getBattleSpeed()
                 / MapTimeBattleSpeed.SPEED_FACTOR;
     }
 }
