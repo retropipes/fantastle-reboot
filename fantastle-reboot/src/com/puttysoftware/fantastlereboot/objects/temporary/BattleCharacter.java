@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.objects;
+package com.puttysoftware.fantastlereboot.objects.temporary;
 
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
