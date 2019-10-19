@@ -2,7 +2,6 @@ package com.puttysoftware.fantastlereboot.objects;
 
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public final class BattleCharacter extends FantastleObject {
@@ -12,11 +11,13 @@ public final class BattleCharacter extends FantastleObject {
     // Properties
     private final Creature creature;
 
-    public BattleCharacter(final Creature newTemplate) {
+    public BattleCharacter(final Creature theCreature) {
         super(-1);
-        this.creature = newTemplate;
+        this.creature = theCreature;
         this.addOneCustomFlag();
         this.addOneCustomCounter();
+        this.activate();
+        this.resetActions();
     }
 
     public int getX() {
@@ -138,11 +139,6 @@ public final class BattleCharacter extends FantastleObject {
     @Override
     public BufferedImageIcon getBattleImageHook() {
         return this.creature.getImage();
-    }
-
-    @Override
-    public int getLayer() {
-        return MazeConstants.LAYER_OBJECT;
     }
 
     @Override

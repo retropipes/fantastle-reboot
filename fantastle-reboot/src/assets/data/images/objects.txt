@@ -55,10 +55,10 @@ e_port
 easy_monster
 empty
 energy_sphere
-enhancement_shop
+bonus_shop
 f_plug
 f_port
-faith_power_shop
+elemental_shop
 fake_finish
 finish
 finish_to
@@ -169,7 +169,7 @@ s_port
 sealed_finish
 sealing_wall
 single_hourglass
-socks_shop
+necklace_shop
 spell_shop
 spinner_trap
 spring
