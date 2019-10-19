@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.obsolete.maze2;
+package com.puttysoftware.fantastlereboot.maze;
 
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
 

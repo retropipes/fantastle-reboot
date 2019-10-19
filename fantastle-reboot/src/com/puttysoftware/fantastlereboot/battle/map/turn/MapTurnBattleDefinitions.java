@@ -6,7 +6,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.battle.map.turn;
 
 import com.puttysoftware.fantastlereboot.ai.map.MapAIContext;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
+import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
 
 public class MapTurnBattleDefinitions {

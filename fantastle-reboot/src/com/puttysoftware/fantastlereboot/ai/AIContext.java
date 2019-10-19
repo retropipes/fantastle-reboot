@@ -7,7 +7,7 @@ package com.puttysoftware.fantastlereboot.ai;
 
 import java.awt.Point;
 
-import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
+import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
 
 public abstract class AIContext {

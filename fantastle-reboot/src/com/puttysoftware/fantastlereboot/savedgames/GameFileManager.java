@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.obsolete.maze2.games;
+package com.puttysoftware.fantastlereboot.savedgames;
 
 import java.io.File;
 import java.io.FileInputStream;

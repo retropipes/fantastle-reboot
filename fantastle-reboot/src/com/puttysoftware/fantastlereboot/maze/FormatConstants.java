@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.obsolete.maze2;
+package com.puttysoftware.fantastlereboot.maze;
 
 public class FormatConstants {
     public static final int MAZE_FORMAT_LATEST = 2;

@@ -6,8 +6,8 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.obsolete.maze2.abc;
 
 import com.puttysoftware.fantastlereboot.items.Shop;
+import com.puttysoftware.fantastlereboot.maze.MazeConstants;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public abstract class AbstractShop extends AbstractMazeObject {

@@ -3,12 +3,12 @@ Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.obsolete.maze2.games;
+package com.puttysoftware.fantastlereboot.savedgames;
 
 import java.io.File;
 import java.io.FilenameFilter;
 
-import com.puttysoftware.fantastlereboot.obsolete.maze2.Extension;
+import com.puttysoftware.fantastlereboot.maze.Extension;
 
 public class GameFinder implements FilenameFilter {
     @Override

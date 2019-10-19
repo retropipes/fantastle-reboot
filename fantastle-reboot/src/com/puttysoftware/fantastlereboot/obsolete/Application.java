@@ -11,7 +11,7 @@ import com.puttysoftware.fantastlereboot.MenuManager;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.items.Shop;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeManager;
+import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.utilities.MazeObjectList;
 
 public final class Application {

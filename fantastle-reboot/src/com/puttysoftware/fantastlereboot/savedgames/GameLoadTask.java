@@ -3,7 +3,7 @@ Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.obsolete.maze2.games;
+package com.puttysoftware.fantastlereboot.savedgames;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,11 +17,11 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.VersionException;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.maze.PrefixHandler;
+import com.puttysoftware.fantastlereboot.maze.SuffixHandler;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.Maze;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.PrefixHandler;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.SuffixHandler;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
 import com.puttysoftware.fileutils.ZipUtilities;

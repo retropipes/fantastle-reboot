@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.obsolete.maze2;
+package com.puttysoftware.fantastlereboot.maze;
 
 public class MazeConstants {
     public static final int LAYER_GROUND = 0;

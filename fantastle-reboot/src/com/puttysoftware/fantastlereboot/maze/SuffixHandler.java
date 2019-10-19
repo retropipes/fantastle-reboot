@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.obsolete.maze2;
+package com.puttysoftware.fantastlereboot.maze;
 
 import java.io.IOException;
 

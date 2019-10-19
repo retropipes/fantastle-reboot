@@ -7,7 +7,7 @@ package com.puttysoftware.fantastlereboot.obsolete.maze2.abc;
 
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
+import com.puttysoftware.fantastlereboot.maze.MazeConstants;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public abstract class AbstractPassThroughObject extends AbstractMazeObject {

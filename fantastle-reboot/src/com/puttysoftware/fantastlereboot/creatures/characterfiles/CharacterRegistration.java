@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.Extension;
+import com.puttysoftware.fantastlereboot.maze.Extension;
 import com.puttysoftware.fileutils.ResourceStreamReader;
 
 public class CharacterRegistration {

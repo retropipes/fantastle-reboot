@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: mazer5d@worldwizard
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze2.abc;
 
-import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
+import com.puttysoftware.fantastlereboot.maze.MazeConstants;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public abstract class AbstractMPModifier extends AbstractMazeObject {

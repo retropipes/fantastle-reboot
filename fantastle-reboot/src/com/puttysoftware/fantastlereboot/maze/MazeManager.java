@@ -3,7 +3,7 @@ Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.obsolete.maze2;
+package com.puttysoftware.fantastlereboot.maze;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,9 +17,9 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.games.GameFinder;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.games.GameLoadTask;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.games.GameSaveTask;
+import com.puttysoftware.fantastlereboot.savedgames.GameFinder;
+import com.puttysoftware.fantastlereboot.savedgames.GameLoadTask;
+import com.puttysoftware.fantastlereboot.savedgames.GameSaveTask;
 import com.puttysoftware.fileutils.FilenameChecker;
 
 public final class MazeManager {

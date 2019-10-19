@@ -5,10 +5,10 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.obsolete.maze2.objects;
 
+import com.puttysoftware.fantastlereboot.maze.MazeConstants;
 import com.puttysoftware.fantastlereboot.obsolete.Application;
 import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageConstants;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.MazeConstants;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
 import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractWall;
 
