@@ -32,6 +32,25 @@ public abstract class FantastleObject extends GameObject
 
     public FantastleObject(final int objectID, final String cacheObjectName,
             final ObjectImageIndex objectImage, final String cacheAttributeName,
+            final AttributeImageIndex attributeImage) {
+        super(objectID, new AttributedObjectAppearance(
+                new AttributeAppearance(cacheAttributeName, attributeImage),
+                cacheObjectName, objectImage));
+    }
+
+    public FantastleObject(final int objectID, final String cacheObjectName,
+            final ObjectImageIndex objectImage, final ColorShader objectShader,
+            final String cacheAttributeName,
+            final AttributeImageIndex attributeImage) {
+        super(objectID,
+                new AttributedObjectAppearance(
+                        new AttributeAppearance(cacheAttributeName,
+                                attributeImage),
+                        cacheObjectName, objectImage, objectShader));
+    }
+
+    public FantastleObject(final int objectID, final String cacheObjectName,
+            final ObjectImageIndex objectImage, final String cacheAttributeName,
             final AttributeImageIndex attributeImage,
             final ColorShader attributeShader) {
         super(objectID,

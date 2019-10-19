@@ -16,12 +16,21 @@ public final class ColorShaders {
     private static ColorShader LIQUID;
     private static ColorShader NORMAL;
     private static ColorShader POISON;
+    private static ColorShader PLASMA;
+    private static ColorShader MAGNET;
 
-    public static ColorShader liquid() {
-        if (LIQUID == null) {
-            LIQUID = new ColorShader("liquid", new Color(0, 0, 255, 255));
+    public static ColorShader wooden() {
+        if (WOODEN == null) {
+            WOODEN = new ColorShader("wooden", new Color(127, 63, 0, 255));
         }
-        return LIQUID;
+        return WOODEN;
+    }
+
+    public static ColorShader scorch() {
+        if (SCORCH == null) {
+            SCORCH = new ColorShader("scorch", new Color(255, 0, 0, 255));
+        }
+        return SCORCH;
     }
 
     public static ColorShader freeze() {
@@ -36,13 +45,6 @@ public final class ColorShaders {
             SHADOW = new ColorShader("shadow", new Color(47, 47, 47, 255));
         }
         return SHADOW;
-    }
-
-    public static ColorShader scorch() {
-        if (SCORCH == null) {
-            SCORCH = new ColorShader("scorch", new Color(255, 0, 0, 255));
-        }
-        return SCORCH;
     }
 
     public static ColorShader vortex() {
@@ -73,9 +75,16 @@ public final class ColorShaders {
         return BEAUTY;
     }
 
+    public static ColorShader liquid() {
+        if (LIQUID == null) {
+            LIQUID = new ColorShader("liquid", new Color(0, 0, 255, 255));
+        }
+        return LIQUID;
+    }
+
     public static ColorShader normal() {
         if (NORMAL == null) {
-            NORMAL = new ColorShader("normal", new Color(255, 255, 255, 255));
+            NORMAL = new ColorShader("normal", new Color(127, 127, 127, 255));
         }
         return NORMAL;
     }
@@ -87,11 +96,18 @@ public final class ColorShaders {
         return POISON;
     }
 
-    public static ColorShader wooden() {
-        if (WOODEN == null) {
-            WOODEN = new ColorShader("wooden", new Color(127, 63, 0, 255));
+    public static ColorShader plasma() {
+        if (PLASMA == null) {
+            PLASMA = new ColorShader("plasma", new Color(63, 255, 127, 255));
         }
-        return WOODEN;
+        return PLASMA;
+    }
+
+    public static ColorShader magnet() {
+        if (MAGNET == null) {
+            MAGNET = new ColorShader("magnet", new Color(255, 63, 0, 255));
+        }
+        return MAGNET;
     }
 
     private ColorShaders() {

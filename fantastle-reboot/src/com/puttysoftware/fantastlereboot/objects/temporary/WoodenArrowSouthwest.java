@@ -4,10 +4,10 @@ import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 import com.puttysoftware.fantastlereboot.objectmodel.ColorShaders;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
-public class WoodArrowSouthwest extends FantastleObject {
+public class WoodenArrowSouthwest extends FantastleObject {
     // Constructors
-    public WoodArrowSouthwest() {
-        super(-8, "wood_arrow_southwest", ObjectImageIndex.ARROW_SOUTHWEST,
+    public WoodenArrowSouthwest() {
+        super(-1, "arrow_southwest", ObjectImageIndex.ARROW_SOUTHWEST,
                 ColorShaders.wooden());
     }
 }
