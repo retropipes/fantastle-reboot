@@ -5,85 +5,93 @@ import java.awt.Color;
 import com.puttysoftware.diane.loaders.ColorShader;
 
 public final class ColorShaders {
-    private static ColorShader WOOD;
-//    private static ColorShader FIRE;
-//    private static ColorShader COLD;
-//    private static ColorShader DARK;
-//    private static ColorShader GUST;
-//    private static ColorShader JOLT;
-//    private static ColorShader BEAM;
-    private static ColorShader LOVE;
-//    private static ColorShader AQUA;
-    private static ColorShader NONE;
+    private static ColorShader WOODEN;
+    private static ColorShader SCORCH;
+    private static ColorShader FREEZE;
+    private static ColorShader SHADOW;
+    private static ColorShader VORTEX;
+    private static ColorShader CHARGE;
+    private static ColorShader SACRED;
+    private static ColorShader BEAUTY;
+    private static ColorShader LIQUID;
+    private static ColorShader NORMAL;
+    private static ColorShader POISON;
 
-    public static ColorShader wood() {
-        if (WOOD == null) {
-            WOOD = new ColorShader("wood", new Color(127, 63, 0, 255));
+    public static ColorShader liquid() {
+        if (LIQUID == null) {
+            LIQUID = new ColorShader("liquid", new Color(0, 0, 255, 255));
         }
-        return WOOD;
+        return LIQUID;
     }
-//
-//    public static ColorShader fire() {
-//        if (FIRE == null) {
-//            FIRE = new ColorShader("fire", new Color(255, 0, 0, 255));
-//        }
-//        return FIRE;
-//    }
-//
-//    public static ColorShader cold() {
-//        if (COLD == null) {
-//            COLD = new ColorShader("cold", new Color(0, 255, 255, 255));
-//        }
-//        return COLD;
-//    }
-//
-//    public static ColorShader dark() {
-//        if (DARK == null) {
-//            DARK = new ColorShader("dark", new Color(47, 47, 47, 255));
-//        }
-//        return DARK;
-//    }
-//
-//    public static ColorShader gust() {
-//        if (GUST == null) {
-//            GUST = new ColorShader("gust", new Color(0, 255, 0, 255));
-//        }
-//        return GUST;
-//    }
-//
-//    public static ColorShader jolt() {
-//        if (JOLT == null) {
-//            JOLT = new ColorShader("jolt", new Color(255, 255, 0, 255));
-//        }
-//        return JOLT;
-//    }
-//
-//    public static ColorShader beam() {
-//        if (BEAM == null) {
-//            BEAM = new ColorShader("beam", new Color(223, 223, 223, 255));
-//        }
-//        return BEAM;
-//    }
 
-    public static ColorShader love() {
-        if (LOVE == null) {
-            LOVE = new ColorShader("love", new Color(255, 0, 255, 255));
+    public static ColorShader freeze() {
+        if (FREEZE == null) {
+            FREEZE = new ColorShader("freeze", new Color(0, 255, 255, 255));
         }
-        return LOVE;
+        return FREEZE;
     }
-//
-//    public static ColorShader aqua() {
-//        if (AQUA == null) {
-//            AQUA = new ColorShader("aqua", new Color(0, 0, 255, 255));
-//        }
-//        return AQUA;
-//    }
 
-    public static ColorShader none() {
-        if (NONE == null) {
-            NONE = new ColorShader("none", new Color(255, 255, 255, 255));
+    public static ColorShader shadow() {
+        if (SHADOW == null) {
+            SHADOW = new ColorShader("shadow", new Color(47, 47, 47, 255));
         }
-        return NONE;
+        return SHADOW;
+    }
+
+    public static ColorShader scorch() {
+        if (SCORCH == null) {
+            SCORCH = new ColorShader("scorch", new Color(255, 0, 0, 255));
+        }
+        return SCORCH;
+    }
+
+    public static ColorShader vortex() {
+        if (VORTEX == null) {
+            VORTEX = new ColorShader("vortex", new Color(0, 255, 0, 255));
+        }
+        return VORTEX;
+    }
+
+    public static ColorShader charge() {
+        if (CHARGE == null) {
+            CHARGE = new ColorShader("charge", new Color(255, 255, 0, 255));
+        }
+        return CHARGE;
+    }
+
+    public static ColorShader sacred() {
+        if (SACRED == null) {
+            SACRED = new ColorShader("sacred", new Color(223, 223, 223, 255));
+        }
+        return SACRED;
+    }
+
+    public static ColorShader beauty() {
+        if (BEAUTY == null) {
+            BEAUTY = new ColorShader("beauty", new Color(255, 0, 255, 255));
+        }
+        return BEAUTY;
+    }
+
+    public static ColorShader normal() {
+        if (NORMAL == null) {
+            NORMAL = new ColorShader("normal", new Color(255, 255, 255, 255));
+        }
+        return NORMAL;
+    }
+
+    public static ColorShader poison() {
+        if (POISON == null) {
+            POISON = new ColorShader("poison", new Color(63, 0, 127, 255));
+        }
+        return POISON;
+    }
+
+    public static ColorShader wooden() {
+        if (WOODEN == null) {
+            WOODEN = new ColorShader("wooden", new Color(127, 63, 0, 255));
+        }
+        return WOODEN;
     }
 
     private ColorShaders() {

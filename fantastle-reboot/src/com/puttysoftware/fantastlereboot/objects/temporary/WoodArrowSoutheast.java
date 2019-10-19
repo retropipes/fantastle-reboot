@@ -8,6 +8,6 @@ public class WoodArrowSoutheast extends FantastleObject {
     // Constructors
     public WoodArrowSoutheast() {
         super(-6, "wood_arrow_southeast", ObjectImageIndex.ARROW_SOUTHEAST,
-                ColorShaders.wood());
+                ColorShaders.wooden());
     }
 }

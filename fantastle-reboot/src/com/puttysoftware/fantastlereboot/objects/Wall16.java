@@ -7,8 +7,8 @@ import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 public final class Wall16 extends FantastleObject {
     public Wall16() {
-        super(29, "wall", ObjectImageIndex.WALL, ColorShaders.wood(), "16",
-                AttributeImageIndex.LARGE_NUMBER_16, ColorShaders.none());
+        super(29, "wall", ObjectImageIndex.WALL, ColorShaders.wooden(), "16",
+                AttributeImageIndex.LARGE_NUMBER_16, ColorShaders.normal());
         this.setSolid(true);
         this.setSightBlocking(true);
     }

@@ -6,6 +6,6 @@ import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 public final class Amulet extends FantastleObject {
     public Amulet() {
-        super(12, "amulet", ObjectImageIndex.AMULET, ColorShaders.love());
+        super(12, "amulet", ObjectImageIndex.AMULET, ColorShaders.beauty());
     }
 }
