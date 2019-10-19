@@ -1,4 +1,4 @@
-/*  TallerTower: An RPG
+/*  FantastleReboot: An RPG
 Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
@@ -34,11 +34,10 @@ import com.puttysoftware.fantastlereboot.items.combat.CombatItem;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeConstants;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Empty;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
+import com.puttysoftware.fantastlereboot.objectmodel.Layer;
+import com.puttysoftware.fantastlereboot.objects.OpenSpace;
+import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 import com.puttysoftware.fantastlereboot.spells.Spell;
 import com.puttysoftware.fantastlereboot.spells.SpellCaster;
 import com.puttysoftware.randomrange.RandomRange;
@@ -97,7 +96,7 @@ public class MapTurnBattleLogic extends Battle {
         // Level Up Check
         if (playerCharacter.checkLevelUp()) {
             playerCharacter.levelUp();
-            TallerTower.getApplication().getGameManager().keepNextMessage();
+            FantastleReboot.getBagOStuff().getGameManager().keepNextMessage();
             bag.showMessage(
                     "You reached level " + playerCharacter.getLevel() + ".");
         }
@@ -106,7 +105,7 @@ public class MapTurnBattleLogic extends Battle {
     private void doBattleInternal(final Maze bMaze, final MapBattle b) {
         // Initialize Battle
         final BagOStuff bag = FantastleReboot.getBagOStuff();
-        TallerTower.getApplication().getGameManager().hideOutput();
+        FantastleReboot.getBagOStuff().getGameManager().hideOutput();
         bag.setInBattle();
         this.bd = new MapTurnBattleDefinitions();
         this.bd.setBattleMaze(bMaze);
@@ -119,8 +118,8 @@ public class MapTurnBattleLogic extends Battle {
                 .getBattleCharacters();
         // Generate Enemies
         this.enemy = b.getBattlers();
-        this.enemy.getTemplate().healAndRegenerateFully();
-        this.enemy.getTemplate().loadCreature();
+        this.enemy.getCreature().healAndRegenerateFully();
+        this.enemy.getCreature().loadCreature();
         // Merge and Create AI Contexts
         for (int x = 0; x < 2; x++) {
             if (x == 0) {
@@ -160,8 +159,8 @@ public class MapTurnBattleLogic extends Battle {
         // Leave Battle
         this.hideBattle();
         // Return to whence we came
-        TallerTower.getApplication().getGameManager().showOutput();
-        TallerTower.getApplication().getGameManager().redrawMaze();
+        FantastleReboot.getBagOStuff().getGameManager().showOutput();
+        FantastleReboot.getBagOStuff().getGameManager().redrawMaze();
     }
 
     private void clearStatusMessage() {
@@ -209,36 +208,36 @@ public class MapTurnBattleLogic extends Battle {
     @Override
     public void executeNextAIAction() {
         if (this.bd != null && this.bd.getActiveCharacter() != null
-                && this.bd.getActiveCharacter().getTemplate() != null
-                && this.bd.getActiveCharacter().getTemplate()
+                && this.bd.getActiveCharacter().getCreature() != null
+                && this.bd.getActiveCharacter().getCreature()
                         .getMapAI() != null) {
             final BattleCharacter active = this.bd.getActiveCharacter();
-            if (active.getTemplate().isAlive()) {
-                final int action = active.getTemplate().getMapAI()
+            if (active.getCreature().isAlive()) {
+                final int action = active.getCreature().getMapAI()
                         .getNextAction(
-                                this.bd.getActiveCharacter().getTemplate(),
+                                this.bd.getActiveCharacter().getCreature(),
                                 this.bd.getBattlerAIContexts()[this.activeIndex]);
                 switch (action) {
                 case AIRoutine.ACTION_MOVE:
-                    final int x = active.getTemplate().getMapAI().getMoveX();
-                    final int y = active.getTemplate().getMapAI().getMoveY();
+                    final int x = active.getCreature().getMapAI().getMoveX();
+                    final int y = active.getCreature().getMapAI().getMoveY();
                     this.lastAIActionResult = this.updatePosition(x, y);
-                    active.getTemplate().getMapAI()
+                    active.getCreature().getMapAI()
                             .setLastResult(this.lastAIActionResult);
                     break;
                 case AIRoutine.ACTION_CAST_SPELL:
                     this.lastAIActionResult = this.castSpell();
-                    active.getTemplate().getMapAI()
+                    active.getCreature().getMapAI()
                             .setLastResult(this.lastAIActionResult);
                     break;
                 case AIRoutine.ACTION_DRAIN:
                     this.lastAIActionResult = this.drain();
-                    active.getTemplate().getMapAI()
+                    active.getCreature().getMapAI()
                             .setLastResult(this.lastAIActionResult);
                     break;
                 case AIRoutine.ACTION_STEAL:
                     this.lastAIActionResult = this.steal();
-                    active.getTemplate().getMapAI()
+                    active.getCreature().getMapAI()
                             .setLastResult(this.lastAIActionResult);
                     break;
                 default:
@@ -259,7 +258,7 @@ public class MapTurnBattleLogic extends Battle {
 
     private void executeAutoAI(final BattleCharacter acting) {
         final int index = this.bd.findBattler(acting.getName());
-        final int action = this.auto.getNextAction(acting.getTemplate(),
+        final int action = this.auto.getNextAction(acting.getCreature(),
                 this.bd.getBattlerAIContexts()[index]);
         switch (action) {
         case AIRoutine.ACTION_MOVE:
@@ -401,9 +400,9 @@ public class MapTurnBattleLogic extends Battle {
     private void resetSpeedArray() {
         for (int x = 0; x < this.speedArray.length; x++) {
             if (this.bd.getBattlers()[x] != null
-                    && this.bd.getBattlers()[x].getTemplate().isAlive()) {
+                    && this.bd.getBattlers()[x].getCreature().isAlive()) {
                 this.speedArray[x] = (int) this.bd.getBattlers()[x]
-                        .getTemplate()
+                        .getCreature()
                         .getEffectedStat(StatConstants.STAT_AGILITY);
             } else {
                 this.speedArray[x] = Integer.MIN_VALUE;
@@ -428,23 +427,23 @@ public class MapTurnBattleLogic extends Battle {
         for (int x = 0; x < this.bd.getBattlers().length; x++) {
             if (this.bd.getBattlers()[x] != null) {
                 if (this.bd.getBattlers()[x].isActive()
-                        && this.bd.getBattlers()[x].getTemplate().getX() == -1
-                        && this.bd.getBattlers()[x].getTemplate()
+                        && this.bd.getBattlers()[x].getCreature().getX() == -1
+                        && this.bd.getBattlers()[x].getCreature()
                                 .getY() == -1) {
                     rx = randX.generate();
                     ry = randY.generate();
-                    AbstractMazeObject obj = this.bd.getBattleMaze().getCell(rx,
-                            ry, 0, MazeConstants.LAYER_OBJECT);
+                    FantastleObjectModel obj = this.bd.getBattleMaze().getCell(rx,
+                            ry, 0, Layer.OBJECT);
                     while (obj.isSolidInBattle()) {
                         rx = randX.generate();
                         ry = randY.generate();
                         obj = this.bd.getBattleMaze().getCell(rx, ry, 0,
-                                MazeConstants.LAYER_OBJECT);
+                                Layer.OBJECT);
                     }
                     this.bd.getBattlers()[x].setX(rx);
                     this.bd.getBattlers()[x].setY(ry);
                     this.bd.getBattleMaze().setCell(this.bd.getBattlers()[x],
-                            rx, ry, 0, MazeConstants.LAYER_OBJECT);
+                            rx, ry, 0, Layer.OBJECT);
                 }
             }
         }
@@ -467,7 +466,7 @@ public class MapTurnBattleLogic extends Battle {
                 return this.setNextActive(isNewRound);
             }
             // AI Check
-            if (this.bd.getActiveCharacter().getTemplate().hasMapAI()) {
+            if (this.bd.getActiveCharacter().getCreature().hasMapAI()) {
                 // Run AI
                 this.waitForAI();
                 this.ait.aiRun();
@@ -515,7 +514,7 @@ public class MapTurnBattleLogic extends Battle {
         for (int x = 0; x < this.bd.getBattlers().length; x++) {
             if (this.bd.getBattlers()[x] != null) {
                 if (this.bd.getBattlers()[x].getTeamID() != 0) {
-                    res += this.bd.getBattlers()[x].getTemplate().getGold();
+                    res += this.bd.getBattlers()[x].getCreature().getGold();
                 }
             }
         }
@@ -526,7 +525,7 @@ public class MapTurnBattleLogic extends Battle {
         for (int x = 0; x < this.bd.getBattlers().length; x++) {
             if (this.bd.getBattlers()[x] != null) {
                 if (this.bd.getBattlers()[x].getTeamID() == teamID) {
-                    final boolean res = this.bd.getBattlers()[x].getTemplate()
+                    final boolean res = this.bd.getBattlers()[x].getCreature()
                             .isAlive();
                     if (res) {
                         return true;
@@ -541,7 +540,7 @@ public class MapTurnBattleLogic extends Battle {
         for (int x = 0; x < this.bd.getBattlers().length; x++) {
             if (this.bd.getBattlers()[x] != null) {
                 if (this.bd.getBattlers()[x].getTeamID() != teamID) {
-                    final boolean res = this.bd.getBattlers()[x].getTemplate()
+                    final boolean res = this.bd.getBattlers()[x].getCreature()
                             .isAlive();
                     if (res) {
                         return true;
@@ -557,12 +556,12 @@ public class MapTurnBattleLogic extends Battle {
         for (int x = 0; x < this.bd.getBattlers().length; x++) {
             if (this.bd.getBattlers()[x] != null) {
                 if (this.bd.getBattlers()[x].getTeamID() != teamID) {
-                    final boolean res = this.bd.getBattlers()[x].getTemplate()
+                    final boolean res = this.bd.getBattlers()[x].getCreature()
                             .isAlive() && this.bd.getBattlers()[x].isActive();
                     if (res) {
                         return false;
                     }
-                    if (!this.bd.getBattlers()[x].getTemplate().isAlive()) {
+                    if (!this.bd.getBattlers()[x].getCreature().isAlive()) {
                         deadCount++;
                     }
                 }
@@ -576,7 +575,7 @@ public class MapTurnBattleLogic extends Battle {
         for (int x = 0; x < this.bd.getBattlers().length; x++) {
             if (this.bd.getBattlers()[x] != null) {
                 if (this.bd.getBattlers()[x].getTeamID() != teamID) {
-                    if (this.bd.getBattlers()[x].getTemplate().isAlive()) {
+                    if (this.bd.getBattlers()[x].getCreature().isAlive()) {
                         res = res && !this.bd.getBattlers()[x].isActive();
                         if (!res) {
                             return false;
@@ -593,7 +592,7 @@ public class MapTurnBattleLogic extends Battle {
         for (int x = 0; x < this.bd.getBattlers().length; x++) {
             if (this.bd.getBattlers()[x] != null) {
                 if (this.bd.getBattlers()[x].getTeamID() == teamID) {
-                    if (this.bd.getBattlers()[x].getTemplate().isAlive()) {
+                    if (this.bd.getBattlers()[x].getCreature().isAlive()) {
                         res = res && !this.bd.getBattlers()[x].isActive();
                         if (!res) {
                             return false;
@@ -634,7 +633,7 @@ public class MapTurnBattleLogic extends Battle {
             at.start();
         } else {
             // Deny arrow - out of actions
-            if (!this.bd.getActiveCharacter().getTemplate().hasMapAI()) {
+            if (!this.bd.getActiveCharacter().getCreature().hasMapAI()) {
                 this.setStatusMessage("Out of actions!");
             }
         }
@@ -644,18 +643,18 @@ public class MapTurnBattleLogic extends Battle {
     public void arrowDone(final BattleCharacter hit) {
         this.battleGUI.turnEventHandlersOn();
         // Handle death
-        if (hit != null && !hit.getTemplate().isAlive()) {
+        if (hit != null && !hit.getCreature().isAlive()) {
             if (hit.getTeamID() != Creature.TEAM_PARTY) {
                 // Update victory spoils
-                this.battleExp = hit.getTemplate().getExperience();
+                this.battleExp = hit.getCreature().getExperience();
             }
             // Remove effects from dead character
-            hit.getTemplate().stripAllEffects();
+            hit.getCreature().stripAllEffects();
             // Set dead character to inactive
             hit.deactivate();
             // Remove character from battle
-            this.bd.getBattleMaze().setCell(new Empty(), hit.getX(), hit.getY(),
-                    0, MazeConstants.LAYER_OBJECT);
+            this.bd.getBattleMaze().setCell(new OpenSpace(), hit.getX(),
+                    hit.getY(), 0, Layer.OBJECT);
         }
         // Check result
         final BattleResults currResult = this.getResult();
@@ -674,16 +673,16 @@ public class MapTurnBattleLogic extends Battle {
         int px = active.getX();
         int py = active.getY();
         final Maze m = this.bd.getBattleMaze();
-        AbstractMazeObject next = null;
-        AbstractMazeObject nextGround = null;
-        AbstractMazeObject currGround = null;
+        FantastleObjectModel next = null;
+        FantastleObjectModel nextGround = null;
+        FantastleObjectModel currGround = null;
         active.saveLocation();
         this.battleGUI.getViewManager().saveViewingWindow();
         try {
-            next = m.getCell(px + x, py + y, 0, MazeConstants.LAYER_OBJECT);
+            next = m.getCell(px + x, py + y, 0, Layer.OBJECT);
             nextGround = m.getCell(px + x, py + y, 0,
-                    MazeConstants.LAYER_GROUND);
-            currGround = m.getCell(px, py, 0, MazeConstants.LAYER_GROUND);
+                    Layer.GROUND);
+            currGround = m.getCell(px, py, 0, Layer.GROUND);
         } catch (final ArrayIndexOutOfBoundsException aioob) {
             // Ignore
         }
@@ -692,59 +691,59 @@ public class MapTurnBattleLogic extends Battle {
                 if ((useAP && this.getActiveActionCounter() >= AIContext
                         .getDefaultAPCost()) || !useAP) {
                     // Move
-                    AbstractMazeObject obj1 = null;
-                    AbstractMazeObject obj2 = null;
-                    AbstractMazeObject obj3 = null;
-                    AbstractMazeObject obj4 = null;
-                    AbstractMazeObject obj6 = null;
-                    AbstractMazeObject obj7 = null;
-                    AbstractMazeObject obj8 = null;
-                    AbstractMazeObject obj9 = null;
+                    FantastleObjectModel obj1 = null;
+                    FantastleObjectModel obj2 = null;
+                    FantastleObjectModel obj3 = null;
+                    FantastleObjectModel obj4 = null;
+                    FantastleObjectModel obj6 = null;
+                    FantastleObjectModel obj7 = null;
+                    FantastleObjectModel obj8 = null;
+                    FantastleObjectModel obj9 = null;
                     try {
                         obj1 = m.getCell(px - 1, py - 1, 0,
-                                MazeConstants.LAYER_OBJECT);
+                                Layer.OBJECT);
                     } catch (final ArrayIndexOutOfBoundsException aioob) {
                         // Ignore
                     }
                     try {
                         obj2 = m.getCell(px, py - 1, 0,
-                                MazeConstants.LAYER_OBJECT);
+                                Layer.OBJECT);
                     } catch (final ArrayIndexOutOfBoundsException aioob) {
                         // Ignore
                     }
                     try {
                         obj3 = m.getCell(px + 1, py - 1, 0,
-                                MazeConstants.LAYER_OBJECT);
+                                Layer.OBJECT);
                     } catch (final ArrayIndexOutOfBoundsException aioob) {
                         // Ignore
                     }
                     try {
                         obj4 = m.getCell(px - 1, py, 0,
-                                MazeConstants.LAYER_OBJECT);
+                                Layer.OBJECT);
                     } catch (final ArrayIndexOutOfBoundsException aioob) {
                         // Ignore
                     }
                     try {
                         obj6 = m.getCell(px + 1, py - 1, 0,
-                                MazeConstants.LAYER_OBJECT);
+                                Layer.OBJECT);
                     } catch (final ArrayIndexOutOfBoundsException aioob) {
                         // Ignore
                     }
                     try {
                         obj7 = m.getCell(px - 1, py + 1, 0,
-                                MazeConstants.LAYER_OBJECT);
+                                Layer.OBJECT);
                     } catch (final ArrayIndexOutOfBoundsException aioob) {
                         // Ignore
                     }
                     try {
                         obj8 = m.getCell(px, py + 1, 0,
-                                MazeConstants.LAYER_OBJECT);
+                                Layer.OBJECT);
                     } catch (final ArrayIndexOutOfBoundsException aioob) {
                         // Ignore
                     }
                     try {
                         obj9 = m.getCell(px + 1, py + 1, 0,
-                                MazeConstants.LAYER_OBJECT);
+                                Layer.OBJECT);
                     } catch (final ArrayIndexOutOfBoundsException aioob) {
                         // Ignore
                     }
@@ -834,7 +833,7 @@ public class MapTurnBattleLogic extends Battle {
                         }
                     }
                     m.setCell(active.getSavedObject(), px, py, 0,
-                            MazeConstants.LAYER_OBJECT);
+                            Layer.OBJECT);
                     active.offsetX(x);
                     active.offsetY(y);
                     px += x;
@@ -844,14 +843,14 @@ public class MapTurnBattleLogic extends Battle {
                     this.battleGUI.getViewManager()
                             .offsetViewingWindowLocationY(x);
                     active.setSavedObject(
-                            m.getCell(px, py, 0, MazeConstants.LAYER_OBJECT));
-                    m.setCell(active, px, py, 0, MazeConstants.LAYER_OBJECT);
+                            m.getCell(px, py, 0, Layer.OBJECT));
+                    m.setCell(active, px, py, 0, Layer.OBJECT);
                     this.decrementActiveActionCounterBy(
                             AIContext.getDefaultAPCost());
                     SoundPlayer.playSound(SoundIndex.WALK);
                 } else {
                     // Deny move - out of actions
-                    if (!this.bd.getActiveCharacter().getTemplate()
+                    if (!this.bd.getActiveCharacter().getCreature()
                             .hasMapAI()) {
                         this.setStatusMessage("Out of moves!");
                     }
@@ -865,7 +864,7 @@ public class MapTurnBattleLogic extends Battle {
                         final BattleCharacter bc = (BattleCharacter) next;
                         if (bc.getTeamID() == active.getTeamID()) {
                             // Attack Friend?
-                            if (!active.getTemplate().hasMapAI()) {
+                            if (!active.getCreature().hasMapAI()) {
                                 final int confirm = CommonDialogs
                                         .showConfirmDialog("Attack Friend?",
                                                 "Battle");
@@ -880,49 +879,49 @@ public class MapTurnBattleLogic extends Battle {
                             this.decrementActiveAttackCounter();
                         }
                         // Do damage
-                        this.computeDamage(theEnemy.getTemplate(),
-                                active.getTemplate(), activeDE);
+                        this.computeDamage(theEnemy.getCreature(),
+                                active.getCreature(), activeDE);
                         // Handle low health for party members
-                        if (theEnemy.getTemplate().isAlive()
+                        if (theEnemy.getCreature().isAlive()
                                 && theEnemy.getTeamID() == Creature.TEAM_PARTY
-                                && theEnemy.getTemplate()
+                                && theEnemy.getCreature()
                                         .getCurrentHP() <= theEnemy
-                                                .getTemplate().getMaximumHP()
+                                                .getCreature().getMaximumHP()
                                                 * 3 / 10) {
                             SoundPlayer.playSound(SoundIndex.LOW_HEALTH);
                         }
                         // Handle enemy death
-                        if (!theEnemy.getTemplate().isAlive()) {
+                        if (!theEnemy.getCreature().isAlive()) {
                             if (theEnemy.getTeamID() != Creature.TEAM_PARTY) {
                                 // Update victory spoils
-                                this.battleExp = theEnemy.getTemplate()
+                                this.battleExp = theEnemy.getCreature()
                                         .getExperience();
                             }
                             // Remove effects from dead character
-                            bc.getTemplate().stripAllEffects();
+                            bc.getCreature().stripAllEffects();
                             // Set dead character to inactive
                             bc.deactivate();
                             // Remove character from battle
-                            this.bd.getBattleMaze().setCell(new Empty(),
+                            this.bd.getBattleMaze().setCell(new OpenSpace(),
                                     bc.getX(), bc.getY(), 0,
-                                    MazeConstants.LAYER_OBJECT);
+                                    Layer.OBJECT);
                         }
                         // Handle self death
-                        if (!active.getTemplate().isAlive()) {
+                        if (!active.getCreature().isAlive()) {
                             // Remove effects from dead character
-                            active.getTemplate().stripAllEffects();
+                            active.getCreature().stripAllEffects();
                             // Set dead character to inactive
                             active.deactivate();
                             // Remove character from battle
-                            this.bd.getBattleMaze().setCell(new Empty(),
+                            this.bd.getBattleMaze().setCell(new OpenSpace(),
                                     active.getX(), active.getY(), 0,
-                                    MazeConstants.LAYER_OBJECT);
+                                    Layer.OBJECT);
                             // End turn
                             this.endTurn();
                         }
                     } else {
                         // Deny attack - out of actions
-                        if (!this.bd.getActiveCharacter().getTemplate()
+                        if (!this.bd.getActiveCharacter().getCreature()
                                 .hasMapAI()) {
                             this.setStatusMessage("Out of attacks!");
                         }
@@ -930,7 +929,7 @@ public class MapTurnBattleLogic extends Battle {
                     }
                 } else {
                     // Move Failed
-                    if (!active.getTemplate().hasMapAI()) {
+                    if (!active.getCreature().hasMapAI()) {
                         this.setStatusMessage("Can't go that way");
                     }
                     return false;
@@ -938,7 +937,7 @@ public class MapTurnBattleLogic extends Battle {
             }
         } else {
             // Confirm Flee
-            if (!active.getTemplate().hasMapAI()) {
+            if (!active.getCreature().hasMapAI()) {
                 SoundPlayer.playSound(SoundIndex.SPECIAL);
                 final int confirm = CommonDialogs
                         .showConfirmDialog("Embrace Cowardice?", "Battle");
@@ -954,8 +953,8 @@ public class MapTurnBattleLogic extends Battle {
             // Set fled character to inactive
             active.deactivate();
             // Remove character from battle
-            m.setCell(new Empty(), active.getX(), active.getY(), 0,
-                    MazeConstants.LAYER_OBJECT);
+            m.setCell(new OpenSpace(), active.getX(), active.getY(), 0,
+                    Layer.OBJECT);
             // End Turn
             this.endTurn();
             this.updateStatsAndEffects();
@@ -985,14 +984,14 @@ public class MapTurnBattleLogic extends Battle {
 
     @Override
     public Creature getEnemy() {
-        return this.enemy.getTemplate();
+        return this.enemy.getCreature();
     }
 
     private BattleCharacter getEnemyBC() {
         final int px = this.bd.getActiveCharacter().getX();
         final int py = this.bd.getActiveCharacter().getY();
         final Maze m = this.bd.getBattleMaze();
-        AbstractMazeObject next = null;
+        FantastleObjectModel next = null;
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
                 if (x == 0 && y == 0) {
@@ -1000,7 +999,7 @@ public class MapTurnBattleLogic extends Battle {
                 }
                 try {
                     next = m.getCell(px + x, py + y, 0,
-                            MazeConstants.LAYER_OBJECT);
+                            Layer.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException aioob) {
                     // Ignore
                 }
@@ -1028,10 +1027,10 @@ public class MapTurnBattleLogic extends Battle {
     public boolean castSpell() {
         // Check Spell Counter
         if (this.getActiveSpellCounter() > 0) {
-            if (!this.bd.getActiveCharacter().getTemplate().hasMapAI()) {
+            if (!this.bd.getActiveCharacter().getCreature().hasMapAI()) {
                 // Active character has no AI, or AI is turned off
                 final boolean success = SpellCaster.selectAndCastSpell(
-                        this.bd.getActiveCharacter().getTemplate());
+                        this.bd.getActiveCharacter().getCreature());
                 if (success) {
                     this.decrementActiveSpellCounter();
                 }
@@ -1044,10 +1043,10 @@ public class MapTurnBattleLogic extends Battle {
                 return success;
             } else {
                 // Active character has AI, and AI is turned on
-                final Spell sp = this.bd.getActiveCharacter().getTemplate()
+                final Spell sp = this.bd.getActiveCharacter().getCreature()
                         .getMapAI().getSpellToCast();
                 final boolean success = SpellCaster.castSpell(sp,
-                        this.bd.getActiveCharacter().getTemplate());
+                        this.bd.getActiveCharacter().getCreature());
                 if (success) {
                     this.decrementActiveSpellCounter();
                 }
@@ -1061,7 +1060,7 @@ public class MapTurnBattleLogic extends Battle {
             }
         } else {
             // Deny cast - out of actions
-            if (!this.bd.getActiveCharacter().getTemplate().hasMapAI()) {
+            if (!this.bd.getActiveCharacter().getCreature().hasMapAI()) {
                 this.setStatusMessage("Out of actions!");
             }
             return false;
@@ -1072,10 +1071,10 @@ public class MapTurnBattleLogic extends Battle {
     public boolean useItem() {
         // Check Action Counter
         if (this.getActiveActionCounter() > 0) {
-            if (!this.bd.getActiveCharacter().getTemplate().hasMapAI()) {
+            if (!this.bd.getActiveCharacter().getCreature().hasMapAI()) {
                 // Active character has no AI, or AI is turned off
                 final boolean success = CombatItemChucker.selectAndUseItem(
-                        this.bd.getActiveCharacter().getTemplate());
+                        this.bd.getActiveCharacter().getCreature());
                 if (success) {
                     this.bd.getActiveCharacter()
                             .modifyAP(MapTurnBattleLogic.ITEM_ACTION_POINTS);
@@ -1090,9 +1089,9 @@ public class MapTurnBattleLogic extends Battle {
             } else {
                 // Active character has AI, and AI is turned on
                 final CombatItem cui = this.bd.getActiveCharacter()
-                        .getTemplate().getMapAI().getItemToUse();
+                        .getCreature().getMapAI().getItemToUse();
                 final boolean success = CombatItemChucker.useItem(cui,
-                        this.bd.getActiveCharacter().getTemplate());
+                        this.bd.getActiveCharacter().getCreature());
                 if (success) {
                     this.bd.getActiveCharacter()
                             .modifyAP(MapTurnBattleLogic.ITEM_ACTION_POINTS);
@@ -1107,7 +1106,7 @@ public class MapTurnBattleLogic extends Battle {
             }
         } else {
             // Deny use - out of actions
-            if (!this.bd.getActiveCharacter().getTemplate().hasMapAI()) {
+            if (!this.bd.getActiveCharacter().getCreature().hasMapAI()) {
                 this.setStatusMessage("Out of actions!");
             }
             return false;
@@ -1120,7 +1119,7 @@ public class MapTurnBattleLogic extends Battle {
         if (this.getActiveActionCounter() > 0) {
             Creature activeEnemy = null;
             try {
-                activeEnemy = this.getEnemyBC().getTemplate();
+                activeEnemy = this.getEnemyBC().getCreature();
             } catch (final NullPointerException npe) {
                 // Ignore
             }
@@ -1150,7 +1149,7 @@ public class MapTurnBattleLogic extends Battle {
                             + " tries to steal, but no Gold is left to steal!");
                     return false;
                 } else {
-                    this.bd.getActiveCharacter().getTemplate()
+                    this.bd.getActiveCharacter().getCreature()
                             .offsetGold(stealAmount);
                     this.setStatusMessage(this.bd.getActiveCharacter().getName()
                             + " tries to steal, and successfully steals "
@@ -1171,7 +1170,7 @@ public class MapTurnBattleLogic extends Battle {
                                 + " tries to steal, but no Gold is left to steal!");
                         return false;
                     } else {
-                        this.bd.getActiveCharacter().getTemplate()
+                        this.bd.getActiveCharacter().getCreature()
                                 .offsetGold(stealAmount);
                         this.setStatusMessage(this.bd.getActiveCharacter()
                                 .getName()
@@ -1188,7 +1187,7 @@ public class MapTurnBattleLogic extends Battle {
             }
         } else {
             // Deny steal - out of actions
-            if (!this.bd.getActiveCharacter().getTemplate().hasMapAI()) {
+            if (!this.bd.getActiveCharacter().getCreature().hasMapAI()) {
                 this.setStatusMessage("Out of actions!");
             }
             return false;
@@ -1201,7 +1200,7 @@ public class MapTurnBattleLogic extends Battle {
         if (this.getActiveActionCounter() > 0) {
             Creature activeEnemy = null;
             try {
-                activeEnemy = this.getEnemyBC().getTemplate();
+                activeEnemy = this.getEnemyBC().getCreature();
             } catch (final NullPointerException npe) {
                 // Ignore
             }
@@ -1232,7 +1231,7 @@ public class MapTurnBattleLogic extends Battle {
                     return false;
                 } else {
                     activeEnemy.offsetCurrentMP(-drainAmount);
-                    this.bd.getActiveCharacter().getTemplate()
+                    this.bd.getActiveCharacter().getCreature()
                             .offsetCurrentMP(drainAmount);
                     this.setStatusMessage(this.bd.getActiveCharacter().getName()
                             + " tries to drain, and successfully drains "
@@ -1254,7 +1253,7 @@ public class MapTurnBattleLogic extends Battle {
                         return false;
                     } else {
                         activeEnemy.offsetCurrentMP(-drainAmount);
-                        this.bd.getActiveCharacter().getTemplate()
+                        this.bd.getActiveCharacter().getCreature()
                                 .offsetCurrentMP(drainAmount);
                         this.setStatusMessage(this.bd.getActiveCharacter()
                                 .getName()
@@ -1271,7 +1270,7 @@ public class MapTurnBattleLogic extends Battle {
             }
         } else {
             // Deny drain - out of actions
-            if (!this.bd.getActiveCharacter().getTemplate().hasMapAI()) {
+            if (!this.bd.getActiveCharacter().getCreature().hasMapAI()) {
                 this.setStatusMessage("Out of actions!");
             }
             return false;
@@ -1305,7 +1304,7 @@ public class MapTurnBattleLogic extends Battle {
 
     @Override
     public void redrawOneBattleSquare(final int x, final int y,
-            final AbstractMazeObject obj3) {
+            final FantastleObjectModel obj3) {
         this.battleGUI.redrawOneBattleSquare(this.bd, x, y, obj3);
     }
 
@@ -1343,20 +1342,19 @@ public class MapTurnBattleLogic extends Battle {
             // Maintain Effects
             if (this.bd.getBattlers()[x] != null
                     && this.bd.getBattlers()[x].isActive()) {
-                final Creature active = this.bd.getBattlers()[x].getTemplate();
+                final Creature active = this.bd.getBattlers()[x].getCreature();
                 // Use Effects
                 active.useEffects();
                 // Display all effect messages
                 final String effectMessages = this.bd.getBattlers()[x]
-                        .getTemplate().getAllCurrentEffectMessages();
+                        .getCreature().getAllCurrentEffectMessages();
                 final String[] individualEffectMessages = effectMessages
                         .split("\n");
                 for (final String message : individualEffectMessages) {
                     if (!message.equals(Effect.getNullMessage())) {
                         this.setStatusMessage(message);
                         try {
-                            FantastleReboot.getBagOStuff()
-                                    .getPrefsManager();
+                            FantastleReboot.getBagOStuff().getPrefsManager();
                             Thread.sleep(PreferencesManager.getBattleSpeed());
                         } catch (final InterruptedException ie) {
                             // Ignore
@@ -1377,7 +1375,7 @@ public class MapTurnBattleLogic extends Battle {
                     if (this.bd.getBattlers()[x]
                             .getTeamID() != Creature.TEAM_PARTY) {
                         // Update victory spoils
-                        this.battleExp = this.bd.getBattlers()[x].getTemplate()
+                        this.battleExp = this.bd.getBattlers()[x].getCreature()
                                 .getExperience();
                     }
                     // Set dead character to inactive
@@ -1385,10 +1383,10 @@ public class MapTurnBattleLogic extends Battle {
                     // Remove effects from dead character
                     active.stripAllEffects();
                     // Remove character from battle
-                    this.bd.getBattleMaze().setCell(new Empty(),
+                    this.bd.getBattleMaze().setCell(new OpenSpace(),
                             this.bd.getBattlers()[x].getX(),
                             this.bd.getBattlers()[x].getY(), 0,
-                            MazeConstants.LAYER_OBJECT);
+                            Layer.OBJECT);
                     if (this.bd.getActiveCharacter().getName()
                             .equals(this.bd.getBattlers()[x].getName())) {
                         // Active character died, end turn
@@ -1417,11 +1415,11 @@ public class MapTurnBattleLogic extends Battle {
                 // Perform New Round Actions
                 if (this.bd.getBattlerAIContexts()[x] != null
                         && this.bd.getBattlerAIContexts()[x].getCharacter()
-                                .getTemplate().hasMapAI()
+                                .getCreature().hasMapAI()
                         && this.bd.getBattlers()[x].isActive()
-                        && this.bd.getBattlers()[x].getTemplate().isAlive()) {
+                        && this.bd.getBattlers()[x].getCreature().isAlive()) {
                     this.bd.getBattlerAIContexts()[x].getCharacter()
-                            .getTemplate().getMapAI().newRoundHook();
+                            .getCreature().getMapAI().newRoundHook();
                 }
             }
         }

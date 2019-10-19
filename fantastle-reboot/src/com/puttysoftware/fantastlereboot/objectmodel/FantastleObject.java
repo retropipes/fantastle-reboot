@@ -88,6 +88,7 @@ public abstract class FantastleObject extends GameObject
         this.savedObject = newSavedObject;
     }
 
+    @Override
     public Layer getLayer() {
         return Layer.OBJECT;
     }

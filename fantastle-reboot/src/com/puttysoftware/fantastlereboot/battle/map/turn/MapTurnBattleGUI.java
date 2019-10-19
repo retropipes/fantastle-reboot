@@ -1,4 +1,4 @@
-/*  TallerTower: An RPG
+/*  FantastleReboot: An RPG
 Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
@@ -33,10 +33,9 @@ import com.puttysoftware.fantastlereboot.battle.map.MapBattleDraw;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleEffects;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleViewingWindowManager;
 import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
-import com.puttysoftware.fantastlereboot.maze.MazeConstants;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.EmptyVoid;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
+import com.puttysoftware.fantastlereboot.objectmodel.Layer;
+import com.puttysoftware.fantastlereboot.objects.Nothing;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class MapTurnBattleGUI {
@@ -108,21 +107,21 @@ class MapTurnBattleGUI {
                     xFix = x - xView;
                     yFix = y - yView;
                     try {
-                        final AbstractMazeObject obj1 = bd.getBattleMaze()
-                                .getCell(y, x, 0, MazeConstants.LAYER_GROUND);
-                        final AbstractMazeObject obj2 = bd.getBattleMaze()
-                                .getCell(y, x, 0, MazeConstants.LAYER_OBJECT);
+                        final FantastleObjectModel obj1 = bd.getBattleMaze()
+                                .getCell(y, x, 0, Layer.GROUND);
+                        final FantastleObjectModel obj2 = bd.getBattleMaze()
+                                .getCell(y, x, 0, Layer.OBJECT);
                         String cacheName = generateCacheName(obj1, obj2);
                         final BufferedImageIcon icon1 = obj1.battleRenderHook();
                         final BufferedImageIcon icon2 = obj2.battleRenderHook();
                         this.drawGrid.setImageCell(ImageCompositor.composite(
                                 cacheName, icon1, icon2), xFix, yFix);
                     } catch (final ArrayIndexOutOfBoundsException ae) {
-                        final EmptyVoid ev = new EmptyVoid();
+                        final Nothing ev = new Nothing();
                         this.drawGrid.setImageCell(ev.battleRenderHook(), xFix,
                                 yFix);
                     } catch (final NullPointerException np) {
-                        final EmptyVoid ev = new EmptyVoid();
+                        final Nothing ev = new Nothing();
                         this.drawGrid.setImageCell(ev.battleRenderHook(), xFix,
                                 yFix);
                     }
@@ -134,7 +133,7 @@ class MapTurnBattleGUI {
     }
 
     void redrawOneBattleSquare(final MapTurnBattleDefinitions bd, final int x,
-            final int y, final AbstractMazeObject obj3) {
+            final int y, final FantastleObjectModel obj3) {
         // Draw the battle, if it is visible
         if (this.battleFrame.isVisible()) {
             try {
@@ -143,10 +142,10 @@ class MapTurnBattleGUI {
                 final int yView = this.vwMgr.getViewingWindowLocationY();
                 xFix = y - xView;
                 yFix = x - yView;
-                final AbstractMazeObject obj1 = bd.getBattleMaze().getCell(y, x,
-                        0, MazeConstants.LAYER_GROUND);
-                final AbstractMazeObject obj2 = bd.getBattleMaze().getCell(y, x,
-                        0, MazeConstants.LAYER_OBJECT);
+                final FantastleObjectModel obj1 = bd.getBattleMaze().getCell(y, x,
+                        0, Layer.GROUND);
+                final FantastleObjectModel obj2 = bd.getBattleMaze().getCell(y, x,
+                        0, Layer.OBJECT);
                 String cacheName = generateCacheName(obj1, obj2, obj3);
                 final BufferedImageIcon icon1 = obj1.battleRenderHook();
                 final BufferedImageIcon icon2 = obj2.battleRenderHook();
@@ -164,9 +163,9 @@ class MapTurnBattleGUI {
     }
 
     private static String generateCacheName(
-            final AbstractMazeObject... objects) {
+            final FantastleObjectModel... objects) {
         StringBuilder result = new StringBuilder();
-        for (AbstractMazeObject object : objects) {
+        for (FantastleObjectModel object : objects) {
             result.append(object.getBattleBaseID());
             result.append("_");
         }
@@ -286,7 +285,7 @@ class MapTurnBattleGUI {
         public void actionPerformed(final ActionEvent e) {
             try {
                 final String cmd = e.getActionCommand();
-                final Battle b = TallerTower.getApplication().getBattle();
+                final Battle b = FantastleReboot.getBagOStuff().getBattle();
                 // Do Player Actions
                 if (cmd.equals("Cast Spell") || cmd.equals("c")) {
                     // Cast Spell
@@ -348,7 +347,7 @@ class MapTurnBattleGUI {
                         return;
                     }
                 }
-                final Battle bl = TallerTower.getApplication().getBattle();
+                final Battle bl = FantastleReboot.getBagOStuff().getBattle();
                 final MapTurnBattleGUI bg = MapTurnBattleGUI.this;
                 if (bg.eventHandlersOn) {
                     final int keyCode = e.getKeyCode();
@@ -420,7 +419,7 @@ class MapTurnBattleGUI {
                         return;
                     }
                 }
-                final Battle bl = TallerTower.getApplication().getBattle();
+                final Battle bl = FantastleReboot.getBagOStuff().getBattle();
                 final MapTurnBattleGUI bg = MapTurnBattleGUI.this;
                 if (bg.eventHandlersOn) {
                     final int keyCode = e.getKeyCode();

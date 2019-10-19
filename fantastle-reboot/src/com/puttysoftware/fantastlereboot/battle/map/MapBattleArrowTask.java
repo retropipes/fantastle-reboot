@@ -1,4 +1,4 @@
-/*  TallerTower: A Maze-Solving Game
+/*  FantastleReboot: A Maze-Solving Game
 Copyright (C) 2008-2010 Eric Ahnell
 
 Any questions should be directed to the author via email at: mazer5d@worldwizard.net
@@ -6,21 +6,20 @@ Any questions should be directed to the author via email at: mazer5d@worldwizard
 package com.puttysoftware.fantastlereboot.battle.map;
 
 import com.puttysoftware.diane.utilties.DirectionResolver;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeConstants;
-import com.puttysoftware.fantastlereboot.obsolete.Application;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractTransientObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Arrow;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Empty;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Wall;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
+import com.puttysoftware.fantastlereboot.objectmodel.Layer;
+import com.puttysoftware.fantastlereboot.objects.OpenSpace;
+import com.puttysoftware.fantastlereboot.objects.Wall;
+import com.puttysoftware.fantastlereboot.objects.temporary.ArrowFactory;
+import com.puttysoftware.fantastlereboot.objects.temporary.ArrowType;
+import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 
 public class MapBattleArrowTask extends Thread {
     // Fields
@@ -42,7 +41,7 @@ public class MapBattleArrowTask extends Thread {
     public void run() {
         try {
             boolean res = true;
-            final Application app = TallerTower.getApplication();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             final Maze m = this.battleMaze;
             final int px = this.active.getX();
             final int py = this.active.getY();
@@ -50,17 +49,16 @@ public class MapBattleArrowTask extends Thread {
             int cumY = this.y;
             final int incX = this.x;
             final int incY = this.y;
-            AbstractMazeObject o = null;
+            FantastleObjectModel o = null;
             try {
                 o = m.getCell(px + cumX, py + cumY, 0,
-                        MazeConstants.LAYER_OBJECT);
+                        Layer.OBJECT);
             } catch (final ArrayIndexOutOfBoundsException ae) {
                 o = new Wall();
             }
-            final AbstractTransientObject a = MapBattleArrowTask.createArrow();
-            final int newDir = DirectionResolver.resolve(incX,
-                    incY);
-            a.setDirection(newDir);
+            final int newDir = DirectionResolver.resolve(incX, incY);
+            final FantastleObjectModel a = ArrowFactory
+                    .createArrow(ArrowType.WOODEN, newDir);
             SoundPlayer.playSound(SoundIndex.ARROW_SHOOT);
             while (res) {
                 res = o.arrowHitBattleCheck();
@@ -73,12 +71,12 @@ public class MapBattleArrowTask extends Thread {
                 Thread.sleep(MapBattleArrowSpeedConstants.getArrowSpeed());
                 // Clear arrow
                 app.getBattle().redrawOneBattleSquare(px + cumX, py + cumY,
-                        new Empty());
+                        new OpenSpace());
                 cumX += incX;
                 cumY += incY;
                 try {
                     o = m.getCell(px + cumX, py + cumY, 0,
-                            MazeConstants.LAYER_OBJECT);
+                            Layer.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException ae) {
                     res = false;
                 }
@@ -88,24 +86,24 @@ public class MapBattleArrowTask extends Thread {
             if (o instanceof BattleCharacter) {
                 // Arrow hit a creature, hurt it
                 hit = (BattleCharacter) o;
-                final Faith shooter = this.active.getTemplate().getFaith();
-                final Faith target = hit.getTemplate().getFaith();
+                final Faith shooter = this.active.getCreature().getFaith();
+                final Faith target = hit.getCreature().getFaith();
                 final int mult = (int) (shooter
                         .getMultiplierForOtherFaith(target.getFaithID()) * 10);
                 final Battle bl = app.getBattle();
                 if (mult == 0) {
-                    hit.getTemplate().doDamage(1);
+                    hit.getCreature().doDamage(1);
                     bl.setStatusMessage(
                             "Ow, you got shot! It didn't hurt much.");
                 } else if (mult == 5) {
-                    hit.getTemplate().doDamage(3);
+                    hit.getCreature().doDamage(3);
                     bl.setStatusMessage(
                             "Ow, you got shot! It hurt a little bit.");
                 } else if (mult == 10) {
-                    hit.getTemplate().doDamage(5);
+                    hit.getCreature().doDamage(5);
                     bl.setStatusMessage("Ow, you got shot! It hurt somewhat.");
                 } else if (mult == 20) {
-                    hit.getTemplate().doDamage(8);
+                    hit.getCreature().doDamage(8);
                     bl.setStatusMessage(
                             "Ow, you got shot! It hurt significantly!");
                 }
@@ -116,9 +114,5 @@ public class MapBattleArrowTask extends Thread {
         } catch (final Throwable t) {
             FantastleReboot.logError(t);
         }
-    }
-
-    private static AbstractTransientObject createArrow() {
-        return new Arrow();
     }
 }

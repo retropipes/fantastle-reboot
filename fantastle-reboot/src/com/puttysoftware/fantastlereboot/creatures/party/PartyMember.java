@@ -1,4 +1,4 @@
-/*  TallerTower: An RPG
+/*  FantastleReboot: An RPG
 Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
@@ -24,7 +24,6 @@ import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.loaders.AvatarImageLoader;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;
 import com.puttysoftware.fantastlereboot.maze.GenerateTask;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.page.Page;
@@ -258,7 +257,7 @@ public class PartyMember extends Creature {
         this.setGold(PartyMember.START_GOLD);
         this.setExperience(0L);
         this.getItems().resetInventory();
-        TallerTower.getApplication().getGameManager().deactivateAllEffects();
+        FantastleReboot.getBagOStuff().getGameManager().deactivateAllEffects();
         final Page nextLevelEquation = new Page(3, 1, 0, true);
         final double value = BASE_COEFF * this.personality.getAttribute(
                 PersonalityConstants.PERSONALITY_ATTRIBUTE_LEVEL_UP_SPEED);
@@ -427,7 +426,8 @@ public class PartyMember extends Creature {
 
     @Override
     protected BufferedImageIcon getInitialImage() {
-        return AvatarImageLoader.load(this.avatarFamilyID, this.avatarSkinID, this.avatarHairID);
+        return AvatarImageLoader.load(this.avatarFamilyID, this.avatarSkinID,
+                this.avatarHairID);
     }
 
     @Override

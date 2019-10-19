@@ -35,8 +35,8 @@ import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.MazeManager;
-import com.puttysoftware.fantastlereboot.obsolete.objects.MazeObjectList;
+import com.puttysoftware.fantastlereboot.maze.MazeManager;
+import com.puttysoftware.fantastlereboot.utilities.FantastleObjectModelList;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.updater.ProductData;
 
@@ -51,10 +51,10 @@ public class BagOStuff {
     private ObjectHelpManager oHelpMgr;
     private MazeEditor editor;
     private GUIManager guiMgr;
-    private final MazeObjectList objects;
+    private final FantastleObjectModelList objects;
     private final CombatItemList combatItems;
     private Shop weapons, armor, healer, bank, regenerator, spells, items,
-    socks, enhancements, faiths;
+            socks, enhancements, faiths;
     private BufferedImageIcon microLogo;
     private WindowTurnBattleLogic windowTurnBattle;
     private WindowTimeBattleLogic windowTimeBattle;
@@ -64,7 +64,7 @@ public class BagOStuff {
     private int formerMode;
     private static final String UPDATE_SITE = "http://update.puttysoftware.com/tallertower/";
     private static final String NEW_VERSION_SITE = "http://www.puttysoftware.com/tallertower/";
-    private static final String PRODUCT_NAME = "TallerTower";
+    private static final String PRODUCT_NAME = "FantastleReboot";
     private static final String COMPANY_NAME = "Putty Software";
     private static final String RDNS_COMPANY_NAME = "com.puttysoftware.tallertower";
     private static final ProductData pd = new ProductData(BagOStuff.UPDATE_SITE,
@@ -87,7 +87,7 @@ public class BagOStuff {
 
     // Constructors
     public BagOStuff() {
-        this.objects = new MazeObjectList();
+        this.objects = new FantastleObjectModelList();
         this.combatItems = new CombatItemList();
         this.currentMode = BagOStuff.STATUS_NULL;
         this.formerMode = BagOStuff.STATUS_NULL;
@@ -351,7 +351,7 @@ public class BagOStuff {
         }
     }
 
-    public MazeObjectList getObjects() {
+    public FantastleObjectModelList getObjects() {
         return this.objects;
     }
 

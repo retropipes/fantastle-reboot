@@ -24,23 +24,21 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
-import com.puttysoftware.fantastlereboot.obsolete.objects.Arrow;
-import com.puttysoftware.fantastlereboot.obsolete.objects.Empty;
-import com.puttysoftware.fantastlereboot.obsolete.objects.GenericTransientObject;
-import com.puttysoftware.fantastlereboot.obsolete.objects.IceArrow;
-import com.puttysoftware.fantastlereboot.obsolete.objects.MazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.objects.Wall;
-import com.puttysoftware.fantastlereboot.utilities.ArrowTypeConstants;
-import com.puttysoftware.fantastlereboot.utilities.DirectionNameResolver;
+import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
+import com.puttysoftware.fantastlereboot.objectmodel.Layer;
+import com.puttysoftware.fantastlereboot.objects.OpenSpace;
+import com.puttysoftware.fantastlereboot.objects.Wall;
+import com.puttysoftware.fantastlereboot.objects.temporary.ArrowFactory;
+import com.puttysoftware.fantastlereboot.objects.temporary.ArrowType;
 
 public class ArrowTask extends Thread {
     // Fields
     private int x, y;
-    private final int at;
+    private final ArrowType at;
 
     // Constructors
-    public ArrowTask(final int newX, final int newY, final int newAT) {
+    public ArrowTask(final int newX, final int newY, final ArrowType newAT) {
         this.x = newX;
         this.y = newY;
         this.at = newAT;
@@ -66,16 +64,14 @@ public class ArrowTask extends Thread {
         final int incY = this.y;
         final Maze m = app.getMazeManager().getMaze();
         m.tickTimers(pw, pz);
-        MazeObject o = null;
+        FantastleObjectModel o = null;
         try {
-            o = m.getCell(px + cumX, py + cumY, pz, pw, Maze.LAYER_OBJECT);
+            o = m.getCell(px + cumX, py + cumY, pz, pw, Layer.OBJECT);
         } catch (final ArrayIndexOutOfBoundsException ae) {
             o = new Wall();
         }
-        final GenericTransientObject a = ArrowTask.createArrowForType(this.at);
-        final String suffix = DirectionNameResolver.resolveToName(
+        final FantastleObjectModel a = ArrowFactory.createArrow(this.at,
                 DirectionResolver.resolve(incX, incY));
-        a.setNameSuffix(suffix);
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             SoundPlayer.playSound(SoundIndex.ARROW_SHOOT);
@@ -91,11 +87,11 @@ public class ArrowTask extends Thread {
                         a.getName());
             }
             app.getGameManager().redrawOneSquare(px + cumX, py + cumY, false,
-                    new Empty().getName());
+                    new OpenSpace().getName());
             cumX += incX;
             cumY += incY;
             try {
-                o = m.getCell(px + cumX, py + cumY, pz, pw, Maze.LAYER_OBJECT);
+                o = m.getCell(px + cumX, py + cumY, pz, pw, Layer.OBJECT);
             } catch (final ArrayIndexOutOfBoundsException ae) {
                 o = new Wall();
             }
@@ -111,16 +107,5 @@ public class ArrowTask extends Thread {
             SoundPlayer.playSound(SoundIndex.ARROW_DIE);
         }
         app.getGameManager().arrowDone();
-    }
-
-    private static GenericTransientObject createArrowForType(final int type) {
-        switch (type) {
-        case ArrowTypeConstants.ARROW_TYPE_PLAIN:
-            return new Arrow();
-        case ArrowTypeConstants.ARROW_TYPE_ICE:
-            return new IceArrow();
-        default:
-            return null;
-        }
     }
 }

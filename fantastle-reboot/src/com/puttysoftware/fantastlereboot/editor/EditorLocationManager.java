@@ -19,7 +19,8 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot.editor;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
+import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.objectmodel.Layer;
 
 public class EditorLocationManager {
     // Fields
@@ -212,7 +213,7 @@ public class EditorLocationManager {
         this.minW = 0;
         this.minE = 0;
         this.maxW = m.getLevels() - 1;
-        this.maxE = Maze.LAYER_COUNT - 1;
+        this.maxE = Layer.COUNT - 1;
         this.maxX = m.getRows(this.locW);
         this.maxY = m.getColumns(this.locW);
         this.maxZ = m.getFloors(this.locW) - 1;

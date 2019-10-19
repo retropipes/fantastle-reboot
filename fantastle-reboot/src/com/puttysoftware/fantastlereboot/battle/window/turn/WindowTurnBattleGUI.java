@@ -20,7 +20,6 @@ import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
 import com.puttysoftware.fantastlereboot.battle.BossRewards;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class WindowTurnBattleGUI {
@@ -175,7 +174,7 @@ public class WindowTurnBattleGUI {
                 boolean success = true;
                 final String cmd = e.getActionCommand();
                 final WindowTurnBattleGUI wbg = WindowTurnBattleGUI.this;
-                final Battle b = TallerTower.getApplication().getBattle();
+                final Battle b = FantastleReboot.getBagOStuff().getBattle();
                 // Clear Message Area
                 wbg.clearMessageArea();
                 // Display Beginning Stats

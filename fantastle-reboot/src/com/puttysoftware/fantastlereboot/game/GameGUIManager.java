@@ -1,4 +1,4 @@
-/*  TallerTower: An RPG
+/*  FantastleReboot: An RPG
 Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
@@ -20,20 +20,16 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 import com.puttysoftware.diane.loaders.ImageCompositor;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.DrawGrid;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeConstants;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
-import com.puttysoftware.fantastlereboot.obsolete.Application;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.loaders.ObjectImageManager;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Darkness;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.EmptyVoid;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.MazeNoteObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Player;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
+import com.puttysoftware.fantastlereboot.objectmodel.Layer;
+import com.puttysoftware.fantastlereboot.objects.Nothing;
+import com.puttysoftware.fantastlereboot.objects.Player;
 import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
 import com.puttysoftware.images.BufferedImageIcon;
 
@@ -76,7 +72,7 @@ class GameGUIManager {
 
     void initViewManager() {
         if (this.vwMgr == null) {
-            this.vwMgr = TallerTower.getApplication().getGameManager()
+            this.vwMgr = FantastleReboot.getBagOStuff().getGameManager()
                     .getViewManager();
             this.setUpGUI();
         }
@@ -93,7 +89,7 @@ class GameGUIManager {
     }
 
     public void showOutput() {
-        final Application app = TallerTower.getApplication();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         if (!this.outputFrame.isVisible()) {
             app.getMenuManager().setGameMenus();
             this.outputFrame.setVisible(true);
@@ -127,14 +123,14 @@ class GameGUIManager {
     public void redrawMaze() {
         // Draw the maze, if it is visible
         if (this.outputFrame.isVisible()) {
-            final Application app = TallerTower.getApplication();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             final Maze m = app.getMazeManager().getMaze();
             int x, y, u, v;
             int xFix, yFix;
             boolean visible;
             u = m.getPlayerLocationX();
             v = m.getPlayerLocationY();
-            final AbstractMazeObject ev = new EmptyVoid();
+            final FantastleObjectModel ev = new Nothing();
             for (x = this.vwMgr.getViewingWindowLocationX(); x <= this.vwMgr
                     .getLowerRightViewingWindowLocationX(); x++) {
                 for (y = this.vwMgr.getViewingWindowLocationY(); y <= this.vwMgr
@@ -145,34 +141,34 @@ class GameGUIManager {
                             v, y, x);
                     try {
                         if (visible) {
-                            final AbstractMazeObject obj1 = m
+                            final FantastleObjectModel obj1 = m
                                     .getCell(y, x, m.getPlayerLocationZ(),
-                                            MazeConstants.LAYER_GROUND)
+                                            Layer.GROUND)
                                     .gameRenderHook(y, x,
                                             m.getPlayerLocationZ());
-                            final AbstractMazeObject obj2 = m
+                            final FantastleObjectModel obj2 = m
                                     .getCell(y, x, m.getPlayerLocationZ(),
-                                            MazeConstants.LAYER_OBJECT)
+                                            Layer.OBJECT)
                                     .gameRenderHook(y, x,
                                             m.getPlayerLocationZ());
                             final BufferedImageIcon img1 = ObjectImageManager
                                     .getImage(obj1.getName(),
                                             obj1.getGameBaseID(),
-                                            AbstractMazeObject
+                                            FantastleObjectModel
                                                     .getTemplateColor());
                             final BufferedImageIcon img2 = ObjectImageManager
                                     .getImage(obj2.getName(),
                                             obj2.getGameBaseID(),
-                                            AbstractMazeObject
+                                            FantastleObjectModel
                                                     .getTemplateColor());
                             if (u == y && v == x) {
-                                final AbstractMazeObject obj3 = new Player()
+                                final FantastleObjectModel obj3 = new Player()
                                         .gameRenderHook(y, x,
                                                 m.getPlayerLocationZ());
                                 final BufferedImageIcon img3 = ObjectImageManager
                                         .getImage(obj3.getName(),
                                                 obj3.getGameBaseID(),
-                                                AbstractMazeObject
+                                                FantastleObjectModel
                                                         .getTemplateColor());
                                 String cacheName = generateCacheName(obj1, obj2,
                                         obj3);
@@ -181,13 +177,13 @@ class GameGUIManager {
                                         xFix, yFix);
                             } else if (m.hasNote(x, y,
                                     m.getPlayerLocationZ())) {
-                                final AbstractMazeObject obj3 = NOTE
+                                final FantastleObjectModel obj3 = NOTE
                                         .gameRenderHook(y, x,
                                                 m.getPlayerLocationZ());
                                 final BufferedImageIcon img3 = ObjectImageManager
                                         .getImage(obj3.getName(),
                                                 obj3.getGameBaseID(),
-                                                AbstractMazeObject
+                                                FantastleObjectModel
                                                         .getTemplateColor());
                                 String cacheName = generateCacheName(obj1, obj2,
                                         obj3);
@@ -211,20 +207,20 @@ class GameGUIManager {
                                     xFix, yFix);
                         }
                     } catch (final ArrayIndexOutOfBoundsException ae) {
-                        final AbstractMazeObject obj = ev.gameRenderHook(y, x,
+                        final FantastleObjectModel obj = ev.gameRenderHook(y, x,
                                 m.getPlayerLocationZ());
                         this.drawGrid.setImageCell(
                                 ObjectImageManager.getImage(obj.getName(),
                                         obj.getGameBaseID(),
-                                        AbstractMazeObject.getTemplateColor()),
+                                        FantastleObjectModel.getTemplateColor()),
                                 xFix, yFix);
                     } catch (final NullPointerException np) {
-                        final AbstractMazeObject obj = ev.gameRenderHook(y, x,
+                        final FantastleObjectModel obj = ev.gameRenderHook(y, x,
                                 m.getPlayerLocationZ());
                         this.drawGrid.setImageCell(
                                 ObjectImageManager.getImage(obj.getName(),
                                         obj.getGameBaseID(),
-                                        AbstractMazeObject.getTemplateColor()),
+                                        FantastleObjectModel.getTemplateColor()),
                                 xFix, yFix);
                     }
                 }
@@ -241,9 +237,9 @@ class GameGUIManager {
     }
 
     private static String generateCacheName(
-            final AbstractMazeObject... objects) {
+            final FantastleObjectModel... objects) {
         StringBuilder result = new StringBuilder();
-        for (AbstractMazeObject object : objects) {
+        for (FantastleObjectModel object : objects) {
             result.append(object.getGameBaseID());
             result.append("_");
         }
@@ -267,7 +263,7 @@ class GameGUIManager {
         this.borderPane.setLayout(new BorderLayout());
         this.messageLabel = new JLabel(" ");
         this.messageLabel.setOpaque(true);
-        this.outputFrame = new JFrame("TallerTower");
+        this.outputFrame = new JFrame("FantastleReboot");
         this.drawGrid = new DrawGrid(FantastleReboot.getBagOStuff()
                 .getPrefsManager().getViewingWindowSize());
         this.outputPane = new GameDraw(this.drawGrid);
@@ -313,7 +309,7 @@ class GameGUIManager {
 
         public void handleMovement(final KeyEvent e) {
             try {
-                final GameLogicManager glm = TallerTower.getApplication()
+                final GameLogicManager glm = FantastleReboot.getBagOStuff()
                         .getGameManager();
                 final int keyCode = e.getKeyCode();
                 switch (keyCode) {
@@ -408,7 +404,7 @@ class GameGUIManager {
         @Override
         public void windowClosing(final WindowEvent we) {
             try {
-                final Application app = TallerTower.getApplication();
+                final BagOStuff app = FantastleReboot.getBagOStuff();
                 boolean success = false;
                 int status = 0;
                 if (app.getMazeManager().getDirty()) {
@@ -465,7 +461,7 @@ class GameGUIManager {
         @Override
         public void mouseClicked(final MouseEvent e) {
             try {
-                final GameLogicManager gm = TallerTower.getApplication()
+                final GameLogicManager gm = FantastleReboot.getBagOStuff()
                         .getGameManager();
                 if (e.isShiftDown()) {
                     final int x = e.getX();

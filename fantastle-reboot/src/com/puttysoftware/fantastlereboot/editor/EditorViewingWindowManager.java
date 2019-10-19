@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.editor;
 
-import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
+import com.puttysoftware.fantastlereboot.maze.Maze;
 
 public class EditorViewingWindowManager {
     // Fields
@@ -133,7 +133,8 @@ public class EditorViewingWindowManager {
 
     public void halfOffsetMaximumViewingWindowLocationsFromMaze(final Maze m) {
         for (int x = 0; x < m.getLevels(); x++) {
-            this.MAX_VIEWING_WINDOW_X = m.getRows(x) + EditorViewingWindowManager.getOffsetFactorX();
+            this.MAX_VIEWING_WINDOW_X = m.getRows(x)
+                    + EditorViewingWindowManager.getOffsetFactorX();
             this.MAX_VIEWING_WINDOW_Y = m.getColumns(x)
                     + EditorViewingWindowManager.getOffsetFactorY();
         }
@@ -141,18 +142,22 @@ public class EditorViewingWindowManager {
 
     public void halfOffsetMaximumViewingWindowLocation(final int valueX,
             final int valueY) {
-        this.MAX_VIEWING_WINDOW_X = valueX + EditorViewingWindowManager.getOffsetFactorX();
-        this.MAX_VIEWING_WINDOW_Y = valueY + EditorViewingWindowManager.getOffsetFactorY();
+        this.MAX_VIEWING_WINDOW_X = valueX
+                + EditorViewingWindowManager.getOffsetFactorX();
+        this.MAX_VIEWING_WINDOW_Y = valueY
+                + EditorViewingWindowManager.getOffsetFactorY();
         this.checkViewingWindow();
     }
 
     public void halfOffsetMaximumViewingWindowLocationX(final int value) {
-        this.MAX_VIEWING_WINDOW_X = value + EditorViewingWindowManager.getOffsetFactorX();
+        this.MAX_VIEWING_WINDOW_X = value
+                + EditorViewingWindowManager.getOffsetFactorX();
         this.checkViewingWindow();
     }
 
     public void halfOffsetMaximumViewingWindowLocationY(final int value) {
-        this.MAX_VIEWING_WINDOW_Y = value + EditorViewingWindowManager.getOffsetFactorY();
+        this.MAX_VIEWING_WINDOW_Y = value
+                + EditorViewingWindowManager.getOffsetFactorY();
         this.checkViewingWindow();
     }
 

@@ -1,4 +1,4 @@
-/*  TallerTower: An RPG
+/*  FantastleReboot: An RPG
 Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
@@ -11,10 +11,10 @@ import java.io.IOException;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.VersionException;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Empty;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Monster;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Tile;
+import com.puttysoftware.fantastlereboot.creatures.monsters.Monster;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
+import com.puttysoftware.fantastlereboot.objects.OpenSpace;
+import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.randomrange.RandomLongRange;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
@@ -46,19 +46,19 @@ public class Maze {
         final long random = new RandomLongRange(0, Long.MAX_VALUE).generate();
         final String randomID = Long.toHexString(random);
         this.basePath = System.getProperty("java.io.tmpdir") + File.separator
-                + "TallerTower" + File.separator + randomID + ".maze";
+                + "FantastleReboot" + File.separator + randomID + ".maze";
         final File base = new File(this.basePath);
         final boolean success = base.mkdirs();
         if (!success) {
             CommonDialogs.showErrorDialog(
-                    "Maze temporary folder creation failed!", "TallerTower");
+                    "Maze temporary folder creation failed!", "FantastleReboot");
         }
     }
 
     // Static methods
     public static String getMazeTempFolder() {
         return System.getProperty("java.io.tmpdir") + File.separator
-                + "TallerTower";
+                + "FantastleReboot";
     }
 
     public static int getMinLevels() {
@@ -86,7 +86,7 @@ public class Maze {
         final Maze temp = new Maze();
         temp.addLevel(FantastleReboot.getBattleMazeSize(),
                 FantastleReboot.getBattleMazeSize(), 1);
-        temp.fill(new Tile(), new Empty());
+        temp.fill(new Tile(), new OpenSpace());
         return temp;
     }
 
@@ -188,7 +188,7 @@ public class Maze {
         return this.mazeData.getNote(x, y, z);
     }
 
-    public AbstractMazeObject getCell(final int row, final int col,
+    public FantastleObjectModel getCell(final int row, final int col,
             final int floor, final int extra) {
         return this.mazeData.getCell(row, col, floor, extra);
     }
@@ -230,7 +230,7 @@ public class Maze {
         return this.mazeData.isSquareVisible(x1, y1, x2, y2);
     }
 
-    public void setCell(final AbstractMazeObject mo, final int row,
+    public void setCell(final FantastleObjectModel mo, final int row,
             final int col, final int floor, final int extra) {
         this.mazeData.setCell(mo, row, col, floor, extra);
     }
@@ -301,8 +301,8 @@ public class Maze {
         this.mazeData.restore();
     }
 
-    private void fill(final AbstractMazeObject bottom,
-            final AbstractMazeObject top) {
+    private void fill(final FantastleObjectModel bottom,
+            final FantastleObjectModel top) {
         this.mazeData.fillFloor(bottom, top, 0);
     }
 

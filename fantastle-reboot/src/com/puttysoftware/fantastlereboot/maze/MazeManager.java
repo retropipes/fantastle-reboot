@@ -1,4 +1,4 @@
-/*  TallerTower: An RPG
+/*  FantastleReboot: An RPG
 Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
@@ -11,12 +11,11 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import com.apple.eawt.Application;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.obsolete.Application;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.savedgames.GameFinder;
 import com.puttysoftware.fantastlereboot.savedgames.GameLoadTask;
 import com.puttysoftware.fantastlereboot.savedgames.GameSaveTask;
@@ -29,8 +28,8 @@ public final class MazeManager {
     private static final String MAC_PREFIX = "HOME";
     private static final String WIN_PREFIX = "APPDATA";
     private static final String UNIX_PREFIX = "HOME";
-    private static final String MAC_DIR = "/Library/Application Support/Putty Software/TallerTower/Games/";
-    private static final String WIN_DIR = "\\Putty Software\\TallerTower\\Games\\";
+    private static final String MAC_DIR = "/Library/Application Support/Putty Software/FantastleReboot/Games/";
+    private static final String WIN_DIR = "\\Putty Software\\FantastleReboot\\Games\\";
     private static final String UNIX_DIR = "/.puttysoftware/tallertower/games/";
 
     // Constructors
@@ -58,11 +57,11 @@ public final class MazeManager {
             triedToLoad.delete();
         }
         this.setDirty(false);
-        TallerTower.getApplication().getGameManager().stateChanged();
-        TallerTower.getApplication().getMenuManager().checkFlags();
+        FantastleReboot.getBagOStuff().getGameManager().stateChanged();
+        FantastleReboot.getBagOStuff().getMenuManager().checkFlags();
     }
 
-    public AbstractMazeObject getMazeObject(final int x, final int y,
+    public FantastleObjectModel getFantastleObjectModel(final int x, final int y,
             final int z, final int e) {
         try {
             return this.gameMaze.getCell(x, y, z, e);
@@ -77,7 +76,7 @@ public final class MazeManager {
         final int mode = bag.getMode();
         if (mode == BagOStuff.STATUS_GAME) {
             type = "game";
-            source = "TallerTower";
+            source = "FantastleReboot";
         } else {
             // Not in the game or editor, so abort
             return JOptionPane.NO_OPTION;
@@ -91,7 +90,7 @@ public final class MazeManager {
     }
 
     public void setLoaded(final boolean status) {
-        final Application app = TallerTower.getApplication();
+        final Application app = FantastleReboot.getBagOStuff();
         this.loaded = status;
         app.getMenuManager().checkFlags();
     }

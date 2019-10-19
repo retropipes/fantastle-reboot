@@ -23,7 +23,7 @@ import java.awt.FlowLayout;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import com.puttysoftware.fantastlereboot.obsolete.objects.MazeObjectList;
+import com.puttysoftware.fantastlereboot.utilities.FantastleObjectModelList;
 import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 import com.puttysoftware.help.GraphicalHelpViewer;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -31,7 +31,7 @@ import com.puttysoftware.images.BufferedImageIcon;
 public class ObjectHelpManager {
     // Fields
     private final JFrame helpFrame;
-    private final MazeObjectList objectList;
+    private final FantastleObjectModelList objectList;
     private final String[] objectNames;
     private final BufferedImageIcon[] objectAppearances;
     private final GraphicalHelpViewer hv;

@@ -1,4 +1,4 @@
-/*  TallerTower: An RPG
+/*  FantastleReboot: An RPG
 Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
@@ -8,8 +8,8 @@ package com.puttysoftware.fantastlereboot.battle;
 import javax.swing.JFrame;
 
 import com.puttysoftware.fantastlereboot.creatures.Creature;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
+import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 
 public abstract class Battle {
     // Constructors
@@ -68,7 +68,7 @@ public abstract class Battle {
     public abstract void arrowDone(BattleCharacter hit);
 
     public abstract void redrawOneBattleSquare(int x, int y,
-            AbstractMazeObject obj3);
+            FantastleObjectModel obj3);
 
     public abstract boolean isWaitingForAI();
 }

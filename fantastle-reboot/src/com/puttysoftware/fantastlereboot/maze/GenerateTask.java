@@ -1,4 +1,4 @@
-/*  TallerTower: An RPG
+/*  FantastleReboot: An RPG
 Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
@@ -9,11 +9,11 @@ import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 import javax.swing.WindowConstants;
 
+import com.apple.eawt.Application;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
-import com.puttysoftware.fantastlereboot.obsolete.Application;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
+import com.puttysoftware.fantastlereboot.objectmodel.Layer;
 import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
 import com.puttysoftware.randomrange.RandomRange;
 
@@ -41,7 +41,7 @@ public class GenerateTask extends Thread {
     public void run() {
         try {
             this.generateFrame.setVisible(true);
-            final Application app = TallerTower.getApplication();
+            final Application app = FantastleReboot.getBagOStuff();
             Maze gameMaze = app.getMazeManager().getMaze();
             if (!this.scratch) {
                 app.getGameManager().disableEvents();
@@ -62,7 +62,7 @@ public class GenerateTask extends Thread {
                     startC = rC.generate();
                     startF = rF.generate();
                 } while (gameMaze.getCell(startR, startC, startF,
-                        MazeConstants.LAYER_OBJECT).isSolid());
+                        Layer.OBJECT).isSolid());
                 gameMaze.setStartRow(startR);
                 gameMaze.setStartColumn(startC);
                 gameMaze.setStartFloor(startF);
@@ -79,7 +79,7 @@ public class GenerateTask extends Thread {
                     startC = rC.generate();
                     startF = rF.generate();
                 } while (gameMaze.getCell(startR, startC, startF,
-                        MazeConstants.LAYER_OBJECT).isSolid());
+                        Layer.OBJECT).isSolid());
                 gameMaze.setPlayerLocationX(startR);
                 gameMaze.setPlayerLocationY(startC);
                 gameMaze.setPlayerLocationZ(startF);
@@ -87,7 +87,7 @@ public class GenerateTask extends Thread {
             }
             gameMaze.save();
             // Final cleanup
-            AbstractMazeObject
+            FantastleObjectModel
                     .setTemplateColor(ImageColorConstants.getColorForLevel(
                             PartyManager.getParty().getMonsterLevel()));
             if (this.scratch) {

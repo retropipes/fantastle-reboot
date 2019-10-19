@@ -1,4 +1,4 @@
-/*  TallerTower: An RPG
+/*  FantastleReboot: An RPG
 Copyright (C) 2011-2012 Eric Ahnell
 
 
@@ -14,7 +14,7 @@ import javax.swing.SwingConstants;
 
 import com.puttysoftware.fantastlereboot.assets.EffectImageIndex;
 import com.puttysoftware.fantastlereboot.loaders.EffectImageLoader;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
+import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class MapTimeBattleStats {

@@ -44,10 +44,10 @@ public class AvatarImageLoader {
             }
         }
         String imageExt = fileExtensions.getProperty("images");
-        String name = "/assets/images/avatars/" + Integer.toString(familyID) + Integer.toString(skinID)
-        + Integer.toString(hairID) + imageExt;
-        return ImageLoader.load(name,
-                AvatarImageLoader.class.getResource(name),
+        String name = "/assets/images/avatars/" + Integer.toString(familyID)
+                + Integer.toString(skinID) + Integer.toString(hairID)
+                + imageExt;
+        return ImageLoader.load(name, AvatarImageLoader.class.getResource(name),
                 FantastleReboot.getErrorHandler());
     }
 }

@@ -1,4 +1,4 @@
-/*  TallerTower: An RPG
+/*  FantastleReboot: An RPG
 Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
@@ -11,6 +11,7 @@ import java.util.TimerTask;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import com.apple.eawt.Application;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
@@ -35,12 +36,10 @@ import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeConstants;
-import com.puttysoftware.fantastlereboot.obsolete.Application;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.Empty;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
+import com.puttysoftware.fantastlereboot.objectmodel.Layer;
+import com.puttysoftware.fantastlereboot.objects.OpenSpace;
+import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 import com.puttysoftware.fantastlereboot.spells.Spell;
 import com.puttysoftware.fantastlereboot.spells.SpellCaster;
 import com.puttysoftware.randomrange.RandomRange;
@@ -97,7 +96,7 @@ public class MapTimeBattleLogic extends Battle {
         // Level Up Check
         if (playerCharacter.checkLevelUp()) {
             playerCharacter.levelUp();
-            TallerTower.getApplication().getGameManager().keepNextMessage();
+            FantastleReboot.getBagOStuff().getGameManager().keepNextMessage();
             bag.showMessage(
                     "You reached level " + playerCharacter.getLevel() + ".");
         }
@@ -106,7 +105,7 @@ public class MapTimeBattleLogic extends Battle {
     private void doBattleInternal(final Maze bMaze, final MapBattle b) {
         // Initialize Battle
         final BagOStuff bag = FantastleReboot.getBagOStuff();
-        TallerTower.getApplication().getGameManager().hideOutput();
+        FantastleReboot.getBagOStuff().getGameManager().hideOutput();
         bag.setInBattle();
         this.battleMaze = bMaze;
         this.pde = AbstractDamageEngine.getPlayerInstance();
@@ -148,8 +147,8 @@ public class MapTimeBattleLogic extends Battle {
         // Leave Battle
         this.hideBattle();
         // Return to whence we came
-        TallerTower.getApplication().getGameManager().showOutput();
-        TallerTower.getApplication().getGameManager().redrawMaze();
+        FantastleReboot.getBagOStuff().getGameManager().showOutput();
+        FantastleReboot.getBagOStuff().getGameManager().redrawMaze();
     }
 
     private void clearStatusMessage() {
@@ -383,18 +382,18 @@ public class MapTimeBattleLogic extends Battle {
                     && this.me.getTemplate().getY() == -1) {
                 rx = randX.generate();
                 ry = randY.generate();
-                AbstractMazeObject obj = this.battleMaze.getCell(rx, ry, 0,
-                        MazeConstants.LAYER_OBJECT);
+                FantastleObjectModel obj = this.battleMaze.getCell(rx, ry, 0,
+                        Layer.OBJECT);
                 while (obj.isSolidInBattle()) {
                     rx = randX.generate();
                     ry = randY.generate();
                     obj = this.battleMaze.getCell(rx, ry, 0,
-                            MazeConstants.LAYER_OBJECT);
+                            Layer.OBJECT);
                 }
                 this.me.setX(rx);
                 this.me.setY(ry);
                 this.battleMaze.setCell(this.me, rx, ry, 0,
-                        MazeConstants.LAYER_OBJECT);
+                        Layer.OBJECT);
             }
         }
         // Set Enemy Location
@@ -403,18 +402,18 @@ public class MapTimeBattleLogic extends Battle {
                     && this.enemy.getTemplate().getY() == -1) {
                 rx = randX.generate();
                 ry = randY.generate();
-                AbstractMazeObject obj = this.battleMaze.getCell(rx, ry, 0,
-                        MazeConstants.LAYER_OBJECT);
+                FantastleObjectModel obj = this.battleMaze.getCell(rx, ry, 0,
+                        Layer.OBJECT);
                 while (obj.isSolidInBattle()) {
                     rx = randX.generate();
                     ry = randY.generate();
                     obj = this.battleMaze.getCell(rx, ry, 0,
-                            MazeConstants.LAYER_OBJECT);
+                            Layer.OBJECT);
                 }
                 this.enemy.setX(rx);
                 this.enemy.setY(ry);
                 this.battleMaze.setCell(this.enemy, rx, ry, 0,
-                        MazeConstants.LAYER_OBJECT);
+                        Layer.OBJECT);
             }
         }
     }
@@ -556,8 +555,8 @@ public class MapTimeBattleLogic extends Battle {
             // Set dead character to inactive
             hit.deactivate();
             // Remove character from battle
-            this.battleMaze.setCell(new Empty(), hit.getX(), hit.getY(), 0,
-                    MazeConstants.LAYER_OBJECT);
+            this.battleMaze.setCell(new OpenSpace(), hit.getX(), hit.getY(), 0,
+                    Layer.OBJECT);
         }
         // Check result
         final BattleResults currResult = this.getResult();
@@ -576,74 +575,74 @@ public class MapTimeBattleLogic extends Battle {
         int px = active.getX();
         int py = active.getY();
         final Maze m = this.battleMaze;
-        AbstractMazeObject next = null;
-        AbstractMazeObject nextGround = null;
-        AbstractMazeObject currGround = null;
+        FantastleObjectModel next = null;
+        FantastleObjectModel nextGround = null;
+        FantastleObjectModel currGround = null;
         active.saveLocation();
         if (updateView) {
             this.battleGUI.getViewManager().saveViewingWindow();
         }
         try {
-            next = m.getCell(px + x, py + y, 0, MazeConstants.LAYER_OBJECT);
+            next = m.getCell(px + x, py + y, 0, Layer.OBJECT);
             nextGround = m.getCell(px + x, py + y, 0,
-                    MazeConstants.LAYER_GROUND);
-            currGround = m.getCell(px, py, 0, MazeConstants.LAYER_GROUND);
+                    Layer.GROUND);
+            currGround = m.getCell(px, py, 0, Layer.GROUND);
         } catch (final ArrayIndexOutOfBoundsException aioob) {
             // Ignore
         }
         if (next != null && nextGround != null && currGround != null) {
             if (!next.isSolidInBattle()) {
                 // Move
-                AbstractMazeObject obj1 = null;
-                AbstractMazeObject obj2 = null;
-                AbstractMazeObject obj3 = null;
-                AbstractMazeObject obj4 = null;
-                AbstractMazeObject obj6 = null;
-                AbstractMazeObject obj7 = null;
-                AbstractMazeObject obj8 = null;
-                AbstractMazeObject obj9 = null;
+                FantastleObjectModel obj1 = null;
+                FantastleObjectModel obj2 = null;
+                FantastleObjectModel obj3 = null;
+                FantastleObjectModel obj4 = null;
+                FantastleObjectModel obj6 = null;
+                FantastleObjectModel obj7 = null;
+                FantastleObjectModel obj8 = null;
+                FantastleObjectModel obj9 = null;
                 try {
                     obj1 = m.getCell(px - 1, py - 1, 0,
-                            MazeConstants.LAYER_OBJECT);
+                            Layer.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException aioob) {
                     // Ignore
                 }
                 try {
-                    obj2 = m.getCell(px, py - 1, 0, MazeConstants.LAYER_OBJECT);
+                    obj2 = m.getCell(px, py - 1, 0, Layer.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException aioob) {
                     // Ignore
                 }
                 try {
                     obj3 = m.getCell(px + 1, py - 1, 0,
-                            MazeConstants.LAYER_OBJECT);
+                            Layer.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException aioob) {
                     // Ignore
                 }
                 try {
-                    obj4 = m.getCell(px - 1, py, 0, MazeConstants.LAYER_OBJECT);
+                    obj4 = m.getCell(px - 1, py, 0, Layer.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException aioob) {
                     // Ignore
                 }
                 try {
                     obj6 = m.getCell(px + 1, py - 1, 0,
-                            MazeConstants.LAYER_OBJECT);
+                            Layer.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException aioob) {
                     // Ignore
                 }
                 try {
                     obj7 = m.getCell(px - 1, py + 1, 0,
-                            MazeConstants.LAYER_OBJECT);
+                            Layer.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException aioob) {
                     // Ignore
                 }
                 try {
-                    obj8 = m.getCell(px, py + 1, 0, MazeConstants.LAYER_OBJECT);
+                    obj8 = m.getCell(px, py + 1, 0, Layer.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException aioob) {
                     // Ignore
                 }
                 try {
                     obj9 = m.getCell(px + 1, py + 1, 0,
-                            MazeConstants.LAYER_OBJECT);
+                            Layer.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException aioob) {
                     // Ignore
                 }
@@ -733,7 +732,7 @@ public class MapTimeBattleLogic extends Battle {
                     }
                 }
                 m.setCell(active.getSavedObject(), px, py, 0,
-                        MazeConstants.LAYER_OBJECT);
+                        Layer.OBJECT);
                 active.offsetX(x);
                 active.offsetY(y);
                 px += x;
@@ -745,8 +744,8 @@ public class MapTimeBattleLogic extends Battle {
                             .offsetViewingWindowLocationY(x);
                 }
                 active.setSavedObject(
-                        m.getCell(px, py, 0, MazeConstants.LAYER_OBJECT));
-                m.setCell(active, px, py, 0, MazeConstants.LAYER_OBJECT);
+                        m.getCell(px, py, 0, Layer.OBJECT));
+                m.setCell(active, px, py, 0, Layer.OBJECT);
                 SoundPlayer.playSound(SoundIndex.WALK);
             } else {
                 if (next instanceof BattleCharacter) {
@@ -786,8 +785,8 @@ public class MapTimeBattleLogic extends Battle {
                         // Set dead character to inactive
                         bc.deactivate();
                         // Remove character from battle
-                        m.setCell(new Empty(), bc.getX(), bc.getY(), 0,
-                                MazeConstants.LAYER_OBJECT);
+                        m.setCell(new OpenSpace(), bc.getX(), bc.getY(), 0,
+                                Layer.OBJECT);
                     }
                     // Handle self death
                     if (!active.getTemplate().isAlive()) {
@@ -796,8 +795,8 @@ public class MapTimeBattleLogic extends Battle {
                         // Set dead character to inactive
                         active.deactivate();
                         // Remove character from battle
-                        m.setCell(new Empty(), active.getX(), active.getY(), 0,
-                                MazeConstants.LAYER_OBJECT);
+                        m.setCell(new OpenSpace(), active.getX(), active.getY(),
+                                0, Layer.OBJECT);
                     }
                 } else {
                     // Move Failed
@@ -829,8 +828,8 @@ public class MapTimeBattleLogic extends Battle {
             // Set fled character to inactive
             active.deactivate();
             // Remove character from battle
-            m.setCell(new Empty(), active.getX(), active.getY(), 0,
-                    MazeConstants.LAYER_OBJECT);
+            m.setCell(new OpenSpace(), active.getX(), active.getY(), 0,
+                    Layer.OBJECT);
             // End Turn
             this.endTurn();
             this.updateStatsAndEffects();
@@ -871,7 +870,7 @@ public class MapTimeBattleLogic extends Battle {
         final int px = acting.getX();
         final int py = acting.getY();
         final Maze m = this.battleMaze;
-        AbstractMazeObject next = null;
+        FantastleObjectModel next = null;
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
                 if (x == 0 && y == 0) {
@@ -879,7 +878,7 @@ public class MapTimeBattleLogic extends Battle {
                 }
                 try {
                     next = m.getCell(px + x, py + y, 0,
-                            MazeConstants.LAYER_OBJECT);
+                            Layer.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException aioob) {
                     // Ignore
                 }
@@ -1219,7 +1218,7 @@ public class MapTimeBattleLogic extends Battle {
 
     @Override
     public void redrawOneBattleSquare(final int x, final int y,
-            final AbstractMazeObject obj3) {
+            final FantastleObjectModel obj3) {
         this.battleGUI.redrawOneBattleSquare(this.battleMaze, x, y, obj3);
     }
 
@@ -1243,8 +1242,7 @@ public class MapTimeBattleLogic extends Battle {
                     if (!message.equals(Effect.getNullMessage())) {
                         this.setStatusMessage(message);
                         try {
-                            FantastleReboot.getBagOStuff()
-                                    .getPrefsManager();
+                            FantastleReboot.getBagOStuff().getPrefsManager();
                             Thread.sleep(PreferencesManager.getBattleSpeed());
                         } catch (final InterruptedException ie) {
                             // Ignore
@@ -1271,8 +1269,8 @@ public class MapTimeBattleLogic extends Battle {
                     // Remove effects from dead character
                     active.stripAllEffects();
                     // Remove character from battle
-                    this.battleMaze.setCell(new Empty(), this.me.getX(),
-                            this.me.getY(), 0, MazeConstants.LAYER_OBJECT);
+                    this.battleMaze.setCell(new OpenSpace(), this.me.getX(),
+                            this.me.getY(), 0, Layer.OBJECT);
                 }
             }
         } else {
@@ -1289,8 +1287,7 @@ public class MapTimeBattleLogic extends Battle {
                     if (!message.equals(Effect.getNullMessage())) {
                         this.setStatusMessage(message);
                         try {
-                            FantastleReboot.getBagOStuff()
-                                    .getPrefsManager();
+                            FantastleReboot.getBagOStuff().getPrefsManager();
                             Thread.sleep(PreferencesManager.getBattleSpeed());
                         } catch (final InterruptedException ie) {
                             // Ignore
@@ -1318,8 +1315,8 @@ public class MapTimeBattleLogic extends Battle {
                     // Remove effects from dead character
                     active.stripAllEffects();
                     // Remove character from battle
-                    this.battleMaze.setCell(new Empty(), this.enemy.getX(),
-                            this.enemy.getY(), 0, MazeConstants.LAYER_OBJECT);
+                    this.battleMaze.setCell(new OpenSpace(), this.enemy.getX(),
+                            this.enemy.getY(), 0, Layer.OBJECT);
                 }
             }
         }
@@ -1463,7 +1460,7 @@ public class MapTimeBattleLogic extends Battle {
         @Override
         public void run() {
             try {
-                final Application app = TallerTower.getApplication();
+                final Application app = FantastleReboot.getBagOStuff();
                 final BagOStuff bag = FantastleReboot.getBagOStuff();
                 final Battle b = app.getBattle();
                 if (bag.getMode() == BagOStuff.STATUS_BATTLE
@@ -1495,7 +1492,7 @@ public class MapTimeBattleLogic extends Battle {
         @Override
         public void run() {
             try {
-                final Application app = TallerTower.getApplication();
+                final Application app = FantastleReboot.getBagOStuff();
                 final BagOStuff bag = FantastleReboot.getBagOStuff();
                 final Battle b = app.getBattle();
                 if (bag.getMode() == BagOStuff.STATUS_BATTLE

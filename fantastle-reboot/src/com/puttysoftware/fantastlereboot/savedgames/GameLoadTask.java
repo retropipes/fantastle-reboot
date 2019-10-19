@@ -1,4 +1,4 @@
-/*  TallerTower: An RPG
+/*  FantastleReboot: An RPG
 Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 import javax.swing.WindowConstants;
 
+import com.apple.eawt.Application;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.VersionException;
@@ -20,9 +21,7 @@ import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.PrefixHandler;
 import com.puttysoftware.fantastlereboot.maze.SuffixHandler;
-import com.puttysoftware.fantastlereboot.obsolete.Application;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
 import com.puttysoftware.fileutils.ZipUtilities;
 
@@ -52,7 +51,7 @@ public class GameLoadTask extends Thread {
         final File mazeFile = new File(this.filename);
         try {
             this.loadFrame.setVisible(true);
-            final Application app = TallerTower.getApplication();
+            final Application app = FantastleReboot.getBagOStuff();
             int startW;
             app.getGameManager().setSavedGameFlag(false);
             final File tempLock = new File(
@@ -85,7 +84,7 @@ public class GameLoadTask extends Thread {
             gameMaze.save();
             // Final cleanup
             app.getGameManager().stateChanged();
-            AbstractMazeObject
+            FantastleObjectModel
                     .setTemplateColor(ImageColorConstants.getColorForLevel(
                             PartyManager.getParty().getMonsterLevel()));
             app.getMazeManager().setLoaded(true);
@@ -95,17 +94,17 @@ public class GameLoadTask extends Thread {
         } catch (final VersionException ve) {
             CommonDialogs.showDialog("Loading the " + sg.toLowerCase()
                     + " failed, due to the format version being unsupported.");
-            TallerTower.getApplication().getMazeManager()
+            FantastleReboot.getBagOStuff().getMazeManager()
                     .handleDeferredSuccess(false, true, mazeFile);
         } catch (final FileNotFoundException fnfe) {
             CommonDialogs.showDialog("Loading the " + sg.toLowerCase()
                     + " failed, probably due to illegal characters in the file name.");
-            TallerTower.getApplication().getMazeManager()
+            FantastleReboot.getBagOStuff().getMazeManager()
                     .handleDeferredSuccess(false, false, null);
         } catch (final IOException ie) {
             CommonDialogs.showDialog("Loading the " + sg.toLowerCase()
                     + " failed, due to some other type of I/O error.");
-            TallerTower.getApplication().getMazeManager()
+            FantastleReboot.getBagOStuff().getMazeManager()
                     .handleDeferredSuccess(false, false, null);
         } catch (final Exception ex) {
             FantastleReboot.logError(ex);

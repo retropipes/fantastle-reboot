@@ -76,8 +76,8 @@ public class AboutDialog implements AboutHandler {
         this.aboutPane.setLayout(new BorderLayout());
         this.logoPane.setLayout(new FlowLayout());
         this.logoPane.add(new JLabel("",
-                UserInterfaceImageLoader.load(
-                        UserInterfaceImageIndex.MINI_LOGO),
+                UserInterfaceImageLoader
+                        .load(UserInterfaceImageIndex.MINI_LOGO),
                 SwingConstants.LEFT));
         this.textPane.setLayout(new GridLayout(4, 1));
         this.textPane.add(new JLabel("Fantastle Version: " + ver));

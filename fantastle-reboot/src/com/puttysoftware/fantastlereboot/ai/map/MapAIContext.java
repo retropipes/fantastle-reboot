@@ -1,4 +1,4 @@
-/*  TallerTower: An RPG
+/*  FantastleReboot: An RPG
 Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
@@ -9,9 +9,9 @@ import java.awt.Point;
 
 import com.puttysoftware.fantastlereboot.ai.AIContext;
 import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeConstants;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
+import com.puttysoftware.fantastlereboot.objectmodel.Layer;
+import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 
 public class MapAIContext extends AIContext {
     private final int[][] apCosts;
@@ -29,8 +29,8 @@ public class MapAIContext extends AIContext {
     public void updateContext(final Maze arena) {
         for (int x = 0; x < this.apCosts.length; x++) {
             for (int y = 0; y < this.apCosts[x].length; y++) {
-                final AbstractMazeObject obj = arena.getCell(x, y, 0,
-                        MazeConstants.LAYER_OBJECT);
+                final FantastleObjectModel obj = arena.getCell(x, y, 0,
+                        Layer.OBJECT);
                 if (obj.isSolid()) {
                     this.apCosts[x][y] = AIContext.CANNOT_MOVE_THERE;
                 } else {
@@ -40,8 +40,8 @@ public class MapAIContext extends AIContext {
         }
         for (int x = 0; x < this.creatureLocations.length; x++) {
             for (int y = 0; y < this.creatureLocations[x].length; y++) {
-                final AbstractMazeObject obj = arena.getCell(x, y, 0,
-                        MazeConstants.LAYER_OBJECT);
+                final FantastleObjectModel obj = arena.getCell(x, y, 0,
+                        Layer.OBJECT);
                 if (obj instanceof BattleCharacter) {
                     final BattleCharacter bc = (BattleCharacter) obj;
                     this.creatureLocations[x][y] = bc.getTeamID();

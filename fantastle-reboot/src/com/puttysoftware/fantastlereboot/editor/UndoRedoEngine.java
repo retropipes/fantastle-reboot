@@ -18,13 +18,13 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.editor;
 
-import com.puttysoftware.fantastlereboot.obsolete.objects.MazeObject;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 
 public class UndoRedoEngine {
     // Fields
     private final LinkStack undoHistory;
     private final LinkStack redoHistory;
-    private MazeObject object;
+    private FantastleObjectModel object;
     private int destX, destY, destZ, destW, destE;
 
     // Constructors
@@ -90,17 +90,17 @@ public class UndoRedoEngine {
         return this.undoHistory.isEmpty() && this.redoHistory.isEmpty();
     }
 
-    public void updateUndoHistory(final MazeObject obj, final int x,
+    public void updateUndoHistory(final FantastleObjectModel obj, final int x,
             final int y, final int z, final int w, final int e) {
         this.undoHistory.push(obj, x, y, z, w, e);
     }
 
-    public void updateRedoHistory(final MazeObject obj, final int x,
+    public void updateRedoHistory(final FantastleObjectModel obj, final int x,
             final int y, final int z, final int w, final int e) {
         this.redoHistory.push(obj, x, y, z, w, e);
     }
 
-    public MazeObject getObject() {
+    public FantastleObjectModel getObject() {
         return this.object;
     }
 
@@ -127,11 +127,11 @@ public class UndoRedoEngine {
     // Inner classes
     private class Link {
         // Fields
-        public MazeObject mo;
+        public FantastleObjectModel mo;
         public int coordX, coordY, coordZ, coordW, coordE;
         public Link next;
 
-        public Link(final MazeObject obj, final int x, final int y, final int z,
+        public Link(final FantastleObjectModel obj, final int x, final int y, final int z,
                 final int w, final int e) {
             this.mo = obj;
             this.coordX = x;
@@ -155,7 +155,7 @@ public class UndoRedoEngine {
             return this.first == null;
         }
 
-        public void insertFirst(final MazeObject obj, final int x, final int y,
+        public void insertFirst(final FantastleObjectModel obj, final int x, final int y,
                 final int z, final int w, final int e) {
             final Link newLink = new Link(obj, x, y, z, w, e);
             newLink.next = this.first;
@@ -177,7 +177,7 @@ public class UndoRedoEngine {
             this.theList = new LinkList();
         }
 
-        public void push(final MazeObject obj, final int x, final int y,
+        public void push(final FantastleObjectModel obj, final int x, final int y,
                 final int z, final int w, final int e) {
             this.theList.insertFirst(obj, x, y, z, w, e);
         }

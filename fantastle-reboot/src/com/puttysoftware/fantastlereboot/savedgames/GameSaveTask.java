@@ -1,4 +1,4 @@
-/*  TallerTower: An RPG
+/*  FantastleReboot: An RPG
 Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import com.apple.eawt.Application;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
@@ -16,8 +17,6 @@ import com.puttysoftware.fantastlereboot.maze.Extension;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.PrefixHandler;
 import com.puttysoftware.fantastlereboot.maze.SuffixHandler;
-import com.puttysoftware.fantastlereboot.obsolete.Application;
-import com.puttysoftware.fantastlereboot.obsolete.TallerTower;
 import com.puttysoftware.fileutils.ZipUtilities;
 
 public class GameSaveTask extends Thread {
@@ -35,7 +34,7 @@ public class GameSaveTask extends Thread {
         boolean success = true;
         final String sg = "Game";
         try {
-            final Application app = TallerTower.getApplication();
+            final Application app = FantastleReboot.getBagOStuff();
             final BagOStuff bag = FantastleReboot.getBagOStuff();
             // filename check
             final boolean hasExtension = GameSaveTask
@@ -70,7 +69,7 @@ public class GameSaveTask extends Thread {
         } catch (final Exception ex) {
             FantastleReboot.logError(ex);
         }
-        TallerTower.getApplication().getMazeManager()
+        FantastleReboot.getBagOStuff().getMazeManager()
                 .handleDeferredSuccess(success, false, null);
     }
 

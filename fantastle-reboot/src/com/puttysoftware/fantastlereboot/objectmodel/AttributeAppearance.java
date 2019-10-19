@@ -19,7 +19,8 @@ class AttributeAppearance extends Appearance {
     }
 
     public AttributeAppearance(final String name,
-            final AttributeImageIndex inImageIndex, final ColorShader inShader) {
+            final AttributeImageIndex inImageIndex,
+            final ColorShader inShader) {
         super(name, inImageIndex, inShader);
     }
 

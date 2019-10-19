@@ -36,7 +36,7 @@ import com.puttysoftware.fantastlereboot.game.InventoryViewer;
 import com.puttysoftware.fantastlereboot.game.NoteManager;
 import com.puttysoftware.fantastlereboot.game.StatisticsViewer;
 import com.puttysoftware.fantastlereboot.maze.GenerateTask;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.MazeManager;
+import com.puttysoftware.fantastlereboot.maze.MazeManager;
 
 public class MenuManager {
     // Fields
@@ -65,8 +65,8 @@ public class MenuManager {
             editDownOneFloorAccel, editUpOneLevelAccel, editDownOneLevelAccel,
             editToggleLayerAccel;
     private KeyStroke playPlayMazeAccel, playEditMazeAccel;
-    private KeyStroke gameNewGameAccel, gameInventoryAccel, gameUseAccel, gameResetAccel,
-            gameShowScoreAccel, gameShowTableAccel;
+    private KeyStroke gameNewGameAccel, gameInventoryAccel, gameUseAccel,
+            gameResetAccel, gameShowScoreAccel, gameShowTableAccel;
     private final EventHandler handler;
 
     // Constructors
@@ -399,7 +399,8 @@ public class MenuManager {
                 modKey | InputEvent.SHIFT_DOWN_MASK);
         this.playPlayMazeAccel = KeyStroke.getKeyStroke(KeyEvent.VK_P, modKey);
         this.playEditMazeAccel = KeyStroke.getKeyStroke(KeyEvent.VK_E, modKey);
-        this.gameNewGameAccel = KeyStroke.getKeyStroke(KeyEvent.VK_N, modKey | InputEvent.SHIFT_DOWN_MASK);
+        this.gameNewGameAccel = KeyStroke.getKeyStroke(KeyEvent.VK_N,
+                modKey | InputEvent.SHIFT_DOWN_MASK);
         this.gameInventoryAccel = KeyStroke.getKeyStroke(KeyEvent.VK_I, modKey);
         this.gameUseAccel = KeyStroke.getKeyStroke(KeyEvent.VK_U, modKey);
         this.gameResetAccel = KeyStroke.getKeyStroke(KeyEvent.VK_R, modKey);

@@ -1,4 +1,4 @@
-/*  TallerTower: An RPG
+/*  FantastleReboot: An RPG
 Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
@@ -8,7 +8,7 @@ package com.puttysoftware.fantastlereboot.ai;
 import java.awt.Point;
 
 import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
+import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 
 public abstract class AIContext {
     protected final BattleCharacter aiCreature;

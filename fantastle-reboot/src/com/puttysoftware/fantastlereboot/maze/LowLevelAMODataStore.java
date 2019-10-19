@@ -1,10 +1,10 @@
 package com.puttysoftware.fantastlereboot.maze;
 
-import com.puttysoftware.fantastlereboot.obsolete.maze2.abc.AbstractMazeObject;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 
 class LowLevelAMODataStore implements Cloneable {
     // Fields
-    private final AbstractMazeObject[] dataStore;
+    private final FantastleObjectModel[] dataStore;
     private final int[] dataShape;
     private final int[] interProd;
 
@@ -17,7 +17,7 @@ class LowLevelAMODataStore implements Cloneable {
             this.interProd[x] = product;
             product *= shape[x];
         }
-        this.dataStore = new AbstractMazeObject[product];
+        this.dataStore = new FantastleObjectModel[product];
     }
 
     // Methods
@@ -41,12 +41,12 @@ class LowLevelAMODataStore implements Cloneable {
         return this.dataShape;
     }
 
-    public AbstractMazeObject getCell(final int... loc) {
+    public FantastleObjectModel getCell(final int... loc) {
         final int aloc = this.ravelLocation(loc);
         return this.dataStore[aloc];
     }
 
-    public void setCell(final AbstractMazeObject obj, final int... loc) {
+    public void setCell(final FantastleObjectModel obj, final int... loc) {
         final int aloc = this.ravelLocation(loc);
         this.dataStore[aloc] = obj;
     }

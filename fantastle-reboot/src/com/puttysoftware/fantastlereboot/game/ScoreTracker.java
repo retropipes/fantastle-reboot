@@ -21,7 +21,7 @@ package com.puttysoftware.fantastlereboot.game;
 import java.io.File;
 
 import com.puttysoftware.fantastlereboot.Messager;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.Extension;
+import com.puttysoftware.fantastlereboot.maze.Extension;
 import com.puttysoftware.scoremanager.SavedScoreManager;
 import com.puttysoftware.scoremanager.ScoreManager;
 

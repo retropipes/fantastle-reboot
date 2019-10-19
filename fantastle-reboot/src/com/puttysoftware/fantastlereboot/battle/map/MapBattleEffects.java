@@ -1,4 +1,4 @@
-/*  TallerTower: An RPG
+/*  FantastleReboot: An RPG
 Copyright (C) 2011-2012 Eric Ahnell
 
 
@@ -11,7 +11,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 
-import com.puttysoftware.fantastlereboot.obsolete.maze2.objects.BattleCharacter;
+import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 
 public class MapBattleEffects {
     // Fields

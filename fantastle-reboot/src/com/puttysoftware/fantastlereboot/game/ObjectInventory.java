@@ -21,10 +21,8 @@ package com.puttysoftware.fantastlereboot.game;
 import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.obsolete.objects.GenericBoots;
-import com.puttysoftware.fantastlereboot.obsolete.objects.MazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.objects.MazeObjectList;
-import com.puttysoftware.fantastlereboot.obsolete.objects.RegularBoots;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
+import com.puttysoftware.fantastlereboot.utilities.FantastleObjectModelList;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
@@ -40,7 +38,7 @@ public class ObjectInventory implements Cloneable {
 
     // Constructors
     public ObjectInventory() {
-        final MazeObjectList list = FantastleReboot.getBagOStuff().getObjects();
+        final FantastleObjectModelList list = FantastleReboot.getBagOStuff().getObjects();
         this.nameList = list.getAllInventoryableNamesMinusBoots();
         this.contents = new int[this.nameList.length];
         this.uses = new int[this.nameList.length][this.MAX_QUANTITY];
@@ -48,7 +46,7 @@ public class ObjectInventory implements Cloneable {
     }
 
     // Accessors
-    public int getItemCount(final MazeObject mo) {
+    public int getItemCount(final FantastleObjectModel mo) {
         if (ObjectInventory.isBoots(mo)) {
             return this.getBootsCount();
         } else {
@@ -56,7 +54,7 @@ public class ObjectInventory implements Cloneable {
         }
     }
 
-    public int getUses(final MazeObject mo) {
+    public int getUses(final FantastleObjectModel mo) {
         if (ObjectInventory.isBoots(mo)) {
             return 0;
         } else {
@@ -64,13 +62,13 @@ public class ObjectInventory implements Cloneable {
         }
     }
 
-    private void setUses(final MazeObject mo, final int newUses) {
+    private void setUses(final FantastleObjectModel mo, final int newUses) {
         if (!ObjectInventory.isBoots(mo)) {
             this.setNonBootsUses(mo, newUses);
         }
     }
 
-    public void use(final MazeObject mo, final int x, final int y, final int z,
+    public void use(final FantastleObjectModel mo, final int x, final int y, final int z,
             final int w) {
         int tempUses = this.getUses(mo);
         if (mo.isUsable() && tempUses > 0) {
@@ -83,7 +81,7 @@ public class ObjectInventory implements Cloneable {
         }
     }
 
-    public boolean isItemThere(final MazeObject mo) {
+    public boolean isItemThere(final FantastleObjectModel mo) {
         if (ObjectInventory.isBoots(mo)) {
             return this.areBootsThere(mo);
         } else {
@@ -98,7 +96,7 @@ public class ObjectInventory implements Cloneable {
         }
     }
 
-    public void addItem(final MazeObject mo) {
+    public void addItem(final FantastleObjectModel mo) {
         if (ObjectInventory.isBoots(mo)) {
             this.addBoots(mo);
         } else {
@@ -106,7 +104,7 @@ public class ObjectInventory implements Cloneable {
         }
     }
 
-    public void removeItem(final MazeObject mo) {
+    public void removeItem(final FantastleObjectModel mo) {
         if (ObjectInventory.isBoots(mo)) {
             this.removeBoots();
         } else {
@@ -145,7 +143,7 @@ public class ObjectInventory implements Cloneable {
     }
 
     public String[] generateUseStringArray() {
-        final MazeObjectList list = FantastleReboot.getBagOStuff().getObjects();
+        final FantastleObjectModelList list = FantastleReboot.getBagOStuff().getObjects();
         final String[] names = list.getAllUsableNames();
         final int len = names.length;
         final StringBuilder[] sb = new StringBuilder[len];
@@ -173,22 +171,22 @@ public class ObjectInventory implements Cloneable {
         }
     }
 
-    private int getNonBootsCount(final MazeObject mo) {
+    private int getNonBootsCount(final FantastleObjectModel mo) {
         final int loc = this.indexOf(mo);
         return this.contents[loc];
     }
 
-    private int getNonBootsUses(final MazeObject mo) {
+    private int getNonBootsUses(final FantastleObjectModel mo) {
         final int loc = this.indexOf(mo);
         return this.uses[loc][this.contents[loc]];
     }
 
-    private void setNonBootsUses(final MazeObject mo, final int newUses) {
+    private void setNonBootsUses(final FantastleObjectModel mo, final int newUses) {
         final int loc = this.indexOf(mo);
         this.uses[loc][this.contents[loc]] = newUses;
     }
 
-    private boolean areNonBootsThere(final MazeObject mo) {
+    private boolean areNonBootsThere(final FantastleObjectModel mo) {
         final int loc = this.indexOf(mo);
         if (loc != -1) {
             if (this.contents[loc] != 0) {
@@ -201,7 +199,7 @@ public class ObjectInventory implements Cloneable {
         }
     }
 
-    private boolean areBootsThere(final MazeObject mo) {
+    private boolean areBootsThere(final FantastleObjectModel mo) {
         if (!this.boots.equals(ObjectInventory.NULL_INSTANCE)) {
             if (this.boots.getName().equals(mo.getName())) {
                 return true;
@@ -213,11 +211,11 @@ public class ObjectInventory implements Cloneable {
         }
     }
 
-    private void addBoots(final MazeObject mo) {
+    private void addBoots(final FantastleObjectModel mo) {
         this.boots = (GenericBoots) mo;
     }
 
-    private void addNonBoots(final MazeObject mo) {
+    private void addNonBoots(final FantastleObjectModel mo) {
         final int loc = this.indexOf(mo);
         if (this.contents[loc] < this.MAX_QUANTITY) {
             this.contents[loc]++;
@@ -229,14 +227,14 @@ public class ObjectInventory implements Cloneable {
         this.boots = new RegularBoots();
     }
 
-    private void removeNonBoots(final MazeObject mo) {
+    private void removeNonBoots(final FantastleObjectModel mo) {
         final int loc = this.indexOf(mo);
         if (this.contents[loc] != 0) {
             this.contents[loc]--;
         }
     }
 
-    private static boolean isBoots(final MazeObject mo) {
+    private static boolean isBoots(final FantastleObjectModel mo) {
         if (mo.isOfType(TypeConstants.TYPE_BOOTS)) {
             return true;
         } else {
@@ -244,7 +242,7 @@ public class ObjectInventory implements Cloneable {
         }
     }
 
-    private int indexOf(final MazeObject mo) {
+    private int indexOf(final FantastleObjectModel mo) {
         int x;
         for (x = 0; x < this.contents.length; x++) {
             if (mo.getName().equals(this.nameList[x])) {
@@ -281,10 +279,10 @@ public class ObjectInventory implements Cloneable {
 
     public static ObjectInventory readInventory(final XDataReader reader,
             final int formatVersion) throws IOException {
-        final MazeObjectList objects = FantastleReboot.getBagOStuff()
+        final FantastleObjectModelList objects = FantastleReboot.getBagOStuff()
                 .getObjects();
         final ObjectInventory i = new ObjectInventory();
-        i.boots = (GenericBoots) objects.readMazeObject(reader, formatVersion);
+        i.boots = (GenericBoots) objects.readFantastleObjectModel(reader, formatVersion);
         if (i.boots == null) {
             i.boots = ObjectInventory.NULL_INSTANCE;
         }
@@ -300,7 +298,7 @@ public class ObjectInventory implements Cloneable {
     }
 
     public void writeInventory(final XDataWriter writer) throws IOException {
-        this.boots.writeMazeObject(writer);
+        this.boots.writeFantastleObjectModel(writer);
         for (final int content : this.contents) {
             writer.writeInt(content);
         }

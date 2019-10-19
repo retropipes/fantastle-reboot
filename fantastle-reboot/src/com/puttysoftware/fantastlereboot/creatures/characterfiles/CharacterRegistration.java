@@ -1,4 +1,4 @@
-/*  TallerTower: An RPG
+/*  FantastleReboot: An RPG
 Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
@@ -22,8 +22,8 @@ public class CharacterRegistration {
     private static final String MAC_PREFIX = "HOME";
     private static final String WIN_PREFIX = "APPDATA";
     private static final String UNIX_PREFIX = "HOME";
-    private static final String MAC_DIR = "/Library/Application Support/Putty Software/TallerTower/Characters";
-    private static final String WIN_DIR = "\\Putty Software\\TallerTower\\Characters";
+    private static final String MAC_DIR = "/Library/Application Support/Putty Software/FantastleReboot/Characters";
+    private static final String WIN_DIR = "\\Putty Software\\FantastleReboot\\Characters";
     private static final String UNIX_DIR = "/.puttysoftware/tallertower/characters";
 
     // Methods

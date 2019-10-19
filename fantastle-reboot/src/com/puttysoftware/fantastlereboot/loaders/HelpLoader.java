@@ -29,7 +29,8 @@ public class HelpLoader {
 
     public static HTMLHelpViewer getHelpViewer() {
         if (HelpLoader.helpViewer == null) {
-            HelpLoader.helpViewer = new HTMLHelpViewer(HelpLoader.class.getResource("/assets/help/help.html"));
+            HelpLoader.helpViewer = new HTMLHelpViewer(
+                    HelpLoader.class.getResource("/assets/help/help.html"));
         }
         return HelpLoader.helpViewer;
     }
