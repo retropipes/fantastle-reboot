@@ -33,7 +33,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.objects.MazeObject;
 import com.puttysoftware.fantastlereboot.utilities.FormatConstants;
 
 public class MazeManager implements OpenFilesHandler, QuitHandler {

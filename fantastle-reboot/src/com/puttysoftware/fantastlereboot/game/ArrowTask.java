@@ -25,12 +25,12 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.obsolete.maze1.Maze;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericTransientObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Arrow;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Empty;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.IceArrow;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.Wall;
+import com.puttysoftware.fantastlereboot.obsolete.objects.Arrow;
+import com.puttysoftware.fantastlereboot.obsolete.objects.Empty;
+import com.puttysoftware.fantastlereboot.obsolete.objects.GenericTransientObject;
+import com.puttysoftware.fantastlereboot.obsolete.objects.IceArrow;
+import com.puttysoftware.fantastlereboot.obsolete.objects.MazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.objects.Wall;
 import com.puttysoftware.fantastlereboot.utilities.ArrowTypeConstants;
 import com.puttysoftware.fantastlereboot.utilities.DirectionNameResolver;
 

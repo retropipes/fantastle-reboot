@@ -21,10 +21,10 @@ package com.puttysoftware.fantastlereboot.game;
 import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.GenericBoots;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObject;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObjectList;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.objects.RegularBoots;
+import com.puttysoftware.fantastlereboot.obsolete.objects.GenericBoots;
+import com.puttysoftware.fantastlereboot.obsolete.objects.MazeObject;
+import com.puttysoftware.fantastlereboot.obsolete.objects.MazeObjectList;
+import com.puttysoftware.fantastlereboot.obsolete.objects.RegularBoots;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;

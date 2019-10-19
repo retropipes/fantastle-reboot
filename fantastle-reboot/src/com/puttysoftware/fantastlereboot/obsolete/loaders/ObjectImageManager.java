@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 import com.puttysoftware.diane.loaders.ColorShader;
 import com.puttysoftware.diane.loaders.ImageShader;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.obsolete.maze1.generic.MazeObjectList;
+import com.puttysoftware.fantastlereboot.obsolete.objects.MazeObjectList;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class ObjectImageManager {
