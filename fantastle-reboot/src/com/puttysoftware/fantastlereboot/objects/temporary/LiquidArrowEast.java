@@ -4,7 +4,7 @@ import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 import com.puttysoftware.fantastlereboot.objectmodel.ColorShaders;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
-public class LiquidArrowEast extends FantastleObject {
+class LiquidArrowEast extends FantastleObject {
     // Constructors
     public LiquidArrowEast() {
         super(-1, "arrow_east", ObjectImageIndex.ARROW_EAST,

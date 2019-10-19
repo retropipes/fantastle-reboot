@@ -4,7 +4,7 @@ import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 import com.puttysoftware.fantastlereboot.objectmodel.ColorShaders;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
-public class VortexArrowNortheast extends FantastleObject {
+class VortexArrowNortheast extends FantastleObject {
     // Constructors
     public VortexArrowNortheast() {
         super(-1, "arrow_northeast", ObjectImageIndex.ARROW_NORTHEAST,
