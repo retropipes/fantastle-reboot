@@ -12,8 +12,9 @@ public final class ColorShaders {
 //    private static ColorShader GUST;
 //    private static ColorShader JOLT;
 //    private static ColorShader BEAM;
-//    private static ColorShader LOVE;
+    private static ColorShader LOVE;
 //    private static ColorShader AQUA;
+    private static ColorShader NONE;
 
     public static ColorShader wood() {
         if (WOOD == null) {
@@ -63,13 +64,13 @@ public final class ColorShaders {
 //        }
 //        return BEAM;
 //    }
-//
-//    public static ColorShader love() {
-//        if (LOVE == null) {
-//            LOVE = new ColorShader("love", new Color(255, 0, 255, 255));
-//        }
-//        return LOVE;
-//    }
+
+    public static ColorShader love() {
+        if (LOVE == null) {
+            LOVE = new ColorShader("love", new Color(255, 0, 255, 255));
+        }
+        return LOVE;
+    }
 //
 //    public static ColorShader aqua() {
 //        if (AQUA == null) {
@@ -77,6 +78,13 @@ public final class ColorShaders {
 //        }
 //        return AQUA;
 //    }
+
+    public static ColorShader none() {
+        if (NONE == null) {
+            NONE = new ColorShader("none", new Color(255, 255, 255, 255));
+        }
+        return NONE;
+    }
 
     private ColorShaders() {
         // Do nothing
