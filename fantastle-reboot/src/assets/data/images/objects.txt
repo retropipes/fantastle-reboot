@@ -53,7 +53,7 @@ drunk_trap
 e_plug
 e_port
 easy_monster
-empty
+open_space
 energy_sphere
 bonus_shop
 f_plug
@@ -98,7 +98,7 @@ invisible_spring
 invisible_super_pit
 invisible_super_spring
 invisible_teleport
-invisible_destination
+invisible_teleport_destination
 invisible_two_way_teleport
 item_shop
 j_plug
@@ -189,7 +189,7 @@ super_unknown_potion
 t_plug
 t_port
 teleport
-destination
+teleport_destination
 tile
 treasure_chest
 treasure_key
