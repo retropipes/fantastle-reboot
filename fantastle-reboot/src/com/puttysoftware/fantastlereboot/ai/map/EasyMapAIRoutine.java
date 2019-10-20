@@ -34,7 +34,7 @@ class EasyMapAIRoutine extends AbstractMapAIRoutine {
     @Override
     public int getNextAction(final Creature c, final AIContext ac) {
         if (this.roundsRemaining == null) {
-            this.roundsRemaining = new int[ac.getCharacter().getTemplate()
+            this.roundsRemaining = new int[ac.getCharacter().getCreature()
                     .getSpellBook().getSpellCount()];
         }
         if (this.spellCheck(ac)) {
@@ -51,7 +51,7 @@ class EasyMapAIRoutine extends AbstractMapAIRoutine {
                     return AIRoutine.ACTION_DRAIN;
                 } else {
                     // Something hostile is nearby, so attack it
-                    if (ac.getCharacter().getCurrentAT() > 0) {
+                    if (ac.getCharacter().getCurrentActions() > 0) {
                         this.moveX = there.x;
                         this.moveY = there.y;
                         return AIRoutine.ACTION_MOVE;
@@ -113,7 +113,7 @@ class EasyMapAIRoutine extends AbstractMapAIRoutine {
                         }
                     }
                 }
-                if (ac.getCharacter().getCurrentAP() > 0) {
+                if (ac.getCharacter().getCurrentActions() > 0) {
                     if (there == null) {
                         // Wander randomly
                         this.moveX = this.randMove.generate();
@@ -139,16 +139,16 @@ class EasyMapAIRoutine extends AbstractMapAIRoutine {
         if (chance <= EasyMapAIRoutine.CAST_SPELL_CHANCE) {
             final int maxIndex = CommonMapAIRoutines.getMaxCastIndex(ac);
             if (maxIndex > -1) {
-                if (ac.getCharacter().getCurrentSP() > 0) {
+                if (ac.getCharacter().getCurrentActions() > 0) {
                     // Select a random spell to cast
                     final RandomRange randomSpell = new RandomRange(0,
                             maxIndex);
                     final int randomSpellID = randomSpell.generate();
                     if (randomSpellID == CommonMapAIRoutines.SPELL_INDEX_HEAL) {
                         // Healing spell was selected - is healing needed?
-                        if (ac.getCharacter().getTemplate()
+                        if (ac.getCharacter().getCreature()
                                 .getCurrentHP() > ac.getCharacter()
-                                        .getTemplate().getMaximumHP()
+                                        .getCreature().getMaximumHP()
                                         * EasyMapAIRoutine.HEAL_THRESHOLD
                                         / 100) {
                             // Do not need healing
@@ -156,7 +156,7 @@ class EasyMapAIRoutine extends AbstractMapAIRoutine {
                         }
                     }
                     if (this.roundsRemaining[randomSpellID] == 0) {
-                        this.spell = ac.getCharacter().getTemplate()
+                        this.spell = ac.getCharacter().getCreature()
                                 .getSpellBook().getSpellByID(randomSpellID);
                         this.roundsRemaining[randomSpellID] = this.spell
                                 .getEffect().getInitialRounds();

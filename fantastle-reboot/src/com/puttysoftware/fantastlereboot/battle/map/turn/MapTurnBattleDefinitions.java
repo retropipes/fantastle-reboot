@@ -33,11 +33,9 @@ public class MapTurnBattleDefinitions {
     public void resetBattlers() {
         for (int x = 0; x < this.battlers.length; x++) {
             if (this.battlers[x] != null) {
-                if (this.battlers[x].getTemplate().isAlive()) {
+                if (this.battlers[x].getCreature().isAlive()) {
                     this.battlers[x].activate();
-                    this.battlers[x].resetAP();
-                    this.battlers[x].resetAttacks();
-                    this.battlers[x].resetSpells();
+                    this.battlers[x].resetActions();
                     this.battlers[x].resetLocation();
                 }
             }
@@ -47,10 +45,8 @@ public class MapTurnBattleDefinitions {
     public void roundResetBattlers() {
         for (int x = 0; x < this.battlers.length; x++) {
             if (this.battlers[x] != null) {
-                if (this.battlers[x].getTemplate().isAlive()) {
-                    this.battlers[x].resetAP();
-                    this.battlers[x].resetAttacks();
-                    this.battlers[x].resetSpells();
+                if (this.battlers[x].getCreature().isAlive()) {
+                    this.battlers[x].resetActions();
                 }
             }
         }

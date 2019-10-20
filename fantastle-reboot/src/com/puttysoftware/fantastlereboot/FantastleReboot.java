@@ -18,23 +18,11 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenuBar;
-import javax.swing.JProgressBar;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.errorlogger.ErrorLogger;
-import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
-import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.integration.NativeIntegration;
 
 public class FantastleReboot {
@@ -93,7 +81,6 @@ public class FantastleReboot {
             FantastleReboot.bag.postConstruct();
             // OS Integration
             NATIVITY.configureLookAndFeel();
-            NATIVITY.setOpenFileHandler(FantastleReboot.bag.getMazeManager());
             NATIVITY.setQuitHandler(FantastleReboot.bag.getMazeManager());
             NATIVITY.setPreferencesHandler(
                     FantastleReboot.bag.getPrefsManager());
@@ -109,37 +96,7 @@ public class FantastleReboot {
     }
 
     private static void showLoadingScreen() {
-        // Set up wait frame
-        final JFrame waitFrame = new JFrame("Loading...");
-        final Container logoContainer = new Container();
-        final Container textContainer = new Container();
-        final JLabel waitLogo = new JLabel("",
-                UserInterfaceImageLoader.load(UserInterfaceImageIndex.LOADING),
-                SwingConstants.CENTER);
-        final JLabel waitLabel = new JLabel("Creating Caches...");
-        final JProgressBar waitProgress = new JProgressBar();
-        waitProgress.setMinimum(0);
-        waitProgress.setMaximum(100);
-        waitProgress.setValue(0);
-        waitFrame.getContentPane().setLayout(new BorderLayout());
-        logoContainer.setLayout(new FlowLayout());
-        textContainer.setLayout(new GridLayout(2, 1));
-        logoContainer.add(waitLogo);
-        textContainer.add(waitLabel);
-        textContainer.add(waitProgress);
-        waitFrame.getContentPane().add(logoContainer, BorderLayout.CENTER);
-        waitFrame.getContentPane().add(textContainer, BorderLayout.SOUTH);
-        waitFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        waitFrame.setResizable(false);
-        waitFrame.pack();
-        // Do the loading
-        waitFrame.setVisible(true);
-        // Create logo cache
-        FantastleReboot.getBagOStuff().getGUIManager().updateLogo();
-        waitProgress.setValue(50);
-        // Create stat image cache
-        FantastleReboot.getBagOStuff().getGameManager().updateStatGUI();
-        waitProgress.setValue(100);
-        waitFrame.setVisible(false);
+        CacheTask loader = new CacheTask();
+        loader.start();
     }
 }

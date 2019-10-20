@@ -63,10 +63,10 @@ public class ArrowTask extends Thread {
         final int incX = this.x;
         final int incY = this.y;
         final Maze m = app.getMazeManager().getMaze();
-        m.tickTimers(pw, pz);
+        m.tickTimers(pz);
         FantastleObjectModel o = null;
         try {
-            o = m.getCell(px + cumX, py + cumY, pz, pw, Layers.OBJECT);
+            o = m.getCell(px + cumX, py + cumY, pz, Layers.OBJECT);
         } catch (final ArrayIndexOutOfBoundsException ae) {
             o = new Wall();
         }
@@ -84,14 +84,14 @@ public class ArrowTask extends Thread {
             }
             if (!o.isConditionallyDirectionallySolid(true, incX, incY, inv)) {
                 app.getGameManager().redrawOneSquare(px + cumX, py + cumY, true,
-                        a.getName());
+                        a);
             }
             app.getGameManager().redrawOneSquare(px + cumX, py + cumY, false,
-                    new OpenSpace().getName());
+                    new OpenSpace());
             cumX += incX;
             cumY += incY;
             try {
-                o = m.getCell(px + cumX, py + cumY, pz, pw, Layers.OBJECT);
+                o = m.getCell(px + cumX, py + cumY, pz, Layers.OBJECT);
             } catch (final ArrayIndexOutOfBoundsException ae) {
                 o = new Wall();
             }

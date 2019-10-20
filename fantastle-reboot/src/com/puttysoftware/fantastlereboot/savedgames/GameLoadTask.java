@@ -17,12 +17,9 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.VersionException;
-import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.PrefixHandler;
 import com.puttysoftware.fantastlereboot.maze.SuffixHandler;
-import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
 import com.puttysoftware.fileutils.ZipUtilities;
 
 public class GameLoadTask extends Thread {
@@ -84,9 +81,6 @@ public class GameLoadTask extends Thread {
             gameMaze.save();
             // Final cleanup
             app.getGameManager().stateChanged();
-            FantastleObjectModel
-                    .setTemplateColor(ImageColorConstants.getColorForLevel(
-                            PartyManager.getParty().getMonsterLevel()));
             app.getMazeManager().setLoaded(true);
             CommonDialogs.showDialog(sg + " loaded.");
             app.getGameManager().playMaze();

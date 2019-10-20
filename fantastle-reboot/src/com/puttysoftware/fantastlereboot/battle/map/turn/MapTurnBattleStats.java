@@ -42,12 +42,12 @@ public class MapTurnBattleStats {
     public void updateStats(final BattleCharacter bc) {
         this.nameLabel.setText(bc.getName());
         this.teamLabel.setText(bc.getTeamString());
-        this.hpLabel.setText(bc.getTemplate().getHPString());
-        this.mpLabel.setText(bc.getTemplate().getMPString());
-        this.attLabel.setText(Integer.toString(bc.getTemplate().getAttack()));
-        this.defLabel.setText(Integer.toString(bc.getTemplate().getDefense()));
-        this.apLabel.setText(bc.getAPString());
-        this.updateActionIcon(bc.getCurrentAP());
+        this.hpLabel.setText(bc.getCreature().getHPString());
+        this.mpLabel.setText(bc.getCreature().getMPString());
+        this.attLabel.setText(Integer.toString(bc.getCreature().getAttack()));
+        this.defLabel.setText(Integer.toString(bc.getCreature().getDefense()));
+        this.apLabel.setText(bc.getActionString());
+        this.updateActionIcon(bc.getCurrentActions());
     }
 
     private void setUpGUI() {

@@ -11,8 +11,8 @@ import java.io.IOException;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.VersionException;
-import com.puttysoftware.fantastlereboot.creatures.monsters.Monster;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
+import com.puttysoftware.fantastlereboot.objects.MonsterObject;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.randomrange.RandomLongRange;
@@ -91,11 +91,11 @@ public class Maze {
     }
 
     public void updateMonsterPosition(final int move, final int xLoc,
-            final int yLoc, final Monster monster) {
+            final int yLoc, final MonsterObject monster) {
         this.mazeData.updateMonsterPosition(move, xLoc, yLoc, monster);
     }
 
-    public void postBattle(final Monster m, final int xLoc, final int yLoc,
+    public void postBattle(final MonsterObject m, final int xLoc, final int yLoc,
             final boolean player) {
         this.mazeData.postBattle(m, xLoc, yLoc, player);
     }

@@ -319,20 +319,6 @@ public class MenuManager {
         } else {
             this.setMenusLoadedOff();
         }
-        if (app.getMode() == BagOStuff.STATUS_EDITOR) {
-            if (app.getMazeManager().getMaze().isPasteBlocked()) {
-                this.disablePasteLevel();
-                this.disableInsertLevelFromClipboard();
-            } else {
-                this.enablePasteLevel();
-                this.enableInsertLevelFromClipboard();
-            }
-            if (app.getMazeManager().getMaze().isCutBlocked()) {
-                this.disableCutLevel();
-            } else {
-                this.enableCutLevel();
-            }
-        }
     }
 
     private void setMenusDirtyOn() {
@@ -348,11 +334,7 @@ public class MenuManager {
         if (app.getMode() == BagOStuff.STATUS_GUI) {
             this.fileClose.setEnabled(false);
             this.fileSaveAs.setEnabled(false);
-            if (app.getMazeManager().getMaze().findPlayerOnLevel(0)) {
-                this.playPlay.setEnabled(true);
-            } else {
-                this.playPlay.setEnabled(false);
-            }
+            this.playPlay.setEnabled(true);
             this.playEdit.setEnabled(true);
         } else {
             this.fileClose.setEnabled(true);
@@ -655,7 +637,7 @@ public class MenuManager {
                     loaded = me.newMaze();
                     app.getMazeManager().setLoaded(loaded);
                 } else if (cmd.equals("Open...")) {
-                    loaded = app.getMazeManager().loadMaze();
+                    loaded = app.getMazeManager().loadGame();
                     app.getMazeManager().setLoaded(loaded);
                 } else if (cmd.equals("Close")) {
                     // Close the window
@@ -668,7 +650,7 @@ public class MenuManager {
                             app.getMazeManager();
                             status = MazeManager.showSaveDialog();
                             if (status == JOptionPane.YES_OPTION) {
-                                saved = app.getMazeManager().saveMaze();
+                                saved = MazeManager.saveGame();
                             } else if (status == JOptionPane.CANCEL_OPTION) {
                                 saved = false;
                             } else {
@@ -682,13 +664,7 @@ public class MenuManager {
                     }
                 } else if (cmd.equals("Save")) {
                     if (app.getMazeManager().getLoaded()) {
-                        app.getMazeManager().saveMaze();
-                    } else {
-                        Messager.showDialog("No Maze Opened");
-                    }
-                } else if (cmd.equals("Save As...")) {
-                    if (app.getMazeManager().getLoaded()) {
-                        app.getMazeManager().saveMazeAs();
+                        MazeManager.saveGame();
                     } else {
                         Messager.showDialog("No Maze Opened");
                     }
@@ -701,29 +677,6 @@ public class MenuManager {
                 } else if (cmd.equals("Redo")) {
                     // Redo most recent undone action
                     me.redo();
-                } else if (cmd.equals("Cut Level")) {
-                    // Cut Level
-                    final int level = app.getEditor().getLocationManager()
-                            .getEditorLocationW();
-                    app.getMazeManager().getMaze().cutLevel(level);
-                    app.getEditor().fixLimits();
-                    app.getEditor().updateEditorLevelAbsolute(level);
-                } else if (cmd.equals("Copy Level")) {
-                    // Copy Level
-                    final int level = app.getEditor().getLocationManager()
-                            .getEditorLocationW();
-                    app.getMazeManager().getMaze().copyLevel(level);
-                } else if (cmd.equals("Paste Level")) {
-                    // Paste Level
-                    final int level = app.getEditor().getLocationManager()
-                            .getEditorLocationW();
-                    app.getMazeManager().getMaze().pasteLevel(level);
-                    app.getEditor().fixLimits();
-                    me.redrawEditor();
-                } else if (cmd.equals("Insert Level From Clipboard")) {
-                    // Insert Level From Clipboard
-                    app.getMazeManager().getMaze().insertLevelFromClipboard();
-                    app.getEditor().fixLimits();
                 } else if (cmd.equals("Preferences...")) {
                     // Show preferences dialog
                     app.getPrefsManager().showPrefs();
@@ -835,8 +788,6 @@ public class MenuManager {
                     app.getAboutDialog().showAboutDialog();
                 } else if (cmd.equals("Fantastle Help")) {
                     app.getGeneralHelpManager().showHelp();
-                } else if (cmd.equals("Fantastle Object Help")) {
-                    app.getObjectHelpManager().showHelp();
                 }
                 MenuManager.this.checkFlags();
             } catch (final Exception ex) {

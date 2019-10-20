@@ -80,15 +80,6 @@ public class FantastleObjectModelList {
                 .toArray(new FantastleObjectModel[this.allObjectList.size()]);
     }
 
-    public String[] getAllDescriptions() {
-        final FantastleObjectModel[] objects = this.getAllObjects();
-        final String[] allDescriptions = new String[objects.length];
-        for (int x = 0; x < objects.length; x++) {
-            allDescriptions[x] = objects[x].getDescription();
-        }
-        return allDescriptions;
-    }
-
     public BufferedImageIcon[] getAllEditorAppearances() {
         final FantastleObjectModel[] objects = this.getAllObjects();
         final BufferedImageIcon[] allEditorAppearances = new BufferedImageIcon[objects.length];
@@ -96,6 +87,28 @@ public class FantastleObjectModelList {
             allEditorAppearances[x] = objects[x].getEditorImage();
         }
         return allEditorAppearances;
+    }
+
+    public final int[] getAllCarryableUIDs() {
+        final FantastleObjectModel[] objects = this.getAllObjects();
+        final int[] tempAllCarryableUIDs = new int[objects.length];
+        int x;
+        int count = 0;
+        for (x = 0; x < objects.length; x++) {
+            if (objects[x].isCarryable()) {
+                tempAllCarryableUIDs[count] = objects[x].getUniqueID();
+                count++;
+            }
+        }
+        if (count == 0) {
+            return null;
+        } else {
+            final int[] allCarryableUIDs = new int[count];
+            for (x = 0; x < count; x++) {
+                allCarryableUIDs[x] = tempAllCarryableUIDs[x];
+            }
+            return allCarryableUIDs;
+        }
     }
 
     public final FantastleObjectModel[] getAllRequired(final int layer) {
@@ -144,12 +157,12 @@ public class FantastleObjectModelList {
         }
     }
 
-    public final FantastleObjectModel getNewInstanceByName(final String name) {
+    public final FantastleObjectModel getNewInstanceByUniqueID(final int uid) {
         final FantastleObjectModel[] objects = this.getAllObjects();
         FantastleObjectModel instance = null;
         int x;
         for (x = 0; x < objects.length; x++) {
-            if (objects[x].getName().equals(name)) {
+            if (objects[x].getUniqueID() == uid) {
                 instance = objects[x];
                 break;
             }
@@ -168,7 +181,7 @@ public class FantastleObjectModelList {
         }
     }
 
-    public FantastleObjectModel readFantastleObjectModel(final XDataReader reader,
+    public FantastleObjectModel readObject(final XDataReader reader,
             final int formatVersion) throws IOException {
         final FantastleObjectModel[] objects = this.getAllObjects();
         FantastleObjectModel o = null;
@@ -195,7 +208,7 @@ public class FantastleObjectModelList {
         return null;
     }
 
-    public FantastleObjectModel readSavedFantastleObjectModel(final XDataReader reader,
+    public FantastleObjectModel readSavedObject(final XDataReader reader,
             final String UID, final int formatVersion) throws IOException {
         final FantastleObjectModel[] objects = this.getAllObjects();
         FantastleObjectModel o = null;

@@ -434,7 +434,7 @@ public class MapTurnBattleLogic extends Battle {
                     ry = randY.generate();
                     FantastleObjectModel obj = this.bd.getBattleMaze().getCell(rx,
                             ry, 0, Layers.OBJECT);
-                    while (obj.isSolidInBattle()) {
+                    while (obj.isSolid()) {
                         rx = randX.generate();
                         ry = randY.generate();
                         obj = this.bd.getBattleMaze().getCell(rx, ry, 0,
@@ -623,9 +623,9 @@ public class MapTurnBattleLogic extends Battle {
 
     @Override
     public void fireArrow(final int x, final int y) {
-        if (this.bd.getActiveCharacter().getCurrentAP() > 0) {
+        if (this.bd.getActiveCharacter().getCurrentActions() > 0) {
             // Has actions left
-            this.bd.getActiveCharacter().modifyAP(1);
+            this.bd.getActiveCharacter().act(1);
             this.updateStatsAndEffects();
             this.battleGUI.turnEventHandlersOff();
             final MapBattleArrowTask at = new MapBattleArrowTask(x, y,
@@ -687,7 +687,7 @@ public class MapTurnBattleLogic extends Battle {
             // Ignore
         }
         if (next != null && nextGround != null && currGround != null) {
-            if (!next.isSolidInBattle()) {
+            if (!next.isSolid()) {
                 if ((useAP && this.getActiveActionCounter() >= AIContext
                         .getDefaultAPCost()) || !useAP) {
                     // Move
@@ -1004,7 +1004,7 @@ public class MapTurnBattleLogic extends Battle {
                     // Ignore
                 }
                 if (next != null) {
-                    if (next.isSolidInBattle()) {
+                    if (next.isSolid()) {
                         if (next instanceof BattleCharacter) {
                             return (BattleCharacter) next;
                         }
@@ -1077,7 +1077,7 @@ public class MapTurnBattleLogic extends Battle {
                         this.bd.getActiveCharacter().getCreature());
                 if (success) {
                     this.bd.getActiveCharacter()
-                            .modifyAP(MapTurnBattleLogic.ITEM_ACTION_POINTS);
+                            .act(MapTurnBattleLogic.ITEM_ACTION_POINTS);
                 }
                 final BattleResults currResult = this.getResult();
                 if (currResult != BattleResults.IN_PROGRESS) {
@@ -1094,7 +1094,7 @@ public class MapTurnBattleLogic extends Battle {
                         this.bd.getActiveCharacter().getCreature());
                 if (success) {
                     this.bd.getActiveCharacter()
-                            .modifyAP(MapTurnBattleLogic.ITEM_ACTION_POINTS);
+                            .act(MapTurnBattleLogic.ITEM_ACTION_POINTS);
                 }
                 final BattleResults currResult = this.getResult();
                 if (currResult != BattleResults.IN_PROGRESS) {
@@ -1126,7 +1126,7 @@ public class MapTurnBattleLogic extends Battle {
             int stealChance;
             int stealAmount = 0;
             this.bd.getActiveCharacter()
-                    .modifyAP(MapTurnBattleLogic.STEAL_ACTION_POINTS);
+                    .act(MapTurnBattleLogic.STEAL_ACTION_POINTS);
             stealChance = StatConstants.CHANCE_STEAL;
             if (activeEnemy == null) {
                 // Failed - nobody to steal from
@@ -1207,7 +1207,7 @@ public class MapTurnBattleLogic extends Battle {
             int drainChance;
             int drainAmount = 0;
             this.bd.getActiveCharacter()
-                    .modifyAP(MapTurnBattleLogic.DRAIN_ACTION_POINTS);
+                    .act(MapTurnBattleLogic.DRAIN_ACTION_POINTS);
             drainChance = StatConstants.CHANCE_DRAIN;
             if (activeEnemy == null) {
                 // Failed - nobody to drain from
@@ -1313,27 +1313,27 @@ public class MapTurnBattleLogic extends Battle {
     }
 
     private int getActiveActionCounter() {
-        return this.bd.getActiveCharacter().getCurrentAP();
+        return this.bd.getActiveCharacter().getCurrentActions();
     }
 
     private int getActiveAttackCounter() {
-        return this.bd.getActiveCharacter().getCurrentAT();
+        return this.bd.getActiveCharacter().getCurrentActions();
     }
 
     private int getActiveSpellCounter() {
-        return this.bd.getActiveCharacter().getCurrentSP();
+        return this.bd.getActiveCharacter().getCurrentActions();
     }
 
     private void decrementActiveActionCounterBy(final int amount) {
-        this.bd.getActiveCharacter().modifyAP(amount);
+        this.bd.getActiveCharacter().act(amount);
     }
 
     private void decrementActiveAttackCounter() {
-        this.bd.getActiveCharacter().modifyAttacks(1);
+        this.bd.getActiveCharacter().act(1);
     }
 
     private void decrementActiveSpellCounter() {
-        this.bd.getActiveCharacter().modifySpells(1);
+        this.bd.getActiveCharacter().act(1);
     }
 
     @Override

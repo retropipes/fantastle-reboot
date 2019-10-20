@@ -132,12 +132,10 @@ public class EditorViewingWindowManager {
     }
 
     public void halfOffsetMaximumViewingWindowLocationsFromMaze(final Maze m) {
-        for (int x = 0; x < m.getLevels(); x++) {
-            this.MAX_VIEWING_WINDOW_X = m.getRows(x)
-                    + EditorViewingWindowManager.getOffsetFactorX();
-            this.MAX_VIEWING_WINDOW_Y = m.getColumns(x)
-                    + EditorViewingWindowManager.getOffsetFactorY();
-        }
+        this.MAX_VIEWING_WINDOW_X = m.getRows()
+                + EditorViewingWindowManager.getOffsetFactorX();
+        this.MAX_VIEWING_WINDOW_Y = m.getColumns()
+                + EditorViewingWindowManager.getOffsetFactorY();
     }
 
     public void halfOffsetMaximumViewingWindowLocation(final int valueX,

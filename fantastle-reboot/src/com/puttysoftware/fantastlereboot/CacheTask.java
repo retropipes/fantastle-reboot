@@ -26,26 +26,20 @@ class CacheTask extends Thread {
 
     @Override
     public void run() {
-        FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(0);
+        BagOStuff bag = FantastleReboot.getBagOStuff();
+        PreferencesManager prefs = bag.getPrefsManager();
+        prefs.updateWaitProgress(0);
         // Enter Wait Mode
-        FantastleReboot.getBagOStuff().getPrefsManager().enterWaitMode();
-        // Update Micro Logo
-        FantastleReboot.getBagOStuff().updateMicroLogo();
-        FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(25);
-        // Update GUI Logo
-        FantastleReboot.getBagOStuff().getGUIManager().updateLogo();
-        FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(50);
-        // Recreate image cache
-        FantastleReboot.getBagOStuff().getPrefsManager().updateWaitProgress(75);
-        // Update stat image cache
-        FantastleReboot.getBagOStuff().getGameManager().updateStatGUI();
-        FantastleReboot.getBagOStuff().getPrefsManager()
-                .updateWaitProgress(100);
+        prefs.enterWaitMode();
+        // Update user interface images
+        bag.updateMicroLogo();
+        bag.getGUIManager().updateLogo();
+        prefs.updateWaitProgress(50);
         // Update Help
-        FantastleReboot.getBagOStuff().getObjectHelpManager().updateHelpSize();
-        FantastleReboot.getBagOStuff().getGeneralHelpManager().updateHelpSize();
+        bag.getGeneralHelpManager().updateHelpSize();
+        prefs.updateWaitProgress(100);
         // Exit Wait Mode
-        FantastleReboot.getBagOStuff().getPrefsManager().exitWaitMode();
-        FantastleReboot.getBagOStuff().getPrefsManager().hidePrefs();
+        prefs.exitWaitMode();
+        bag.getGUIManager().showGUI();
     }
 }

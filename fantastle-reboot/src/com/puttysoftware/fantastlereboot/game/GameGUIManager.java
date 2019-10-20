@@ -30,6 +30,8 @@ import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.Nothing;
 import com.puttysoftware.fantastlereboot.objects.Player;
+import com.puttysoftware.fantastlereboot.objects.temporary.Darkness;
+import com.puttysoftware.fantastlereboot.objects.temporary.NoteObject;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class GameGUIManager {
@@ -45,7 +47,7 @@ class GameGUIManager {
     private boolean deferredRedraw;
     boolean eventFlag;
     private static Darkness DARK = new Darkness();
-    private static MazeNoteObject NOTE = new MazeNoteObject();
+    private static NoteObject NOTE = new NoteObject();
 
     // Constructors
     public GameGUIManager() {
@@ -173,12 +175,11 @@ class GameGUIManager {
                                                 xFix, yFix);
                             }
                         } else {
-                            this.drawGrid.setImageCell(
-                                    DARK.getImage());
+                            this.drawGrid.setImageCell(DARK.getImage(), xFix,
+                                    yFix);
                         }
                     } catch (final ArrayIndexOutOfBoundsException ae) {
-                        this.drawGrid.setImageCell(ev.getImage(),
-                                xFix, yFix);
+                        this.drawGrid.setImageCell(ev.getImage(), xFix, yFix);
                     }
                 }
             }

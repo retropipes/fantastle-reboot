@@ -32,10 +32,10 @@ public class MapBattleEffects {
     }
 
     public void updateEffects(final BattleCharacter bc) {
-        final int count = bc.getTemplate().getActiveEffectCount();
+        final int count = bc.getCreature().getActiveEffectCount();
         if (count > 0) {
             this.setUpGUI(count);
-            final String[] es = bc.getTemplate().getCompleteEffectStringArray();
+            final String[] es = bc.getCreature().getCompleteEffectStringArray();
             for (int x = 0; x < count; x++) {
                 this.effectLabels[x].setText(es[x]);
             }

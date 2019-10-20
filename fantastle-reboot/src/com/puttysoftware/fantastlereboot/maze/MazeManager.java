@@ -5,6 +5,9 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.maze;
 
+import java.awt.desktop.QuitEvent;
+import java.awt.desktop.QuitHandler;
+import java.awt.desktop.QuitResponse;
 import java.io.File;
 import java.io.IOException;
 
@@ -20,7 +23,7 @@ import com.puttysoftware.fantastlereboot.savedgames.GameLoadTask;
 import com.puttysoftware.fantastlereboot.savedgames.GameSaveTask;
 import com.puttysoftware.fileutils.FilenameChecker;
 
-public final class MazeManager {
+public final class MazeManager implements QuitHandler {
     // Fields
     private Maze gameMaze;
     private boolean loaded, isDirty;
@@ -47,6 +50,28 @@ public final class MazeManager {
         this.gameMaze = newMaze;
     }
 
+    @Override
+    public void handleQuitRequestWith(QuitEvent inE, QuitResponse inResponse) {
+        boolean saved = true;
+        int status = JOptionPane.DEFAULT_OPTION;
+        if (this.getDirty()) {
+            status = MazeManager.showSaveDialog();
+            if (status == JOptionPane.YES_OPTION) {
+                saved = MazeManager.saveGame();
+            } else if (status == JOptionPane.CANCEL_OPTION) {
+                saved = false;
+            } else {
+                this.setDirty(false);
+            }
+        }
+        if (saved) {
+            FantastleReboot.getBagOStuff().getPrefsManager().writePrefs();
+            inResponse.performQuit();
+        } else {
+            inResponse.cancelQuit();
+        }
+    }
+
     public void handleDeferredSuccess(final boolean value,
             final boolean versionError, final File triedToLoad) {
         if (value) {
@@ -60,7 +85,7 @@ public final class MazeManager {
         FantastleReboot.getBagOStuff().getMenuManager().checkFlags();
     }
 
-    public FantastleObjectModel getFantastleObjectModel(final int x, final int y,
+    public FantastleObjectModel getMazeCell(final int x, final int y,
             final int z, final int e) {
         try {
             return this.gameMaze.getCell(x, y, z, e);

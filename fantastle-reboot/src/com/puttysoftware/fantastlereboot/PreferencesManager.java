@@ -239,22 +239,7 @@ public class PreferencesManager implements PreferencesHandler {
     }
 
     public FantastleObjectModel getEditorDefaultFill() {
-        final String choice = this.editorFillChoiceArray[this.editorFill];
-        if (choice.equals("Tile")) {
-            return new Tile();
-        } else if (choice.equals("Grass")) {
-            return new Grass();
-        } else if (choice.equals("Dirt")) {
-            return new Dirt();
-        } else if (choice.equals("Snow")) {
-            return new Snow();
-        } else if (choice.equals("Tundra")) {
-            return new Tundra();
-        } else if (choice.equals("Sand")) {
-            return new Sand();
-        } else {
-            return null;
-        }
+        return new Tile();
     }
 
     private void defaultEnableSounds() {

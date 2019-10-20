@@ -23,49 +23,38 @@ import java.io.IOException;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.utilities.FantastleObjectModelList;
-import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
 public class ObjectInventory implements Cloneable {
     // Properties
-    private final String[] nameList;
+    private final int[] uidList;
     private final int[] contents;
     private final int[][] uses;
-    private GenericBoots boots;
     private final int MAX_QUANTITY = 100;
-    private static final GenericBoots NULL_INSTANCE = new RegularBoots();
 
     // Constructors
     public ObjectInventory() {
         final FantastleObjectModelList list = FantastleReboot.getBagOStuff().getObjects();
-        this.nameList = list.getAllInventoryableNamesMinusBoots();
-        this.contents = new int[this.nameList.length];
-        this.uses = new int[this.nameList.length][this.MAX_QUANTITY];
-        this.boots = ObjectInventory.NULL_INSTANCE;
+        this.uidList = list.getAllCarryableUIDs();
+        this.contents = new int[this.uidList.length];
+        this.uses = new int[this.uidList.length][this.MAX_QUANTITY];
     }
 
     // Accessors
     public int getItemCount(final FantastleObjectModel mo) {
-        if (ObjectInventory.isBoots(mo)) {
-            return this.getBootsCount();
-        } else {
-            return this.getNonBootsCount(mo);
-        }
+        final int loc = this.indexOf(mo);
+        return this.contents[loc];
     }
 
     public int getUses(final FantastleObjectModel mo) {
-        if (ObjectInventory.isBoots(mo)) {
-            return 0;
-        } else {
-            return this.getNonBootsUses(mo);
-        }
+        final int loc = this.indexOf(mo);
+        return this.uses[loc][this.contents[loc]];
     }
 
     private void setUses(final FantastleObjectModel mo, final int newUses) {
-        if (!ObjectInventory.isBoots(mo)) {
-            this.setNonBootsUses(mo, newUses);
-        }
+        final int loc = this.indexOf(mo);
+        this.uses[loc][this.contents[loc]] = newUses;
     }
 
     public void use(final FantastleObjectModel mo, final int x, final int y, final int z,
@@ -74,7 +63,7 @@ public class ObjectInventory implements Cloneable {
         if (mo.isUsable() && tempUses > 0) {
             tempUses--;
             this.setUses(mo, tempUses);
-            mo.useHelper(x, y, z, w);
+            mo.use();
             if (tempUses == 0) {
                 this.removeItem(mo);
             }
@@ -82,111 +71,6 @@ public class ObjectInventory implements Cloneable {
     }
 
     public boolean isItemThere(final FantastleObjectModel mo) {
-        if (ObjectInventory.isBoots(mo)) {
-            return this.areBootsThere(mo);
-        } else {
-            return this.areNonBootsThere(mo);
-        }
-    }
-
-    // Transformers
-    public void fireStepActions() {
-        if (!this.boots.equals(ObjectInventory.NULL_INSTANCE)) {
-            this.boots.stepAction();
-        }
-    }
-
-    public void addItem(final FantastleObjectModel mo) {
-        if (ObjectInventory.isBoots(mo)) {
-            this.addBoots(mo);
-        } else {
-            this.addNonBoots(mo);
-        }
-    }
-
-    public void removeItem(final FantastleObjectModel mo) {
-        if (ObjectInventory.isBoots(mo)) {
-            this.removeBoots();
-        } else {
-            this.removeNonBoots(mo);
-        }
-    }
-
-    public void removeAllBoots() {
-        this.removeBoots();
-    }
-
-    public String[] generateInventoryStringArray() {
-        final String[] result = new String[this.contents.length + 1];
-        final StringBuilder[] sb = new StringBuilder[this.contents.length + 1];
-        for (int x = 0; x < this.contents.length; x++) {
-            sb[x] = new StringBuilder();
-            sb[x].append("Slot ");
-            sb[x].append(x + 1);
-            sb[x].append(": ");
-            sb[x].append(this.nameList[x]);
-            sb[x].append(" (Qty: ");
-            sb[x].append(this.contents[x]);
-            sb[x].append(", Uses: ");
-            sb[x].append(this.uses[x][this.contents[x]]);
-            sb[x].append(")");
-            result[x] = sb[x].toString();
-        }
-        sb[this.contents.length] = new StringBuilder();
-        sb[this.contents.length].append("Slot ");
-        sb[this.contents.length].append(this.contents.length + 1);
-        sb[this.contents.length].append(": ");
-        sb[this.contents.length].append(this.boots.getName());
-        sb[this.contents.length].append(" (Qty 1, Uses 0)");
-        result[this.contents.length] = sb[this.contents.length].toString();
-        return result;
-    }
-
-    public String[] generateUseStringArray() {
-        final FantastleObjectModelList list = FantastleReboot.getBagOStuff().getObjects();
-        final String[] names = list.getAllUsableNames();
-        final int len = names.length;
-        final StringBuilder[] sb = new StringBuilder[len];
-        final String[] result = new String[len];
-        for (int x = 0; x < len; x++) {
-            final int index = this.indexByName(names[x]);
-            sb[x] = new StringBuilder();
-            sb[x].append(names[x]);
-            sb[x].append(" (Qty: ");
-            sb[x].append(this.contents[index]);
-            sb[x].append(", Uses: ");
-            sb[x].append(this.uses[index][this.contents[index]]);
-            sb[x].append(")");
-            result[x] = sb[x].toString();
-        }
-        return result;
-    }
-
-    // Helper methods
-    private int getBootsCount() {
-        if (!this.boots.equals(ObjectInventory.NULL_INSTANCE)) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-    private int getNonBootsCount(final FantastleObjectModel mo) {
-        final int loc = this.indexOf(mo);
-        return this.contents[loc];
-    }
-
-    private int getNonBootsUses(final FantastleObjectModel mo) {
-        final int loc = this.indexOf(mo);
-        return this.uses[loc][this.contents[loc]];
-    }
-
-    private void setNonBootsUses(final FantastleObjectModel mo, final int newUses) {
-        final int loc = this.indexOf(mo);
-        this.uses[loc][this.contents[loc]] = newUses;
-    }
-
-    private boolean areNonBootsThere(final FantastleObjectModel mo) {
         final int loc = this.indexOf(mo);
         if (loc != -1) {
             if (this.contents[loc] != 0) {
@@ -199,63 +83,25 @@ public class ObjectInventory implements Cloneable {
         }
     }
 
-    private boolean areBootsThere(final FantastleObjectModel mo) {
-        if (!this.boots.equals(ObjectInventory.NULL_INSTANCE)) {
-            if (this.boots.getName().equals(mo.getName())) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    private void addBoots(final FantastleObjectModel mo) {
-        this.boots = (GenericBoots) mo;
-    }
-
-    private void addNonBoots(final FantastleObjectModel mo) {
+    public void addItem(final FantastleObjectModel mo) {
         final int loc = this.indexOf(mo);
-        if (this.contents[loc] < this.MAX_QUANTITY) {
+        if (this.contents[loc] != -1) {
             this.contents[loc]++;
-            this.uses[loc][this.contents[loc]] = mo.getUses();
         }
     }
 
-    private void removeBoots() {
-        this.boots = new RegularBoots();
-    }
-
-    private void removeNonBoots(final FantastleObjectModel mo) {
+    public void removeItem(final FantastleObjectModel mo) {
         final int loc = this.indexOf(mo);
-        if (this.contents[loc] != 0) {
+        if (this.contents[loc] > 0) {
             this.contents[loc]--;
         }
     }
 
-    private static boolean isBoots(final FantastleObjectModel mo) {
-        if (mo.isOfType(TypeConstants.TYPE_BOOTS)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
+    // Helper methods
     private int indexOf(final FantastleObjectModel mo) {
         int x;
         for (x = 0; x < this.contents.length; x++) {
-            if (mo.getName().equals(this.nameList[x])) {
-                return x;
-            }
-        }
-        return -1;
-    }
-
-    private int indexByName(final String name) {
-        int x;
-        for (x = 0; x < this.contents.length; x++) {
-            if (name.equals(this.nameList[x])) {
+            if (mo.getUniqueID() == this.uidList[x]) {
                 return x;
             }
         }
@@ -273,19 +119,12 @@ public class ObjectInventory implements Cloneable {
                 clone.uses[x][y] = this.uses[x][y];
             }
         }
-        clone.boots = this.boots;
         return clone;
     }
 
     public static ObjectInventory readInventory(final XDataReader reader,
             final int formatVersion) throws IOException {
-        final FantastleObjectModelList objects = FantastleReboot.getBagOStuff()
-                .getObjects();
         final ObjectInventory i = new ObjectInventory();
-        i.boots = (GenericBoots) objects.readFantastleObjectModel(reader, formatVersion);
-        if (i.boots == null) {
-            i.boots = ObjectInventory.NULL_INSTANCE;
-        }
         for (int x = 0; x < i.contents.length; x++) {
             i.contents[x] = reader.readInt();
         }
@@ -298,7 +137,6 @@ public class ObjectInventory implements Cloneable {
     }
 
     public void writeInventory(final XDataWriter writer) throws IOException {
-        this.boots.writeFantastleObjectModel(writer);
         for (final int content : this.contents) {
             writer.writeInt(content);
         }

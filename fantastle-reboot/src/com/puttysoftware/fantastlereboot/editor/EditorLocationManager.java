@@ -18,7 +18,6 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.editor;
 
-import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 
@@ -212,11 +211,11 @@ public class EditorLocationManager {
         this.minZ = 0;
         this.minW = 0;
         this.minE = 0;
-        this.maxW = m.getLevels() - 1;
+        this.maxW = Maze.getMaxLevels();
         this.maxE = Layers.COUNT - 1;
-        this.maxX = m.getRows(this.locW);
-        this.maxY = m.getColumns(this.locW);
-        this.maxZ = m.getFloors(this.locW) - 1;
+        this.maxX = m.getRows();
+        this.maxY = m.getColumns();
+        this.maxZ = m.getFloors() - 1;
     }
 
     public void resetEditorLocation() {
@@ -248,8 +247,6 @@ public class EditorLocationManager {
 
     private void checkLimits() {
         // Check for limits out of bounds
-        final Maze m = FantastleReboot.getBagOStuff().getMazeManager()
-                .getMaze();
         if (this.locW < this.minW) {
             this.locW = this.minW;
         }
@@ -269,18 +266,10 @@ public class EditorLocationManager {
             this.locY = this.maxY;
         }
         if (this.locZ < this.minZ) {
-            if (m.is3rdDimensionWraparoundEnabled(this.locW)) {
-                this.locZ = this.maxZ;
-            } else {
-                this.locZ = this.minZ;
-            }
+            this.locZ = this.minZ;
         }
         if (this.locZ > this.maxZ) {
-            if (m.is3rdDimensionWraparoundEnabled(this.locW)) {
-                this.locZ = this.minZ;
-            } else {
-                this.locZ = this.maxZ;
-            }
+            this.locZ = this.maxZ;
         }
         if (this.locE < this.minE) {
             this.locE = this.minE;

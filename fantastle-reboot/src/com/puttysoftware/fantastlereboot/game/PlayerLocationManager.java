@@ -18,9 +18,6 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.game;
 
-import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.maze.Maze;
-
 public class PlayerLocationManager {
     // Fields
     private int oldLocX, oldLocY, oldLocZ, oldLocW;
@@ -127,14 +124,8 @@ public class PlayerLocationManager {
     }
 
     private void fixLocationZ() {
-        final Maze m = FantastleReboot.getBagOStuff().getMazeManager()
-                .getMaze();
-        if (m.is3rdDimensionWraparoundEnabled(this.locW)) {
-            if (this.locZ < 0) {
-                this.locZ = m.getFloors(this.locW) - 1;
-            } else if (this.locZ > m.getFloors(this.locW) - 1) {
-                this.locZ = 0;
-            }
+        if (this.locZ < 0) {
+            this.locZ = 0;
         }
     }
 }

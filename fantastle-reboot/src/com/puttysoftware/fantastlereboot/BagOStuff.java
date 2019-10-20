@@ -48,7 +48,6 @@ public class BagOStuff {
     private MenuManager menuMgr;
     private PreferencesManager prefsMgr;
     private GeneralHelpManager gHelpMgr;
-    private ObjectHelpManager oHelpMgr;
     private MazeEditor editor;
     private GUIManager guiMgr;
     private final FantastleObjectModelList objects;
@@ -102,7 +101,6 @@ public class BagOStuff {
         this.mazeMgr = new MazeManager();
         this.menuMgr = new MenuManager();
         this.gHelpMgr = new GeneralHelpManager();
-        this.oHelpMgr = new ObjectHelpManager();
         this.windowTurnBattle = new WindowTurnBattleLogic();
         this.windowTimeBattle = new WindowTimeBattleLogic();
         this.mapTurnBattle = new MapTurnBattleLogic();
@@ -189,10 +187,6 @@ public class BagOStuff {
 
     public GeneralHelpManager getGeneralHelpManager() {
         return this.gHelpMgr;
-    }
-
-    public ObjectHelpManager getObjectHelpManager() {
-        return this.oHelpMgr;
     }
 
     public void updateMicroLogo() {

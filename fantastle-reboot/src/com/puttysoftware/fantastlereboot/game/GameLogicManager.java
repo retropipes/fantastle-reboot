@@ -707,12 +707,8 @@ public final class GameLogicManager {
                         Messager.showMessage(
                                 "That item has no more uses left.");
                         this.setUsingAnItem(false);
-                    } else if (!this.objectBeingUsed
-                            .isOfType(TypeConstants.TYPE_BOW)) {
-                        Messager.showMessage("Click to set target");
                     } else {
-                        this.useItemHandler(0, 0);
-                        this.setUsingAnItem(false);
+                        Messager.showMessage("Click to set target");
                     }
                     return;
                 }
