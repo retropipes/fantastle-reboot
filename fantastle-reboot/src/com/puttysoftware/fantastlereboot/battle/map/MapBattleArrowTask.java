@@ -14,7 +14,7 @@ import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.objectmodel.Layer;
+import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Wall;
 import com.puttysoftware.fantastlereboot.objects.temporary.ArrowFactory;
@@ -52,7 +52,7 @@ public class MapBattleArrowTask extends Thread {
             FantastleObjectModel o = null;
             try {
                 o = m.getCell(px + cumX, py + cumY, 0,
-                        Layer.OBJECT);
+                        Layers.OBJECT);
             } catch (final ArrayIndexOutOfBoundsException ae) {
                 o = new Wall();
             }
@@ -76,7 +76,7 @@ public class MapBattleArrowTask extends Thread {
                 cumY += incY;
                 try {
                     o = m.getCell(px + cumX, py + cumY, 0,
-                            Layer.OBJECT);
+                            Layers.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException ae) {
                     res = false;
                 }

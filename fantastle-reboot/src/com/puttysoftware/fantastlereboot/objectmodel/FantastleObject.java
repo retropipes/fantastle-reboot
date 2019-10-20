@@ -13,7 +13,7 @@ import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 public abstract class FantastleObject extends GameObject
         implements FantastleObjectModel {
     // Properties
-    private FantastleObject savedObject = null;
+    private FantastleObjectModel savedObject = null;
 
     // Constructors
     public FantastleObject(final int objectID) {
@@ -74,7 +74,7 @@ public abstract class FantastleObject extends GameObject
 
     // Methods
     @Override
-    public final FantastleObject getSavedObject() {
+    public final FantastleObjectModel getSavedObject() {
         return this.savedObject;
     }
 
@@ -84,13 +84,13 @@ public abstract class FantastleObject extends GameObject
     }
 
     @Override
-    public final void setSavedObject(final FantastleObject newSavedObject) {
+    public final void setSavedObject(final FantastleObjectModel newSavedObject) {
         this.savedObject = newSavedObject;
     }
 
     @Override
-    public Layer getLayer() {
-        return Layer.OBJECT;
+    public int getLayer() {
+        return Layers.OBJECT;
     }
 
     public String getName() {

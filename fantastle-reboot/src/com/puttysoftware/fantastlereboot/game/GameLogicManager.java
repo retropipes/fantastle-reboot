@@ -7,7 +7,6 @@ package com.puttysoftware.fantastlereboot.game;
 
 import javax.swing.JFrame;
 
-import com.apple.eawt.Application;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
@@ -20,10 +19,10 @@ import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.GenerateTask;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.objectmodel.Layer;
+import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.Nothing;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
-import com.puttysoftware.fantastlereboot.utilities.ArrowTypeConstants;
+import com.puttysoftware.fantastlereboot.objects.temporary.ArrowType;
 import com.puttysoftware.fantastlereboot.utilities.FantastleObjectModelList;
 import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
@@ -45,7 +44,7 @@ public final class GameLogicManager {
     // private int[] remoteCoords;
     private String gameOverMessage;
     // private boolean arrowActive;
-    private int activeArrowType;
+    private ArrowType activeArrowType;
     private boolean isTeleporting;
     private final ScoreTracker scorer;
     private final GameGUIManager gui;
@@ -72,7 +71,7 @@ public final class GameLogicManager {
         // this.remoteCoords = new int[4];
         // this.arrowActive = false;
         this.isTeleporting = false;
-        this.activeArrowType = ArrowTypeConstants.ARROW_TYPE_PLAIN;
+        this.activeArrowType = ArrowType.WOODEN;
         this.savedGameFlag = false;
         this.stateChanged = true;
     }
@@ -127,13 +126,13 @@ public final class GameLogicManager {
         return this.vwMgr;
     }
 
-    public void setArrowType(final int type) {
+    public void setArrowType(final ArrowType type) {
         this.activeArrowType = type;
     }
 
     void arrowDone() {
         // this.arrowActive = false;
-        this.activeArrowType = ArrowTypeConstants.ARROW_TYPE_PLAIN;
+        this.activeArrowType = ArrowType.WOODEN;
     }
 
     public void setSavedGameFlag(final boolean value) {
@@ -172,7 +171,7 @@ public final class GameLogicManager {
     }
 
     public void resetViewingWindow() {
-        final Application app = FantastleReboot.getBagOStuff();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         if (m != null && this.vwMgr != null) {
             this.vwMgr.setViewingWindowLocationX(m.getPlayerLocationY()
@@ -187,7 +186,7 @@ public final class GameLogicManager {
     }
 
     public static void resetPlayerLocation(final int level) {
-        final Application app = FantastleReboot.getBagOStuff();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         if (m != null) {
             m.switchLevel(level);
@@ -238,7 +237,7 @@ public final class GameLogicManager {
         this.setRemoteAction(x, y, z, w);
         // final FantastleObjectModel acted =
         // FantastleReboot.getBagOStuff().getMazeManager()
-        // .getFantastleObjectModel(x, y, z, w, Layer.OBJECT);
+        // .getFantastleObjectModel(x, y, z, w, Layers.OBJECT);
         // acted.postMoveAction(false, x, y, this.objectInv);
         // if (acted.doesChainReact()) {
         // acted.chainReactionAction(x, y, z, w);
@@ -254,7 +253,7 @@ public final class GameLogicManager {
         // m.getCell(this.plMgr.getPlayerLocationX(),
         // this.plMgr.getPlayerLocationY(),
         // this.plMgr.getPlayerLocationZ() - 1,
-        // this.plMgr.getPlayerLocationW(), Layer.OBJECT);
+        // this.plMgr.getPlayerLocationW(), Layers.OBJECT);
         // return true;
         // } catch (final ArrayIndexOutOfBoundsException ae) {
         // return false;
@@ -272,7 +271,7 @@ public final class GameLogicManager {
         // m.getCell(this.plMgr.getPlayerLocationX(),
         // this.plMgr.getPlayerLocationY(),
         // this.plMgr.getPlayerLocationZ() + 1,
-        // this.plMgr.getPlayerLocationW(), Layer.OBJECT);
+        // this.plMgr.getPlayerLocationW(), Layers.OBJECT);
         // return true;
         // } catch (final ArrayIndexOutOfBoundsException ae) {
         // return false;
@@ -290,7 +289,7 @@ public final class GameLogicManager {
         // m.getCell(this.plMgr.getPlayerLocationX(),
         // this.plMgr.getPlayerLocationY(),
         // this.plMgr.getPlayerLocationZ(),
-        // this.plMgr.getPlayerLocationW() - 1, Layer.OBJECT);
+        // this.plMgr.getPlayerLocationW() - 1, Layers.OBJECT);
         // return true;
         // } catch (final ArrayIndexOutOfBoundsException ae) {
         // return false;
@@ -308,7 +307,7 @@ public final class GameLogicManager {
         // m.getCell(this.plMgr.getPlayerLocationX(),
         // this.plMgr.getPlayerLocationY(),
         // this.plMgr.getPlayerLocationZ(),
-        // this.plMgr.getPlayerLocationW() + 1, Layer.OBJECT);
+        // this.plMgr.getPlayerLocationW() + 1, Layers.OBJECT);
         // return true;
         // } catch (final ArrayIndexOutOfBoundsException ae) {
         // return false;
@@ -325,7 +324,7 @@ public final class GameLogicManager {
         // try {
         // m.getCell(this.plMgr.getPlayerLocationX(),
         // this.plMgr.getPlayerLocationY(), floor,
-        // this.plMgr.getPlayerLocationW(), Layer.OBJECT);
+        // this.plMgr.getPlayerLocationW(), Layers.OBJECT);
         // return true;
         // } catch (final ArrayIndexOutOfBoundsException ae) {
         // return false;
@@ -342,7 +341,7 @@ public final class GameLogicManager {
         // try {
         // m.getCell(this.plMgr.getPlayerLocationX(),
         // this.plMgr.getPlayerLocationY(),
-        // this.plMgr.getPlayerLocationZ(), level, Layer.OBJECT);
+        // this.plMgr.getPlayerLocationZ(), level, Layers.OBJECT);
         // return true;
         // } catch (final ArrayIndexOutOfBoundsException ae) {
         // return false;
@@ -414,7 +413,7 @@ public final class GameLogicManager {
     }
 
     public void goToLevelOffset(final int level) {
-        final Application app = FantastleReboot.getBagOStuff();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         final boolean levelExists = m.doesLevelExistOffset(level);
         this.stopMovement();
@@ -427,7 +426,7 @@ public final class GameLogicManager {
 
     public void exitGame() {
         this.stateChanged = true;
-        final Application app = FantastleReboot.getBagOStuff();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         // Restore the maze
         m.restore();
@@ -467,15 +466,15 @@ public final class GameLogicManager {
     }
 
     public static void decay() {
-        final Application app = FantastleReboot.getBagOStuff();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         m.setCell(new OpenSpace(), m.getPlayerLocationX(),
                 m.getPlayerLocationY(), m.getPlayerLocationZ(),
-                Layer.OBJECT);
+                Layers.OBJECT);
     }
 
     public static void morph(final FantastleObjectModel morphInto) {
-        final Application app = FantastleReboot.getBagOStuff();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         m.setCell(morphInto, m.getPlayerLocationX(), m.getPlayerLocationY(),
                 m.getPlayerLocationZ(), morphInto.getLayer());
@@ -486,7 +485,7 @@ public final class GameLogicManager {
     }
 
     public void identifyObject(final int x, final int y) {
-        final Application app = FantastleReboot.getBagOStuff();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final BagOStuff bag = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         final int xOffset = this.vwMgr.getViewingWindowLocationX()
@@ -500,25 +499,22 @@ public final class GameLogicManager {
         final int destZ = m.getPlayerLocationZ();
         try {
             final FantastleObjectModel target1 = m.getCell(destX, destY, destZ,
-                    Layer.GROUND);
+                    Layers.GROUND);
             final FantastleObjectModel target2 = m.getCell(destX, destY, destZ,
-                    Layer.OBJECT);
-            target1.determineCurrentAppearance(destX, destY, destZ);
-            target2.determineCurrentAppearance(destX, destY, destZ);
+                    Layers.OBJECT);
             final String gameName1 = target1.getGameName();
             final String gameName2 = target2.getGameName();
             bag.showMessage(gameName2 + " on " + gameName1);
             SoundPlayer.playSound(SoundIndex.IDENTIFY);
         } catch (final ArrayIndexOutOfBoundsException ae) {
             final Nothing ev = new Nothing();
-            ev.determineCurrentAppearance(destX, destY, destZ);
             bag.showMessage(ev.getGameName());
             SoundPlayer.playSound(SoundIndex.IDENTIFY);
         }
     }
 
     public void playMaze() {
-        final Application app = FantastleReboot.getBagOStuff();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         if (app.getMazeManager().getLoaded()) {
             this.gui.initViewManager();
@@ -755,7 +751,7 @@ public final class GameLogicManager {
         // this.plMgr.getPlayerLocationW());
         // try {
         // final FantastleObjectModel target = m.getCell(destX, destY, destZ,
-        // destW, Layer.OBJECT);
+        // destW, Layers.OBJECT);
         // final String name = this.objectBeingUsed.getName();
         // if ((target.isSolid() || !visible)
         // && name.equals(new TeleportWand().getName())) {

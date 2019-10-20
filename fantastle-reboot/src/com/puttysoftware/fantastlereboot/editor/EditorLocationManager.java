@@ -20,7 +20,7 @@ package com.puttysoftware.fantastlereboot.editor;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.objectmodel.Layer;
+import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 
 public class EditorLocationManager {
     // Fields
@@ -213,7 +213,7 @@ public class EditorLocationManager {
         this.minW = 0;
         this.minE = 0;
         this.maxW = m.getLevels() - 1;
-        this.maxE = Layer.COUNT - 1;
+        this.maxE = Layers.COUNT - 1;
         this.maxX = m.getRows(this.locW);
         this.maxY = m.getColumns(this.locW);
         this.maxZ = m.getFloors(this.locW) - 1;

@@ -66,8 +66,8 @@ class CommonMapAIRoutines {
     }
 
     static int getMaxCastIndex(final AIContext ac) {
-        final int currMP = ac.getCharacter().getTemplate().getCurrentMP();
-        final int[] allCosts = ac.getCharacter().getTemplate().getSpellBook()
+        final int currMP = ac.getCharacter().getCreature().getCurrentMP();
+        final int[] allCosts = ac.getCharacter().getCreature().getSpellBook()
                 .getAllSpellCosts();
         int result = -1;
         if (currMP > 0) {
@@ -84,7 +84,7 @@ class CommonMapAIRoutines {
         final RandomRange random = new RandomRange(1, 100);
         final int chance = random.generate();
         if (chance <= effChance) {
-            if (ac.getCharacter().getCurrentAP() > 0) {
+            if (ac.getCharacter().getCurrentActions() > 0) {
                 return true;
             } else {
                 // Can't act any more times

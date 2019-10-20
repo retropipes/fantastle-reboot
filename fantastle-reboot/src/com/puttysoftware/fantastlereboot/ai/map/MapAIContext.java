@@ -10,7 +10,7 @@ import java.awt.Point;
 import com.puttysoftware.fantastlereboot.ai.AIContext;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.objectmodel.Layer;
+import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 
 public class MapAIContext extends AIContext {
@@ -30,7 +30,7 @@ public class MapAIContext extends AIContext {
         for (int x = 0; x < this.apCosts.length; x++) {
             for (int y = 0; y < this.apCosts[x].length; y++) {
                 final FantastleObjectModel obj = arena.getCell(x, y, 0,
-                        Layer.OBJECT);
+                        Layers.OBJECT);
                 if (obj.isSolid()) {
                     this.apCosts[x][y] = AIContext.CANNOT_MOVE_THERE;
                 } else {
@@ -41,7 +41,7 @@ public class MapAIContext extends AIContext {
         for (int x = 0; x < this.creatureLocations.length; x++) {
             for (int y = 0; y < this.creatureLocations[x].length; y++) {
                 final FantastleObjectModel obj = arena.getCell(x, y, 0,
-                        Layer.OBJECT);
+                        Layers.OBJECT);
                 if (obj instanceof BattleCharacter) {
                     final BattleCharacter bc = (BattleCharacter) obj;
                     this.creatureLocations[x][y] = bc.getTeamID();

@@ -35,7 +35,7 @@ import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.objectmodel.Layer;
+import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 import com.puttysoftware.fantastlereboot.spells.Spell;
@@ -433,17 +433,17 @@ public class MapTurnBattleLogic extends Battle {
                     rx = randX.generate();
                     ry = randY.generate();
                     FantastleObjectModel obj = this.bd.getBattleMaze().getCell(rx,
-                            ry, 0, Layer.OBJECT);
+                            ry, 0, Layers.OBJECT);
                     while (obj.isSolidInBattle()) {
                         rx = randX.generate();
                         ry = randY.generate();
                         obj = this.bd.getBattleMaze().getCell(rx, ry, 0,
-                                Layer.OBJECT);
+                                Layers.OBJECT);
                     }
                     this.bd.getBattlers()[x].setX(rx);
                     this.bd.getBattlers()[x].setY(ry);
                     this.bd.getBattleMaze().setCell(this.bd.getBattlers()[x],
-                            rx, ry, 0, Layer.OBJECT);
+                            rx, ry, 0, Layers.OBJECT);
                 }
             }
         }
@@ -654,7 +654,7 @@ public class MapTurnBattleLogic extends Battle {
             hit.deactivate();
             // Remove character from battle
             this.bd.getBattleMaze().setCell(new OpenSpace(), hit.getX(),
-                    hit.getY(), 0, Layer.OBJECT);
+                    hit.getY(), 0, Layers.OBJECT);
         }
         // Check result
         final BattleResults currResult = this.getResult();
@@ -679,10 +679,10 @@ public class MapTurnBattleLogic extends Battle {
         active.saveLocation();
         this.battleGUI.getViewManager().saveViewingWindow();
         try {
-            next = m.getCell(px + x, py + y, 0, Layer.OBJECT);
+            next = m.getCell(px + x, py + y, 0, Layers.OBJECT);
             nextGround = m.getCell(px + x, py + y, 0,
-                    Layer.GROUND);
-            currGround = m.getCell(px, py, 0, Layer.GROUND);
+                    Layers.GROUND);
+            currGround = m.getCell(px, py, 0, Layers.GROUND);
         } catch (final ArrayIndexOutOfBoundsException aioob) {
             // Ignore
         }
@@ -701,49 +701,49 @@ public class MapTurnBattleLogic extends Battle {
                     FantastleObjectModel obj9 = null;
                     try {
                         obj1 = m.getCell(px - 1, py - 1, 0,
-                                Layer.OBJECT);
+                                Layers.OBJECT);
                     } catch (final ArrayIndexOutOfBoundsException aioob) {
                         // Ignore
                     }
                     try {
                         obj2 = m.getCell(px, py - 1, 0,
-                                Layer.OBJECT);
+                                Layers.OBJECT);
                     } catch (final ArrayIndexOutOfBoundsException aioob) {
                         // Ignore
                     }
                     try {
                         obj3 = m.getCell(px + 1, py - 1, 0,
-                                Layer.OBJECT);
+                                Layers.OBJECT);
                     } catch (final ArrayIndexOutOfBoundsException aioob) {
                         // Ignore
                     }
                     try {
                         obj4 = m.getCell(px - 1, py, 0,
-                                Layer.OBJECT);
+                                Layers.OBJECT);
                     } catch (final ArrayIndexOutOfBoundsException aioob) {
                         // Ignore
                     }
                     try {
                         obj6 = m.getCell(px + 1, py - 1, 0,
-                                Layer.OBJECT);
+                                Layers.OBJECT);
                     } catch (final ArrayIndexOutOfBoundsException aioob) {
                         // Ignore
                     }
                     try {
                         obj7 = m.getCell(px - 1, py + 1, 0,
-                                Layer.OBJECT);
+                                Layers.OBJECT);
                     } catch (final ArrayIndexOutOfBoundsException aioob) {
                         // Ignore
                     }
                     try {
                         obj8 = m.getCell(px, py + 1, 0,
-                                Layer.OBJECT);
+                                Layers.OBJECT);
                     } catch (final ArrayIndexOutOfBoundsException aioob) {
                         // Ignore
                     }
                     try {
                         obj9 = m.getCell(px + 1, py + 1, 0,
-                                Layer.OBJECT);
+                                Layers.OBJECT);
                     } catch (final ArrayIndexOutOfBoundsException aioob) {
                         // Ignore
                     }
@@ -833,7 +833,7 @@ public class MapTurnBattleLogic extends Battle {
                         }
                     }
                     m.setCell(active.getSavedObject(), px, py, 0,
-                            Layer.OBJECT);
+                            Layers.OBJECT);
                     active.offsetX(x);
                     active.offsetY(y);
                     px += x;
@@ -843,8 +843,8 @@ public class MapTurnBattleLogic extends Battle {
                     this.battleGUI.getViewManager()
                             .offsetViewingWindowLocationY(x);
                     active.setSavedObject(
-                            m.getCell(px, py, 0, Layer.OBJECT));
-                    m.setCell(active, px, py, 0, Layer.OBJECT);
+                            m.getCell(px, py, 0, Layers.OBJECT));
+                    m.setCell(active, px, py, 0, Layers.OBJECT);
                     this.decrementActiveActionCounterBy(
                             AIContext.getDefaultAPCost());
                     SoundPlayer.playSound(SoundIndex.WALK);
@@ -904,7 +904,7 @@ public class MapTurnBattleLogic extends Battle {
                             // Remove character from battle
                             this.bd.getBattleMaze().setCell(new OpenSpace(),
                                     bc.getX(), bc.getY(), 0,
-                                    Layer.OBJECT);
+                                    Layers.OBJECT);
                         }
                         // Handle self death
                         if (!active.getCreature().isAlive()) {
@@ -915,7 +915,7 @@ public class MapTurnBattleLogic extends Battle {
                             // Remove character from battle
                             this.bd.getBattleMaze().setCell(new OpenSpace(),
                                     active.getX(), active.getY(), 0,
-                                    Layer.OBJECT);
+                                    Layers.OBJECT);
                             // End turn
                             this.endTurn();
                         }
@@ -954,7 +954,7 @@ public class MapTurnBattleLogic extends Battle {
             active.deactivate();
             // Remove character from battle
             m.setCell(new OpenSpace(), active.getX(), active.getY(), 0,
-                    Layer.OBJECT);
+                    Layers.OBJECT);
             // End Turn
             this.endTurn();
             this.updateStatsAndEffects();
@@ -999,7 +999,7 @@ public class MapTurnBattleLogic extends Battle {
                 }
                 try {
                     next = m.getCell(px + x, py + y, 0,
-                            Layer.OBJECT);
+                            Layers.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException aioob) {
                     // Ignore
                 }
@@ -1386,7 +1386,7 @@ public class MapTurnBattleLogic extends Battle {
                     this.bd.getBattleMaze().setCell(new OpenSpace(),
                             this.bd.getBattlers()[x].getX(),
                             this.bd.getBattlers()[x].getY(), 0,
-                            Layer.OBJECT);
+                            Layers.OBJECT);
                     if (this.bd.getActiveCharacter().getName()
                             .equals(this.bd.getBattlers()[x].getName())) {
                         // Active character died, end turn

@@ -5,7 +5,6 @@ import java.util.TimerTask;
 
 import javax.swing.JFrame;
 
-import com.apple.eawt.Application;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
@@ -318,7 +317,7 @@ public class WindowTimeBattleLogic extends Battle {
     @Override
     public void doBattle() {
         final BagOStuff bag = FantastleReboot.getBagOStuff();
-        final Application app = FantastleReboot.getBagOStuff();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         try {
             final GameLogicManager gm = app.getGameManager();
             if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
@@ -733,7 +732,7 @@ public class WindowTimeBattleLogic extends Battle {
         @Override
         public void run() {
             try {
-                final Application app = FantastleReboot.getBagOStuff();
+                final BagOStuff app = FantastleReboot.getBagOStuff();
                 final BagOStuff bag = FantastleReboot.getBagOStuff();
                 final Battle b = app.getBattle();
                 if (bag.getMode() == BagOStuff.STATUS_BATTLE
@@ -765,7 +764,7 @@ public class WindowTimeBattleLogic extends Battle {
         @Override
         public void run() {
             try {
-                final Application app = FantastleReboot.getBagOStuff();
+                final BagOStuff app = FantastleReboot.getBagOStuff();
                 final BagOStuff bag = FantastleReboot.getBagOStuff();
                 final Battle b = app.getBattle();
                 if (bag.getMode() == BagOStuff.STATUS_BATTLE

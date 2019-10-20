@@ -13,8 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 import javax.swing.WindowConstants;
 
-import com.apple.eawt.Application;
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.VersionException;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
@@ -51,7 +51,7 @@ public class GameLoadTask extends Thread {
         final File mazeFile = new File(this.filename);
         try {
             this.loadFrame.setVisible(true);
-            final Application app = FantastleReboot.getBagOStuff();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             int startW;
             app.getGameManager().setSavedGameFlag(false);
             final File tempLock = new File(

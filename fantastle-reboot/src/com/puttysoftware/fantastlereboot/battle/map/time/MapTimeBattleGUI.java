@@ -37,7 +37,7 @@ import com.puttysoftware.fantastlereboot.battle.map.MapBattleViewingWindowManage
 import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.objectmodel.Layer;
+import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.Nothing;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -148,21 +148,21 @@ class MapTimeBattleGUI {
                     yFix = y - yView;
                     try {
                         final FantastleObjectModel obj1 = battleMaze.getCell(y, x,
-                                0, Layer.GROUND);
+                                0, Layers.GROUND);
                         final FantastleObjectModel obj2 = battleMaze.getCell(y, x,
-                                0, Layer.OBJECT);
+                                0, Layers.OBJECT);
                         String cacheName = generateCacheName(obj1, obj2);
-                        final BufferedImageIcon icon1 = obj1.battleRenderHook();
-                        final BufferedImageIcon icon2 = obj2.battleRenderHook();
+                        final BufferedImageIcon icon1 = obj1.getBattleImage();
+                        final BufferedImageIcon icon2 = obj2.getBattleImage();
                         this.drawGrid.setImageCell(ImageCompositor.composite(
                                 cacheName, icon1, icon2), xFix, yFix);
                     } catch (final ArrayIndexOutOfBoundsException ae) {
                         final Nothing ev = new Nothing();
-                        this.drawGrid.setImageCell(ev.battleRenderHook(), xFix,
+                        this.drawGrid.setImageCell(ev.getBattleImage(), xFix,
                                 yFix);
                     } catch (final NullPointerException np) {
                         final Nothing ev = new Nothing();
-                        this.drawGrid.setImageCell(ev.battleRenderHook(), xFix,
+                        this.drawGrid.setImageCell(ev.getBattleImage(), xFix,
                                 yFix);
                     }
                 }
@@ -183,13 +183,13 @@ class MapTimeBattleGUI {
                 xFix = y - xView;
                 yFix = x - yView;
                 final FantastleObjectModel obj1 = battleMaze.getCell(y, x, 0,
-                        Layer.GROUND);
+                        Layers.GROUND);
                 final FantastleObjectModel obj2 = battleMaze.getCell(y, x, 0,
-                        Layer.OBJECT);
+                        Layers.OBJECT);
                 String cacheName = generateCacheName(obj1, obj2);
-                final BufferedImageIcon icon1 = obj1.battleRenderHook();
-                final BufferedImageIcon icon2 = obj2.battleRenderHook();
-                final BufferedImageIcon icon3 = obj3.battleRenderHook();
+                final BufferedImageIcon icon1 = obj1.getBattleImage();
+                final BufferedImageIcon icon2 = obj2.getBattleImage();
+                final BufferedImageIcon icon3 = obj3.getBattleImage();
                 this.drawGrid.setImageCell(ImageCompositor.composite(cacheName,
                         icon1, icon2, icon3), xFix, yFix);
                 this.battlePane.repaint();
@@ -206,7 +206,7 @@ class MapTimeBattleGUI {
             final FantastleObjectModel... objects) {
         StringBuilder result = new StringBuilder();
         for (FantastleObjectModel object : objects) {
-            result.append(object.getBattleBaseID());
+            result.append(object.getUniqueID());
             result.append("_");
         }
         result.append("cache");

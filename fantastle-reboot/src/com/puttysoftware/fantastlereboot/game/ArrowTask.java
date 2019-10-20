@@ -26,7 +26,7 @@ import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.objectmodel.Layer;
+import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Wall;
 import com.puttysoftware.fantastlereboot.objects.temporary.ArrowFactory;
@@ -66,7 +66,7 @@ public class ArrowTask extends Thread {
         m.tickTimers(pw, pz);
         FantastleObjectModel o = null;
         try {
-            o = m.getCell(px + cumX, py + cumY, pz, pw, Layer.OBJECT);
+            o = m.getCell(px + cumX, py + cumY, pz, pw, Layers.OBJECT);
         } catch (final ArrayIndexOutOfBoundsException ae) {
             o = new Wall();
         }
@@ -91,7 +91,7 @@ public class ArrowTask extends Thread {
             cumX += incX;
             cumY += incY;
             try {
-                o = m.getCell(px + cumX, py + cumY, pz, pw, Layer.OBJECT);
+                o = m.getCell(px + cumX, py + cumY, pz, pw, Layers.OBJECT);
             } catch (final ArrayIndexOutOfBoundsException ae) {
                 o = new Wall();
             }

@@ -2,7 +2,6 @@ package com.puttysoftware.fantastlereboot.battle.window.turn;
 
 import javax.swing.JFrame;
 
-import com.apple.eawt.Application;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
@@ -306,7 +305,7 @@ public class WindowTurnBattleLogic extends Battle {
     @Override
     public void doBattle() {
         try {
-            final Application app = FantastleReboot.getBagOStuff();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             final BagOStuff bag = FantastleReboot.getBagOStuff();
             final GameLogicManager gm = app.getGameManager();
             if (bag.getMode() != BagOStuff.STATUS_BATTLE) {

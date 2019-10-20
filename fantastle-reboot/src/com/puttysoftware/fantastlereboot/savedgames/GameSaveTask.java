@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import com.apple.eawt.Application;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
@@ -34,7 +33,7 @@ public class GameSaveTask extends Thread {
         boolean success = true;
         final String sg = "Game";
         try {
-            final Application app = FantastleReboot.getBagOStuff();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             final BagOStuff bag = FantastleReboot.getBagOStuff();
             // filename check
             final boolean hasExtension = GameSaveTask

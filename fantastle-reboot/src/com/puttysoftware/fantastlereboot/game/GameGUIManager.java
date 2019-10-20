@@ -27,10 +27,9 @@ import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.objectmodel.Layer;
+import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.Nothing;
 import com.puttysoftware.fantastlereboot.objects.Player;
-import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class GameGUIManager {
@@ -141,35 +140,15 @@ class GameGUIManager {
                             v, y, x);
                     try {
                         if (visible) {
-                            final FantastleObjectModel obj1 = m
-                                    .getCell(y, x, m.getPlayerLocationZ(),
-                                            Layer.GROUND)
-                                    .gameRenderHook(y, x,
-                                            m.getPlayerLocationZ());
-                            final FantastleObjectModel obj2 = m
-                                    .getCell(y, x, m.getPlayerLocationZ(),
-                                            Layer.OBJECT)
-                                    .gameRenderHook(y, x,
-                                            m.getPlayerLocationZ());
-                            final BufferedImageIcon img1 = ObjectImageManager
-                                    .getImage(obj1.getName(),
-                                            obj1.getGameBaseID(),
-                                            FantastleObjectModel
-                                                    .getTemplateColor());
-                            final BufferedImageIcon img2 = ObjectImageManager
-                                    .getImage(obj2.getName(),
-                                            obj2.getGameBaseID(),
-                                            FantastleObjectModel
-                                                    .getTemplateColor());
+                            final FantastleObjectModel obj1 = m.getCell(y, x,
+                                    m.getPlayerLocationZ(), Layers.GROUND);
+                            final FantastleObjectModel obj2 = m.getCell(y, x,
+                                    m.getPlayerLocationZ(), Layers.OBJECT);
+                            final BufferedImageIcon img1 = obj1.getImage();
+                            final BufferedImageIcon img2 = obj2.getImage();
                             if (u == y && v == x) {
-                                final FantastleObjectModel obj3 = new Player()
-                                        .gameRenderHook(y, x,
-                                                m.getPlayerLocationZ());
-                                final BufferedImageIcon img3 = ObjectImageManager
-                                        .getImage(obj3.getName(),
-                                                obj3.getGameBaseID(),
-                                                FantastleObjectModel
-                                                        .getTemplateColor());
+                                final FantastleObjectModel obj3 = new Player();
+                                final BufferedImageIcon img3 = obj3.getImage();
                                 String cacheName = generateCacheName(obj1, obj2,
                                         obj3);
                                 this.drawGrid.setImageCell(ImageCompositor
@@ -177,14 +156,8 @@ class GameGUIManager {
                                         xFix, yFix);
                             } else if (m.hasNote(x, y,
                                     m.getPlayerLocationZ())) {
-                                final FantastleObjectModel obj3 = NOTE
-                                        .gameRenderHook(y, x,
-                                                m.getPlayerLocationZ());
-                                final BufferedImageIcon img3 = ObjectImageManager
-                                        .getImage(obj3.getName(),
-                                                obj3.getGameBaseID(),
-                                                FantastleObjectModel
-                                                        .getTemplateColor());
+                                final FantastleObjectModel obj3 = NOTE;
+                                final BufferedImageIcon img3 = obj3.getImage();
                                 String cacheName = generateCacheName(obj1, obj2,
                                         obj3);
                                 this.drawGrid.setImageCell(ImageCompositor
@@ -201,26 +174,10 @@ class GameGUIManager {
                             }
                         } else {
                             this.drawGrid.setImageCell(
-                                    ObjectImageManager.getImage(DARK.getName(),
-                                            DARK.getBaseID(),
-                                            ImageColorConstants.COLOR_NONE),
-                                    xFix, yFix);
+                                    DARK.getImage());
                         }
                     } catch (final ArrayIndexOutOfBoundsException ae) {
-                        final FantastleObjectModel obj = ev.gameRenderHook(y, x,
-                                m.getPlayerLocationZ());
-                        this.drawGrid.setImageCell(
-                                ObjectImageManager.getImage(obj.getName(),
-                                        obj.getGameBaseID(),
-                                        FantastleObjectModel.getTemplateColor()),
-                                xFix, yFix);
-                    } catch (final NullPointerException np) {
-                        final FantastleObjectModel obj = ev.gameRenderHook(y, x,
-                                m.getPlayerLocationZ());
-                        this.drawGrid.setImageCell(
-                                ObjectImageManager.getImage(obj.getName(),
-                                        obj.getGameBaseID(),
-                                        FantastleObjectModel.getTemplateColor()),
+                        this.drawGrid.setImageCell(ev.getImage(),
                                 xFix, yFix);
                     }
                 }
@@ -240,7 +197,7 @@ class GameGUIManager {
             final FantastleObjectModel... objects) {
         StringBuilder result = new StringBuilder();
         for (FantastleObjectModel object : objects) {
-            result.append(object.getGameBaseID());
+            result.append(object.getUniqueID());
             result.append("_");
         }
         result.append("cache");

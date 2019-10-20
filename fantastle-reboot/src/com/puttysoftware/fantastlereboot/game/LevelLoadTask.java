@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 import javax.swing.WindowConstants;
 
-import com.apple.eawt.Application;
+import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
@@ -40,7 +40,7 @@ public class LevelLoadTask extends Thread {
     public void run() {
         try {
             this.loadFrame.setVisible(true);
-            final Application app = FantastleReboot.getBagOStuff();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             final Maze gameMaze = app.getMazeManager().getMaze();
             app.getGameManager().disableEvents();
             gameMaze.switchLevelOffset(this.level);

@@ -2,7 +2,7 @@ package com.puttysoftware.fantastlereboot.objects;
 
 import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
-import com.puttysoftware.fantastlereboot.objectmodel.Layer;
+import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 
 public final class Tile extends FantastleObject {
     public Tile() {
@@ -10,7 +10,7 @@ public final class Tile extends FantastleObject {
     }
 
     @Override
-    public Layer getLayer() {
-        return Layer.GROUND;
+    public int getLayer() {
+        return Layers.GROUND;
     }
 }

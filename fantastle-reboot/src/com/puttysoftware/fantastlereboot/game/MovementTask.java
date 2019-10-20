@@ -5,7 +5,6 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.game;
 
-import com.apple.eawt.Application;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
@@ -16,7 +15,7 @@ import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.objectmodel.Layer;
+import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Wall;
 import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
@@ -89,15 +88,15 @@ final class MovementTask extends Thread {
 
     public boolean tryAbsolute(final int x, final int y, final int z) {
         try {
-            final Application app = FantastleReboot.getBagOStuff();
+            final BagOStuff app = FantastleReboot.getBagOStuff();
             final Maze m = app.getMazeManager().getMaze();
             final FantastleObjectModel below = m.getCell(m.getPlayerLocationX(),
                     m.getPlayerLocationY(), m.getPlayerLocationZ(),
-                    Layer.GROUND);
+                    Layers.GROUND);
             final FantastleObjectModel nextBelow = m.getCell(x, y, z,
-                    Layer.GROUND);
+                    Layers.GROUND);
             final FantastleObjectModel nextAbove = m.getCell(x, y, z,
-                    Layer.OBJECT);
+                    Layers.OBJECT);
             return MovementTask.checkSolidAbsolute(this.saved, below, nextBelow,
                     nextAbove);
         } catch (final ArrayIndexOutOfBoundsException ae) {
@@ -145,7 +144,7 @@ final class MovementTask extends Thread {
 
     private void updatePositionRelative(final int dirX, final int dirY,
             final int dirZ) {
-        final Application app = FantastleReboot.getBagOStuff();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final BagOStuff bag = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         int px = m.getPlayerLocationX();
@@ -164,19 +163,19 @@ final class MovementTask extends Thread {
         do {
             try {
                 try {
-                    below = m.getCell(px, py, pz, Layer.GROUND);
+                    below = m.getCell(px, py, pz, Layers.GROUND);
                 } catch (final ArrayIndexOutOfBoundsException ae) {
                     below = new OpenSpace();
                 }
                 try {
                     nextBelow = m.getCell(px + fX, py + fY, pz + fZ,
-                            Layer.GROUND);
+                            Layers.GROUND);
                 } catch (final ArrayIndexOutOfBoundsException ae) {
                     nextBelow = new OpenSpace();
                 }
                 try {
                     nextAbove = m.getCell(px + fX, py + fY, pz + fZ,
-                            Layer.OBJECT);
+                            Layers.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException ae) {
                     nextAbove = new Wall();
                 }
@@ -213,9 +212,9 @@ final class MovementTask extends Thread {
                         }
                         if (this.proceed) {
                             this.saved = m.getCell(px, py, pz,
-                                    Layer.OBJECT);
+                                    Layers.OBJECT);
                             groundInto = m.getCell(px, py, pz,
-                                    Layer.GROUND);
+                                    Layers.GROUND);
                             if (groundInto.overridesDefaultPostMove()) {
                                 groundInto.postMoveAction(false, px, py);
                                 if (!this.saved.isOfType(
@@ -303,11 +302,11 @@ final class MovementTask extends Thread {
     }
 
     private void updatePositionAbsolute(final int x, final int y, final int z) {
-        final Application app = FantastleReboot.getBagOStuff();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         final BagOStuff bag = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         try {
-            m.getCell(x, y, z, Layer.OBJECT).preMoveAction(true,
+            m.getCell(x, y, z, Layers.OBJECT).preMoveAction(true,
                     x, y);
         } catch (final ArrayIndexOutOfBoundsException ae) {
             // Ignore
@@ -317,7 +316,7 @@ final class MovementTask extends Thread {
         m.savePlayerLocation();
         this.vwMgr.saveViewingWindow();
         try {
-            if (!(m.getCell(x, y, z, Layer.OBJECT).isSolid())) {
+            if (!(m.getCell(x, y, z, Layers.OBJECT).isSolid())) {
                 m.setPlayerLocationX(x);
                 m.setPlayerLocationY(y);
                 m.setPlayerLocationZ(z);
@@ -327,7 +326,7 @@ final class MovementTask extends Thread {
                         - GameViewingWindowManager.getOffsetFactorY());
                 this.saved = m.getCell(m.getPlayerLocationX(),
                         m.getPlayerLocationY(), m.getPlayerLocationZ(),
-                        Layer.OBJECT);
+                        Layers.OBJECT);
                 app.getMazeManager().setDirty(true);
                 this.saved.postMoveAction(false, x, y);
                 final int px = m.getPlayerLocationX();

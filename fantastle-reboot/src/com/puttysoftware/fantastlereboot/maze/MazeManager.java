@@ -11,7 +11,6 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import com.apple.eawt.Application;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
@@ -28,7 +27,7 @@ public final class MazeManager {
     private static final String MAC_PREFIX = "HOME";
     private static final String WIN_PREFIX = "APPDATA";
     private static final String UNIX_PREFIX = "HOME";
-    private static final String MAC_DIR = "/Library/Application Support/Putty Software/FantastleReboot/Games/";
+    private static final String MAC_DIR = "/Library/BagOStuff Support/Putty Software/FantastleReboot/Games/";
     private static final String WIN_DIR = "\\Putty Software\\FantastleReboot\\Games\\";
     private static final String UNIX_DIR = "/.puttysoftware/tallertower/games/";
 
@@ -90,7 +89,7 @@ public final class MazeManager {
     }
 
     public void setLoaded(final boolean status) {
-        final Application app = FantastleReboot.getBagOStuff();
+        final BagOStuff app = FantastleReboot.getBagOStuff();
         this.loaded = status;
         app.getMenuManager().checkFlags();
     }

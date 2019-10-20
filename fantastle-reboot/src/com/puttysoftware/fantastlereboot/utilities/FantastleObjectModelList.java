@@ -10,10 +10,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.creatures.monsters.Monster;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.objectmodel.Layer;
 import com.puttysoftware.fantastlereboot.objects.Amulet;
 import com.puttysoftware.fantastlereboot.objects.ArmorShop;
 import com.puttysoftware.fantastlereboot.objects.BankShop;
@@ -30,6 +28,7 @@ import com.puttysoftware.fantastlereboot.objects.HealTrap;
 import com.puttysoftware.fantastlereboot.objects.HurtTrap;
 import com.puttysoftware.fantastlereboot.objects.Ice;
 import com.puttysoftware.fantastlereboot.objects.ItemShop;
+import com.puttysoftware.fantastlereboot.objects.MonsterObject;
 import com.puttysoftware.fantastlereboot.objects.NecklaceShop;
 import com.puttysoftware.fantastlereboot.objects.Nothing;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
@@ -62,7 +61,7 @@ public class FantastleObjectModelList {
                 new DizzinessTrap(), new DrunkTrap(), new OpenSpace(),
                 new Nothing(), new BonusShop(), new ElementalShop(),
                 new HealShop(), new HealTrap(), new HurtTrap(), new Ice(),
-                new ItemShop(), new Monster(), new RegenerateShop(),
+                new ItemShop(), new MonsterObject(), new RegenerateShop(),
                 new SealingWall(), new NecklaceShop(), new SpellShop(),
                 new Tile(), new UTurnTrap(), new VariableHealTrap(),
                 new VariableHurtTrap(), new Wall(), new WarpTrap(),
@@ -94,14 +93,12 @@ public class FantastleObjectModelList {
         final FantastleObjectModel[] objects = this.getAllObjects();
         final BufferedImageIcon[] allEditorAppearances = new BufferedImageIcon[objects.length];
         for (int x = 0; x < allEditorAppearances.length; x++) {
-            allEditorAppearances[x] = ObjectImageManager.getImage(
-                    objects[x].getName(), objects[x].getBaseID(),
-                    FantastleObjectModel.getTemplateColor());
+            allEditorAppearances[x] = objects[x].getEditorImage();
         }
         return allEditorAppearances;
     }
 
-    public final FantastleObjectModel[] getAllRequired(final Layer layer) {
+    public final FantastleObjectModel[] getAllRequired(final int layer) {
         final FantastleObjectModel[] objects = this.getAllObjects();
         final FantastleObjectModel[] tempAllRequired = new FantastleObjectModel[objects.length];
         int x;
@@ -124,7 +121,7 @@ public class FantastleObjectModelList {
     }
 
     public final FantastleObjectModel[] getAllWithoutPrerequisiteAndNotRequired(
-            final Layer layer) {
+            final int layer) {
         final FantastleObjectModel[] objects = this.getAllObjects();
         final FantastleObjectModel[] tempAllWithoutPrereq = new FantastleObjectModel[objects.length];
         int x;
@@ -184,7 +181,7 @@ public class FantastleObjectModelList {
                 FantastleObjectModel instance;
                 instance = objects[x].getClass().getConstructor().newInstance();
                 if (formatVersion == FormatConstants.MAZE_FORMAT_LATEST) {
-                    o = instance.readFantastleObjectModelV1(reader, UID);
+                    o = instance.readObject(reader, UID);
                     if (o != null) {
                         return o;
                     }
@@ -207,7 +204,7 @@ public class FantastleObjectModelList {
                 FantastleObjectModel instance;
                 instance = objects[x].getClass().getConstructor().newInstance();
                 if (formatVersion == FormatConstants.MAZE_FORMAT_LATEST) {
-                    o = instance.readFantastleObjectModelV1(reader, UID);
+                    o = instance.readObject(reader, UID);
                     if (o != null) {
                         return o;
                     }
