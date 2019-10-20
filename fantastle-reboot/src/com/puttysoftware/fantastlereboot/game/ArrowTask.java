@@ -48,13 +48,10 @@ public class ArrowTask extends Thread {
     public void run() {
         boolean res = true;
         final BagOStuff app = FantastleReboot.getBagOStuff();
-        final PlayerLocationManager plMgr = app.getGameManager()
-                .getPlayerManager();
-        final ObjectInventory inv = app.getGameManager().getObjectInventory();
-        final int px = plMgr.getPlayerLocationX();
-        final int py = plMgr.getPlayerLocationY();
-        final int pz = plMgr.getPlayerLocationZ();
-        final int pw = plMgr.getPlayerLocationW();
+        final Maze m = app.getMazeManager().getMaze();
+        final int px = m.getPlayerLocationX();
+        final int py = m.getPlayerLocationY();
+        final int pz = m.getPlayerLocationZ();
         final int[] mod = app.getGameManager().doEffects(this.x, this.y);
         this.x = mod[0];
         this.y = mod[1];
@@ -62,7 +59,6 @@ public class ArrowTask extends Thread {
         int cumY = this.y;
         final int incX = this.x;
         final int incY = this.y;
-        final Maze m = app.getMazeManager().getMaze();
         m.tickTimers(pz);
         FantastleObjectModel o = null;
         try {
@@ -76,17 +72,15 @@ public class ArrowTask extends Thread {
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             SoundPlayer.playSound(SoundIndex.ARROW_SHOOT);
         }
-        while (!o.isConditionallyDirectionallySolid(true, incX, incY, inv)) {
-            res = o.arrowHitAction(px + cumX, py + cumY, pz, pw, incX, incY,
-                    this.at, inv);
+        while (!o.isDirectionallySolid(incX, incY)) {
+            res = arrowHitCheck(px + cumX, py + cumY, pz);
             if (!res) {
                 break;
             }
-            if (!o.isConditionallyDirectionallySolid(true, incX, incY, inv)) {
-                app.getGameManager().redrawOneSquare(px + cumX, py + cumY, true,
-                        a);
+            if (!o.isDirectionallySolid(incX, incY)) {
+                app.getGameManager().redrawOneSquare(px + cumX, py + cumY, a);
             }
-            app.getGameManager().redrawOneSquare(px + cumX, py + cumY, false,
+            app.getGameManager().redrawOneSquare(px + cumX, py + cumY,
                     new OpenSpace());
             cumX += incX;
             cumY += incY;
@@ -96,16 +90,16 @@ public class ArrowTask extends Thread {
                 o = new Wall();
             }
         }
-        // Fire arrow hit action for final object, if it hasn't already been
-        // fired
-        if (res) {
-            o.arrowHitAction(px + cumX, py + cumY, pz, pw, incX, incY, this.at,
-                    inv);
-        }
         if (app.getPrefsManager()
                 .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
             SoundPlayer.playSound(SoundIndex.ARROW_DIE);
         }
         app.getGameManager().arrowDone();
+    }
+
+    private static boolean arrowHitCheck(final int inX, final int inY,
+            final int pz) {
+        return !FantastleReboot.getBagOStuff().getMazeManager()
+                .getMazeCell(inX, inY, pz, Layers.OBJECT).isSolid();
     }
 }

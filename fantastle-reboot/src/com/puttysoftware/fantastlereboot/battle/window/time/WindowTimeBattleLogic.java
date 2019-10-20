@@ -808,4 +808,10 @@ public class WindowTimeBattleLogic extends Battle {
             }
         }
     }
+
+    @Override
+    public boolean arrowHitCheck(int inX, int inY) {
+        // Meaningless in Window Battles
+        return false;
+    }
 }

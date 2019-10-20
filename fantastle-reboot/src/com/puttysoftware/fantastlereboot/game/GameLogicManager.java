@@ -20,23 +20,17 @@ import com.puttysoftware.fantastlereboot.maze.GenerateTask;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
-import com.puttysoftware.fantastlereboot.objects.Nothing;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.temporary.ArrowType;
-import com.puttysoftware.fantastlereboot.utilities.FantastleObjectModelList;
-import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
-import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 public final class GameLogicManager {
     // Fields
     private boolean savedGameFlag;
     private final GameViewingWindowManager vwMgr;
     private boolean stateChanged;
-    private FantastleObjectModel objectBeingUsed;
     private ObjectInventory objectInv;
     private boolean pullInProgress;
     private boolean using;
-    private int lastUsedObjectIndex;
     // private boolean keepNextMessage;
     // private boolean delayedDecayActive;
     // private FantastleObjectModel delayedDecayObject;
@@ -61,8 +55,6 @@ public final class GameLogicManager {
         this.mt.start();
         this.pullInProgress = false;
         this.using = false;
-        this.objectBeingUsed = null;
-        this.lastUsedObjectIndex = 0;
         // this.keepNextMessage = false;
         this.savedGameFlag = false;
         // this.delayedDecayActive = false;
@@ -163,6 +155,11 @@ public final class GameLogicManager {
 
     public void redrawMaze() {
         this.gui.redrawMaze();
+    }
+
+    public void redrawOneSquare(final int inX, final int inY,
+            final FantastleObjectModel obj4) {
+        this.gui.redrawOneSquare(inX, inY, obj4);
     }
 
     public void resetViewingWindowAndPlayerLocation() {
@@ -469,8 +466,7 @@ public final class GameLogicManager {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
         m.setCell(new OpenSpace(), m.getPlayerLocationX(),
-                m.getPlayerLocationY(), m.getPlayerLocationZ(),
-                Layers.OBJECT);
+                m.getPlayerLocationY(), m.getPlayerLocationZ(), Layers.OBJECT);
     }
 
     public static void morph(final FantastleObjectModel morphInto) {
@@ -482,35 +478,6 @@ public final class GameLogicManager {
 
     public void keepNextMessage() {
         this.gui.keepNextMessage();
-    }
-
-    public void identifyObject(final int x, final int y) {
-        final BagOStuff app = FantastleReboot.getBagOStuff();
-        final BagOStuff bag = FantastleReboot.getBagOStuff();
-        final Maze m = app.getMazeManager().getMaze();
-        final int xOffset = this.vwMgr.getViewingWindowLocationX()
-                - GameViewingWindowManager.getOffsetFactorX();
-        final int yOffset = this.vwMgr.getViewingWindowLocationY()
-                - GameViewingWindowManager.getOffsetFactorY();
-        final int destX = x / ImageConstants.SIZE
-                + this.vwMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int destY = y / ImageConstants.SIZE
-                + this.vwMgr.getViewingWindowLocationY() + xOffset - yOffset;
-        final int destZ = m.getPlayerLocationZ();
-        try {
-            final FantastleObjectModel target1 = m.getCell(destX, destY, destZ,
-                    Layers.GROUND);
-            final FantastleObjectModel target2 = m.getCell(destX, destY, destZ,
-                    Layers.OBJECT);
-            final String gameName1 = target1.getGameName();
-            final String gameName2 = target2.getGameName();
-            bag.showMessage(gameName2 + " on " + gameName1);
-            SoundPlayer.playSound(SoundIndex.IDENTIFY);
-        } catch (final ArrayIndexOutOfBoundsException ae) {
-            final Nothing ev = new Nothing();
-            bag.showMessage(ev.getGameName());
-            SoundPlayer.playSound(SoundIndex.IDENTIFY);
-        }
     }
 
     public void playMaze() {
@@ -670,52 +637,6 @@ public final class GameLogicManager {
         // this.scorer.commitScore();
         // this.hideOutput();
         // app.getGUIManager().showGUI();
-    }
-
-    public void showInventoryDialog() {
-        final String[] inv1String = this.objectInv
-                .generateInventoryStringArray();
-        final String[] inv2String = PartyManager.getParty().getLeader()
-                .getItems().generateInventoryStringArray(inv1String.length);
-        final String[] invString = new String[inv1String.length
-                + inv2String.length];
-        for (int x = 0; x < inv1String.length + inv2String.length; x++) {
-            if (x < inv1String.length) {
-                invString[x] = inv1String[x];
-            } else {
-                invString[x] = inv2String[x - inv1String.length];
-            }
-        }
-        Messager.showInputDialog("Inventory", "Inventory", invString,
-                invString[0]);
-    }
-
-    public void showUseDialog() {
-        int x;
-        final FantastleObjectModelList list = FantastleReboot.getBagOStuff().getObjects();
-        final FantastleObjectModel[] choices = list.getAllUsableObjects();
-        final String[] userChoices = this.objectInv.generateUseStringArray();
-        final String result = Messager.showInputDialog("Use which item?",
-                "Fantastle", userChoices,
-                userChoices[this.lastUsedObjectIndex]);
-        try {
-            for (x = 0; x < choices.length; x++) {
-                if (result.equals(userChoices[x])) {
-                    this.lastUsedObjectIndex = x;
-                    this.objectBeingUsed = choices[x];
-                    if (this.objectInv.getUses(this.objectBeingUsed) == 0) {
-                        Messager.showMessage(
-                                "That item has no more uses left.");
-                        this.setUsingAnItem(false);
-                    } else {
-                        Messager.showMessage("Click to set target");
-                    }
-                    return;
-                }
-            }
-        } catch (final NullPointerException np) {
-            this.setUsingAnItem(false);
-        }
     }
 
     public ObjectInventory getObjectInventory() {

@@ -706,18 +706,9 @@ public class MenuManager {
                 } else if (cmd.equals("Add a Level...")) {
                     // Add a level
                     me.addLevel();
-                } else if (cmd.equals("Remove a Level...")) {
-                    // Remove a level
-                    me.removeLevel();
-                } else if (cmd.equals("Resize Current Level...")) {
-                    // Resize level
-                    me.resizeLevel();
                 } else if (cmd.equals("Toggle Layer")) {
                     // Toggle current layer
                     me.toggleLayer();
-                } else if (cmd.equals("Maze Preferences...")) {
-                    // Set Maze Preferences
-                    me.setMazePrefs();
                 } else if (cmd.equals("New Game")) {
                     // Start a new game
                     final boolean proceed = app.getGameManager().newGame();
@@ -736,15 +727,6 @@ public class MenuManager {
                 } else if (cmd.equals("Show Equipment...")) {
                     if (!app.getGameManager().usingAnItem()) {
                         InventoryViewer.showEquipmentDialog();
-                    }
-                } else if (cmd.equals("Show Inventory...")) {
-                    if (!app.getGameManager().usingAnItem()) {
-                        app.getGameManager().showInventoryDialog();
-                    }
-                } else if (cmd.equals("Use an Item...")) {
-                    if (!app.getGameManager().usingAnItem()) {
-                        app.getGameManager().setUsingAnItem(true);
-                        app.getGameManager().showUseDialog();
                     }
                 } else if (cmd.equals("Reset Current Level")) {
                     if (!app.getGameManager().usingAnItem()) {

@@ -11,7 +11,6 @@ import java.util.Arrays;
 import com.puttysoftware.diane.utilties.DirectionResolver;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.creatures.monsters.Monster;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.MonsterObject;
@@ -520,7 +519,6 @@ final class LayeredTower implements Cloneable {
                                     objects.getNewInstanceByUniqueID(
                                             placeObj.getUniqueID()),
                                     y, x, z, e);
-                            placeObj.editorGenerateHook(y, x, z);
                         }
                     }
                 }
@@ -558,7 +556,6 @@ final class LayeredTower implements Cloneable {
                                     objects.getNewInstanceByUniqueID(
                                             currObj.getUniqueID()),
                                     randomColumn, randomRow, z, layer);
-                            currObj.editorGenerateHook(y, x, z);
                         } else {
                             while (!currObj.shouldGenerateObject(maze,
                                     randomColumn, randomRow, z, w, layer)) {
@@ -569,7 +566,6 @@ final class LayeredTower implements Cloneable {
                                     objects.getNewInstanceByUniqueID(
                                             currObj.getUniqueID()),
                                     randomColumn, randomRow, z, layer);
-                            currObj.editorGenerateHook(y, x, z);
                         }
                     }
                 }

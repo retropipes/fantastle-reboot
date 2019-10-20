@@ -65,6 +65,8 @@ public abstract class Battle {
 
     public abstract void fireArrow(int x, int y);
 
+    public abstract boolean arrowHitCheck(int x, int y);
+
     public abstract void arrowDone(BattleCharacter hit);
 
     public abstract void redrawOneBattleSquare(int x, int y,

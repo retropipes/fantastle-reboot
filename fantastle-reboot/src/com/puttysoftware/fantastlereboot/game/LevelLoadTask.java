@@ -13,8 +13,6 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.utilities.ImageColorConstants;
 
 public class LevelLoadTask extends Thread {
     // Fields
@@ -46,9 +44,6 @@ public class LevelLoadTask extends Thread {
             gameMaze.switchLevelOffset(this.level);
             gameMaze.offsetPlayerLocationW(this.level);
             PartyManager.getParty().offsetMonsterLevel(this.level);
-            FantastleObjectModel
-                    .setTemplateColor(ImageColorConstants.getColorForLevel(
-                            PartyManager.getParty().getMonsterLevel()));
             app.getGameManager().resetViewingWindow();
             app.getGameManager().enableEvents();
             app.getGameManager().redrawMaze();

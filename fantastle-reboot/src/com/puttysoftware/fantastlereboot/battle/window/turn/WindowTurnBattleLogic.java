@@ -707,4 +707,10 @@ public class WindowTurnBattleLogic extends Battle {
     public boolean isWaitingForAI() {
         return false;
     }
+
+    @Override
+    public boolean arrowHitCheck(int inX, int inY) {
+        // Meaningless in Window Battles
+        return false;
+    }
 }

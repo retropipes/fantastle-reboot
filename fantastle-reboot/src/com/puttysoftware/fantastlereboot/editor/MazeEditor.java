@@ -75,6 +75,7 @@ public class MazeEditor {
     EditorViewingWindowManager evMgr;
     private JLabel[][] drawGrid;
     private boolean mazeChanged;
+    private FantastleObjectModel savedObject;
     public static final int STAIRS_UP = 0;
     public static final int STAIRS_DOWN = 1;
     public static final FantastleObjectModel NOTHING = new Nothing();
@@ -283,10 +284,9 @@ public class MazeEditor {
         final int gridY = y / ImageConstants.SIZE
                 + this.evMgr.getViewingWindowLocationY() + xOffset - yOffset;
         try {
-            app.getGameManager()
-                    .setSavedObject(app.getMazeManager().getMaze().getCell(
-                            gridX, gridY, this.elMgr.getEditorLocationZ(),
-                            this.elMgr.getEditorLocationE()));
+            this.savedObject = app.getMazeManager().getMaze().getCell(gridX,
+                    gridY, this.elMgr.getEditorLocationZ(),
+                    this.elMgr.getEditorLocationE());
         } catch (final ArrayIndexOutOfBoundsException ae) {
             return;
         }
@@ -300,8 +300,8 @@ public class MazeEditor {
         this.elMgr.setEditorLocationX(gridX);
         this.elMgr.setEditorLocationY(gridY);
         try {
-            this.updateUndoHistory(app.getGameManager().getSavedObject(), gridX,
-                    gridY, this.elMgr.getEditorLocationZ(),
+            this.updateUndoHistory(this.savedObject, gridX, gridY,
+                    this.elMgr.getEditorLocationZ(),
                     this.elMgr.getEditorLocationW(),
                     this.elMgr.getEditorLocationE());
             app.getMazeManager().getMaze().setCell(mo, gridX, gridY,
@@ -313,34 +313,10 @@ public class MazeEditor {
             this.checkMenus();
             this.redrawEditor();
         } catch (final ArrayIndexOutOfBoundsException aioob) {
-            app.getMazeManager().getMaze().setCell(
-                    app.getGameManager().getSavedObject(), gridX, gridY,
-                    this.elMgr.getEditorLocationZ(),
+            app.getMazeManager().getMaze().setCell(this.savedObject, gridX,
+                    gridY, this.elMgr.getEditorLocationZ(),
                     this.elMgr.getEditorLocationE());
             this.redrawEditor();
-        }
-    }
-
-    public void probeObjectProperties(final int x, final int y) {
-        final BagOStuff app = FantastleReboot.getBagOStuff();
-        final int xOffset = this.vertScroll.getValue()
-                - this.vertScroll.getMinimum();
-        final int yOffset = this.horzScroll.getValue()
-                - this.horzScroll.getMinimum();
-        final int gridX = x / ImageConstants.SIZE
-                + this.evMgr.getViewingWindowLocationX() - xOffset + yOffset;
-        final int gridY = y / ImageConstants.SIZE
-                + this.evMgr.getViewingWindowLocationY() + xOffset - yOffset;
-        try {
-            final FantastleObjectModel mo = app.getMazeManager().getMaze()
-                    .getCell(gridX, gridY, this.elMgr.getEditorLocationZ(),
-                            this.elMgr.getEditorLocationE());
-            this.elMgr.setEditorLocationX(gridX);
-            this.elMgr.setEditorLocationY(gridY);
-            mo.editorProbeHook();
-        } catch (final ArrayIndexOutOfBoundsException aioob) {
-            final Nothing ev = new Nothing();
-            ev.editorProbeHook();
         }
     }
 
@@ -493,8 +469,6 @@ public class MazeEditor {
             if (this.mazeChanged) {
                 this.elMgr = new EditorLocationManager();
                 this.evMgr = new EditorViewingWindowManager();
-                final int startW = app.getMazeManager().getMaze()
-                        .getStartLevel();
                 final int mazeSizeX = app.getMazeManager().getMaze().getRows();
                 final int mazeSizeY = app.getMazeManager().getMaze()
                         .getColumns();
@@ -512,10 +486,7 @@ public class MazeEditor {
             this.setUpGUI();
             this.clearHistory();
             this.checkMenus();
-            // Make sure message area is attached to border pane
             this.borderPane.removeAll();
-            this.borderPane.add(app.getGameManager().getMessageLabel(),
-                    BorderLayout.SOUTH);
             this.borderPane.add(this.outputPane, BorderLayout.CENTER);
             this.borderPane.add(this.picker.getPicker(), BorderLayout.EAST);
             this.redrawEditor();
@@ -736,7 +707,6 @@ public class MazeEditor {
         if (this.outputFrame != null) {
             this.outputFrame.dispose();
         }
-        final BagOStuff app = FantastleReboot.getBagOStuff();
         this.outputFrame = new JFrame("Editor");
         this.outputPane = new Container();
         this.secondaryPane = new Container();
@@ -761,8 +731,6 @@ public class MazeEditor {
             }
         }
         this.borderPane.add(this.outputPane, BorderLayout.CENTER);
-        this.borderPane.add(app.getGameManager().getMessageLabel(),
-                BorderLayout.SOUTH);
         this.gridbag = new GridBagLayout();
         this.c = new GridBagConstraints();
         this.outputPane.setLayout(this.gridbag);
@@ -969,8 +937,6 @@ public class MazeEditor {
                 final int y = e.getY();
                 if (e.isAltDown()) {
                     me.editObjectProperties(x, y);
-                } else if (e.isShiftDown()) {
-                    me.probeObjectProperties(x, y);
                 } else {
                     me.editObject(x, y);
                 }

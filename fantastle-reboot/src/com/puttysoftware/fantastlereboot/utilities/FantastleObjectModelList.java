@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
+import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.Amulet;
 import com.puttysoftware.fantastlereboot.objects.ArmorShop;
 import com.puttysoftware.fantastlereboot.objects.BankShop;
@@ -87,6 +88,94 @@ public class FantastleObjectModelList {
             allEditorAppearances[x] = objects[x].getEditorImage();
         }
         return allEditorAppearances;
+    }
+
+    public final FantastleObjectModel[] getAllGroundLayerObjects() {
+        final FantastleObjectModel[] objects = this.getAllObjects();
+        final FantastleObjectModel[] tempAll = new FantastleObjectModel[objects.length];
+        int x;
+        int count = 0;
+        for (x = 0; x < objects.length; x++) {
+            if (objects[x].getLayer() == Layers.GROUND) {
+                tempAll[count] = objects[x];
+                count++;
+            }
+        }
+        if (count == 0) {
+            return null;
+        } else {
+            final FantastleObjectModel[] all = new FantastleObjectModel[count];
+            for (x = 0; x < count; x++) {
+                all[x] = tempAll[x];
+            }
+            return all;
+        }
+    }
+
+    public final BufferedImageIcon[] getAllGroundLayerEditorAppearances() {
+        final FantastleObjectModel[] objects = this.getAllObjects();
+        final BufferedImageIcon[] tempAll = new BufferedImageIcon[objects.length];
+        int x;
+        int count = 0;
+        for (x = 0; x < objects.length; x++) {
+            if (objects[x].getLayer() == Layers.GROUND) {
+                tempAll[count] = objects[x].getEditorImage();
+                count++;
+            }
+        }
+        if (count == 0) {
+            return null;
+        } else {
+            final BufferedImageIcon[] all = new BufferedImageIcon[count];
+            for (x = 0; x < count; x++) {
+                all[x] = tempAll[x];
+            }
+            return all;
+        }
+    }
+
+    public final FantastleObjectModel[] getAllObjectLayerObjects() {
+        final FantastleObjectModel[] objects = this.getAllObjects();
+        final FantastleObjectModel[] tempAll = new FantastleObjectModel[objects.length];
+        int x;
+        int count = 0;
+        for (x = 0; x < objects.length; x++) {
+            if (objects[x].getLayer() == Layers.OBJECT) {
+                tempAll[count] = objects[x];
+                count++;
+            }
+        }
+        if (count == 0) {
+            return null;
+        } else {
+            final FantastleObjectModel[] all = new FantastleObjectModel[count];
+            for (x = 0; x < count; x++) {
+                all[x] = tempAll[x];
+            }
+            return all;
+        }
+    }
+
+    public final BufferedImageIcon[] getAllObjectLayerEditorAppearances() {
+        final FantastleObjectModel[] objects = this.getAllObjects();
+        final BufferedImageIcon[] tempAll = new BufferedImageIcon[objects.length];
+        int x;
+        int count = 0;
+        for (x = 0; x < objects.length; x++) {
+            if (objects[x].getLayer() == Layers.OBJECT) {
+                tempAll[count] = objects[x].getEditorImage();
+                count++;
+            }
+        }
+        if (count == 0) {
+            return null;
+        } else {
+            final BufferedImageIcon[] all = new BufferedImageIcon[count];
+            for (x = 0; x < count; x++) {
+                all[x] = tempAll[x];
+            }
+            return all;
+        }
     }
 
     public final int[] getAllCarryableUIDs() {
@@ -185,9 +274,9 @@ public class FantastleObjectModelList {
             final int formatVersion) throws IOException {
         final FantastleObjectModel[] objects = this.getAllObjects();
         FantastleObjectModel o = null;
-        String UID = "";
+        int UID = -1;
         if (formatVersion == FormatConstants.MAZE_FORMAT_LATEST) {
-            UID = reader.readString();
+            UID = reader.readInt();
         }
         for (int x = 0; x < objects.length; x++) {
             try {
@@ -209,7 +298,7 @@ public class FantastleObjectModelList {
     }
 
     public FantastleObjectModel readSavedObject(final XDataReader reader,
-            final String UID, final int formatVersion) throws IOException {
+            final int UID, final int formatVersion) throws IOException {
         final FantastleObjectModel[] objects = this.getAllObjects();
         FantastleObjectModel o = null;
         for (int x = 0; x < objects.length; x++) {

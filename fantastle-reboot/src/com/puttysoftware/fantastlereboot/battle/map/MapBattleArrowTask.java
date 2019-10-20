@@ -51,8 +51,7 @@ public class MapBattleArrowTask extends Thread {
             final int incY = this.y;
             FantastleObjectModel o = null;
             try {
-                o = m.getCell(px + cumX, py + cumY, 0,
-                        Layers.OBJECT);
+                o = m.getCell(px + cumX, py + cumY, 0, Layers.OBJECT);
             } catch (final ArrayIndexOutOfBoundsException ae) {
                 o = new Wall();
             }
@@ -60,8 +59,43 @@ public class MapBattleArrowTask extends Thread {
             final FantastleObjectModel a = ArrowFactory
                     .createArrow(ArrowType.WOODEN, newDir);
             SoundPlayer.playSound(SoundIndex.ARROW_SHOOT);
+            BattleCharacter hit = null;
             while (res) {
-                res = o.arrowHitBattleCheck();
+                // Check to see if the arrow hit anything
+                res = app.getBattle().arrowHitCheck(px + cumX, py + cumY);
+                if (res) {
+                    // Check to see if the arrow hit a creature
+                    if (o instanceof BattleCharacter) {
+                        // Arrow hit something
+                        res = false;
+                        // Arrow hit a creature, hurt it
+                        hit = (BattleCharacter) o;
+                        final Faith shooter = this.active.getCreature()
+                                .getFaith();
+                        final Faith target = hit.getCreature().getFaith();
+                        final int mult = (int) (shooter
+                                .getMultiplierForOtherFaith(target.getFaithID())
+                                * 10);
+                        final Battle bl = app.getBattle();
+                        if (mult == 0) {
+                            hit.getCreature().doDamage(1);
+                            bl.setStatusMessage(
+                                    "Ow, you got shot! It didn't hurt much.");
+                        } else if (mult == 5) {
+                            hit.getCreature().doDamage(3);
+                            bl.setStatusMessage(
+                                    "Ow, you got shot! It hurt a little bit.");
+                        } else if (mult == 10) {
+                            hit.getCreature().doDamage(5);
+                            bl.setStatusMessage(
+                                    "Ow, you got shot! It hurt somewhat.");
+                        } else if (mult == 20) {
+                            hit.getCreature().doDamage(8);
+                            bl.setStatusMessage(
+                                    "Ow, you got shot! It hurt significantly!");
+                        }
+                    }
+                }
                 if (!res) {
                     break;
                 }
@@ -75,37 +109,9 @@ public class MapBattleArrowTask extends Thread {
                 cumX += incX;
                 cumY += incY;
                 try {
-                    o = m.getCell(px + cumX, py + cumY, 0,
-                            Layers.OBJECT);
+                    o = m.getCell(px + cumX, py + cumY, 0, Layers.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException ae) {
                     res = false;
-                }
-            }
-            // Check to see if the arrow hit a creature
-            BattleCharacter hit = null;
-            if (o instanceof BattleCharacter) {
-                // Arrow hit a creature, hurt it
-                hit = (BattleCharacter) o;
-                final Faith shooter = this.active.getCreature().getFaith();
-                final Faith target = hit.getCreature().getFaith();
-                final int mult = (int) (shooter
-                        .getMultiplierForOtherFaith(target.getFaithID()) * 10);
-                final Battle bl = app.getBattle();
-                if (mult == 0) {
-                    hit.getCreature().doDamage(1);
-                    bl.setStatusMessage(
-                            "Ow, you got shot! It didn't hurt much.");
-                } else if (mult == 5) {
-                    hit.getCreature().doDamage(3);
-                    bl.setStatusMessage(
-                            "Ow, you got shot! It hurt a little bit.");
-                } else if (mult == 10) {
-                    hit.getCreature().doDamage(5);
-                    bl.setStatusMessage("Ow, you got shot! It hurt somewhat.");
-                } else if (mult == 20) {
-                    hit.getCreature().doDamage(8);
-                    bl.setStatusMessage(
-                            "Ow, you got shot! It hurt significantly!");
                 }
             }
             // Arrow has died

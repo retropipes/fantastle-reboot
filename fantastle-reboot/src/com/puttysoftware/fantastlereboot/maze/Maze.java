@@ -301,7 +301,7 @@ public class Maze {
         this.mazeData.restore();
     }
 
-    private void fill(final FantastleObjectModel bottom,
+    public void fill(final FantastleObjectModel bottom,
             final FantastleObjectModel top) {
         this.mazeData.fillFloor(bottom, top, 0);
     }

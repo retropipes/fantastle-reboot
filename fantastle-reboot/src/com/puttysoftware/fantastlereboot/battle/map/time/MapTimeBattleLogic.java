@@ -386,13 +386,11 @@ public class MapTimeBattleLogic extends Battle {
                 while (obj.isSolid()) {
                     rx = randX.generate();
                     ry = randY.generate();
-                    obj = this.battleMaze.getCell(rx, ry, 0,
-                            Layers.OBJECT);
+                    obj = this.battleMaze.getCell(rx, ry, 0, Layers.OBJECT);
                 }
                 this.me.setX(rx);
                 this.me.setY(ry);
-                this.battleMaze.setCell(this.me, rx, ry, 0,
-                        Layers.OBJECT);
+                this.battleMaze.setCell(this.me, rx, ry, 0, Layers.OBJECT);
             }
         }
         // Set Enemy Location
@@ -406,13 +404,11 @@ public class MapTimeBattleLogic extends Battle {
                 while (obj.isSolid()) {
                     rx = randX.generate();
                     ry = randY.generate();
-                    obj = this.battleMaze.getCell(rx, ry, 0,
-                            Layers.OBJECT);
+                    obj = this.battleMaze.getCell(rx, ry, 0, Layers.OBJECT);
                 }
                 this.enemy.setX(rx);
                 this.enemy.setY(ry);
-                this.battleMaze.setCell(this.enemy, rx, ry, 0,
-                        Layers.OBJECT);
+                this.battleMaze.setCell(this.enemy, rx, ry, 0, Layers.OBJECT);
             }
         }
     }
@@ -583,8 +579,7 @@ public class MapTimeBattleLogic extends Battle {
         }
         try {
             next = m.getCell(px + x, py + y, 0, Layers.OBJECT);
-            nextGround = m.getCell(px + x, py + y, 0,
-                    Layers.GROUND);
+            nextGround = m.getCell(px + x, py + y, 0, Layers.GROUND);
             currGround = m.getCell(px, py, 0, Layers.GROUND);
         } catch (final ArrayIndexOutOfBoundsException aioob) {
             // Ignore
@@ -601,8 +596,7 @@ public class MapTimeBattleLogic extends Battle {
                 FantastleObjectModel obj8 = null;
                 FantastleObjectModel obj9 = null;
                 try {
-                    obj1 = m.getCell(px - 1, py - 1, 0,
-                            Layers.OBJECT);
+                    obj1 = m.getCell(px - 1, py - 1, 0, Layers.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException aioob) {
                     // Ignore
                 }
@@ -612,8 +606,7 @@ public class MapTimeBattleLogic extends Battle {
                     // Ignore
                 }
                 try {
-                    obj3 = m.getCell(px + 1, py - 1, 0,
-                            Layers.OBJECT);
+                    obj3 = m.getCell(px + 1, py - 1, 0, Layers.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException aioob) {
                     // Ignore
                 }
@@ -623,14 +616,12 @@ public class MapTimeBattleLogic extends Battle {
                     // Ignore
                 }
                 try {
-                    obj6 = m.getCell(px + 1, py - 1, 0,
-                            Layers.OBJECT);
+                    obj6 = m.getCell(px + 1, py - 1, 0, Layers.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException aioob) {
                     // Ignore
                 }
                 try {
-                    obj7 = m.getCell(px - 1, py + 1, 0,
-                            Layers.OBJECT);
+                    obj7 = m.getCell(px - 1, py + 1, 0, Layers.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException aioob) {
                     // Ignore
                 }
@@ -640,8 +631,7 @@ public class MapTimeBattleLogic extends Battle {
                     // Ignore
                 }
                 try {
-                    obj9 = m.getCell(px + 1, py + 1, 0,
-                            Layers.OBJECT);
+                    obj9 = m.getCell(px + 1, py + 1, 0, Layers.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException aioob) {
                     // Ignore
                 }
@@ -730,8 +720,7 @@ public class MapTimeBattleLogic extends Battle {
                         }
                     }
                 }
-                m.setCell(active.getSavedObject(), px, py, 0,
-                        Layers.OBJECT);
+                m.setCell(active.getSavedObject(), px, py, 0, Layers.OBJECT);
                 active.offsetX(x);
                 active.offsetY(y);
                 px += x;
@@ -742,8 +731,7 @@ public class MapTimeBattleLogic extends Battle {
                     this.battleGUI.getViewManager()
                             .offsetViewingWindowLocationY(x);
                 }
-                active.setSavedObject(
-                        m.getCell(px, py, 0, Layers.OBJECT));
+                active.setSavedObject(m.getCell(px, py, 0, Layers.OBJECT));
                 m.setCell(active, px, py, 0, Layers.OBJECT);
                 SoundPlayer.playSound(SoundIndex.WALK);
             } else {
@@ -876,8 +864,7 @@ public class MapTimeBattleLogic extends Battle {
                     continue;
                 }
                 try {
-                    next = m.getCell(px + x, py + y, 0,
-                            Layers.OBJECT);
+                    next = m.getCell(px + x, py + y, 0, Layers.OBJECT);
                 } catch (final ArrayIndexOutOfBoundsException aioob) {
                     // Ignore
                 }
@@ -1531,5 +1518,10 @@ public class MapTimeBattleLogic extends Battle {
                 logic.doResult();
             }
         }
+    }
+
+    @Override
+    public boolean arrowHitCheck(int inX, int inY) {
+        return !this.battleMaze.getCell(inX, inY, 0, Layers.OBJECT).isSolid();
     }
 }

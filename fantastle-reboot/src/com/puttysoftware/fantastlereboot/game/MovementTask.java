@@ -18,7 +18,6 @@ import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Wall;
-import com.puttysoftware.fantastlereboot.utilities.TypeConstants;
 
 final class MovementTask extends Thread {
     // Fields
@@ -109,7 +108,8 @@ final class MovementTask extends Thread {
     }
 
     void fireStepActions() {
-        final Maze m = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
+        final Maze m = FantastleReboot.getBagOStuff().getMazeManager()
+                .getMaze();
         final int px = m.getPlayerLocationX();
         final int py = m.getPlayerLocationY();
         final int pz = m.getPlayerLocationZ();
@@ -129,7 +129,8 @@ final class MovementTask extends Thread {
     }
 
     private static boolean checkSolidAbsolute(final FantastleObjectModel inside,
-            final FantastleObjectModel below, final FantastleObjectModel nextBelow,
+            final FantastleObjectModel below,
+            final FantastleObjectModel nextBelow,
             final FantastleObjectModel nextAbove) {
         final boolean insideSolid = inside.isSolid();
         final boolean belowSolid = below.isSolid();
@@ -179,12 +180,7 @@ final class MovementTask extends Thread {
                 } catch (final ArrayIndexOutOfBoundsException ae) {
                     nextAbove = new Wall();
                 }
-                try {
-                    this.proceed = nextAbove.preMoveAction(true, px + fX,
-                            py + fY);
-                } catch (final ArrayIndexOutOfBoundsException ae) {
-                    this.proceed = true;
-                }
+                this.proceed = true;
             } catch (final NullPointerException np) {
                 this.proceed = false;
                 this.decayEffects();
@@ -196,7 +192,6 @@ final class MovementTask extends Thread {
                 try {
                     if (MovementTask.checkSolid(this.saved, below, nextBelow,
                             nextAbove)) {
-                        FantastleObjectModel groundInto;
                         m.offsetPlayerLocationX(fX);
                         m.offsetPlayerLocationY(fY);
                         px += fX;
@@ -211,24 +206,11 @@ final class MovementTask extends Thread {
                             this.proceed = false;
                         }
                         if (this.proceed) {
-                            this.saved = m.getCell(px, py, pz,
-                                    Layers.OBJECT);
-                            groundInto = m.getCell(px, py, pz,
-                                    Layers.GROUND);
-                            if (groundInto.overridesDefaultPostMove()) {
-                                groundInto.postMoveAction(false, px, py);
-                                if (!this.saved.isOfType(
-                                        TypeConstants.TYPE_PASS_THROUGH)) {
-                                    this.saved.postMoveAction(false, px, py);
-                                }
-                            } else {
-                                this.saved.postMoveAction(false, px, py);
-                            }
+                            this.saved = m.getCell(px, py, pz, Layers.OBJECT);
                         }
                     } else {
                         // Move failed - object is solid in that direction
-                        MovementTask.fireMoveFailedActions(px + fX, py + fY,
-                                this.saved, below, nextBelow, nextAbove);
+                        bag.showMessage("Can't go that way");
                         this.fireStepActions();
                         this.decayEffects();
                     }
@@ -236,7 +218,6 @@ final class MovementTask extends Thread {
                     this.vwMgr.restoreViewingWindow();
                     m.restorePlayerLocation();
                     // Move failed - attempted to go outside the maze
-                    nextAbove.moveFailedAction(false, px, py);
                     bag.showMessage("Can't go that way");
                     nextAbove = new OpenSpace();
                     this.decayEffects();
@@ -245,7 +226,6 @@ final class MovementTask extends Thread {
                 this.fireStepActions();
             } else {
                 // Move failed - pre-move check failed
-                nextAbove.moveFailedAction(false, px + fX, py + fY);
                 this.fireStepActions();
                 this.decayEffects();
                 this.proceed = false;
@@ -266,7 +246,8 @@ final class MovementTask extends Thread {
     }
 
     private static boolean checkSolid(final FantastleObjectModel inside,
-            final FantastleObjectModel below, final FantastleObjectModel nextBelow,
+            final FantastleObjectModel below,
+            final FantastleObjectModel nextBelow,
             final FantastleObjectModel nextAbove) {
         final boolean insideSolid = inside.isSolid();
         final boolean belowSolid = below.isSolid();
@@ -279,40 +260,10 @@ final class MovementTask extends Thread {
         }
     }
 
-    private static void fireMoveFailedActions(final int x, final int y,
-            final FantastleObjectModel inside, final FantastleObjectModel below,
-            final FantastleObjectModel nextBelow,
-            final FantastleObjectModel nextAbove) {
-        final boolean insideSolid = inside.isSolid();
-        final boolean belowSolid = below.isSolid();
-        final boolean nextBelowSolid = nextBelow.isSolid();
-        final boolean nextAboveSolid = nextAbove.isSolid();
-        if (insideSolid) {
-            inside.moveFailedAction(false, x, y);
-        }
-        if (belowSolid) {
-            below.moveFailedAction(false, x, y);
-        }
-        if (nextBelowSolid) {
-            nextBelow.moveFailedAction(false, x, y);
-        }
-        if (nextAboveSolid) {
-            nextAbove.moveFailedAction(false, x, y);
-        }
-    }
-
     private void updatePositionAbsolute(final int x, final int y, final int z) {
         final BagOStuff app = FantastleReboot.getBagOStuff();
         final BagOStuff bag = FantastleReboot.getBagOStuff();
         final Maze m = app.getMazeManager().getMaze();
-        try {
-            m.getCell(x, y, z, Layers.OBJECT).preMoveAction(true,
-                    x, y);
-        } catch (final ArrayIndexOutOfBoundsException ae) {
-            // Ignore
-        } catch (final NullPointerException np) {
-            // Ignore
-        }
         m.savePlayerLocation();
         this.vwMgr.saveViewingWindow();
         try {
@@ -328,7 +279,6 @@ final class MovementTask extends Thread {
                         m.getPlayerLocationY(), m.getPlayerLocationZ(),
                         Layers.OBJECT);
                 app.getMazeManager().setDirty(true);
-                this.saved.postMoveAction(false, x, y);
                 final int px = m.getPlayerLocationX();
                 final int py = m.getPlayerLocationY();
                 final int pz = m.getPlayerLocationZ();

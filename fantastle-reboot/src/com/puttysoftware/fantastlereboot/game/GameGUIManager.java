@@ -9,8 +9,6 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -194,6 +192,69 @@ class GameGUIManager {
         }
     }
 
+    public void redrawOneSquare(final int inX, final int inY,
+            final FantastleObjectModel obj4) {
+        // Draw the maze, if it is visible
+        if (this.outputFrame.isVisible()) {
+            final BagOStuff app = FantastleReboot.getBagOStuff();
+            final Maze m = app.getMazeManager().getMaze();
+            int x, y, u, v;
+            x = inX;
+            y = inY;
+            int xFix, yFix;
+            boolean visible;
+            u = m.getPlayerLocationX();
+            v = m.getPlayerLocationY();
+            final FantastleObjectModel ev = new Nothing();
+            xFix = x - this.vwMgr.getViewingWindowLocationX();
+            yFix = y - this.vwMgr.getViewingWindowLocationY();
+            visible = app.getMazeManager().getMaze().isSquareVisible(u, v, y,
+                    x);
+            try {
+                if (visible) {
+                    final FantastleObjectModel obj1 = m.getCell(y, x,
+                            m.getPlayerLocationZ(), Layers.GROUND);
+                    final FantastleObjectModel obj2 = m.getCell(y, x,
+                            m.getPlayerLocationZ(), Layers.OBJECT);
+                    final BufferedImageIcon img1 = obj1.getImage();
+                    final BufferedImageIcon img2 = obj2.getImage();
+                    final BufferedImageIcon img4 = obj4.getImage();
+                    if (u == y && v == x) {
+                        final FantastleObjectModel obj3 = new Player();
+                        final BufferedImageIcon img3 = obj3.getImage();
+                        String cacheName = generateCacheName(obj1, obj2, obj3,
+                                obj4);
+                        this.drawGrid.setImageCell(ImageCompositor.composite(
+                                cacheName, img1, img2, img3, img4), xFix, yFix);
+                    } else if (m.hasNote(x, y, m.getPlayerLocationZ())) {
+                        final FantastleObjectModel obj3 = NOTE;
+                        final BufferedImageIcon img3 = obj3.getImage();
+                        String cacheName = generateCacheName(obj1, obj2, obj3,
+                                obj4);
+                        this.drawGrid.setImageCell(ImageCompositor.composite(
+                                cacheName, img1, img2, img3, img4), xFix, yFix);
+                    } else {
+                        String cacheName = generateCacheName(obj1, obj2, obj4);
+                        this.drawGrid.setImageCell(ImageCompositor.composite(
+                                cacheName, img1, img2, img4), xFix, yFix);
+                    }
+                } else {
+                    this.drawGrid.setImageCell(DARK.getImage(), xFix, yFix);
+                }
+            } catch (final ArrayIndexOutOfBoundsException ae) {
+                this.drawGrid.setImageCell(ev.getImage(), xFix, yFix);
+            }
+            if (this.knm) {
+                this.knm = false;
+            } else {
+                this.setStatusMessage(" ");
+            }
+            this.outputPane.repaint();
+            this.outputFrame.pack();
+            this.showOutput();
+        }
+    }
+
     private static String generateCacheName(
             final FantastleObjectModel... objects) {
         StringBuilder result = new StringBuilder();
@@ -231,11 +292,9 @@ class GameGUIManager {
         this.outputFrame.setResizable(false);
         this.outputFrame.addKeyListener(handler);
         this.outputFrame.addWindowListener(handler);
-        this.outputPane.addMouseListener(handler);
     }
 
-    private class EventHandler
-            implements KeyListener, WindowListener, MouseListener {
+    private class EventHandler implements KeyListener, WindowListener {
         EventHandler() {
             // Do nothing
         }
@@ -402,42 +461,6 @@ class GameGUIManager {
 
         @Override
         public void windowOpened(final WindowEvent we) {
-            // Do nothing
-        }
-
-        // handle mouse
-        @Override
-        public void mousePressed(final MouseEvent e) {
-            // Do nothing
-        }
-
-        @Override
-        public void mouseReleased(final MouseEvent e) {
-            // Do nothing
-        }
-
-        @Override
-        public void mouseClicked(final MouseEvent e) {
-            try {
-                final GameLogicManager gm = FantastleReboot.getBagOStuff()
-                        .getGameManager();
-                if (e.isShiftDown()) {
-                    final int x = e.getX();
-                    final int y = e.getY();
-                    gm.identifyObject(x, y);
-                }
-            } catch (final Exception ex) {
-                FantastleReboot.logError(ex);
-            }
-        }
-
-        @Override
-        public void mouseEntered(final MouseEvent e) {
-            // Do nothing
-        }
-
-        @Override
-        public void mouseExited(final MouseEvent e) {
             // Do nothing
         }
     }
