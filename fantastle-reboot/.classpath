@@ -11,11 +11,5 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/ErrorLogger-1.0.0.jar" sourcepath="lib/ErrorLogger-src-1.0.0.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/fantastle-reboot/lib/ErrorLogger-javadoc-1.0.0.jar!/"/>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

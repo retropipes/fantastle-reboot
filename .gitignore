@@ -27,4 +27,4 @@ fantastle-reboot/bin/
 fantastle-reboot/target/
 
 # Exclusions
-!fantastle-reboot/lib/*.jar
+!fantastle-reboot/lib/diane.jar
