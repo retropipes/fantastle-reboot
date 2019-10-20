@@ -6,7 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/diane-game-engine">
+	<classpathentry kind="lib" path="lib/diane.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
