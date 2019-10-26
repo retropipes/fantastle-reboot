@@ -27,30 +27,30 @@ import com.puttysoftware.fantastlereboot.assets.AttributeImageIndex;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class AttributeImageLoader {
-    private static String[] allFilenames;
-    private static Properties fileExtensions;
+  private static String[] allFilenames;
+  private static Properties fileExtensions;
 
-    public static BufferedImageIcon load(AttributeImageIndex image) {
-        if (image != AttributeImageIndex._NONE) {
-            if (allFilenames == null) {
-                allFilenames = DataLoader.loadAttributeImageData();
-            }
-            if (fileExtensions == null) {
-                try {
-                    fileExtensions = new Properties();
-                    fileExtensions.load(SoundPlayer.class.getResourceAsStream(
-                            "/assets/data/extensions/extensions.properties"));
-                } catch (IOException e) {
-                    FantastleReboot.logError(e);
-                }
-            }
-            String imageExt = fileExtensions.getProperty("images");
-            String name = "/assets/images/attributes/"
-                    + allFilenames[image.ordinal()] + imageExt;
-            return ImageLoader.load(name,
-                    AttributeImageLoader.class.getResource(name),
-                    FantastleReboot.getErrorHandler());
+  public static BufferedImageIcon load(AttributeImageIndex image) {
+    if (image != AttributeImageIndex._NONE) {
+      if (allFilenames == null) {
+        allFilenames = DataLoader.loadAttributeImageData();
+      }
+      if (fileExtensions == null) {
+        try {
+          fileExtensions = new Properties();
+          fileExtensions.load(SoundPlayer.class.getResourceAsStream(
+              "/assets/data/extensions/extensions.properties"));
+        } catch (IOException e) {
+          FantastleReboot.logError(e);
         }
-        return null;
+      }
+      String imageExt = fileExtensions.getProperty("images");
+      String name = "/assets/images/attributes/" + allFilenames[image.ordinal()]
+          + imageExt;
+      return ImageLoader.load(name,
+          AttributeImageLoader.class.getResource(name),
+          FantastleReboot.getErrorHandler());
     }
+    return null;
+  }
 }

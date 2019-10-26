@@ -5,9 +5,8 @@ import com.puttysoftware.fantastlereboot.objectmodel.ColorShaders;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 class PoisonArrowEast extends FantastleObject {
-    // Constructors
-    public PoisonArrowEast() {
-        super(-1, "arrow_east", ObjectImageIndex.ARROW_EAST,
-                ColorShaders.poison());
-    }
+  // Constructors
+  public PoisonArrowEast() {
+    super(-1, "arrow_east", ObjectImageIndex.ARROW_EAST, ColorShaders.poison());
+  }
 }

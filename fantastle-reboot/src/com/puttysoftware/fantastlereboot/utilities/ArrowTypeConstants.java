@@ -19,6 +19,6 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot.utilities;
 
 public class ArrowTypeConstants {
-    public static final int ARROW_TYPE_PLAIN = 0;
-    public static final int ARROW_TYPE_ICE = 1;
+  public static final int ARROW_TYPE_PLAIN = 0;
+  public static final int ARROW_TYPE_ICE = 1;
 }

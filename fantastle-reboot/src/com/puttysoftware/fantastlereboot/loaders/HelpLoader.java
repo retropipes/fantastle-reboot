@@ -21,17 +21,17 @@ package com.puttysoftware.fantastlereboot.loaders;
 import com.puttysoftware.help.HTMLHelpViewer;
 
 public class HelpLoader {
-    private static HTMLHelpViewer helpViewer;
+  private static HTMLHelpViewer helpViewer;
 
-    private HelpLoader() {
-        // Do nothing
-    }
+  private HelpLoader() {
+    // Do nothing
+  }
 
-    public static HTMLHelpViewer getHelpViewer() {
-        if (HelpLoader.helpViewer == null) {
-            HelpLoader.helpViewer = new HTMLHelpViewer(
-                    HelpLoader.class.getResource("/assets/help/help.html"));
-        }
-        return HelpLoader.helpViewer;
+  public static HTMLHelpViewer getHelpViewer() {
+    if (HelpLoader.helpViewer == null) {
+      HelpLoader.helpViewer = new HTMLHelpViewer(
+          HelpLoader.class.getResource("/assets/help/help.html"));
     }
+    return HelpLoader.helpViewer;
+  }
 }

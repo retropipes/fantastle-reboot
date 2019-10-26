@@ -28,43 +28,43 @@ import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 import com.puttysoftware.help.HTMLHelpViewer;
 
 public class GeneralHelpManager {
-    // Fields
-    private final JFrame helpFrame;
-    private final HTMLHelpViewer hv;
+  // Fields
+  private final JFrame helpFrame;
+  private final HTMLHelpViewer hv;
 
-    // Constructors
-    public GeneralHelpManager() {
-        this.hv = HelpLoader.getHelpViewer();
-        this.helpFrame = new JFrame("Fantastle Help");
-        this.helpFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        this.helpFrame.setLayout(new FlowLayout());
-        this.helpFrame.add(this.hv.getHelp());
-//        if (FantastleReboot.getBagOStuff().getPrefsManager()
-//                .isMobileModeEnabled()) {
-//            this.hv.setHelpSize(ImageConstants.MAX_MOBILE_WINDOW_SIZE,
-//                    ImageConstants.MAX_MOBILE_WINDOW_SIZE);
-//        } else {
-            this.hv.setHelpSize(ImageConstants.MAX_WINDOW_SIZE,
-                    ImageConstants.MAX_WINDOW_SIZE);
-//        }
-        this.helpFrame.pack();
-        this.helpFrame.setResizable(false);
-    }
+  // Constructors
+  public GeneralHelpManager() {
+    this.hv = HelpLoader.getHelpViewer();
+    this.helpFrame = new JFrame("Fantastle Help");
+    this.helpFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+    this.helpFrame.setLayout(new FlowLayout());
+    this.helpFrame.add(this.hv.getHelp());
+    // if (FantastleReboot.getBagOStuff().getPrefsManager()
+    // .isMobileModeEnabled()) {
+    // this.hv.setHelpSize(ImageConstants.MAX_MOBILE_WINDOW_SIZE,
+    // ImageConstants.MAX_MOBILE_WINDOW_SIZE);
+    // } else {
+    this.hv.setHelpSize(ImageConstants.MAX_WINDOW_SIZE,
+        ImageConstants.MAX_WINDOW_SIZE);
+    // }
+    this.helpFrame.pack();
+    this.helpFrame.setResizable(false);
+  }
 
-    // Methods
-    public void showHelp() {
-        this.helpFrame.setVisible(true);
-    }
+  // Methods
+  public void showHelp() {
+    this.helpFrame.setVisible(true);
+  }
 
-    public void updateHelpSize() {
-//        if (FantastleReboot.getBagOStuff().getPrefsManager()
-//                .isMobileModeEnabled()) {
-//            this.hv.setHelpSize(ImageConstants.MAX_MOBILE_WINDOW_SIZE,
-//                    ImageConstants.MAX_MOBILE_WINDOW_SIZE);
-//        } else {
-            this.hv.setHelpSize(ImageConstants.MAX_WINDOW_SIZE,
-                    ImageConstants.MAX_WINDOW_SIZE);
-//        }
-        this.helpFrame.pack();
-    }
+  public void updateHelpSize() {
+    // if (FantastleReboot.getBagOStuff().getPrefsManager()
+    // .isMobileModeEnabled()) {
+    // this.hv.setHelpSize(ImageConstants.MAX_MOBILE_WINDOW_SIZE,
+    // ImageConstants.MAX_MOBILE_WINDOW_SIZE);
+    // } else {
+    this.hv.setHelpSize(ImageConstants.MAX_WINDOW_SIZE,
+        ImageConstants.MAX_WINDOW_SIZE);
+    // }
+    this.helpFrame.pack();
+  }
 }

@@ -6,10 +6,10 @@ import com.puttysoftware.fantastlereboot.objectmodel.ColorShaders;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 public final class Wall14 extends FantastleObject {
-    public Wall14() {
-        super(27, "wall", ObjectImageIndex.WALL, ColorShaders.wooden(), "14",
-                AttributeImageIndex.LARGE_NUMBER_14);
-        this.setSolid(true);
-        this.setSightBlocking(true);
-    }
+  public Wall14() {
+    super(27, "wall", ObjectImageIndex.WALL, ColorShaders.wooden(), "14",
+        AttributeImageIndex.LARGE_NUMBER_14);
+    this.setSolid(true);
+    this.setSightBlocking(true);
+  }
 }

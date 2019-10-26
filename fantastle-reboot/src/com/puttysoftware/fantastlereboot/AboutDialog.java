@@ -37,83 +37,82 @@ import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 
 public class AboutDialog implements AboutHandler {
-    // Fields
-    private JFrame aboutFrame;
-    private Container aboutPane, textPane, buttonPane, logoPane;
-    private JButton aboutOK;
-    private EventHandler handler;
+  // Fields
+  private JFrame aboutFrame;
+  private Container aboutPane, textPane, buttonPane, logoPane;
+  private JButton aboutOK;
+  private EventHandler handler;
 
-    // Constructors
-    public AboutDialog(final String ver) {
-        this.setUpGUI(ver);
+  // Constructors
+  public AboutDialog(final String ver) {
+    this.setUpGUI(ver);
+  }
+
+  // Methods
+  @Override
+  public void handleAbout(AboutEvent inE) {
+    this.aboutFrame.setVisible(true);
+  }
+
+  public void showAboutDialog() {
+    this.aboutFrame.setVisible(true);
+  }
+
+  void hideAboutDialog() {
+    this.aboutFrame.setVisible(false);
+  }
+
+  private void setUpGUI(final String ver) {
+    this.handler = new EventHandler();
+    this.aboutFrame = new JFrame("About Fantastle");
+    this.aboutPane = new Container();
+    this.textPane = new Container();
+    this.buttonPane = new Container();
+    this.logoPane = new Container();
+    this.aboutOK = new JButton("OK");
+    this.aboutOK.setDefaultCapable(true);
+    this.aboutFrame.getRootPane().setDefaultButton(this.aboutOK);
+    this.aboutFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+    this.aboutPane.setLayout(new BorderLayout());
+    this.logoPane.setLayout(new FlowLayout());
+    this.logoPane.add(new JLabel("",
+        UserInterfaceImageLoader.load(UserInterfaceImageIndex.MINI_LOGO),
+        SwingConstants.LEFT));
+    this.textPane.setLayout(new GridLayout(4, 1));
+    this.textPane.add(new JLabel("Fantastle Version: " + ver));
+    this.textPane.add(new JLabel("Author: Eric Ahnell"));
+    this.textPane
+        .add(new JLabel("Web Site: http://fantastle.worldwizard.net/"));
+    this.textPane
+        .add(new JLabel("E-mail bug reports to: fantastle@worldwizard.net  "));
+    this.buttonPane.setLayout(new FlowLayout());
+    this.buttonPane.add(this.aboutOK);
+    this.aboutPane.add(this.logoPane, BorderLayout.WEST);
+    this.aboutPane.add(this.textPane, BorderLayout.CENTER);
+    this.aboutPane.add(this.buttonPane, BorderLayout.SOUTH);
+    this.aboutFrame.setResizable(false);
+    this.aboutOK.addActionListener(this.handler);
+    this.aboutFrame.setContentPane(this.aboutPane);
+    this.aboutFrame.pack();
+  }
+
+  private class EventHandler implements ActionListener {
+    public EventHandler() {
+      // TODO Auto-generated constructor stub
     }
 
-    // Methods
+    // Handle buttons
     @Override
-    public void handleAbout(AboutEvent inE) {
-        this.aboutFrame.setVisible(true);
-    }
-
-    public void showAboutDialog() {
-        this.aboutFrame.setVisible(true);
-    }
-
-    void hideAboutDialog() {
-        this.aboutFrame.setVisible(false);
-    }
-
-    private void setUpGUI(final String ver) {
-        this.handler = new EventHandler();
-        this.aboutFrame = new JFrame("About Fantastle");
-        this.aboutPane = new Container();
-        this.textPane = new Container();
-        this.buttonPane = new Container();
-        this.logoPane = new Container();
-        this.aboutOK = new JButton("OK");
-        this.aboutOK.setDefaultCapable(true);
-        this.aboutFrame.getRootPane().setDefaultButton(this.aboutOK);
-        this.aboutFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        this.aboutPane.setLayout(new BorderLayout());
-        this.logoPane.setLayout(new FlowLayout());
-        this.logoPane.add(new JLabel("",
-                UserInterfaceImageLoader
-                        .load(UserInterfaceImageIndex.MINI_LOGO),
-                SwingConstants.LEFT));
-        this.textPane.setLayout(new GridLayout(4, 1));
-        this.textPane.add(new JLabel("Fantastle Version: " + ver));
-        this.textPane.add(new JLabel("Author: Eric Ahnell"));
-        this.textPane
-                .add(new JLabel("Web Site: http://fantastle.worldwizard.net/"));
-        this.textPane.add(new JLabel(
-                "E-mail bug reports to: fantastle@worldwizard.net  "));
-        this.buttonPane.setLayout(new FlowLayout());
-        this.buttonPane.add(this.aboutOK);
-        this.aboutPane.add(this.logoPane, BorderLayout.WEST);
-        this.aboutPane.add(this.textPane, BorderLayout.CENTER);
-        this.aboutPane.add(this.buttonPane, BorderLayout.SOUTH);
-        this.aboutFrame.setResizable(false);
-        this.aboutOK.addActionListener(this.handler);
-        this.aboutFrame.setContentPane(this.aboutPane);
-        this.aboutFrame.pack();
-    }
-
-    private class EventHandler implements ActionListener {
-        public EventHandler() {
-            // TODO Auto-generated constructor stub
+    public void actionPerformed(final ActionEvent e) {
+      try {
+        final AboutDialog ad = AboutDialog.this;
+        final String cmd = e.getActionCommand();
+        if (cmd.equals("OK")) {
+          ad.hideAboutDialog();
         }
-
-        // Handle buttons
-        @Override
-        public void actionPerformed(final ActionEvent e) {
-            try {
-                final AboutDialog ad = AboutDialog.this;
-                final String cmd = e.getActionCommand();
-                if (cmd.equals("OK")) {
-                    ad.hideAboutDialog();
-                }
-            } catch (final Exception ex) {
-                FantastleReboot.logError(ex);
-            }
-        }
+      } catch (final Exception ex) {
+        FantastleReboot.logError(ex);
+      }
     }
+  }
 }

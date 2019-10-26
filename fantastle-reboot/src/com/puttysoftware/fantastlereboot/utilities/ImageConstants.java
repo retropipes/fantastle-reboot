@@ -19,11 +19,11 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot.utilities;
 
 public class ImageConstants {
-    public static final int MAX_MOBILE_WINDOW_SIZE = 320;
-    public static final int MAX_WINDOW_SIZE = 700;
-    public static final int SIZE = 64;
+  public static final int MAX_MOBILE_WINDOW_SIZE = 320;
+  public static final int MAX_WINDOW_SIZE = 700;
+  public static final int SIZE = 64;
 
-    private ImageConstants() {
-        // Do nothing
-    }
+  private ImageConstants() {
+    // Do nothing
+  }
 }

@@ -6,7 +6,7 @@ import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
 public interface SuffixIO {
-    void writeSuffix(XDataWriter writer) throws IOException;
+  void writeSuffix(XDataWriter writer) throws IOException;
 
-    void readSuffix(XDataReader reader, int formatVersion) throws IOException;
+  void readSuffix(XDataReader reader, int formatVersion) throws IOException;
 }

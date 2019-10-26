@@ -9,18 +9,18 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 
 class MapTimeBattleSpeed {
-    // Constants
-    private static int SPEED_FACTOR = 20;
+  // Constants
+  private static int SPEED_FACTOR = 20;
 
-    // Constructor
-    private MapTimeBattleSpeed() {
-        // Do nothing
-    }
+  // Constructor
+  private MapTimeBattleSpeed() {
+    // Do nothing
+  }
 
-    // Method
-    static int getSpeed() {
-        FantastleReboot.getBagOStuff().getPrefsManager();
-        return PreferencesManager.getBattleSpeed()
-                / MapTimeBattleSpeed.SPEED_FACTOR;
-    }
+  // Method
+  static int getSpeed() {
+    FantastleReboot.getBagOStuff().getPrefsManager();
+    return PreferencesManager.getBattleSpeed()
+        / MapTimeBattleSpeed.SPEED_FACTOR;
+  }
 }

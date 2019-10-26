@@ -5,9 +5,9 @@ import com.puttysoftware.fantastlereboot.objectmodel.ColorShaders;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 class LiquidArrowNortheast extends FantastleObject {
-    // Constructors
-    public LiquidArrowNortheast() {
-        super(-1, "arrow_northeast", ObjectImageIndex.ARROW_NORTHEAST,
-                ColorShaders.liquid());
-    }
+  // Constructors
+  public LiquidArrowNortheast() {
+    super(-1, "arrow_northeast", ObjectImageIndex.ARROW_NORTHEAST,
+        ColorShaders.liquid());
+  }
 }

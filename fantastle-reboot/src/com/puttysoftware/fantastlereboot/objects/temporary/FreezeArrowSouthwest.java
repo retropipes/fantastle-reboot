@@ -5,9 +5,9 @@ import com.puttysoftware.fantastlereboot.objectmodel.ColorShaders;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 class FreezeArrowSouthwest extends FantastleObject {
-    // Constructors
-    public FreezeArrowSouthwest() {
-        super(-1, "arrow_southwest", ObjectImageIndex.ARROW_SOUTHWEST,
-                ColorShaders.freeze());
-    }
+  // Constructors
+  public FreezeArrowSouthwest() {
+    super(-1, "arrow_southwest", ObjectImageIndex.ARROW_SOUTHWEST,
+        ColorShaders.freeze());
+  }
 }

@@ -27,27 +27,27 @@ import com.puttysoftware.fantastlereboot.assets.BossImageIndex;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class BossImageLoader {
-    private static String[] allFilenames;
-    private static Properties fileExtensions;
+  private static String[] allFilenames;
+  private static Properties fileExtensions;
 
-    public static BufferedImageIcon load() {
-        if (allFilenames == null) {
-            allFilenames = DataLoader.loadBossImageData();
-        }
-        if (fileExtensions == null) {
-            try {
-                fileExtensions = new Properties();
-                fileExtensions.load(SoundPlayer.class.getResourceAsStream(
-                        "/assets/data/extensions/extensions.properties"));
-            } catch (IOException e) {
-                FantastleReboot.logError(e);
-            }
-        }
-        String imageExt = fileExtensions.getProperty("images");
-        BossImageIndex image = BossImageIndex.BOSS;
-        String name = "/assets/images/boss/" + allFilenames[image.ordinal()]
-                + imageExt;
-        return ImageLoader.load(name, BossImageLoader.class.getResource(name),
-                FantastleReboot.getErrorHandler());
+  public static BufferedImageIcon load() {
+    if (allFilenames == null) {
+      allFilenames = DataLoader.loadBossImageData();
     }
+    if (fileExtensions == null) {
+      try {
+        fileExtensions = new Properties();
+        fileExtensions.load(SoundPlayer.class.getResourceAsStream(
+            "/assets/data/extensions/extensions.properties"));
+      } catch (IOException e) {
+        FantastleReboot.logError(e);
+      }
+    }
+    String imageExt = fileExtensions.getProperty("images");
+    BossImageIndex image = BossImageIndex.BOSS;
+    String name = "/assets/images/boss/" + allFilenames[image.ordinal()]
+        + imageExt;
+    return ImageLoader.load(name, BossImageLoader.class.getResource(name),
+        FantastleReboot.getErrorHandler());
+  }
 }

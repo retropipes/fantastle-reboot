@@ -19,23 +19,23 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot;
 
 public class PreferencesException extends Exception {
-    private static final long serialVersionUID = 2935395223L;
+  private static final long serialVersionUID = 2935395223L;
 
-    /**
-     * Creates a new instance of <code>PreferencesException</code> without
-     * detail message.
-     */
-    public PreferencesException() {
-    }
+  /**
+   * Creates a new instance of <code>PreferencesException</code> without detail
+   * message.
+   */
+  public PreferencesException() {
+  }
 
-    /**
-     * Constructs an instance of <code>PreferencesException</code> with the
-     * specified detail message.
-     *
-     * @param msg
-     *            the detail message.
-     */
-    public PreferencesException(final String msg) {
-        super(msg);
-    }
+  /**
+   * Constructs an instance of <code>PreferencesException</code> with the
+   * specified detail message.
+   *
+   * @param msg
+   *          the detail message.
+   */
+  public PreferencesException(final String msg) {
+    super(msg);
+  }
 }

@@ -27,30 +27,29 @@ import com.puttysoftware.fantastlereboot.assets.ItemImageIndex;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class ItemImageLoader {
-    private static String[] allFilenames;
-    private static Properties fileExtensions;
+  private static String[] allFilenames;
+  private static Properties fileExtensions;
 
-    public static BufferedImageIcon load(ItemImageIndex image) {
-        if (image != ItemImageIndex._NONE) {
-            if (allFilenames == null) {
-                allFilenames = DataLoader.loadItemImageData();
-            }
-            if (fileExtensions == null) {
-                try {
-                    fileExtensions = new Properties();
-                    fileExtensions.load(SoundPlayer.class.getResourceAsStream(
-                            "/assets/data/extensions/extensions.properties"));
-                } catch (IOException e) {
-                    FantastleReboot.logError(e);
-                }
-            }
-            String imageExt = fileExtensions.getProperty("images");
-            String name = "/assets/images/items/"
-                    + allFilenames[image.ordinal()] + imageExt;
-            return ImageLoader.load(name,
-                    ItemImageLoader.class.getResource(name),
-                    FantastleReboot.getErrorHandler());
+  public static BufferedImageIcon load(ItemImageIndex image) {
+    if (image != ItemImageIndex._NONE) {
+      if (allFilenames == null) {
+        allFilenames = DataLoader.loadItemImageData();
+      }
+      if (fileExtensions == null) {
+        try {
+          fileExtensions = new Properties();
+          fileExtensions.load(SoundPlayer.class.getResourceAsStream(
+              "/assets/data/extensions/extensions.properties"));
+        } catch (IOException e) {
+          FantastleReboot.logError(e);
         }
-        return null;
+      }
+      String imageExt = fileExtensions.getProperty("images");
+      String name = "/assets/images/items/" + allFilenames[image.ordinal()]
+          + imageExt;
+      return ImageLoader.load(name, ItemImageLoader.class.getResource(name),
+          FantastleReboot.getErrorHandler());
     }
+    return null;
+  }
 }

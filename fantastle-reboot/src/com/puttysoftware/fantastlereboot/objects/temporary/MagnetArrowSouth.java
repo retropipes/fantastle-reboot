@@ -5,9 +5,9 @@ import com.puttysoftware.fantastlereboot.objectmodel.ColorShaders;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 class MagnetArrowSouth extends FantastleObject {
-    // Constructors
-    public MagnetArrowSouth() {
-        super(-1, "arrow_south", ObjectImageIndex.ARROW_SOUTH,
-                ColorShaders.magnet());
-    }
+  // Constructors
+  public MagnetArrowSouth() {
+    super(-1, "arrow_south", ObjectImageIndex.ARROW_SOUTH,
+        ColorShaders.magnet());
+  }
 }

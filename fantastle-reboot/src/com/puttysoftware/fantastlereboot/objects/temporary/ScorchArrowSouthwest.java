@@ -5,9 +5,9 @@ import com.puttysoftware.fantastlereboot.objectmodel.ColorShaders;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 class ScorchArrowSouthwest extends FantastleObject {
-    // Constructors
-    public ScorchArrowSouthwest() {
-        super(-1, "arrow_southwest", ObjectImageIndex.ARROW_SOUTHWEST,
-                ColorShaders.scorch());
-    }
+  // Constructors
+  public ScorchArrowSouthwest() {
+    super(-1, "arrow_southwest", ObjectImageIndex.ARROW_SOUTHWEST,
+        ColorShaders.scorch());
+  }
 }

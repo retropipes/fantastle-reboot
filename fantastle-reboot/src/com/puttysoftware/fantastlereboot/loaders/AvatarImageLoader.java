@@ -26,28 +26,27 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class AvatarImageLoader {
-    private static String[] allFilenames;
-    private static Properties fileExtensions;
+  private static String[] allFilenames;
+  private static Properties fileExtensions;
 
-    public static BufferedImageIcon load(final int familyID, final int skinID,
-            final int hairID) {
-        if (allFilenames == null) {
-            allFilenames = DataLoader.loadAvatarImageData();
-        }
-        if (fileExtensions == null) {
-            try {
-                fileExtensions = new Properties();
-                fileExtensions.load(SoundPlayer.class.getResourceAsStream(
-                        "/assets/data/extensions/extensions.properties"));
-            } catch (IOException e) {
-                FantastleReboot.logError(e);
-            }
-        }
-        String imageExt = fileExtensions.getProperty("images");
-        String name = "/assets/images/avatars/" + Integer.toString(familyID)
-                + Integer.toString(skinID) + Integer.toString(hairID)
-                + imageExt;
-        return ImageLoader.load(name, AvatarImageLoader.class.getResource(name),
-                FantastleReboot.getErrorHandler());
+  public static BufferedImageIcon load(final int familyID, final int skinID,
+      final int hairID) {
+    if (allFilenames == null) {
+      allFilenames = DataLoader.loadAvatarImageData();
     }
+    if (fileExtensions == null) {
+      try {
+        fileExtensions = new Properties();
+        fileExtensions.load(SoundPlayer.class.getResourceAsStream(
+            "/assets/data/extensions/extensions.properties"));
+      } catch (IOException e) {
+        FantastleReboot.logError(e);
+      }
+    }
+    String imageExt = fileExtensions.getProperty("images");
+    String name = "/assets/images/avatars/" + Integer.toString(familyID)
+        + Integer.toString(skinID) + Integer.toString(hairID) + imageExt;
+    return ImageLoader.load(name, AvatarImageLoader.class.getResource(name),
+        FantastleReboot.getErrorHandler());
+  }
 }

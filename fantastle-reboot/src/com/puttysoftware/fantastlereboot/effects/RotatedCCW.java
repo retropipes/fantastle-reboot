@@ -21,33 +21,33 @@ package com.puttysoftware.fantastlereboot.effects;
 import com.puttysoftware.diane.utilties.Directions;
 
 public class RotatedCCW extends Effect {
-    // Constructor
-    public RotatedCCW(final int newRounds) {
-        super("Rotated CCW", newRounds);
-    }
+  // Constructor
+  public RotatedCCW(final int newRounds) {
+    super("Rotated CCW", newRounds);
+  }
 
-    @Override
-    public int modifyMove1(final int arg) {
-        switch (arg) {
-        case Directions.NORTH:
-            return Directions.WEST;
-        case Directions.SOUTH:
-            return Directions.EAST;
-        case Directions.WEST:
-            return Directions.SOUTH;
-        case Directions.EAST:
-            return Directions.NORTH;
-        case Directions.NORTHWEST:
-            return Directions.SOUTHWEST;
-        case Directions.NORTHEAST:
-            return Directions.NORTHWEST;
-        case Directions.SOUTHWEST:
-            return Directions.SOUTHEAST;
-        case Directions.SOUTHEAST:
-            return Directions.NORTHEAST;
-        default:
-            break;
-        }
-        return 0;
+  @Override
+  public int modifyMove1(final int arg) {
+    switch (arg) {
+    case Directions.NORTH:
+      return Directions.WEST;
+    case Directions.SOUTH:
+      return Directions.EAST;
+    case Directions.WEST:
+      return Directions.SOUTH;
+    case Directions.EAST:
+      return Directions.NORTH;
+    case Directions.NORTHWEST:
+      return Directions.SOUTHWEST;
+    case Directions.NORTHEAST:
+      return Directions.NORTHWEST;
+    case Directions.SOUTHWEST:
+      return Directions.SOUTHEAST;
+    case Directions.SOUTHEAST:
+      return Directions.NORTHEAST;
+    default:
+      break;
     }
+    return 0;
+  }
 }

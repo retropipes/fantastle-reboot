@@ -9,36 +9,36 @@ import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.randomrange.RandomRange;
 
 class CommonWindowAIRoutines {
-    // Constants
-    static final int SPELL_INDEX_HEAL = 1;
+  // Constants
+  static final int SPELL_INDEX_HEAL = 1;
 
-    // Constructor
-    private CommonWindowAIRoutines() {
-        // Do nothing
-    }
+  // Constructor
+  private CommonWindowAIRoutines() {
+    // Do nothing
+  }
 
-    static int getMaxCastIndex(final Creature c) {
-        final int currMP = c.getCurrentMP();
-        final int[] allCosts = c.getSpellBook().getAllSpellCosts();
-        int result = -1;
-        if (currMP > 0) {
-            for (int x = 0; x < allCosts.length; x++) {
-                if (currMP >= allCosts[x]) {
-                    result = x;
-                }
-            }
+  static int getMaxCastIndex(final Creature c) {
+    final int currMP = c.getCurrentMP();
+    final int[] allCosts = c.getSpellBook().getAllSpellCosts();
+    int result = -1;
+    if (currMP > 0) {
+      for (int x = 0; x < allCosts.length; x++) {
+        if (currMP >= allCosts[x]) {
+          result = x;
         }
-        return result;
+      }
     }
+    return result;
+  }
 
-    static boolean check(final int effChance) {
-        final RandomRange random = new RandomRange(1, 100);
-        final int chance = random.generate();
-        if (chance <= effChance) {
-            return true;
-        } else {
-            // Not acting
-            return false;
-        }
+  static boolean check(final int effChance) {
+    final RandomRange random = new RandomRange(1, 100);
+    final int chance = random.generate();
+    if (chance <= effChance) {
+      return true;
+    } else {
+      // Not acting
+      return false;
     }
+  }
 }

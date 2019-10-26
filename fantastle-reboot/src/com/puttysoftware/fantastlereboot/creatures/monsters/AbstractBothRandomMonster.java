@@ -12,32 +12,32 @@ import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.randomrange.RandomRange;
 
 abstract class AbstractBothRandomMonster extends Monster {
-    // Constructors
-    AbstractBothRandomMonster() {
-        super();
-        this.element = AbstractBothRandomMonster.getInitialElement();
-        this.image = this.getInitialImage();
-    }
+  // Constructors
+  AbstractBothRandomMonster() {
+    super();
+    this.element = AbstractBothRandomMonster.getInitialElement();
+    this.image = this.getInitialImage();
+  }
 
-    @Override
-    protected BufferedImageIcon getInitialImage() {
-        if (this.getLevel() == 0) {
-            return null;
-        } else {
-            final String[] types = MonsterNames.getAllNames();
-            final RandomRange r = new RandomRange(0, types.length - 1);
-            int imageID = r.generate();
-            this.setType(types[imageID]);
-            return MonsterImageLoader.load(imageID, this.getElement());
-        }
+  @Override
+  protected BufferedImageIcon getInitialImage() {
+    if (this.getLevel() == 0) {
+      return null;
+    } else {
+      final String[] types = MonsterNames.getAllNames();
+      final RandomRange r = new RandomRange(0, types.length - 1);
+      int imageID = r.generate();
+      this.setType(types[imageID]);
+      return MonsterImageLoader.load(imageID, this.getElement());
     }
+  }
 
-    private static Element getInitialElement() {
-        return new Element(FaithManager.getRandomFaith());
-    }
+  private static Element getInitialElement() {
+    return new Element(FaithManager.getRandomFaith());
+  }
 
-    @Override
-    public void loadCreature() {
-        this.image = this.getInitialImage();
-    }
+  @Override
+  public void loadCreature() {
+    this.image = this.getInitialImage();
+  }
 }

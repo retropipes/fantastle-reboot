@@ -33,73 +33,71 @@ import com.puttysoftware.fantastlereboot.objects.temporary.ArrowFactory;
 import com.puttysoftware.fantastlereboot.objects.temporary.ArrowType;
 
 public class ArrowTask extends Thread {
-    // Fields
-    private int x, y;
-    private final ArrowType at;
+  // Fields
+  private int x, y;
+  private final ArrowType at;
 
-    // Constructors
-    public ArrowTask(final int newX, final int newY, final ArrowType newAT) {
-        this.x = newX;
-        this.y = newY;
-        this.at = newAT;
-    }
+  // Constructors
+  public ArrowTask(final int newX, final int newY, final ArrowType newAT) {
+    this.x = newX;
+    this.y = newY;
+    this.at = newAT;
+  }
 
-    @Override
-    public void run() {
-        boolean res = true;
-        final BagOStuff app = FantastleReboot.getBagOStuff();
-        final Maze m = app.getMazeManager().getMaze();
-        final int px = m.getPlayerLocationX();
-        final int py = m.getPlayerLocationY();
-        final int pz = m.getPlayerLocationZ();
-        final int[] mod = app.getGameManager().doEffects(this.x, this.y);
-        this.x = mod[0];
-        this.y = mod[1];
-        int cumX = this.x;
-        int cumY = this.y;
-        final int incX = this.x;
-        final int incY = this.y;
-        m.tickTimers(pz);
-        FantastleObjectModel o = null;
-        try {
-            o = m.getCell(px + cumX, py + cumY, pz, Layers.OBJECT);
-        } catch (final ArrayIndexOutOfBoundsException ae) {
-            o = new Wall();
-        }
-        final FantastleObjectModel a = ArrowFactory.createArrow(this.at,
-                DirectionResolver.resolve(incX, incY));
-        if (app.getPrefsManager()
-                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-            SoundPlayer.playSound(SoundIndex.ARROW_SHOOT);
-        }
-        while (!o.isDirectionallySolid(incX, incY)) {
-            res = arrowHitCheck(px + cumX, py + cumY, pz);
-            if (!res) {
-                break;
-            }
-            if (!o.isDirectionallySolid(incX, incY)) {
-                app.getGameManager().redrawOneSquare(px + cumX, py + cumY, a);
-            }
-            app.getGameManager().redrawOneSquare(px + cumX, py + cumY,
-                    new OpenSpace());
-            cumX += incX;
-            cumY += incY;
-            try {
-                o = m.getCell(px + cumX, py + cumY, pz, Layers.OBJECT);
-            } catch (final ArrayIndexOutOfBoundsException ae) {
-                o = new Wall();
-            }
-        }
-        if (app.getPrefsManager()
-                .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-            SoundPlayer.playSound(SoundIndex.ARROW_DIE);
-        }
-        app.getGameManager().arrowDone();
+  @Override
+  public void run() {
+    boolean res = true;
+    final BagOStuff app = FantastleReboot.getBagOStuff();
+    final Maze m = app.getMazeManager().getMaze();
+    final int px = m.getPlayerLocationX();
+    final int py = m.getPlayerLocationY();
+    final int pz = m.getPlayerLocationZ();
+    final int[] mod = app.getGameManager().doEffects(this.x, this.y);
+    this.x = mod[0];
+    this.y = mod[1];
+    int cumX = this.x;
+    int cumY = this.y;
+    final int incX = this.x;
+    final int incY = this.y;
+    m.tickTimers(pz);
+    FantastleObjectModel o = null;
+    try {
+      o = m.getCell(px + cumX, py + cumY, pz, Layers.OBJECT);
+    } catch (final ArrayIndexOutOfBoundsException ae) {
+      o = new Wall();
     }
+    final FantastleObjectModel a = ArrowFactory.createArrow(this.at,
+        DirectionResolver.resolve(incX, incY));
+    if (app.getPrefsManager().getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
+      SoundPlayer.playSound(SoundIndex.ARROW_SHOOT);
+    }
+    while (!o.isDirectionallySolid(incX, incY)) {
+      res = arrowHitCheck(px + cumX, py + cumY, pz);
+      if (!res) {
+        break;
+      }
+      if (!o.isDirectionallySolid(incX, incY)) {
+        app.getGameManager().redrawOneSquare(px + cumX, py + cumY, a);
+      }
+      app.getGameManager().redrawOneSquare(px + cumX, py + cumY,
+          new OpenSpace());
+      cumX += incX;
+      cumY += incY;
+      try {
+        o = m.getCell(px + cumX, py + cumY, pz, Layers.OBJECT);
+      } catch (final ArrayIndexOutOfBoundsException ae) {
+        o = new Wall();
+      }
+    }
+    if (app.getPrefsManager().getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
+      SoundPlayer.playSound(SoundIndex.ARROW_DIE);
+    }
+    app.getGameManager().arrowDone();
+  }
 
-    private static boolean arrowHitCheck(final int inX, final int inY,
-            final int pz) {
-        return !FantastleReboot.getBagOStuff().getMazeManager()
-                .getMazeCell(inX, inY, pz, Layers.OBJECT).isSolid();
-    }
+  private static boolean arrowHitCheck(final int inX, final int inY,
+      final int pz) {
+    return !FantastleReboot.getBagOStuff().getMazeManager()
+        .getMazeCell(inX, inY, pz, Layers.OBJECT).isSolid();
+  }
 }

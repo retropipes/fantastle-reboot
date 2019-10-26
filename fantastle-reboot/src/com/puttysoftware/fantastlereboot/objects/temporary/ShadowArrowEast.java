@@ -5,9 +5,8 @@ import com.puttysoftware.fantastlereboot.objectmodel.ColorShaders;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 class ShadowArrowEast extends FantastleObject {
-    // Constructors
-    public ShadowArrowEast() {
-        super(-1, "arrow_east", ObjectImageIndex.ARROW_EAST,
-                ColorShaders.shadow());
-    }
+  // Constructors
+  public ShadowArrowEast() {
+    super(-1, "arrow_east", ObjectImageIndex.ARROW_EAST, ColorShaders.shadow());
+  }
 }

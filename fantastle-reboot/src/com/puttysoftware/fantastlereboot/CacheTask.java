@@ -19,27 +19,27 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot;
 
 class CacheTask extends Thread {
-    // Constructors
-    public CacheTask() {
-        // Do nothing
-    }
+  // Constructors
+  public CacheTask() {
+    // Do nothing
+  }
 
-    @Override
-    public void run() {
-        BagOStuff bag = FantastleReboot.getBagOStuff();
-        PreferencesManager prefs = bag.getPrefsManager();
-        prefs.updateWaitProgress(0);
-        // Enter Wait Mode
-        prefs.enterWaitMode();
-        // Update user interface images
-        bag.updateMicroLogo();
-        bag.getGUIManager().updateLogo();
-        prefs.updateWaitProgress(50);
-        // Update Help
-        bag.getGeneralHelpManager().updateHelpSize();
-        prefs.updateWaitProgress(100);
-        // Exit Wait Mode
-        prefs.exitWaitMode();
-        bag.getGUIManager().showGUI();
-    }
+  @Override
+  public void run() {
+    BagOStuff bag = FantastleReboot.getBagOStuff();
+    PreferencesManager prefs = bag.getPrefsManager();
+    prefs.updateWaitProgress(0);
+    // Enter Wait Mode
+    prefs.enterWaitMode();
+    // Update user interface images
+    bag.updateMicroLogo();
+    bag.getGUIManager().updateLogo();
+    prefs.updateWaitProgress(50);
+    // Update Help
+    bag.getGeneralHelpManager().updateHelpSize();
+    prefs.updateWaitProgress(100);
+    // Exit Wait Mode
+    prefs.exitWaitMode();
+    bag.getGUIManager().showGUI();
+  }
 }

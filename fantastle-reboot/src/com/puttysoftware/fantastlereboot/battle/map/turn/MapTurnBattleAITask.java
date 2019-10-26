@@ -10,47 +10,46 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 
 public class MapTurnBattleAITask extends Thread {
-    // Fields
-    private final Battle b;
+  // Fields
+  private final Battle b;
 
-    // Constructors
-    public MapTurnBattleAITask(final Battle battle) {
-        this.setName("Map AI Runner");
-        this.b = battle;
-    }
+  // Constructors
+  public MapTurnBattleAITask(final Battle battle) {
+    this.setName("Map AI Runner");
+    this.b = battle;
+  }
 
-    @Override
-    public void run() {
-        try {
-            this.aiWait();
-            while (true) {
-                this.b.executeNextAIAction();
-                if (this.b.getLastAIActionResult()) {
-                    // Delay, for animation purposes
-                    try {
-                        FantastleReboot.getBagOStuff().getPrefsManager();
-                        final int battleSpeed = PreferencesManager
-                                .getBattleSpeed();
-                        Thread.sleep(battleSpeed);
-                    } catch (final InterruptedException i) {
-                        // Ignore
-                    }
-                }
-            }
-        } catch (final Throwable t) {
-            FantastleReboot.logError(t);
-        }
-    }
-
-    public synchronized void aiWait() {
-        try {
-            this.wait();
-        } catch (final InterruptedException e) {
+  @Override
+  public void run() {
+    try {
+      this.aiWait();
+      while (true) {
+        this.b.executeNextAIAction();
+        if (this.b.getLastAIActionResult()) {
+          // Delay, for animation purposes
+          try {
+            FantastleReboot.getBagOStuff().getPrefsManager();
+            final int battleSpeed = PreferencesManager.getBattleSpeed();
+            Thread.sleep(battleSpeed);
+          } catch (final InterruptedException i) {
             // Ignore
+          }
         }
+      }
+    } catch (final Throwable t) {
+      FantastleReboot.logError(t);
     }
+  }
 
-    public synchronized void aiRun() {
-        this.notify();
+  public synchronized void aiWait() {
+    try {
+      this.wait();
+    } catch (final InterruptedException e) {
+      // Ignore
     }
+  }
+
+  public synchronized void aiRun() {
+    this.notify();
+  }
 }

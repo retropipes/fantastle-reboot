@@ -27,30 +27,29 @@ import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class ObjectImageLoader {
-    private static String[] allFilenames;
-    private static Properties fileExtensions;
+  private static String[] allFilenames;
+  private static Properties fileExtensions;
 
-    public static BufferedImageIcon load(ObjectImageIndex image) {
-        if (image != ObjectImageIndex._NONE) {
-            if (allFilenames == null) {
-                allFilenames = DataLoader.loadObjectImageData();
-            }
-            if (fileExtensions == null) {
-                try {
-                    fileExtensions = new Properties();
-                    fileExtensions.load(SoundPlayer.class.getResourceAsStream(
-                            "/assets/data/extensions/extensions.properties"));
-                } catch (IOException e) {
-                    FantastleReboot.logError(e);
-                }
-            }
-            String imageExt = fileExtensions.getProperty("images");
-            String name = "/assets/images/objects/"
-                    + allFilenames[image.ordinal()] + imageExt;
-            return ImageLoader.load(name,
-                    ObjectImageLoader.class.getResource(name),
-                    FantastleReboot.getErrorHandler());
+  public static BufferedImageIcon load(ObjectImageIndex image) {
+    if (image != ObjectImageIndex._NONE) {
+      if (allFilenames == null) {
+        allFilenames = DataLoader.loadObjectImageData();
+      }
+      if (fileExtensions == null) {
+        try {
+          fileExtensions = new Properties();
+          fileExtensions.load(SoundPlayer.class.getResourceAsStream(
+              "/assets/data/extensions/extensions.properties"));
+        } catch (IOException e) {
+          FantastleReboot.logError(e);
         }
-        return null;
+      }
+      String imageExt = fileExtensions.getProperty("images");
+      String name = "/assets/images/objects/" + allFilenames[image.ordinal()]
+          + imageExt;
+      return ImageLoader.load(name, ObjectImageLoader.class.getResource(name),
+          FantastleReboot.getErrorHandler());
     }
+    return null;
+  }
 }

@@ -13,28 +13,27 @@ import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class ObjectAppearance extends Appearance {
-    public ObjectAppearance(final String name,
-            final ObjectImageIndex inImageIndex) {
-        super(name, inImageIndex);
-    }
+  public ObjectAppearance(final String name,
+      final ObjectImageIndex inImageIndex) {
+    super(name, inImageIndex);
+  }
 
-    public ObjectAppearance(final String name,
-            final ObjectImageIndex inImageIndex, final ColorShader inShader) {
-        super(name, inImageIndex, inShader);
-    }
+  public ObjectAppearance(final String name,
+      final ObjectImageIndex inImageIndex, final ColorShader inShader) {
+    super(name, inImageIndex, inShader);
+  }
 
-    private ObjectImageIndex getWhichObjectImage() {
-        return (ObjectImageIndex) super.getWhichImage();
-    }
+  private ObjectImageIndex getWhichObjectImage() {
+    return (ObjectImageIndex) super.getWhichImage();
+  }
 
-    @Override
-    public BufferedImageIcon getImage() {
-        BufferedImageIcon image = ObjectImageLoader
-                .load(this.getWhichObjectImage());
-        if (this.hasShading()) {
-            image = ImageShader.shade(this.getCacheName(), image,
-                    this.getShading());
-        }
-        return image;
+  @Override
+  public BufferedImageIcon getImage() {
+    BufferedImageIcon image = ObjectImageLoader
+        .load(this.getWhichObjectImage());
+    if (this.hasShading()) {
+      image = ImageShader.shade(this.getCacheName(), image, this.getShading());
     }
+    return image;
+  }
 }

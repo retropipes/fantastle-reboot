@@ -5,9 +5,9 @@ import com.puttysoftware.fantastlereboot.objectmodel.ColorShaders;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 class BeautyArrowSoutheast extends FantastleObject {
-    // Constructors
-    public BeautyArrowSoutheast() {
-        super(-1, "arrow_southeast", ObjectImageIndex.ARROW_SOUTHEAST,
-                ColorShaders.wooden());
-    }
+  // Constructors
+  public BeautyArrowSoutheast() {
+    super(-1, "arrow_southeast", ObjectImageIndex.ARROW_SOUTHEAST,
+        ColorShaders.wooden());
+  }
 }

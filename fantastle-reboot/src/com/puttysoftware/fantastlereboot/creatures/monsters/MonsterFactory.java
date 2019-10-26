@@ -10,16 +10,15 @@ import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 
 public class MonsterFactory {
-    private MonsterFactory() {
-        // Do nothing
-    }
+  private MonsterFactory() {
+    // Do nothing
+  }
 
-    public static Creature getNewMonsterInstance() {
-        if (PartyManager.getParty().getMonsterLevel() == Maze.getMaxLevels()
-                - 1) {
-            return new BossMonster();
-        } else {
-            return new BothRandomScalingStaticMonster();
-        }
+  public static Creature getNewMonsterInstance() {
+    if (PartyManager.getParty().getMonsterLevel() == Maze.getMaxLevels() - 1) {
+      return new BossMonster();
+    } else {
+      return new BothRandomScalingStaticMonster();
     }
+  }
 }

@@ -22,287 +22,287 @@ import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 
 class EditorLocationManager {
-//public class EditorLocationManager {
-    // Fields
-    private int oldLocX, oldLocY, oldLocZ;
-    private int oldLocW, oldLocE;
-    private int locX, locY, locZ;
-    private int locW, locE;
-    private int cameFromW, oldCameFromW;
-    private int cameFromZ, oldCameFromZ;
-    private int minX, minY, minZ, minW, minE;
-    private int maxW, maxE;
-    private int maxX, maxY, maxZ;
+  // public class EditorLocationManager {
+  // Fields
+  private int oldLocX, oldLocY, oldLocZ;
+  private int oldLocW, oldLocE;
+  private int locX, locY, locZ;
+  private int locW, locE;
+  private int cameFromW, oldCameFromW;
+  private int cameFromZ, oldCameFromZ;
+  private int minX, minY, minZ, minW, minE;
+  private int maxW, maxE;
+  private int maxX, maxY, maxZ;
 
-    // Constructors
-    public EditorLocationManager() {
-        this.resetEditorLocation();
-    }
+  // Constructors
+  public EditorLocationManager() {
+    this.resetEditorLocation();
+  }
 
-    // Methods
-    public int getEditorLocationX() {
-        return this.locX;
-    }
+  // Methods
+  public int getEditorLocationX() {
+    return this.locX;
+  }
 
-    public int getEditorLocationY() {
-        return this.locY;
-    }
+  public int getEditorLocationY() {
+    return this.locY;
+  }
 
-    public int getEditorLocationZ() {
-        return this.locZ;
-    }
+  public int getEditorLocationZ() {
+    return this.locZ;
+  }
 
-    public int getEditorLocationW() {
-        return this.locW;
-    }
+  public int getEditorLocationW() {
+    return this.locW;
+  }
 
-    public int getEditorLocationE() {
-        return this.locE;
-    }
+  public int getEditorLocationE() {
+    return this.locE;
+  }
 
-    public int getMaxEditorLocationX() {
-        return this.maxX;
-    }
+  public int getMaxEditorLocationX() {
+    return this.maxX;
+  }
 
-    public int getMaxEditorLocationY() {
-        return this.maxY;
-    }
+  public int getMaxEditorLocationY() {
+    return this.maxY;
+  }
 
-    public int getMaxEditorLocationZ() {
-        return this.maxZ;
-    }
+  public int getMaxEditorLocationZ() {
+    return this.maxZ;
+  }
 
-    public int getMaxEditorLocationW() {
-        return this.maxW;
-    }
+  public int getMaxEditorLocationW() {
+    return this.maxW;
+  }
 
-    public int getMaxEditorLocationE() {
-        return this.maxE;
-    }
+  public int getMaxEditorLocationE() {
+    return this.maxE;
+  }
 
-    public int getMinEditorLocationX() {
-        return this.minX;
-    }
+  public int getMinEditorLocationX() {
+    return this.minX;
+  }
 
-    public int getMinEditorLocationY() {
-        return this.minY;
-    }
+  public int getMinEditorLocationY() {
+    return this.minY;
+  }
 
-    public int getMinEditorLocationZ() {
-        return this.minZ;
-    }
+  public int getMinEditorLocationZ() {
+    return this.minZ;
+  }
 
-    public int getMinEditorLocationW() {
-        return this.minW;
-    }
+  public int getMinEditorLocationW() {
+    return this.minW;
+  }
 
-    public int getMinEditorLocationE() {
-        return this.minE;
-    }
+  public int getMinEditorLocationE() {
+    return this.minE;
+  }
 
-    public int getCameFromZ() {
-        return this.cameFromZ;
-    }
+  public int getCameFromZ() {
+    return this.cameFromZ;
+  }
 
-    public int getCameFromW() {
-        return this.cameFromW;
-    }
+  public int getCameFromW() {
+    return this.cameFromW;
+  }
 
-    public void setEditorLocationX(final int val) {
-        this.locX = val;
-        this.checkLimits();
-    }
+  public void setEditorLocationX(final int val) {
+    this.locX = val;
+    this.checkLimits();
+  }
 
-    public void setEditorLocationY(final int val) {
-        this.locY = val;
-        this.checkLimits();
-    }
+  public void setEditorLocationY(final int val) {
+    this.locY = val;
+    this.checkLimits();
+  }
 
-    public void setEditorLocationZ(final int val) {
-        this.locZ = val;
-        this.checkLimits();
-    }
+  public void setEditorLocationZ(final int val) {
+    this.locZ = val;
+    this.checkLimits();
+  }
 
-    public void setEditorLocationW(final int val) {
-        this.locW = val;
-        this.checkLimits();
-    }
+  public void setEditorLocationW(final int val) {
+    this.locW = val;
+    this.checkLimits();
+  }
 
-    public void setEditorLocationE(final int val) {
-        this.locE = val;
-        this.checkLimits();
-    }
+  public void setEditorLocationE(final int val) {
+    this.locE = val;
+    this.checkLimits();
+  }
 
-    public void setCameFromZ(final int val) {
-        this.cameFromZ = val;
-    }
+  public void setCameFromZ(final int val) {
+    this.cameFromZ = val;
+  }
 
-    public void setCameFromW(final int val) {
-        this.cameFromW = val;
-    }
+  public void setCameFromW(final int val) {
+    this.cameFromW = val;
+  }
 
-    public void setEditorLocation(final int valX, final int valY,
-            final int valZ, final int valW, final int valE) {
-        this.locW = valW;
-        this.locE = valE;
-        this.locX = valX;
-        this.locY = valY;
-        this.locZ = valZ;
-        this.checkLimits();
-    }
+  public void setEditorLocation(final int valX, final int valY, final int valZ,
+      final int valW, final int valE) {
+    this.locW = valW;
+    this.locE = valE;
+    this.locX = valX;
+    this.locY = valY;
+    this.locZ = valZ;
+    this.checkLimits();
+  }
 
-    public void offsetEditorLocation(final int valX, final int valY,
-            final int valZ, final int valW, final int valE) {
-        this.locW += valW;
-        this.locE += valE;
-        this.locX += valX;
-        this.locY += valY;
-        this.locZ += valZ;
-        this.checkLimits();
-    }
+  public void offsetEditorLocation(final int valX, final int valY,
+      final int valZ, final int valW, final int valE) {
+    this.locW += valW;
+    this.locE += valE;
+    this.locX += valX;
+    this.locY += valY;
+    this.locZ += valZ;
+    this.checkLimits();
+  }
 
-    public void setCameFrom(final int valZ, final int valW) {
-        this.cameFromW = valW;
-        this.cameFromZ = valZ;
-        this.checkLimits();
-    }
+  public void setCameFrom(final int valZ, final int valW) {
+    this.cameFromW = valW;
+    this.cameFromZ = valZ;
+    this.checkLimits();
+  }
 
-    public void offsetCameFrom(final int valZ, final int valW) {
-        this.cameFromW += valW;
-        this.cameFromZ += valZ;
-        this.checkLimits();
-    }
+  public void offsetCameFrom(final int valZ, final int valW) {
+    this.cameFromW += valW;
+    this.cameFromZ += valZ;
+    this.checkLimits();
+  }
 
-    public void offsetEditorLocationX(final int val) {
-        this.locX += val;
-        this.checkLimits();
-    }
+  public void offsetEditorLocationX(final int val) {
+    this.locX += val;
+    this.checkLimits();
+  }
 
-    public void offsetEditorLocationY(final int val) {
-        this.locY += val;
-        this.checkLimits();
-    }
+  public void offsetEditorLocationY(final int val) {
+    this.locY += val;
+    this.checkLimits();
+  }
 
-    public void offsetEditorLocationZ(final int val) {
-        this.locZ += val;
-        this.checkLimits();
-    }
+  public void offsetEditorLocationZ(final int val) {
+    this.locZ += val;
+    this.checkLimits();
+  }
 
-    public void offsetEditorLocationW(final int val) {
-        this.locW += val;
-        this.checkLimits();
-    }
+  public void offsetEditorLocationW(final int val) {
+    this.locW += val;
+    this.checkLimits();
+  }
 
-    public void offsetEditorLocationE(final int val) {
-        this.locE += val;
-        this.checkLimits();
-    }
+  public void offsetEditorLocationE(final int val) {
+    this.locE += val;
+    this.checkLimits();
+  }
 
-    public void offsetCameFromZ(final int val) {
-        this.cameFromZ += val;
-    }
+  public void offsetCameFromZ(final int val) {
+    this.cameFromZ += val;
+  }
 
-    public void offsetCameFromW(final int val) {
-        this.cameFromW += val;
-    }
+  public void offsetCameFromW(final int val) {
+    this.cameFromW += val;
+  }
 
-    public void setLimitsFromMaze(final Maze m) {
-        this.minX = 0;
-        this.minY = 0;
-        this.minZ = 0;
-        this.minW = 0;
-        this.minE = 0;
-        this.maxW = Maze.getMaxLevels();
-        this.maxE = Layers.COUNT - 1;
-        this.maxX = m.getRows();
-        this.maxY = m.getColumns();
-        this.maxZ = m.getFloors() - 1;
-    }
+  public void setLimitsFromMaze(final Maze m) {
+    this.minX = 0;
+    this.minY = 0;
+    this.minZ = 0;
+    this.minW = 0;
+    this.minE = 0;
+    this.maxW = Maze.getMaxLevels();
+    this.maxE = Layers.COUNT - 1;
+    this.maxX = m.getRows();
+    this.maxY = m.getColumns();
+    this.maxZ = m.getFloors() - 1;
+  }
 
-    public void resetEditorLocation() {
-        this.locX = 0;
-        this.locY = 0;
-        this.locZ = 0;
-        this.locW = 0;
-        this.locE = 0;
-        this.oldLocX = 0;
-        this.oldLocY = 0;
-        this.oldLocZ = 0;
-        this.oldLocW = 0;
-        this.oldLocE = 0;
-        this.cameFromZ = 0;
-        this.cameFromW = 0;
-        this.oldCameFromZ = 0;
-        this.oldCameFromW = 0;
-        this.maxX = 0;
-        this.maxY = 0;
-        this.maxZ = 0;
-        this.maxW = 0;
-        this.maxE = 0;
-        this.minX = 0;
-        this.minY = 0;
-        this.minZ = 0;
-        this.minW = 0;
-        this.minE = 0;
-    }
+  public void resetEditorLocation() {
+    this.locX = 0;
+    this.locY = 0;
+    this.locZ = 0;
+    this.locW = 0;
+    this.locE = 0;
+    this.oldLocX = 0;
+    this.oldLocY = 0;
+    this.oldLocZ = 0;
+    this.oldLocW = 0;
+    this.oldLocE = 0;
+    this.cameFromZ = 0;
+    this.cameFromW = 0;
+    this.oldCameFromZ = 0;
+    this.oldCameFromW = 0;
+    this.maxX = 0;
+    this.maxY = 0;
+    this.maxZ = 0;
+    this.maxW = 0;
+    this.maxE = 0;
+    this.minX = 0;
+    this.minY = 0;
+    this.minZ = 0;
+    this.minW = 0;
+    this.minE = 0;
+  }
 
-    private void checkLimits() {
-        // Check for limits out of bounds
-        if (this.locW < this.minW) {
-            this.locW = this.minW;
-        }
-        if (this.locW > this.maxW) {
-            this.locW = this.maxW;
-        }
-        if (this.locX < this.minX) {
-            this.locX = this.minX;
-        }
-        if (this.locX > this.maxX) {
-            this.locX = this.maxX;
-        }
-        if (this.locY < this.minY) {
-            this.locY = this.minY;
-        }
-        if (this.locY > this.maxY) {
-            this.locY = this.maxY;
-        }
-        if (this.locZ < this.minZ) {
-            this.locZ = this.minZ;
-        }
-        if (this.locZ > this.maxZ) {
-            this.locZ = this.maxZ;
-        }
-        if (this.locE < this.minE) {
-            this.locE = this.minE;
-        }
-        if (this.locE > this.maxE) {
-            this.locE = this.maxE;
-        }
+  private void checkLimits() {
+    // Check for limits out of bounds
+    if (this.locW < this.minW) {
+      this.locW = this.minW;
     }
+    if (this.locW > this.maxW) {
+      this.locW = this.maxW;
+    }
+    if (this.locX < this.minX) {
+      this.locX = this.minX;
+    }
+    if (this.locX > this.maxX) {
+      this.locX = this.maxX;
+    }
+    if (this.locY < this.minY) {
+      this.locY = this.minY;
+    }
+    if (this.locY > this.maxY) {
+      this.locY = this.maxY;
+    }
+    if (this.locZ < this.minZ) {
+      this.locZ = this.minZ;
+    }
+    if (this.locZ > this.maxZ) {
+      this.locZ = this.maxZ;
+    }
+    if (this.locE < this.minE) {
+      this.locE = this.minE;
+    }
+    if (this.locE > this.maxE) {
+      this.locE = this.maxE;
+    }
+  }
 
-    public void saveEditorLocation() {
-        this.oldLocX = this.locX;
-        this.oldLocY = this.locY;
-        this.oldLocZ = this.locZ;
-        this.oldLocW = this.locW;
-        this.oldLocE = this.locE;
-    }
+  public void saveEditorLocation() {
+    this.oldLocX = this.locX;
+    this.oldLocY = this.locY;
+    this.oldLocZ = this.locZ;
+    this.oldLocW = this.locW;
+    this.oldLocE = this.locE;
+  }
 
-    public void restoreEditorLocation() {
-        this.locX = this.oldLocX;
-        this.locY = this.oldLocY;
-        this.locZ = this.oldLocZ;
-        this.locW = this.oldLocW;
-        this.locE = this.oldLocE;
-    }
+  public void restoreEditorLocation() {
+    this.locX = this.oldLocX;
+    this.locY = this.oldLocY;
+    this.locZ = this.oldLocZ;
+    this.locW = this.oldLocW;
+    this.locE = this.oldLocE;
+  }
 
-    public void saveCameFrom() {
-        this.oldCameFromZ = this.cameFromZ;
-        this.oldCameFromW = this.cameFromW;
-    }
+  public void saveCameFrom() {
+    this.oldCameFromZ = this.cameFromZ;
+    this.oldCameFromW = this.cameFromW;
+  }
 
-    public void restoreCameFrom() {
-        this.cameFromZ = this.oldCameFromZ;
-        this.cameFromW = this.oldCameFromW;
-    }
+  public void restoreCameFrom() {
+    this.cameFromZ = this.oldCameFromZ;
+    this.cameFromW = this.oldCameFromW;
+  }
 }

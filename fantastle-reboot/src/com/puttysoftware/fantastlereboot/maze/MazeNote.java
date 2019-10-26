@@ -12,30 +12,30 @@ import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
 public class MazeNote extends CloneableObject {
-    // Fields
-    private String contents;
+  // Fields
+  private String contents;
 
-    // Constructor
-    public MazeNote() {
-        this.contents = "Empty Note";
-    }
+  // Constructor
+  public MazeNote() {
+    this.contents = "Empty Note";
+  }
 
-    // Methods
-    public String getContents() {
-        return this.contents;
-    }
+  // Methods
+  public String getContents() {
+    return this.contents;
+  }
 
-    public void setContents(final String newContents) {
-        this.contents = newContents;
-    }
+  public void setContents(final String newContents) {
+    this.contents = newContents;
+  }
 
-    static MazeNote readNote(final XDataReader reader) throws IOException {
-        final MazeNote mn = new MazeNote();
-        mn.contents = reader.readString();
-        return mn;
-    }
+  static MazeNote readNote(final XDataReader reader) throws IOException {
+    final MazeNote mn = new MazeNote();
+    mn.contents = reader.readString();
+    return mn;
+  }
 
-    void writeNote(final XDataWriter writer) throws IOException {
-        writer.writeString(this.contents);
-    }
+  void writeNote(final XDataWriter writer) throws IOException {
+    writer.writeString(this.contents);
+  }
 }

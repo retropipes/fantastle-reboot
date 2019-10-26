@@ -14,36 +14,36 @@ import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class AttributedObjectAppearance extends Appearance {
-    private final AttributeAppearance attribute;
+  private final AttributeAppearance attribute;
 
-    public AttributedObjectAppearance(final AttributeAppearance inAttribute,
-            final String name, final ObjectImageIndex inImageIndex) {
-        super(name, inImageIndex);
-        this.attribute = inAttribute;
-    }
+  public AttributedObjectAppearance(final AttributeAppearance inAttribute,
+      final String name, final ObjectImageIndex inImageIndex) {
+    super(name, inImageIndex);
+    this.attribute = inAttribute;
+  }
 
-    public AttributedObjectAppearance(final AttributeAppearance inAttribute,
-            final String name, final ObjectImageIndex inImageIndex,
-            final ColorShader inShader) {
-        super(name, inImageIndex, inShader);
-        this.attribute = inAttribute;
-    }
+  public AttributedObjectAppearance(final AttributeAppearance inAttribute,
+      final String name, final ObjectImageIndex inImageIndex,
+      final ColorShader inShader) {
+    super(name, inImageIndex, inShader);
+    this.attribute = inAttribute;
+  }
 
-    private ObjectImageIndex getWhichObjectImage() {
-        return (ObjectImageIndex) super.getWhichImage();
-    }
+  private ObjectImageIndex getWhichObjectImage() {
+    return (ObjectImageIndex) super.getWhichImage();
+  }
 
-    @Override
-    public BufferedImageIcon getImage() {
-        BufferedImageIcon oImage = ObjectImageLoader
-                .load(this.getWhichObjectImage());
-        if (this.hasShading()) {
-            oImage = ImageShader.shade(this.getCacheName(), oImage,
-                    this.getShading());
-        }
-        BufferedImageIcon aImage = this.attribute.getImage();
-        String comboCacheName = this.getCacheName() + "_"
-                + this.attribute.getCacheName();
-        return ImageCompositor.composite(comboCacheName, oImage, aImage);
+  @Override
+  public BufferedImageIcon getImage() {
+    BufferedImageIcon oImage = ObjectImageLoader
+        .load(this.getWhichObjectImage());
+    if (this.hasShading()) {
+      oImage = ImageShader.shade(this.getCacheName(), oImage,
+          this.getShading());
     }
+    BufferedImageIcon aImage = this.attribute.getImage();
+    String comboCacheName = this.getCacheName() + "_"
+        + this.attribute.getCacheName();
+    return ImageCompositor.composite(comboCacheName, oImage, aImage);
+  }
 }

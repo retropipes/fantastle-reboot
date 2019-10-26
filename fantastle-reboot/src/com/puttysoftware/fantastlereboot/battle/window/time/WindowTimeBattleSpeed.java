@@ -9,18 +9,18 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 
 class WindowTimeBattleSpeed {
-    // Constants
-    private static int SPEED_FACTOR = 10;
+  // Constants
+  private static int SPEED_FACTOR = 10;
 
-    // Constructor
-    private WindowTimeBattleSpeed() {
-        // Do nothing
-    }
+  // Constructor
+  private WindowTimeBattleSpeed() {
+    // Do nothing
+  }
 
-    // Method
-    static int getSpeed() {
-        FantastleReboot.getBagOStuff().getPrefsManager();
-        return PreferencesManager.getBattleSpeed()
-                / WindowTimeBattleSpeed.SPEED_FACTOR;
-    }
+  // Method
+  static int getSpeed() {
+    FantastleReboot.getBagOStuff().getPrefsManager();
+    return PreferencesManager.getBattleSpeed()
+        / WindowTimeBattleSpeed.SPEED_FACTOR;
+  }
 }

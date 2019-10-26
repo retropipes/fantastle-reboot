@@ -13,59 +13,59 @@ import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.Item;
 
 public class CombatItem extends Item {
-    // Fields
-    private final BattleTarget target;
-    protected Effect e;
-    protected SoundIndex sound;
+  // Fields
+  private final BattleTarget target;
+  protected Effect e;
+  protected SoundIndex sound;
 
-    // Constructors
-    public CombatItem(final String itemName, final int itemBuyPrice,
-            final BattleTarget itemTarget) {
-        super(itemName, 1, 0);
-        this.setCombatUsable(true);
-        this.setBuyPrice(itemBuyPrice);
-        this.target = itemTarget;
-        this.defineFields();
-    }
+  // Constructors
+  public CombatItem(final String itemName, final int itemBuyPrice,
+      final BattleTarget itemTarget) {
+    super(itemName, 1, 0);
+    this.setCombatUsable(true);
+    this.setBuyPrice(itemBuyPrice);
+    this.target = itemTarget;
+    this.defineFields();
+  }
 
-    // Methods
-    final BattleTarget getTarget() {
-        return this.target;
-    }
+  // Methods
+  final BattleTarget getTarget() {
+    return this.target;
+  }
 
-    final Effect getEffect() {
-        return this.e;
-    }
+  final Effect getEffect() {
+    return this.e;
+  }
 
-    final SoundIndex getSound() {
-        return this.sound;
-    }
+  final SoundIndex getSound() {
+    return this.sound;
+  }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + Objects.hash(this.e, this.sound, this.target);
-        return result;
-    }
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + Objects.hash(this.e, this.sound, this.target);
+    return result;
+  }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!super.equals(obj)) {
-            return false;
-        }
-        if (!(obj instanceof CombatItem)) {
-            return false;
-        }
-        CombatItem other = (CombatItem) obj;
-        return Objects.equals(this.e, other.e) && this.sound == other.sound
-                && this.target == other.target;
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
     }
+    if (!super.equals(obj)) {
+      return false;
+    }
+    if (!(obj instanceof CombatItem)) {
+      return false;
+    }
+    CombatItem other = (CombatItem) obj;
+    return Objects.equals(this.e, other.e) && this.sound == other.sound
+        && this.target == other.target;
+  }
 
-    protected void defineFields() {
-        // Do nothing
-    }
+  protected void defineFields() {
+    // Do nothing
+  }
 }

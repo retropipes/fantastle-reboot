@@ -19,17 +19,17 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot.effects;
 
 public class EffectConstants {
-    private EffectConstants() {
-        // Do nothing
-    }
+  private EffectConstants() {
+    // Do nothing
+  }
 
-    public static final int EFFECT_ROTATED_CLOCKWISE = 0;
-    public static final int EFFECT_ROTATED_COUNTERCLOCKWISE = 1;
-    public static final int EFFECT_U_TURNED = 2;
-    public static final int EFFECT_CONFUSED = 3;
-    public static final int EFFECT_DIZZY = 4;
-    public static final int EFFECT_DRUNK = 5;
-    public static final int EFFECT_STICKY = 6;
-    public static final int EFFECT_POWER_GATHER = 7;
-    public static final int EFFECT_POWER_WITHER = 8;
+  public static final int EFFECT_ROTATED_CLOCKWISE = 0;
+  public static final int EFFECT_ROTATED_COUNTERCLOCKWISE = 1;
+  public static final int EFFECT_U_TURNED = 2;
+  public static final int EFFECT_CONFUSED = 3;
+  public static final int EFFECT_DIZZY = 4;
+  public static final int EFFECT_DRUNK = 5;
+  public static final int EFFECT_STICKY = 6;
+  public static final int EFFECT_POWER_GATHER = 7;
+  public static final int EFFECT_POWER_WITHER = 8;
 }

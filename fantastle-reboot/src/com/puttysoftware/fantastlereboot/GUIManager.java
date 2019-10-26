@@ -32,50 +32,50 @@ import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class GUIManager {
-    // Fields
-    private final JFrame guiFrame;
-    private final Container guiPane;
-    private final JLabel logoLabel;
+  // Fields
+  private final JFrame guiFrame;
+  private final Container guiPane;
+  private final JLabel logoLabel;
 
-    // Constructors
-    public GUIManager() {
-        this.guiFrame = new JFrame("Fantastle");
-        this.guiPane = this.guiFrame.getContentPane();
-        this.guiFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.guiFrame.setLayout(new GridLayout(1, 1));
-        this.logoLabel = new JLabel("", null, SwingConstants.CENTER);
-        this.logoLabel.setBorder(new EmptyBorder(0, 0, 0, 0));
-        this.guiPane.add(this.logoLabel);
-        this.guiFrame.pack();
-        this.guiFrame.setResizable(false);
-    }
+  // Constructors
+  public GUIManager() {
+    this.guiFrame = new JFrame("Fantastle");
+    this.guiPane = this.guiFrame.getContentPane();
+    this.guiFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    this.guiFrame.setLayout(new GridLayout(1, 1));
+    this.logoLabel = new JLabel("", null, SwingConstants.CENTER);
+    this.logoLabel.setBorder(new EmptyBorder(0, 0, 0, 0));
+    this.guiPane.add(this.logoLabel);
+    this.guiFrame.pack();
+    this.guiFrame.setResizable(false);
+  }
 
-    // Methods
-    public JFrame getGUIFrame() {
-        if (this.guiFrame.isVisible()) {
-            return this.guiFrame;
-        } else {
-            return null;
-        }
+  // Methods
+  public JFrame getGUIFrame() {
+    if (this.guiFrame.isVisible()) {
+      return this.guiFrame;
+    } else {
+      return null;
     }
+  }
 
-    public void showGUI() {
-        final BagOStuff app = FantastleReboot.getBagOStuff();
-        app.setInGUI();
-        app.getMenuManager().attachMenus();
-        this.guiFrame.setVisible(true);
-        app.getMenuManager().setMainMenus();
-        app.getMenuManager().checkFlags();
-    }
+  public void showGUI() {
+    final BagOStuff app = FantastleReboot.getBagOStuff();
+    app.setInGUI();
+    app.getMenuManager().attachMenus();
+    this.guiFrame.setVisible(true);
+    app.getMenuManager().setMainMenus();
+    app.getMenuManager().checkFlags();
+  }
 
-    public void hideGUI() {
-        this.guiFrame.setVisible(false);
-    }
+  public void hideGUI() {
+    this.guiFrame.setVisible(false);
+  }
 
-    public void updateLogo() {
-        final BufferedImageIcon logo = UserInterfaceImageLoader
-                .load(UserInterfaceImageIndex.LOGO);
-        this.logoLabel.setIcon(logo);
-        this.guiFrame.pack();
-    }
+  public void updateLogo() {
+    final BufferedImageIcon logo = UserInterfaceImageLoader
+        .load(UserInterfaceImageIndex.LOGO);
+    this.logoLabel.setIcon(logo);
+    this.guiFrame.pack();
+  }
 }

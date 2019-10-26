@@ -5,9 +5,9 @@ import com.puttysoftware.fantastlereboot.objectmodel.ColorShaders;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 class SacredArrowSoutheast extends FantastleObject {
-    // Constructors
-    public SacredArrowSoutheast() {
-        super(-1, "arrow_southeast", ObjectImageIndex.ARROW_SOUTHEAST,
-                ColorShaders.sacred());
-    }
+  // Constructors
+  public SacredArrowSoutheast() {
+    super(-1, "arrow_southeast", ObjectImageIndex.ARROW_SOUTHEAST,
+        ColorShaders.sacred());
+  }
 }

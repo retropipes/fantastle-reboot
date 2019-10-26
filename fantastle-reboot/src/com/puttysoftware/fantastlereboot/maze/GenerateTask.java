@@ -16,87 +16,87 @@ import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class GenerateTask extends Thread {
-    // Fields
-    private final JFrame generateFrame;
-    private final boolean scratch;
+  // Fields
+  private final JFrame generateFrame;
+  private final boolean scratch;
 
-    // Constructors
-    public GenerateTask(final boolean startFromScratch) {
-        this.scratch = startFromScratch;
-        this.setName("Level Generator");
-        this.generateFrame = new JFrame("Generating...");
-        final JProgressBar loadBar = new JProgressBar();
-        loadBar.setIndeterminate(true);
-        this.generateFrame.getContentPane().add(loadBar);
-        this.generateFrame.setResizable(false);
-        this.generateFrame
-                .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        this.generateFrame.pack();
-    }
+  // Constructors
+  public GenerateTask(final boolean startFromScratch) {
+    this.scratch = startFromScratch;
+    this.setName("Level Generator");
+    this.generateFrame = new JFrame("Generating...");
+    final JProgressBar loadBar = new JProgressBar();
+    loadBar.setIndeterminate(true);
+    this.generateFrame.getContentPane().add(loadBar);
+    this.generateFrame.setResizable(false);
+    this.generateFrame
+        .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+    this.generateFrame.pack();
+  }
 
-    // Methods
-    @Override
-    public void run() {
-        try {
-            this.generateFrame.setVisible(true);
-            final BagOStuff app = FantastleReboot.getBagOStuff();
-            Maze gameMaze = app.getMazeManager().getMaze();
-            if (!this.scratch) {
-                app.getGameManager().disableEvents();
-            } else {
-                gameMaze = new Maze();
-                app.getMazeManager().setMaze(gameMaze);
-            }
-            gameMaze.addLevel(Maze.getMaxRows(), Maze.getMaxColumns(),
-                    Maze.getMaxFloors());
-            gameMaze.fillLevelRandomly();
-            final RandomRange rR = new RandomRange(0, Maze.getMaxRows() - 1);
-            final RandomRange rC = new RandomRange(0, Maze.getMaxColumns() - 1);
-            final RandomRange rF = new RandomRange(0, Maze.getMaxFloors() - 1);
-            if (this.scratch) {
-                int startR, startC, startF;
-                do {
-                    startR = rR.generate();
-                    startC = rC.generate();
-                    startF = rF.generate();
-                } while (gameMaze.getCell(startR, startC, startF,
-                        Layers.OBJECT).isSolid());
-                gameMaze.setStartRow(startR);
-                gameMaze.setStartColumn(startC);
-                gameMaze.setStartFloor(startF);
-                app.getMazeManager().setLoaded(true);
-                final boolean playerExists = gameMaze.doesPlayerExist();
-                if (playerExists) {
-                    gameMaze.setPlayerToStart();
-                    app.getGameManager().resetViewingWindow();
-                }
-            } else {
-                int startR, startC, startF;
-                do {
-                    startR = rR.generate();
-                    startC = rC.generate();
-                    startF = rF.generate();
-                } while (gameMaze.getCell(startR, startC, startF,
-                        Layers.OBJECT).isSolid());
-                gameMaze.setPlayerLocationX(startR);
-                gameMaze.setPlayerLocationY(startC);
-                gameMaze.setPlayerLocationZ(startF);
-                PartyManager.getParty().offsetMonsterLevel(1);
-            }
-            gameMaze.save();
-            // Final cleanup
-            if (this.scratch) {
-                app.getGameManager().stateChanged();
-                app.getGameManager().playMaze();
-            } else {
-                app.getGameManager().resetViewingWindow();
-                app.getGameManager().enableEvents();
-                app.getGameManager().redrawMaze();
-            }
-        } catch (final Throwable t) {
-            FantastleReboot.logError(t);
-        } finally {
-            this.generateFrame.setVisible(false);
+  // Methods
+  @Override
+  public void run() {
+    try {
+      this.generateFrame.setVisible(true);
+      final BagOStuff app = FantastleReboot.getBagOStuff();
+      Maze gameMaze = app.getMazeManager().getMaze();
+      if (!this.scratch) {
+        app.getGameManager().disableEvents();
+      } else {
+        gameMaze = new Maze();
+        app.getMazeManager().setMaze(gameMaze);
+      }
+      gameMaze.addLevel(Maze.getMaxRows(), Maze.getMaxColumns(),
+          Maze.getMaxFloors());
+      gameMaze.fillLevelRandomly();
+      final RandomRange rR = new RandomRange(0, Maze.getMaxRows() - 1);
+      final RandomRange rC = new RandomRange(0, Maze.getMaxColumns() - 1);
+      final RandomRange rF = new RandomRange(0, Maze.getMaxFloors() - 1);
+      if (this.scratch) {
+        int startR, startC, startF;
+        do {
+          startR = rR.generate();
+          startC = rC.generate();
+          startF = rF.generate();
+        } while (gameMaze.getCell(startR, startC, startF, Layers.OBJECT)
+            .isSolid());
+        gameMaze.setStartRow(startR);
+        gameMaze.setStartColumn(startC);
+        gameMaze.setStartFloor(startF);
+        app.getMazeManager().setLoaded(true);
+        final boolean playerExists = gameMaze.doesPlayerExist();
+        if (playerExists) {
+          gameMaze.setPlayerToStart();
+          app.getGameManager().resetViewingWindow();
         }
+      } else {
+        int startR, startC, startF;
+        do {
+          startR = rR.generate();
+          startC = rC.generate();
+          startF = rF.generate();
+        } while (gameMaze.getCell(startR, startC, startF, Layers.OBJECT)
+            .isSolid());
+        gameMaze.setPlayerLocationX(startR);
+        gameMaze.setPlayerLocationY(startC);
+        gameMaze.setPlayerLocationZ(startF);
+        PartyManager.getParty().offsetMonsterLevel(1);
+      }
+      gameMaze.save();
+      // Final cleanup
+      if (this.scratch) {
+        app.getGameManager().stateChanged();
+        app.getGameManager().playMaze();
+      } else {
+        app.getGameManager().resetViewingWindow();
+        app.getGameManager().enableEvents();
+        app.getGameManager().redrawMaze();
+      }
+    } catch (final Throwable t) {
+      FantastleReboot.logError(t);
+    } finally {
+      this.generateFrame.setVisible(false);
     }
+  }
 }

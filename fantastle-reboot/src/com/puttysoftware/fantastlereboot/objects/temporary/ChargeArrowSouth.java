@@ -5,9 +5,9 @@ import com.puttysoftware.fantastlereboot.objectmodel.ColorShaders;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 class ChargeArrowSouth extends FantastleObject {
-    // Constructors
-    public ChargeArrowSouth() {
-        super(-1, "arrow_south", ObjectImageIndex.ARROW_SOUTH,
-                ColorShaders.charge());
-    }
+  // Constructors
+  public ChargeArrowSouth() {
+    super(-1, "arrow_south", ObjectImageIndex.ARROW_SOUTH,
+        ColorShaders.charge());
+  }
 }

@@ -6,8 +6,8 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.creatures.monsters;
 
 class BothRandomScalingStaticMonster extends AbstractBothRandomScalingMonster {
-    // Constructors
-    BothRandomScalingStaticMonster() {
-        super();
-    }
+  // Constructors
+  BothRandomScalingStaticMonster() {
+    super();
+  }
 }

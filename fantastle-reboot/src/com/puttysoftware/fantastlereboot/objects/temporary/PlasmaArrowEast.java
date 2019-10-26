@@ -5,9 +5,8 @@ import com.puttysoftware.fantastlereboot.objectmodel.ColorShaders;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 class PlasmaArrowEast extends FantastleObject {
-    // Constructors
-    public PlasmaArrowEast() {
-        super(-1, "arrow_east", ObjectImageIndex.ARROW_EAST,
-                ColorShaders.plasma());
-    }
+  // Constructors
+  public PlasmaArrowEast() {
+    super(-1, "arrow_east", ObjectImageIndex.ARROW_EAST, ColorShaders.plasma());
+  }
 }

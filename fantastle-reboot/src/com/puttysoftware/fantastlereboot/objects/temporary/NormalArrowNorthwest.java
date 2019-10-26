@@ -5,9 +5,9 @@ import com.puttysoftware.fantastlereboot.objectmodel.ColorShaders;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 class NormalArrowNorthwest extends FantastleObject {
-    // Constructors
-    public NormalArrowNorthwest() {
-        super(-1, "arrow_northwest", ObjectImageIndex.ARROW_NORTHWEST,
-                ColorShaders.normal());
-    }
+  // Constructors
+  public NormalArrowNorthwest() {
+    super(-1, "arrow_northwest", ObjectImageIndex.ARROW_NORTHWEST,
+        ColorShaders.normal());
+  }
 }

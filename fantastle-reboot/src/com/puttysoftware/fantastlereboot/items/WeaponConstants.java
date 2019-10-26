@@ -6,38 +6,38 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.items;
 
 public class WeaponConstants {
-    // Constants
-    private static final String[] WEAPON_1H = { "Dagger", "Club", "Scimitar",
-            "Boomerang", "Javelin", "Grenade", "Whip", "Crossbow", "Dart",
-            "Sword", "Lock", "Fists", "Throwing Stars", "Pebbles", "Lockpicks",
-            "Gun", "Flail", "Hammer", "Wand", "Voice" };
-    private static final String[] WEAPON_2H = { "Longsword", "Mace", "Staff",
-            "Slingshot", "Spear", "Bazooka", "Catapult", "Bow", "Boulder",
-            "Axe", "Key", "Feet", "Halberd", "Lance", "Door", "Cannon",
-            "Battering Ram", "Laser", "Scythe", "Dance" };
-    private static final String[] WEAPON_CHOICES = { "One-Handed Weapons",
-            "Two-Handed Weapons" };
-    private static final String[] HAND_CHOICES = { "Main Hand", "Off-Hand" };
+  // Constants
+  private static final String[] WEAPON_1H = { "Dagger", "Club", "Scimitar",
+      "Boomerang", "Javelin", "Grenade", "Whip", "Crossbow", "Dart", "Sword",
+      "Lock", "Fists", "Throwing Stars", "Pebbles", "Lockpicks", "Gun", "Flail",
+      "Hammer", "Wand", "Voice" };
+  private static final String[] WEAPON_2H = { "Longsword", "Mace", "Staff",
+      "Slingshot", "Spear", "Bazooka", "Catapult", "Bow", "Boulder", "Axe",
+      "Key", "Feet", "Halberd", "Lance", "Door", "Cannon", "Battering Ram",
+      "Laser", "Scythe", "Dance" };
+  private static final String[] WEAPON_CHOICES = { "One-Handed Weapons",
+      "Two-Handed Weapons" };
+  private static final String[] HAND_CHOICES = { "Main Hand", "Off-Hand" };
 
-    // Private Constructor
-    private WeaponConstants() {
-        // Do nothing
-    }
+  // Private Constructor
+  private WeaponConstants() {
+    // Do nothing
+  }
 
-    // Methods
-    public static String[] getWeaponChoices() {
-        return WEAPON_CHOICES;
-    }
+  // Methods
+  public static String[] getWeaponChoices() {
+    return WEAPON_CHOICES;
+  }
 
-    public static synchronized String[] getHandChoices() {
-        return HAND_CHOICES;
-    }
+  public static synchronized String[] getHandChoices() {
+    return HAND_CHOICES;
+  }
 
-    public static synchronized String[] get1HWeapons() {
-        return WEAPON_1H;
-    }
+  public static synchronized String[] get1HWeapons() {
+    return WEAPON_1H;
+  }
 
-    public static synchronized String[] get2HWeapons() {
-        return WEAPON_2H;
-    }
+  public static synchronized String[] get2HWeapons() {
+    return WEAPON_2H;
+  }
 }
