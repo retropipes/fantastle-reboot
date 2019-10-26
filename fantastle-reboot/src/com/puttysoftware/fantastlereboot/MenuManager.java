@@ -42,8 +42,8 @@ public class MenuManager {
   // Fields
   private JMenuBar mainMenuBar;
   private JMenu fileMenu, editMenu, playMenu, gameMenu, debugMenu, helpMenu;
-  private JMenuItem fileNew, fileOpen, fileClose, fileSave, fileSaveAs,
-      fileExit;
+  // private JMenuItem fileNew;
+  private JMenuItem fileOpen, fileClose, fileSave, fileSaveAs, fileExit;
   private JMenuItem editUndo, editRedo, editPreferences;
   // private JMenuItem editCutLevel, editCopyLevel,
   // editPasteLevel, editInsertLevelFromClipboard,
@@ -57,7 +57,8 @@ public class MenuManager {
       gameUnregisterCharacter, gameRemoveCharacter, gameEditNote, gameViewStats;
   private JMenuItem debugResetPreferences;
   private JMenuItem helpAbout, helpGeneralHelp, helpObjectHelp;
-  private KeyStroke fileNewAccel, fileOpenAccel, fileCloseAccel, fileSaveAccel,
+  // private KeyStroke fileNewAccel;
+  private KeyStroke fileOpenAccel, fileCloseAccel, fileSaveAccel,
       fileSaveAsAccel;
   private KeyStroke editPreferencesAccel;
   // private KeyStroke editUndoAccel, editRedoAccel, editCutLevelAccel,
@@ -90,7 +91,7 @@ public class MenuManager {
   }
 
   public void setGameMenus() {
-    this.fileNew.setEnabled(false);
+    // this.fileNew.setEnabled(false);
     this.fileOpen.setEnabled(false);
     this.fileExit.setEnabled(true);
     this.editUndo.setEnabled(false);
@@ -147,7 +148,7 @@ public class MenuManager {
   // }
 
   public void setPrefMenus() {
-    this.fileNew.setEnabled(false);
+    // this.fileNew.setEnabled(false);
     this.fileOpen.setEnabled(false);
     this.fileClose.setEnabled(false);
     this.fileSave.setEnabled(false);
@@ -182,7 +183,7 @@ public class MenuManager {
   }
 
   public void setMainMenus() {
-    this.fileNew.setEnabled(true);
+    // this.fileNew.setEnabled(true);
     this.fileOpen.setEnabled(true);
     this.fileExit.setEnabled(true);
     this.editUndo.setEnabled(false);
@@ -361,7 +362,7 @@ public class MenuManager {
     } else {
       modKey = InputEvent.CTRL_DOWN_MASK;
     }
-    this.fileNewAccel = KeyStroke.getKeyStroke(KeyEvent.VK_N, modKey);
+    // this.fileNewAccel = KeyStroke.getKeyStroke(KeyEvent.VK_N, modKey);
     this.fileOpenAccel = KeyStroke.getKeyStroke(KeyEvent.VK_O, modKey);
     this.fileCloseAccel = KeyStroke.getKeyStroke(KeyEvent.VK_W, modKey);
     this.fileSaveAccel = KeyStroke.getKeyStroke(KeyEvent.VK_S, modKey);
@@ -411,8 +412,8 @@ public class MenuManager {
     this.gameMenu = new JMenu("Game");
     this.debugMenu = new JMenu("Debug");
     this.helpMenu = new JMenu("Help");
-    this.fileNew = new JMenuItem("New...");
-    this.fileNew.setAccelerator(this.fileNewAccel);
+    // this.fileNew = new JMenuItem("New...");
+    // this.fileNew.setAccelerator(this.fileNewAccel);
     this.fileOpen = new JMenuItem("Open...");
     this.fileOpen.setAccelerator(this.fileOpenAccel);
     this.fileClose = new JMenuItem("Close");
@@ -482,7 +483,7 @@ public class MenuManager {
     this.helpAbout = new JMenuItem("About Fantastle...");
     this.helpGeneralHelp = new JMenuItem("Fantastle Help");
     this.helpObjectHelp = new JMenuItem("Fantastle Object Help");
-    this.fileNew.addActionListener(this.handler);
+    // this.fileNew.addActionListener(this.handler);
     this.fileOpen.addActionListener(this.handler);
     this.fileClose.addActionListener(this.handler);
     this.fileSave.addActionListener(this.handler);
@@ -524,7 +525,7 @@ public class MenuManager {
     this.helpAbout.addActionListener(this.handler);
     this.helpGeneralHelp.addActionListener(this.handler);
     this.helpObjectHelp.addActionListener(this.handler);
-    this.fileMenu.add(this.fileNew);
+    // this.fileMenu.add(this.fileNew);
     this.fileMenu.add(this.fileOpen);
     this.fileMenu.add(this.fileClose);
     this.fileMenu.add(this.fileSave);
@@ -582,7 +583,7 @@ public class MenuManager {
   }
 
   private void setInitialMenuState() {
-    this.fileNew.setEnabled(true);
+    // this.fileNew.setEnabled(true);
     this.fileOpen.setEnabled(true);
     this.fileClose.setEnabled(false);
     this.fileSave.setEnabled(false);
