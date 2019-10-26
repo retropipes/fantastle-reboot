@@ -725,10 +725,7 @@ public class MenuManager {
           }
         } else if (cmd.equals("Play")) {
           // Play the current maze
-          final boolean proceed = app.getGameManager().newGame();
-          if (proceed) {
-            app.getGameManager().playMaze();
-          }
+          app.getGameManager().playMaze();
           // } else if (cmd.equals("Edit")) {
           // // Edit the current maze
           // me.editMaze();
