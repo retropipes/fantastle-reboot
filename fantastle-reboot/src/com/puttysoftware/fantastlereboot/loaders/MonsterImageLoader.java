@@ -71,7 +71,7 @@ public class MonsterImageLoader {
         Integer.toString(imageID) + imageExt, cacheName);
   }
 
-  public static void cacheAll() {
+  public static void cacheAll(final int f) {
     try {
       fileExtensions = new Properties();
       fileExtensions.load(MonsterImageLoader.class.getResourceAsStream(
@@ -81,12 +81,10 @@ public class MonsterImageLoader {
     }
     String imageExt = fileExtensions.getProperty("images");
     for (int i = 0; i <= MAX_INDEX; i++) {
-      for (int f = 0; f <= FaithConstants.FAITHS_COUNT; f++) {
-        ColorShader shader = FaithConstants.getFaithShader(f);
-        String cacheName = shader.getName() + "_" + Integer.toString(i);
-        ImageCache.getCachedImage(shader, Integer.toString(i) + imageExt,
-            cacheName);
-      }
+      ColorShader shader = FaithConstants.getFaithShader(f);
+      String cacheName = shader.getName() + "_" + Integer.toString(i);
+      ImageCache.getCachedImage(shader, Integer.toString(i) + imageExt,
+          cacheName);
     }
   }
 

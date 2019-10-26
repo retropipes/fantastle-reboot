@@ -188,12 +188,6 @@ public class BagOStuff {
   public GeneralHelpManager getGeneralHelpManager() {
     return this.gHelpMgr;
   }
-
-  public void updateMicroLogo() {
-    // Cache Micro Logo
-    this.microLogo = UserInterfaceImageLoader
-        .load(UserInterfaceImageIndex.MICRO_LOGO);
-  }
   //
   // public MazeEditor getEditor() {
   // return this.editor;

@@ -46,8 +46,11 @@ public class GUIManager {
     this.logoLabel = new JLabel("", null, SwingConstants.CENTER);
     this.logoLabel.setBorder(new EmptyBorder(0, 0, 0, 0));
     this.guiPane.add(this.logoLabel);
-    this.guiFrame.pack();
     this.guiFrame.setResizable(false);
+    final BufferedImageIcon logo = UserInterfaceImageLoader
+        .load(UserInterfaceImageIndex.LOGO);
+    this.logoLabel.setIcon(logo);
+    this.guiFrame.pack();
   }
 
   // Methods
@@ -70,12 +73,5 @@ public class GUIManager {
 
   public void hideGUI() {
     this.guiFrame.setVisible(false);
-  }
-
-  public void updateLogo() {
-    final BufferedImageIcon logo = UserInterfaceImageLoader
-        .load(UserInterfaceImageIndex.LOGO);
-    this.logoLabel.setIcon(logo);
-    this.guiFrame.pack();
   }
 }

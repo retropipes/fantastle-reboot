@@ -18,7 +18,9 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot;
 
-import java.awt.GridLayout;
+import java.awt.Container;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,7 +33,6 @@ import com.puttysoftware.fantastlereboot.loaders.AvatarImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.BossImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.EffectImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.ItemImageLoader;
-import com.puttysoftware.fantastlereboot.loaders.MonsterImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 
@@ -43,21 +44,24 @@ class CacheTask extends Thread {
   // Constructors
   public CacheTask() {
     // Set up wait frame
-    this.waitFrame = new JFrame("Please Wait...");
-    this.waitLabel = new JLabel(
-        UserInterfaceImageLoader.load(UserInterfaceImageIndex.LOADING));
+    this.waitFrame = new JFrame("Loading...");
+    this.waitLabel = new JLabel();
     this.waitProgress = new JProgressBar();
     this.waitProgress.setMinimum(0);
     this.waitProgress.setMaximum(100);
     this.waitProgress.setValue(0);
-    this.waitFrame.getContentPane().setLayout(new GridLayout(2, 1));
-    this.waitFrame.getContentPane().add(this.waitLabel);
-    this.waitFrame.getContentPane().add(this.waitProgress);
+    Container content = this.waitFrame.getContentPane();
+    content.setLayout(new GridBagLayout());
+    GridBagConstraints c = new GridBagConstraints();
+    c.gridx = 0;
+    c.gridy = 0;
+    content.add(this.waitLabel, c);
+    c.gridy = 1;
+    content.add(this.waitProgress, c);
     this.waitFrame
         .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     this.waitFrame.setResizable(false);
     this.waitFrame.setAlwaysOnTop(true);
-    this.waitFrame.pack();
   }
 
   @Override
@@ -67,28 +71,25 @@ class CacheTask extends Thread {
       this.enterWaitMode();
       // Cache UI images
       UserInterfaceImageLoader.cacheAll();
-      this.updateWaitProgress(11);
+      this.updateWaitProgress(12);
       // Cache Boss images
       BossImageLoader.cacheAll();
-      this.updateWaitProgress(22);
+      this.updateWaitProgress(25);
       // Cache Item images
       ItemImageLoader.cacheAll();
-      this.updateWaitProgress(33);
+      this.updateWaitProgress(37);
       // Cache Effect images
       EffectImageLoader.cacheAll();
-      this.updateWaitProgress(44);
-      // Cache Monster images
-      MonsterImageLoader.cacheAll();
-      this.updateWaitProgress(55);
+      this.updateWaitProgress(50);
       // Cache Avatar images
       AvatarImageLoader.cacheAll();
-      this.updateWaitProgress(66);
+      this.updateWaitProgress(62);
       // Cache Attribute images
       AttributeImageLoader.cacheAll();
-      this.updateWaitProgress(78);
+      this.updateWaitProgress(75);
       // Cache Object images
       ObjectImageLoader.cacheAll();
-      this.updateWaitProgress(88);
+      this.updateWaitProgress(87);
       // Final tasks
       BagOStuff bag = FantastleReboot.getBagOStuff();
       bag.postConstruct();
@@ -105,6 +106,10 @@ class CacheTask extends Thread {
   }
 
   private void enterWaitMode() {
+    UserInterfaceImageLoader.preInit();
+    this.waitLabel.setIcon(
+        UserInterfaceImageLoader.load(UserInterfaceImageIndex.LOADING));
+    this.waitFrame.pack();
     this.waitFrame.setVisible(true);
   }
 
