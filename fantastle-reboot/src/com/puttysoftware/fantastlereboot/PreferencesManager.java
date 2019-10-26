@@ -56,8 +56,9 @@ public class PreferencesManager implements PreferencesHandler {
     JFrame prefFrame;
     private JFrame waitFrame;
     private JTabbedPane prefTabPane;
-    private Container mainPrefPane, buttonPane, editorPane, miscPane, soundPane,
+    private Container mainPrefPane, buttonPane, miscPane, soundPane,
             musicPane;
+//    private Container editorPane;
     private JButton prefsOK, prefsCancel;
     private JButton prefsExport, prefsImport;
     final JCheckBox[] sounds;
@@ -68,15 +69,15 @@ public class PreferencesManager implements PreferencesHandler {
     JCheckBox mobileMode;
     JCheckBox mapBattleEngine;
     JCheckBox timeBattleEngine;
-    JComboBox<String> editorFillChoices;
-    private String[] editorFillChoiceArray;
+//    JComboBox<String> editorFillChoices;
+//    private String[] editorFillChoiceArray;
     JComboBox<String> difficultyChoices;
     JComboBox<String> updateCheckInterval;
     private String[] updateCheckIntervalValues;
     private JComboBox<String> viewingWindowChoices;
     private JLabel waitLabel;
     private JProgressBar waitProgress;
-    int editorFill;
+//    int editorFill;
     private EventHandler handler;
     private final PreferencesFileManager fileMgr;
     private final ExportImportManager eiMgr;
@@ -330,7 +331,7 @@ public class PreferencesManager implements PreferencesHandler {
     }
 
     public void setPrefs(final boolean initial) {
-        this.editorFill = this.editorFillChoices.getSelectedIndex();
+//        this.editorFill = this.editorFillChoices.getSelectedIndex();
         for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
             this.setSoundEnabled(x, this.sounds[x].isSelected());
         }
@@ -373,7 +374,7 @@ public class PreferencesManager implements PreferencesHandler {
     }
 
     private void resetDefaultPrefs() {
-        this.editorFill = 0;
+//        this.editorFill = 0;
         this.defaultEnableSounds();
         this.defaultEnableMusic();
         this.checkUpdatesStartup.setSelected(true);
@@ -411,7 +412,7 @@ public class PreferencesManager implements PreferencesHandler {
         this.prefFrame = new JFrame("Preferences");
         this.prefTabPane = new JTabbedPane();
         this.mainPrefPane = new Container();
-        this.editorPane = new Container();
+//        this.editorPane = new Container();
         this.soundPane = new Container();
         this.musicPane = new Container();
         this.miscPane = new Container();
@@ -426,9 +427,9 @@ public class PreferencesManager implements PreferencesHandler {
         this.prefsExport.setDefaultCapable(false);
         this.prefsImport = new JButton("Import...");
         this.prefsImport.setDefaultCapable(false);
-        this.editorFillChoiceArray = new String[] { "Grass", "Dirt", "Sand",
-                "Snow", "Tile", "Tundra" };
-        this.editorFillChoices = new JComboBox<>(this.editorFillChoiceArray);
+//        this.editorFillChoiceArray = new String[] { "Grass", "Dirt", "Sand",
+//                "Snow", "Tile", "Tundra" };
+//        this.editorFillChoices = new JComboBox<>(this.editorFillChoiceArray);
         this.sounds[PreferencesManager.SOUNDS_ALL] = new JCheckBox(
                 "Enable ALL sounds", true);
         this.sounds[PreferencesManager.SOUNDS_UI] = new JCheckBox(
@@ -462,10 +463,10 @@ public class PreferencesManager implements PreferencesHandler {
         this.prefFrame.addWindowListener(this.handler);
         this.mainPrefPane.setLayout(new BorderLayout());
         this.prefFrame.setResizable(false);
-        this.editorPane
-                .setLayout(new GridLayout(PreferencesManager.GRID_LENGTH, 1));
-        this.editorPane.add(new JLabel("Default fill for new mazes:"));
-        this.editorPane.add(this.editorFillChoices);
+//        this.editorPane
+//                .setLayout(new GridLayout(PreferencesManager.GRID_LENGTH, 1));
+//        this.editorPane.add(new JLabel("Default fill for new mazes:"));
+//        this.editorPane.add(this.editorFillChoices);
         this.soundPane
                 .setLayout(new GridLayout(PreferencesManager.GRID_LENGTH, 1));
         for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
@@ -500,7 +501,7 @@ public class PreferencesManager implements PreferencesHandler {
         this.buttonPane.add(this.prefsCancel);
         this.buttonPane.add(this.prefsExport);
         this.buttonPane.add(this.prefsImport);
-        this.prefTabPane.addTab("Editor", null, this.editorPane, "Editor");
+//        this.prefTabPane.addTab("Editor", null, this.editorPane, "Editor");
         this.prefTabPane.addTab("Sounds", null, this.soundPane, "Sounds");
         this.prefTabPane.addTab("Music", null, this.musicPane, "Music");
         this.prefTabPane.addTab("Misc.", null, this.miscPane, "Misc.");
@@ -574,8 +575,8 @@ public class PreferencesManager implements PreferencesHandler {
                     throw new PreferencesException(
                             "Incompatible preferences major version, using defaults.");
                 }
-                pm.editorFillChoices
-                        .setSelectedIndex(Integer.parseInt(s.readLine()));
+//                pm.editorFillChoices
+//                        .setSelectedIndex(Integer.parseInt(s.readLine()));
                 pm.checkUpdatesStartup
                         .setSelected(Boolean.parseBoolean(s.readLine()));
                 pm.moveOneAtATime
@@ -624,7 +625,8 @@ public class PreferencesManager implements PreferencesHandler {
                         + "\n");
                 s.write(Integer.toString(PreferencesManager.PREFS_VERSION_MINOR)
                         + "\n");
-                s.write(Integer.toString(pm.editorFill) + "\n");
+                s.write("0\n");
+//                s.write(Integer.toString(pm.editorFill) + "\n");
                 s.write(Boolean.toString(pm.checkUpdatesStartupEnabled) + "\n");
                 s.write(Boolean.toString(pm.moveOneAtATimeEnabled) + "\n");
                 for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
@@ -719,8 +721,10 @@ public class PreferencesManager implements PreferencesHandler {
                 s.readLine();
                 // Read and discard minor version
                 s.readLine();
-                pm.editorFillChoices
-                        .setSelectedIndex(Integer.parseInt(s.readLine()));
+                // Read and discard editor fill
+                s.readLine();
+//                pm.editorFillChoices
+//                        .setSelectedIndex(Integer.parseInt(s.readLine()));
                 pm.checkUpdatesStartup
                         .setSelected(Boolean.parseBoolean(s.readLine()));
                 pm.moveOneAtATime
@@ -755,7 +759,8 @@ public class PreferencesManager implements PreferencesHandler {
                         + "\n");
                 s.write(Integer.toString(PreferencesManager.PREFS_VERSION_MINOR)
                         + "\n");
-                s.write(Integer.toString(pm.editorFill) + "\n");
+                s.write("0\n");
+//                s.write(Integer.toString(pm.editorFill) + "\n");
                 s.write(Boolean.toString(pm.checkUpdatesStartupEnabled) + "\n");
                 s.write(Boolean.toString(pm.moveOneAtATimeEnabled) + "\n");
                 for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
