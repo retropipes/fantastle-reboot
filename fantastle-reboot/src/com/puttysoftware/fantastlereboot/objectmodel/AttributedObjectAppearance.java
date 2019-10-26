@@ -13,7 +13,7 @@ import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.images.BufferedImageIcon;
 
-public class AttributedObjectAppearance extends Appearance {
+class AttributedObjectAppearance extends Appearance {
   private final AttributeAppearance attribute;
 
   public AttributedObjectAppearance(final AttributeAppearance inAttribute,
