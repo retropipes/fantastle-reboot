@@ -26,77 +26,93 @@ import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.integration.NativeIntegration;
 
 public class FantastleReboot {
-    // Constants
-    private static BagOStuff bag;
-    private static final String PROGRAM_NAME = "Fantastle";
-    private static final String ERROR_MESSAGE = "Perhaps a bug is to blame for this error message.\n"
-            + "Include the debug log with your bug report.\n"
-            + "Email bug reports to: fantastle@worldwizard.net\n"
-            + "Subject: Fantastle Bug Report";
-    private static final String ERROR_TITLE = "Fantastle Error";
-    private static final ErrorLogger debug = new ErrorLogger(
-            FantastleReboot.PROGRAM_NAME);
-    private static final NativeIntegration NATIVITY = new NativeIntegration();
-    private static boolean IN_FANTASTLE = true;
-    private static final int BATTLE_MAZE_SIZE = 16;
+  // Constants
+  private static BagOStuff bag;
+  private static final String PROGRAM_NAME = "Fantastle Reboot";
+  private static final String ERROR_MESSAGE = "Perhaps a bug is to blame for this error message.\n"
+      + "Include the debug log with your bug report.\n"
+      + "Email bug reports to: support@puttysoftware.com\n"
+      + "Subject: Fantastle Reboot Error Report";
+  private static final String ERROR_TITLE = "Fantastle Error";
+  private static final String WARNING_MESSAGE = "Perhaps a bug is to blame for this warning message.\n"
+      + "Include the debug log with your bug report.\n"
+      + "Email bug reports to: support@puttysoftware.com\n"
+      + "Subject: Fantastle Reboot Warning Report";
+  private static final String WARNING_TITLE = "Fantastle Warning";
+  private static final ErrorLogger debug = new ErrorLogger(
+      FantastleReboot.PROGRAM_NAME);
+  private static final NativeIntegration NATIVITY = new NativeIntegration();
+  private static boolean IN_FANTASTLE = true;
+  private static final int BATTLE_MAZE_SIZE = 16;
 
-    // Methods
-    public static BagOStuff getBagOStuff() {
-        return FantastleReboot.bag;
-    }
+  // Methods
+  public static BagOStuff getBagOStuff() {
+    return FantastleReboot.bag;
+  }
 
-    public static ErrorLogger getErrorHandler() {
-        return FantastleReboot.debug;
-    }
+  public static ErrorLogger getErrorHandler() {
+    return FantastleReboot.debug;
+  }
 
-    public static void logError(final Throwable t) {
-        CommonDialogs.showErrorDialog(FantastleReboot.ERROR_MESSAGE,
-                FantastleReboot.ERROR_TITLE);
-        FantastleReboot.debug.logError(t);
-    }
+  public static void logError(final Throwable t) {
+    CommonDialogs.showErrorDialog(FantastleReboot.ERROR_MESSAGE,
+        FantastleReboot.ERROR_TITLE);
+    FantastleReboot.debug.logError(t);
+  }
 
-    public static int getBattleMazeSize() {
-        return FantastleReboot.BATTLE_MAZE_SIZE;
-    }
+  public static void logWarning(final Throwable t) {
+    CommonDialogs.showErrorDialog(FantastleReboot.WARNING_MESSAGE,
+        FantastleReboot.WARNING_TITLE);
+    FantastleReboot.debug.logNonFatalError(t);
+  }
 
-    public static boolean inFantastleReboot() {
-        return FantastleReboot.IN_FANTASTLE;
-    }
+  public static void logWarningWithMessage(final Throwable t,
+      final String message) {
+    CommonDialogs.showErrorDialog(message, FantastleReboot.WARNING_TITLE);
+    FantastleReboot.debug.logNonFatalError(t);
+  }
 
-    public static void leaveFantastleReboot() {
-        FantastleReboot.IN_FANTASTLE = false;
-    }
+  public static int getBattleMazeSize() {
+    return FantastleReboot.BATTLE_MAZE_SIZE;
+  }
 
-    public static void attachMenus(JMenuBar defaultMenuBar) {
-        NATIVITY.setDefaultMenuBar(defaultMenuBar);
-    }
+  public static boolean inFantastleReboot() {
+    return FantastleReboot.IN_FANTASTLE;
+  }
 
-    public static void main(final String[] args) {
-        try {
-            // Compute action cap
-            Creature.computeActionCap(FantastleReboot.BATTLE_MAZE_SIZE,
-                    FantastleReboot.BATTLE_MAZE_SIZE);
-            // Create the Bag O'Stuff
-            FantastleReboot.bag = new BagOStuff();
-            FantastleReboot.bag.postConstruct();
-            // OS Integration
-            NATIVITY.configureLookAndFeel();
-            NATIVITY.setQuitHandler(FantastleReboot.bag.getMazeManager());
-            NATIVITY.setPreferencesHandler(
-                    FantastleReboot.bag.getPrefsManager());
-            NATIVITY.setAboutHandler(FantastleReboot.bag.getAboutDialog());
-            // Load stuff
-            FantastleReboot.showLoadingScreen();
-            // Done loading
-            FantastleReboot.bag.playLogoSound();
-            FantastleReboot.bag.getGUIManager().showGUI();
-        } catch (final Throwable t) {
-            FantastleReboot.logError(t);
-        }
-    }
+  public static void leaveFantastleReboot() {
+    FantastleReboot.IN_FANTASTLE = false;
+  }
 
-    private static void showLoadingScreen() {
-        CacheTask loader = new CacheTask();
-        loader.start();
+  public static void attachMenus(JMenuBar defaultMenuBar) {
+    NATIVITY.setDefaultMenuBar(defaultMenuBar);
+  }
+
+  public static void main(final String[] args) {
+    try {
+      // Compute action cap
+      Creature.computeActionCap(FantastleReboot.BATTLE_MAZE_SIZE,
+          FantastleReboot.BATTLE_MAZE_SIZE);
+      // Create the Bag O'Stuff
+      FantastleReboot.bag = new BagOStuff();
+      FantastleReboot.bag.postConstruct();
+      // OS Integration
+      NATIVITY.configureLookAndFeel();
+      NATIVITY.setQuitHandler(FantastleReboot.bag.getMazeManager());
+      NATIVITY.setPreferencesHandler(FantastleReboot.bag.getPrefsManager());
+      NATIVITY.setAboutHandler(FantastleReboot.bag.getAboutDialog());
+      // Load stuff
+      FantastleReboot.showLoadingScreen();
+      // Done loading
+      FantastleReboot.bag.playLogoSound();
+      FantastleReboot.bag.getGUIManager().showGUI();
+    } catch (final Throwable t) {
+      FantastleReboot.logError(t);
     }
+  }
+
+  private static void showLoadingScreen() {
+    CacheTask loader = new CacheTask();
+    loader.start();
+  }
 }
