@@ -87,7 +87,7 @@ public class GenerateTask extends Thread {
       // Final cleanup
       if (this.scratch) {
         app.getGameManager().stateChanged();
-        app.getGameManager().playMaze();
+        app.getMenuManager().checkFlags();
       } else {
         app.getGameManager().resetViewingWindow();
         app.getGameManager().enableEvents();
