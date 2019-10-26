@@ -18,7 +18,7 @@ public class MonsterFactory {
     if (PartyManager.getParty().getMonsterLevel() == Maze.getMaxLevels() - 1) {
       return new BossMonster();
     } else {
-      return new BothRandomScalingStaticMonster();
+      return new Monster();
     }
   }
 }
