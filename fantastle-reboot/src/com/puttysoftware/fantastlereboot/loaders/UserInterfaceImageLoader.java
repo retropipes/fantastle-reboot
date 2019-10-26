@@ -50,7 +50,7 @@ public class UserInterfaceImageLoader {
       FantastleReboot.logError(e);
     }
     String imageExt = fileExtensions.getProperty("images");
-    for (int i = 0; i <= MAX_INDEX; i++) {
+    for (int i = 1; i <= MAX_INDEX; i++) {
       String name = "/assets/images/ui/" + allFilenames[i] + imageExt;
       ImageLoader.load(name, UserInterfaceImageLoader.class.getResource(name),
           FantastleReboot.getErrorHandler());

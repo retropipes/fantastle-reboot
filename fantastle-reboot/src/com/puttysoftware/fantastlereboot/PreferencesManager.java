@@ -43,7 +43,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JProgressBar;
 import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 
@@ -54,7 +53,6 @@ import com.puttysoftware.fantastlereboot.objects.Tile;
 public class PreferencesManager implements PreferencesHandler {
   // Fields
   JFrame prefFrame;
-  private JFrame waitFrame;
   private JTabbedPane prefTabPane;
   private Container mainPrefPane, buttonPane, miscPane, soundPane;
   // private Container editorPane, musicPane;
@@ -74,8 +72,6 @@ public class PreferencesManager implements PreferencesHandler {
   // JComboBox<String> updateCheckInterval;
   // private String[] updateCheckIntervalValues;
   private JComboBox<String> viewingWindowChoices;
-  private JLabel waitLabel;
-  private JProgressBar waitProgress;
   // int editorFill;
   private EventHandler handler;
   private final PreferencesFileManager fileMgr;
@@ -354,18 +350,6 @@ public class PreferencesManager implements PreferencesHandler {
     }
   }
 
-  void enterWaitMode() {
-    this.waitFrame.setVisible(true);
-  }
-
-  void updateWaitProgress(final int value) {
-    this.waitProgress.setValue(value);
-  }
-
-  void exitWaitMode() {
-    this.waitFrame.setVisible(false);
-  }
-
   private void resetDefaultPrefs() {
     // this.editorFill = 0;
     this.defaultEnableSounds();
@@ -504,21 +488,6 @@ public class PreferencesManager implements PreferencesHandler {
     this.prefsExport.addActionListener(this.handler);
     this.prefsImport.addActionListener(this.handler);
     this.prefFrame.pack();
-    // Set up wait frame
-    this.waitFrame = new JFrame("Please Wait...");
-    this.waitLabel = new JLabel("Please wait, updating image caches...");
-    this.waitProgress = new JProgressBar();
-    this.waitProgress.setMinimum(0);
-    this.waitProgress.setMaximum(100);
-    this.waitProgress.setValue(0);
-    this.waitFrame.getContentPane().setLayout(new GridLayout(2, 1));
-    this.waitFrame.getContentPane().add(this.waitLabel);
-    this.waitFrame.getContentPane().add(this.waitProgress);
-    this.waitFrame
-        .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-    this.waitFrame.setResizable(false);
-    this.waitFrame.setAlwaysOnTop(true);
-    this.waitFrame.pack();
   }
 
   private class PreferencesFileManager {

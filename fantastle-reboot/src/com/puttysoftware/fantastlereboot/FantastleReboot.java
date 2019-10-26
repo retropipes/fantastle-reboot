@@ -95,7 +95,6 @@ public class FantastleReboot {
           FantastleReboot.BATTLE_MAZE_SIZE);
       // Create the Bag O'Stuff
       FantastleReboot.bag = new BagOStuff();
-      FantastleReboot.bag.postConstruct();
       // OS Integration
       NATIVITY.configureLookAndFeel();
       NATIVITY.setQuitHandler(FantastleReboot.bag.getMazeManager());
@@ -103,9 +102,6 @@ public class FantastleReboot {
       NATIVITY.setAboutHandler(FantastleReboot.bag.getAboutDialog());
       // Load stuff
       FantastleReboot.showLoadingScreen();
-      // Done loading
-      FantastleReboot.bag.playLogoSound();
-      FantastleReboot.bag.getGUIManager().showGUI();
     } catch (final Throwable t) {
       FantastleReboot.logError(t);
     }

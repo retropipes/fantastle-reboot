@@ -18,6 +18,14 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot;
 
+import java.awt.GridLayout;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JProgressBar;
+import javax.swing.WindowConstants;
+
+import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.loaders.AttributeImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.AvatarImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.BossImageLoader;
@@ -28,47 +36,83 @@ import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 
 class CacheTask extends Thread {
+  private JFrame waitFrame;
+  private JLabel waitLabel;
+  private JProgressBar waitProgress;
+
   // Constructors
   public CacheTask() {
-    // Do nothing
+    // Set up wait frame
+    this.waitFrame = new JFrame("Please Wait...");
+    this.waitLabel = new JLabel(
+        UserInterfaceImageLoader.load(UserInterfaceImageIndex.LOADING));
+    this.waitProgress = new JProgressBar();
+    this.waitProgress.setMinimum(0);
+    this.waitProgress.setMaximum(100);
+    this.waitProgress.setValue(0);
+    this.waitFrame.getContentPane().setLayout(new GridLayout(2, 1));
+    this.waitFrame.getContentPane().add(this.waitLabel);
+    this.waitFrame.getContentPane().add(this.waitProgress);
+    this.waitFrame
+        .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+    this.waitFrame.setResizable(false);
+    this.waitFrame.setAlwaysOnTop(true);
+    this.waitFrame.pack();
   }
 
   @Override
   public void run() {
-    BagOStuff bag = FantastleReboot.getBagOStuff();
-    PreferencesManager prefs = bag.getPrefsManager();
-    prefs.updateWaitProgress(0);
-    // Enter Wait Mode
-    prefs.enterWaitMode();
-    // Cache UI images
-    UserInterfaceImageLoader.cacheAll();
-    prefs.updateWaitProgress(11);
-    // Cache Boss images
-    BossImageLoader.cacheAll();
-    prefs.updateWaitProgress(22);
-    // Cache Item images
-    ItemImageLoader.cacheAll();
-    prefs.updateWaitProgress(33);
-    // Cache Effect images
-    EffectImageLoader.cacheAll();
-    prefs.updateWaitProgress(44);
-    // Cache Monster images
-    MonsterImageLoader.cacheAll();
-    prefs.updateWaitProgress(55);
-    // Cache Avatar images
-    AvatarImageLoader.cacheAll();
-    prefs.updateWaitProgress(66);
-    // Cache Attribute images
-    AttributeImageLoader.cacheAll();
-    prefs.updateWaitProgress(78);
-    // Cache Object images
-    ObjectImageLoader.cacheAll();
-    prefs.updateWaitProgress(88);
-    // Final tasks
-    bag.getGeneralHelpManager().updateHelpSize();
-    prefs.updateWaitProgress(100);
-    // Exit Wait Mode
-    prefs.exitWaitMode();
-    bag.getGUIManager().showGUI();
+    try {
+      // Enter Wait Mode
+      this.enterWaitMode();
+      // Cache UI images
+      UserInterfaceImageLoader.cacheAll();
+      this.updateWaitProgress(11);
+      // Cache Boss images
+      BossImageLoader.cacheAll();
+      this.updateWaitProgress(22);
+      // Cache Item images
+      ItemImageLoader.cacheAll();
+      this.updateWaitProgress(33);
+      // Cache Effect images
+      EffectImageLoader.cacheAll();
+      this.updateWaitProgress(44);
+      // Cache Monster images
+      MonsterImageLoader.cacheAll();
+      this.updateWaitProgress(55);
+      // Cache Avatar images
+      AvatarImageLoader.cacheAll();
+      this.updateWaitProgress(66);
+      // Cache Attribute images
+      AttributeImageLoader.cacheAll();
+      this.updateWaitProgress(78);
+      // Cache Object images
+      ObjectImageLoader.cacheAll();
+      this.updateWaitProgress(88);
+      // Final tasks
+      BagOStuff bag = FantastleReboot.getBagOStuff();
+      bag.postConstruct();
+      bag.getObjects().initializeObjects();
+      bag.getGeneralHelpManager().updateHelpSize();
+      this.updateWaitProgress(100);
+      // Exit Wait Mode
+      this.exitWaitMode();
+      bag.playLogoSound();
+      bag.getGUIManager().showGUI();
+    } catch (Throwable t) {
+      FantastleReboot.logError(t);
+    }
+  }
+
+  private void enterWaitMode() {
+    this.waitFrame.setVisible(true);
+  }
+
+  private void updateWaitProgress(final int value) {
+    this.waitProgress.setValue(value);
+  }
+
+  private void exitWaitMode() {
+    this.waitFrame.setVisible(false);
   }
 }

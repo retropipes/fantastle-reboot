@@ -57,7 +57,6 @@ public final class FantastleObjectModelList {
   // Constructor
   public FantastleObjectModelList() {
     this.allObjectList = new ArrayList<>();
-    this.initializeObjects();
   }
 
   // Methods
