@@ -575,6 +575,8 @@ public class PreferencesManager implements PreferencesHandler {
                     throw new PreferencesException(
                             "Incompatible preferences major version, using defaults.");
                 }
+                // Read and discard editor fill
+                s.readLine();
 //                pm.editorFillChoices
 //                        .setSelectedIndex(Integer.parseInt(s.readLine()));
                 pm.checkUpdatesStartup
