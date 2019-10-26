@@ -124,17 +124,17 @@ public class BagOStuff {
                 .load(UserInterfaceImageIndex.MICRO_LOGO);
     }
 
-    public void setInGUI(final boolean value) {
+    public void setInGUI() {
         this.formerMode = this.currentMode;
         this.currentMode = BagOStuff.STATUS_GUI;
     }
 
-    public void setInPrefs(final boolean value) {
+    public void setInPrefs() {
         this.formerMode = this.currentMode;
         this.currentMode = BagOStuff.STATUS_PREFS;
     }
 
-    public void setInGame(final boolean value) {
+    public void setInGame() {
         this.formerMode = this.currentMode;
         this.currentMode = BagOStuff.STATUS_GAME;
     }

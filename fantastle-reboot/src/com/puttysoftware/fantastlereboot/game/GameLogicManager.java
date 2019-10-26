@@ -756,13 +756,11 @@ public final class GameLogicManager {
 
     public void showOutput() {
         final BagOStuff bag = FantastleReboot.getBagOStuff();
-        bag.setInGame(true);
+        bag.setInGame();
         this.gui.showOutput();
     }
 
     public void hideOutput() {
-        final BagOStuff bag = FantastleReboot.getBagOStuff();
-        bag.setInGame(false);
         this.stopMovement();
         this.gui.hideOutput();
     }
