@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.objects.temporary;
+package com.puttysoftware.fantastlereboot.objects;
 
 import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;

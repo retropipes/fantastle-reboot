@@ -2,6 +2,7 @@ package com.puttysoftware.fantastlereboot.objects.temporary;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.objects.MonsterObject;
 
 public class MonsterObjectFactory {
   private MonsterObjectFactory() {
