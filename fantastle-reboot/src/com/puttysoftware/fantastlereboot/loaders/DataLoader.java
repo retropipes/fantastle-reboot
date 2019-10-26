@@ -40,7 +40,7 @@ public class DataLoader {
   }
 
   public static double[] loadFaithData(final int f) {
-    final String name = FaithConstants.FAITH_NAMES[f].toLowerCase();
+    final String name = Integer.toString(f);
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
             .getResourceAsStream("/assets/data/faith/" + name + ".dat"))) {
