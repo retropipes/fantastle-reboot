@@ -1,14 +1,14 @@
 package com.puttysoftware.fantastlereboot.objects.temporary;
 
 import com.puttysoftware.diane.utilties.Directions;
-import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 
 public class ArrowFactory {
   private ArrowFactory() {
     // Do nothing
   }
 
-  public static FantastleObject createArrow(final ArrowType type,
+  public static FantastleObjectModel createArrow(final ArrowType type,
       final int dir) {
     switch (type) {
     case BEAUTY:
