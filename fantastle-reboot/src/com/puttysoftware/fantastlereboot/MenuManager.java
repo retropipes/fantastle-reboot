@@ -41,7 +41,8 @@ import com.puttysoftware.fantastlereboot.maze.MazeManager;
 public class MenuManager {
   // Fields
   private JMenuBar mainMenuBar;
-  private JMenu fileMenu, editMenu, playMenu, gameMenu, debugMenu, helpMenu;
+  private JMenu fileMenu, editMenu, gameMenu, debugMenu, helpMenu;
+  // private JMenu playMenu;
   // private JMenuItem fileNew;
   private JMenuItem fileOpen, fileClose, fileSave, fileSaveAs, fileExit;
   private JMenuItem editUndo, editRedo, editPreferences;
@@ -408,7 +409,7 @@ public class MenuManager {
     this.mainMenuBar = new JMenuBar();
     this.fileMenu = new JMenu("File");
     this.editMenu = new JMenu("Edit");
-    this.playMenu = new JMenu("Play");
+    // this.playMenu = new JMenu("Play");
     this.gameMenu = new JMenu("Game");
     this.debugMenu = new JMenu("Debug");
     this.helpMenu = new JMenu("Help");
@@ -554,9 +555,10 @@ public class MenuManager {
     // this.editMenu.add(this.editResizeLevel);
     // this.editMenu.add(this.editToggleLayer);
     // this.editMenu.add(this.editMazePreferences);
-    this.playMenu.add(this.playPlay);
+    // this.playMenu.add(this.playPlay);
     // this.playMenu.add(this.playEdit);
     this.gameMenu.add(this.gameNewGame);
+    this.gameMenu.add(this.playPlay);
     this.gameMenu.add(this.gameEquipment);
     this.gameMenu.add(this.gameInventory);
     this.gameMenu.add(this.gameUse);
@@ -576,7 +578,7 @@ public class MenuManager {
     this.helpMenu.add(this.helpObjectHelp);
     this.mainMenuBar.add(this.fileMenu);
     this.mainMenuBar.add(this.editMenu);
-    this.mainMenuBar.add(this.playMenu);
+    // this.mainMenuBar.add(this.playMenu);
     this.mainMenuBar.add(this.gameMenu);
     this.mainMenuBar.add(this.debugMenu);
     this.mainMenuBar.add(this.helpMenu);
