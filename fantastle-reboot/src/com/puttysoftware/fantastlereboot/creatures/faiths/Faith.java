@@ -2,6 +2,7 @@ package com.puttysoftware.fantastlereboot.creatures.faiths;
 
 import java.awt.Color;
 
+import com.puttysoftware.diane.loaders.ColorShader;
 import com.puttysoftware.fantastlereboot.loaders.DataLoader;
 
 public final class Faith {
@@ -31,5 +32,9 @@ public final class Faith {
 
   public Color getColor() {
     return FaithConstants.FAITH_COLORS[this.faithID];
+  }
+
+  public ColorShader getShader() {
+    return FaithConstants.getFaithShader(this.faithID);
   }
 }

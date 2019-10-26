@@ -21,7 +21,7 @@ import com.puttysoftware.randomrange.RandomRange;
 public abstract class Monster extends Creature {
   // Fields
   private String type;
-  protected Element element;
+  private Faith faith;
   protected static final double MINIMUM_EXPERIENCE_RANDOM_VARIANCE = -5.0 / 2.0;
   protected static final double MAXIMUM_EXPERIENCE_RANDOM_VARIANCE = 5.0 / 2.0;
   protected static final int PERFECT_GOLD_MIN = 1;
@@ -34,7 +34,7 @@ public abstract class Monster extends Creature {
     super(true, 1);
     this.setWindowAI(Monster.getInitialWindowAI());
     this.setMapAI(Monster.getInitialMapAI());
-    this.element = new Element(FaithManager.getFaith(0));
+    this.faith = FaithManager.getRandomFaith();
     final SpellBook spells = SpellBookManager.getEnemySpellBookByID(
         FantastleReboot.getBagOStuff().getPrefsManager().getGameDifficulty());
     spells.learnAllSpells();
@@ -44,12 +44,12 @@ public abstract class Monster extends Creature {
   // Methods
   @Override
   public String getName() {
-    return this.element.getName() + " " + this.type;
+    return this.getFaith().getName() + " " + this.type;
   }
 
   @Override
   public Faith getFaith() {
-    return this.element.getFaith();
+    return this.faith;
   }
 
   @Override
@@ -108,10 +108,6 @@ public abstract class Monster extends Creature {
     return this.type;
   }
 
-  final Element getElement() {
-    return this.element;
-  }
-
   final void setType(final String newType) {
     this.type = newType;
   }
@@ -127,44 +123,6 @@ public abstract class Monster extends Creature {
 
   private static AbstractMapAIRoutine getInitialMapAI() {
     return MapAIRoutinePicker.getNextRoutine();
-  }
-
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = super.hashCode();
-    result = prime * result
-        + ((this.element == null) ? 0 : this.element.hashCode());
-    return prime * result + ((this.type == null) ? 0 : this.type.hashCode());
-  }
-
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (!super.equals(obj)) {
-      return false;
-    }
-    if (!(obj instanceof Monster)) {
-      return false;
-    }
-    final Monster other = (Monster) obj;
-    if (this.element == null) {
-      if (other.element != null) {
-        return false;
-      }
-    } else if (!this.element.equals(other.element)) {
-      return false;
-    }
-    if (this.type == null) {
-      if (other.type != null) {
-        return false;
-      }
-    } else if (!this.type.equals(other.type)) {
-      return false;
-    }
-    return true;
   }
 
   protected final int getBattlesToNextLevel() {

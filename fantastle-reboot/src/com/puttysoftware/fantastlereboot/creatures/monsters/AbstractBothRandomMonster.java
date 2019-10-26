@@ -5,7 +5,6 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.creatures.monsters;
 
-import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.loaders.MonsterImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.MonsterNames;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -15,7 +14,6 @@ abstract class AbstractBothRandomMonster extends Monster {
   // Constructors
   AbstractBothRandomMonster() {
     super();
-    this.element = AbstractBothRandomMonster.getInitialElement();
     this.image = this.getInitialImage();
   }
 
@@ -28,12 +26,8 @@ abstract class AbstractBothRandomMonster extends Monster {
       final RandomRange r = new RandomRange(0, types.length - 1);
       int imageID = r.generate();
       this.setType(types[imageID]);
-      return MonsterImageLoader.load(imageID, this.getElement());
+      return MonsterImageLoader.load(imageID, this.getFaith());
     }
-  }
-
-  private static Element getInitialElement() {
-    return new Element(FaithManager.getRandomFaith());
   }
 
   @Override

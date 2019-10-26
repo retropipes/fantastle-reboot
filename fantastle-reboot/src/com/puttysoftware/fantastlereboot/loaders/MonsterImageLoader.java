@@ -28,17 +28,18 @@ import java.util.Properties;
 
 import javax.imageio.ImageIO;
 
+import com.puttysoftware.diane.loaders.ColorShader;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithConstants;
-import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
-import com.puttysoftware.fantastlereboot.creatures.monsters.Element;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class MonsterImageLoader {
   private static Properties fileExtensions;
   private static final int MAX_INDEX = 89;
 
-  static BufferedImageIcon loadUncached(final String name, final Element elem) {
+  static BufferedImageIcon loadUncached(final String name,
+      final ColorShader shader) {
     try {
       final URL url = MonsterImageLoader.class
           .getResource("/assets/images/monsters/" + name);
@@ -51,7 +52,7 @@ public class MonsterImageLoader {
         for (int y = 0; y < imageHeight; y++) {
           final int pixel = input.getRGB(x, y);
           final Color c = new Color(pixel);
-          final Color nc = elem.applyTransform(c);
+          final Color nc = shader.applyShade(c);
           result.setRGB(x, y, nc.getRGB());
         }
       }
@@ -62,10 +63,12 @@ public class MonsterImageLoader {
     }
   }
 
-  public static BufferedImageIcon load(final int imageID, final Element elem) {
+  public static BufferedImageIcon load(final int imageID, final Faith faith) {
+    final ColorShader shader = faith.getShader();
     String imageExt = fileExtensions.getProperty("images");
-    return ImageCache.getCachedImage(Integer.toString(imageID) + imageExt,
-        elem);
+    String cacheName = shader.getName() + "_" + Integer.toString(imageID);
+    return ImageCache.getCachedImage(shader,
+        Integer.toString(imageID) + imageExt, cacheName);
   }
 
   public static void cacheAll() {
@@ -79,8 +82,10 @@ public class MonsterImageLoader {
     String imageExt = fileExtensions.getProperty("images");
     for (int i = 0; i <= MAX_INDEX; i++) {
       for (int f = 0; f <= FaithConstants.FAITHS_COUNT; f++) {
-        ImageCache.getCachedImage(Integer.toString(i) + imageExt,
-            new Element(FaithManager.getFaith(f)));
+        ColorShader shader = FaithConstants.getFaithShader(f);
+        String cacheName = shader.getName() + "_" + Integer.toString(i);
+        ImageCache.getCachedImage(shader, Integer.toString(i) + imageExt,
+            cacheName);
       }
     }
   }
@@ -91,22 +96,21 @@ public class MonsterImageLoader {
     private static boolean cacheCreated = false;
 
     // Methods
-    public static BufferedImageIcon getCachedImage(final String name,
-        final Element elem) {
+    public static BufferedImageIcon getCachedImage(final ColorShader shader,
+        final String imagePath, final String name) {
       if (!ImageCache.cacheCreated) {
         ImageCache.createCache();
       }
       for (ImageCacheEntry entry : ImageCache.cache) {
-        if (name.equals(entry.name())
-            && elem.getName().equals(entry.elementName())) {
+        if (name.equals(entry.name())) {
           // Found
           return entry.image();
         }
       }
       // Not found: Add to cache
-      BufferedImageIcon newImage = MonsterImageLoader.loadUncached(name, elem);
-      ImageCacheEntry newEntry = new ImageCacheEntry(newImage, name,
-          elem.getName());
+      BufferedImageIcon newImage = MonsterImageLoader.loadUncached(imagePath,
+          shader);
+      ImageCacheEntry newEntry = new ImageCacheEntry(newImage, name);
       ImageCache.cache.add(newEntry);
       return newImage;
     }
@@ -124,14 +128,12 @@ public class MonsterImageLoader {
     // Fields
     private final BufferedImageIcon image;
     private final String name;
-    private final String elementName;
 
     // Constructors
     public ImageCacheEntry(final BufferedImageIcon newImage,
-        final String newName, final String newElementName) {
+        final String newName) {
       this.image = newImage;
       this.name = newName;
-      this.elementName = newElementName;
     }
 
     // Methods
@@ -143,13 +145,9 @@ public class MonsterImageLoader {
       return this.name;
     }
 
-    public String elementName() {
-      return this.elementName;
-    }
-
     @Override
     public int hashCode() {
-      return Objects.hash(this.elementName, this.name);
+      return Objects.hash(this.name);
     }
 
     @Override
@@ -161,8 +159,7 @@ public class MonsterImageLoader {
         return false;
       }
       ImageCacheEntry other = (ImageCacheEntry) obj;
-      return Objects.equals(this.elementName, other.elementName)
-          && Objects.equals(this.name, other.name);
+      return Objects.equals(this.name, other.name);
     }
   }
 }

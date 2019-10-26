@@ -2,6 +2,8 @@ package com.puttysoftware.fantastlereboot.creatures.faiths;
 
 import java.awt.Color;
 
+import com.puttysoftware.diane.loaders.ColorShader;
+
 public class FaithConstants {
   public static final int FAITH_BLEND = 0;
   public static final int FAITH_FLAME = 1;
@@ -53,6 +55,7 @@ public class FaithConstants {
       new Color(0, 255, 127), new Color(127, 0, 255), new Color(0, 127, 255),
       new Color(255, 127, 127), new Color(127, 255, 127),
       new Color(127, 127, 255) };
+  private static ColorShader[] FAITH_SHADERS = new ColorShader[FAITHS_COUNT];
   public static final boolean[] FAITH_DARK_EYES = { false, false, true, false,
       true, true, true, false, true, false, false, false, false, false, false,
       false, false, false, true, true, false, false, true, true, true };
@@ -62,6 +65,16 @@ public class FaithConstants {
   }
 
   public static String getFaithPowerName(final int faithID, final int powerID) {
-    return FaithConstants.FAITH_POWER_NAMES[faithID][powerID];
+    return FaithConstants.FAITH_POWER_NAMES[faithID][0];
+  }
+
+  public static ColorShader getFaithShader(final int faithID) {
+    if (FaithConstants.FAITH_SHADERS[faithID] == null) {
+      for (int f = 0; f < FAITHS_COUNT; f++) {
+        FaithConstants.FAITH_SHADERS[f] = new ColorShader(FAITH_NAMES[f],
+            FAITH_COLORS[f]);
+      }
+    }
+    return FaithConstants.FAITH_SHADERS[faithID];
   }
 }
