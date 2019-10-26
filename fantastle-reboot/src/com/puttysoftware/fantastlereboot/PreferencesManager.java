@@ -290,8 +290,8 @@ public class PreferencesManager implements PreferencesHandler {
                     app.getGUIManager().hideGUITemporarily();
                 } else if (formerMode == BagOStuff.STATUS_GAME) {
                     app.getGameManager().hideOutput();
-                } else if (formerMode == BagOStuff.STATUS_EDITOR) {
-                    app.getEditor().hideOutput();
+//                } else if (formerMode == BagOStuff.STATUS_EDITOR) {
+//                    app.getEditor().hideOutput();
                 }
             }
         }
@@ -311,8 +311,8 @@ public class PreferencesManager implements PreferencesHandler {
                     app.getGUIManager().showGUI();
                 } else if (formerMode == BagOStuff.STATUS_GAME) {
                     app.getGameManager().showOutput();
-                } else if (formerMode == BagOStuff.STATUS_EDITOR) {
-                    app.getEditor().showOutput();
+//                } else if (formerMode == BagOStuff.STATUS_EDITOR) {
+//                    app.getEditor().showOutput();
                 }
             }
         }
@@ -797,7 +797,7 @@ public class PreferencesManager implements PreferencesHandler {
     private class EventHandler
             implements ActionListener, ItemListener, WindowListener {
         public EventHandler() {
-            // TODO Auto-generated constructor stub
+            // Do nothing
         }
 
         // Handle buttons

@@ -28,7 +28,7 @@ import com.puttysoftware.fantastlereboot.battle.map.time.MapTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.map.turn.MapTurnBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.window.time.WindowTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.window.turn.WindowTurnBattleLogic;
-import com.puttysoftware.fantastlereboot.editor.MazeEditor;
+//import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.items.ShopTypes;
@@ -48,7 +48,7 @@ public class BagOStuff {
     private MenuManager menuMgr;
     private PreferencesManager prefsMgr;
     private GeneralHelpManager gHelpMgr;
-    private MazeEditor editor;
+//    private MazeEditor editor;
     private GUIManager guiMgr;
     private final FantastleObjectModelList objects;
     private final CombatItemList combatItems;
@@ -105,7 +105,7 @@ public class BagOStuff {
         this.windowTimeBattle = new WindowTimeBattleLogic();
         this.mapTurnBattle = new MapTurnBattleLogic();
         this.mapTimeBattle = new MapTimeBattleLogic();
-        this.editor = new MazeEditor();
+//        this.editor = new MazeEditor();
         this.weapons = new Shop(ShopTypes.WEAPONS);
         this.armor = new Shop(ShopTypes.ARMOR);
         this.healer = new Shop(ShopTypes.HEALER);
@@ -194,10 +194,10 @@ public class BagOStuff {
         this.microLogo = UserInterfaceImageLoader
                 .load(UserInterfaceImageIndex.MICRO_LOGO);
     }
-
-    public MazeEditor getEditor() {
-        return this.editor;
-    }
+//
+//    public MazeEditor getEditor() {
+//        return this.editor;
+//    }
 
     public AboutDialog getAboutDialog() {
         return this.about;
@@ -325,10 +325,12 @@ public class BagOStuff {
                 return this.getBattle().getOutputFrame();
             } else if (this.getMode() == BagOStuff.STATUS_GUI) {
                 return this.getGUIManager().getGUIFrame();
-            } else if (this.getMode() == BagOStuff.STATUS_GAME) {
-                return this.getGameManager().getOutputFrame();
             } else {
-                return this.getEditor().getOutputFrame();
+              return this.getGameManager().getOutputFrame();
+//            } else if (this.getMode() == BagOStuff.STATUS_GAME) {
+//                return this.getGameManager().getOutputFrame();
+//            } else {
+//                return this.getEditor().getOutputFrame();
             }
         } catch (final NullPointerException npe) {
             return null;

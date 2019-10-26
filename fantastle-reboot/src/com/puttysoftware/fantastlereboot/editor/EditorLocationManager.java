@@ -21,7 +21,8 @@ package com.puttysoftware.fantastlereboot.editor;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 
-public class EditorLocationManager {
+class EditorLocationManager {
+//public class EditorLocationManager {
     // Fields
     private int oldLocX, oldLocY, oldLocZ;
     private int oldLocW, oldLocE;

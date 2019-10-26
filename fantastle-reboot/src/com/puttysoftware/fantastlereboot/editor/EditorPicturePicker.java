@@ -16,7 +16,8 @@ import javax.swing.SwingConstants;
 
 import com.puttysoftware.images.BufferedImageIcon;
 
-public final class EditorPicturePicker {
+final class EditorPicturePicker {
+//public final class EditorPicturePicker {
     /**
      * @version 1.0.0
      */

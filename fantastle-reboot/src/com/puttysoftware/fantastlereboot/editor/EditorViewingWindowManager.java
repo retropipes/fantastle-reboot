@@ -20,7 +20,8 @@ package com.puttysoftware.fantastlereboot.editor;
 
 import com.puttysoftware.fantastlereboot.maze.Maze;
 
-public class EditorViewingWindowManager {
+class EditorViewingWindowManager {
+//public class EditorViewingWindowManager {
     // Fields
     private int oldLocX, oldLocY, locX, locY;
     private static final int VIEWING_WINDOW_SIZE_X = 13;

@@ -31,7 +31,7 @@ import javax.swing.KeyStroke;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.creatures.characterfiles.CharacterRegistration;
-import com.puttysoftware.fantastlereboot.editor.MazeEditor;
+//import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.InventoryViewer;
 import com.puttysoftware.fantastlereboot.game.NoteManager;
 import com.puttysoftware.fantastlereboot.game.StatisticsViewer;
@@ -44,12 +44,14 @@ public class MenuManager {
     private JMenu fileMenu, editMenu, playMenu, gameMenu, debugMenu, helpMenu;
     private JMenuItem fileNew, fileOpen, fileClose, fileSave, fileSaveAs,
             fileExit;
-    private JMenuItem editUndo, editRedo, editCutLevel, editCopyLevel,
-            editPasteLevel, editInsertLevelFromClipboard, editPreferences,
-            editClearHistory, editGoTo, editUpOneFloor, editDownOneFloor,
-            editUpOneLevel, editDownOneLevel, editAddLevel, editRemoveLevel,
-            editResizeLevel, editToggleLayer, editMazePreferences;
-    private JMenuItem playPlay, playEdit;
+    private JMenuItem editUndo, editRedo, editPreferences;
+//    private JMenuItem editCutLevel, editCopyLevel,
+//    editPasteLevel, editInsertLevelFromClipboard,
+//    editClearHistory, editGoTo, editUpOneFloor, editDownOneFloor,
+//    editUpOneLevel, editDownOneLevel, editAddLevel, editRemoveLevel,
+//    editResizeLevel, editToggleLayer, editMazePreferences;
+    private JMenuItem playPlay;
+//    private JMenuItem playEdit;
     private JMenuItem gameNewGame, gameEquipment, gameInventory, gameUse,
             gameReset, gameShowScore, gameShowTable, gameRegisterCharacter,
             gameUnregisterCharacter, gameRemoveCharacter, gameEditNote,
@@ -58,13 +60,15 @@ public class MenuManager {
     private JMenuItem helpAbout, helpGeneralHelp, helpObjectHelp;
     private KeyStroke fileNewAccel, fileOpenAccel, fileCloseAccel,
             fileSaveAccel, fileSaveAsAccel;
-    private KeyStroke editUndoAccel, editRedoAccel, editCutLevelAccel,
-            editCopyLevelAccel, editPasteLevelAccel,
-            editInsertLevelFromClipboardAccel, editPreferencesAccel,
-            editClearHistoryAccel, editGoToAccel, editUpOneFloorAccel,
-            editDownOneFloorAccel, editUpOneLevelAccel, editDownOneLevelAccel,
-            editToggleLayerAccel;
-    private KeyStroke playPlayMazeAccel, playEditMazeAccel;
+    private KeyStroke editPreferencesAccel;
+//    private KeyStroke editUndoAccel, editRedoAccel, editCutLevelAccel,
+//            editCopyLevelAccel, editPasteLevelAccel,
+//            editInsertLevelFromClipboardAccel,
+//            editClearHistoryAccel, editGoToAccel, editUpOneFloorAccel,
+//            editDownOneFloorAccel, editUpOneLevelAccel, editDownOneLevelAccel,
+//            editToggleLayerAccel;
+    private KeyStroke playPlayMazeAccel;
+//    private KeyStroke playEditMazeAccel;
     private KeyStroke gameNewGameAccel, gameInventoryAccel, gameUseAccel,
             gameResetAccel, gameShowScoreAccel, gameShowTableAccel;
     private final EventHandler handler;
@@ -92,22 +96,22 @@ public class MenuManager {
         this.fileExit.setEnabled(true);
         this.editUndo.setEnabled(false);
         this.editRedo.setEnabled(false);
-        this.editCutLevel.setEnabled(false);
-        this.editCopyLevel.setEnabled(false);
-        this.editPasteLevel.setEnabled(false);
-        this.editInsertLevelFromClipboard.setEnabled(false);
+//        this.editCutLevel.setEnabled(false);
+//        this.editCopyLevel.setEnabled(false);
+//        this.editPasteLevel.setEnabled(false);
+//        this.editInsertLevelFromClipboard.setEnabled(false);
         this.editPreferences.setEnabled(true);
-        this.editClearHistory.setEnabled(false);
-        this.editGoTo.setEnabled(false);
-        this.editUpOneFloor.setEnabled(false);
-        this.editDownOneFloor.setEnabled(false);
-        this.editUpOneLevel.setEnabled(false);
-        this.editDownOneLevel.setEnabled(false);
-        this.editAddLevel.setEnabled(false);
-        this.editRemoveLevel.setEnabled(false);
-        this.editResizeLevel.setEnabled(false);
-        this.editToggleLayer.setEnabled(false);
-        this.editMazePreferences.setEnabled(false);
+//        this.editClearHistory.setEnabled(false);
+//        this.editGoTo.setEnabled(false);
+//        this.editUpOneFloor.setEnabled(false);
+//        this.editDownOneFloor.setEnabled(false);
+//        this.editUpOneLevel.setEnabled(false);
+//        this.editDownOneLevel.setEnabled(false);
+//        this.editAddLevel.setEnabled(false);
+//        this.editRemoveLevel.setEnabled(false);
+//        this.editResizeLevel.setEnabled(false);
+//        this.editToggleLayer.setEnabled(false);
+//        this.editMazePreferences.setEnabled(false);
         this.gameEquipment.setEnabled(true);
         this.gameInventory.setEnabled(true);
         this.gameUse.setEnabled(true);
@@ -118,30 +122,30 @@ public class MenuManager {
         this.gameViewStats.setEnabled(true);
         this.checkFlags();
     }
-
-    public void setEditorMenus() {
-        this.fileNew.setEnabled(false);
-        this.fileOpen.setEnabled(false);
-        this.fileExit.setEnabled(true);
-        this.editCutLevel.setEnabled(true);
-        this.editCopyLevel.setEnabled(true);
-        this.editPasteLevel.setEnabled(true);
-        this.editInsertLevelFromClipboard.setEnabled(true);
-        this.editPreferences.setEnabled(true);
-        this.editGoTo.setEnabled(true);
-        this.editResizeLevel.setEnabled(true);
-        this.editToggleLayer.setEnabled(true);
-        this.editMazePreferences.setEnabled(true);
-        this.gameEquipment.setEnabled(false);
-        this.gameInventory.setEnabled(false);
-        this.gameUse.setEnabled(false);
-        this.gameReset.setEnabled(false);
-        this.gameShowScore.setEnabled(false);
-        this.gameShowTable.setEnabled(false);
-        this.gameEditNote.setEnabled(false);
-        this.gameViewStats.setEnabled(false);
-        this.checkFlags();
-    }
+//
+//    public void setEditorMenus() {
+//        this.fileNew.setEnabled(false);
+//        this.fileOpen.setEnabled(false);
+//        this.fileExit.setEnabled(true);
+//        this.editCutLevel.setEnabled(true);
+//        this.editCopyLevel.setEnabled(true);
+//        this.editPasteLevel.setEnabled(true);
+//        this.editInsertLevelFromClipboard.setEnabled(true);
+//        this.editPreferences.setEnabled(true);
+//        this.editGoTo.setEnabled(true);
+//        this.editResizeLevel.setEnabled(true);
+//        this.editToggleLayer.setEnabled(true);
+//        this.editMazePreferences.setEnabled(true);
+//        this.gameEquipment.setEnabled(false);
+//        this.gameInventory.setEnabled(false);
+//        this.gameUse.setEnabled(false);
+//        this.gameReset.setEnabled(false);
+//        this.gameShowScore.setEnabled(false);
+//        this.gameShowTable.setEnabled(false);
+//        this.gameEditNote.setEnabled(false);
+//        this.gameViewStats.setEnabled(false);
+//        this.checkFlags();
+//    }
 
     public void setPrefMenus() {
         this.fileNew.setEnabled(false);
@@ -152,22 +156,22 @@ public class MenuManager {
         this.fileExit.setEnabled(true);
         this.editUndo.setEnabled(false);
         this.editRedo.setEnabled(false);
-        this.editCutLevel.setEnabled(false);
-        this.editCopyLevel.setEnabled(false);
-        this.editPasteLevel.setEnabled(false);
-        this.editInsertLevelFromClipboard.setEnabled(false);
+//        this.editCutLevel.setEnabled(false);
+//        this.editCopyLevel.setEnabled(false);
+//        this.editPasteLevel.setEnabled(false);
+//        this.editInsertLevelFromClipboard.setEnabled(false);
         this.editPreferences.setEnabled(false);
-        this.editClearHistory.setEnabled(false);
-        this.editGoTo.setEnabled(false);
-        this.editUpOneFloor.setEnabled(false);
-        this.editDownOneFloor.setEnabled(false);
-        this.editUpOneLevel.setEnabled(false);
-        this.editDownOneLevel.setEnabled(false);
-        this.editAddLevel.setEnabled(false);
-        this.editRemoveLevel.setEnabled(false);
-        this.editResizeLevel.setEnabled(false);
-        this.editToggleLayer.setEnabled(false);
-        this.editMazePreferences.setEnabled(false);
+//        this.editClearHistory.setEnabled(false);
+//        this.editGoTo.setEnabled(false);
+//        this.editUpOneFloor.setEnabled(false);
+//        this.editDownOneFloor.setEnabled(false);
+//        this.editUpOneLevel.setEnabled(false);
+//        this.editDownOneLevel.setEnabled(false);
+//        this.editAddLevel.setEnabled(false);
+//        this.editRemoveLevel.setEnabled(false);
+//        this.editResizeLevel.setEnabled(false);
+//        this.editToggleLayer.setEnabled(false);
+//        this.editMazePreferences.setEnabled(false);
         this.gameEquipment.setEnabled(false);
         this.gameInventory.setEnabled(false);
         this.gameUse.setEnabled(false);
@@ -184,22 +188,22 @@ public class MenuManager {
         this.fileExit.setEnabled(true);
         this.editUndo.setEnabled(false);
         this.editRedo.setEnabled(false);
-        this.editCutLevel.setEnabled(false);
-        this.editCopyLevel.setEnabled(false);
-        this.editPasteLevel.setEnabled(false);
-        this.editInsertLevelFromClipboard.setEnabled(false);
+//        this.editCutLevel.setEnabled(false);
+//        this.editCopyLevel.setEnabled(false);
+//        this.editPasteLevel.setEnabled(false);
+//        this.editInsertLevelFromClipboard.setEnabled(false);
         this.editPreferences.setEnabled(true);
-        this.editClearHistory.setEnabled(false);
-        this.editGoTo.setEnabled(false);
-        this.editUpOneFloor.setEnabled(false);
-        this.editDownOneFloor.setEnabled(false);
-        this.editUpOneLevel.setEnabled(false);
-        this.editDownOneLevel.setEnabled(false);
-        this.editAddLevel.setEnabled(false);
-        this.editRemoveLevel.setEnabled(false);
-        this.editResizeLevel.setEnabled(false);
-        this.editToggleLayer.setEnabled(false);
-        this.editMazePreferences.setEnabled(false);
+//        this.editClearHistory.setEnabled(false);
+//        this.editGoTo.setEnabled(false);
+//        this.editUpOneFloor.setEnabled(false);
+//        this.editDownOneFloor.setEnabled(false);
+//        this.editUpOneLevel.setEnabled(false);
+//        this.editDownOneLevel.setEnabled(false);
+//        this.editAddLevel.setEnabled(false);
+//        this.editRemoveLevel.setEnabled(false);
+//        this.editResizeLevel.setEnabled(false);
+//        this.editToggleLayer.setEnabled(false);
+//        this.editMazePreferences.setEnabled(false);
         this.gameEquipment.setEnabled(false);
         this.gameInventory.setEnabled(false);
         this.gameUse.setEnabled(false);
@@ -210,102 +214,102 @@ public class MenuManager {
         this.gameViewStats.setEnabled(false);
         this.checkFlags();
     }
-
-    public void enableUpOneFloor() {
-        this.editUpOneFloor.setEnabled(true);
-    }
-
-    public void disableUpOneFloor() {
-        this.editUpOneFloor.setEnabled(false);
-    }
-
-    public void enableDownOneFloor() {
-        this.editDownOneFloor.setEnabled(true);
-    }
-
-    public void disableDownOneFloor() {
-        this.editDownOneFloor.setEnabled(false);
-    }
-
-    public void enableUpOneLevel() {
-        this.editUpOneLevel.setEnabled(true);
-    }
-
-    public void disableUpOneLevel() {
-        this.editUpOneLevel.setEnabled(false);
-    }
-
-    public void enableDownOneLevel() {
-        this.editDownOneLevel.setEnabled(true);
-    }
-
-    public void disableDownOneLevel() {
-        this.editDownOneLevel.setEnabled(false);
-    }
-
-    public void enableAddLevel() {
-        this.editAddLevel.setEnabled(true);
-    }
-
-    public void disableAddLevel() {
-        this.editAddLevel.setEnabled(false);
-    }
-
-    public void enableRemoveLevel() {
-        this.editRemoveLevel.setEnabled(true);
-    }
-
-    public void disableRemoveLevel() {
-        this.editRemoveLevel.setEnabled(false);
-    }
-
-    public void enableUndo() {
-        this.editUndo.setEnabled(true);
-    }
-
-    public void disableUndo() {
-        this.editUndo.setEnabled(false);
-    }
-
-    public void enableRedo() {
-        this.editRedo.setEnabled(true);
-    }
-
-    public void disableRedo() {
-        this.editRedo.setEnabled(false);
-    }
-
-    public void enableClearHistory() {
-        this.editClearHistory.setEnabled(true);
-    }
-
-    public void disableClearHistory() {
-        this.editClearHistory.setEnabled(false);
-    }
-
-    public void enableCutLevel() {
-        this.editCutLevel.setEnabled(true);
-    }
-
-    public void disableCutLevel() {
-        this.editCutLevel.setEnabled(false);
-    }
-
-    public void enablePasteLevel() {
-        this.editPasteLevel.setEnabled(true);
-    }
-
-    public void disablePasteLevel() {
-        this.editPasteLevel.setEnabled(false);
-    }
-
-    public void enableInsertLevelFromClipboard() {
-        this.editInsertLevelFromClipboard.setEnabled(true);
-    }
-
-    public void disableInsertLevelFromClipboard() {
-        this.editInsertLevelFromClipboard.setEnabled(false);
-    }
+//
+//    public void enableUpOneFloor() {
+//        this.editUpOneFloor.setEnabled(true);
+//    }
+//
+//    public void disableUpOneFloor() {
+//        this.editUpOneFloor.setEnabled(false);
+//    }
+//
+//    public void enableDownOneFloor() {
+//        this.editDownOneFloor.setEnabled(true);
+//    }
+//
+//    public void disableDownOneFloor() {
+//        this.editDownOneFloor.setEnabled(false);
+//    }
+//
+//    public void enableUpOneLevel() {
+//        this.editUpOneLevel.setEnabled(true);
+//    }
+//
+//    public void disableUpOneLevel() {
+//        this.editUpOneLevel.setEnabled(false);
+//    }
+//
+//    public void enableDownOneLevel() {
+//        this.editDownOneLevel.setEnabled(true);
+//    }
+//
+//    public void disableDownOneLevel() {
+//        this.editDownOneLevel.setEnabled(false);
+//    }
+//
+//    public void enableAddLevel() {
+//        this.editAddLevel.setEnabled(true);
+//    }
+//
+//    public void disableAddLevel() {
+//        this.editAddLevel.setEnabled(false);
+//    }
+//
+//    public void enableRemoveLevel() {
+//        this.editRemoveLevel.setEnabled(true);
+//    }
+//
+//    public void disableRemoveLevel() {
+//        this.editRemoveLevel.setEnabled(false);
+//    }
+//
+//    public void enableUndo() {
+//        this.editUndo.setEnabled(true);
+//    }
+//
+//    public void disableUndo() {
+//        this.editUndo.setEnabled(false);
+//    }
+//
+//    public void enableRedo() {
+//        this.editRedo.setEnabled(true);
+//    }
+//
+//    public void disableRedo() {
+//        this.editRedo.setEnabled(false);
+//    }
+//
+//    public void enableClearHistory() {
+//        this.editClearHistory.setEnabled(true);
+//    }
+//
+//    public void disableClearHistory() {
+//        this.editClearHistory.setEnabled(false);
+//    }
+//
+//    public void enableCutLevel() {
+//        this.editCutLevel.setEnabled(true);
+//    }
+//
+//    public void disableCutLevel() {
+//        this.editCutLevel.setEnabled(false);
+//    }
+//
+//    public void enablePasteLevel() {
+//        this.editPasteLevel.setEnabled(true);
+//    }
+//
+//    public void disablePasteLevel() {
+//        this.editPasteLevel.setEnabled(false);
+//    }
+//
+//    public void enableInsertLevelFromClipboard() {
+//        this.editInsertLevelFromClipboard.setEnabled(true);
+//    }
+//
+//    public void disableInsertLevelFromClipboard() {
+//        this.editInsertLevelFromClipboard.setEnabled(false);
+//    }
 
     public void checkFlags() {
         final BagOStuff app = FantastleReboot.getBagOStuff();
@@ -335,12 +339,12 @@ public class MenuManager {
             this.fileClose.setEnabled(false);
             this.fileSaveAs.setEnabled(false);
             this.playPlay.setEnabled(true);
-            this.playEdit.setEnabled(true);
+//            this.playEdit.setEnabled(true);
         } else {
             this.fileClose.setEnabled(true);
             this.fileSaveAs.setEnabled(true);
             this.playPlay.setEnabled(false);
-            this.playEdit.setEnabled(false);
+//            this.playEdit.setEnabled(false);
         }
     }
 
@@ -348,7 +352,7 @@ public class MenuManager {
         this.fileClose.setEnabled(false);
         this.fileSaveAs.setEnabled(false);
         this.playPlay.setEnabled(false);
-        this.playEdit.setEnabled(false);
+//        this.playEdit.setEnabled(false);
     }
 
     private void createAccelerators() {
@@ -364,23 +368,23 @@ public class MenuManager {
         this.fileSaveAccel = KeyStroke.getKeyStroke(KeyEvent.VK_S, modKey);
         this.fileSaveAsAccel = KeyStroke.getKeyStroke(KeyEvent.VK_S,
                 modKey | InputEvent.SHIFT_DOWN_MASK);
-        this.editUndoAccel = KeyStroke.getKeyStroke(KeyEvent.VK_Z, modKey);
-        this.editRedoAccel = KeyStroke.getKeyStroke(KeyEvent.VK_Z,
-                modKey | InputEvent.SHIFT_DOWN_MASK);
-        this.editCutLevelAccel = KeyStroke.getKeyStroke(KeyEvent.VK_X, modKey);
-        this.editCopyLevelAccel = KeyStroke.getKeyStroke(KeyEvent.VK_C, modKey);
-        this.editPasteLevelAccel = KeyStroke.getKeyStroke(KeyEvent.VK_V,
-                modKey);
-        this.editInsertLevelFromClipboardAccel = KeyStroke
-                .getKeyStroke(KeyEvent.VK_F, modKey);
+//        this.editUndoAccel = KeyStroke.getKeyStroke(KeyEvent.VK_Z, modKey);
+//        this.editRedoAccel = KeyStroke.getKeyStroke(KeyEvent.VK_Z,
+//                modKey | InputEvent.SHIFT_DOWN_MASK);
+//        this.editCutLevelAccel = KeyStroke.getKeyStroke(KeyEvent.VK_X, modKey);
+//        this.editCopyLevelAccel = KeyStroke.getKeyStroke(KeyEvent.VK_C, modKey);
+//        this.editPasteLevelAccel = KeyStroke.getKeyStroke(KeyEvent.VK_V,
+//                modKey);
+//        this.editInsertLevelFromClipboardAccel = KeyStroke
+//                .getKeyStroke(KeyEvent.VK_F, modKey);
         this.editPreferencesAccel = KeyStroke.getKeyStroke(KeyEvent.VK_COMMA,
                 modKey);
-        this.editClearHistoryAccel = KeyStroke.getKeyStroke(KeyEvent.VK_Y,
-                modKey);
-        this.editGoToAccel = KeyStroke.getKeyStroke(KeyEvent.VK_G,
-                modKey | InputEvent.SHIFT_DOWN_MASK);
+//        this.editClearHistoryAccel = KeyStroke.getKeyStroke(KeyEvent.VK_Y,
+//                modKey);
+//        this.editGoToAccel = KeyStroke.getKeyStroke(KeyEvent.VK_G,
+//                modKey | InputEvent.SHIFT_DOWN_MASK);
         this.playPlayMazeAccel = KeyStroke.getKeyStroke(KeyEvent.VK_P, modKey);
-        this.playEditMazeAccel = KeyStroke.getKeyStroke(KeyEvent.VK_E, modKey);
+//        this.playEditMazeAccel = KeyStroke.getKeyStroke(KeyEvent.VK_E, modKey);
         this.gameNewGameAccel = KeyStroke.getKeyStroke(KeyEvent.VK_N,
                 modKey | InputEvent.SHIFT_DOWN_MASK);
         this.gameInventoryAccel = KeyStroke.getKeyStroke(KeyEvent.VK_I, modKey);
@@ -388,16 +392,16 @@ public class MenuManager {
         this.gameResetAccel = KeyStroke.getKeyStroke(KeyEvent.VK_R, modKey);
         this.gameShowScoreAccel = KeyStroke.getKeyStroke(KeyEvent.VK_G, modKey);
         this.gameShowTableAccel = KeyStroke.getKeyStroke(KeyEvent.VK_T, modKey);
-        this.editUpOneFloorAccel = KeyStroke.getKeyStroke(KeyEvent.VK_UP,
-                modKey);
-        this.editDownOneFloorAccel = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,
-                modKey);
-        this.editUpOneLevelAccel = KeyStroke.getKeyStroke(KeyEvent.VK_UP,
-                modKey | InputEvent.SHIFT_DOWN_MASK);
-        this.editDownOneLevelAccel = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,
-                modKey | InputEvent.SHIFT_DOWN_MASK);
-        this.editToggleLayerAccel = KeyStroke.getKeyStroke(KeyEvent.VK_L,
-                modKey);
+//        this.editUpOneFloorAccel = KeyStroke.getKeyStroke(KeyEvent.VK_UP,
+//                modKey);
+//        this.editDownOneFloorAccel = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,
+//                modKey);
+//        this.editUpOneLevelAccel = KeyStroke.getKeyStroke(KeyEvent.VK_UP,
+//                modKey | InputEvent.SHIFT_DOWN_MASK);
+//        this.editDownOneLevelAccel = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,
+//                modKey | InputEvent.SHIFT_DOWN_MASK);
+//        this.editToggleLayerAccel = KeyStroke.getKeyStroke(KeyEvent.VK_L,
+//                modKey);
     }
 
     private void createMenus() {
@@ -420,43 +424,43 @@ public class MenuManager {
         this.fileSaveAs.setAccelerator(this.fileSaveAsAccel);
         this.fileExit = new JMenuItem("Exit");
         this.editUndo = new JMenuItem("Undo");
-        this.editUndo.setAccelerator(this.editUndoAccel);
+//        this.editUndo.setAccelerator(this.editUndoAccel);
         this.editRedo = new JMenuItem("Redo");
-        this.editRedo.setAccelerator(this.editRedoAccel);
-        this.editCutLevel = new JMenuItem("Cut Level");
-        this.editCutLevel.setAccelerator(this.editCutLevelAccel);
-        this.editCopyLevel = new JMenuItem("Copy Level");
-        this.editCopyLevel.setAccelerator(this.editCopyLevelAccel);
-        this.editPasteLevel = new JMenuItem("Paste Level");
-        this.editPasteLevel.setAccelerator(this.editPasteLevelAccel);
-        this.editInsertLevelFromClipboard = new JMenuItem(
-                "Insert Level From Clipboard");
-        this.editInsertLevelFromClipboard
-                .setAccelerator(this.editInsertLevelFromClipboardAccel);
+//        this.editRedo.setAccelerator(this.editRedoAccel);
+//        this.editCutLevel = new JMenuItem("Cut Level");
+//        this.editCutLevel.setAccelerator(this.editCutLevelAccel);
+//        this.editCopyLevel = new JMenuItem("Copy Level");
+//        this.editCopyLevel.setAccelerator(this.editCopyLevelAccel);
+//        this.editPasteLevel = new JMenuItem("Paste Level");
+//        this.editPasteLevel.setAccelerator(this.editPasteLevelAccel);
+//        this.editInsertLevelFromClipboard = new JMenuItem(
+//                "Insert Level From Clipboard");
+//        this.editInsertLevelFromClipboard
+//                .setAccelerator(this.editInsertLevelFromClipboardAccel);
         this.editPreferences = new JMenuItem("Preferences...");
         this.editPreferences.setAccelerator(this.editPreferencesAccel);
-        this.editClearHistory = new JMenuItem("Clear History");
-        this.editClearHistory.setAccelerator(this.editClearHistoryAccel);
-        this.editGoTo = new JMenuItem("Go To...");
-        this.editGoTo.setAccelerator(this.editGoToAccel);
-        this.editUpOneFloor = new JMenuItem("Up One Floor");
-        this.editUpOneFloor.setAccelerator(this.editUpOneFloorAccel);
-        this.editDownOneFloor = new JMenuItem("Down One Floor");
-        this.editDownOneFloor.setAccelerator(this.editDownOneFloorAccel);
-        this.editUpOneLevel = new JMenuItem("Up One Level");
-        this.editUpOneLevel.setAccelerator(this.editUpOneLevelAccel);
-        this.editDownOneLevel = new JMenuItem("Down One Level");
-        this.editDownOneLevel.setAccelerator(this.editDownOneLevelAccel);
-        this.editAddLevel = new JMenuItem("Add a Level...");
-        this.editRemoveLevel = new JMenuItem("Remove a Level...");
-        this.editResizeLevel = new JMenuItem("Resize Current Level...");
-        this.editToggleLayer = new JMenuItem("Toggle Layer");
-        this.editToggleLayer.setAccelerator(this.editToggleLayerAccel);
-        this.editMazePreferences = new JMenuItem("Maze Preferences...");
+//        this.editClearHistory = new JMenuItem("Clear History");
+//        this.editClearHistory.setAccelerator(this.editClearHistoryAccel);
+//        this.editGoTo = new JMenuItem("Go To...");
+//        this.editGoTo.setAccelerator(this.editGoToAccel);
+//        this.editUpOneFloor = new JMenuItem("Up One Floor");
+//        this.editUpOneFloor.setAccelerator(this.editUpOneFloorAccel);
+//        this.editDownOneFloor = new JMenuItem("Down One Floor");
+//        this.editDownOneFloor.setAccelerator(this.editDownOneFloorAccel);
+//        this.editUpOneLevel = new JMenuItem("Up One Level");
+//        this.editUpOneLevel.setAccelerator(this.editUpOneLevelAccel);
+//        this.editDownOneLevel = new JMenuItem("Down One Level");
+//        this.editDownOneLevel.setAccelerator(this.editDownOneLevelAccel);
+//        this.editAddLevel = new JMenuItem("Add a Level...");
+//        this.editRemoveLevel = new JMenuItem("Remove a Level...");
+//        this.editResizeLevel = new JMenuItem("Resize Current Level...");
+//        this.editToggleLayer = new JMenuItem("Toggle Layer");
+//        this.editToggleLayer.setAccelerator(this.editToggleLayerAccel);
+//        this.editMazePreferences = new JMenuItem("Maze Preferences...");
         this.playPlay = new JMenuItem("Play");
         this.playPlay.setAccelerator(this.playPlayMazeAccel);
-        this.playEdit = new JMenuItem("Edit");
-        this.playEdit.setAccelerator(this.playEditMazeAccel);
+//        this.playEdit = new JMenuItem("Edit");
+//        this.playEdit.setAccelerator(this.playEditMazeAccel);
         this.gameNewGame = new JMenuItem("New Game");
         this.gameNewGame.setAccelerator(this.gameNewGameAccel);
         this.gameEquipment = new JMenuItem("Show Equipment...");
@@ -485,26 +489,26 @@ public class MenuManager {
         this.fileSave.addActionListener(this.handler);
         this.fileSaveAs.addActionListener(this.handler);
         this.fileExit.addActionListener(this.handler);
-        this.editUndo.addActionListener(this.handler);
-        this.editRedo.addActionListener(this.handler);
-        this.editCutLevel.addActionListener(this.handler);
-        this.editCopyLevel.addActionListener(this.handler);
-        this.editPasteLevel.addActionListener(this.handler);
-        this.editInsertLevelFromClipboard.addActionListener(this.handler);
+//        this.editUndo.addActionListener(this.handler);
+//        this.editRedo.addActionListener(this.handler);
+//        this.editCutLevel.addActionListener(this.handler);
+//        this.editCopyLevel.addActionListener(this.handler);
+//        this.editPasteLevel.addActionListener(this.handler);
+//        this.editInsertLevelFromClipboard.addActionListener(this.handler);
         this.editPreferences.addActionListener(this.handler);
-        this.editClearHistory.addActionListener(this.handler);
-        this.editGoTo.addActionListener(this.handler);
-        this.editUpOneFloor.addActionListener(this.handler);
-        this.editDownOneFloor.addActionListener(this.handler);
-        this.editUpOneLevel.addActionListener(this.handler);
-        this.editDownOneLevel.addActionListener(this.handler);
-        this.editAddLevel.addActionListener(this.handler);
-        this.editRemoveLevel.addActionListener(this.handler);
-        this.editResizeLevel.addActionListener(this.handler);
-        this.editToggleLayer.addActionListener(this.handler);
-        this.editMazePreferences.addActionListener(this.handler);
+//        this.editClearHistory.addActionListener(this.handler);
+//        this.editGoTo.addActionListener(this.handler);
+//        this.editUpOneFloor.addActionListener(this.handler);
+//        this.editDownOneFloor.addActionListener(this.handler);
+//        this.editUpOneLevel.addActionListener(this.handler);
+//        this.editDownOneLevel.addActionListener(this.handler);
+//        this.editAddLevel.addActionListener(this.handler);
+//        this.editRemoveLevel.addActionListener(this.handler);
+//        this.editResizeLevel.addActionListener(this.handler);
+//        this.editToggleLayer.addActionListener(this.handler);
+//        this.editMazePreferences.addActionListener(this.handler);
         this.playPlay.addActionListener(this.handler);
-        this.playEdit.addActionListener(this.handler);
+//        this.playEdit.addActionListener(this.handler);
         this.gameEquipment.addActionListener(this.handler);
         this.gameInventory.addActionListener(this.handler);
         this.gameUse.addActionListener(this.handler);
@@ -531,27 +535,27 @@ public class MenuManager {
         }
         this.editMenu.add(this.editUndo);
         this.editMenu.add(this.editRedo);
-        this.editMenu.add(this.editCutLevel);
-        this.editMenu.add(this.editCopyLevel);
-        this.editMenu.add(this.editPasteLevel);
-        this.editMenu.add(this.editInsertLevelFromClipboard);
+//        this.editMenu.add(this.editCutLevel);
+//        this.editMenu.add(this.editCopyLevel);
+//        this.editMenu.add(this.editPasteLevel);
+//        this.editMenu.add(this.editInsertLevelFromClipboard);
         if (!System.getProperty("os.name").equalsIgnoreCase("Mac OS X")) {
             this.editMenu.add(this.editPreferences);
         }
-        this.editMenu.add(this.editClearHistory);
-        this.editMenu.add(this.editGoTo);
-        this.editMenu.addSeparator();
-        this.editMenu.add(this.editUpOneFloor);
-        this.editMenu.add(this.editDownOneFloor);
-        this.editMenu.add(this.editUpOneLevel);
-        this.editMenu.add(this.editDownOneLevel);
-        this.editMenu.add(this.editAddLevel);
-        this.editMenu.add(this.editRemoveLevel);
-        this.editMenu.add(this.editResizeLevel);
-        this.editMenu.add(this.editToggleLayer);
-        this.editMenu.add(this.editMazePreferences);
+//        this.editMenu.add(this.editClearHistory);
+//        this.editMenu.add(this.editGoTo);
+//        this.editMenu.addSeparator();
+//        this.editMenu.add(this.editUpOneFloor);
+//        this.editMenu.add(this.editDownOneFloor);
+//        this.editMenu.add(this.editUpOneLevel);
+//        this.editMenu.add(this.editDownOneLevel);
+//        this.editMenu.add(this.editAddLevel);
+//        this.editMenu.add(this.editRemoveLevel);
+//        this.editMenu.add(this.editResizeLevel);
+//        this.editMenu.add(this.editToggleLayer);
+//        this.editMenu.add(this.editMazePreferences);
         this.playMenu.add(this.playPlay);
-        this.playMenu.add(this.playEdit);
+//        this.playMenu.add(this.playEdit);
         this.gameMenu.add(this.gameNewGame);
         this.gameMenu.add(this.gameEquipment);
         this.gameMenu.add(this.gameInventory);
@@ -587,24 +591,24 @@ public class MenuManager {
         this.fileExit.setEnabled(true);
         this.editUndo.setEnabled(false);
         this.editRedo.setEnabled(false);
-        this.editCutLevel.setEnabled(false);
-        this.editCopyLevel.setEnabled(false);
-        this.editPasteLevel.setEnabled(false);
-        this.editInsertLevelFromClipboard.setEnabled(false);
+//        this.editCutLevel.setEnabled(false);
+//        this.editCopyLevel.setEnabled(false);
+//        this.editPasteLevel.setEnabled(false);
+//        this.editInsertLevelFromClipboard.setEnabled(false);
         this.editPreferences.setEnabled(true);
-        this.editClearHistory.setEnabled(false);
-        this.editGoTo.setEnabled(false);
-        this.editUpOneFloor.setEnabled(false);
-        this.editDownOneFloor.setEnabled(false);
-        this.editUpOneLevel.setEnabled(false);
-        this.editDownOneLevel.setEnabled(false);
-        this.editAddLevel.setEnabled(false);
-        this.editRemoveLevel.setEnabled(false);
-        this.editResizeLevel.setEnabled(false);
-        this.editToggleLayer.setEnabled(false);
-        this.editMazePreferences.setEnabled(false);
+//        this.editClearHistory.setEnabled(false);
+//        this.editGoTo.setEnabled(false);
+//        this.editUpOneFloor.setEnabled(false);
+//        this.editDownOneFloor.setEnabled(false);
+//        this.editUpOneLevel.setEnabled(false);
+//        this.editDownOneLevel.setEnabled(false);
+//        this.editAddLevel.setEnabled(false);
+//        this.editRemoveLevel.setEnabled(false);
+//        this.editResizeLevel.setEnabled(false);
+//        this.editToggleLayer.setEnabled(false);
+//        this.editMazePreferences.setEnabled(false);
         this.playPlay.setEnabled(false);
-        this.playEdit.setEnabled(false);
+//        this.playEdit.setEnabled(false);
         this.gameNewGame.setEnabled(true);
         this.gameEquipment.setEnabled(false);
         this.gameInventory.setEnabled(false);
@@ -630,20 +634,22 @@ public class MenuManager {
         public void actionPerformed(final ActionEvent e) {
             try {
                 final BagOStuff app = FantastleReboot.getBagOStuff();
-                final MazeEditor me = app.getEditor();
+//                final MazeEditor me = app.getEditor();
                 boolean loaded = false;
                 final String cmd = e.getActionCommand();
-                if (cmd.equals("New...")) {
-                    loaded = me.newMaze();
-                    app.getMazeManager().setLoaded(loaded);
-                } else if (cmd.equals("Open...")) {
+//                if (cmd.equals("New...")) {
+//                    loaded = me.newMaze();
+//                    app.getMazeManager().setLoaded(loaded);
+//                } else if (cmd.equals("Open...")) {
+                if (cmd.equals("Open...")) {
                     loaded = app.getMazeManager().loadGame();
                     app.getMazeManager().setLoaded(loaded);
                 } else if (cmd.equals("Close")) {
                     // Close the window
-                    if (app.getMode() == BagOStuff.STATUS_EDITOR) {
-                        app.getEditor().handleCloseWindow();
-                    } else if (app.getMode() == BagOStuff.STATUS_GAME) {
+//                    if (app.getMode() == BagOStuff.STATUS_EDITOR) {
+//                        app.getEditor().handleCloseWindow();
+//                    } else if (app.getMode() == BagOStuff.STATUS_GAME) {
+                    if (app.getMode() == BagOStuff.STATUS_GAME) {
                         boolean saved = true;
                         int status = 0;
                         if (app.getMazeManager().getDirty()) {
@@ -671,44 +677,44 @@ public class MenuManager {
                 } else if (cmd.equals("Exit")) {
                     // Exit program
                     System.exit(0);
-                } else if (cmd.equals("Undo")) {
-                    // Undo most recent action
-                    me.undo();
-                } else if (cmd.equals("Redo")) {
-                    // Redo most recent undone action
-                    me.redo();
+//                } else if (cmd.equals("Undo")) {
+//                    // Undo most recent action
+//                    me.undo();
+//                } else if (cmd.equals("Redo")) {
+//                    // Redo most recent undone action
+//                    me.redo();
                 } else if (cmd.equals("Preferences...")) {
                     // Show preferences dialog
                     app.getPrefsManager().showPrefs();
-                } else if (cmd.equals("Clear History")) {
-                    // Clear undo/redo history, confirm first
-                    final int res = Messager.showConfirmDialog(
-                            "Are you sure you want to clear the history?",
-                            "Editor");
-                    if (res == JOptionPane.YES_OPTION) {
-                        me.clearHistory();
-                    }
-                } else if (cmd.equals("Go To...")) {
-                    // Go To
-                    me.goToHandler();
-                } else if (cmd.equals("Up One Floor")) {
-                    // Go up one floor
-                    me.updateEditorPosition(0, 0, 1, 0);
-                } else if (cmd.equals("Down One Floor")) {
-                    // Go down one floor
-                    me.updateEditorPosition(0, 0, -1, 0);
-                } else if (cmd.equals("Up One Level")) {
-                    // Go up one level
-                    me.updateEditorPosition(0, 0, 0, 1);
-                } else if (cmd.equals("Down One Level")) {
-                    // Go down one level
-                    me.updateEditorPosition(0, 0, 0, -1);
-                } else if (cmd.equals("Add a Level...")) {
-                    // Add a level
-                    me.addLevel();
-                } else if (cmd.equals("Toggle Layer")) {
-                    // Toggle current layer
-                    me.toggleLayer();
+//                } else if (cmd.equals("Clear History")) {
+//                    // Clear undo/redo history, confirm first
+//                    final int res = Messager.showConfirmDialog(
+//                            "Are you sure you want to clear the history?",
+//                            "Editor");
+//                    if (res == JOptionPane.YES_OPTION) {
+//                        me.clearHistory();
+//                    }
+//                } else if (cmd.equals("Go To...")) {
+//                    // Go To
+//                    me.goToHandler();
+//                } else if (cmd.equals("Up One Floor")) {
+//                    // Go up one floor
+//                    me.updateEditorPosition(0, 0, 1, 0);
+//                } else if (cmd.equals("Down One Floor")) {
+//                    // Go down one floor
+//                    me.updateEditorPosition(0, 0, -1, 0);
+//                } else if (cmd.equals("Up One Level")) {
+//                    // Go up one level
+//                    me.updateEditorPosition(0, 0, 0, 1);
+//                } else if (cmd.equals("Down One Level")) {
+//                    // Go down one level
+//                    me.updateEditorPosition(0, 0, 0, -1);
+//                } else if (cmd.equals("Add a Level...")) {
+//                    // Add a level
+//                    me.addLevel();
+//                } else if (cmd.equals("Toggle Layer")) {
+//                    // Toggle current layer
+//                    me.toggleLayer();
                 } else if (cmd.equals("New Game")) {
                     // Start a new game
                     final boolean proceed = app.getGameManager().newGame();
@@ -721,9 +727,9 @@ public class MenuManager {
                     if (proceed) {
                         app.getGameManager().playMaze();
                     }
-                } else if (cmd.equals("Edit")) {
-                    // Edit the current maze
-                    me.editMaze();
+//                } else if (cmd.equals("Edit")) {
+//                    // Edit the current maze
+//                    me.editMaze();
                 } else if (cmd.equals("Show Equipment...")) {
                     if (!app.getGameManager().usingAnItem()) {
                         InventoryViewer.showEquipmentDialog();
