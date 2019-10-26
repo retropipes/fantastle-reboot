@@ -39,7 +39,7 @@ public class GUIManager {
 
   // Constructors
   public GUIManager() {
-    this.guiFrame = new JFrame("Fantastle");
+    this.guiFrame = new JFrame("Fantastle Reboot");
     this.guiPane = this.guiFrame.getContentPane();
     this.guiFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     this.guiFrame.setLayout(new GridLayout(1, 1));

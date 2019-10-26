@@ -18,6 +18,8 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot;
 
+import java.awt.desktop.QuitStrategy;
+
 import javax.swing.JMenuBar;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
@@ -88,6 +90,13 @@ public class FantastleReboot {
     NATIVITY.setDefaultMenuBar(defaultMenuBar);
   }
 
+  static void doLateOSIntegration() {
+    NATIVITY.setQuitStrategy(QuitStrategy.NORMAL_EXIT);
+    NATIVITY.setQuitHandler(FantastleReboot.bag.getMazeManager());
+    NATIVITY.setPreferencesHandler(FantastleReboot.bag.getPrefsManager());
+    NATIVITY.setAboutHandler(FantastleReboot.bag.getAboutDialog());
+  }
+
   public static void main(final String[] args) {
     try {
       // Compute action cap
@@ -97,9 +106,6 @@ public class FantastleReboot {
       FantastleReboot.bag = new BagOStuff();
       // OS Integration
       NATIVITY.configureLookAndFeel();
-      NATIVITY.setQuitHandler(FantastleReboot.bag.getMazeManager());
-      NATIVITY.setPreferencesHandler(FantastleReboot.bag.getPrefsManager());
-      NATIVITY.setAboutHandler(FantastleReboot.bag.getAboutDialog());
       // Load stuff
       FantastleReboot.showLoadingScreen();
     } catch (final Throwable t) {

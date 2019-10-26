@@ -95,6 +95,7 @@ class CacheTask extends Thread {
       bag.postConstruct();
       bag.getObjects().initializeObjects();
       bag.getGeneralHelpManager().updateHelpSize();
+      FantastleReboot.doLateOSIntegration();
       this.updateWaitProgress(100);
       // Exit Wait Mode
       this.exitWaitMode();
