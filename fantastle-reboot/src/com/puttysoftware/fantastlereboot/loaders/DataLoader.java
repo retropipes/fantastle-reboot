@@ -31,7 +31,6 @@ public class DataLoader {
           rawData[x] = 0;
         }
       }
-      rsr.close();
       return rawData;
     } catch (final IOException e) {
       FantastleReboot.logError(e);
@@ -53,7 +52,6 @@ public class DataLoader {
           rawData[x] = -3;
         }
       }
-      rsr.close();
       // Parse raw data
       final double[] finalData = new double[rawData.length];
       for (int x = 0; x < rawData.length; x++) {
@@ -124,7 +122,6 @@ public class DataLoader {
           rawData[x] = 0;
         }
       }
-      rsr.close();
       return rawData;
     } catch (final IOException e) {
       FantastleReboot.logError(e);
@@ -143,7 +140,6 @@ public class DataLoader {
         raw = rsr.readString();
         data.add(raw);
       }
-      rsr.close();
       final Object[] arr = data.toArray();
       final String[] tempres = new String[arr.length];
       int count = 0;
@@ -182,7 +178,6 @@ public class DataLoader {
           rawData[x] = 0;
         }
       }
-      rsr.close();
       return rawData;
     } catch (final IOException e) {
       FantastleReboot.logError(e);
@@ -204,7 +199,6 @@ public class DataLoader {
           rawData[x] = 0;
         }
       }
-      rsr.close();
       return rawData;
     } catch (final IOException e) {
       FantastleReboot.logError(e);
