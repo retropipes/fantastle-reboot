@@ -169,7 +169,7 @@ public class DataLoader {
   }
 
   public static int[] loadPersonalityData(final int p) {
-    final String name = PersonalityConstants.PERSONALITY_NAMES[p].toLowerCase();
+    final String name = Integer.toString(p);
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class.getResourceAsStream(
             "/assets/data/personality/" + name + ".dat"))) {
