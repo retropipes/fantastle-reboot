@@ -29,7 +29,6 @@ import com.puttysoftware.fantastlereboot.objects.HealTrap;
 import com.puttysoftware.fantastlereboot.objects.HurtTrap;
 import com.puttysoftware.fantastlereboot.objects.Ice;
 import com.puttysoftware.fantastlereboot.objects.ItemShop;
-import com.puttysoftware.fantastlereboot.objects.MonsterObject;
 import com.puttysoftware.fantastlereboot.objects.NecklaceShop;
 import com.puttysoftware.fantastlereboot.objects.Nothing;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
@@ -47,34 +46,40 @@ import com.puttysoftware.fantastlereboot.objects.WallOff;
 import com.puttysoftware.fantastlereboot.objects.WallOn;
 import com.puttysoftware.fantastlereboot.objects.WarpTrap;
 import com.puttysoftware.fantastlereboot.objects.WeaponShop;
+import com.puttysoftware.fantastlereboot.objects.temporary.MonsterObjectFactory;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.xio.XDataReader;
 
-public class FantastleObjectModelList {
+public final class FantastleObjectModelList {
   // Fields
   private final ArrayList<FantastleObjectModel> allObjectList;
 
   // Constructor
   public FantastleObjectModelList() {
+    this.allObjectList = new ArrayList<>();
+    this.initializeObjects();
+  }
+
+  // Methods
+  public final void initializeObjects() {
     final FantastleObjectModel[] allObjects = { new ArmorShop(), new BankShop(),
         new ClockwiseRotationTrap(), new ConfusionTrap(),
         new CounterclockwiseRotationTrap(), new DizzinessTrap(),
         new DrunkTrap(), new OpenSpace(), new Nothing(), new BonusShop(),
         new ElementalShop(), new HealShop(), new HealTrap(), new HurtTrap(),
-        new Ice(), new ItemShop(), new MonsterObject(), new RegenerateShop(),
-        new SealingWall(), new NecklaceShop(), new SpellShop(), new Tile(),
-        new UTurnTrap(), new VariableHealTrap(), new VariableHurtTrap(),
-        new Wall(), new WarpTrap(), new WeaponShop(), new StairsUp(),
-        new StairsDown(), new WallOff(), new WallOn(), new Button(),
-        new Amulet() };
-    this.allObjectList = new ArrayList<>();
+        new Ice(), new ItemShop(), MonsterObjectFactory.createMonster(),
+        new RegenerateShop(), new SealingWall(), new NecklaceShop(),
+        new SpellShop(), new Tile(), new UTurnTrap(), new VariableHealTrap(),
+        new VariableHurtTrap(), new Wall(), new WarpTrap(), new WeaponShop(),
+        new StairsUp(), new StairsDown(), new WallOff(), new WallOn(),
+        new Button(), new Amulet() };
+    this.allObjectList.clear();
     // Add all predefined objects to the list
     for (int z = 0; z < allObjects.length; z++) {
       this.allObjectList.add(allObjects[z]);
     }
   }
 
-  // Methods
   public FantastleObjectModel[] getAllObjects() {
     return this.allObjectList
         .toArray(new FantastleObjectModel[this.allObjectList.size()]);

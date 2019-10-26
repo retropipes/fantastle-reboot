@@ -65,7 +65,7 @@ public class PreferencesManager implements PreferencesHandler {
   // JCheckBox checkUpdatesStartup;
   // JCheckBox checkBetaUpdatesStartup;
   JCheckBox moveOneAtATime;
-  // JCheckBox mobileMode;
+  JCheckBox monstersVisible;
   JCheckBox mapBattleEngine;
   JCheckBox timeBattleEngine;
   // JComboBox<String> editorFillChoices;
@@ -83,7 +83,7 @@ public class PreferencesManager implements PreferencesHandler {
   // boolean checkUpdatesStartupEnabled;
   // boolean checkBetaUpdatesStartupEnabled;
   boolean moveOneAtATimeEnabled;
-  // boolean mobileModeEnabled;
+  boolean monstersVisibleEnabled;
   boolean useMapBattleEngine;
   boolean useTimeBattleEngine;
   int difficultySetting = PreferencesManager.DEFAULT_DIFFICULTY;
@@ -217,10 +217,10 @@ public class PreferencesManager implements PreferencesHandler {
   public void setViewingWindowSizeIndex(final int value) {
     this.viewingWindowIndex = value;
   }
-  //
-  // public boolean isMobileModeEnabled() {
-  // return this.mobileModeEnabled;
-  // }
+
+  public boolean monstersVisible() {
+    return this.monstersVisibleEnabled;
+  }
 
   public boolean getSoundEnabled(final int snd) {
     if (!this.soundsEnabled[PreferencesManager.SOUNDS_ALL]) {
@@ -344,17 +344,8 @@ public class PreferencesManager implements PreferencesHandler {
     // this.checkBetaUpdatesStartupEnabled = this.checkBetaUpdatesStartup
     // .isSelected();
     this.moveOneAtATimeEnabled = this.moveOneAtATime.isSelected();
-    // final boolean oldMobile = this.mobileModeEnabled;
-    // this.mobileModeEnabled = this.mobileMode.isSelected();
-    // if (!initial) {
-    // if (oldMobile != this.mobileModeEnabled) {
-    // // Graphics mode changed
-    // final CacheTask ct = new CacheTask();
-    // ct.start();
-    // } else {
+    this.monstersVisibleEnabled = this.monstersVisible.isSelected();
     this.hidePrefs();
-    // }
-    // }
   }
 
   public void setDefaultPrefs() {
@@ -385,8 +376,8 @@ public class PreferencesManager implements PreferencesHandler {
     // this.checkBetaUpdatesStartupEnabled = true;
     this.moveOneAtATime.setSelected(true);
     this.moveOneAtATimeEnabled = true;
-    // this.mobileMode.setSelected(false);
-    // this.mobileModeEnabled = false;
+    this.monstersVisible.setSelected(false);
+    this.monstersVisibleEnabled = false;
     // this.updateCheckInterval.setSelectedIndex(0);
     this.lastFilterUsed = PreferencesManager.FILTER_MAZE_V5;
   }
@@ -453,7 +444,7 @@ public class PreferencesManager implements PreferencesHandler {
     // this.checkBetaUpdatesStartup = new JCheckBox(
     // "Check for Beta Updates at Startup", true);
     this.moveOneAtATime = new JCheckBox("One Move at a Time", true);
-    // this.mobileMode = new JCheckBox("Enable mobile mode", false);
+    this.monstersVisible = new JCheckBox("Show monsters on map", false);
     // this.updateCheckIntervalValues = new String[] { "Daily",
     // "Every 2nd Day", "Weekly", "Every 2nd Week", "Monthly" };
     // this.updateCheckInterval = new JComboBox<>(
@@ -484,7 +475,7 @@ public class PreferencesManager implements PreferencesHandler {
     // this.miscPane.add(this.checkBetaUpdatesStartup);
     // }
     this.miscPane.add(this.moveOneAtATime);
-    // this.miscPane.add(this.mobileMode);
+    this.miscPane.add(this.monstersVisible);
     // this.miscPane.add(new JLabel("Check How Often For Updates"));
     // this.miscPane.add(this.updateCheckInterval);
     this.miscPane.add(new JLabel("Game Difficulty"));
@@ -596,9 +587,7 @@ public class PreferencesManager implements PreferencesHandler {
         // pm.checkBetaUpdatesStartup
         // .setSelected(Boolean.parseBoolean(s.readLine()));
         pm.lastFilterUsed = Integer.parseInt(s.readLine());
-        // Read and discard
-        s.readLine();
-        // pm.mobileMode.setSelected(Boolean.parseBoolean(s.readLine()));
+        pm.monstersVisible.setSelected(Boolean.parseBoolean(s.readLine()));
         for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
           // Read and discard
           s.readLine();
@@ -650,8 +639,7 @@ public class PreferencesManager implements PreferencesHandler {
         // s.write(Boolean.toString(pm.checkBetaUpdatesStartupEnabled)
         // + "\n");
         s.write(Integer.toString(pm.lastFilterUsed) + "\n");
-        s.write("false\n");
-        // s.write(Boolean.toString(pm.mobileModeEnabled) + "\n");
+        s.write(Boolean.toString(pm.monstersVisibleEnabled) + "\n");
         for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
           s.write("false\n");
           // s.write(Boolean.toString(pm.musicEnabled[x]) + "\n");
@@ -755,9 +743,7 @@ public class PreferencesManager implements PreferencesHandler {
         // pm.checkBetaUpdatesStartup
         // .setSelected(Boolean.parseBoolean(s.readLine()));
         pm.lastFilterUsed = Integer.parseInt(s.readLine());
-        // Read and discard
-        s.readLine();
-        // pm.mobileMode.setSelected(Boolean.parseBoolean(s.readLine()));
+        pm.monstersVisible.setSelected(Boolean.parseBoolean(s.readLine()));
         for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
           // Read and discard
           s.readLine();
@@ -796,8 +782,7 @@ public class PreferencesManager implements PreferencesHandler {
         // s.write(Boolean.toString(pm.checkBetaUpdatesStartupEnabled)
         // + "\n");
         s.write(Integer.toString(pm.lastFilterUsed) + "\n");
-        s.write("false\n");
-        // s.write(Boolean.toString(pm.mobileModeEnabled) + "\n");
+        s.write(Boolean.toString(pm.monstersVisibleEnabled) + "\n");
         for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
           s.write("false\n");
           // s.write(Boolean.toString(pm.musicEnabled[x]) + "\n");

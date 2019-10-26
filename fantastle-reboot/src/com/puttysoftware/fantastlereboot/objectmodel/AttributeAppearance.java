@@ -12,7 +12,7 @@ import com.puttysoftware.fantastlereboot.assets.AttributeImageIndex;
 import com.puttysoftware.fantastlereboot.loaders.AttributeImageLoader;
 import com.puttysoftware.images.BufferedImageIcon;
 
-class AttributeAppearance extends Appearance {
+public class AttributeAppearance extends Appearance {
   public AttributeAppearance(final String name,
       final AttributeImageIndex inImageIndex) {
     super(name, inImageIndex);

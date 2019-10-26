@@ -13,11 +13,12 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
-import com.puttysoftware.fantastlereboot.objects.MonsterObject;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.fantastlereboot.objects.WallOff;
 import com.puttysoftware.fantastlereboot.objects.WallOn;
+import com.puttysoftware.fantastlereboot.objects.temporary.MonsterObject;
+import com.puttysoftware.fantastlereboot.objects.temporary.MonsterObjectFactory;
 import com.puttysoftware.fantastlereboot.utilities.FantastleObjectModelList;
 import com.puttysoftware.fantastlereboot.utilities.RandomGenerationRule;
 import com.puttysoftware.randomrange.RandomRange;
@@ -144,7 +145,7 @@ final class LayeredTower implements Cloneable {
     FantastleObjectModel currObj = this.getCell(randomRow, randomColumn, zLoc,
         Layers.OBJECT);
     if (!currObj.isSolid()) {
-      final FantastleObjectModel m = new MonsterObject();
+      final FantastleObjectModel m = MonsterObjectFactory.createMonster();
       m.setSavedObject(currObj);
       this.setCell(m, randomRow, randomColumn, zLoc, Layers.OBJECT);
     } else {
@@ -153,7 +154,7 @@ final class LayeredTower implements Cloneable {
         randomColumn = column.generate();
         currObj = this.getCell(randomRow, randomColumn, zLoc, Layers.OBJECT);
       }
-      final FantastleObjectModel m = new MonsterObject();
+      final FantastleObjectModel m = MonsterObjectFactory.createMonster();
       m.setSavedObject(currObj);
       this.setCell(m, randomRow, randomColumn, zLoc, Layers.OBJECT);
     }
