@@ -10,6 +10,7 @@ import com.puttysoftware.fantastlereboot.creatures.faiths.FaithConstants;
 import com.puttysoftware.fantastlereboot.creatures.genders.GenderConstants;
 import com.puttysoftware.fantastlereboot.creatures.personalities.PersonalityConstants;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
+import com.puttysoftware.fileutils.ResourceStreamReader;
 
 public class DataLoader {
   private DataLoader() {
@@ -18,7 +19,7 @@ public class DataLoader {
 
   public static int[] loadCasteData(final int c) {
     final String name = CasteConstants.CASTE_NAMES[c].toLowerCase();
-    try (final ResourceStreamLoader rsr = new ResourceStreamLoader(
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
             .getResourceAsStream("/assets/data/caste/" + name + ".dat"))) {
       // Fetch data
@@ -39,7 +40,7 @@ public class DataLoader {
 
   public static double[] loadFaithData(final int f) {
     final String name = Integer.toString(f);
-    try (final ResourceStreamLoader rsr = new ResourceStreamLoader(
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
             .getResourceAsStream("/assets/data/faith/" + name + ".dat"))) {
       // Fetch data
@@ -80,7 +81,7 @@ public class DataLoader {
 
   public static Hashtable<Integer, String> loadFaithPowerData(final int f,
       final int p) {
-    try (final ResourceStreamLoader rsr = new ResourceStreamLoader(
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
             .getResourceAsStream("/assets/data/faith/powers.dat"))) {
       // Fetch data
@@ -109,7 +110,7 @@ public class DataLoader {
 
   public static int[] loadGenderData(final int g) {
     final String name = GenderConstants.GENDER_NAMES[g].toLowerCase();
-    try (final ResourceStreamLoader rsr = new ResourceStreamLoader(
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
             .getResourceAsStream("/assets/data/gender/" + name + ".dat"))) {
       // Fetch data
@@ -129,7 +130,7 @@ public class DataLoader {
   }
 
   public static String[] loadMonsterData() {
-    try (final ResourceStreamLoader rsr = new ResourceStreamLoader(
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
             .getResourceAsStream("/assets/data/monster/monsternames.dat"))) {
       // Fetch data
@@ -165,7 +166,7 @@ public class DataLoader {
 
   public static int[] loadPersonalityData(final int p) {
     final String name = Integer.toString(p);
-    try (final ResourceStreamLoader rsr = new ResourceStreamLoader(
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class.getResourceAsStream(
             "/assets/data/personality/" + name + ".dat"))) {
       // Fetch data
@@ -186,7 +187,7 @@ public class DataLoader {
 
   public static int[] loadRaceData(final int c) {
     final String name = RaceConstants.RACE_NAMES[c].toLowerCase();
-    try (final ResourceStreamLoader rsr = new ResourceStreamLoader(
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
             .getResourceAsStream("/assets/data/race/" + name + ".dat"))) {
       // Fetch data
@@ -206,7 +207,7 @@ public class DataLoader {
   }
 
   public static String[] loadSoundData() {
-    try (final ResourceStreamLoader rsr = new ResourceStreamLoader(
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
             .getResourceAsStream("/assets/data/sounds/files.txt"))) {
       // Fetch data
@@ -226,7 +227,7 @@ public class DataLoader {
   }
 
   public static String[] loadAttributeImageData() {
-    try (final ResourceStreamLoader rsr = new ResourceStreamLoader(
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
             .getResourceAsStream("/assets/data/images/attributes.txt"))) {
       // Fetch data
@@ -246,7 +247,7 @@ public class DataLoader {
   }
 
   public static String[] loadAvatarImageData() {
-    try (final ResourceStreamLoader rsr = new ResourceStreamLoader(
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
             .getResourceAsStream("/assets/data/images/avatars.txt"))) {
       // Fetch data
@@ -266,7 +267,7 @@ public class DataLoader {
   }
 
   public static String[] loadBossImageData() {
-    try (final ResourceStreamLoader rsr = new ResourceStreamLoader(
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class.getResourceAsStream("/assets/data/images/boss.txt"))) {
       // Fetch data
       final ArrayList<String> data = new ArrayList<>();
@@ -285,7 +286,7 @@ public class DataLoader {
   }
 
   public static String[] loadEffectImageData() {
-    try (final ResourceStreamLoader rsr = new ResourceStreamLoader(
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
             .getResourceAsStream("/assets/data/images/effects.txt"))) {
       // Fetch data
@@ -305,7 +306,7 @@ public class DataLoader {
   }
 
   public static String[] loadItemImageData() {
-    try (final ResourceStreamLoader rsr = new ResourceStreamLoader(
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
             .getResourceAsStream("/assets/data/images/items.txt"))) {
       // Fetch data
@@ -325,7 +326,7 @@ public class DataLoader {
   }
 
   public static String[] loadObjectImageData() {
-    try (final ResourceStreamLoader rsr = new ResourceStreamLoader(
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
             .getResourceAsStream("/assets/data/images/objects.txt"))) {
       // Fetch data
@@ -345,7 +346,7 @@ public class DataLoader {
   }
 
   public static String[] loadUserInterfaceImageData() {
-    try (final ResourceStreamLoader rsr = new ResourceStreamLoader(
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class.getResourceAsStream("/assets/data/images/ui.txt"))) {
       // Fetch data
       final ArrayList<String> data = new ArrayList<>();
