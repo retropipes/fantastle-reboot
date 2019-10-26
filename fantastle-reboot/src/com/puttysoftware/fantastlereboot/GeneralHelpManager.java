@@ -39,14 +39,14 @@ public class GeneralHelpManager {
         this.helpFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         this.helpFrame.setLayout(new FlowLayout());
         this.helpFrame.add(this.hv.getHelp());
-        if (FantastleReboot.getBagOStuff().getPrefsManager()
-                .isMobileModeEnabled()) {
-            this.hv.setHelpSize(ImageConstants.MAX_MOBILE_WINDOW_SIZE,
-                    ImageConstants.MAX_MOBILE_WINDOW_SIZE);
-        } else {
+//        if (FantastleReboot.getBagOStuff().getPrefsManager()
+//                .isMobileModeEnabled()) {
+//            this.hv.setHelpSize(ImageConstants.MAX_MOBILE_WINDOW_SIZE,
+//                    ImageConstants.MAX_MOBILE_WINDOW_SIZE);
+//        } else {
             this.hv.setHelpSize(ImageConstants.MAX_WINDOW_SIZE,
                     ImageConstants.MAX_WINDOW_SIZE);
-        }
+//        }
         this.helpFrame.pack();
         this.helpFrame.setResizable(false);
     }
@@ -57,14 +57,14 @@ public class GeneralHelpManager {
     }
 
     public void updateHelpSize() {
-        if (FantastleReboot.getBagOStuff().getPrefsManager()
-                .isMobileModeEnabled()) {
-            this.hv.setHelpSize(ImageConstants.MAX_MOBILE_WINDOW_SIZE,
-                    ImageConstants.MAX_MOBILE_WINDOW_SIZE);
-        } else {
+//        if (FantastleReboot.getBagOStuff().getPrefsManager()
+//                .isMobileModeEnabled()) {
+//            this.hv.setHelpSize(ImageConstants.MAX_MOBILE_WINDOW_SIZE,
+//                    ImageConstants.MAX_MOBILE_WINDOW_SIZE);
+//        } else {
             this.hv.setHelpSize(ImageConstants.MAX_WINDOW_SIZE,
                     ImageConstants.MAX_WINDOW_SIZE);
-        }
+//        }
         this.helpFrame.pack();
     }
 }
