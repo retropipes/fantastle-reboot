@@ -17,7 +17,6 @@ import com.puttysoftware.fantastlereboot.creatures.castes.CasteManager;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.genders.Gender;
 import com.puttysoftware.fantastlereboot.creatures.personalities.Personality;
-import com.puttysoftware.fantastlereboot.creatures.personalities.PersonalityConstants;
 import com.puttysoftware.fantastlereboot.creatures.races.Race;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
@@ -86,8 +85,7 @@ public class PartyMember extends Creature {
     this.setGold(PartyMember.START_GOLD);
     this.setExperience(0L);
     final Page nextLevelEquation = new Page(3, 1, 0, true);
-    final double value = BASE_COEFF * this.personality.getAttribute(
-        PersonalityConstants.PERSONALITY_ATTRIBUTE_LEVEL_UP_SPEED);
+    final double value = BASE_COEFF;
     nextLevelEquation.setCoefficient(1, value);
     nextLevelEquation.setCoefficient(2, value);
     nextLevelEquation.setCoefficient(3, value);
@@ -98,20 +96,6 @@ public class PartyMember extends Creature {
   // Methods
   public String getXPString() {
     return this.getExperience() + "/" + this.getToNextLevelValue();
-  }
-
-  @Override
-  public int getMapBattleActionsPerRound() {
-    return Math.max(super.getMapBattleActionsPerRound() * this.personality
-        .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_ACTION_MOD),
-        1);
-  }
-
-  @Override
-  public int getWindowBattleActionsPerRound() {
-    return Math.max(super.getWindowBattleActionsPerRound() * this.personality
-        .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_ACTION_MOD),
-        1);
   }
 
   // Transformers
@@ -148,23 +132,6 @@ public class PartyMember extends Creature {
       }
     }
     this.setSpellBook(book);
-  }
-
-  @Override
-  public int getCapacity() {
-    return Math.max(StatConstants.MIN_CAPACITY,
-        super.getCapacity() * this.getPersonality().getAttribute(
-            PersonalityConstants.PERSONALITY_ATTRIBUTE_CAPACITY_MOD));
-  }
-
-  @Override
-  public void offsetGold(final int value) {
-    int fixedValue = value;
-    if (value > 0) {
-      fixedValue = fixedValue * this.getPersonality()
-          .getAttribute(PersonalityConstants.PERSONALITY_ATTRIBUTE_WEALTH_MOD);
-    }
-    super.offsetGold(fixedValue);
   }
 
   public int getKills() {
@@ -253,8 +220,7 @@ public class PartyMember extends Creature {
     this.getItems().resetInventory();
     FantastleReboot.getBagOStuff().getGameManager().deactivateAllEffects();
     final Page nextLevelEquation = new Page(3, 1, 0, true);
-    final double value = BASE_COEFF * this.personality.getAttribute(
-        PersonalityConstants.PERSONALITY_ATTRIBUTE_LEVEL_UP_SPEED);
+    final double value = BASE_COEFF;
     nextLevelEquation.setCoefficient(1, value);
     nextLevelEquation.setCoefficient(2, value);
     nextLevelEquation.setCoefficient(3, value);

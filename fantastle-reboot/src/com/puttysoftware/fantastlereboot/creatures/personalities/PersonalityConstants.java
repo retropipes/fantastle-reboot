@@ -33,11 +33,7 @@ public class PersonalityConstants {
   public static final int PERSONALITY_ATTRIBUTE_RANDOM_VITALITY = 3;
   public static final int PERSONALITY_ATTRIBUTE_RANDOM_INTELLIGENCE = 4;
   public static final int PERSONALITY_ATTRIBUTE_RANDOM_LUCK = 5;
-  public static final int PERSONALITY_ATTRIBUTE_LEVEL_UP_SPEED = 6;
-  public static final int PERSONALITY_ATTRIBUTE_ACTION_MOD = 7;
-  public static final int PERSONALITY_ATTRIBUTE_CAPACITY_MOD = 8;
-  public static final int PERSONALITY_ATTRIBUTE_WEALTH_MOD = 9;
-  public static final int PERSONALITY_ATTRIBUTES_COUNT = 10;
+  public static final int PERSONALITY_ATTRIBUTES_COUNT = 6;
   public static final String[] PERSONALITY_NAMES = { "Agile", "Bully",
       "Carefree", "Cautious", "Daring", "Flippant", "Glutton", "Honest",
       "Impulsive", "Jealous", "Kindly", "Logical", "Lucky", "Ordinary", "Proud",
