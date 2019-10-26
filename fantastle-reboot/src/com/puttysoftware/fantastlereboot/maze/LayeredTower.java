@@ -27,8 +27,8 @@ import com.puttysoftware.xio.XDataWriter;
 
 final class LayeredTower implements Cloneable {
   // Properties
-  private LowLevelAMODataStore data;
-  private LowLevelAMODataStore savedTowerState;
+  private LowLevelMazeDataStore data;
+  private LowLevelMazeDataStore savedTowerState;
   private FlagStorage visionData;
   private final LowLevelNoteDataStore noteData;
   private final int[] playerStartData;
@@ -49,8 +49,8 @@ final class LayeredTower implements Cloneable {
 
   // Constructors
   public LayeredTower(final int rows, final int cols, final int floors) {
-    this.data = new LowLevelAMODataStore(cols, rows, floors, Layers.COUNT);
-    this.savedTowerState = new LowLevelAMODataStore(cols, rows, floors,
+    this.data = new LowLevelMazeDataStore(cols, rows, floors, Layers.COUNT);
+    this.savedTowerState = new LowLevelMazeDataStore(cols, rows, floors,
         Layers.COUNT);
     this.visionData = new FlagStorage(cols, rows, floors);
     this.noteData = new LowLevelNoteDataStore(cols, rows, floors);
@@ -770,7 +770,7 @@ final class LayeredTower implements Cloneable {
     sizeX = reader.readInt();
     sizeY = reader.readInt();
     sizeZ = reader.readInt();
-    this.savedTowerState = new LowLevelAMODataStore(sizeY, sizeX, sizeZ,
+    this.savedTowerState = new LowLevelMazeDataStore(sizeY, sizeX, sizeZ,
         Layers.COUNT);
     for (x = 0; x < sizeY; x++) {
       for (y = 0; y < sizeX; y++) {
