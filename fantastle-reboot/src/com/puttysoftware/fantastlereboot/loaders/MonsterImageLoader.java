@@ -29,11 +29,14 @@ import java.util.Properties;
 import javax.imageio.ImageIO;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.creatures.faiths.FaithConstants;
+import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.creatures.monsters.Element;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class MonsterImageLoader {
   private static Properties fileExtensions;
+  private static final int MAX_INDEX = 89;
 
   static BufferedImageIcon loadUncached(final String name, final Element elem) {
     try {
@@ -60,18 +63,26 @@ public class MonsterImageLoader {
   }
 
   public static BufferedImageIcon load(final int imageID, final Element elem) {
-    if (fileExtensions == null) {
-      try {
-        fileExtensions = new Properties();
-        fileExtensions.load(SoundPlayer.class.getResourceAsStream(
-            "/assets/data/extensions/extensions.properties"));
-      } catch (IOException e) {
-        FantastleReboot.logError(e);
-      }
-    }
     String imageExt = fileExtensions.getProperty("images");
     return ImageCache.getCachedImage(Integer.toString(imageID) + imageExt,
         elem);
+  }
+
+  public static void cacheAll() {
+    try {
+      fileExtensions = new Properties();
+      fileExtensions.load(MonsterImageLoader.class.getResourceAsStream(
+          "/assets/data/extensions/extensions.properties"));
+    } catch (IOException e) {
+      FantastleReboot.logError(e);
+    }
+    String imageExt = fileExtensions.getProperty("images");
+    for (int i = 0; i <= MAX_INDEX; i++) {
+      for (int f = 0; f <= FaithConstants.FAITHS_COUNT; f++) {
+        ImageCache.getCachedImage(Integer.toString(i) + imageExt,
+            new Element(FaithManager.getFaith(f)));
+      }
+    }
   }
 
   private static class ImageCache {

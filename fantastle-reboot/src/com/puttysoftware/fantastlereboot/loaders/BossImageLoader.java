@@ -31,23 +31,28 @@ public class BossImageLoader {
   private static Properties fileExtensions;
 
   public static BufferedImageIcon load() {
-    if (allFilenames == null) {
-      allFilenames = DataLoader.loadBossImageData();
-    }
-    if (fileExtensions == null) {
-      try {
-        fileExtensions = new Properties();
-        fileExtensions.load(SoundPlayer.class.getResourceAsStream(
-            "/assets/data/extensions/extensions.properties"));
-      } catch (IOException e) {
-        FantastleReboot.logError(e);
-      }
-    }
     String imageExt = fileExtensions.getProperty("images");
     BossImageIndex image = BossImageIndex.BOSS;
     String name = "/assets/images/boss/" + allFilenames[image.ordinal()]
         + imageExt;
     return ImageLoader.load(name, BossImageLoader.class.getResource(name),
+        FantastleReboot.getErrorHandler());
+  }
+
+  public static void cacheAll() {
+    allFilenames = DataLoader.loadBossImageData();
+    try {
+      fileExtensions = new Properties();
+      fileExtensions.load(BossImageLoader.class.getResourceAsStream(
+          "/assets/data/extensions/extensions.properties"));
+    } catch (IOException e) {
+      FantastleReboot.logError(e);
+    }
+    String imageExt = fileExtensions.getProperty("images");
+    BossImageIndex image = BossImageIndex.BOSS;
+    String name = "/assets/images/boss/" + allFilenames[image.ordinal()]
+        + imageExt;
+    ImageLoader.load(name, BossImageLoader.class.getResource(name),
         FantastleReboot.getErrorHandler());
   }
 }

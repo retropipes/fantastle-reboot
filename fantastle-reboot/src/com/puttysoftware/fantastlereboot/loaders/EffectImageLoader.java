@@ -29,21 +29,10 @@ import com.puttysoftware.images.BufferedImageIcon;
 public class EffectImageLoader {
   private static String[] allFilenames;
   private static Properties fileExtensions;
+  private static final int MAX_INDEX = 46;
 
   public static BufferedImageIcon load(EffectImageIndex image) {
     if (image != EffectImageIndex._NONE) {
-      if (allFilenames == null) {
-        allFilenames = DataLoader.loadEffectImageData();
-      }
-      if (fileExtensions == null) {
-        try {
-          fileExtensions = new Properties();
-          fileExtensions.load(SoundPlayer.class.getResourceAsStream(
-              "/assets/data/extensions/extensions.properties"));
-        } catch (IOException e) {
-          FantastleReboot.logError(e);
-        }
-      }
       String imageExt = fileExtensions.getProperty("images");
       String name = "/assets/images/effects/" + allFilenames[image.ordinal()]
           + imageExt;
@@ -51,5 +40,22 @@ public class EffectImageLoader {
           FantastleReboot.getErrorHandler());
     }
     return null;
+  }
+
+  public static void cacheAll() {
+    allFilenames = DataLoader.loadEffectImageData();
+    try {
+      fileExtensions = new Properties();
+      fileExtensions.load(EffectImageLoader.class.getResourceAsStream(
+          "/assets/data/extensions/extensions.properties"));
+    } catch (IOException e) {
+      FantastleReboot.logError(e);
+    }
+    String imageExt = fileExtensions.getProperty("images");
+    for (int i = 0; i <= MAX_INDEX; i++) {
+      String name = "/assets/images/effects/" + allFilenames[i] + imageExt;
+      ImageLoader.load(name, EffectImageLoader.class.getResource(name),
+          FantastleReboot.getErrorHandler());
+    }
   }
 }

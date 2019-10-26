@@ -29,25 +29,31 @@ import com.puttysoftware.images.BufferedImageIcon;
 public class UserInterfaceImageLoader {
   private static String[] allFilenames;
   private static Properties fileExtensions;
+  private static final int MAX_INDEX = 3;
 
   public static BufferedImageIcon load(UserInterfaceImageIndex image) {
-    if (allFilenames == null) {
-      allFilenames = DataLoader.loadUserInterfaceImageData();
-    }
-    if (fileExtensions == null) {
-      try {
-        fileExtensions = new Properties();
-        fileExtensions.load(SoundPlayer.class.getResourceAsStream(
-            "/assets/data/extensions/extensions.properties"));
-      } catch (IOException e) {
-        FantastleReboot.logError(e);
-      }
-    }
     String imageExt = fileExtensions.getProperty("images");
     String name = "/assets/images/ui/" + allFilenames[image.ordinal()]
         + imageExt;
     return ImageLoader.load(name,
         UserInterfaceImageLoader.class.getResource(name),
         FantastleReboot.getErrorHandler());
+  }
+
+  public static void cacheAll() {
+    allFilenames = DataLoader.loadUserInterfaceImageData();
+    try {
+      fileExtensions = new Properties();
+      fileExtensions.load(UserInterfaceImageLoader.class.getResourceAsStream(
+          "/assets/data/extensions/extensions.properties"));
+    } catch (IOException e) {
+      FantastleReboot.logError(e);
+    }
+    String imageExt = fileExtensions.getProperty("images");
+    for (int i = 0; i <= MAX_INDEX; i++) {
+      String name = "/assets/images/ui/" + allFilenames[i] + imageExt;
+      ImageLoader.load(name, UserInterfaceImageLoader.class.getResource(name),
+          FantastleReboot.getErrorHandler());
+    }
   }
 }

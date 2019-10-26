@@ -29,21 +29,10 @@ import com.puttysoftware.images.BufferedImageIcon;
 public class AttributeImageLoader {
   private static String[] allFilenames;
   private static Properties fileExtensions;
+  private static final int MAX_INDEX = 69;
 
   public static BufferedImageIcon load(AttributeImageIndex image) {
     if (image != AttributeImageIndex._NONE) {
-      if (allFilenames == null) {
-        allFilenames = DataLoader.loadAttributeImageData();
-      }
-      if (fileExtensions == null) {
-        try {
-          fileExtensions = new Properties();
-          fileExtensions.load(SoundPlayer.class.getResourceAsStream(
-              "/assets/data/extensions/extensions.properties"));
-        } catch (IOException e) {
-          FantastleReboot.logError(e);
-        }
-      }
       String imageExt = fileExtensions.getProperty("images");
       String name = "/assets/images/attributes/" + allFilenames[image.ordinal()]
           + imageExt;
@@ -52,5 +41,22 @@ public class AttributeImageLoader {
           FantastleReboot.getErrorHandler());
     }
     return null;
+  }
+
+  public static void cacheAll() {
+    allFilenames = DataLoader.loadAttributeImageData();
+    try {
+      fileExtensions = new Properties();
+      fileExtensions.load(AttributeImageLoader.class.getResourceAsStream(
+          "/assets/data/extensions/extensions.properties"));
+    } catch (IOException e) {
+      FantastleReboot.logError(e);
+    }
+    String imageExt = fileExtensions.getProperty("images");
+    for (int i = 0; i <= MAX_INDEX; i++) {
+      String name = "/assets/images/attributes/" + allFilenames[i] + imageExt;
+      ImageLoader.load(name, AttributeImageLoader.class.getResource(name),
+          FantastleReboot.getErrorHandler());
+    }
   }
 }

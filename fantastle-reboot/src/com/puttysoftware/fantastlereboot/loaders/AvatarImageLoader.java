@@ -26,18 +26,17 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class AvatarImageLoader {
-  private static String[] allFilenames;
   private static Properties fileExtensions;
+  private static final int MAX_FAMILY_INDEX = 5;
+  private static final int MAX_HAIR_INDEX = 9;
+  private static final int MAX_SKIN_INDEX = 9;
 
   public static BufferedImageIcon load(final int familyID, final int skinID,
       final int hairID) {
-    if (allFilenames == null) {
-      allFilenames = DataLoader.loadAvatarImageData();
-    }
     if (fileExtensions == null) {
       try {
         fileExtensions = new Properties();
-        fileExtensions.load(SoundPlayer.class.getResourceAsStream(
+        fileExtensions.load(AvatarImageLoader.class.getResourceAsStream(
             "/assets/data/extensions/extensions.properties"));
       } catch (IOException e) {
         FantastleReboot.logError(e);
@@ -48,5 +47,26 @@ public class AvatarImageLoader {
         + Integer.toString(skinID) + Integer.toString(hairID) + imageExt;
     return ImageLoader.load(name, AvatarImageLoader.class.getResource(name),
         FantastleReboot.getErrorHandler());
+  }
+
+  public static void cacheAll() {
+    try {
+      fileExtensions = new Properties();
+      fileExtensions.load(AvatarImageLoader.class.getResourceAsStream(
+          "/assets/data/extensions/extensions.properties"));
+    } catch (IOException e) {
+      FantastleReboot.logError(e);
+    }
+    String imageExt = fileExtensions.getProperty("images");
+    for (int familyID = 0; familyID <= MAX_FAMILY_INDEX; familyID++) {
+      for (int skinID = 0; skinID <= MAX_SKIN_INDEX; skinID++) {
+        for (int hairID = 0; hairID <= MAX_HAIR_INDEX; hairID++) {
+          String name = "/assets/images/avatars/" + Integer.toString(familyID)
+              + Integer.toString(skinID) + Integer.toString(hairID) + imageExt;
+          ImageLoader.load(name, AvatarImageLoader.class.getResource(name),
+              FantastleReboot.getErrorHandler());
+        }
+      }
+    }
   }
 }

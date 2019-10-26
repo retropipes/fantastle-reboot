@@ -18,6 +18,15 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot;
 
+import com.puttysoftware.fantastlereboot.loaders.AttributeImageLoader;
+import com.puttysoftware.fantastlereboot.loaders.AvatarImageLoader;
+import com.puttysoftware.fantastlereboot.loaders.BossImageLoader;
+import com.puttysoftware.fantastlereboot.loaders.EffectImageLoader;
+import com.puttysoftware.fantastlereboot.loaders.ItemImageLoader;
+import com.puttysoftware.fantastlereboot.loaders.MonsterImageLoader;
+import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
+import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
+
 class CacheTask extends Thread {
   // Constructors
   public CacheTask() {
@@ -31,11 +40,31 @@ class CacheTask extends Thread {
     prefs.updateWaitProgress(0);
     // Enter Wait Mode
     prefs.enterWaitMode();
-    // Update user interface images
-    bag.updateMicroLogo();
-    bag.getGUIManager().updateLogo();
-    prefs.updateWaitProgress(50);
-    // Update Help
+    // Cache UI images
+    UserInterfaceImageLoader.cacheAll();
+    prefs.updateWaitProgress(11);
+    // Cache Boss images
+    BossImageLoader.cacheAll();
+    prefs.updateWaitProgress(22);
+    // Cache Item images
+    ItemImageLoader.cacheAll();
+    prefs.updateWaitProgress(33);
+    // Cache Effect images
+    EffectImageLoader.cacheAll();
+    prefs.updateWaitProgress(44);
+    // Cache Monster images
+    MonsterImageLoader.cacheAll();
+    prefs.updateWaitProgress(55);
+    // Cache Avatar images
+    AvatarImageLoader.cacheAll();
+    prefs.updateWaitProgress(66);
+    // Cache Attribute images
+    AttributeImageLoader.cacheAll();
+    prefs.updateWaitProgress(78);
+    // Cache Object images
+    ObjectImageLoader.cacheAll();
+    prefs.updateWaitProgress(88);
+    // Final tasks
     bag.getGeneralHelpManager().updateHelpSize();
     prefs.updateWaitProgress(100);
     // Exit Wait Mode
