@@ -31,12 +31,10 @@ import javax.imageio.ImageIO;
 import com.puttysoftware.diane.loaders.ColorShader;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
-import com.puttysoftware.fantastlereboot.creatures.faiths.FaithConstants;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class MonsterImageLoader {
   private static Properties fileExtensions;
-  private static final int MAX_INDEX = 89;
 
   static BufferedImageIcon loadUncached(final String name,
       final ColorShader shader) {
