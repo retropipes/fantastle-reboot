@@ -1,0 +1,35 @@
+The actions are specified as a integer bitmask.
+Multiple actions are specified by adding the flag values.
+
+0 = Nothing
+1 = Disappear
+2 = Add Self to Object Inventory
+4 = Consume Related from Object Inventory (fail if not present)
+8 = Play Sound
+16 = Grant Effect
+32 = Enter Battle
+64 = Change Form of All Objects By ID #1
+128 = Change Form of All Objects By ID #2
+256 = Change Form of All Objects By Type #1
+512 = Change Form of All Objects By Type #2
+1024 = Up One Floor
+2048 = Down One Floor
+4096 = Previous Level
+8192 = Next Level
+16384 = Enter Shop
+32768 = Push Object
+65536 = Pull Object
+131072 = Destroy Pushed Object
+262144 = Replace Self With Object By ID
+524288 = Spawn Many Objects Randomly
+1048576 = Modify Global Timer
+2097152 = Up Two Floors
+4194304 = Down Two Floors
+8388608 = Stop Moving Objects By ID
+16777216 = Stop Moving Objects By Type
+33554432 = Dispel All Effects
+67108864 = Move Object Randomly
+134217728 = Teleport Player (known destination)
+268435456 = Teleport Pushed Object (known destination)
+536870912 = Teleport Player (random destination)
+1073741824 = Allow Movement if Inventory Object Present by ID
