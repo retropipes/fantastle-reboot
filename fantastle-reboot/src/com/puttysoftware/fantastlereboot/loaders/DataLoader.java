@@ -3,6 +3,7 @@ package com.puttysoftware.fantastlereboot.loaders;
 import java.io.IOException;
 import java.nio.LongBuffer;
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.Hashtable;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
@@ -243,19 +244,26 @@ public class DataLoader {
       }
       LongBuffer[] indexData = new LongBuffer[rawData.size()];
       int index = 0;
-      for (Long val : rawData) {
-        indexData[index] = LongBuffer.wrap(new long[] { val.longValue() });
-        index++;
-      }
       FantastleObjectActions[] data = new FantastleObjectActions[indexData.length];
       for (index = 0; index < data.length; index++) {
-        data[index] = new FantastleObjectActions(indexData[index]);
+        Long val = rawData.get(index);
+        data[index] = getCachedActionData(val);
       }
       return data;
     } catch (final IOException e) {
       FantastleReboot.logError(e);
       return null;
     }
+  }
+
+  private static final Dictionary<Long, FantastleObjectActions> CACHE = new Hashtable<>();
+
+  private static FantastleObjectActions getCachedActionData(final Long key) {
+    if (CACHE.get(key) == null) {
+      CACHE.put(key, new FantastleObjectActions(
+          LongBuffer.wrap(new long[] { key.longValue() })));
+    }
+    return CACHE.get(key);
   }
 
   public static int[] loadObjectActionAddonData(int actionID) {
