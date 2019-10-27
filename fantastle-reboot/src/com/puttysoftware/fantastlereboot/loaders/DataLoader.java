@@ -18,10 +18,10 @@ public class DataLoader {
   }
 
   public static int[] loadCasteData(final int c) {
-    final String name = CasteConstants.CASTE_NAMES[c].toLowerCase();
+    final String name = Integer.toString(c);
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
-            .getResourceAsStream("/assets/data/caste/" + name + ".dat"))) {
+            .getResourceAsStream("/assets/data/caste/" + name + ".txt"))) {
       // Fetch data
       final int[] rawData = new int[CasteConstants.CASTES_ATTRIBUTE_COUNT];
       for (int x = 0; x < rawData.length; x++) {
@@ -42,7 +42,7 @@ public class DataLoader {
     final String name = Integer.toString(f);
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
-            .getResourceAsStream("/assets/data/faith/" + name + ".dat"))) {
+            .getResourceAsStream("/assets/data/faith/" + name + ".txt"))) {
       // Fetch data
       final int[] rawData = new int[FaithConstants.FAITHS_COUNT];
       for (int x = 0; x < rawData.length; x++) {
@@ -83,7 +83,7 @@ public class DataLoader {
       final int p) {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
-            .getResourceAsStream("/assets/data/faith/powers.dat"))) {
+            .getResourceAsStream("/assets/data/faith/powers.txt"))) {
       // Fetch data
       final ArrayList<String> rawData = new ArrayList<>();
       String line = "";
@@ -109,10 +109,10 @@ public class DataLoader {
   }
 
   public static int[] loadGenderData(final int g) {
-    final String name = GenderConstants.GENDER_NAMES[g].toLowerCase();
+    final String name = Integer.toString(g);
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
-            .getResourceAsStream("/assets/data/gender/" + name + ".dat"))) {
+            .getResourceAsStream("/assets/data/gender/" + name + ".txt"))) {
       // Fetch data
       final int[] rawData = new int[GenderConstants.GENDERS_ATTRIBUTE_COUNT];
       for (int x = 0; x < rawData.length; x++) {
@@ -132,7 +132,7 @@ public class DataLoader {
   public static String[] loadMonsterData() {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
-            .getResourceAsStream("/assets/data/monster/monsternames.dat"))) {
+            .getResourceAsStream("/assets/data/monster/monsternames.txt"))) {
       // Fetch data
       final ArrayList<String> data = new ArrayList<>();
       String raw = "0";
@@ -168,7 +168,7 @@ public class DataLoader {
     final String name = Integer.toString(p);
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class.getResourceAsStream(
-            "/assets/data/personality/" + name + ".dat"))) {
+            "/assets/data/personality/" + name + ".txt"))) {
       // Fetch data
       final int[] rawData = new int[PersonalityConstants.PERSONALITY_ATTRIBUTES_COUNT];
       for (int x = 0; x < rawData.length; x++) {
@@ -185,11 +185,11 @@ public class DataLoader {
     }
   }
 
-  public static int[] loadRaceData(final int c) {
-    final String name = RaceConstants.RACE_NAMES[c].toLowerCase();
+  public static int[] loadRaceData(final int r) {
+    final String name = Integer.toString(r);
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
-            .getResourceAsStream("/assets/data/race/" + name + ".dat"))) {
+            .getResourceAsStream("/assets/data/race/" + name + ".txt"))) {
       // Fetch data
       final int[] rawData = new int[RaceConstants.RACE_ATTRIBUTE_COUNT];
       for (int x = 0; x < rawData.length; x++) {
@@ -220,6 +220,32 @@ public class DataLoader {
         }
       }
       return data.toArray(new String[data.size()]);
+    } catch (final IOException e) {
+      FantastleReboot.logError(e);
+      return null;
+    }
+  }
+
+  public static int[] loadObjectActionData() {
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
+        DataLoader.class
+            .getResourceAsStream("/assets/data/objects/actions.txt"))) {
+      // Fetch data
+      final ArrayList<Integer> rawData = new ArrayList<>();
+      String raw = "0";
+      while (raw != null) {
+        raw = rsr.readString();
+        if (raw != null) {
+          rawData.add(Integer.parseInt(raw));
+        }
+      }
+      int[] data = new int[rawData.size()];
+      int index = 0;
+      for (Integer val : rawData) {
+        data[index] = val.intValue();
+        index++;
+      }
+      return data;
     } catch (final IOException e) {
       FantastleReboot.logError(e);
       return null;
