@@ -152,6 +152,7 @@ final class MovementTask extends Thread {
     FantastleObjectModel below = null;
     FantastleObjectModel nextBelow = null;
     FantastleObjectModel nextAbove = new Wall();
+    boolean loopCheck = true;
     do {
       try {
         below = m.getCell(px, py, pz, Layers.GROUND);
@@ -190,6 +191,7 @@ final class MovementTask extends Thread {
             }
           } else {
             // Move failed - object is solid in that direction
+            SoundPlayer.playSound(SoundIndex.WALK_FAILED);
             bag.showMessage("Can't go that way");
             this.fireStepActions();
             this.decayEffects();
@@ -198,6 +200,7 @@ final class MovementTask extends Thread {
           this.vwMgr.restoreViewingWindow();
           m.restorePlayerLocation();
           // Move failed - attempted to go outside the maze
+          SoundPlayer.playSound(SoundIndex.WALK_FAILED);
           bag.showMessage("Can't go that way");
           nextAbove = new OpenSpace();
           this.decayEffects();
@@ -206,6 +209,8 @@ final class MovementTask extends Thread {
         this.fireStepActions();
       } else {
         // Move failed - pre-move check failed
+        SoundPlayer.playSound(SoundIndex.WALK_FAILED);
+        bag.showMessage("Can't go that way");
         this.fireStepActions();
         this.decayEffects();
         this.proceed = false;
@@ -213,7 +218,15 @@ final class MovementTask extends Thread {
       px = m.getPlayerLocationX();
       py = m.getPlayerLocationY();
       pz = m.getPlayerLocationZ();
-    } while (this.checkLoopCondition(below, nextBelow, nextAbove));
+      loopCheck = this.checkLoopCondition(below, nextBelow, nextAbove);
+      if (loopCheck && !nextBelow.hasFriction()) {
+        // Sliding on ice
+        SoundPlayer.playSound(SoundIndex.WALK_ICE);
+      } else if (nextBelow.hasFriction() && this.proceed) {
+        // Walking normally
+        SoundPlayer.playSound(SoundIndex.WALK);
+      }
+    } while (loopCheck);
   }
 
   private boolean checkLoopCondition(final FantastleObjectModel below,
