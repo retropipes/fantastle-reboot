@@ -15,6 +15,7 @@ public class MusicPlayer {
 
   private static String[] allFilenames;
   private static Properties fileExtensions;
+  private static ModuleLoader MUSIC = new ModuleLoader();
 
   private static String getMusicFilename(final MusicIndex music) {
     if (allFilenames == null && fileExtensions == null) {
@@ -42,8 +43,11 @@ public class MusicPlayer {
   public static void playMusic(final MusicIndex music) {
     if (music != null && music != MusicIndex._NONE) {
       final String filename = getMusicFilename(music);
+      if (MUSIC.isPlaying()) {
+        MUSIC.stopLoop();
+      }
       try {
-        new ModuleLoader().load("/assets/music/" + filename).play();
+        MUSIC.load("/assets/music/" + filename).play();
       } catch (IOException e) {
         FantastleReboot.logWarning(e);
       }

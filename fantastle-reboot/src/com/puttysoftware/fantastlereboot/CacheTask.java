@@ -27,12 +27,14 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.WindowConstants;
 
+import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.loaders.AttributeImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.AvatarImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.BossImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.EffectImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.ItemImageLoader;
+import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 
@@ -69,6 +71,8 @@ class CacheTask extends Thread {
     try {
       // Enter Wait Mode
       this.enterWaitMode();
+      // Get music going
+      MusicPlayer.playMusic(MusicIndex.TITLE);
       // Cache UI images
       UserInterfaceImageLoader.cacheAll();
       this.updateWaitProgress(12);

@@ -6,10 +6,12 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
+import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 
 public class Shop {
@@ -149,6 +151,7 @@ public class Shop {
         }
       }
     }
+    MusicPlayer.playMusic(MusicIndex.DUNGEON);
   }
 
   private boolean shopStage1() {
@@ -157,6 +160,7 @@ public class Shop {
     if (FantastleReboot.getBagOStuff().getPrefsManager()
         .getSoundEnabled(PreferencesManager.SOUNDS_SHOP)) {
       SoundPlayer.playSound(SoundIndex.SHOP);
+      MusicPlayer.playMusic(MusicIndex.SHOP);
     }
     if (this.type == ShopTypes.WEAPONS) {
       this.typeChoices = WeaponConstants.getWeaponChoices();

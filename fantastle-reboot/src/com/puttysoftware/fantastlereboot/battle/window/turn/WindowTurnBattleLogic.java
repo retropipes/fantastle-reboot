@@ -6,6 +6,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
+import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
@@ -20,6 +21,7 @@ import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
+import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
@@ -305,6 +307,7 @@ public class WindowTurnBattleLogic extends Battle {
       final GameLogicManager gm = app.getGameManager();
       if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
         SoundPlayer.playSound(SoundIndex.DRAW_SWORD);
+        MusicPlayer.playMusic(MusicIndex.NORMAL_WINDOW_BATTLE);
       }
       bag.setInBattle();
       gm.hideOutput();
