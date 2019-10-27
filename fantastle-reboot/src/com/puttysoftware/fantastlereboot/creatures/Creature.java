@@ -5,6 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.creatures;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.puttysoftware.fantastlereboot.ai.map.AbstractMapAIRoutine;
@@ -23,7 +24,7 @@ public abstract class Creature {
   protected BufferedImageIcon image;
   private final Statistic[] stats;
   private long experience;
-  private final Effect[] effectList;
+  private final ArrayList<Effect> effectList;
   private SpellBook spellsKnown;
   private AbstractMapAIRoutine mapAI;
   private AbstractWindowAIRoutine windowAI;
@@ -69,7 +70,7 @@ public abstract class Creature {
     this.stats[StatConstants.STAT_AGILITY].setMinVal(1);
     this.stats[StatConstants.STAT_VITALITY].setValue(1);
     this.stats[StatConstants.STAT_AGILITY].setValue(1);
-    this.effectList = new Effect[Creature.MAX_EFFECTS];
+    this.effectList = new ArrayList<>(Creature.MAX_EFFECTS);
     this.spellsKnown = null;
     this.windowAI = null;
     this.items = new ItemInventory(hasCombatItems);
@@ -139,11 +140,9 @@ public abstract class Creature {
     return this.teamID;
   }
 
-  public final void applyEffect(final Effect e) {
-    int x;
-    for (x = 0; x < this.effectList.length; x++) {
-      if (this.get(x) == null) {
-        this.set(x, e);
+  public final void applyEffect(final Effect ie) {
+    for (Effect e : this.effectList) {
+      if (e.isActive() && ie.equals(e)) {
         e.scaleEffect(Effect.EFFECT_ADD, this);
         return;
       }
@@ -159,12 +158,8 @@ public abstract class Creature {
   }
 
   public final void cullInactiveEffects() {
-    int x;
-    for (x = 0; x < this.effectList.length; x++) {
-      final Effect e = this.get(x);
-      if (!(e.isActive())) {
-        this.set(x, null);
-      }
+    for (Effect e : this.effectList) {
+      e.deactivateEffect();
     }
   }
 
@@ -188,10 +183,10 @@ public abstract class Creature {
     this.fixStatValue(StatConstants.STAT_CURRENT_MP);
   }
 
-  public final void extendEffect(final Effect e, final int rounds) {
-    final int index = this.indexOf(e);
-    if (index != -1) {
-      this.get(index).extendEffect(rounds);
+  public final void extendEffect(final Effect ie, final int rounds) {
+    Effect e = this.get(ie);
+    if (e != null) {
+      e.extendEffect(rounds);
     }
   }
 
@@ -208,8 +203,13 @@ public abstract class Creature {
     }
   }
 
-  private final Effect get(final int x) {
-    return this.effectList[x];
+  private final Effect get(final Effect ie) {
+    for (Effect e : this.effectList) {
+      if (e.isActive() && ie.equals(e)) {
+        return e;
+      }
+    }
+    return null;
   }
 
   public int getMapBattleActionsPerRound() {
@@ -246,10 +246,9 @@ public abstract class Creature {
   }
 
   public final String getAllCurrentEffectMessages() {
-    int x;
     final StringBuilder sb = new StringBuilder(Effect.getNullMessage());
-    for (x = 0; x < this.effectList.length; x++) {
-      sb.append(this.get(x).getCurrentMessage());
+    for (Effect e : this.effectList) {
+      sb.append(e.getCurrentMessage());
       sb.append("\n");
     }
     String s = sb.toString();
@@ -280,10 +279,9 @@ public abstract class Creature {
   }
 
   public final String getCompleteEffectString() {
-    int x;
     String s = "";
-    for (x = 0; x < this.effectList.length; x++) {
-      s += this.get(x).getEffectString() + "\n";
+    for (Effect e : this.effectList) {
+      s += e.getEffectString() + "\n";
     }
     // Strip final newline character, if it exists
     if (!s.equals(Effect.getNullMessage())) {
@@ -293,10 +291,9 @@ public abstract class Creature {
   }
 
   public final int getActiveEffectCount() {
-    int x, c;
+    int c;
     c = 0;
-    for (x = 0; x < this.effectList.length; x++) {
-      final Effect e = this.get(x);
+    for (Effect e : this.effectList) {
       if (e.isActive()) {
         c++;
       }
@@ -305,15 +302,13 @@ public abstract class Creature {
   }
 
   public final String[] getCompleteEffectStringArray() {
-    int x, z;
+    int z;
     z = this.getActiveEffectCount();
     final String[] s = new String[z];
     int counter = 0;
-    for (x = 0; x < z; x++) {
-      if (this.effectList[x] != null) {
-        s[counter] = this.effectList[x].getEffectString();
-        counter++;
-      }
+    for (Effect e : this.effectList) {
+      s[counter] = e.getEffectString();
+      counter++;
     }
     return s;
   }
@@ -333,15 +328,11 @@ public abstract class Creature {
   }
 
   public final double getEffectedStat(final int stat) {
-    int x, s, p;
+    int s, p;
     s = 0;
     p = this.getStat(stat);
-    for (x = 0; x < this.effectList.length; x++) {
-      final Effect e = this.get(x);
+    for (Effect e : this.effectList) {
       p *= e.getEffect(Effect.EFFECT_MULTIPLY);
-    }
-    for (x = 0; x < this.effectList.length; x++) {
-      final Effect e = this.get(x);
       s += e.getEffect(Effect.EFFECT_ADD);
     }
     return p + s;
@@ -612,32 +603,13 @@ public abstract class Creature {
     this.fixStatValue(StatConstants.STAT_CURRENT_HP);
   }
 
-  private final int indexOf(final Effect e) {
-    int x;
-    for (x = 0; x < this.effectList.length; x++) {
-      final Effect le = this.get(x);
-      if (le != null) {
-        if (e.equals(le)) {
-          return x;
-        }
-      } else {
-        return -1;
-      }
-    }
-    return -1;
-  }
-
   public final boolean isAlive() {
     return this.getCurrentHP() > 0;
   }
 
-  public final boolean isEffectActive(final Effect e) {
-    final int index = this.indexOf(e);
-    if (index != -1) {
-      return this.get(index).isActive();
-    } else {
-      return false;
-    }
+  public final boolean isEffectActive(final Effect ie) {
+    final Effect e = this.get(ie);
+    return e != null;
   }
 
   public final void levelUp() {
@@ -774,10 +746,6 @@ public abstract class Creature {
     this.fixStatValue(StatConstants.STAT_CURRENT_MP);
   }
 
-  private final void set(final int x, final Effect e) {
-    this.effectList[x] = e;
-  }
-
   public final void setAgility(final int value) {
     this.setStat(StatConstants.STAT_AGILITY, value);
   }
@@ -880,16 +848,14 @@ public abstract class Creature {
   }
 
   public final void stripAllEffects() {
-    int x;
-    for (x = 0; x < this.effectList.length; x++) {
-      this.set(x, null);
+    for (Effect e : this.effectList) {
+      e.deactivateEffect();
     }
   }
 
   public final void useEffects() {
-    int x;
-    for (x = 0; x < this.effectList.length; x++) {
-      this.get(x).useEffect(this);
+    for (Effect e : this.effectList) {
+      e.useEffect(this);
     }
   }
 
@@ -921,7 +887,7 @@ public abstract class Creature {
   public int hashCode() {
     final int prime = 31;
     int result = super.hashCode();
-    result = prime * result + Arrays.hashCode(this.effectList);
+    result = prime * result + this.effectList.hashCode();
     result = prime * result
         + (int) (this.experience ^ (this.experience >>> 32));
     result = prime * result
@@ -946,7 +912,7 @@ public abstract class Creature {
       return false;
     }
     final Creature other = (Creature) obj;
-    if (!Arrays.equals(this.effectList, other.effectList)) {
+    if (!this.effectList.equals(other.effectList)) {
       return false;
     }
     if (this.experience != other.experience) {
@@ -1022,10 +988,9 @@ public abstract class Creature {
   }
 
   public String getAllEffectMessages(final int which) {
-    int x;
     String s = "";
-    for (x = 0; x < this.effectList.length; x++) {
-      s += this.get(x).getMessage(which) + "\n";
+    for (Effect e : this.effectList) {
+      s += e.getMessage(which) + "\n";
     }
     // Strip final newline character, if it exists
     if (!s.equals(Effect.getNullMessage())) {
@@ -1039,20 +1004,40 @@ public abstract class Creature {
         * StatConstants.FACTOR_ABSORB_DEFENSE);
   }
 
-  public String getEffectMessage(final Effect e, final int which) {
-    return this.get(this.indexOf(e)).getMessage(which);
+  public String getEffectMessage(final Effect ie, final int which) {
+    final Effect e = this.get(ie);
+    if (e != null) {
+      return e.getMessage(which);
+    } else {
+      return Effect.getNullMessage();
+    }
   }
 
-  public String getEffectName(final Effect e) {
-    return this.get(this.indexOf(e)).getName();
+  public String getEffectName(final Effect ie) {
+    final Effect e = this.get(ie);
+    if (e != null) {
+      return e.getName();
+    } else {
+      return "";
+    }
   }
 
-  public int getEffectRounds(final Effect e) {
-    return this.get(this.indexOf(e)).getRounds();
+  public int getEffectRounds(final Effect ie) {
+    final Effect e = this.get(ie);
+    if (e != null) {
+      return e.getRounds();
+    } else {
+      return 0;
+    }
   }
 
-  public String getEffectString(final Effect e) {
-    return this.get(this.indexOf(e)).getEffectString();
+  public String getEffectString(final Effect ie) {
+    final Effect e = this.get(ie);
+    if (e != null) {
+      return e.getEffectString();
+    } else {
+      return Effect.getNullEffectString();
+    }
   }
 
   public String getEffectedHPString() {
@@ -1068,10 +1053,10 @@ public abstract class Creature {
         * StatConstants.FACTOR_POWER_ATTACK);
   }
 
-  public void stripEffect(final Effect e) {
-    final int x = this.indexOf(e);
-    if (x != -1) {
-      this.set(x, null);
+  public void stripEffect(final Effect ie) {
+    final Effect e = this.get(ie);
+    if (e != null) {
+      e.deactivateEffect();
     }
   }
 }
