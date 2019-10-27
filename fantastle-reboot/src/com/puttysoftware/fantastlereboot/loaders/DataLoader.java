@@ -1,6 +1,7 @@
 package com.puttysoftware.fantastlereboot.loaders;
 
 import java.io.IOException;
+import java.nio.LongBuffer;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -10,6 +11,7 @@ import com.puttysoftware.fantastlereboot.creatures.faiths.FaithConstants;
 import com.puttysoftware.fantastlereboot.creatures.genders.GenderConstants;
 import com.puttysoftware.fantastlereboot.creatures.personalities.PersonalityConstants;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectActions;
 import com.puttysoftware.fileutils.ResourceStreamReader;
 
 public class DataLoader {
@@ -226,10 +228,41 @@ public class DataLoader {
     }
   }
 
-  public static int[] loadObjectActionData() {
+  public static FantastleObjectActions[] loadObjectActionData() {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
             .getResourceAsStream("/assets/data/objects/actions.txt"))) {
+      // Fetch data
+      final ArrayList<Long> rawData = new ArrayList<>();
+      String raw = "0";
+      while (raw != null) {
+        raw = rsr.readString();
+        if (raw != null) {
+          rawData.add(Long.parseLong(raw));
+        }
+      }
+      LongBuffer[] indexData = new LongBuffer[rawData.size()];
+      int index = 0;
+      for (Long val : rawData) {
+        indexData[index] = LongBuffer.wrap(new long[] { val.longValue() });
+        index++;
+      }
+      FantastleObjectActions[] data = new FantastleObjectActions[indexData.length];
+      for (index = 0; index < data.length; index++) {
+        data[index] = new FantastleObjectActions(indexData[index]);
+      }
+      return data;
+    } catch (final IOException e) {
+      FantastleReboot.logError(e);
+      return null;
+    }
+  }
+
+  public static int[] loadObjectActionAddonData(int actionID) {
+    final String name = "action-" + Integer.toString(actionID);
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
+        DataLoader.class
+            .getResourceAsStream("/assets/data/objects/" + name + ".txt"))) {
       // Fetch data
       final ArrayList<Integer> rawData = new ArrayList<>();
       String raw = "0";
@@ -239,10 +272,10 @@ public class DataLoader {
           rawData.add(Integer.parseInt(raw));
         }
       }
-      int[] data = new int[rawData.size()];
       int index = 0;
-      for (Integer val : rawData) {
-        data[index] = val.intValue();
+      int[] data = new int[rawData.size()];
+      for (Integer rawItem : rawData) {
+        data[index] = rawItem.intValue();
         index++;
       }
       return data;
