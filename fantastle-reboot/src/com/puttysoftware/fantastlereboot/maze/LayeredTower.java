@@ -634,13 +634,48 @@ final class LayeredTower implements Cloneable {
 
   public void tickTimers(final int floor) {
     int x, y;
-    // Tick all FantastleObjectModel timers
+    // Tick all object timers
+    FantastleObjectModelList objects = FantastleReboot.getBagOStuff()
+        .getObjects();
     for (x = 0; x < this.getColumns(); x++) {
       for (y = 0; y < this.getRows(); y++) {
-        final FantastleObjectModel mo = this.getCell(y, x, floor,
+        final FantastleObjectModel obj = this.getCell(y, x, floor,
             Layers.OBJECT);
-        if (mo != null) {
-          mo.tickTimer();
+        obj.tickTimer();
+        int objMovedX = 0;
+        int objMovedY = 0;
+        if (objects.movesRandomly(obj)) {
+          // Move object randomly
+          objMovedX = RandomRange.generate(-1, 1);
+          objMovedY = RandomRange.generate(-1, 1);
+          if (y + objMovedY < this.getColumns()
+              && x + objMovedX < this.getRows() && y + objMovedY >= 0
+              && x + objMovedX >= 0) {
+            FantastleObjectModel below = this.getCell(y, x, floor,
+                Layers.GROUND);
+            FantastleObjectModel nextBelow = this.getCell(y + objMovedY,
+                x + objMovedX, floor, Layers.GROUND);
+            FantastleObjectModel nextAbove = this.getCell(y + objMovedY,
+                x + objMovedX, floor, Layers.OBJECT);
+            if (!below.isSolid() && !nextBelow.isSolid()
+                && !nextAbove.isSolid()) {
+              this.setCell(obj, y, x, floor, Layers.OBJECT);
+              if (obj.hasSavedObject()) {
+                this.setCell(obj.getSavedObject(), y + objMovedY, x + objMovedX,
+                    floor, Layers.OBJECT);
+              } else {
+                this.setCell(new OpenSpace(), y, x, floor, Layers.OBJECT);
+              }
+            }
+          }
+        }
+        if (objects.startsBattle(obj)) {
+          int px = this.getPlayerColumn();
+          int py = this.getPlayerRow();
+          if (y + objMovedY == py && x + objMovedX == px) {
+            // Start battle!
+            FantastleReboot.getBagOStuff().getBattle().doBattle();
+          }
         }
       }
     }

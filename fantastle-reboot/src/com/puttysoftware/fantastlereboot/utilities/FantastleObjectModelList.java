@@ -10,7 +10,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.loaders.DataLoader;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectActions;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objectmodel.MonsterObjectModel;
@@ -54,6 +56,8 @@ import com.puttysoftware.xio.XDataReader;
 public final class FantastleObjectModelList {
   // Fields
   private final ArrayList<FantastleObjectModel> allObjectList;
+  private FantastleObjectActions[] allActionList;
+  private int[] allShopActionList;
 
   // Constructor
   public FantastleObjectModelList() {
@@ -74,10 +78,29 @@ public final class FantastleObjectModelList {
         new StairsUp(), new StairsDown(), new WallOff(), new WallOn(),
         new Button(), new Amulet() };
     this.allObjectList.clear();
-    // Add all predefined objects to the list
+    // Populate lists
+    this.allActionList = DataLoader.loadObjectActionData();
+    this.allShopActionList = DataLoader
+        .loadObjectActionAddonData(FantastleObjectActions.SHOP);
     for (int z = 0; z < allObjects.length; z++) {
       this.allObjectList.add(allObjects[z]);
     }
+  }
+
+  public boolean movesRandomly(FantastleObjectModel obj) {
+    return this.allActionList[obj.getUniqueID()].get(FantastleObjectActions.MOVE_SELF);
+  }
+
+  public boolean startsBattle(FantastleObjectModel obj) {
+    return this.allActionList[obj.getUniqueID()].get(FantastleObjectActions.BATTLE);
+  }
+
+  public boolean sendsToShop(FantastleObjectModel obj) {
+    return this.allActionList[obj.getUniqueID()].get(FantastleObjectActions.SHOP);
+  }
+
+  public int sendsToWhichShop(FantastleObjectModel obj) {
+    return this.allShopActionList[obj.getUniqueID()];
   }
 
   public FantastleObjectModel[] getAllObjects() {

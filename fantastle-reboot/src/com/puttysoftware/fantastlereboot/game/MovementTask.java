@@ -18,6 +18,7 @@ import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Wall;
+import com.puttysoftware.fantastlereboot.utilities.FantastleObjectModelList;
 
 final class MovementTask extends Thread {
   // Fields
@@ -136,9 +137,9 @@ final class MovementTask extends Thread {
 
   private void updatePositionRelative(final int dirX, final int dirY,
       final int dirZ) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
     final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = bag.getMazeManager().getMaze();
+    final FantastleObjectModelList objects = bag.getObjects();
     int px = m.getPlayerLocationX();
     int py = m.getPlayerLocationY();
     int pz = m.getPlayerLocationZ();
@@ -182,7 +183,7 @@ final class MovementTask extends Thread {
             py += fY;
             this.vwMgr.offsetViewingWindowLocationX(fY);
             this.vwMgr.offsetViewingWindowLocationY(fX);
-            app.getMazeManager().setDirty(true);
+            bag.getMazeManager().setDirty(true);
             this.fireStepActions();
             this.decayEffects();
             this.redrawMaze();
@@ -225,6 +226,10 @@ final class MovementTask extends Thread {
       } else if (nextBelow.hasFriction() && this.proceed) {
         // Walking normally
         SoundPlayer.playSound(SoundIndex.WALK);
+      }
+      if (this.proceed && objects.sendsToShop(nextAbove)) {
+        // Send player to shop
+        bag.getShop(objects.sendsToWhichShop(nextAbove)).showShop();
       }
     } while (loopCheck);
   }

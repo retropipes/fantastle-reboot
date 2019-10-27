@@ -242,9 +242,9 @@ public class DataLoader {
           rawData.add(Long.parseLong(raw));
         }
       }
-      LongBuffer[] indexData = new LongBuffer[rawData.size()];
       int index = 0;
-      FantastleObjectActions[] data = new FantastleObjectActions[indexData.length];
+      FantastleObjectActions[] data = new FantastleObjectActions[rawData
+          .size()];
       for (index = 0; index < data.length; index++) {
         Long val = rawData.get(index);
         data[index] = getCachedActionData(val);
