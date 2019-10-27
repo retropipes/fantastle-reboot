@@ -143,18 +143,18 @@ class GameGUIManager {
                   m.getPlayerLocationZ(), Layers.GROUND);
               final FantastleObjectModel obj2 = m.getCell(y, x,
                   m.getPlayerLocationZ(), Layers.OBJECT);
-              final BufferedImageIcon img1 = obj1.getImage();
-              final BufferedImageIcon img2 = obj2.getImage();
+              final BufferedImageIcon img1 = obj1.getGameImage();
+              final BufferedImageIcon img2 = obj2.getGameImage();
               if (u == y && v == x) {
                 final FantastleObjectModel obj3 = new Player();
-                final BufferedImageIcon img3 = obj3.getImage();
+                final BufferedImageIcon img3 = obj3.getGameImage();
                 String cacheName = generateCacheName(obj1, obj2, obj3);
                 this.drawGrid.setImageCell(
                     ImageCompositor.composite(cacheName, img1, img2, img3),
                     xFix, yFix);
               } else if (m.hasNote(x, y, m.getPlayerLocationZ())) {
                 final FantastleObjectModel obj3 = NOTE;
-                final BufferedImageIcon img3 = obj3.getImage();
+                final BufferedImageIcon img3 = obj3.getGameImage();
                 String cacheName = generateCacheName(obj1, obj2, obj3);
                 this.drawGrid.setImageCell(
                     ImageCompositor.composite(cacheName, img1, img2, img3),
@@ -169,7 +169,7 @@ class GameGUIManager {
               this.drawGrid.setImageCell(DARK.getImage(), xFix, yFix);
             }
           } catch (final ArrayIndexOutOfBoundsException ae) {
-            this.drawGrid.setImageCell(ev.getImage(), xFix, yFix);
+            this.drawGrid.setImageCell(ev.getGameImage(), xFix, yFix);
           }
         }
       }
@@ -207,19 +207,19 @@ class GameGUIManager {
               m.getPlayerLocationZ(), Layers.GROUND);
           final FantastleObjectModel obj2 = m.getCell(y, x,
               m.getPlayerLocationZ(), Layers.OBJECT);
-          final BufferedImageIcon img1 = obj1.getImage();
-          final BufferedImageIcon img2 = obj2.getImage();
-          final BufferedImageIcon img4 = obj4.getImage();
+          final BufferedImageIcon img1 = obj1.getGameImage();
+          final BufferedImageIcon img2 = obj2.getGameImage();
+          final BufferedImageIcon img4 = obj4.getGameImage();
           if (u == y && v == x) {
             final FantastleObjectModel obj3 = new Player();
-            final BufferedImageIcon img3 = obj3.getImage();
+            final BufferedImageIcon img3 = obj3.getGameImage();
             String cacheName = generateCacheName(obj1, obj2, obj3, obj4);
             this.drawGrid.setImageCell(
                 ImageCompositor.composite(cacheName, img1, img2, img3, img4),
                 xFix, yFix);
           } else if (m.hasNote(x, y, m.getPlayerLocationZ())) {
             final FantastleObjectModel obj3 = NOTE;
-            final BufferedImageIcon img3 = obj3.getImage();
+            final BufferedImageIcon img3 = obj3.getGameImage();
             String cacheName = generateCacheName(obj1, obj2, obj3, obj4);
             this.drawGrid.setImageCell(
                 ImageCompositor.composite(cacheName, img1, img2, img3, img4),
@@ -234,7 +234,7 @@ class GameGUIManager {
           this.drawGrid.setImageCell(DARK.getImage(), xFix, yFix);
         }
       } catch (final ArrayIndexOutOfBoundsException ae) {
-        this.drawGrid.setImageCell(ev.getImage(), xFix, yFix);
+        this.drawGrid.setImageCell(ev.getGameImage(), xFix, yFix);
       }
       if (this.knm) {
         this.knm = false;
