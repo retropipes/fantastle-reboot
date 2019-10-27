@@ -340,7 +340,11 @@ public class PreferencesManager implements PreferencesHandler {
     // this.checkBetaUpdatesStartupEnabled = this.checkBetaUpdatesStartup
     // .isSelected();
     this.moveOneAtATimeEnabled = this.moveOneAtATime.isSelected();
+    boolean oldMonstersVisibleEnabled = this.monstersVisibleEnabled;
     this.monstersVisibleEnabled = this.monstersVisible.isSelected();
+    if (this.monstersVisibleEnabled != oldMonstersVisibleEnabled) {
+      FantastleReboot.getBagOStuff().getObjects().updateMonster();
+    }
     this.hidePrefs();
   }
 

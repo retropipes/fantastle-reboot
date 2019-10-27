@@ -16,20 +16,11 @@ import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectActions;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objectmodel.MonsterObjectModel;
-import com.puttysoftware.fantastlereboot.objects.Amulet;
 import com.puttysoftware.fantastlereboot.objects.ArmorShop;
 import com.puttysoftware.fantastlereboot.objects.BankShop;
 import com.puttysoftware.fantastlereboot.objects.BonusShop;
-import com.puttysoftware.fantastlereboot.objects.Button;
-import com.puttysoftware.fantastlereboot.objects.ClockwiseRotationTrap;
-import com.puttysoftware.fantastlereboot.objects.ConfusionTrap;
-import com.puttysoftware.fantastlereboot.objects.CounterclockwiseRotationTrap;
-import com.puttysoftware.fantastlereboot.objects.DizzinessTrap;
-import com.puttysoftware.fantastlereboot.objects.DrunkTrap;
 import com.puttysoftware.fantastlereboot.objects.ElementalShop;
 import com.puttysoftware.fantastlereboot.objects.HealShop;
-import com.puttysoftware.fantastlereboot.objects.HealTrap;
-import com.puttysoftware.fantastlereboot.objects.HurtTrap;
 import com.puttysoftware.fantastlereboot.objects.Ice;
 import com.puttysoftware.fantastlereboot.objects.ItemShop;
 import com.puttysoftware.fantastlereboot.objects.NecklaceShop;
@@ -41,13 +32,7 @@ import com.puttysoftware.fantastlereboot.objects.SpellShop;
 import com.puttysoftware.fantastlereboot.objects.StairsDown;
 import com.puttysoftware.fantastlereboot.objects.StairsUp;
 import com.puttysoftware.fantastlereboot.objects.Tile;
-import com.puttysoftware.fantastlereboot.objects.UTurnTrap;
-import com.puttysoftware.fantastlereboot.objects.VariableHealTrap;
-import com.puttysoftware.fantastlereboot.objects.VariableHurtTrap;
 import com.puttysoftware.fantastlereboot.objects.Wall;
-import com.puttysoftware.fantastlereboot.objects.WallOff;
-import com.puttysoftware.fantastlereboot.objects.WallOn;
-import com.puttysoftware.fantastlereboot.objects.WarpTrap;
 import com.puttysoftware.fantastlereboot.objects.WeaponShop;
 import com.puttysoftware.fantastlereboot.objects.temporary.MonsterObjectFactory;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -66,17 +51,13 @@ public final class FantastleObjectModelList {
 
   // Methods
   public final void initializeObjects() {
-    final FantastleObjectModel[] allObjects = { new ArmorShop(), new BankShop(),
-        new ClockwiseRotationTrap(), new ConfusionTrap(),
-        new CounterclockwiseRotationTrap(), new DizzinessTrap(),
-        new DrunkTrap(), new OpenSpace(), new Nothing(), new BonusShop(),
-        new ElementalShop(), new HealShop(), new HealTrap(), new HurtTrap(),
-        new Ice(), new ItemShop(), MonsterObjectFactory.createMonster(),
-        new RegenerateShop(), new SealingWall(), new NecklaceShop(),
-        new SpellShop(), new Tile(), new UTurnTrap(), new VariableHealTrap(),
-        new VariableHurtTrap(), new Wall(), new WarpTrap(), new WeaponShop(),
-        new StairsUp(), new StairsDown(), new WallOff(), new WallOn(),
-        new Button(), new Amulet() };
+    final FantastleObjectModel[] allObjects = {
+        MonsterObjectFactory.createMonster(), new ArmorShop(), new BankShop(),
+        new OpenSpace(), new Nothing(), new BonusShop(), new ElementalShop(),
+        new HealShop(), new Ice(), new ItemShop(), new RegenerateShop(),
+        new SealingWall(), new NecklaceShop(), new SpellShop(), new Tile(),
+        new Wall(), new WeaponShop(), new StairsUp(), new StairsDown(),
+        new Wall() };
     this.allObjectList.clear();
     // Populate lists
     for (int z = 0; z < allObjects.length; z++) {
@@ -85,6 +66,10 @@ public final class FantastleObjectModelList {
     this.allActionList = DataLoader.loadObjectActionData();
     this.allShopActionList = DataLoader
         .loadObjectActionAddonData(FantastleObjectActions.SHOP);
+  }
+
+  public void updateMonster() {
+    this.allObjectList.set(0, MonsterObjectFactory.createMonster());
   }
 
   public boolean movesRandomly(FantastleObjectModel obj) {
