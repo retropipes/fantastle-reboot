@@ -21,6 +21,6 @@ public abstract class MonsterObject extends FantastleObject
     if (!this.isVisible) {
       return this.getSavedObject().getImage();
     }
-    return this.getGameImage();
+    return super.getGameImageHook();
   }
 }
