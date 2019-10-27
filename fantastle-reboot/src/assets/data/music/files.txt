@@ -10,3 +10,4 @@ dungeon-random-2
 dungeon-random-3
 dungeon-random-4
 shop
+victory

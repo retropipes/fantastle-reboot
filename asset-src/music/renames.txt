@@ -10,3 +10,4 @@ dungeons 2.mod => dungeon-random-2.music
 dungeons 3.mod => dungeon-random-3.music
 the dungeons v3.mod => dungeon-random-4.music
 Night Dancer.mod => shop.music
+Galaxy Hero.mod => victory.music
