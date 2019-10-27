@@ -21,7 +21,9 @@ import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
+import com.puttysoftware.fantastlereboot.objects.Player;
 import com.puttysoftware.fantastlereboot.objects.temporary.ArrowType;
+import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 
 public final class GameLogicManager {
   // Fields
@@ -31,13 +33,8 @@ public final class GameLogicManager {
   private ObjectInventory objectInv;
   private boolean pullInProgress;
   private boolean using;
-  // private boolean keepNextMessage;
-  // private boolean delayedDecayActive;
-  // private FantastleObjectModel delayedDecayObject;
-  // private boolean actingRemotely;
-  // private int[] remoteCoords;
+  private FantastleObjectModel objectBeingUsed;
   private String gameOverMessage;
-  // private boolean arrowActive;
   private ArrowType activeArrowType;
   private boolean isTeleporting;
   private final ScoreTracker scorer;
@@ -55,13 +52,7 @@ public final class GameLogicManager {
     this.mt.start();
     this.pullInProgress = false;
     this.using = false;
-    // this.keepNextMessage = false;
     this.savedGameFlag = false;
-    // this.delayedDecayActive = false;
-    // this.delayedDecayObject = null;
-    // this.actingRemotely = false;
-    // this.remoteCoords = new int[4];
-    // this.arrowActive = false;
     this.isTeleporting = false;
     this.activeArrowType = ArrowType.WOODEN;
     this.savedGameFlag = false;
@@ -123,7 +114,6 @@ public final class GameLogicManager {
   }
 
   void arrowDone() {
-    // this.arrowActive = false;
     this.activeArrowType = ArrowType.WOODEN;
   }
 
@@ -179,14 +169,9 @@ public final class GameLogicManager {
   }
 
   public static void resetPlayerLocation() {
-    GameLogicManager.resetPlayerLocation(0);
-  }
-
-  public static void resetPlayerLocation(final int level) {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
     if (m != null) {
-      m.switchLevel(level);
       m.setPlayerToStart();
     }
   }
@@ -223,177 +208,80 @@ public final class GameLogicManager {
     return this.em.doEffects(x, y);
   }
 
-  public void setRemoteAction(final int x, final int y, final int z,
-      final int w) {
-    // this.remoteCoords = new int[] { x, y, z, w };
-    // this.actingRemotely = true;
+  public static boolean isFloorBelow() {
+    final BagOStuff app = FantastleReboot.getBagOStuff();
+    final Maze m = app.getMazeManager().getMaze();
+    try {
+      m.getCell(m.getPlayerLocationX(), m.getPlayerLocationY(),
+          m.getPlayerLocationZ() - 1, Layers.OBJECT);
+      return true;
+    } catch (final ArrayIndexOutOfBoundsException ae) {
+      return false;
+    }
   }
 
-  public void doRemoteAction(final int x, final int y, final int z,
-      final int w) {
-    this.setRemoteAction(x, y, z, w);
-    // final FantastleObjectModel acted =
-    // FantastleReboot.getBagOStuff().getMazeManager()
-    // .getFantastleObjectModel(x, y, z, w, Layers.OBJECT);
-    // acted.postMoveAction(false, x, y, this.objectInv);
-    // if (acted.doesChainReact()) {
-    // acted.chainReactionAction(x, y, z, w);
-    // }
+  public static boolean isFloorAbove() {
+    final BagOStuff app = FantastleReboot.getBagOStuff();
+    final Maze m = app.getMazeManager().getMaze();
+    try {
+      m.getCell(m.getPlayerLocationX(), m.getPlayerLocationY(),
+          m.getPlayerLocationZ() + 1, Layers.OBJECT);
+      return true;
+    } catch (final ArrayIndexOutOfBoundsException ae) {
+      return false;
+    }
   }
 
-  @SuppressWarnings("static-method")
-  public boolean isFloorBelow() {
-    return false;
-    // final BagOStuff app = FantastleReboot.getBagOStuff();
-    // final Maze m = app.getMazeManager().getMaze();
-    // try {
-    // m.getCell(this.plMgr.getPlayerLocationX(),
-    // this.plMgr.getPlayerLocationY(),
-    // this.plMgr.getPlayerLocationZ() - 1,
-    // this.plMgr.getPlayerLocationW(), Layers.OBJECT);
-    // return true;
-    // } catch (final ArrayIndexOutOfBoundsException ae) {
-    // return false;
-    // }
+  public static boolean isLevelBelow() {
+    final BagOStuff app = FantastleReboot.getBagOStuff();
+    final Maze m = app.getMazeManager().getMaze();
+    try {
+      m.getCell(m.getPlayerLocationX(), m.getPlayerLocationY(),
+          m.getPlayerLocationZ() - 1, Layers.OBJECT);
+      return true;
+    } catch (final ArrayIndexOutOfBoundsException ae) {
+      return false;
+    }
   }
 
-  @SuppressWarnings("static-method")
-  public boolean isFloorAbove() {
-    return false;
-    // final BagOStuff app = FantastleReboot.getBagOStuff();
-    // final Maze m = app.getMazeManager().getMaze();
-    // try {
-    // m.getCell(this.plMgr.getPlayerLocationX(),
-    // this.plMgr.getPlayerLocationY(),
-    // this.plMgr.getPlayerLocationZ() + 1,
-    // this.plMgr.getPlayerLocationW(), Layers.OBJECT);
-    // return true;
-    // } catch (final ArrayIndexOutOfBoundsException ae) {
-    // return false;
-    // }
+  public static boolean isLevelAbove() {
+    final BagOStuff app = FantastleReboot.getBagOStuff();
+    final Maze m = app.getMazeManager().getMaze();
+    try {
+      m.getCell(m.getPlayerLocationX(), m.getPlayerLocationY(),
+          m.getPlayerLocationZ() + 1, Layers.OBJECT);
+      return true;
+    } catch (final ArrayIndexOutOfBoundsException ae) {
+      return false;
+    }
   }
 
-  @SuppressWarnings("static-method")
-  public boolean isLevelBelow() {
-    return false;
-    // final BagOStuff app = FantastleReboot.getBagOStuff();
-    // final Maze m = app.getMazeManager().getMaze();
-    // try {
-    // m.getCell(this.plMgr.getPlayerLocationX(),
-    // this.plMgr.getPlayerLocationY(),
-    // this.plMgr.getPlayerLocationZ(),
-    // this.plMgr.getPlayerLocationW() - 1, Layers.OBJECT);
-    // return true;
-    // } catch (final ArrayIndexOutOfBoundsException ae) {
-    // return false;
-    // }
+  public static boolean doesFloorExist(final int floor) {
+    final BagOStuff app = FantastleReboot.getBagOStuff();
+    final Maze m = app.getMazeManager().getMaze();
+    try {
+      m.getCell(m.getPlayerLocationX(), m.getPlayerLocationY(), floor,
+          Layers.OBJECT);
+      return true;
+    } catch (final ArrayIndexOutOfBoundsException ae) {
+      return false;
+    }
   }
 
-  @SuppressWarnings("static-method")
-  public boolean isLevelAbove() {
-    return false;
-    // final BagOStuff app = FantastleReboot.getBagOStuff();
-    // final Maze m = app.getMazeManager().getMaze();
-    // try {
-    // m.getCell(this.plMgr.getPlayerLocationX(),
-    // this.plMgr.getPlayerLocationY(),
-    // this.plMgr.getPlayerLocationZ(),
-    // this.plMgr.getPlayerLocationW() + 1, Layers.OBJECT);
-    // return true;
-    // } catch (final ArrayIndexOutOfBoundsException ae) {
-    // return false;
-    // }
-  }
-
-  @SuppressWarnings("static-method")
-  public boolean doesFloorExist(final int floor) {
-    return false;
-    // final BagOStuff app = FantastleReboot.getBagOStuff();
-    // final Maze m = app.getMazeManager().getMaze();
-    // try {
-    // m.getCell(this.plMgr.getPlayerLocationX(),
-    // this.plMgr.getPlayerLocationY(), floor,
-    // this.plMgr.getPlayerLocationW(), Layers.OBJECT);
-    // return true;
-    // } catch (final ArrayIndexOutOfBoundsException ae) {
-    // return false;
-    // }
-  }
-
-  @SuppressWarnings("static-method")
-  public boolean doesLevelExist(final int level) {
-    return false;
-    // final BagOStuff app = FantastleReboot.getBagOStuff();
-    // final Maze m = app.getMazeManager().getMaze();
-    // try {
-    // m.getCell(this.plMgr.getPlayerLocationX(),
-    // this.plMgr.getPlayerLocationY(),
-    // this.plMgr.getPlayerLocationZ(), level, Layers.OBJECT);
-    // return true;
-    // } catch (final ArrayIndexOutOfBoundsException ae) {
-    // return false;
-    // }
-  }
-
-  public void doClockwiseRotate(final int r) {
-    // final Maze m = FantastleReboot.getBagOStuff().getMazeManager()
-    // .getMaze();
-    // boolean b = false;
-    // if (this.actingRemotely) {
-    // b = m.rotateRadiusClockwise(this.remoteCoords[0],
-    // this.remoteCoords[1], this.remoteCoords[2],
-    // this.remoteCoords[3], r);
-    // } else {
-    // b = m.rotateRadiusClockwise(this.plMgr.getPlayerLocationX(),
-    // this.plMgr.getPlayerLocationY(),
-    // this.plMgr.getPlayerLocationZ(),
-    // this.plMgr.getPlayerLocationW(), r);
-    // }
-    // if (b) {
-    // this.findPlayerAndAdjust();
-    // } else {
-    // this.keepNextMessage();
-    // Messager.showMessage("Rotation failed!");
-    // }
-  }
-
-  public void doCounterclockwiseRotate(final int r) {
-    // final Maze m = FantastleReboot.getBagOStuff().getMazeManager()
-    // .getMaze();
-    // boolean b = false;
-    // if (this.actingRemotely) {
-    // b = m.rotateRadiusCounterclockwise(this.remoteCoords[0],
-    // this.remoteCoords[1], this.remoteCoords[2],
-    // this.remoteCoords[3], r);
-    // } else {
-    // b = m.rotateRadiusCounterclockwise(this.plMgr.getPlayerLocationX(),
-    // this.plMgr.getPlayerLocationY(),
-    // this.plMgr.getPlayerLocationZ(),
-    // this.plMgr.getPlayerLocationW(), r);
-    // }
-    // if (b) {
-    // this.findPlayerAndAdjust();
-    // } else {
-    // this.keepNextMessage();
-    // Messager.showMessage("Rotation failed!");
-    // }
-  }
-
-  public void findPlayerAndAdjust() {
-    // Find the player, adjust player location
-    // final Maze m = FantastleReboot.getBagOStuff().getMazeManager()
-    // .getMaze();
-    // final int w = this.plMgr.getPlayerLocationW();
-    // m.findPlayerOnLevel(w);
-    // this.plMgr.setPlayerLocation(m.getFindResultColumn(w),
-    // m.getFindResultRow(w), m.getFindResultFloor(w), w);
-    // this.resetViewingWindow();
-    // this.redrawMaze();
+  public static boolean doesLevelExist(final int level) {
+    final BagOStuff app = FantastleReboot.getBagOStuff();
+    final Maze m = app.getMazeManager().getMaze();
+    try {
+      m.getCell(m.getPlayerLocationX(), m.getPlayerLocationY(),
+          m.getPlayerLocationZ(), Layers.OBJECT);
+      return true;
+    } catch (final ArrayIndexOutOfBoundsException ae) {
+      return false;
+    }
   }
 
   public void fireArrow(final int x, final int y) {
     final ArrowTask at = new ArrowTask(x, y, this.activeArrowType);
-    // this.arrowActive = true;
     at.start();
   }
 
@@ -504,84 +392,56 @@ public final class GameLogicManager {
   }
 
   public void resetCurrentLevel() {
-    // this.resetLevel(this.plMgr.getPlayerLocationW());
+    this.resetLevel();
   }
 
   public void resetGameState() {
-    // this.deactivateAllEffects();
-    // final BagOStuff app = FantastleReboot.getBagOStuff();
-    // final Maze m = app.getMazeManager().getMaze();
-    // app.getMazeManager().setDirty(false);
-    // m.restore();
-    // this.setSavedGameFlag(false);
-    // this.scorer.resetScore(app.getMazeManager().getScoresFileName());
-    // this.decay();
-    // this.objectInv = new ObjectInventory();
-    // this.savedObjectInv = new ObjectInventory();
-    // final int startW = m.getStartLevel();
-    // final boolean playerExists = m.findPlayerOnLevel(startW);
-    // if (playerExists) {
-    // m.findAllStarts();
-    // this.plMgr.setPlayerLocation(m.getFindResultColumn(startW),
-    // m.getFindResultRow(startW), m.getFindResultFloor(startW),
-    // startW);
-    // m.save();
-    // }
+    this.deactivateAllEffects();
+    final BagOStuff app = FantastleReboot.getBagOStuff();
+    final Maze m = app.getMazeManager().getMaze();
+    app.getMazeManager().setDirty(false);
+    m.restore();
+    this.setSavedGameFlag(false);
+    this.scorer.resetScore();
+    GameLogicManager.decay();
+    this.objectInv = new ObjectInventory();
+    final boolean playerExists = m.doesPlayerExist();
+    if (playerExists) {
+      m.save();
+    }
   }
 
-  public void resetLevel(final int level) {
-    // PartyManager.getParty().getLeader().healAndRegenerateFully();
-    // this.deactivateAllEffects();
-    // final BagOStuff app = FantastleReboot.getBagOStuff();
-    // final Maze m = app.getMazeManager().getMaze();
-    // app.getMazeManager().setDirty(true);
-    // m.restoreLevel(level);
-    // final boolean playerExists = m.findPlayerOnLevel(level);
-    // if (playerExists) {
-    // this.scorer.resetScore(app.getMazeManager().getScoresFileName());
-    // this.resetPlayerLocation(level);
-    // this.resetViewingWindow();
-    // m.setVisionRadiusToMaximum(level);
-    // this.decay();
-    // this.restoreObjectInventory();
-    // this.redrawMaze();
-    // }
+  public void resetLevel() {
+    PartyManager.getParty().getLeader().healAndRegenerateFully();
+    this.deactivateAllEffects();
+    final BagOStuff app = FantastleReboot.getBagOStuff();
+    final Maze m = app.getMazeManager().getMaze();
+    app.getMazeManager().setDirty(true);
+    m.restore();
+    final boolean playerExists = m.doesPlayerExist();
+    if (playerExists) {
+      this.scorer.resetScore();
+      GameLogicManager.resetPlayerLocation();
+      this.resetViewingWindow();
+      GameLogicManager.decay();
+      this.redrawMaze();
+    }
   }
 
   public void solvedLevel() {
-    // this.deactivateAllEffects();
-    // final BagOStuff app = FantastleReboot.getBagOStuff();
-    // final Maze m = app.getMazeManager().getMaze();
-    // final boolean playerExists = m
-    // .findPlayerOnLevel(this.plMgr.getPlayerLocationW() + 1);
-    // if (playerExists) {
-    // m.restoreLevel(this.plMgr.getPlayerLocationW());
-    // this.resetPlayerLocation(this.plMgr.getPlayerLocationW() + 1);
-    // this.resetViewingWindow();
-    // m.setVisionRadiusToMaximum(this.plMgr.getPlayerLocationW());
-    // this.decay();
-    // this.saveObjectInventory();
-    // this.redrawMaze();
-    // } else {
-    // this.solvedMaze();
-    // }
-  }
-
-  public void solvedLevelWarp(final int level) {
-    // this.deactivateAllEffects();
-    // final BagOStuff app = FantastleReboot.getBagOStuff();
-    // final Maze m = app.getMazeManager().getMaze();
-    // final boolean playerExists = m.findPlayerOnLevel(level);
-    // if (playerExists) {
-    // m.restoreLevel(this.plMgr.getPlayerLocationW());
-    // this.resetPlayerLocation(level);
-    // this.resetViewingWindow();
-    // this.decay();
-    // this.saveObjectInventory();
-    // this.redrawMaze();
-    // } else {
-    // this.solvedMaze();
-    // }
+    this.deactivateAllEffects();
+    final BagOStuff app = FantastleReboot.getBagOStuff();
+    final Maze m = app.getMazeManager().getMaze();
+    final boolean playerExists = m.doesPlayerExist();
+    if (playerExists) {
+      m.restore();
+      GameLogicManager.resetPlayerLocation();
+      this.resetViewingWindow();
+      GameLogicManager.decay();
+      this.redrawMaze();
+    } else {
+      this.solvedMaze();
+    }
   }
 
   private void gameOver() {
@@ -602,29 +462,29 @@ public final class GameLogicManager {
   }
 
   public void solvedMaze() {
-    // PartyManager.getParty().getLeader().healAndRegenerateFully();
-    // this.deactivateAllEffects();
-    // final BagOStuff app = FantastleReboot.getBagOStuff();
-    // final Maze m = app.getMazeManager().getMaze();
-    // // Restore the maze
-    // m.restoreLevel(this.plMgr.getPlayerLocationW());
-    // final boolean playerExists = m.findPlayerOnLevel(0);
-    // if (playerExists) {
-    // this.resetViewingWindowAndPlayerLocation();
-    // } else {
-    // app.getMazeManager().setLoaded(false);
-    // }
-    // // Wipe the inventory
-    // this.objectInv = new ObjectInventory();
-    // // Reset saved game flag
-    // this.savedGameFlag = false;
-    // app.getMazeManager().setDirty(false);
-    // if (this.scorer.checkScore()) {
-    // app.playHighScoreSound();
-    // }
-    // this.scorer.commitScore();
-    // this.hideOutput();
-    // app.getGUIManager().showGUI();
+    PartyManager.getParty().getLeader().healAndRegenerateFully();
+    this.deactivateAllEffects();
+    final BagOStuff app = FantastleReboot.getBagOStuff();
+    final Maze m = app.getMazeManager().getMaze();
+    // Restore the maze
+    m.restore();
+    final boolean playerExists = m.doesPlayerExist();
+    if (playerExists) {
+      this.resetViewingWindowAndPlayerLocation();
+    } else {
+      app.getMazeManager().setLoaded(false);
+    }
+    // Wipe the inventory
+    this.objectInv = new ObjectInventory();
+    // Reset saved game flag
+    this.savedGameFlag = false;
+    app.getMazeManager().setDirty(false);
+    if (this.scorer.checkScore()) {
+      app.playHighScoreSound();
+    }
+    this.scorer.commitScore();
+    this.hideOutput();
+    app.getGUIManager().showGUI();
   }
 
   public ObjectInventory getObjectInventory() {
@@ -636,75 +496,34 @@ public final class GameLogicManager {
   }
 
   public void useItemHandler(final int x, final int y) {
-    // final BagOStuff app = FantastleReboot.getBagOStuff();
-    // final Maze m = app.getMazeManager().getMaze();
-    // final int xOffset = this.vwMgr.getViewingWindowLocationX()
-    // - GameViewingWindowManager.getOffsetFactorX();
-    // final int yOffset = this.vwMgr.getViewingWindowLocationY()
-    // - GameViewingWindowManager.getOffsetFactorY();
-    // final int destX = x / ImageConstants.SIZE
-    // + this.vwMgr.getViewingWindowLocationX() - xOffset + yOffset;
-    // final int destY = y / ImageConstants.SIZE
-    // + this.vwMgr.getViewingWindowLocationY() + xOffset - yOffset;
-    // final int destZ = this.plMgr.getPlayerLocationZ();
-    // final int destW = this.plMgr.getPlayerLocationW();
-    // if (this.usingAnItem() && app.getMode() == BagOStuff.STATUS_GAME) {
-    // if (!this.objectBeingUsed.isOfType(TypeConstants.TYPE_BOW)) {
-    // final boolean visible = app.getMazeManager().getMaze()
-    // .isSquareVisible(this.plMgr.getPlayerLocationX(),
-    // this.plMgr.getPlayerLocationY(), destX, destY,
-    // this.plMgr.getPlayerLocationW());
-    // try {
-    // final FantastleObjectModel target = m.getCell(destX, destY, destZ,
-    // destW, Layers.OBJECT);
-    // final String name = this.objectBeingUsed.getName();
-    // if ((target.isSolid() || !visible)
-    // && name.equals(new TeleportWand().getName())) {
-    // this.setUsingAnItem(false);
-    // Messager.showMessage("Can't teleport there");
-    // }
-    // if (target.getName().equals(new Player().getName())) {
-    // this.setUsingAnItem(false);
-    // Messager.showMessage("Don't aim at yourself!");
-    // }
-    // if (!target.isDestroyable()
-    // && name.equals(new AnnihilationWand().getName())) {
-    // this.setUsingAnItem(false);
-    // Messager.showMessage("Can't destroy that");
-    // }
-    // if (!target.isDestroyable()
-    // && name.equals(new WallMakingWand().getName())) {
-    // this.setUsingAnItem(false);
-    // Messager.showMessage("Can't create a wall there");
-    // }
-    // if (!target.isDestroyable()
-    // && name.equals(new FinishMakingWand().getName())) {
-    // this.setUsingAnItem(false);
-    // Messager.showMessage("Can't create a finish there");
-    // }
-    // if ((!target.isDestroyable()
-    // || !target.isOfType(TypeConstants.TYPE_WALL))
-    // && name.equals(new WallBreakingWand().getName())) {
-    // this.setUsingAnItem(false);
-    // Messager.showMessage("Aim at a wall");
-    // }
-    // if ((!target.isDestroyable()
-    // || !target.isOfType(TypeConstants.TYPE_TRAP))
-    // && name.equals(new DisarmTrapWand().getName())) {
-    // this.setUsingAnItem(false);
-    // Messager.showMessage("Aim at a trap");
-    // }
-    // } catch (final ArrayIndexOutOfBoundsException ae) {
-    // this.setUsingAnItem(false);
-    // Messager.showMessage("Aim within the maze");
-    // }
-    // }
-    // if (this.usingAnItem()) {
-    // this.objectInv.use(this.objectBeingUsed, destX, destY, destZ,
-    // destW);
-    // this.redrawMaze();
-    // }
-    // }
+    final BagOStuff app = FantastleReboot.getBagOStuff();
+    final Maze m = app.getMazeManager().getMaze();
+    final int xOffset = this.vwMgr.getViewingWindowLocationX()
+        - GameViewingWindowManager.getOffsetFactorX();
+    final int yOffset = this.vwMgr.getViewingWindowLocationY()
+        - GameViewingWindowManager.getOffsetFactorY();
+    final int destX = x / ImageConstants.SIZE
+        + this.vwMgr.getViewingWindowLocationX() - xOffset + yOffset;
+    final int destY = y / ImageConstants.SIZE
+        + this.vwMgr.getViewingWindowLocationY() + xOffset - yOffset;
+    final int destZ = m.getPlayerLocationZ();
+    if (this.usingAnItem() && app.getMode() == BagOStuff.STATUS_GAME) {
+      try {
+        final FantastleObjectModel target = m.getCell(destX, destY, destZ,
+            Layers.OBJECT);
+        if (target instanceof Player) {
+          this.setUsingAnItem(false);
+          Messager.showMessage("Don't aim at yourself!");
+        }
+      } catch (final ArrayIndexOutOfBoundsException ae) {
+        this.setUsingAnItem(false);
+        Messager.showMessage("Aim within the maze");
+      }
+      if (this.usingAnItem()) {
+        this.objectInv.use(this.objectBeingUsed);
+        this.redrawMaze();
+      }
+    }
   }
 
   public void controllableTeleport() {
@@ -713,31 +532,25 @@ public final class GameLogicManager {
   }
 
   void controllableTeleportHandler(final int x, final int y) {
-    // if (this.isTeleporting) {
-    // final int xOffset = this.vwMgr.getViewingWindowLocationX()
-    // - GameViewingWindowManager.getOffsetFactorX();
-    // final int yOffset = this.vwMgr.getViewingWindowLocationY()
-    // - GameViewingWindowManager.getOffsetFactorY();
-    // final int destX = x / ImageConstants.SIZE
-    // + this.vwMgr.getViewingWindowLocationX() - xOffset
-    // + yOffset;
-    // final int destY = y / ImageConstants.SIZE
-    // + this.vwMgr.getViewingWindowLocationY() + xOffset
-    // - yOffset;
-    // final int destZ = this.plMgr.getPlayerLocationZ();
-    // final int destW = this.plMgr.getPlayerLocationW();
-    // this.updatePositionAbsolute(destX, destY, destZ, destW);
-    // if (FantastleReboot.getBagOStuff().getPrefsManager()
-    // .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-    // SoundPlayer.playSound(GameSound.TELEPORT);
-    // }
-    // this.isTeleporting = false;
-    // }
-  }
-
-  public void delayedDecayTo(final FantastleObjectModel obj) {
-    // this.delayedDecayActive = true;
-    // this.delayedDecayObject = obj;
+    final BagOStuff app = FantastleReboot.getBagOStuff();
+    final Maze m = app.getMazeManager().getMaze();
+    if (this.isTeleporting) {
+      final int xOffset = this.vwMgr.getViewingWindowLocationX()
+          - GameViewingWindowManager.getOffsetFactorX();
+      final int yOffset = this.vwMgr.getViewingWindowLocationY()
+          - GameViewingWindowManager.getOffsetFactorY();
+      final int destX = x / ImageConstants.SIZE
+          + this.vwMgr.getViewingWindowLocationX() - xOffset + yOffset;
+      final int destY = y / ImageConstants.SIZE
+          + this.vwMgr.getViewingWindowLocationY() + xOffset - yOffset;
+      final int destZ = m.getPlayerLocationZ();
+      this.updatePositionAbsolute(destX, destY, destZ);
+      if (FantastleReboot.getBagOStuff().getPrefsManager()
+          .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
+        SoundPlayer.playSound(SoundIndex.TELEPORT);
+      }
+      this.isTeleporting = false;
+    }
   }
 
   public void showOutput() {

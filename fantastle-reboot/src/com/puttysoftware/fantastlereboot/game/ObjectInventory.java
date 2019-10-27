@@ -58,8 +58,7 @@ public class ObjectInventory implements Cloneable {
     this.uses[loc][this.contents[loc]] = newUses;
   }
 
-  public void use(final FantastleObjectModel mo, final int x, final int y,
-      final int z, final int w) {
+  public void use(final FantastleObjectModel mo) {
     int tempUses = this.getUses(mo);
     if (mo.isUsable() && tempUses > 0) {
       tempUses--;

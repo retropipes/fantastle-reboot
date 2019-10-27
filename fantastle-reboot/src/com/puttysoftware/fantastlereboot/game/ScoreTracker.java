@@ -68,8 +68,7 @@ public class ScoreTracker {
     this.scoreValid = false;
   }
 
-  public void resetScore(final String filename) {
-    this.setScoreFile(filename);
+  public void resetScore() {
     this.score = 0L;
   }
 
