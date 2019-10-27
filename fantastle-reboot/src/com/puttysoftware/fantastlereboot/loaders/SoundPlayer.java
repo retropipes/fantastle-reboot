@@ -40,7 +40,7 @@ public class SoundPlayer {
   }
 
   public static void playSound(final SoundIndex sound) {
-    if (sound != SoundIndex._NONE) {
+    if (sound != null && sound != SoundIndex._NONE) {
       final String filename = getSoundFilename(sound);
       SoundLoader.play(
           SoundPlayer.class.getResource("/assets/sounds/" + filename),
