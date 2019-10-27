@@ -635,8 +635,8 @@ final class LayeredTower implements Cloneable {
         final FantastleObjectModel obj = this.getCell(y, x, floor,
             Layers.OBJECT);
         obj.tickTimer();
-        int objMovedX = 0;
-        int objMovedY = 0;
+        int objMovedX = RandomRange.generate(-1, 1);
+        int objMovedY = RandomRange.generate(-1, 1);
         if (objects.movesRandomly(obj) && objects.startsBattle(obj)
             && obj instanceof MonsterObject) {
           MonsterObject monster = (MonsterObject) obj;
