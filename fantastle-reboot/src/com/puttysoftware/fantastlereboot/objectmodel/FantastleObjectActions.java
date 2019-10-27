@@ -3,8 +3,7 @@ package com.puttysoftware.fantastlereboot.objectmodel;
 import java.nio.LongBuffer;
 import java.util.BitSet;
 
-public class FantastleObjectActions extends BitSet {
-  private static final long serialVersionUID = 1L;
+public class FantastleObjectActions {
   public static final int DISAPPEAR = 0;
   public static final int ADD_INVENTORY = 1;
   public static final int REMOVE_INVENTORY = 2;
@@ -36,12 +35,14 @@ public class FantastleObjectActions extends BitSet {
   public static final int TELEPORT_PUSHED = 28;
   public static final int TELEPORT_RANDOM = 29;
   public static final int PASS_IF_HAVE_INVENTORY = 30;
+  private final BitSet bits;
 
-  public FantastleObjectActions(final LongBuffer lb) {
+  public FantastleObjectActions(final long... val) {
     super();
-    int n = 0;
-    while (n < 64 * lb.remaining()) {
-      this.set(n, ((lb.get(lb.position() + n / 64) & (1L << (n % 64))) != 0));
-    }
+    this.bits = BitSet.valueOf(LongBuffer.wrap(val));
+  }
+
+  public boolean get(final int val) {
+    return this.bits.get(val);
   }
 }

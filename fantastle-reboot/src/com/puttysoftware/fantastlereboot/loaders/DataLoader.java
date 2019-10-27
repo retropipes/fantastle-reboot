@@ -1,9 +1,7 @@
 package com.puttysoftware.fantastlereboot.loaders;
 
 import java.io.IOException;
-import java.nio.LongBuffer;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.Hashtable;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
@@ -234,36 +232,19 @@ public class DataLoader {
         DataLoader.class
             .getResourceAsStream("/assets/data/objects/actions.txt"))) {
       // Fetch data
-      final ArrayList<Long> rawData = new ArrayList<>();
+      final ArrayList<FantastleObjectActions> data = new ArrayList<>();
       String raw = "0";
       while (raw != null) {
         raw = rsr.readString();
         if (raw != null) {
-          rawData.add(Long.parseLong(raw));
+          data.add(new FantastleObjectActions(Long.parseLong(raw)));
         }
       }
-      int index = 0;
-      FantastleObjectActions[] data = new FantastleObjectActions[rawData
-          .size()];
-      for (index = 0; index < data.length; index++) {
-        Long val = rawData.get(index);
-        data[index] = getCachedActionData(val);
-      }
-      return data;
+      return data.toArray(new FantastleObjectActions[data.size()]);
     } catch (final IOException e) {
       FantastleReboot.logError(e);
       return null;
     }
-  }
-
-  private static final Dictionary<Long, FantastleObjectActions> CACHE = new Hashtable<>();
-
-  private static FantastleObjectActions getCachedActionData(final Long key) {
-    if (CACHE.get(key) == null) {
-      CACHE.put(key, new FantastleObjectActions(
-          LongBuffer.wrap(new long[] { key.longValue() })));
-    }
-    return CACHE.get(key);
   }
 
   public static int[] loadObjectActionAddonData(int actionID) {

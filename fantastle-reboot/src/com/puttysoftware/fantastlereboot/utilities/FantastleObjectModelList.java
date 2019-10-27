@@ -79,24 +79,27 @@ public final class FantastleObjectModelList {
         new Button(), new Amulet() };
     this.allObjectList.clear();
     // Populate lists
-    this.allActionList = DataLoader.loadObjectActionData();
-    this.allShopActionList = DataLoader
-        .loadObjectActionAddonData(FantastleObjectActions.SHOP);
     for (int z = 0; z < allObjects.length; z++) {
       this.allObjectList.add(allObjects[z]);
     }
+    this.allActionList = DataLoader.loadObjectActionData();
+    this.allShopActionList = DataLoader
+        .loadObjectActionAddonData(FantastleObjectActions.SHOP);
   }
 
   public boolean movesRandomly(FantastleObjectModel obj) {
-    return this.allActionList[obj.getUniqueID()].get(FantastleObjectActions.MOVE_SELF);
+    return this.allActionList[obj.getUniqueID()]
+        .get(FantastleObjectActions.MOVE_SELF);
   }
 
   public boolean startsBattle(FantastleObjectModel obj) {
-    return this.allActionList[obj.getUniqueID()].get(FantastleObjectActions.BATTLE);
+    return this.allActionList[obj.getUniqueID()]
+        .get(FantastleObjectActions.BATTLE);
   }
 
   public boolean sendsToShop(FantastleObjectModel obj) {
-    return this.allActionList[obj.getUniqueID()].get(FantastleObjectActions.SHOP);
+    return this.allActionList[obj.getUniqueID()]
+        .get(FantastleObjectActions.SHOP);
   }
 
   public int sendsToWhichShop(FantastleObjectModel obj) {
