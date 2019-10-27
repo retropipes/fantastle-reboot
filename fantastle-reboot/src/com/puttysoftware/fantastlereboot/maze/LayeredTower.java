@@ -644,31 +644,31 @@ final class LayeredTower implements Cloneable {
         obj.tickTimer();
         int objMovedX = 0;
         int objMovedY = 0;
-        if (objects.movesRandomly(obj)) {
-          // Move object randomly
-          objMovedX = RandomRange.generate(-1, 1);
-          objMovedY = RandomRange.generate(-1, 1);
-          if (y + objMovedY < this.getColumns()
-              && x + objMovedX < this.getRows() && y + objMovedY >= 0
-              && x + objMovedX >= 0) {
-            FantastleObjectModel below = this.getCell(y, x, floor,
-                Layers.GROUND);
-            FantastleObjectModel nextBelow = this.getCell(y + objMovedY,
-                x + objMovedX, floor, Layers.GROUND);
-            FantastleObjectModel nextAbove = this.getCell(y + objMovedY,
-                x + objMovedX, floor, Layers.OBJECT);
-            if (!below.isSolid() && !nextBelow.isSolid()
-                && !nextAbove.isSolid()) {
-              this.setCell(obj, y, x, floor, Layers.OBJECT);
-              if (obj.hasSavedObject()) {
-                this.setCell(obj.getSavedObject(), y + objMovedY, x + objMovedX,
-                    floor, Layers.OBJECT);
-              } else {
-                this.setCell(new OpenSpace(), y, x, floor, Layers.OBJECT);
-              }
-            }
-          }
-        }
+//        if (objects.movesRandomly(obj)) {
+//          // Move object randomly
+//          objMovedX = RandomRange.generate(-1, 1);
+//          objMovedY = RandomRange.generate(-1, 1);
+//          if (y + objMovedY < this.getColumns()
+//              && x + objMovedX < this.getRows() && y + objMovedY >= 0
+//              && x + objMovedX >= 0) {
+//            FantastleObjectModel below = this.getCell(y, x, floor,
+//                Layers.GROUND);
+//            FantastleObjectModel nextBelow = this.getCell(y + objMovedY,
+//                x + objMovedX, floor, Layers.GROUND);
+//            FantastleObjectModel nextAbove = this.getCell(y + objMovedY,
+//                x + objMovedX, floor, Layers.OBJECT);
+//            if (!below.isSolid() && !nextBelow.isSolid()
+//                && !nextAbove.isSolid()) {
+//              this.setCell(obj, y, x, floor, Layers.OBJECT);
+//              if (obj.hasSavedObject()) {
+//                this.setCell(obj.getSavedObject(), y + objMovedY, x + objMovedX,
+//                    floor, Layers.OBJECT);
+//              } else {
+//                this.setCell(new OpenSpace(), y, x, floor, Layers.OBJECT);
+//              }
+//            }
+//          }
+//        }
         if (objects.startsBattle(obj)) {
           int px = this.getPlayerColumn();
           int py = this.getPlayerRow();
