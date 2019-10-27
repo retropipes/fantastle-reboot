@@ -13,6 +13,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
+import com.puttysoftware.fantastlereboot.objectmodel.MonsterObjectModel;
 import com.puttysoftware.fantastlereboot.objects.Amulet;
 import com.puttysoftware.fantastlereboot.objects.ArmorShop;
 import com.puttysoftware.fantastlereboot.objects.BankShop;
@@ -260,6 +261,8 @@ public final class FantastleObjectModelList {
     }
     if (instance == null) {
       return null;
+    } else if (instance instanceof MonsterObjectModel) {
+      return MonsterObjectFactory.createMonster();
     } else {
       try {
         return instance.getClass().getConstructor().newInstance();
