@@ -158,9 +158,6 @@ class MapTimeBattleGUI {
           } catch (final ArrayIndexOutOfBoundsException ae) {
             final Nothing ev = new Nothing();
             this.drawGrid.setImageCell(ev.getBattleImage(), xFix, yFix);
-          } catch (final NullPointerException np) {
-            final Nothing ev = new Nothing();
-            this.drawGrid.setImageCell(ev.getBattleImage(), xFix, yFix);
           }
         }
       }
@@ -192,8 +189,6 @@ class MapTimeBattleGUI {
             yFix);
         this.battlePane.repaint();
       } catch (final ArrayIndexOutOfBoundsException ae) {
-        // Do nothing
-      } catch (final NullPointerException np) {
         // Do nothing
       }
       this.battleFrame.pack();

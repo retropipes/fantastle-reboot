@@ -154,27 +154,21 @@ final class MovementTask extends Thread {
     FantastleObjectModel nextAbove = new Wall();
     do {
       try {
-        try {
-          below = m.getCell(px, py, pz, Layers.GROUND);
-        } catch (final ArrayIndexOutOfBoundsException ae) {
-          below = new OpenSpace();
-        }
-        try {
-          nextBelow = m.getCell(px + fX, py + fY, pz + fZ, Layers.GROUND);
-        } catch (final ArrayIndexOutOfBoundsException ae) {
-          nextBelow = new OpenSpace();
-        }
-        try {
-          nextAbove = m.getCell(px + fX, py + fY, pz + fZ, Layers.OBJECT);
-        } catch (final ArrayIndexOutOfBoundsException ae) {
-          nextAbove = new Wall();
-        }
-        this.proceed = true;
-      } catch (final NullPointerException np) {
-        this.proceed = false;
-        this.decayEffects();
-        nextAbove = new OpenSpace();
+        below = m.getCell(px, py, pz, Layers.GROUND);
+      } catch (final ArrayIndexOutOfBoundsException ae) {
+        below = new OpenSpace();
       }
+      try {
+        nextBelow = m.getCell(px + fX, py + fY, pz + fZ, Layers.GROUND);
+      } catch (final ArrayIndexOutOfBoundsException ae) {
+        nextBelow = new OpenSpace();
+      }
+      try {
+        nextAbove = m.getCell(px + fX, py + fY, pz + fZ, Layers.OBJECT);
+      } catch (final ArrayIndexOutOfBoundsException ae) {
+        nextAbove = new Wall();
+      }
+      this.proceed = true;
       if (this.proceed) {
         m.savePlayerLocation();
         this.vwMgr.saveViewingWindow();
@@ -273,10 +267,6 @@ final class MovementTask extends Thread {
         this.redrawMaze();
       }
     } catch (final ArrayIndexOutOfBoundsException ae) {
-      m.restorePlayerLocation();
-      this.vwMgr.restoreViewingWindow();
-      bag.showMessage("Can't go outside the maze");
-    } catch (final NullPointerException np) {
       m.restorePlayerLocation();
       this.vwMgr.restoreViewingWindow();
       bag.showMessage("Can't go outside the maze");

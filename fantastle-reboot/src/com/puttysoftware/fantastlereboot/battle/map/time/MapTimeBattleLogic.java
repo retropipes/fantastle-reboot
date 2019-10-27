@@ -923,12 +923,7 @@ public class MapTimeBattleLogic extends Battle {
 
   @Override
   public boolean steal() {
-    Creature activeEnemy = null;
-    try {
-      activeEnemy = this.getEnemyBC(this.me).getCreature();
-    } catch (final NullPointerException npe) {
-      // Ignore
-    }
+    Creature activeEnemy = this.getEnemyBC(this.me).getCreature();
     int stealChance;
     int stealAmount = 0;
     stealChance = StatConstants.CHANCE_STEAL;
@@ -985,12 +980,7 @@ public class MapTimeBattleLogic extends Battle {
   }
 
   private boolean enemySteal() {
-    Creature activeEnemy = null;
-    try {
-      activeEnemy = this.getEnemyBC(this.enemy).getCreature();
-    } catch (final NullPointerException npe) {
-      // Ignore
-    }
+    Creature activeEnemy = this.getEnemyBC(this.enemy).getCreature();
     int stealChance;
     int stealAmount = 0;
     stealChance = StatConstants.CHANCE_STEAL;
@@ -1049,12 +1039,7 @@ public class MapTimeBattleLogic extends Battle {
 
   @Override
   public boolean drain() {
-    Creature activeEnemy = null;
-    try {
-      activeEnemy = this.getEnemyBC(this.me).getCreature();
-    } catch (final NullPointerException npe) {
-      // Ignore
-    }
+    Creature activeEnemy = this.getEnemyBC(this.me).getCreature();
     int drainChance;
     int drainAmount = 0;
     drainChance = StatConstants.CHANCE_DRAIN;
@@ -1115,12 +1100,7 @@ public class MapTimeBattleLogic extends Battle {
   }
 
   private boolean enemyDrain() {
-    Creature activeEnemy = null;
-    try {
-      activeEnemy = this.getEnemyBC(this.enemy).getCreature();
-    } catch (final NullPointerException npe) {
-      // Ignore
-    }
+    Creature activeEnemy = this.getEnemyBC(this.enemy).getCreature();
     int drainChance;
     int drainAmount = 0;
     drainChance = StatConstants.CHANCE_DRAIN;

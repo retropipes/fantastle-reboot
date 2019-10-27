@@ -155,11 +155,6 @@ class MazeEditor {
   // } else {
   // app.getMenuManager().enableUpOneLevel();
   // }
-  // } catch (final NullPointerException npe) {
-  // app.getMenuManager().disableDownOneFloor();
-  // app.getMenuManager().disableUpOneFloor();
-  // app.getMenuManager().disableDownOneLevel();
-  // app.getMenuManager().disableUpOneLevel();
   // }
   // if (!this.engine.tryUndo()) {
   // app.getMenuManager().disableUndo();

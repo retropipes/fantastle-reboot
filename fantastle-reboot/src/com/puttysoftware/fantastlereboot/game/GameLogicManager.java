@@ -254,8 +254,6 @@ public final class GameLogicManager {
     // return true;
     // } catch (final ArrayIndexOutOfBoundsException ae) {
     // return false;
-    // } catch (final NullPointerException np) {
-    // return false;
     // }
   }
 
@@ -271,8 +269,6 @@ public final class GameLogicManager {
     // this.plMgr.getPlayerLocationW(), Layers.OBJECT);
     // return true;
     // } catch (final ArrayIndexOutOfBoundsException ae) {
-    // return false;
-    // } catch (final NullPointerException np) {
     // return false;
     // }
   }
@@ -290,8 +286,6 @@ public final class GameLogicManager {
     // return true;
     // } catch (final ArrayIndexOutOfBoundsException ae) {
     // return false;
-    // } catch (final NullPointerException np) {
-    // return false;
     // }
   }
 
@@ -308,8 +302,6 @@ public final class GameLogicManager {
     // return true;
     // } catch (final ArrayIndexOutOfBoundsException ae) {
     // return false;
-    // } catch (final NullPointerException np) {
-    // return false;
     // }
   }
 
@@ -325,8 +317,6 @@ public final class GameLogicManager {
     // return true;
     // } catch (final ArrayIndexOutOfBoundsException ae) {
     // return false;
-    // } catch (final NullPointerException np) {
-    // return false;
     // }
   }
 
@@ -341,8 +331,6 @@ public final class GameLogicManager {
     // this.plMgr.getPlayerLocationZ(), level, Layers.OBJECT);
     // return true;
     // } catch (final ArrayIndexOutOfBoundsException ae) {
-    // return false;
-    // } catch (final NullPointerException np) {
     // return false;
     // }
   }
@@ -709,8 +697,6 @@ public final class GameLogicManager {
     // } catch (final ArrayIndexOutOfBoundsException ae) {
     // this.setUsingAnItem(false);
     // Messager.showMessage("Aim within the maze");
-    // } catch (final NullPointerException np) {
-    // this.setUsingAnItem(false);
     // }
     // }
     // if (this.usingAnItem()) {

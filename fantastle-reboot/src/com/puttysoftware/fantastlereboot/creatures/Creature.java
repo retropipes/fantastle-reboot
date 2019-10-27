@@ -161,15 +161,9 @@ public abstract class Creature {
   public final void cullInactiveEffects() {
     int x;
     for (x = 0; x < this.effectList.length; x++) {
-      try {
-        final Effect e = this.get(x);
-        if (!(e.isActive())) {
-          this.set(x, null);
-        }
-      } catch (final NullPointerException np) {
-        // Do nothing
-      } catch (final ArrayIndexOutOfBoundsException aioob) {
-        // Do nothing
+      final Effect e = this.get(x);
+      if (!(e.isActive())) {
+        this.set(x, null);
       }
     }
   }
@@ -255,14 +249,8 @@ public abstract class Creature {
     int x;
     final StringBuilder sb = new StringBuilder(Effect.getNullMessage());
     for (x = 0; x < this.effectList.length; x++) {
-      try {
-        sb.append(this.get(x).getCurrentMessage());
-        sb.append("\n");
-      } catch (final NullPointerException np) {
-        // Do nothing
-      } catch (final ArrayIndexOutOfBoundsException aioob) {
-        // Do nothing
-      }
+      sb.append(this.get(x).getCurrentMessage());
+      sb.append("\n");
     }
     String s = sb.toString();
     // Strip final newline character, if it exists
@@ -295,13 +283,7 @@ public abstract class Creature {
     int x;
     String s = "";
     for (x = 0; x < this.effectList.length; x++) {
-      try {
-        s += this.get(x).getEffectString() + "\n";
-      } catch (final NullPointerException np) {
-        // Do nothing
-      } catch (final ArrayIndexOutOfBoundsException aioob) {
-        // Do nothing
-      }
+      s += this.get(x).getEffectString() + "\n";
     }
     // Strip final newline character, if it exists
     if (!s.equals(Effect.getNullMessage())) {
@@ -314,15 +296,9 @@ public abstract class Creature {
     int x, c;
     c = 0;
     for (x = 0; x < this.effectList.length; x++) {
-      try {
-        final Effect e = this.get(x);
-        if (e.isActive()) {
-          c++;
-        }
-      } catch (final NullPointerException np) {
-        // Do nothing
-      } catch (final ArrayIndexOutOfBoundsException aioob) {
-        // Do nothing
+      final Effect e = this.get(x);
+      if (e.isActive()) {
+        c++;
       }
     }
     return c;
@@ -361,24 +337,12 @@ public abstract class Creature {
     s = 0;
     p = this.getStat(stat);
     for (x = 0; x < this.effectList.length; x++) {
-      try {
-        final Effect e = this.get(x);
-        p *= e.getEffect(Effect.EFFECT_MULTIPLY);
-      } catch (final NullPointerException np) {
-        // Do nothing
-      } catch (final ArrayIndexOutOfBoundsException aioob) {
-        // Do nothing
-      }
+      final Effect e = this.get(x);
+      p *= e.getEffect(Effect.EFFECT_MULTIPLY);
     }
     for (x = 0; x < this.effectList.length; x++) {
-      try {
-        final Effect e = this.get(x);
-        s += e.getEffect(Effect.EFFECT_ADD);
-      } catch (final NullPointerException np) {
-        // Do nothing
-      } catch (final ArrayIndexOutOfBoundsException aioob) {
-        // Do nothing
-      }
+      final Effect e = this.get(x);
+      s += e.getEffect(Effect.EFFECT_ADD);
     }
     return p + s;
   }
@@ -925,13 +889,7 @@ public abstract class Creature {
   public final void useEffects() {
     int x;
     for (x = 0; x < this.effectList.length; x++) {
-      try {
-        this.get(x).useEffect(this);
-      } catch (final NullPointerException np) {
-        // Do nothing
-      } catch (final ArrayIndexOutOfBoundsException aioob) {
-        // Do nothing
-      }
+      this.get(x).useEffect(this);
     }
   }
 
@@ -1067,13 +1025,7 @@ public abstract class Creature {
     int x;
     String s = "";
     for (x = 0; x < this.effectList.length; x++) {
-      try {
-        s += this.get(x).getMessage(which) + "\n";
-      } catch (final NullPointerException np) {
-        // Do nothing
-      } catch (final ArrayIndexOutOfBoundsException aioob) {
-        // Do nothing
-      }
+      s += this.get(x).getMessage(which) + "\n";
     }
     // Strip final newline character, if it exists
     if (!s.equals(Effect.getNullMessage())) {
@@ -1088,43 +1040,19 @@ public abstract class Creature {
   }
 
   public String getEffectMessage(final Effect e, final int which) {
-    try {
-      return this.get(this.indexOf(e)).getMessage(which);
-    } catch (final NullPointerException np) {
-      return null;
-    } catch (final ArrayIndexOutOfBoundsException aioob) {
-      return null;
-    }
+    return this.get(this.indexOf(e)).getMessage(which);
   }
 
   public String getEffectName(final Effect e) {
-    try {
-      return this.get(this.indexOf(e)).getName();
-    } catch (final NullPointerException np) {
-      return null;
-    } catch (final ArrayIndexOutOfBoundsException aioob) {
-      return null;
-    }
+    return this.get(this.indexOf(e)).getName();
   }
 
   public int getEffectRounds(final Effect e) {
-    try {
-      return this.get(this.indexOf(e)).getRounds();
-    } catch (final NullPointerException np) {
-      return 0;
-    } catch (final ArrayIndexOutOfBoundsException aioob) {
-      return 0;
-    }
+    return this.get(this.indexOf(e)).getRounds();
   }
 
   public String getEffectString(final Effect e) {
-    try {
-      return this.get(this.indexOf(e)).getEffectString();
-    } catch (final NullPointerException np) {
-      return null;
-    } catch (final ArrayIndexOutOfBoundsException aioob) {
-      return null;
-    }
+    return this.get(this.indexOf(e)).getEffectString();
   }
 
   public String getEffectedHPString() {

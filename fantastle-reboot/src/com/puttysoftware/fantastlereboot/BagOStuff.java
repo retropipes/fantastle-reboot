@@ -312,22 +312,18 @@ public class BagOStuff {
   }
 
   public JFrame getOutputFrame() {
-    try {
-      if (this.getMode() == BagOStuff.STATUS_PREFS) {
-        return this.getPrefsManager().getPrefFrame();
-      } else if (this.getMode() == BagOStuff.STATUS_BATTLE) {
-        return this.getBattle().getOutputFrame();
-      } else if (this.getMode() == BagOStuff.STATUS_GUI) {
-        return this.getGUIManager().getGUIFrame();
-      } else {
-        return this.getGameManager().getOutputFrame();
-        // } else if (this.getMode() == BagOStuff.STATUS_GAME) {
-        // return this.getGameManager().getOutputFrame();
-        // } else {
-        // return this.getEditor().getOutputFrame();
-      }
-    } catch (final NullPointerException npe) {
-      return null;
+    if (this.getMode() == BagOStuff.STATUS_PREFS) {
+      return this.getPrefsManager().getPrefFrame();
+    } else if (this.getMode() == BagOStuff.STATUS_BATTLE) {
+      return this.getBattle().getOutputFrame();
+    } else if (this.getMode() == BagOStuff.STATUS_GUI) {
+      return this.getGUIManager().getGUIFrame();
+    } else {
+      return this.getGameManager().getOutputFrame();
+      // } else if (this.getMode() == BagOStuff.STATUS_GAME) {
+      // return this.getGameManager().getOutputFrame();
+      // } else {
+      // return this.getEditor().getOutputFrame();
     }
   }
 

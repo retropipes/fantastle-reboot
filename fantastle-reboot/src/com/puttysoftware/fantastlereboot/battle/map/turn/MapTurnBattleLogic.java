@@ -1083,12 +1083,7 @@ public class MapTurnBattleLogic extends Battle {
   public boolean steal() {
     // Check Action Counter
     if (this.getActiveActionCounter() > 0) {
-      Creature activeEnemy = null;
-      try {
-        activeEnemy = this.getEnemyBC().getCreature();
-      } catch (final NullPointerException npe) {
-        // Ignore
-      }
+      Creature activeEnemy = this.getEnemyBC().getCreature();
       int stealChance;
       int stealAmount = 0;
       this.bd.getActiveCharacter().act(MapTurnBattleLogic.STEAL_ACTION_POINTS);
@@ -1157,12 +1152,7 @@ public class MapTurnBattleLogic extends Battle {
   public boolean drain() {
     // Check Action Counter
     if (this.getActiveActionCounter() > 0) {
-      Creature activeEnemy = null;
-      try {
-        activeEnemy = this.getEnemyBC().getCreature();
-      } catch (final NullPointerException npe) {
-        // Ignore
-      }
+      Creature activeEnemy = this.getEnemyBC().getCreature();
       int drainChance;
       int drainAmount = 0;
       this.bd.getActiveCharacter().act(MapTurnBattleLogic.DRAIN_ACTION_POINTS);
