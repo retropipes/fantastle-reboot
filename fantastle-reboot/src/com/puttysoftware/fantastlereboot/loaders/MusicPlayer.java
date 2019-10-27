@@ -6,6 +6,7 @@ import java.util.Properties;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.loaders.mod.ModuleLoader;
+import com.puttysoftware.randomrange.RandomRange;
 
 public class MusicPlayer {
   private MusicPlayer() {
@@ -15,7 +16,7 @@ public class MusicPlayer {
   private static String[] allFilenames;
   private static Properties fileExtensions;
 
-  private static String getMusicFilename(final MusicIndex sound) {
+  private static String getMusicFilename(final MusicIndex music) {
     if (allFilenames == null && fileExtensions == null) {
       allFilenames = DataLoader.loadMusicData();
       try {
@@ -27,12 +28,20 @@ public class MusicPlayer {
       }
     }
     String musicExt = fileExtensions.getProperty("music");
-    return allFilenames[sound.ordinal()] + musicExt;
+    if (music == MusicIndex.DUNGEON || music == MusicIndex._DUNGEON_RANDOM_2
+        || music == MusicIndex._DUNGEON_RANDOM_3
+        || music == MusicIndex._DUNGEON_RANDOM_4) {
+      // Pick random dungeon music and play it
+      int base = MusicIndex.DUNGEON.ordinal();
+      int offset = RandomRange.generate(0, 3);
+      return allFilenames[base + offset] + musicExt;
+    }
+    return allFilenames[music.ordinal()] + musicExt;
   }
 
-  public static void playMusic(final MusicIndex sound) {
-    if (sound != null && sound != MusicIndex._NONE) {
-      final String filename = getMusicFilename(sound);
+  public static void playMusic(final MusicIndex music) {
+    if (music != null && music != MusicIndex._NONE) {
+      final String filename = getMusicFilename(music);
       try {
         new ModuleLoader().load("/assets/music/" + filename).play();
       } catch (IOException e) {

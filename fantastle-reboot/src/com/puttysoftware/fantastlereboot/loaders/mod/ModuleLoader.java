@@ -26,6 +26,7 @@ public class ModuleLoader {
 
   public synchronized ModuleLoader load(final String modRes)
       throws IOException {
+    byte[] moduleData = null;
     try (
         final InputStream is = ModuleLoader.class.getResourceAsStream(modRes)) {
       try (final ByteArrayOutputStream os = new ByteArrayOutputStream()) {
@@ -35,7 +36,7 @@ public class ModuleLoader {
         while ((len = is.read(buf)) > 0) {
           os.write(buf, 0, len);
         }
-        final byte[] moduleData = os.toByteArray();
+        moduleData = os.toByteArray();
         this.module = new Module(moduleData);
         this.ibxm = new IBXM(this.module, ModuleLoader.SAMPLE_RATE);
         this.ibxm.setInterpolation(this.interpolation);
