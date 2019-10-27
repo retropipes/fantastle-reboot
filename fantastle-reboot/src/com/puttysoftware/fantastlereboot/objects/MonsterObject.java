@@ -11,5 +11,6 @@ public abstract class MonsterObject extends FantastleObject implements MonsterOb
     if (!visible) {
       this.setGameLook("invisible_monster", ObjectImageIndex.OPEN_SPACE);
     }
+    this.setSavedObject(new OpenSpace());
   }
 }
