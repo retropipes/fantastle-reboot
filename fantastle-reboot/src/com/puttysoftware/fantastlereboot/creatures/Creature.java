@@ -858,7 +858,7 @@ public abstract class Creature {
     this.setStat(StatConstants.STAT_INTELLIGENCE, value);
   }
 
-  public final void setItems(final ItemInventory newItems) {
+  protected final void setItems(final ItemInventory newItems) {
     this.items = newItems;
   }
 
