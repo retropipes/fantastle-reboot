@@ -280,7 +280,8 @@ public class DataLoader {
       }
       return data;
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.logWarningWithMessage(e,
+          "Action ID " + actionID + " has no addon data file.");
       return null;
     }
   }
