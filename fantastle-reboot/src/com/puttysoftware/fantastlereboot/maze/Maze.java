@@ -12,7 +12,6 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.VersionException;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.objects.MonsterObject;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.randomrange.RandomLongRange;
@@ -88,16 +87,6 @@ public class Maze {
         FantastleReboot.getBattleMazeSize(), 1);
     temp.fill(new Tile(), new OpenSpace());
     return temp;
-  }
-
-  public void updateMonsterPosition(final int move, final int xLoc,
-      final int yLoc, final MonsterObject monster) {
-    this.mazeData.updateMonsterPosition(move, xLoc, yLoc, monster);
-  }
-
-  public void postBattle(final MonsterObject m, final int xLoc, final int yLoc,
-      final boolean player) {
-    this.mazeData.postBattle(m, xLoc, yLoc, player);
   }
 
   public String getBasePath() {
