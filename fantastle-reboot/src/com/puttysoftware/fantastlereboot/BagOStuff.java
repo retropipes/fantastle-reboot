@@ -157,10 +157,6 @@ public class BagOStuff {
     return this.formerMode;
   }
 
-  public boolean modeChanged() {
-    return this.formerMode != this.currentMode;
-  }
-
   public MenuManager getMenuManager() {
     return this.menuMgr;
   }

@@ -185,9 +185,6 @@ final class MovementTask extends Thread {
             this.fireStepActions();
             this.decayEffects();
             this.redrawMaze();
-            if (bag.modeChanged()) {
-              this.proceed = false;
-            }
             if (this.proceed) {
               this.saved = m.getCell(px, py, pz, Layers.OBJECT);
             }
