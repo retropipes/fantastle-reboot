@@ -29,8 +29,6 @@ import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.RegenerateShop;
 import com.puttysoftware.fantastlereboot.objects.SealingWall;
 import com.puttysoftware.fantastlereboot.objects.SpellShop;
-import com.puttysoftware.fantastlereboot.objects.StairsDown;
-import com.puttysoftware.fantastlereboot.objects.StairsUp;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.fantastlereboot.objects.Wall;
 import com.puttysoftware.fantastlereboot.objects.WeaponShop;
@@ -55,8 +53,7 @@ public final class FantastleObjectModelList {
         new OpenSpace(), new Nothing(), new BonusShop(), new ElementalShop(),
         new HealShop(), new Ice(), new ItemShop(), new RegenerateShop(),
         new SealingWall(), new NecklaceShop(), new SpellShop(), new Tile(),
-        new Wall(), new WeaponShop(), new StairsUp(), new StairsDown(),
-        new Wall() };
+        new Wall(), new WeaponShop(), new Wall() };
     this.allObjectList.clear();
     // Populate lists
     for (int z = 0; z < allObjects.length; z++) {
