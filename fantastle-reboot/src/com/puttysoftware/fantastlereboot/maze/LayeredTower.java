@@ -12,12 +12,10 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
-import com.puttysoftware.fantastlereboot.objects.MonsterObject;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.fantastlereboot.objects.WallOff;
 import com.puttysoftware.fantastlereboot.objects.WallOn;
-import com.puttysoftware.fantastlereboot.objects.temporary.MonsterObjectFactory;
 import com.puttysoftware.fantastlereboot.utilities.FantastleObjectModelList;
 import com.puttysoftware.fantastlereboot.utilities.RandomGenerationRule;
 import com.puttysoftware.randomrange.RandomRange;
@@ -30,6 +28,7 @@ final class LayeredTower implements Cloneable {
   private LowLevelMazeDataStore data;
   private LowLevelMazeDataStore savedTowerState;
   private FlagStorage visionData;
+  private FlagStorage monsterData;
   private final LowLevelNoteDataStore noteData;
   private final int[] playerStartData;
   private final int[] playerLocationData;
@@ -53,6 +52,7 @@ final class LayeredTower implements Cloneable {
     this.savedTowerState = new LowLevelMazeDataStore(cols, rows, floors,
         Layers.COUNT);
     this.visionData = new FlagStorage(cols, rows, floors);
+    this.monsterData = new FlagStorage(cols, rows, floors);
     this.noteData = new LowLevelNoteDataStore(cols, rows, floors);
     this.playerStartData = new int[3];
     Arrays.fill(this.playerStartData, -1);
@@ -85,7 +85,7 @@ final class LayeredTower implements Cloneable {
 
   // Methods
   private void updateMonsterPosition(final int moveX, final int moveY,
-      final int xLoc, final int yLoc, final MonsterObject monster) {
+      final int xLoc, final int yLoc) {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     final int pLocX = this.getPlayerRow();
     final int pLocY = this.getPlayerColumn();
@@ -94,37 +94,37 @@ final class LayeredTower implements Cloneable {
         && yLoc + moveY >= 0 && yLoc + moveY < this.getRows()) {
       final FantastleObjectModel there = this.getCell(xLoc + moveX,
           yLoc + moveY, zLoc, Layers.OBJECT);
-      final FantastleObjectModel ground = this.getCell(xLoc + moveX,
-          yLoc + moveY, zLoc, Layers.GROUND);
-      if (!there.isSolid() && !(there instanceof MonsterObject)) {
+      if (!there.isSolid()
+          && !this.monsterData.getCell(xLoc + moveX, yLoc + moveY, zLoc)) {
+        // Check for battle before moving
+        boolean enteredBattle = false;
         if (LayeredTower.radialScan(xLoc, yLoc, 0, pLocX, pLocY)) {
           if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
             bag.getGameManager().stopMovement();
+            enteredBattle = true;
             bag.getBattle().doBattle();
-            this.postBattle(monster, xLoc, yLoc);
+            this.postBattle(xLoc, yLoc);
           }
-        } else {
-          // Move the monster
-          this.setCell(monster.getSavedObject(), xLoc, yLoc, zLoc,
-              Layers.OBJECT);
-          monster.setSavedObject(there);
-          this.setCell(monster, xLoc + moveX, yLoc + moveY, zLoc,
-              Layers.OBJECT);
-          // Does the ground have friction?
-          if (!ground.hasFriction()) {
-            // No - move the monster again
-            this.updateMonsterPosition(moveX, moveY, xLoc + moveX, yLoc + moveY,
-                monster);
+        }
+        // Move the monster
+        this.monsterData.setCell(false, xLoc, yLoc, zLoc);
+        this.monsterData.setCell(true, xLoc + moveX, yLoc + moveY, zLoc);
+        // Check for battle after moving
+        if (!enteredBattle && LayeredTower.radialScan(xLoc + moveX,
+            yLoc + moveY, 0, pLocX, pLocY)) {
+          if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
+            bag.getGameManager().stopMovement();
+            bag.getBattle().doBattle();
+            this.postBattle(xLoc + moveX, yLoc + moveY);
           }
         }
       }
     }
   }
 
-  private void postBattle(final MonsterObject m, final int xLoc,
-      final int yLoc) {
+  private void postBattle(final int xLoc, final int yLoc) {
     final int zLoc = this.getPlayerFloor();
-    this.setCell(m.getSavedObject(), xLoc, yLoc, zLoc, Layers.OBJECT);
+    this.monsterData.setCell(false, xLoc, yLoc, zLoc);
     this.generateOneMonster();
   }
 
@@ -132,24 +132,20 @@ final class LayeredTower implements Cloneable {
     final RandomRange row = new RandomRange(0, this.getRows() - 1);
     final RandomRange column = new RandomRange(0, this.getColumns() - 1);
     final int zLoc = this.getPlayerFloor();
-    int randomRow, randomColumn;
-    randomRow = row.generate();
-    randomColumn = column.generate();
-    FantastleObjectModel currObj = this.getCell(randomRow, randomColumn, zLoc,
+    int xLoc, yLoc;
+    xLoc = row.generate();
+    yLoc = column.generate();
+    FantastleObjectModel currObj = this.getCell(xLoc, yLoc, zLoc,
         Layers.OBJECT);
     if (!currObj.isSolid()) {
-      final FantastleObjectModel m = MonsterObjectFactory.createMonster();
-      m.setSavedObject(currObj);
-      this.setCell(m, randomRow, randomColumn, zLoc, Layers.OBJECT);
+      this.monsterData.setCell(true, xLoc, yLoc, zLoc);
     } else {
       while (currObj.isSolid()) {
-        randomRow = row.generate();
-        randomColumn = column.generate();
-        currObj = this.getCell(randomRow, randomColumn, zLoc, Layers.OBJECT);
+        xLoc = row.generate();
+        yLoc = column.generate();
+        currObj = this.getCell(xLoc, yLoc, zLoc, Layers.OBJECT);
       }
-      final FantastleObjectModel m = MonsterObjectFactory.createMonster();
-      m.setSavedObject(currObj);
-      this.setCell(m, randomRow, randomColumn, zLoc, Layers.OBJECT);
+      this.monsterData.setCell(true, xLoc, yLoc, zLoc);
     }
   }
 
@@ -486,6 +482,8 @@ final class LayeredTower implements Cloneable {
         .getObjects();
     final FantastleObjectModel pass1FillBottom = new Tile();
     final FantastleObjectModel pass1FillTop = new OpenSpace();
+    final RandomRange row = new RandomRange(0, this.getRows() - 1);
+    final RandomRange column = new RandomRange(0, this.getColumns() - 1);
     RandomRange r = null;
     int x, y, e;
     // Pass 1
@@ -518,8 +516,6 @@ final class LayeredTower implements Cloneable {
       final FantastleObjectModel[] requiredObjects = objects
           .getAllRequired(layer);
       if (requiredObjects != null) {
-        final RandomRange row = new RandomRange(0, this.getRows() - 1);
-        final RandomRange column = new RandomRange(0, this.getColumns() - 1);
         int randomColumn, randomRow;
         for (x = 0; x < requiredObjects.length; x++) {
           final FantastleObjectModel currObj = requiredObjects[x];
@@ -555,6 +551,26 @@ final class LayeredTower implements Cloneable {
             }
           }
         }
+      }
+    }
+    // Pass 4: Add monsters
+    int monsterMin = 20000;
+    int monsterMax = 40000;
+    final RandomRange howMany = new RandomRange(monsterMin, monsterMax);
+    final int generateHowMany = howMany.generate();
+    for (y = 0; y < generateHowMany; y++) {
+      int xLoc = row.generate();
+      int yLoc = column.generate();
+      FantastleObjectModel there = this.getCell(xLoc, yLoc, z, Layers.OBJECT);
+      if (!there.isSolid()) {
+        this.monsterData.setCell(true, xLoc, yLoc, z);
+      } else {
+        while (there.isSolid()) {
+          xLoc = row.generate();
+          yLoc = column.generate();
+          there = this.getCell(xLoc, yLoc, z, Layers.OBJECT);
+        }
+        this.monsterData.setCell(true, xLoc, yLoc, z);
       }
     }
   }
@@ -628,8 +644,6 @@ final class LayeredTower implements Cloneable {
   public void tickTimers(final int floor) {
     int x, y;
     // Tick all object timers
-    FantastleObjectModelList objects = FantastleReboot.getBagOStuff()
-        .getObjects();
     for (x = 0; x < this.getColumns(); x++) {
       for (y = 0; y < this.getRows(); y++) {
         final FantastleObjectModel obj = this.getCell(y, x, floor,
@@ -637,11 +651,9 @@ final class LayeredTower implements Cloneable {
         obj.tickTimer();
         int objMovedX = RandomRange.generate(-1, 1);
         int objMovedY = RandomRange.generate(-1, 1);
-        if (objects.movesRandomly(obj) && objects.startsBattle(obj)
-            && obj instanceof MonsterObject) {
-          MonsterObject monster = (MonsterObject) obj;
+        if (this.monsterData.getCell(x, y, floor)) {
           this.updateMonsterPosition(objMovedX, objMovedY, x + objMovedX,
-              y + objMovedY, monster);
+              y + objMovedY);
         }
       }
     }

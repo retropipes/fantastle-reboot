@@ -51,8 +51,7 @@ public final class FantastleObjectModelList {
 
   // Methods
   public final void initializeObjects() {
-    final FantastleObjectModel[] allObjects = {
-        MonsterObjectFactory.createMonster(), new ArmorShop(), new BankShop(),
+    final FantastleObjectModel[] allObjects = { new ArmorShop(), new BankShop(),
         new OpenSpace(), new Nothing(), new BonusShop(), new ElementalShop(),
         new HealShop(), new Ice(), new ItemShop(), new RegenerateShop(),
         new SealingWall(), new NecklaceShop(), new SpellShop(), new Tile(),
