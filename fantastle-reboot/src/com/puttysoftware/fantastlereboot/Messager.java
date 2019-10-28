@@ -18,7 +18,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot;
 
-import javax.swing.JOptionPane;
+import com.puttysoftware.commondialogs.CommonDialogs;
 
 public class Messager {
   public static void showMessage(final String msg) {
@@ -27,58 +27,39 @@ public class Messager {
   }
 
   public static void showDialog(final String msg) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    JOptionPane.showMessageDialog(app.getOutputFrame(), msg, "Fantastle",
-        JOptionPane.INFORMATION_MESSAGE, app.getMicroLogo());
+    CommonDialogs.showDialog(msg);
   }
 
   public static void showTitledDialog(final String msg, final String title) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    JOptionPane.showMessageDialog(app.getOutputFrame(), msg, title,
-        JOptionPane.INFORMATION_MESSAGE, app.getMicroLogo());
+    CommonDialogs.showTitledDialog(msg, title);
   }
 
   public static void showErrorDialog(final String msg, final String title) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    JOptionPane.showMessageDialog(app.getOutputFrame(), msg, title,
-        JOptionPane.ERROR_MESSAGE, app.getMicroLogo());
+    CommonDialogs.showErrorDialog(msg, title);
   }
 
   public static String showInputDialog(final String prompt, final String title,
       final Object[] choices, final String defaultChoice) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    return (String) JOptionPane.showInputDialog(app.getOutputFrame(), prompt,
-        title, JOptionPane.QUESTION_MESSAGE, app.getMicroLogo(), choices,
-        defaultChoice);
+    return CommonDialogs.showInputDialog(prompt, title, choices, defaultChoice);
   }
 
   public static String showTextInputDialog(final String prompt,
       final String title) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    return (String) JOptionPane.showInputDialog(app.getOutputFrame(), prompt,
-        title, JOptionPane.QUESTION_MESSAGE, app.getMicroLogo(), null, null);
+    return CommonDialogs.showTextInputDialog(prompt, title);
   }
 
   public static String showTextInputDialogWithDefault(final String prompt,
       final String title, final String defaultValue) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    return (String) JOptionPane.showInputDialog(app.getOutputFrame(), prompt,
-        title, JOptionPane.QUESTION_MESSAGE, app.getMicroLogo(), null,
+    return CommonDialogs.showTextInputDialogWithDefault(prompt, title,
         defaultValue);
   }
 
   public static int showConfirmDialog(final String prompt, final String title) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    return JOptionPane.showConfirmDialog(app.getOutputFrame(), prompt, title,
-        JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
-        app.getMicroLogo());
+    return CommonDialogs.showConfirmDialog(prompt, title);
   }
 
   public static int showYNCConfirmDialog(final String prompt,
       final String title) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    return JOptionPane.showConfirmDialog(app.getOutputFrame(), prompt, title,
-        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
-        app.getMicroLogo());
+    return CommonDialogs.showYNCConfirmDialog(prompt, title);
   }
 }

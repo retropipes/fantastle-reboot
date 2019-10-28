@@ -24,7 +24,9 @@ import javax.swing.JMenuBar;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.errorlogger.ErrorLogger;
+import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
+import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.integration.NativeIntegration;
 
 public class FantastleReboot {
@@ -91,6 +93,9 @@ public class FantastleReboot {
   }
 
   static void doLateOSIntegration() {
+    CommonDialogs.setDefaultTitle(FantastleReboot.PROGRAM_NAME);
+    CommonDialogs.setIcon(
+        UserInterfaceImageLoader.load(UserInterfaceImageIndex.MICRO_LOGO));
     NATIVITY.setQuitStrategy(QuitStrategy.NORMAL_EXIT);
     NATIVITY.setQuitHandler(FantastleReboot.bag.getMazeManager());
     NATIVITY.setPreferencesHandler(FantastleReboot.bag.getPrefsManager());
