@@ -49,7 +49,7 @@ public class MonsterImageLoader {
       for (int x = 0; x < imageWidth; x++) {
         for (int y = 0; y < imageHeight; y++) {
           final int pixel = input.getRGB(x, y);
-          final Color c = new Color(pixel);
+          final Color c = new Color(pixel, true);
           final Color nc = shader.applyShade(c);
           result.setRGB(x, y, nc.getRGB());
         }
