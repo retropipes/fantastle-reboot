@@ -2,6 +2,7 @@ package com.puttysoftware.fantastlereboot.objects.temporary;
 
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
+import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public final class BattleCharacter extends FantastleObject {
@@ -13,6 +14,7 @@ public final class BattleCharacter extends FantastleObject {
 
   public BattleCharacter(final Creature theCreature) {
     super(-1);
+    this.setSavedObject(new OpenSpace());
     this.creature = theCreature;
     this.addOneCustomFlag();
     this.addOneCustomCounter();
