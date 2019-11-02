@@ -272,8 +272,9 @@ public abstract class FantastleObject extends GameObject
     return Layers.OBJECT;
   }
 
+  @Override
   public String getName() {
-    return "";
+    return Integer.toString(this.getUniqueID());
   }
 
   @Override

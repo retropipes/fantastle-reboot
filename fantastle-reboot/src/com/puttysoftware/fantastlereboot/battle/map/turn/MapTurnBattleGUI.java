@@ -160,7 +160,7 @@ class MapTurnBattleGUI {
       generateCacheName(final FantastleObjectModel... objects) {
     StringBuilder result = new StringBuilder();
     for (FantastleObjectModel object : objects) {
-      result.append(object.getUniqueID());
+      result.append(object.getName());
       result.append("_");
     }
     result.append("cache");

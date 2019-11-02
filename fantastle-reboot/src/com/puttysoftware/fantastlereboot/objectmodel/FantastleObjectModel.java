@@ -77,6 +77,8 @@ public interface FantastleObjectModel
   boolean hasSavedObject();
 
   void setSavedObject(FantastleObjectModel inNewSavedObject);
+  
+  String getName();
 
   int getLayer();
 
