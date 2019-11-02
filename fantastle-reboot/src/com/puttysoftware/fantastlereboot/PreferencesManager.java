@@ -64,8 +64,8 @@ public class PreferencesManager implements PreferencesHandler {
   // JCheckBox checkBetaUpdatesStartup;
   JCheckBox moveOneAtATime;
   JCheckBox monstersVisible;
-  JCheckBox mapBattleEngine;
-  JCheckBox timeBattleEngine;
+  private JCheckBox mapBattleEngine;
+  private JCheckBox timeBattleEngine;
   // JComboBox<String> editorFillChoices;
   // private String[] editorFillChoiceArray;
   JComboBox<String> difficultyChoices;
@@ -345,6 +345,8 @@ public class PreferencesManager implements PreferencesHandler {
     if (this.monstersVisibleEnabled != oldMonstersVisibleEnabled) {
       FantastleReboot.getBagOStuff().getObjects().updateMonster();
     }
+    this.useMapBattleEngine = this.mapBattleEngine.isSelected();
+    this.useTimeBattleEngine = this.timeBattleEngine.isSelected();
     this.hidePrefs();
   }
 
@@ -366,6 +368,10 @@ public class PreferencesManager implements PreferencesHandler {
     this.moveOneAtATimeEnabled = true;
     this.monstersVisible.setSelected(false);
     this.monstersVisibleEnabled = false;
+    this.mapBattleEngine.setSelected(false);
+    this.useMapBattleEngine = false;
+    this.timeBattleEngine.setSelected(false);
+    this.useTimeBattleEngine = false;
     // this.updateCheckInterval.setSelectedIndex(0);
     this.lastFilterUsed = PreferencesManager.FILTER_MAZE_V5;
   }
@@ -433,6 +439,8 @@ public class PreferencesManager implements PreferencesHandler {
     // "Check for Beta Updates at Startup", true);
     this.moveOneAtATime = new JCheckBox("One Move at a Time", true);
     this.monstersVisible = new JCheckBox("Show monsters on map", false);
+    this.mapBattleEngine = new JCheckBox("Use map battle engine", false);
+    this.timeBattleEngine = new JCheckBox("Use time battle engine", false);
     // this.updateCheckIntervalValues = new String[] { "Daily",
     // "Every 2nd Day", "Weekly", "Every 2nd Week", "Monthly" };
     // this.updateCheckInterval = new JComboBox<>(
@@ -464,6 +472,8 @@ public class PreferencesManager implements PreferencesHandler {
     // }
     this.miscPane.add(this.moveOneAtATime);
     this.miscPane.add(this.monstersVisible);
+    this.miscPane.add(this.mapBattleEngine);
+    this.miscPane.add(this.timeBattleEngine);
     // this.miscPane.add(new JLabel("Check How Often For Updates"));
     // this.miscPane.add(this.updateCheckInterval);
     this.miscPane.add(new JLabel("Game Difficulty"));
@@ -560,7 +570,12 @@ public class PreferencesManager implements PreferencesHandler {
         // pm.checkBetaUpdatesStartup
         // .setSelected(Boolean.parseBoolean(s.readLine()));
         pm.lastFilterUsed = Integer.parseInt(s.readLine());
-        pm.monstersVisible.setSelected(Boolean.parseBoolean(s.readLine()));
+        pm.monstersVisibleEnabled = Boolean.parseBoolean(s.readLine());
+        pm.monstersVisible.setSelected(pm.monstersVisibleEnabled);
+        pm.useMapBattleEngine = Boolean.parseBoolean(s.readLine());
+        pm.mapBattleEngine.setSelected(pm.useMapBattleEngine);
+        pm.useTimeBattleEngine = Boolean.parseBoolean(s.readLine());
+        pm.timeBattleEngine.setSelected(pm.useTimeBattleEngine);
         for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
           // Read and discard
           s.readLine();
@@ -613,6 +628,8 @@ public class PreferencesManager implements PreferencesHandler {
         // + "\n");
         s.write(Integer.toString(pm.lastFilterUsed) + "\n");
         s.write(Boolean.toString(pm.monstersVisibleEnabled) + "\n");
+        s.write(Boolean.toString(pm.useMapBattleEngine));
+        s.write(Boolean.toString(pm.useTimeBattleEngine));
         for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
           s.write("false\n");
           // s.write(Boolean.toString(pm.musicEnabled[x]) + "\n");
@@ -717,6 +734,8 @@ public class PreferencesManager implements PreferencesHandler {
         // .setSelected(Boolean.parseBoolean(s.readLine()));
         pm.lastFilterUsed = Integer.parseInt(s.readLine());
         pm.monstersVisible.setSelected(Boolean.parseBoolean(s.readLine()));
+        pm.mapBattleEngine.setSelected(Boolean.parseBoolean(s.readLine()));
+        pm.timeBattleEngine.setSelected(Boolean.parseBoolean(s.readLine()));
         for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
           // Read and discard
           s.readLine();
@@ -756,6 +775,8 @@ public class PreferencesManager implements PreferencesHandler {
         // + "\n");
         s.write(Integer.toString(pm.lastFilterUsed) + "\n");
         s.write(Boolean.toString(pm.monstersVisibleEnabled) + "\n");
+        s.write(Boolean.toString(pm.useMapBattleEngine));
+        s.write(Boolean.toString(pm.useTimeBattleEngine));
         for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
           s.write("false\n");
           // s.write(Boolean.toString(pm.musicEnabled[x]) + "\n");
