@@ -158,11 +158,15 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public void battleDone() {
+    BagOStuff bag = FantastleReboot.getBagOStuff();
     // Leave Battle
     this.hideBattle();
+    // Post-battle stuff
+    Maze m = bag.getMazeManager().getMaze();
+    m.postBattle(m.getPlayerLocationX(), m.getPlayerLocationY());
     // Return to whence we came
-    FantastleReboot.getBagOStuff().getGameManager().showOutput();
-    FantastleReboot.getBagOStuff().getGameManager().redrawMaze();
+    bag.getGameManager().showOutput();
+    bag.getGameManager().redrawMaze();
   }
 
   private void clearStatusMessage() {

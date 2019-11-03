@@ -102,7 +102,8 @@ final class MovementTask extends Thread {
   }
 
   void fireStepActions() {
-    final Maze m = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
+    BagOStuff bag = FantastleReboot.getBagOStuff();
+    final Maze m = bag.getMazeManager().getMaze();
     final int px = m.getPlayerLocationX();
     final int py = m.getPlayerLocationY();
     final int pz = m.getPlayerLocationZ();
@@ -110,6 +111,13 @@ final class MovementTask extends Thread {
     m.tickTimers(pz);
     PartyManager.getParty().fireStepActions();
     this.gui.updateStats();
+    // Check for battle
+    if (m.hasMonster(px, py, pz)) {
+      if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
+        bag.getGameManager().stopMovement();
+        bag.getBattle().doBattle();
+      }
+    }
     MovementTask.checkGameOver();
   }
 

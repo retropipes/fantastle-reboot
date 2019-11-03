@@ -89,6 +89,10 @@ public class Maze {
     return temp;
   }
 
+  public void postBattle(final int xLoc, final int yLoc) {
+    this.mazeData.postBattle(xLoc, yLoc);
+  }
+
   public String getBasePath() {
     return this.basePath;
   }
@@ -163,6 +167,10 @@ public class Maze {
     } else {
       return false;
     }
+  }
+
+  public boolean hasMonster(final int x, final int y, final int z) {
+    return this.mazeData.hasMonster(x, y, z);
   }
 
   public boolean hasNote(final int x, final int y, final int z) {

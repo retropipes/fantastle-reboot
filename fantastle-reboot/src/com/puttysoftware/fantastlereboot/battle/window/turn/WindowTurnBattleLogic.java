@@ -23,6 +23,7 @@ import com.puttysoftware.fantastlereboot.game.GameLogicManager;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
+import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 import com.puttysoftware.fantastlereboot.spells.SpellCaster;
@@ -636,10 +637,15 @@ public class WindowTurnBattleLogic extends Battle {
 
   @Override
   public final void battleDone() {
+    BagOStuff bag = FantastleReboot.getBagOStuff();
+    // Leave Battle
     this.battleGUI.getOutputFrame().setVisible(false);
-    final GameLogicManager gm = FantastleReboot.getBagOStuff().getGameManager();
-    gm.showOutput();
-    gm.redrawMaze();
+    // Post-battle stuff
+    Maze m = bag.getMazeManager().getMaze();
+    m.postBattle(m.getPlayerLocationX(), m.getPlayerLocationY());
+    // Return to whence we came
+    bag.getGameManager().showOutput();
+    bag.getGameManager().redrawMaze();
   }
 
   @Override

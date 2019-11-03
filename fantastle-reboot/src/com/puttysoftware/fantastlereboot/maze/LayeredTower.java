@@ -8,7 +8,6 @@ package com.puttysoftware.fantastlereboot.maze;
 import java.io.IOException;
 import java.util.Arrays;
 
-import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
@@ -86,67 +85,45 @@ final class LayeredTower implements Cloneable {
   // Methods
   private void updateMonsterPosition(final int moveX, final int moveY,
       final int xLoc, final int yLoc) {
-    final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final int pLocX = this.getPlayerRow();
-    final int pLocY = this.getPlayerColumn();
     final int zLoc = this.getPlayerFloor();
     if (xLoc + moveX >= 0 && xLoc + moveX < this.getColumns()
         && yLoc + moveY >= 0 && yLoc + moveY < this.getRows()) {
       final FantastleObjectModel there = this.getCell(xLoc + moveX,
           yLoc + moveY, zLoc, Layers.OBJECT);
       if (!there.isSolid()
-          && !this.monsterData.getCell(xLoc + moveX, yLoc + moveY, zLoc)) {
-        // Check for battle before moving
-        boolean enteredBattle = false;
-        if (LayeredTower.radialScan(xLoc, yLoc, 0, pLocX, pLocY)) {
-          if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
-            bag.getGameManager().stopMovement();
-            enteredBattle = true;
-            bag.getBattle().doBattle();
-            this.postBattle(xLoc, yLoc);
-          }
-        }
+          && !this.hasMonster(xLoc + moveX, yLoc + moveY, zLoc)) {
         // Move the monster
         this.monsterData.setCell(false, xLoc, yLoc, zLoc);
         this.monsterData.setCell(true, xLoc + moveX, yLoc + moveY, zLoc);
-        // Check for battle after moving
-        if (!enteredBattle && LayeredTower.radialScan(xLoc + moveX,
-            yLoc + moveY, 0, pLocX, pLocY)) {
-          if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
-            bag.getGameManager().stopMovement();
-            bag.getBattle().doBattle();
-            this.postBattle(xLoc + moveX, yLoc + moveY);
-          }
-        }
       }
     }
   }
 
-  private void postBattle(final int xLoc, final int yLoc) {
+  public void postBattle(final int xLoc, final int yLoc) {
+    // Clear the monster just defeated
     final int zLoc = this.getPlayerFloor();
     this.monsterData.setCell(false, xLoc, yLoc, zLoc);
-    this.generateOneMonster();
-  }
-
-  private void generateOneMonster() {
+    // Generate a new monster
     final RandomRange row = new RandomRange(0, this.getRows() - 1);
     final RandomRange column = new RandomRange(0, this.getColumns() - 1);
-    final int zLoc = this.getPlayerFloor();
-    int xLoc, yLoc;
-    xLoc = row.generate();
-    yLoc = column.generate();
-    FantastleObjectModel currObj = this.getCell(xLoc, yLoc, zLoc,
+    int xGen = row.generate();
+    int yGen = column.generate();
+    FantastleObjectModel currObj = this.getCell(xGen, yGen, zLoc,
         Layers.OBJECT);
     if (!currObj.isSolid()) {
-      this.monsterData.setCell(true, xLoc, yLoc, zLoc);
+      this.monsterData.setCell(true, xGen, yGen, zLoc);
     } else {
       while (currObj.isSolid()) {
-        xLoc = row.generate();
-        yLoc = column.generate();
-        currObj = this.getCell(xLoc, yLoc, zLoc, Layers.OBJECT);
+        xGen = row.generate();
+        yGen = column.generate();
+        currObj = this.getCell(xGen, yGen, zLoc, Layers.OBJECT);
       }
-      this.monsterData.setCell(true, xLoc, yLoc, zLoc);
+      this.monsterData.setCell(true, xGen, yGen, zLoc);
     }
+  }
+
+  public boolean hasMonster(final int x, final int y, final int z) {
+    return this.monsterData.getCell(y, x, z);
   }
 
   public boolean hasNote(final int x, final int y, final int z) {

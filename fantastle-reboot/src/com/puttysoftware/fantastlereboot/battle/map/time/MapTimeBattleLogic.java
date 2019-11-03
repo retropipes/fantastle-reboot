@@ -90,16 +90,18 @@ public class MapTimeBattleLogic extends Battle {
   @Override
   public void doBattleByProxy() {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final Creature m = MonsterFactory.getNewMonsterInstance();
+    final Creature proxyEnemy = MonsterFactory.getNewMonsterInstance();
     final PartyMember playerCharacter = PartyManager.getParty().getLeader();
-    playerCharacter.offsetExperience(m.getExperience());
-    playerCharacter.offsetGold(m.getGold());
+    playerCharacter.offsetExperience(proxyEnemy.getExperience());
+    playerCharacter.offsetGold(proxyEnemy.getGold());
     // Level Up Check
     if (playerCharacter.checkLevelUp()) {
       playerCharacter.levelUp();
       FantastleReboot.getBagOStuff().getGameManager().keepNextMessage();
       bag.showMessage("You reached level " + playerCharacter.getLevel() + ".");
     }
+    Maze m = bag.getMazeManager().getMaze();
+    m.postBattle(m.getPlayerLocationX(), m.getPlayerLocationY());
   }
 
   private void doBattleInternal(final Maze bMaze, final MapBattle b) {
@@ -145,11 +147,15 @@ public class MapTimeBattleLogic extends Battle {
 
   @Override
   public void battleDone() {
+    BagOStuff bag = FantastleReboot.getBagOStuff();
     // Leave Battle
     this.hideBattle();
+    // Post-battle stuff
+    Maze m = bag.getMazeManager().getMaze();
+    m.postBattle(m.getPlayerLocationX(), m.getPlayerLocationY());
     // Return to whence we came
-    FantastleReboot.getBagOStuff().getGameManager().showOutput();
-    FantastleReboot.getBagOStuff().getGameManager().redrawMaze();
+    bag.getGameManager().showOutput();
+    bag.getGameManager().redrawMaze();
   }
 
   private void clearStatusMessage() {
