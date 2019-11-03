@@ -10,7 +10,7 @@ public abstract class MonsterObject extends FantastleObject
   private final boolean isVisible;
 
   protected MonsterObject(final boolean visible) {
-    super(55, "monster", ObjectImageIndex.NORMAL_MONSTER);
+    super(55, "monster", ObjectImageIndex.SHADOW_MONSTER);
     this.isVisible = visible;
     this.setDestroyable(false);
     this.setSavedObject(new OpenSpace());

@@ -52,7 +52,6 @@ down
 drunk_trap
 e_plug
 e_port
-easy_monster
 open_space
 energy_sphere
 bonus_shop
@@ -72,7 +71,6 @@ grass
 h_plug
 h_port
 half_hourglass
-hard_monster
 heal_shop
 heal_trap
 horizontal_beam
@@ -137,7 +135,7 @@ n_way_one_shot_teleport
 n_way_teleport
 no_blocks
 no_player
-normal_monster
+shadow_monster
 note
 nothing
 o_plug
