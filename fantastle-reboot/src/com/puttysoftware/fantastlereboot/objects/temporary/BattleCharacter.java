@@ -15,6 +15,7 @@ public final class BattleCharacter extends FantastleObject {
   public BattleCharacter(final Creature theCreature) {
     super(-1);
     this.setSavedObject(new OpenSpace());
+    this.setSolid(true);
     this.creature = theCreature;
     this.addOneCustomFlag();
     this.addOneCustomCounter();
