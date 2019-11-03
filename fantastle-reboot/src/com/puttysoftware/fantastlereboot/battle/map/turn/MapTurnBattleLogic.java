@@ -66,6 +66,7 @@ public class MapTurnBattleLogic extends Battle {
   private static final int ITEM_ACTION_POINTS = 6;
   private static final int STEAL_ACTION_POINTS = 3;
   private static final int DRAIN_ACTION_POINTS = 3;
+  private static final int SPELL_ACTION_POINTS = 1;
 
   // Constructors
   public MapTurnBattleLogic() {
@@ -998,42 +999,47 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public boolean castSpell() {
-    // Check Spell Counter
-    if (this.getActiveSpellCounter() > 0) {
-      if (!this.bd.getActiveCharacter().getCreature().hasMapAI()) {
+    BattleCharacter activeBC = this.bd.getActiveCharacter();
+    Creature active = null;
+    if (activeBC != null) {
+      active = activeBC.getCreature();
+    }
+    BattleCharacter enemyBC = this.getEnemyBC();
+    Creature activeEnemy = null;
+    if (enemyBC != null) {
+      activeEnemy = enemyBC.getCreature();
+    }
+    if (activeBC == null || active == null) {
+      // Abort
+      return false;
+    }
+    // Check Action Counter
+    if (activeBC.canAct(MapTurnBattleLogic.SPELL_ACTION_POINTS)) {
+      if (enemyBC == null || activeEnemy == null) {
+        // Failed - nobody to use on
+        this.setStatusMessage(activeBC.getName()
+            + " tries to cast a spell, but nobody is there to cast it on!");
+        return false;
+      }
+      if (!active.hasMapAI()) {
         // Active character has no AI, or AI is turned off
-        final boolean success = SpellCaster
-            .selectAndCastSpell(this.bd.getActiveCharacter().getCreature());
+        final boolean success = SpellCaster.selectAndCastSpell(active);
         if (success) {
-          this.decrementActiveSpellCounter();
-        }
-        final BattleResults currResult = this.getResult();
-        if (currResult != BattleResults.IN_PROGRESS) {
-          // Battle Done
-          this.result = currResult;
-          this.doResult();
+          activeBC.act(MapTurnBattleLogic.SPELL_ACTION_POINTS);
         }
         return success;
       } else {
         // Active character has AI, and AI is turned on
-        final Spell sp = this.bd.getActiveCharacter().getCreature().getMapAI()
-            .getSpellToCast();
-        final boolean success = SpellCaster.castSpell(sp,
-            this.bd.getActiveCharacter().getCreature());
+        final Spell spell = active.getMapAI().getSpellToCast();
+        final boolean success = SpellCaster.castSpell(spell, active);
         if (success) {
-          this.decrementActiveSpellCounter();
-        }
-        final BattleResults currResult = this.getResult();
-        if (currResult != BattleResults.IN_PROGRESS) {
-          // Battle Done
-          this.result = currResult;
-          this.doResult();
+          activeBC.act(MapTurnBattleLogic.SPELL_ACTION_POINTS);
         }
         return success;
       }
     } else {
       // Deny cast - out of actions
-      if (!this.bd.getActiveCharacter().getCreature().hasMapAI()) {
+      if (!active.hasMapAI()) {
         this.setStatusMessage("Out of actions!");
       }
       return false;
@@ -1042,44 +1048,47 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public boolean useItem() {
+    BattleCharacter activeBC = this.bd.getActiveCharacter();
+    Creature active = null;
+    if (activeBC != null) {
+      active = activeBC.getCreature();
+    }
+    BattleCharacter enemyBC = this.getEnemyBC();
+    Creature activeEnemy = null;
+    if (enemyBC != null) {
+      activeEnemy = enemyBC.getCreature();
+    }
+    if (activeBC == null || active == null) {
+      // Abort
+      return false;
+    }
     // Check Action Counter
-    if (this.getActiveActionCounter() > 0) {
-      if (!this.bd.getActiveCharacter().getCreature().hasMapAI()) {
+    if (activeBC.canAct(MapTurnBattleLogic.ITEM_ACTION_POINTS)) {
+      if (enemyBC == null || activeEnemy == null) {
+        // Failed - nobody to use on
+        this.setStatusMessage(activeBC.getName()
+            + " tries to use an item, but nobody is there to use it on!");
+        return false;
+      }
+      if (!active.hasMapAI()) {
         // Active character has no AI, or AI is turned off
-        final boolean success = CombatItemChucker
-            .selectAndUseItem(this.bd.getActiveCharacter().getCreature());
+        final boolean success = CombatItemChucker.selectAndUseItem(active);
         if (success) {
-          this.bd.getActiveCharacter()
-              .act(MapTurnBattleLogic.ITEM_ACTION_POINTS);
-        }
-        final BattleResults currResult = this.getResult();
-        if (currResult != BattleResults.IN_PROGRESS) {
-          // Battle Done
-          this.result = currResult;
-          this.doResult();
+          activeBC.act(MapTurnBattleLogic.ITEM_ACTION_POINTS);
         }
         return success;
       } else {
         // Active character has AI, and AI is turned on
-        final CombatItem cui = this.bd.getActiveCharacter().getCreature()
-            .getMapAI().getItemToUse();
-        final boolean success = CombatItemChucker.useItem(cui,
-            this.bd.getActiveCharacter().getCreature());
+        final CombatItem cui = active.getMapAI().getItemToUse();
+        final boolean success = CombatItemChucker.useItem(cui, active);
         if (success) {
-          this.bd.getActiveCharacter()
-              .act(MapTurnBattleLogic.ITEM_ACTION_POINTS);
-        }
-        final BattleResults currResult = this.getResult();
-        if (currResult != BattleResults.IN_PROGRESS) {
-          // Battle Done
-          this.result = currResult;
-          this.doResult();
+          activeBC.act(MapTurnBattleLogic.ITEM_ACTION_POINTS);
         }
         return success;
       }
     } else {
       // Deny use - out of actions
-      if (!this.bd.getActiveCharacter().getCreature().hasMapAI()) {
+      if (!active.hasMapAI()) {
         this.setStatusMessage("Out of actions!");
       }
       return false;
@@ -1088,67 +1097,81 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public boolean steal() {
+    BattleCharacter activeBC = this.bd.getActiveCharacter();
+    Creature active = null;
+    if (activeBC != null) {
+      active = activeBC.getCreature();
+    }
+    BattleCharacter enemyBC = this.getEnemyBC();
+    Creature activeEnemy = null;
+    if (enemyBC != null) {
+      activeEnemy = enemyBC.getCreature();
+    }
+    if (activeBC == null || active == null) {
+      // Abort
+      return false;
+    }
     // Check Action Counter
-    if (this.getActiveActionCounter() > 0) {
-      Creature activeEnemy = this.getEnemyBC().getCreature();
-      int stealChance;
+    if (activeBC.canAct(MapTurnBattleLogic.STEAL_ACTION_POINTS)) {
       int stealAmount = 0;
-      this.bd.getActiveCharacter().act(MapTurnBattleLogic.STEAL_ACTION_POINTS);
-      stealChance = StatConstants.CHANCE_STEAL;
-      if (activeEnemy == null) {
+      int stealChance = StatConstants.CHANCE_STEAL;
+      activeBC.act(MapTurnBattleLogic.STEAL_ACTION_POINTS);
+      if (enemyBC == null || activeEnemy == null) {
         // Failed - nobody to steal from
-        this.setStatusMessage(this.bd.getActiveCharacter().getName()
+        this.setStatusMessage(activeBC.getName()
             + " tries to steal, but nobody is there to steal from!");
         return false;
       }
       if (stealChance <= 0) {
         // Failed
-        this.setStatusMessage(this.bd.getActiveCharacter().getName()
-            + " tries to steal, but fails!");
+        this.setStatusMessage(
+            activeBC.getName() + " tries to steal, but fails!");
         return false;
       } else if (stealChance >= 100) {
         // Succeeded, unless target has 0 Gold
         final RandomRange stole = new RandomRange(0, activeEnemy.getGold());
         stealAmount = stole.generate();
         if (stealAmount == 0) {
-          this.setStatusMessage(this.bd.getActiveCharacter().getName()
+          this.setStatusMessage(activeBC.getName()
               + " tries to steal, but no Gold is left to steal!");
           return false;
         } else {
-          this.bd.getActiveCharacter().getCreature().offsetGold(stealAmount);
-          this.setStatusMessage(this.bd.getActiveCharacter().getName()
-              + " tries to steal, and successfully steals " + stealAmount
-              + " gold!");
+          activeEnemy.offsetGold(-stealAmount);
+          active.offsetGold(stealAmount);
+          this.setStatusMessage(
+              activeBC.getName() + " tries to steal, and successfully stole "
+                  + stealAmount + " Gold!");
           return true;
         }
       } else {
         final RandomRange chance = new RandomRange(0, 100);
         final int randomChance = chance.generate();
         if (randomChance <= stealChance) {
-          // Succeeded, unless target has 0 Gold
+          // Succeeded
           final RandomRange stole = new RandomRange(0, activeEnemy.getGold());
           stealAmount = stole.generate();
           if (stealAmount == 0) {
-            this.setStatusMessage(this.bd.getActiveCharacter().getName()
+            this.setStatusMessage(activeBC.getName()
                 + " tries to steal, but no Gold is left to steal!");
             return false;
           } else {
-            this.bd.getActiveCharacter().getCreature().offsetGold(stealAmount);
-            this.setStatusMessage(this.bd.getActiveCharacter().getName()
-                + " tries to steal, and successfully steals " + stealAmount
-                + " gold!");
+            activeEnemy.offsetGold(-stealAmount);
+            active.offsetGold(stealAmount);
+            this.setStatusMessage(
+                activeBC.getName() + " tries to steal, and successfully stole "
+                    + stealAmount + " Gold!");
             return true;
           }
         } else {
           // Failed
-          this.setStatusMessage(this.bd.getActiveCharacter().getName()
-              + " tries to steal, but fails!");
+          this.setStatusMessage(
+              activeBC.getName() + " tries to steal, but fails!");
           return false;
         }
       }
     } else {
       // Deny steal - out of actions
-      if (!this.bd.getActiveCharacter().getCreature().hasMapAI()) {
+      if (!active.hasMapAI()) {
         this.setStatusMessage("Out of actions!");
       }
       return false;
@@ -1157,23 +1180,36 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public boolean drain() {
+    BattleCharacter activeBC = this.bd.getActiveCharacter();
+    Creature active = null;
+    if (activeBC != null) {
+      active = activeBC.getCreature();
+    }
+    BattleCharacter enemyBC = this.getEnemyBC();
+    Creature activeEnemy = null;
+    if (enemyBC != null) {
+      activeEnemy = enemyBC.getCreature();
+    }
+    if (activeBC == null || active == null) {
+      // Abort
+      return false;
+    }
     // Check Action Counter
-    if (this.getActiveActionCounter() > 0) {
-      Creature activeEnemy = this.getEnemyBC().getCreature();
+    if (activeBC.canAct(MapTurnBattleLogic.DRAIN_ACTION_POINTS)) {
       int drainChance;
       int drainAmount = 0;
-      this.bd.getActiveCharacter().act(MapTurnBattleLogic.DRAIN_ACTION_POINTS);
       drainChance = StatConstants.CHANCE_DRAIN;
-      if (activeEnemy == null) {
+      activeBC.act(MapTurnBattleLogic.DRAIN_ACTION_POINTS);
+      if (enemyBC == null || activeEnemy == null) {
         // Failed - nobody to drain from
-        this.setStatusMessage(this.bd.getActiveCharacter().getName()
+        this.setStatusMessage(activeBC.getName()
             + " tries to drain, but nobody is there to drain from!");
         return false;
       }
       if (drainChance <= 0) {
         // Failed
-        this.setStatusMessage(this.bd.getActiveCharacter().getName()
-            + " tries to drain, but fails!");
+        this.setStatusMessage(
+            activeBC.getName() + " tries to drain, but fails!");
         return false;
       } else if (drainChance >= 100) {
         // Succeeded, unless target has 0 MP
@@ -1181,16 +1217,15 @@ public class MapTurnBattleLogic extends Battle {
             activeEnemy.getCurrentMP());
         drainAmount = drained.generate();
         if (drainAmount == 0) {
-          this.setStatusMessage(this.bd.getActiveCharacter().getName()
+          this.setStatusMessage(activeBC.getName()
               + " tries to drain, but no MP is left to drain!");
           return false;
         } else {
           activeEnemy.offsetCurrentMP(-drainAmount);
-          this.bd.getActiveCharacter().getCreature()
-              .offsetCurrentMP(drainAmount);
-          this.setStatusMessage(this.bd.getActiveCharacter().getName()
-              + " tries to drain, and successfully drains " + drainAmount
-              + " MP!");
+          active.offsetCurrentMP(drainAmount);
+          this.setStatusMessage(
+              activeBC.getName() + " tries to drain, and successfully drains "
+                  + drainAmount + " MP!");
           return true;
         }
       } else {
@@ -1202,28 +1237,27 @@ public class MapTurnBattleLogic extends Battle {
               activeEnemy.getCurrentMP());
           drainAmount = drained.generate();
           if (drainAmount == 0) {
-            this.setStatusMessage(this.bd.getActiveCharacter().getName()
+            this.setStatusMessage(activeBC.getName()
                 + " tries to drain, but no MP is left to drain!");
             return false;
           } else {
             activeEnemy.offsetCurrentMP(-drainAmount);
-            this.bd.getActiveCharacter().getCreature()
-                .offsetCurrentMP(drainAmount);
-            this.setStatusMessage(this.bd.getActiveCharacter().getName()
-                + " tries to drain, and successfully drains " + drainAmount
-                + " MP!");
+            active.offsetCurrentMP(drainAmount);
+            this.setStatusMessage(
+                activeBC.getName() + " tries to drain, and successfully drains "
+                    + drainAmount + " MP!");
             return true;
           }
         } else {
           // Failed
-          this.setStatusMessage(this.bd.getActiveCharacter().getName()
-              + " tries to drain, but fails!");
+          this.setStatusMessage(
+              activeBC.getName() + " tries to drain, but fails!");
           return false;
         }
       }
     } else {
       // Deny drain - out of actions
-      if (!this.bd.getActiveCharacter().getCreature().hasMapAI()) {
+      if (!active.hasMapAI()) {
         this.setStatusMessage("Out of actions!");
       }
       return false;
@@ -1273,19 +1307,11 @@ public class MapTurnBattleLogic extends Battle {
     return this.bd.getActiveCharacter().getCurrentActions();
   }
 
-  private int getActiveSpellCounter() {
-    return this.bd.getActiveCharacter().getCurrentActions();
-  }
-
   private void decrementActiveActionCounterBy(final int amount) {
     this.bd.getActiveCharacter().act(amount);
   }
 
   private void decrementActiveAttackCounter() {
-    this.bd.getActiveCharacter().act(1);
-  }
-
-  private void decrementActiveSpellCounter() {
     this.bd.getActiveCharacter().act(1);
   }
 
