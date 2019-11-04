@@ -302,7 +302,7 @@ public class PreferencesManager {
     }
   }
 
-  public static void hidePrefs() {
+  private static void hidePrefs() {
     if (!PreferencesManager.guiSetUp) {
       setUpGUI();
       PreferencesManager.guiSetUp = true;
@@ -337,7 +337,7 @@ public class PreferencesManager {
     resetDefaultPrefs();
   }
 
-  public static void loadPrefs() {
+  private static void loadPrefs() {
     if (!PreferencesManager.guiSetUp) {
       setUpGUI();
       PreferencesManager.guiSetUp = true;
@@ -365,7 +365,7 @@ public class PreferencesManager {
         .setSelectedIndex(PreferencesManager.viewingWindowIndex);
   }
 
-  public static void savePrefs() {
+  private static void savePrefs() {
     if (!PreferencesManager.guiSetUp) {
       setUpGUI();
       PreferencesManager.guiSetUp = true;
@@ -396,7 +396,6 @@ public class PreferencesManager {
         .isSelected();
     PreferencesManager.viewingWindowIndex = PreferencesManager.viewingWindowChoices
         .getSelectedIndex();
-    hidePrefs();
   }
 
   public static void setDefaultPrefs() {
@@ -888,7 +887,9 @@ public class PreferencesManager {
         final String cmd = e.getActionCommand();
         if (cmd.equals("OK")) {
           PreferencesManager.savePrefs();
+          PreferencesManager.hidePrefs();
         } else if (cmd.equals("Cancel")) {
+          PreferencesManager.loadPrefs();
           PreferencesManager.hidePrefs();
         } else if (cmd.equals("Export...")) {
           PreferencesManager.handleExport();
