@@ -157,16 +157,16 @@ class GameGUIManager {
               boolean playerSquare = (u == y && v == x);
               boolean noteSquare = m.hasNote(x, y, z);
               boolean monsterSquare = m.hasMonster(xFix, y, z);
-              if (playerSquare) {
-                obj3 = PLAYER;
+              if (monsterSquare && app.getPrefsManager().monstersVisible()) {
+                obj3 = MonsterObjectFactory.createMonster();
                 img3 = obj3.getGameImage();
               }
-              if (noteSquare) {
-                obj4 = NOTE;
+              if (playerSquare) {
+                obj4 = PLAYER;
                 img4 = obj4.getGameImage();
               }
-              if (monsterSquare && app.getPrefsManager().monstersVisible()) {
-                obj5 = MonsterObjectFactory.createMonster();
+              if (noteSquare) {
+                obj5 = NOTE;
                 img5 = obj5.getGameImage();
               }
               String cacheName = generateCacheName(obj1, obj2, obj3, obj4,
@@ -228,16 +228,16 @@ class GameGUIManager {
           boolean playerSquare = (u == y && v == x);
           boolean noteSquare = m.hasNote(x, y, z);
           boolean monsterSquare = m.hasMonster(xFix, y, z);
-          if (playerSquare) {
-            obj3 = PLAYER;
+          if (monsterSquare && app.getPrefsManager().monstersVisible()) {
+            obj3 = MonsterObjectFactory.createMonster();
             img3 = obj3.getGameImage();
           }
-          if (noteSquare) {
-            obj4 = NOTE;
+          if (playerSquare) {
+            obj4 = PLAYER;
             img4 = obj4.getGameImage();
           }
-          if (monsterSquare && app.getPrefsManager().monstersVisible()) {
-            obj5 = MonsterObjectFactory.createMonster();
+          if (noteSquare) {
+            obj5 = NOTE;
             img5 = obj5.getGameImage();
           }
           String cacheName = generateCacheName(obj1, obj2, obj3, obj4, obj5,
