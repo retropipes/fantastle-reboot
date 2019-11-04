@@ -214,8 +214,7 @@ public class PreferencesManager {
   }
 
   public static boolean isSoundGroupEnabled(final SoundGroup group) {
-    final int snd = group.ordinal();
-    return isSoundGroupEnabledImpl(snd);
+    return isSoundGroupEnabledImpl(group.ordinal());
   }
 
   private static boolean isSoundGroupEnabledImpl(final int snd) {
@@ -265,6 +264,10 @@ public class PreferencesManager {
   }
 
   public static JFrame getPrefFrame() {
+    if (!PreferencesManager.guiSetUp) {
+      setUpGUI();
+      PreferencesManager.guiSetUp = true;
+    }
     if (PreferencesManager.prefFrame != null
         && PreferencesManager.prefFrame.isVisible()) {
       return PreferencesManager.prefFrame;
@@ -274,12 +277,11 @@ public class PreferencesManager {
   }
 
   public static void showPrefs() {
+    if (!PreferencesManager.guiSetUp) {
+      setUpGUI();
+      PreferencesManager.guiSetUp = true;
+    }
     if (FantastleReboot.inFantastleReboot()) {
-      if (!PreferencesManager.guiSetUp) {
-        setUpGUI();
-        setDefaultPrefs();
-        PreferencesManager.guiSetUp = true;
-      }
       final BagOStuff app = FantastleReboot.getBagOStuff();
       app.setInPrefs();
       app.getMenuManager().attachMenus();
@@ -301,6 +303,10 @@ public class PreferencesManager {
   }
 
   public static void hidePrefs() {
+    if (!PreferencesManager.guiSetUp) {
+      setUpGUI();
+      PreferencesManager.guiSetUp = true;
+    }
     if (FantastleReboot.inFantastleReboot()) {
       final BagOStuff app = FantastleReboot.getBagOStuff();
       PreferencesManager.prefFrame.setVisible(false);
@@ -332,6 +338,10 @@ public class PreferencesManager {
   }
 
   public static void loadPrefs() {
+    if (!PreferencesManager.guiSetUp) {
+      setUpGUI();
+      PreferencesManager.guiSetUp = true;
+    }
     // editorFillChoices.setSelectedIndex(editorFill);
     for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
       PreferencesManager.sounds[x].setSelected(isSoundGroupEnabledImpl(x));
@@ -356,6 +366,10 @@ public class PreferencesManager {
   }
 
   public static void savePrefs() {
+    if (!PreferencesManager.guiSetUp) {
+      setUpGUI();
+      PreferencesManager.guiSetUp = true;
+    }
     // editorFill = editorFillChoices.getSelectedIndex();
     for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
       setSoundGroupEnabledImpl(x, PreferencesManager.sounds[x].isSelected());
@@ -392,6 +406,10 @@ public class PreferencesManager {
   }
 
   private static void resetDefaultPrefs() {
+    if (!PreferencesManager.guiSetUp) {
+      setUpGUI();
+      PreferencesManager.guiSetUp = true;
+    }
     // editorFill = 0;
     defaultEnableSoundGroups();
     defaultEnableMusicGroups();

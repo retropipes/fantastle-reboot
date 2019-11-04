@@ -107,6 +107,8 @@ public class FantastleReboot {
       // Compute action cap
       Creature.computeActionCap(FantastleReboot.BATTLE_MAZE_SIZE,
           FantastleReboot.BATTLE_MAZE_SIZE);
+      // Set default preferences
+      PreferencesManager.setDefaultPrefs();
       // Create the Bag O'Stuff
       FantastleReboot.bag = new BagOStuff();
       // OS Integration
