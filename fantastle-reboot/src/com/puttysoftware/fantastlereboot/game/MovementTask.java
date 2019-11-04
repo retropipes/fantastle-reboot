@@ -8,6 +8,7 @@ package com.puttysoftware.fantastlereboot.game;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectConstants;
@@ -111,14 +112,24 @@ final class MovementTask extends Thread {
     m.tickTimers(pz);
     PartyManager.getParty().fireStepActions();
     this.gui.updateStats();
+    MovementTask.checkGameOver();
+  }
+
+  static void checkForBattle() {
     // Check for battle
-    if (m.hasMonster(px, py, pz)) {
-      if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
-        bag.getGameManager().stopMovement();
-        bag.getBattle().doBattle();
+    BagOStuff bag = FantastleReboot.getBagOStuff();
+    if (!bag.inBattle()) {
+      final Maze m = bag.getMazeManager().getMaze();
+      final int px = m.getPlayerLocationX();
+      final int py = m.getPlayerLocationY();
+      final int pz = m.getPlayerLocationZ();
+      if (m.hasMonster(px, py, pz)) {
+        if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
+          bag.getGameManager().stopMovement();
+          bag.getBattle().doBattle();
+        }
       }
     }
-    MovementTask.checkGameOver();
   }
 
   private void decayEffects() {
@@ -200,7 +211,7 @@ final class MovementTask extends Thread {
             }
           } else {
             // Move failed - object is solid in that direction
-            SoundPlayer.playSound(SoundIndex.WALK_FAILED);
+            SoundPlayer.playSound(SoundIndex.WALK_FAILED, SoundGroup.GAME);
             bag.showMessage("Can't go that way");
             this.fireStepActions();
             this.decayEffects();
@@ -209,7 +220,7 @@ final class MovementTask extends Thread {
           this.vwMgr.restoreViewingWindow();
           m.restorePlayerLocation();
           // Move failed - attempted to go outside the maze
-          SoundPlayer.playSound(SoundIndex.WALK_FAILED);
+          SoundPlayer.playSound(SoundIndex.WALK_FAILED, SoundGroup.GAME);
           bag.showMessage("Can't go that way");
           nextAbove = new OpenSpace();
           this.decayEffects();
@@ -218,7 +229,7 @@ final class MovementTask extends Thread {
         this.fireStepActions();
       } else {
         // Move failed - pre-move check failed
-        SoundPlayer.playSound(SoundIndex.WALK_FAILED);
+        SoundPlayer.playSound(SoundIndex.WALK_FAILED, SoundGroup.GAME);
         bag.showMessage("Can't go that way");
         this.fireStepActions();
         this.decayEffects();
@@ -230,10 +241,10 @@ final class MovementTask extends Thread {
       loopCheck = this.checkLoopCondition(below, nextBelow, nextAbove);
       if (loopCheck && !nextBelow.hasFriction()) {
         // Sliding on ice
-        SoundPlayer.playSound(SoundIndex.WALK_ICE);
+        SoundPlayer.playSound(SoundIndex.WALK_ICE, SoundGroup.GAME);
       } else if (nextBelow.hasFriction() && this.proceed) {
         // Walking normally
-        SoundPlayer.playSound(SoundIndex.WALK);
+        SoundPlayer.playSound(SoundIndex.WALK, SoundGroup.GAME);
       }
       if (this.proceed && objects.sendsToShop(nextAbove)) {
         // Send player to shop
@@ -298,7 +309,7 @@ final class MovementTask extends Thread {
 
   private static void checkGameOver() {
     if (!PartyManager.getParty().isAlive()) {
-      SoundPlayer.playSound(SoundIndex.GAME_OVER);
+      SoundPlayer.playSound(SoundIndex.GAME_OVER, SoundGroup.GAME);
       CommonDialogs.showDialog(
           "You have died! You lose 10% of your experience and all your Gold, but you are healed fully.");
       PartyManager.getParty().getLeader().onDeath(-10);

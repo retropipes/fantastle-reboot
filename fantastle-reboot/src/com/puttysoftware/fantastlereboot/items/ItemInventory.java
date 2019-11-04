@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
@@ -102,7 +103,7 @@ public class ItemInventory {
       this.equipment[ei.getSecondSlotUsed()] = ei;
     }
     if (playSound) {
-      SoundPlayer.playSound(SoundIndex.EQUIP);
+      SoundPlayer.playSound(SoundIndex.EQUIP, SoundGroup.GAME);
     }
   }
 
@@ -119,7 +120,7 @@ public class ItemInventory {
     // Equip it in second slot
     this.equipment[ei.getSecondSlotUsed()] = ei;
     if (playSound) {
-      SoundPlayer.playSound(SoundIndex.EQUIP);
+      SoundPlayer.playSound(SoundIndex.EQUIP, SoundGroup.GAME);
     }
   }
 
@@ -161,7 +162,7 @@ public class ItemInventory {
       this.equipment[ei.getFirstSlotUsed()] = ei;
     }
     if (playSound) {
-      SoundPlayer.playSound(SoundIndex.EQUIP);
+      SoundPlayer.playSound(SoundIndex.EQUIP, SoundGroup.GAME);
     }
   }
 

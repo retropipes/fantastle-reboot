@@ -11,8 +11,8 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
-import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
+import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
@@ -447,10 +447,7 @@ public final class GameLogicManager {
   }
 
   private void gameOver() {
-    if (FantastleReboot.getBagOStuff().getPrefsManager()
-        .getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
-      SoundPlayer.playSound(SoundIndex.GAME_OVER);
-    }
+    SoundPlayer.playSound(SoundIndex.GAME_OVER, SoundGroup.GAME);
     if (this.gameOverMessage == null) {
       Messager.showDialog("You have died - Game Over!");
     } else {
@@ -547,10 +544,7 @@ public final class GameLogicManager {
           + this.vwMgr.getViewingWindowLocationY() + xOffset - yOffset;
       final int destZ = m.getPlayerLocationZ();
       this.updatePositionAbsolute(destX, destY, destZ);
-      if (FantastleReboot.getBagOStuff().getPrefsManager()
-          .getSoundEnabled(PreferencesManager.SOUNDS_GAME)) {
-        SoundPlayer.playSound(SoundIndex.TELEPORT);
-      }
+      SoundPlayer.playSound(SoundIndex.TELEPORT, SoundGroup.GAME);
       this.isTeleporting = false;
     }
   }

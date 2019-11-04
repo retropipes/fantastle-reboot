@@ -46,6 +46,7 @@ import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 
+import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.maze.Extension;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.Tile;
@@ -89,13 +90,15 @@ public class PreferencesManager implements PreferencesHandler {
   String lastDirOpen;
   String lastDirSave;
   int lastFilterUsed;
-  static final int[] VIEWING_WINDOW_SIZES = new int[] { 7, 9, 11, 13, 15, 17, 19, 21, 23, 25 };
+  static final int[] VIEWING_WINDOW_SIZES = new int[] { 7, 9, 11, 13, 15, 17,
+      19, 21, 23, 25 };
   static final int DEFAULT_SIZE_INDEX = 2;
   static final int DEFAULT_VIEWING_WINDOW_SIZE = VIEWING_WINDOW_SIZES[DEFAULT_SIZE_INDEX];
-  private static final String[] VIEWING_WINDOW_SIZE_NAMES = new String[] { "Tiny", "Small", "Medium", "Large", "Huge",
-      "Tiny HD", "Small HD", "Medium HD", "Large HD", "Huge HD" };
-  private static final String[] DIFFICULTY_CHOICE_NAMES = new String[] { "Very Easy", "Easy", "Normal", "Hard",
-      "Very Hard" };
+  private static final String[] VIEWING_WINDOW_SIZE_NAMES = new String[] {
+      "Tiny", "Small", "Medium", "Large", "Huge", "Tiny HD", "Small HD",
+      "Medium HD", "Large HD", "Huge HD" };
+  private static final String[] DIFFICULTY_CHOICE_NAMES = new String[] {
+      "Very Easy", "Easy", "Normal", "Hard", "Very Hard" };
   private static final int SOUNDS_ALL = 0;
   public static final int SOUNDS_UI = 1;
   public static final int SOUNDS_GAME = 2;
@@ -200,7 +203,8 @@ public class PreferencesManager implements PreferencesHandler {
   }
 
   public int getViewingWindowSize() {
-    return PreferencesManager.VIEWING_WINDOW_SIZES[this.getViewingWindowSizeIndex()];
+    return PreferencesManager.VIEWING_WINDOW_SIZES[this
+        .getViewingWindowSizeIndex()];
   }
 
   public int getViewingWindowSizeIndex() {
@@ -215,7 +219,12 @@ public class PreferencesManager implements PreferencesHandler {
     return this.monstersVisibleEnabled;
   }
 
-  public boolean getSoundEnabled(final int snd) {
+  public boolean isSoundGroupEnabled(final SoundGroup group) {
+    final int snd = group.ordinal();
+    return this.isSoundGroupEnabledImpl(snd);
+  }
+
+  private boolean isSoundGroupEnabledImpl(final int snd) {
     if (!this.soundsEnabled[PreferencesManager.SOUNDS_ALL]) {
       return false;
     } else {
@@ -235,7 +244,7 @@ public class PreferencesManager implements PreferencesHandler {
     return new Tile();
   }
 
-  private void defaultEnableSounds() {
+  private void defaultEnableSoundGroups() {
     for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
       this.soundsEnabled[x] = true;
     }
@@ -247,7 +256,14 @@ public class PreferencesManager implements PreferencesHandler {
   // }
   // }
 
-  public void setSoundEnabled(final int snd, final boolean status) {
+  public void setSoundGroupEnabled(final SoundGroup group,
+      final boolean status) {
+    final int snd = group.ordinal();
+    this.setSoundGroupEnabledImpl(snd, status);
+  }
+
+  private void setSoundGroupEnabledImpl(final int snd,
+      final boolean status) {
     this.soundsEnabled[snd] = status;
   }
   //
@@ -324,7 +340,7 @@ public class PreferencesManager implements PreferencesHandler {
   public void loadPrefs() {
     // this.editorFillChoices.setSelectedIndex(this.editorFill);
     for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
-      this.sounds[x].setSelected(this.getSoundEnabled(x));
+      this.sounds[x].setSelected(this.isSoundGroupEnabledImpl(x));
     }
     // for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
     // this.music[x].setSelected(this.setMusicEnabled(x));
@@ -342,7 +358,7 @@ public class PreferencesManager implements PreferencesHandler {
   public void savePrefs() {
     // this.editorFill = this.editorFillChoices.getSelectedIndex();
     for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
-      this.setSoundEnabled(x, this.sounds[x].isSelected());
+      this.setSoundGroupEnabledImpl(x, this.sounds[x].isSelected());
     }
     // for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
     // this.setMusicEnabled(x, this.music[x].isSelected());
@@ -371,7 +387,7 @@ public class PreferencesManager implements PreferencesHandler {
 
   private void resetDefaultPrefs() {
     // this.editorFill = 0;
-    this.defaultEnableSounds();
+    this.defaultEnableSoundGroups();
     // this.defaultEnableMusic();
     // this.checkUpdatesStartup.setSelected(true);
     // this.checkUpdatesStartupEnabled = true;
@@ -394,14 +410,16 @@ public class PreferencesManager implements PreferencesHandler {
   }
 
   void handleExport() {
-    final boolean result = this.eiMgr.exportPreferencesFile(this.eiMgr.getExportDestination());
+    final boolean result = this.eiMgr
+        .exportPreferencesFile(this.eiMgr.getExportDestination());
     if (!result) {
       Messager.showErrorDialog("Export Failed!", "Preferences");
     }
   }
 
   void handleImport() {
-    final boolean result = this.eiMgr.importPreferencesFile(this.eiMgr.getImportSource());
+    final boolean result = this.eiMgr
+        .importPreferencesFile(this.eiMgr.getImportSource());
     if (!result) {
       Messager.showErrorDialog("Import Failed!", "Preferences");
     } else {
@@ -432,11 +450,16 @@ public class PreferencesManager implements PreferencesHandler {
     // this.editorFillChoiceArray = new String[] { "Grass", "Dirt", "Sand",
     // "Snow", "Tile", "Tundra" };
     // this.editorFillChoices = new JComboBox<>(this.editorFillChoiceArray);
-    this.sounds[PreferencesManager.SOUNDS_ALL] = new JCheckBox("Enable ALL sounds", true);
-    this.sounds[PreferencesManager.SOUNDS_UI] = new JCheckBox("Enable user interface sounds", true);
-    this.sounds[PreferencesManager.SOUNDS_GAME] = new JCheckBox("Enable game sounds", true);
-    this.sounds[PreferencesManager.SOUNDS_BATTLE] = new JCheckBox("Enable battle sounds", true);
-    this.sounds[PreferencesManager.SOUNDS_SHOP] = new JCheckBox("Enable shop sounds", true);
+    this.sounds[PreferencesManager.SOUNDS_ALL] = new JCheckBox(
+        "Enable ALL sounds", true);
+    this.sounds[PreferencesManager.SOUNDS_UI] = new JCheckBox(
+        "Enable user interface sounds", true);
+    this.sounds[PreferencesManager.SOUNDS_GAME] = new JCheckBox(
+        "Enable game sounds", true);
+    this.sounds[PreferencesManager.SOUNDS_BATTLE] = new JCheckBox(
+        "Enable battle sounds", true);
+    this.sounds[PreferencesManager.SOUNDS_SHOP] = new JCheckBox(
+        "Enable shop sounds", true);
     // this.music[PreferencesManager.MUSIC_ALL] = new JCheckBox(
     // "Enable ALL music", true);
     // this.music[PreferencesManager.MUSIC_BATTLE] = new JCheckBox(
@@ -457,7 +480,8 @@ public class PreferencesManager implements PreferencesHandler {
     // this.updateCheckIntervalValues);
     this.difficultyChoices = new JComboBox<>(DIFFICULTY_CHOICE_NAMES);
     this.prefFrame.setContentPane(this.mainPrefPane);
-    this.prefFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+    this.prefFrame
+        .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     this.prefFrame.addWindowListener(this.handler);
     this.mainPrefPane.setLayout(new BorderLayout());
     this.prefFrame.setResizable(false);
@@ -490,7 +514,8 @@ public class PreferencesManager implements PreferencesHandler {
     final Container viewPane = new Container();
     viewPane.setLayout(new GridLayout(PreferencesManager.GRID_LENGTH, 1));
     viewPane.add(new JLabel("Viewing Window Size"));
-    this.viewingWindowChoices = new JComboBox<>(PreferencesManager.VIEWING_WINDOW_SIZE_NAMES);
+    this.viewingWindowChoices = new JComboBox<>(
+        PreferencesManager.VIEWING_WINDOW_SIZE_NAMES);
     viewPane.add(this.viewingWindowChoices);
     this.buttonPane.setLayout(new FlowLayout());
     this.buttonPane.add(this.prefsOK);
@@ -537,7 +562,8 @@ public class PreferencesManager implements PreferencesHandler {
     }
 
     public boolean readPreferencesFile() {
-      try (final BufferedReader s = new BufferedReader(new FileReader(this.getPrefsFile()))) {
+      try (final BufferedReader s = new BufferedReader(
+          new FileReader(this.getPrefsFile()))) {
         // Read the preferences from the file
         final PreferencesManager pm = PreferencesManager.this;
         // Read major version
@@ -547,10 +573,12 @@ public class PreferencesManager implements PreferencesHandler {
         // Version check
         if (majorVersion == PreferencesManager.PREFS_VERSION_MAJOR) {
           if (minorVersion > PreferencesManager.PREFS_VERSION_MINOR) {
-            throw new PreferencesException("Incompatible preferences minor version, using defaults.");
+            throw new PreferencesException(
+                "Incompatible preferences minor version, using defaults.");
           }
         } else {
-          throw new PreferencesException("Incompatible preferences major version, using defaults.");
+          throw new PreferencesException(
+              "Incompatible preferences major version, using defaults.");
         }
         // Read and discard
         s.readLine();
@@ -569,7 +597,8 @@ public class PreferencesManager implements PreferencesHandler {
         pm.lastDirSave = s.readLine();
         // Read and discard
         s.readLine();
-        // pm.checkBetaUpdatesStartupEnabled = Boolean.parseBoolean(s.readLine());
+        // pm.checkBetaUpdatesStartupEnabled =
+        // Boolean.parseBoolean(s.readLine());
         pm.lastFilterUsed = Integer.parseInt(s.readLine());
         pm.difficultySetting = Integer.parseInt(s.readLine());
         pm.monstersVisibleEnabled = Boolean.parseBoolean(s.readLine());
@@ -600,11 +629,14 @@ public class PreferencesManager implements PreferencesHandler {
       if (!prefsFile.canWrite()) {
         prefsParent.mkdirs();
       }
-      try (final BufferedWriter s = new BufferedWriter(new FileWriter(prefsFile))) {
+      try (final BufferedWriter s = new BufferedWriter(
+          new FileWriter(prefsFile))) {
         // Write the preferences to the file
         final PreferencesManager pm = PreferencesManager.this;
-        s.write(Integer.toString(PreferencesManager.PREFS_VERSION_MAJOR) + "\n");
-        s.write(Integer.toString(PreferencesManager.PREFS_VERSION_MINOR) + "\n");
+        s.write(
+            Integer.toString(PreferencesManager.PREFS_VERSION_MAJOR) + "\n");
+        s.write(
+            Integer.toString(PreferencesManager.PREFS_VERSION_MINOR) + "\n");
         s.write("0\n");
         // s.write(Integer.toString(pm.editorFill) + "\n");
         s.write("false\n");
@@ -701,7 +733,8 @@ public class PreferencesManager implements PreferencesHandler {
 
     // Methods
     public boolean importPreferencesFile(final File importFile) {
-      try (final BufferedReader s = new BufferedReader(new FileReader(importFile))) {
+      try (final BufferedReader s = new BufferedReader(
+          new FileReader(importFile))) {
         // Read the preferences from the file
         final PreferencesManager pm = PreferencesManager.this;
         // Read and discard major version
@@ -748,11 +781,14 @@ public class PreferencesManager implements PreferencesHandler {
     }
 
     public boolean exportPreferencesFile(final File exportFile) {
-      try (final BufferedWriter s = new BufferedWriter(new FileWriter(exportFile))) {
+      try (final BufferedWriter s = new BufferedWriter(
+          new FileWriter(exportFile))) {
         // Write the preferences to the file
         final PreferencesManager pm = PreferencesManager.this;
-        s.write(Integer.toString(PreferencesManager.PREFS_VERSION_MAJOR) + "\n");
-        s.write(Integer.toString(PreferencesManager.PREFS_VERSION_MINOR) + "\n");
+        s.write(
+            Integer.toString(PreferencesManager.PREFS_VERSION_MAJOR) + "\n");
+        s.write(
+            Integer.toString(PreferencesManager.PREFS_VERSION_MINOR) + "\n");
         s.write("0\n");
         // s.write(Integer.toString(pm.editorFill) + "\n");
         s.write("false\n");
@@ -785,19 +821,22 @@ public class PreferencesManager implements PreferencesHandler {
     }
 
     public File getImportSource() {
-      final FileDialog chooser = new FileDialog(PreferencesManager.this.prefFrame, "Import", FileDialog.LOAD);
+      final FileDialog chooser = new FileDialog(
+          PreferencesManager.this.prefFrame, "Import", FileDialog.LOAD);
       chooser.setVisible(true);
       return new File(chooser.getDirectory() + chooser.getFile());
     }
 
     public File getExportDestination() {
-      final FileDialog chooser = new FileDialog(PreferencesManager.this.prefFrame, "Export", FileDialog.SAVE);
+      final FileDialog chooser = new FileDialog(
+          PreferencesManager.this.prefFrame, "Export", FileDialog.SAVE);
       chooser.setVisible(true);
       return new File(chooser.getDirectory() + chooser.getFile());
     }
   }
 
-  private class EventHandler implements ActionListener, ItemListener, WindowListener {
+  private class EventHandler
+      implements ActionListener, ItemListener, WindowListener {
     public EventHandler() {
       // Do nothing
     }
@@ -827,7 +866,8 @@ public class PreferencesManager implements PreferencesHandler {
       try {
         final PreferencesManager pm = PreferencesManager.this;
         final Object o = e.getItem();
-        if (o.getClass().equals(pm.sounds[PreferencesManager.SOUNDS_ALL].getClass())) {
+        if (o.getClass()
+            .equals(pm.sounds[PreferencesManager.SOUNDS_ALL].getClass())) {
           final JCheckBox check = (JCheckBox) o;
           if (check.equals(pm.sounds[PreferencesManager.SOUNDS_ALL])) {
             if (e.getStateChange() == ItemEvent.SELECTED) {

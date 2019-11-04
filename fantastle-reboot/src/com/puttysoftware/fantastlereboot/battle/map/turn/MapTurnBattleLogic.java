@@ -17,6 +17,7 @@ import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.ai.map.AutoMapAI;
 import com.puttysoftware.fantastlereboot.ai.map.MapAIContext;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
+import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
@@ -150,7 +151,7 @@ public class MapTurnBattleLogic extends Battle {
         .setViewingWindowCenterX(this.bd.getActiveCharacter().getY());
     this.battleGUI.getViewManager()
         .setViewingWindowCenterY(this.bd.getActiveCharacter().getX());
-    SoundPlayer.playSound(SoundIndex.DRAW_SWORD);
+    SoundPlayer.playSound(SoundIndex.DRAW_SWORD, SoundGroup.BATTLE);
     MusicPlayer.playMusic(MusicIndex.NORMAL_MAP_BATTLE);
     this.showBattle();
     this.updateStatsAndEffects();
@@ -296,15 +297,15 @@ public class MapTurnBattleLogic extends Battle {
       if (activeDE.weaponMissed()) {
         displayDamageString = activeName + " tries to hit " + enemyName
             + ", but MISSES!";
-        SoundPlayer.playSound(SoundIndex.MISSED);
+        SoundPlayer.playSound(SoundIndex.MISSED, SoundGroup.BATTLE);
       } else if (activeDE.enemyDodged()) {
         displayDamageString = activeName + " tries to hit " + enemyName
             + ", but " + enemyName + " AVOIDS the attack!";
-        SoundPlayer.playSound(SoundIndex.MISSED);
+        SoundPlayer.playSound(SoundIndex.MISSED, SoundGroup.BATTLE);
       } else {
         displayDamageString = activeName + " tries to hit " + enemyName
             + ", but the attack is BLOCKED!";
-        SoundPlayer.playSound(SoundIndex.MISSED);
+        SoundPlayer.playSound(SoundIndex.MISSED, SoundGroup.BATTLE);
       }
     } else if (this.damage < 0) {
       damageString = Integer.toString(-this.damage);
@@ -312,34 +313,34 @@ public class MapTurnBattleLogic extends Battle {
       if (activeDE.weaponCrit() && activeDE.weaponPierce()) {
         displayDamagePrefix = "PIERCING CRITICAL HIT! ";
         if (isParty) {
-          SoundPlayer.playSound(SoundIndex.PARTY_COUNTER);
+          SoundPlayer.playSound(SoundIndex.PARTY_COUNTER, SoundGroup.BATTLE);
         } else {
-          SoundPlayer.playSound(SoundIndex.MONSTER_COUNTER);
+          SoundPlayer.playSound(SoundIndex.MONSTER_COUNTER, SoundGroup.BATTLE);
         }
-        SoundPlayer.playSound(SoundIndex.CRITICAL);
+        SoundPlayer.playSound(SoundIndex.CRITICAL, SoundGroup.BATTLE);
       } else if (activeDE.weaponCrit()) {
         displayDamagePrefix = "CRITICAL HIT! ";
-        SoundPlayer.playSound(SoundIndex.CRITICAL);
+        SoundPlayer.playSound(SoundIndex.CRITICAL, SoundGroup.BATTLE);
       } else if (activeDE.weaponPierce()) {
         displayDamagePrefix = "PIERCING HIT! ";
         if (isParty) {
-          SoundPlayer.playSound(SoundIndex.PARTY_COUNTER);
+          SoundPlayer.playSound(SoundIndex.PARTY_COUNTER, SoundGroup.BATTLE);
         } else {
-          SoundPlayer.playSound(SoundIndex.MONSTER_COUNTER);
+          SoundPlayer.playSound(SoundIndex.MONSTER_COUNTER, SoundGroup.BATTLE);
         }
       }
       displayDamageString = displayDamagePrefix + activeName + " tries to hit "
           + enemyName + ", but " + enemyName + " RIPOSTES for " + damageString
           + " damage!";
       if (isParty) {
-        SoundPlayer.playSound(SoundIndex.PARTY_COUNTER);
+        SoundPlayer.playSound(SoundIndex.PARTY_COUNTER, SoundGroup.BATTLE);
       } else {
-        SoundPlayer.playSound(SoundIndex.MONSTER_COUNTER);
+        SoundPlayer.playSound(SoundIndex.MONSTER_COUNTER, SoundGroup.BATTLE);
       }
     } else {
       String displayDamagePrefix = "";
       if (activeDE.weaponFumble()) {
-        SoundPlayer.playSound(SoundIndex.FUMBLE);
+        SoundPlayer.playSound(SoundIndex.FUMBLE, SoundGroup.BATTLE);
         displayDamageString = "FUMBLE! " + activeName
             + " drops their weapon on themselves, doing " + damageString
             + " damage!";
@@ -347,28 +348,28 @@ public class MapTurnBattleLogic extends Battle {
         if (activeDE.weaponCrit() && activeDE.weaponPierce()) {
           displayDamagePrefix = "PIERCING CRITICAL HIT! ";
           if (isParty) {
-            SoundPlayer.playSound(SoundIndex.PARTY_COUNTER);
+            SoundPlayer.playSound(SoundIndex.PARTY_COUNTER, SoundGroup.BATTLE);
           } else {
-            SoundPlayer.playSound(SoundIndex.MONSTER_COUNTER);
+            SoundPlayer.playSound(SoundIndex.MONSTER_COUNTER, SoundGroup.BATTLE);
           }
-          SoundPlayer.playSound(SoundIndex.CRITICAL);
+          SoundPlayer.playSound(SoundIndex.CRITICAL, SoundGroup.BATTLE);
         } else if (activeDE.weaponCrit()) {
           displayDamagePrefix = "CRITICAL HIT! ";
-          SoundPlayer.playSound(SoundIndex.CRITICAL);
+          SoundPlayer.playSound(SoundIndex.CRITICAL, SoundGroup.BATTLE);
         } else if (activeDE.weaponPierce()) {
           displayDamagePrefix = "PIERCING HIT! ";
           if (isParty) {
-            SoundPlayer.playSound(SoundIndex.PARTY_COUNTER);
+            SoundPlayer.playSound(SoundIndex.PARTY_COUNTER, SoundGroup.BATTLE);
           } else {
-            SoundPlayer.playSound(SoundIndex.MONSTER_COUNTER);
+            SoundPlayer.playSound(SoundIndex.MONSTER_COUNTER, SoundGroup.BATTLE);
           }
         }
         displayDamageString = displayDamagePrefix + activeName + " hits "
             + enemyName + " for " + damageString + " damage!";
         if (isParty) {
-          SoundPlayer.playSound(SoundIndex.PARTY_HIT);
+          SoundPlayer.playSound(SoundIndex.PARTY_HIT, SoundGroup.BATTLE);
         } else {
-          SoundPlayer.playSound(SoundIndex.MONSTER_HIT);
+          SoundPlayer.playSound(SoundIndex.MONSTER_HIT, SoundGroup.BATTLE);
         }
       }
     }
@@ -472,7 +473,7 @@ public class MapTurnBattleLogic extends Battle {
         this.ait.aiRun();
       } else {
         // No AI
-        SoundPlayer.playSound(SoundIndex.PLAYER_UP);
+        SoundPlayer.playSound(SoundIndex.PLAYER_UP, SoundGroup.BATTLE);
       }
       return false;
     } else {
@@ -486,7 +487,7 @@ public class MapTurnBattleLogic extends Battle {
       // Perform new round actions
       this.performNewRoundActions();
       // Play new round sound
-      SoundPlayer.playSound(SoundIndex.NEXT_ROUND);
+      SoundPlayer.playSound(SoundIndex.NEXT_ROUND, SoundGroup.BATTLE);
       // Nobody to act next, set new round flag
       return true;
     }
@@ -830,7 +831,7 @@ public class MapTurnBattleLogic extends Battle {
           active.setSavedObject(m.getCell(px, py, 0, Layers.OBJECT));
           m.setCell(active, px, py, 0, Layers.OBJECT);
           this.decrementActiveActionCounterBy(AIContext.getDefaultAPCost());
-          SoundPlayer.playSound(SoundIndex.WALK);
+          SoundPlayer.playSound(SoundIndex.WALK, SoundGroup.BATTLE);
         } else {
           // Deny move - out of actions
           if (!this.bd.getActiveCharacter().getCreature().hasMapAI()) {
@@ -867,7 +868,7 @@ public class MapTurnBattleLogic extends Battle {
                 && theEnemy.getCreature()
                     .getCurrentHP() <= theEnemy.getCreature().getMaximumHP() * 3
                         / 10) {
-              SoundPlayer.playSound(SoundIndex.LOW_HEALTH);
+              SoundPlayer.playSound(SoundIndex.LOW_HEALTH, SoundGroup.BATTLE);
             }
             // Handle enemy death
             if (!theEnemy.getCreature().isAlive()) {
@@ -913,11 +914,12 @@ public class MapTurnBattleLogic extends Battle {
     } else {
       // Confirm Flee
       if (!active.getCreature().hasMapAI()) {
-        SoundPlayer.playSound(SoundIndex.SPECIAL);
+        SoundPlayer.playSound(SoundIndex.SPECIAL, SoundGroup.BATTLE);
         final int confirm = CommonDialogs
             .showConfirmDialog("Embrace Cowardice?", "Battle");
         if (confirm != JOptionPane.YES_OPTION) {
           this.battleGUI.getViewManager().restoreViewingWindow();
+          SoundPlayer.playSound(SoundIndex.RUN, SoundGroup.BATTLE);
           active.restoreLocation();
           return false;
         }
@@ -1342,7 +1344,7 @@ public class MapTurnBattleLogic extends Battle {
         // Handle low health for party members
         if (active.isAlive() && active.getTeamID() == Creature.TEAM_PARTY
             && active.getCurrentHP() <= active.getMaximumHP() * 3 / 10) {
-          SoundPlayer.playSound(SoundIndex.LOW_HEALTH);
+          SoundPlayer.playSound(SoundIndex.LOW_HEALTH, SoundGroup.BATTLE);
         }
         // Cull Inactive Effects
         active.cullInactiveEffects();
@@ -1463,16 +1465,16 @@ public class MapTurnBattleLogic extends Battle {
         if (this.result == BattleResults.WON
             || this.result == BattleResults.PERFECT) {
           this.setStatusMessage("You defeated the Boss!");
-          SoundPlayer.playSound(SoundIndex.VICTORY);
+          SoundPlayer.playSound(SoundIndex.VICTORY, SoundGroup.BATTLE);
           rewardsFlag = true;
         } else if (this.result == BattleResults.LOST) {
           this.setStatusMessage("The Boss defeated you...");
-          SoundPlayer.playSound(SoundIndex.GAME_OVER);
+          SoundPlayer.playSound(SoundIndex.GAME_OVER, SoundGroup.BATTLE);
           PartyManager.getParty().getLeader().onDeath(-10);
         } else if (this.result == BattleResults.ANNIHILATED) {
           this.setStatusMessage(
               "The Boss defeated you without suffering damage... you were annihilated!");
-          SoundPlayer.playSound(SoundIndex.GAME_OVER);
+          SoundPlayer.playSound(SoundIndex.GAME_OVER, SoundGroup.BATTLE);
           PartyManager.getParty().getLeader().onDeath(-20);
         } else if (this.result == BattleResults.DRAW) {
           this.setStatusMessage(
@@ -1488,7 +1490,7 @@ public class MapTurnBattleLogic extends Battle {
         }
       } else {
         if (this.result == BattleResults.WON) {
-          SoundPlayer.playSound(SoundIndex.VICTORY);
+          SoundPlayer.playSound(SoundIndex.VICTORY, SoundGroup.BATTLE);
           CommonDialogs.showTitledDialog("The party is victorious!",
               "Victory!");
           PartyManager.getParty().getLeader().offsetGold(this.getGold());

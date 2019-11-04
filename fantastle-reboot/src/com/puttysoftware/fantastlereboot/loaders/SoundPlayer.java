@@ -5,6 +5,8 @@ import java.util.Properties;
 
 import com.puttysoftware.diane.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.randomrange.RandomRange;
 
@@ -39,12 +41,15 @@ public class SoundPlayer {
     return allFilenames[sound.ordinal()] + soundExt;
   }
 
-  public static void playSound(final SoundIndex sound) {
-    if (sound != null && sound != SoundIndex._NONE) {
-      final String filename = getSoundFilename(sound);
-      SoundLoader.play(
-          SoundPlayer.class.getResource("/assets/sounds/" + filename),
-          FantastleReboot.getErrorHandler());
+  public static void playSound(final SoundIndex sound, final SoundGroup group) {
+    PreferencesManager prefs = FantastleReboot.getBagOStuff().getPrefsManager();
+    if (prefs.isSoundGroupEnabled(group)) {
+      if (sound != null && sound != SoundIndex._NONE) {
+        final String filename = getSoundFilename(sound);
+        SoundLoader.play(
+            SoundPlayer.class.getResource("/assets/sounds/" + filename),
+            FantastleReboot.getErrorHandler());
+      }
     }
   }
 }

@@ -21,6 +21,7 @@ package com.puttysoftware.fantastlereboot;
 import javax.swing.JFrame;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
@@ -147,6 +148,10 @@ public class BagOStuff {
   public void setInBattle() {
     this.formerMode = this.currentMode;
     this.currentMode = BagOStuff.STATUS_BATTLE;
+  }
+
+  public boolean inBattle() {
+    return this.currentMode == BagOStuff.STATUS_BATTLE;
   }
 
   public int getMode() {
@@ -278,21 +283,15 @@ public class BagOStuff {
   }
 
   public void playHighScoreSound() {
-    if (this.prefsMgr.getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
-      SoundPlayer.playSound(SoundIndex.HIGH_SCORE);
-    }
+    SoundPlayer.playSound(SoundIndex.HIGH_SCORE, SoundGroup.USER_INTERFACE);
   }
 
   public void playLogoSound() {
-    if (this.prefsMgr.getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
-      SoundPlayer.playSound(SoundIndex.LOGO);
-    }
+    SoundPlayer.playSound(SoundIndex.LOGO, SoundGroup.USER_INTERFACE);
   }
 
   public void playStartSound() {
-    if (this.prefsMgr.getSoundEnabled(PreferencesManager.SOUNDS_UI)) {
-      SoundPlayer.playSound(SoundIndex.GET_READY);
-    }
+    SoundPlayer.playSound(SoundIndex.GET_READY, SoundGroup.USER_INTERFACE);
   }
 
   private static String getVersionString() {

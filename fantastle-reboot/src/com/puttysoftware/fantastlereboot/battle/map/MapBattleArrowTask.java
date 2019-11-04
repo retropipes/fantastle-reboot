@@ -8,6 +8,7 @@ package com.puttysoftware.fantastlereboot.battle.map;
 import com.puttysoftware.diane.utilties.DirectionResolver;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
@@ -58,7 +59,7 @@ public class MapBattleArrowTask extends Thread {
       final int newDir = DirectionResolver.resolve(incX, incY);
       final FantastleObjectModel a = ArrowFactory.createArrow(ArrowType.WOODEN,
           newDir);
-      SoundPlayer.playSound(SoundIndex.ARROW_SHOOT);
+      SoundPlayer.playSound(SoundIndex.ARROW_SHOOT, SoundGroup.BATTLE);
       BattleCharacter hit = null;
       while (res) {
         // Check to see if the arrow hit anything
@@ -109,7 +110,7 @@ public class MapBattleArrowTask extends Thread {
         }
       }
       // Arrow has died
-      SoundPlayer.playSound(SoundIndex.ARROW_DIE);
+      SoundPlayer.playSound(SoundIndex.ARROW_DIE, SoundGroup.BATTLE);
       app.getBattle().arrowDone(hit);
     } catch (final Throwable t) {
       FantastleReboot.logError(t);

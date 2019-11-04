@@ -7,6 +7,7 @@ package com.puttysoftware.fantastlereboot.spells;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
@@ -48,7 +49,7 @@ public class SpellCaster {
         final Effect b = cast.getEffect();
         // Play spell's associated sound effect, if it has one
         final SoundIndex snd = cast.getSound();
-        SoundPlayer.playSound(snd);
+        SoundPlayer.playSound(snd, SoundGroup.BATTLE);
         b.resetEffect();
         final Creature target = SpellCaster.resolveTarget(cast,
             caster.getTeamID());
@@ -75,7 +76,7 @@ public class SpellCaster {
       final String[] displayNames = book.getAllSpellNamesWithCosts();
       if (names != null && displayNames != null) {
         // Play casting spell sound
-        SoundPlayer.playSound(SoundIndex.PARTY_SPELL);
+        SoundPlayer.playSound(SoundIndex.PARTY_SPELL, SoundGroup.BATTLE);
         String dialogResult = null;
         dialogResult = CommonDialogs.showInputDialog("Select a Spell to Cast",
             "Select Spell", displayNames, displayNames[0]);

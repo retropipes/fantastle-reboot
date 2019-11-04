@@ -5,8 +5,8 @@ import javax.swing.JOptionPane;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
-import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
+import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
@@ -157,11 +157,8 @@ public class Shop {
   private boolean shopStage1() {
     // Stage 1
     // Play enter shop sound
-    if (FantastleReboot.getBagOStuff().getPrefsManager()
-        .getSoundEnabled(PreferencesManager.SOUNDS_SHOP)) {
-      SoundPlayer.playSound(SoundIndex.SHOP);
+    SoundPlayer.playSound(SoundIndex.SHOP, SoundGroup.SHOP);
       MusicPlayer.playMusic(MusicIndex.SHOP);
-    }
     if (this.type == ShopTypes.WEAPONS) {
       this.typeChoices = WeaponConstants.getWeaponChoices();
       this.typeDefault = 0;
@@ -461,10 +458,7 @@ public class Shop {
     // Stage 6
     final PartyMember playerCharacter = PartyManager.getParty().getLeader();
     // Play transact sound
-    if (FantastleReboot.getBagOStuff().getPrefsManager()
-        .getSoundEnabled(PreferencesManager.SOUNDS_SHOP)) {
-      SoundPlayer.playSound(SoundIndex.TRANSACT);
-    }
+    SoundPlayer.playSound(SoundIndex.TRANSACT, SoundGroup.SHOP);
     if (this.type == ShopTypes.WEAPONS) {
       playerCharacter.offsetGold(-this.cost);
       if (this.typeResult.equals(this.typeChoices[0])) {
