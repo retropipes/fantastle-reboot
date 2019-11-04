@@ -90,6 +90,7 @@ public class PreferencesManager {
   private static String lastDirOpen;
   private static String lastDirSave;
   private static int lastFilterUsed;
+  private static boolean guiSetUp = false;
   private static final int[] VIEWING_WINDOW_SIZES = new int[] { 7, 9, 11, 13,
       15, 17, 19, 21, 23, 25 };
   private static final int DEFAULT_SIZE_INDEX = 2;
@@ -128,8 +129,7 @@ public class PreferencesManager {
 
   // Constructors
   private PreferencesManager() {
-    setUpGUI();
-    setDefaultPrefs();
+    super();
   }
 
   // Methods
@@ -275,6 +275,11 @@ public class PreferencesManager {
 
   public static void showPrefs() {
     if (FantastleReboot.inFantastleReboot()) {
+      if (!PreferencesManager.guiSetUp) {
+        setUpGUI();
+        setDefaultPrefs();
+        PreferencesManager.guiSetUp = true;
+      }
       final BagOStuff app = FantastleReboot.getBagOStuff();
       app.setInPrefs();
       app.getMenuManager().attachMenus();
