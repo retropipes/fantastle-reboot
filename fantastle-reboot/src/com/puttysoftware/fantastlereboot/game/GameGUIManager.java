@@ -265,8 +265,10 @@ class GameGUIManager {
       generateCacheName(final FantastleObjectModel... objects) {
     StringBuilder result = new StringBuilder();
     for (FantastleObjectModel object : objects) {
-      result.append(object.getUniqueID());
-      result.append("_");
+      if (object != null) {
+        result.append(object.getUniqueID());
+        result.append("_");
+      }
     }
     result.append("cache");
     return result.toString();
