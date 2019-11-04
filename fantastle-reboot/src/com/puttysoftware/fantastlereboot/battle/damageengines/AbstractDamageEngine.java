@@ -5,7 +5,6 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.battle.damageengines;
 
-import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 
@@ -24,7 +23,8 @@ public abstract class AbstractDamageEngine {
   public abstract boolean weaponFumble();
 
   public static AbstractDamageEngine getPlayerInstance() {
-    final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager()
+    
+    final int difficulty = PreferencesManager
         .getGameDifficulty();
     if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
       return new VeryEasyDamageEngine();
@@ -50,7 +50,8 @@ public abstract class AbstractDamageEngine {
   }
 
   public static AbstractDamageEngine getEnemyInstance() {
-    final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager()
+    
+    final int difficulty = PreferencesManager
         .getGameDifficulty();
     if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
       return new VeryHardDamageEngine();

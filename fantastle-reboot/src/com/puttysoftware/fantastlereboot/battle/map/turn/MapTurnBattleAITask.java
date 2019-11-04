@@ -28,7 +28,7 @@ public class MapTurnBattleAITask extends Thread {
         if (this.b.getLastAIActionResult()) {
           // Delay, for animation purposes
           try {
-            FantastleReboot.getBagOStuff().getPrefsManager();
+            
             final int battleSpeed = PreferencesManager.getBattleSpeed();
             Thread.sleep(battleSpeed);
           } catch (final InterruptedException i) {

@@ -98,7 +98,7 @@ public class FantastleReboot {
         UserInterfaceImageLoader.load(UserInterfaceImageIndex.MICRO_LOGO));
     NATIVITY.setQuitStrategy(QuitStrategy.NORMAL_EXIT);
     NATIVITY.setQuitHandler(FantastleReboot.bag.getMazeManager());
-    NATIVITY.setPreferencesHandler(FantastleReboot.bag.getPrefsManager());
+    NATIVITY.setPreferencesHandler(new PreferencesLauncher());
     NATIVITY.setAboutHandler(FantastleReboot.bag.getAboutDialog());
   }
 

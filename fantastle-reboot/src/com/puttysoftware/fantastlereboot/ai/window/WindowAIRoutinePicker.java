@@ -1,12 +1,12 @@
 package com.puttysoftware.fantastlereboot.ai.window;
 
-import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 
 public final class WindowAIRoutinePicker {
   // Methods
   public static AbstractWindowAIRoutine getNextRoutine() {
-    final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager()
+    
+    final int difficulty = PreferencesManager
         .getGameDifficulty();
     if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
       return new VeryEasyWindowAIRoutine();

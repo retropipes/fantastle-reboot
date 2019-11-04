@@ -5,7 +5,6 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.creatures.monsters;
 
-import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.map.MapAIRoutinePicker;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
@@ -77,7 +76,8 @@ public class BossMonster extends Creature {
 
   @Override
   public int getSpeed() {
-    final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager()
+    
+    final int difficulty = PreferencesManager
         .getGameDifficulty();
     final int base = this.getBaseSpeed();
     if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
@@ -170,7 +170,8 @@ public class BossMonster extends Creature {
   }
 
   private static int getStatMultiplierForDifficulty() {
-    final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager()
+    
+    final int difficulty = PreferencesManager
         .getGameDifficulty();
     if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
       return STAT_MULT_VERY_EASY;
@@ -196,7 +197,8 @@ public class BossMonster extends Creature {
   }
 
   private static int getMinimumStatForDifficulty() {
-    final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager()
+    
+    final int difficulty = PreferencesManager
         .getGameDifficulty();
     if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
       return MINIMUM_STAT_VALUE_VERY_EASY;

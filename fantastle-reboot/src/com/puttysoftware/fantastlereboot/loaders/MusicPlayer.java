@@ -43,8 +43,7 @@ public class MusicPlayer {
   }
 
   public static void playMusic(final MusicIndex music, final MusicGroup group) {
-    PreferencesManager prefs = FantastleReboot.getBagOStuff().getPrefsManager();
-    if (prefs.isMusicGroupEnabled(group)) {
+    if (PreferencesManager.isMusicGroupEnabled(group)) {
       if (music != null && music != MusicIndex._NONE) {
         final String filename = getMusicFilename(music);
         if (MUSIC.isPlaying()) {

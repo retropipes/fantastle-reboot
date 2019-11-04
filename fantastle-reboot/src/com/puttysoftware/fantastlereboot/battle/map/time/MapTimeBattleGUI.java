@@ -28,6 +28,7 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.diane.loaders.ImageCompositor;
 import com.puttysoftware.fantastlereboot.DrawGrid;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
@@ -341,7 +342,8 @@ class MapTimeBattleGUI {
 
     @Override
     public void keyPressed(final KeyEvent e) {
-      if (!FantastleReboot.getBagOStuff().getPrefsManager().oneMove()) {
+      
+      if (!PreferencesManager.oneMove()) {
         if (e.isShiftDown()) {
           this.handleArrows(e);
         } else {
@@ -352,7 +354,8 @@ class MapTimeBattleGUI {
 
     @Override
     public void keyReleased(final KeyEvent e) {
-      if (FantastleReboot.getBagOStuff().getPrefsManager().oneMove()) {
+      
+      if (PreferencesManager.oneMove()) {
         if (e.isShiftDown()) {
           this.handleArrows(e);
         } else {

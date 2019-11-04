@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.savedgames.GameFinder;
 import com.puttysoftware.fantastlereboot.savedgames.GameLoadTask;
@@ -65,7 +66,8 @@ public final class MazeManager implements QuitHandler {
       }
     }
     if (saved) {
-      FantastleReboot.getBagOStuff().getPrefsManager().writePrefs();
+      
+      PreferencesManager.writePrefs();
       inResponse.performQuit();
     } else {
       inResponse.cancelQuit();

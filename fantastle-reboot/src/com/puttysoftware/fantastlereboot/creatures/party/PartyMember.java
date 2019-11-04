@@ -166,7 +166,8 @@ public class PartyMember extends Creature {
 
   @Override
   public int getSpeed() {
-    final int difficulty = FantastleReboot.getBagOStuff().getPrefsManager()
+    
+    final int difficulty = PreferencesManager
         .getGameDifficulty();
     final int base = this.getBaseSpeed();
     if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {

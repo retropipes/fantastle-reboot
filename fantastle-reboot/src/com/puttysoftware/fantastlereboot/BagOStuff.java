@@ -47,7 +47,6 @@ public class BagOStuff {
   private GameLogicManager gameMgr;
   private MazeManager mazeMgr;
   private MenuManager menuMgr;
-  private PreferencesManager prefsMgr;
   private GeneralHelpManager gHelpMgr;
   // private MazeEditor editor;
   private GUIManager guiMgr;
@@ -95,7 +94,6 @@ public class BagOStuff {
 
   // Methods
   void postConstruct() {
-    this.prefsMgr = new PreferencesManager();
     this.about = new AboutDialog(BagOStuff.getVersionString());
     this.guiMgr = new GUIManager();
     this.gameMgr = new GameLogicManager();
@@ -170,12 +168,8 @@ public class BagOStuff {
     return this.guiMgr;
   }
 
-  public PreferencesManager getPrefsManager() {
-    return this.prefsMgr;
-  }
-
   public void resetPreferences() {
-    this.prefsMgr.resetPrefs();
+    PreferencesManager.resetPrefs();
   }
 
   public GameLogicManager getGameManager() {
@@ -255,15 +249,14 @@ public class BagOStuff {
   }
 
   public Battle getBattle() {
-    PreferencesManager prefs = this.getPrefsManager();
-    if (prefs.useMapBattleEngine()) {
-      if (prefs.useTimeBattleEngine()) {
+    if (PreferencesManager.useMapBattleEngine()) {
+      if (PreferencesManager.useTimeBattleEngine()) {
         return this.mapTimeBattle;
       } else {
         return this.mapTurnBattle;
       }
     } else {
-      if (prefs.useTimeBattleEngine()) {
+      if (PreferencesManager.useTimeBattleEngine()) {
         return this.windowTimeBattle;
       } else {
         return this.windowTurnBattle;
@@ -308,7 +301,7 @@ public class BagOStuff {
 
   public JFrame getOutputFrame() {
     if (this.getMode() == BagOStuff.STATUS_PREFS) {
-      return this.getPrefsManager().getPrefFrame();
+      return PreferencesManager.getPrefFrame();
     } else if (this.getMode() == BagOStuff.STATUS_BATTLE) {
       return this.getBattle().getOutputFrame();
     } else if (this.getMode() == BagOStuff.STATUS_GUI) {

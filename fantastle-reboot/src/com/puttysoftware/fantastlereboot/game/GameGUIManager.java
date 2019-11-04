@@ -21,6 +21,7 @@ import com.puttysoftware.diane.loaders.ImageCompositor;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.DrawGrid;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
@@ -157,7 +158,7 @@ class GameGUIManager {
               boolean playerSquare = (u == y && v == x);
               boolean noteSquare = m.hasNote(x, y, z);
               boolean monsterSquare = m.hasMonster(xFix, y, z);
-              if (monsterSquare && app.getPrefsManager().monstersVisible()) {
+              if (monsterSquare && PreferencesManager.monstersVisible()) {
                 obj3 = MonsterObjectFactory.createMonster();
                 img3 = obj3.getGameImage();
               }
@@ -228,7 +229,7 @@ class GameGUIManager {
           boolean playerSquare = (u == y && v == x);
           boolean noteSquare = m.hasNote(x, y, z);
           boolean monsterSquare = m.hasMonster(xFix, y, z);
-          if (monsterSquare && app.getPrefsManager().monstersVisible()) {
+          if (monsterSquare && PreferencesManager.monstersVisible()) {
             obj3 = MonsterObjectFactory.createMonster();
             img3 = obj3.getGameImage();
           }
@@ -291,8 +292,7 @@ class GameGUIManager {
     this.messageLabel = new JLabel(" ");
     this.messageLabel.setOpaque(true);
     this.outputFrame = new JFrame("FantastleReboot");
-    this.drawGrid = new DrawGrid(FantastleReboot.getBagOStuff()
-        .getPrefsManager().getViewingWindowSize());
+    this.drawGrid = new DrawGrid(PreferencesManager.getViewingWindowSize());
     this.outputPane = new GameDraw(this.drawGrid);
     this.outputFrame.setContentPane(this.borderPane);
     this.outputFrame
@@ -310,7 +310,8 @@ class GameGUIManager {
     @Override
     public void keyPressed(final KeyEvent e) {
       if (GameGUIManager.this.eventFlag) {
-        if (!FantastleReboot.getBagOStuff().getPrefsManager().oneMove()) {
+
+        if (!PreferencesManager.oneMove()) {
           this.handleMovement(e);
         }
       }
@@ -319,7 +320,8 @@ class GameGUIManager {
     @Override
     public void keyReleased(final KeyEvent e) {
       if (GameGUIManager.this.eventFlag) {
-        if (FantastleReboot.getBagOStuff().getPrefsManager().oneMove()) {
+
+        if (PreferencesManager.oneMove()) {
           this.handleMovement(e);
         }
       }

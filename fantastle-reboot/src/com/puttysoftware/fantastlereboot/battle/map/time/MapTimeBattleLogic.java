@@ -1201,7 +1201,7 @@ public class MapTimeBattleLogic extends Battle {
           if (!message.equals(Effect.getNullMessage())) {
             this.setStatusMessage(message);
             try {
-              FantastleReboot.getBagOStuff().getPrefsManager();
+              
               Thread.sleep(PreferencesManager.getBattleSpeed());
             } catch (final InterruptedException ie) {
               // Ignore
@@ -1243,7 +1243,7 @@ public class MapTimeBattleLogic extends Battle {
           if (!message.equals(Effect.getNullMessage())) {
             this.setStatusMessage(message);
             try {
-              FantastleReboot.getBagOStuff().getPrefsManager();
+              
               Thread.sleep(PreferencesManager.getBattleSpeed());
             } catch (final InterruptedException ie) {
               // Ignore

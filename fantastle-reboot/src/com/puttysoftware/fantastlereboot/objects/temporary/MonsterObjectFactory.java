@@ -1,6 +1,5 @@
 package com.puttysoftware.fantastlereboot.objects.temporary;
 
-import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.objects.MonsterObject;
 
@@ -10,8 +9,7 @@ public class MonsterObjectFactory {
   }
 
   public static MonsterObject createMonster() {
-    PreferencesManager prefs = FantastleReboot.getBagOStuff().getPrefsManager();
-    if (prefs.monstersVisible()) {
+    if (PreferencesManager.monstersVisible()) {
       return new VisibleMonsterObject();
     } else {
       return new InvisibleMonsterObject();

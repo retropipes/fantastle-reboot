@@ -42,8 +42,7 @@ public class SoundPlayer {
   }
 
   public static void playSound(final SoundIndex sound, final SoundGroup group) {
-    PreferencesManager prefs = FantastleReboot.getBagOStuff().getPrefsManager();
-    if (prefs.isSoundGroupEnabled(group)) {
+    if (PreferencesManager.isSoundGroupEnabled(group)) {
       if (sound != null && sound != SoundIndex._NONE) {
         final String filename = getSoundFilename(sound);
         SoundLoader.play(
