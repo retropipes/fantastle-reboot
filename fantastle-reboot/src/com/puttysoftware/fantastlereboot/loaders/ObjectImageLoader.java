@@ -29,7 +29,7 @@ import com.puttysoftware.images.BufferedImageIcon;
 public class ObjectImageLoader {
   private static String[] allFilenames;
   private static Properties fileExtensions;
-  private static final int MAX_INDEX = 246;
+  private static final int MAX_INDEX = 244;
 
   public static BufferedImageIcon load(ObjectImageIndex image) {
     if (image != ObjectImageIndex._NONE) {
