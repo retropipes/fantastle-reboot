@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
+import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
@@ -151,14 +152,14 @@ public class Shop {
         }
       }
     }
-    MusicPlayer.playMusic(MusicIndex.DUNGEON);
+    MusicPlayer.playMusic(MusicIndex.DUNGEON, MusicGroup.GAME);
   }
 
   private boolean shopStage1() {
     // Stage 1
     // Play enter shop sound
     SoundPlayer.playSound(SoundIndex.SHOP, SoundGroup.SHOP);
-      MusicPlayer.playMusic(MusicIndex.SHOP);
+    MusicPlayer.playMusic(MusicIndex.SHOP, MusicGroup.SHOP);
     if (this.type == ShopTypes.WEAPONS) {
       this.typeChoices = WeaponConstants.getWeaponChoices();
       this.typeDefault = 0;

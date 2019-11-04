@@ -18,6 +18,7 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.ai.map.AutoMapAI;
 import com.puttysoftware.fantastlereboot.ai.map.MapAIContext;
+import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
@@ -145,7 +146,7 @@ public class MapTimeBattleLogic extends Battle {
     this.battleGUI.getViewManager().setViewingWindowCenterX(this.me.getY());
     this.battleGUI.getViewManager().setViewingWindowCenterY(this.me.getX());
     SoundPlayer.playSound(SoundIndex.DRAW_SWORD, SoundGroup.BATTLE);
-    MusicPlayer.playMusic(MusicIndex.NORMAL_MAP_BATTLE);
+    MusicPlayer.playMusic(MusicIndex.NORMAL_MAP_BATTLE, MusicGroup.BATTLE);
     this.showBattle();
     this.updateStatsAndEffects();
     this.redrawBattle();

@@ -11,6 +11,7 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
+import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
@@ -552,7 +553,7 @@ public final class GameLogicManager {
   public void showOutput() {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     bag.setInGame();
-    MusicPlayer.playMusic(MusicIndex.DUNGEON);
+    MusicPlayer.playMusic(MusicIndex.DUNGEON, MusicGroup.GAME);
     this.gui.showOutput();
   }
 

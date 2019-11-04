@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
+import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
@@ -310,7 +311,7 @@ public class WindowTurnBattleLogic extends Battle {
       final GameLogicManager gm = app.getGameManager();
       if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
         SoundPlayer.playSound(SoundIndex.DRAW_SWORD, SoundGroup.BATTLE);
-        MusicPlayer.playMusic(MusicIndex.NORMAL_WINDOW_BATTLE);
+        MusicPlayer.playMusic(MusicIndex.NORMAL_WINDOW_BATTLE, MusicGroup.BATTLE);
       }
       bag.setInBattle();
       gm.hideOutput();

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Properties;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.loaders.mod.ModuleLoader;
 import com.puttysoftware.randomrange.RandomRange;
@@ -40,16 +42,19 @@ public class MusicPlayer {
     return allFilenames[music.ordinal()] + musicExt;
   }
 
-  public static void playMusic(final MusicIndex music) {
-    if (music != null && music != MusicIndex._NONE) {
-      final String filename = getMusicFilename(music);
-      if (MUSIC.isPlaying()) {
-        MUSIC.stopLoop();
-      }
-      try {
-        MUSIC.load("/assets/music/" + filename).play();
-      } catch (IOException e) {
-        FantastleReboot.logWarning(e);
+  public static void playMusic(final MusicIndex music, final MusicGroup group) {
+    PreferencesManager prefs = FantastleReboot.getBagOStuff().getPrefsManager();
+    if (prefs.isMusicGroupEnabled(group)) {
+      if (music != null && music != MusicIndex._NONE) {
+        final String filename = getMusicFilename(music);
+        if (MUSIC.isPlaying()) {
+          MUSIC.stopLoop();
+        }
+        try {
+          MUSIC.load("/assets/music/" + filename).play();
+        } catch (IOException e) {
+          FantastleReboot.logWarning(e);
+        }
       }
     }
   }

@@ -16,6 +16,7 @@ import com.puttysoftware.fantastlereboot.ai.AIContext;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.ai.map.AutoMapAI;
 import com.puttysoftware.fantastlereboot.ai.map.MapAIContext;
+import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
@@ -152,7 +153,7 @@ public class MapTurnBattleLogic extends Battle {
     this.battleGUI.getViewManager()
         .setViewingWindowCenterY(this.bd.getActiveCharacter().getX());
     SoundPlayer.playSound(SoundIndex.DRAW_SWORD, SoundGroup.BATTLE);
-    MusicPlayer.playMusic(MusicIndex.NORMAL_MAP_BATTLE);
+    MusicPlayer.playMusic(MusicIndex.NORMAL_MAP_BATTLE, MusicGroup.BATTLE);
     this.showBattle();
     this.updateStatsAndEffects();
     this.redrawBattle();
