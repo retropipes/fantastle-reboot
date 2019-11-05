@@ -20,81 +20,94 @@ import com.puttysoftware.images.BufferedImageIcon;
 
 class StatGUI {
   // Fields
-  private Container statsPane;
-  private JLabel hpLabel;
-  private JLabel mpLabel;
-  private JLabel goldLabel;
-  private JLabel attackLabel;
-  private JLabel defenseLabel;
-  private JLabel xpLabel;
-  private JLabel levelLabel;
+  private static Container statsPane;
+  private static JLabel hpLabel;
+  private static JLabel mpLabel;
+  private static JLabel goldLabel;
+  private static JLabel attackLabel;
+  private static JLabel defenseLabel;
+  private static JLabel xpLabel;
+  private static JLabel levelLabel;
+  private static boolean guiSetUp = false;
 
   // Constructors
-  StatGUI() {
-    this.setUpGUI();
+  private StatGUI() {
+    // Do nothing
   }
 
   // Methods
-  Container getStatsPane() {
-    return this.statsPane;
+  static Container getStatsPane() {
+    if (!StatGUI.guiSetUp) {
+      StatGUI.setUpGUI();
+      StatGUI.guiSetUp = true;
+    }
+    return StatGUI.statsPane;
   }
 
-  void updateStats() {
+  static void updateStats() {
+    if (!StatGUI.guiSetUp) {
+      StatGUI.setUpGUI();
+      StatGUI.guiSetUp = true;
+    }
     final Party party = PartyManager.getParty();
     if (party != null) {
       final PartyMember pc = party.getLeader();
       if (pc != null) {
-        this.hpLabel.setText(pc.getHPString());
-        this.mpLabel.setText(pc.getMPString());
-        this.goldLabel.setText(Integer.toString(pc.getGold()));
-        this.attackLabel.setText(Integer.toString(pc.getAttack()));
-        this.defenseLabel.setText(Integer.toString(pc.getDefense()));
-        this.xpLabel.setText(pc.getXPString());
-        this.levelLabel.setText(party.getMonsterLevelString());
+        StatGUI.hpLabel.setText(pc.getHPString());
+        StatGUI.mpLabel.setText(pc.getMPString());
+        StatGUI.goldLabel.setText(Integer.toString(pc.getGold()));
+        StatGUI.attackLabel.setText(Integer.toString(pc.getAttack()));
+        StatGUI.defenseLabel.setText(Integer.toString(pc.getDefense()));
+        StatGUI.xpLabel.setText(pc.getXPString());
+        StatGUI.levelLabel.setText(party.getMonsterLevelString());
       }
     }
   }
 
-  private void setUpGUI() {
-    this.statsPane = new Container();
-    this.statsPane.setLayout(new GridLayout(7, 1));
-    this.hpLabel = new JLabel("", null, SwingConstants.LEFT);
-    this.mpLabel = new JLabel("", null, SwingConstants.LEFT);
-    this.goldLabel = new JLabel("", null, SwingConstants.LEFT);
-    this.attackLabel = new JLabel("", null, SwingConstants.LEFT);
-    this.defenseLabel = new JLabel("", null, SwingConstants.LEFT);
-    this.xpLabel = new JLabel("", null, SwingConstants.LEFT);
-    this.levelLabel = new JLabel("", null, SwingConstants.LEFT);
-    this.statsPane.add(this.hpLabel);
-    this.statsPane.add(this.mpLabel);
-    this.statsPane.add(this.goldLabel);
-    this.statsPane.add(this.attackLabel);
-    this.statsPane.add(this.defenseLabel);
-    this.statsPane.add(this.xpLabel);
-    this.statsPane.add(this.levelLabel);
+  private static void setUpGUI() {
+    StatGUI.statsPane = new Container();
+    StatGUI.statsPane.setLayout(new GridLayout(7, 1));
+    StatGUI.hpLabel = new JLabel("", null, SwingConstants.LEFT);
+    StatGUI.mpLabel = new JLabel("", null, SwingConstants.LEFT);
+    StatGUI.goldLabel = new JLabel("", null, SwingConstants.LEFT);
+    StatGUI.attackLabel = new JLabel("", null, SwingConstants.LEFT);
+    StatGUI.defenseLabel = new JLabel("", null, SwingConstants.LEFT);
+    StatGUI.xpLabel = new JLabel("", null, SwingConstants.LEFT);
+    StatGUI.levelLabel = new JLabel("", null, SwingConstants.LEFT);
+    StatGUI.statsPane.add(StatGUI.hpLabel);
+    StatGUI.statsPane.add(StatGUI.mpLabel);
+    StatGUI.statsPane.add(StatGUI.goldLabel);
+    StatGUI.statsPane.add(StatGUI.attackLabel);
+    StatGUI.statsPane.add(StatGUI.defenseLabel);
+    StatGUI.statsPane.add(StatGUI.xpLabel);
+    StatGUI.statsPane.add(StatGUI.levelLabel);
   }
 
-  void updateImages() {
+  static void updateImages() {
+    if (!StatGUI.guiSetUp) {
+      StatGUI.setUpGUI();
+      StatGUI.guiSetUp = true;
+    }
     final BufferedImageIcon hpImage = EffectImageLoader
         .load(EffectImageIndex.HEALTH);
-    this.hpLabel.setIcon(hpImage);
+    StatGUI.hpLabel.setIcon(hpImage);
     final BufferedImageIcon mpImage = EffectImageLoader
         .load(EffectImageIndex.MAGIC);
-    this.mpLabel.setIcon(mpImage);
+    StatGUI.mpLabel.setIcon(mpImage);
     final BufferedImageIcon goldImage = EffectImageLoader
         .load(EffectImageIndex.MONEY);
-    this.goldLabel.setIcon(goldImage);
+    StatGUI.goldLabel.setIcon(goldImage);
     final BufferedImageIcon attackImage = EffectImageLoader
         .load(EffectImageIndex.MELEE_ATTACK);
-    this.attackLabel.setIcon(attackImage);
+    StatGUI.attackLabel.setIcon(attackImage);
     final BufferedImageIcon defenseImage = EffectImageLoader
         .load(EffectImageIndex.DEFENSE);
-    this.defenseLabel.setIcon(defenseImage);
+    StatGUI.defenseLabel.setIcon(defenseImage);
     final BufferedImageIcon xpImage = EffectImageLoader
         .load(EffectImageIndex.EXPERIENCE);
-    this.xpLabel.setIcon(xpImage);
+    StatGUI.xpLabel.setIcon(xpImage);
     final BufferedImageIcon levelImage = EffectImageLoader
         .load(EffectImageIndex.CREATURE_LEVEL);
-    this.levelLabel.setIcon(levelImage);
+    StatGUI.levelLabel.setIcon(levelImage);
   }
 }

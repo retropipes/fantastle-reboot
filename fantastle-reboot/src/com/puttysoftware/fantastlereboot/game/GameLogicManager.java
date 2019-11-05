@@ -31,7 +31,6 @@ import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 public final class GameLogicManager {
   // Fields
   private boolean savedGameFlag;
-  private final GameViewingWindowManager vwMgr;
   private boolean stateChanged;
   private ObjectInventory objectInv;
   private boolean pullInProgress;
@@ -41,17 +40,14 @@ public final class GameLogicManager {
   private ArrowType activeArrowType;
   private boolean isTeleporting;
   private final ScoreTracker scorer;
-  private final GameGUIManager gui;
   private final EffectManager em;
   private final MovementTask mt;
 
   // Constructors
   public GameLogicManager() {
-    this.vwMgr = new GameViewingWindowManager();
     this.em = new EffectManager();
-    this.gui = new GameGUIManager();
     this.scorer = new ScoreTracker();
-    this.mt = new MovementTask(this.vwMgr, this.em, this.gui);
+    this.mt = new MovementTask(this.em);
     this.mt.start();
     this.pullInProgress = false;
     this.using = false;
@@ -79,16 +75,16 @@ public final class GameLogicManager {
   }
 
   public void enableEvents() {
-    this.mt.fireStepActions();
-    this.gui.enableEvents();
+    MovementTask.fireStepActions();
+    GameGUI.enableEvents();
   }
 
   public void disableEvents() {
-    this.gui.disableEvents();
+    GameGUI.disableEvents();
   }
 
   public void stopMovement() {
-    this.mt.stopMovement();
+    MovementTask.stopMovement();
   }
 
   public void deactivateAllEffects() {
@@ -96,7 +92,7 @@ public final class GameLogicManager {
   }
 
   public void viewingWindowSizeChanged() {
-    this.gui.viewingWindowSizeChanged(this.em);
+    GameGUI.viewingWindowSizeChanged(this.em);
     this.resetViewingWindow();
   }
 
@@ -106,10 +102,6 @@ public final class GameLogicManager {
 
   public ScoreTracker getScoreTracker() {
     return this.scorer;
-  }
-
-  public GameViewingWindowManager getViewManager() {
-    return this.vwMgr;
   }
 
   public void setArrowType(final ArrowType type) {
@@ -129,7 +121,7 @@ public final class GameLogicManager {
   }
 
   public void setStatusMessage(final String msg) {
-    this.gui.setStatusMessage(msg);
+    GameGUI.setStatusMessage(msg);
   }
 
   public void updatePositionRelative(final int dirX, final int dirY,
@@ -139,7 +131,7 @@ public final class GameLogicManager {
 
   public boolean tryUpdatePositionAbsolute(final int x, final int y,
       final int z) {
-    return this.mt.tryAbsolute(x, y, z);
+    return MovementTask.tryAbsolute(x, y, z);
   }
 
   public void updatePositionAbsolute(final int x, final int y, final int z) {
@@ -147,12 +139,12 @@ public final class GameLogicManager {
   }
 
   public void redrawMaze() {
-    this.gui.redrawMaze();
+    GameGUI.redrawMaze();
   }
 
   public void redrawOneSquare(final int inX, final int inY,
       final FantastleObjectModel obj4) {
-    this.gui.redrawOneSquare(inX, inY, obj4);
+    GameGUI.redrawOneSquare(inX, inY, obj4);
   }
 
   public void resetViewingWindowAndPlayerLocation() {
@@ -163,11 +155,11 @@ public final class GameLogicManager {
   public void resetViewingWindow() {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
-    if (m != null && this.vwMgr != null) {
-      this.vwMgr.setViewingWindowLocationX(
-          m.getPlayerLocationY() - GameViewingWindowManager.getOffsetFactorX());
-      this.vwMgr.setViewingWindowLocationY(
-          m.getPlayerLocationX() - GameViewingWindowManager.getOffsetFactorY());
+    if (m != null) {
+      GameView.setViewingWindowLocationX(
+          m.getPlayerLocationY() - GameView.getOffsetFactorX());
+      GameView.setViewingWindowLocationY(
+          m.getPlayerLocationX() - GameView.getOffsetFactorY());
     }
   }
 
@@ -338,7 +330,7 @@ public final class GameLogicManager {
   }
 
   public JFrame getOutputFrame() {
-    return this.gui.getOutputFrame();
+    return GameGUI.getOutputFrame();
   }
 
   public static void decay() {
@@ -356,14 +348,13 @@ public final class GameLogicManager {
   }
 
   public void keepNextMessage() {
-    this.gui.keepNextMessage();
+    GameGUI.keepNextMessage();
   }
 
   public void playMaze() {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
     if (app.getMazeManager().getLoaded()) {
-      this.gui.initViewManager();
       app.getGUIManager().hideGUI();
       if (this.stateChanged) {
         // Initialize only if the maze state has changed
@@ -372,7 +363,7 @@ public final class GameLogicManager {
         this.stateChanged = false;
       }
       // Make sure message area is attached to the border pane
-      this.gui.updateGameGUI(this.em);
+      GameGUI.updateGameGUI(this.em);
       // Make sure initial area player is in is visible
       final int px = m.getPlayerLocationX();
       final int py = m.getPlayerLocationY();
@@ -387,7 +378,7 @@ public final class GameLogicManager {
 
   public void updateStats() {
     // Update stats
-    this.gui.updateStats();
+    GameGUI.updateStats();
     // Check for game over
     if (!PartyManager.getParty().getLeader().isAlive()) {
       this.gameOver();
@@ -498,14 +489,14 @@ public final class GameLogicManager {
   public void useItemHandler(final int x, final int y) {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
-    final int xOffset = this.vwMgr.getViewingWindowLocationX()
-        - GameViewingWindowManager.getOffsetFactorX();
-    final int yOffset = this.vwMgr.getViewingWindowLocationY()
-        - GameViewingWindowManager.getOffsetFactorY();
+    final int xOffset = GameView.getViewingWindowLocationX()
+        - GameView.getOffsetFactorX();
+    final int yOffset = GameView.getViewingWindowLocationY()
+        - GameView.getOffsetFactorY();
     final int destX = x / ImageConstants.SIZE
-        + this.vwMgr.getViewingWindowLocationX() - xOffset + yOffset;
+        + GameView.getViewingWindowLocationX() - xOffset + yOffset;
     final int destY = y / ImageConstants.SIZE
-        + this.vwMgr.getViewingWindowLocationY() + xOffset - yOffset;
+        + GameView.getViewingWindowLocationY() + xOffset - yOffset;
     final int destZ = m.getPlayerLocationZ();
     if (this.usingAnItem() && app.getMode() == BagOStuff.STATUS_GAME) {
       try {
@@ -535,14 +526,14 @@ public final class GameLogicManager {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
     if (this.isTeleporting) {
-      final int xOffset = this.vwMgr.getViewingWindowLocationX()
-          - GameViewingWindowManager.getOffsetFactorX();
-      final int yOffset = this.vwMgr.getViewingWindowLocationY()
-          - GameViewingWindowManager.getOffsetFactorY();
+      final int xOffset = GameView.getViewingWindowLocationX()
+          - GameView.getOffsetFactorX();
+      final int yOffset = GameView.getViewingWindowLocationY()
+          - GameView.getOffsetFactorY();
       final int destX = x / ImageConstants.SIZE
-          + this.vwMgr.getViewingWindowLocationX() - xOffset + yOffset;
+          + GameView.getViewingWindowLocationX() - xOffset + yOffset;
       final int destY = y / ImageConstants.SIZE
-          + this.vwMgr.getViewingWindowLocationY() + xOffset - yOffset;
+          + GameView.getViewingWindowLocationY() + xOffset - yOffset;
       final int destZ = m.getPlayerLocationZ();
       this.updatePositionAbsolute(destX, destY, destZ);
       SoundPlayer.playSound(SoundIndex.TELEPORT, SoundGroup.GAME);
@@ -554,11 +545,11 @@ public final class GameLogicManager {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     bag.setInGame();
     MusicPlayer.playMusic(MusicIndex.DUNGEON, MusicGroup.GAME);
-    this.gui.showOutput();
+    GameGUI.showOutput();
   }
 
   public void hideOutput() {
     this.stopMovement();
-    this.gui.hideOutput();
+    GameGUI.hideOutput();
   }
 }

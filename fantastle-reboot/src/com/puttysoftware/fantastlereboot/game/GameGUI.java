@@ -34,97 +34,85 @@ import com.puttysoftware.fantastlereboot.objects.temporary.MonsterObjectFactory;
 import com.puttysoftware.fantastlereboot.objects.temporary.NoteObject;
 import com.puttysoftware.images.BufferedImageIcon;
 
-class GameGUIManager {
+class GameGUI {
   // Fields
-  private JFrame outputFrame;
-  private Container borderPane;
-  private JLabel messageLabel;
-  private GameViewingWindowManager vwMgr = null;
-  private final StatGUI sg;
-  private DrawGrid drawGrid;
-  private GameDraw outputPane;
-  private boolean knm;
-  private boolean deferredRedraw;
-  boolean eventFlag;
-  private static Darkness DARK = new Darkness();
-  private static NoteObject NOTE = new NoteObject();
-  private static Player PLAYER = new Player();
+  private static JFrame outputFrame;
+  private static Container borderPane;
+  private static JLabel messageLabel;
+  private static DrawGrid drawGrid;
+  private static GameDraw outputPane;
+  private static boolean knm;
+  private static boolean deferredRedraw = false;
+  private static boolean eventFlag = true;
+  private static final Darkness DARK = new Darkness();
+  private static final NoteObject NOTE = new NoteObject();
+  private static final Player PLAYER = new Player();
 
   // Constructors
-  public GameGUIManager() {
-    this.deferredRedraw = false;
-    this.eventFlag = true;
-    this.sg = new StatGUI();
+  private GameGUI() {
+    // Do nothing
   }
 
   // Methods
-  public void updateStats() {
-    this.sg.updateStats();
+  public static void updateStats() {
+    StatGUI.updateStats();
   }
 
-  public void enableEvents() {
-    this.outputFrame.setEnabled(true);
-    this.eventFlag = true;
+  public static void enableEvents() {
+    GameGUI.outputFrame.setEnabled(true);
+    GameGUI.eventFlag = true;
   }
 
-  public void disableEvents() {
-    this.outputFrame.setEnabled(false);
-    this.eventFlag = false;
+  public static void disableEvents() {
+    GameGUI.outputFrame.setEnabled(false);
+    GameGUI.eventFlag = false;
   }
 
-  void initViewManager() {
-    if (this.vwMgr == null) {
-      this.vwMgr = FantastleReboot.getBagOStuff().getGameManager()
-          .getViewManager();
-      this.setUpGUI();
-    }
+  static void viewingWindowSizeChanged(final EffectManager em) {
+    GameGUI.setUpGUI();
+    GameGUI.updateGameGUI(em);
+    GameGUI.deferredRedraw = true;
   }
 
-  void viewingWindowSizeChanged(final EffectManager em) {
-    this.setUpGUI();
-    this.updateGameGUI(em);
-    this.deferredRedraw = true;
+  public static JFrame getOutputFrame() {
+    return GameGUI.outputFrame;
   }
 
-  public JFrame getOutputFrame() {
-    return this.outputFrame;
-  }
-
-  public void showOutput() {
+  public static void showOutput() {
     final BagOStuff app = FantastleReboot.getBagOStuff();
-    if (!this.outputFrame.isVisible()) {
+    if (!GameGUI.outputFrame.isVisible()) {
       app.getMenuManager().setGameMenus();
-      this.outputFrame.setVisible(true);
+      GameGUI.outputFrame.setVisible(true);
       app.getMenuManager().attachMenus();
-      if (this.deferredRedraw) {
-        this.deferredRedraw = false;
-        this.redrawMaze();
+      if (GameGUI.deferredRedraw) {
+        GameGUI.deferredRedraw = false;
+        GameGUI.redrawMaze();
       }
-      this.updateStats();
+      GameGUI.updateStats();
     }
   }
 
-  public void hideOutput() {
-    if (this.outputFrame != null) {
-      this.outputFrame.setVisible(false);
+  public static void hideOutput() {
+    if (GameGUI.outputFrame != null) {
+      GameGUI.outputFrame.setVisible(false);
     }
   }
 
-  public void setStatusMessage(final String msg) {
-    this.messageLabel.setText(msg);
+  public static void setStatusMessage(final String msg) {
+    GameGUI.messageLabel.setText(msg);
   }
 
-  private void resetBorderPane(final EffectManager em) {
-    this.borderPane.removeAll();
-    this.borderPane.add(this.outputPane, BorderLayout.CENTER);
-    this.borderPane.add(this.messageLabel, BorderLayout.NORTH);
-    this.borderPane.add(this.sg.getStatsPane(), BorderLayout.EAST);
-    this.borderPane.add(em.getEffectMessageContainer(), BorderLayout.SOUTH);
+  private static void resetBorderPane(final EffectManager em) {
+    GameGUI.borderPane.removeAll();
+    GameGUI.borderPane.add(GameGUI.outputPane, BorderLayout.CENTER);
+    GameGUI.borderPane.add(GameGUI.messageLabel, BorderLayout.NORTH);
+    GameGUI.borderPane.add(StatGUI.getStatsPane(), BorderLayout.EAST);
+    GameGUI.borderPane.add(em.getEffectMessageContainer(), BorderLayout.SOUTH);
   }
 
-  public void redrawMaze() {
+  public static void redrawMaze() {
     // Draw the maze, if it is visible
-    if (this.outputFrame.isVisible()) {
+    if (GameGUI.outputFrame.isVisible()) {
       final BagOStuff app = FantastleReboot.getBagOStuff();
       final Maze m = app.getMazeManager().getMaze();
       int x, y, u, v;
@@ -134,12 +122,14 @@ class GameGUIManager {
       v = m.getPlayerLocationY();
       final int z = m.getPlayerLocationZ();
       final FantastleObjectModel ev = new Nothing();
-      for (x = this.vwMgr.getViewingWindowLocationX(); x <= this.vwMgr
-          .getLowerRightViewingWindowLocationX(); x++) {
-        for (y = this.vwMgr.getViewingWindowLocationY(); y <= this.vwMgr
-            .getLowerRightViewingWindowLocationY(); y++) {
-          xFix = x - this.vwMgr.getViewingWindowLocationX();
-          yFix = y - this.vwMgr.getViewingWindowLocationY();
+      for (x = GameView
+          .getViewingWindowLocationX(); x <= GameView
+              .getLowerRightViewingWindowLocationX(); x++) {
+        for (y = GameView
+            .getViewingWindowLocationY(); y <= GameView
+                .getLowerRightViewingWindowLocationY(); y++) {
+          xFix = x - GameView.getViewingWindowLocationX();
+          yFix = y - GameView.getViewingWindowLocationY();
           visible = app.getMazeManager().getMaze().isSquareVisible(u, v, y, x);
           try {
             if (visible) {
@@ -172,31 +162,31 @@ class GameGUIManager {
               }
               String cacheName = generateCacheName(obj1, obj2, obj3, obj4,
                   obj5);
-              this.drawGrid.setImageCell(ImageCompositor.composite(cacheName,
+              GameGUI.drawGrid.setImageCell(ImageCompositor.composite(cacheName,
                   img1, img2, img3, img4, img5), xFix, yFix);
             } else {
-              this.drawGrid.setImageCell(DARK.getImage(), xFix, yFix);
+              GameGUI.drawGrid.setImageCell(DARK.getImage(), xFix, yFix);
             }
           } catch (final ArrayIndexOutOfBoundsException ae) {
-            this.drawGrid.setImageCell(ev.getGameImage(), xFix, yFix);
+            GameGUI.drawGrid.setImageCell(ev.getGameImage(), xFix, yFix);
           }
         }
       }
-      if (this.knm) {
-        this.knm = false;
+      if (GameGUI.knm) {
+        GameGUI.knm = false;
       } else {
-        this.setStatusMessage(" ");
+        GameGUI.setStatusMessage(" ");
       }
-      this.outputPane.repaint();
-      this.outputFrame.pack();
-      this.showOutput();
+      GameGUI.outputPane.repaint();
+      GameGUI.outputFrame.pack();
+      GameGUI.showOutput();
     }
   }
 
-  public void redrawOneSquare(final int inX, final int inY,
+  public static void redrawOneSquare(final int inX, final int inY,
       final FantastleObjectModel obj6) {
     // Draw the maze, if it is visible
-    if (this.outputFrame.isVisible() && obj6 != null) {
+    if (GameGUI.outputFrame.isVisible() && obj6 != null) {
       final BagOStuff app = FantastleReboot.getBagOStuff();
       final Maze m = app.getMazeManager().getMaze();
       final int z = m.getPlayerLocationZ();
@@ -208,8 +198,8 @@ class GameGUIManager {
       u = m.getPlayerLocationX();
       v = m.getPlayerLocationY();
       final FantastleObjectModel ev = new Nothing();
-      xFix = x - this.vwMgr.getViewingWindowLocationX();
-      yFix = y - this.vwMgr.getViewingWindowLocationY();
+      xFix = x - GameView.getViewingWindowLocationX();
+      yFix = y - GameView.getViewingWindowLocationY();
       visible = app.getMazeManager().getMaze().isSquareVisible(u, v, y, x);
       try {
         if (visible) {
@@ -243,22 +233,22 @@ class GameGUIManager {
           }
           String cacheName = generateCacheName(obj1, obj2, obj3, obj4, obj5,
               obj6);
-          this.drawGrid.setImageCell(ImageCompositor.composite(cacheName, img1,
-              img2, img3, img4, img5, img6), xFix, yFix);
+          GameGUI.drawGrid.setImageCell(ImageCompositor.composite(cacheName,
+              img1, img2, img3, img4, img5, img6), xFix, yFix);
         } else {
-          this.drawGrid.setImageCell(DARK.getImage(), xFix, yFix);
+          GameGUI.drawGrid.setImageCell(DARK.getImage(), xFix, yFix);
         }
       } catch (final ArrayIndexOutOfBoundsException ae) {
-        this.drawGrid.setImageCell(ev.getGameImage(), xFix, yFix);
+        GameGUI.drawGrid.setImageCell(ev.getGameImage(), xFix, yFix);
       }
-      if (this.knm) {
-        this.knm = false;
+      if (GameGUI.knm) {
+        GameGUI.knm = false;
       } else {
-        this.setStatusMessage(" ");
+        GameGUI.setStatusMessage(" ");
       }
-      this.outputPane.repaint();
-      this.outputFrame.pack();
-      this.showOutput();
+      GameGUI.outputPane.repaint();
+      GameGUI.outputFrame.pack();
+      GameGUI.showOutput();
     }
   }
 
@@ -275,54 +265,52 @@ class GameGUIManager {
     return result.toString();
   }
 
-  public void keepNextMessage() {
-    this.knm = true;
+  public static void keepNextMessage() {
+    GameGUI.knm = true;
   }
 
-  void updateGameGUI(final EffectManager em) {
-    this.resetBorderPane(em);
-    this.sg.updateImages();
-    this.sg.updateStats();
+  static void updateGameGUI(final EffectManager em) {
+    GameGUI.resetBorderPane(em);
+    StatGUI.updateImages();
+    StatGUI.updateStats();
   }
 
-  private void setUpGUI() {
+  private static void setUpGUI() {
     final EventHandler handler = new EventHandler();
-    this.borderPane = new Container();
-    this.borderPane.setLayout(new BorderLayout());
-    this.messageLabel = new JLabel(" ");
-    this.messageLabel.setOpaque(true);
-    this.outputFrame = new JFrame("FantastleReboot");
-    this.drawGrid = new DrawGrid(PreferencesManager.getViewingWindowSize());
-    this.outputPane = new GameDraw(this.drawGrid);
-    this.outputFrame.setContentPane(this.borderPane);
-    this.outputFrame
+    GameGUI.borderPane = new Container();
+    GameGUI.borderPane.setLayout(new BorderLayout());
+    GameGUI.messageLabel = new JLabel(" ");
+    GameGUI.messageLabel.setOpaque(true);
+    GameGUI.outputFrame = new JFrame("FantastleReboot");
+    GameGUI.drawGrid = new DrawGrid(PreferencesManager.getViewingWindowSize());
+    GameGUI.outputPane = new GameDraw(GameGUI.drawGrid);
+    GameGUI.outputFrame.setContentPane(GameGUI.borderPane);
+    GameGUI.outputFrame
         .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-    this.outputFrame.setResizable(false);
-    this.outputFrame.addKeyListener(handler);
-    this.outputFrame.addWindowListener(handler);
+    GameGUI.outputFrame.setResizable(false);
+    GameGUI.outputFrame.addKeyListener(handler);
+    GameGUI.outputFrame.addWindowListener(handler);
   }
 
-  private class EventHandler implements KeyListener, WindowListener {
+  private static class EventHandler implements KeyListener, WindowListener {
     EventHandler() {
       // Do nothing
     }
 
     @Override
     public void keyPressed(final KeyEvent e) {
-      if (GameGUIManager.this.eventFlag) {
-
+      if (GameGUI.eventFlag) {
         if (!PreferencesManager.oneMove()) {
-          this.handleMovement(e);
+          EventHandler.handleMovement(e);
         }
       }
     }
 
     @Override
     public void keyReleased(final KeyEvent e) {
-      if (GameGUIManager.this.eventFlag) {
-
+      if (GameGUI.eventFlag) {
         if (PreferencesManager.oneMove()) {
-          this.handleMovement(e);
+          EventHandler.handleMovement(e);
         }
       }
     }
@@ -332,7 +320,7 @@ class GameGUIManager {
       // Do nothing
     }
 
-    public void handleMovement(final KeyEvent e) {
+    public static void handleMovement(final KeyEvent e) {
       try {
         final GameLogicManager glm = FantastleReboot.getBagOStuff()
             .getGameManager();

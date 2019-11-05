@@ -23,22 +23,17 @@ import com.puttysoftware.fantastlereboot.utilities.FantastleObjectModelList;
 
 final class MovementTask extends Thread {
   // Fields
-  private final GameViewingWindowManager vwMgr;
-  private final GameGUIManager gui;
-  private final EffectManager em;
-  private FantastleObjectModel saved;
-  private boolean proceed;
-  private boolean relative;
-  private int moveX, moveY, moveZ;
+  private static EffectManager em;
+  private static FantastleObjectModel saved;
+  private static boolean proceed;
+  private static boolean relative;
+  private static int moveX, moveY, moveZ;
 
   // Constructors
-  public MovementTask(final GameViewingWindowManager view,
-      final EffectManager effect, final GameGUIManager gameGUI) {
+  public MovementTask(final EffectManager effect) {
     this.setName("Movement Handler");
-    this.vwMgr = view;
-    this.em = effect;
-    this.gui = gameGUI;
-    this.saved = new OpenSpace();
+    MovementTask.em = effect;
+    MovementTask.saved = new OpenSpace();
   }
 
   // Methods
@@ -47,11 +42,13 @@ final class MovementTask extends Thread {
     try {
       while (true) {
         this.waitForWork();
-        if (this.relative) {
-          this.updatePositionRelative(this.moveX, this.moveY, this.moveZ);
+        if (MovementTask.relative) {
+          MovementTask.updatePositionRelative(MovementTask.moveX,
+              MovementTask.moveY, MovementTask.moveZ);
         }
-        if (!this.relative) {
-          this.updatePositionAbsolute(this.moveX, this.moveY, this.moveZ);
+        if (!MovementTask.relative) {
+          MovementTask.updatePositionAbsolute(MovementTask.moveX,
+              MovementTask.moveY, MovementTask.moveZ);
         }
       }
     } catch (final Throwable t) {
@@ -68,22 +65,22 @@ final class MovementTask extends Thread {
   }
 
   public synchronized void moveRelative(final int x, final int y, final int z) {
-    this.moveX = x;
-    this.moveY = y;
-    this.moveZ = z;
-    this.relative = true;
+    MovementTask.moveX = x;
+    MovementTask.moveY = y;
+    MovementTask.moveZ = z;
+    MovementTask.relative = true;
     this.notify();
   }
 
   public synchronized void moveAbsolute(final int x, final int y, final int z) {
-    this.moveX = x;
-    this.moveY = y;
-    this.moveZ = z;
-    this.relative = false;
+    MovementTask.moveX = x;
+    MovementTask.moveY = y;
+    MovementTask.moveZ = z;
+    MovementTask.relative = false;
     this.notify();
   }
 
-  public boolean tryAbsolute(final int x, final int y, final int z) {
+  public static boolean tryAbsolute(final int x, final int y, final int z) {
     try {
       final BagOStuff app = FantastleReboot.getBagOStuff();
       final Maze m = app.getMazeManager().getMaze();
@@ -91,18 +88,18 @@ final class MovementTask extends Thread {
           m.getPlayerLocationY(), m.getPlayerLocationZ(), Layers.GROUND);
       final FantastleObjectModel nextBelow = m.getCell(x, y, z, Layers.GROUND);
       final FantastleObjectModel nextAbove = m.getCell(x, y, z, Layers.OBJECT);
-      return MovementTask.checkSolidAbsolute(this.saved, below, nextBelow,
-          nextAbove);
+      return MovementTask.checkSolidAbsolute(MovementTask.saved, below,
+          nextBelow, nextAbove);
     } catch (final ArrayIndexOutOfBoundsException ae) {
       return false;
     }
   }
 
-  public void stopMovement() {
-    this.proceed = false;
+  public static void stopMovement() {
+    MovementTask.proceed = false;
   }
 
-  void fireStepActions() {
+  static void fireStepActions() {
     BagOStuff bag = FantastleReboot.getBagOStuff();
     final Maze m = bag.getMazeManager().getMaze();
     final int px = m.getPlayerLocationX();
@@ -111,7 +108,7 @@ final class MovementTask extends Thread {
     m.updateVisibleSquares(px, py, pz);
     m.tickTimers(pz);
     PartyManager.getParty().fireStepActions();
-    this.gui.updateStats();
+    GameGUI.updateStats();
     MovementTask.checkGameOver();
   }
 
@@ -132,12 +129,12 @@ final class MovementTask extends Thread {
     }
   }
 
-  private void decayEffects() {
-    this.em.decayEffects();
+  private static void decayEffects() {
+    MovementTask.em.decayEffects();
   }
 
-  private int[] doEffects(final int x, final int y) {
-    return this.em.doEffects(x, y);
+  private static int[] doEffects(final int x, final int y) {
+    return MovementTask.em.doEffects(x, y);
   }
 
   private static boolean checkSolidAbsolute(final FantastleObjectModel inside,
@@ -154,7 +151,7 @@ final class MovementTask extends Thread {
     }
   }
 
-  private void updatePositionRelative(final int dirX, final int dirY,
+  private static void updatePositionRelative(final int dirX, final int dirY,
       final int dirZ) {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     final Maze m = bag.getMazeManager().getMaze();
@@ -165,10 +162,10 @@ final class MovementTask extends Thread {
     int fX;
     int fY;
     final int fZ = dirZ;
-    final int[] mod = this.doEffects(dirX, dirY);
+    final int[] mod = MovementTask.doEffects(dirX, dirY);
     fX = mod[0];
     fY = mod[1];
-    this.proceed = false;
+    MovementTask.proceed = false;
     FantastleObjectModel below = null;
     FantastleObjectModel nextBelow = null;
     FantastleObjectModel nextAbove = new Wall();
@@ -189,77 +186,77 @@ final class MovementTask extends Thread {
       } catch (final ArrayIndexOutOfBoundsException ae) {
         nextAbove = new Wall();
       }
-      this.proceed = true;
-      if (this.proceed) {
+      MovementTask.proceed = true;
+      if (MovementTask.proceed) {
         m.savePlayerLocation();
-        this.vwMgr.saveViewingWindow();
+        GameView.saveViewingWindow();
         try {
-          if (MovementTask.checkSolid(this.saved, below, nextBelow,
+          if (MovementTask.checkSolid(MovementTask.saved, below, nextBelow,
               nextAbove)) {
             m.offsetPlayerLocationX(fX);
             m.offsetPlayerLocationY(fY);
             px += fX;
             py += fY;
-            this.vwMgr.offsetViewingWindowLocationX(fY);
-            this.vwMgr.offsetViewingWindowLocationY(fX);
+            GameView.offsetViewingWindowLocationX(fY);
+            GameView.offsetViewingWindowLocationY(fX);
             bag.getMazeManager().setDirty(true);
-            this.fireStepActions();
-            this.decayEffects();
-            this.redrawMaze();
-            if (this.proceed) {
-              this.saved = m.getCell(px, py, pz, Layers.OBJECT);
+            MovementTask.fireStepActions();
+            MovementTask.decayEffects();
+            MovementTask.redrawMaze();
+            if (MovementTask.proceed) {
+              MovementTask.saved = m.getCell(px, py, pz, Layers.OBJECT);
             }
           } else {
             // Move failed - object is solid in that direction
             SoundPlayer.playSound(SoundIndex.WALK_FAILED, SoundGroup.GAME);
             bag.showMessage("Can't go that way");
-            this.fireStepActions();
-            this.decayEffects();
+            MovementTask.fireStepActions();
+            MovementTask.decayEffects();
           }
         } catch (final ArrayIndexOutOfBoundsException ae) {
-          this.vwMgr.restoreViewingWindow();
+          GameView.restoreViewingWindow();
           m.restorePlayerLocation();
           // Move failed - attempted to go outside the maze
           SoundPlayer.playSound(SoundIndex.WALK_FAILED, SoundGroup.GAME);
           bag.showMessage("Can't go that way");
           nextAbove = new OpenSpace();
-          this.decayEffects();
-          this.proceed = false;
+          MovementTask.decayEffects();
+          MovementTask.proceed = false;
         }
-        this.fireStepActions();
+        MovementTask.fireStepActions();
       } else {
         // Move failed - pre-move check failed
         SoundPlayer.playSound(SoundIndex.WALK_FAILED, SoundGroup.GAME);
         bag.showMessage("Can't go that way");
-        this.fireStepActions();
-        this.decayEffects();
-        this.proceed = false;
+        MovementTask.fireStepActions();
+        MovementTask.decayEffects();
+        MovementTask.proceed = false;
       }
       px = m.getPlayerLocationX();
       py = m.getPlayerLocationY();
       pz = m.getPlayerLocationZ();
-      loopCheck = this.checkLoopCondition(below, nextBelow, nextAbove);
+      loopCheck = MovementTask.checkLoopCondition(below, nextBelow, nextAbove);
       if (loopCheck && !nextBelow.hasFriction()) {
         // Sliding on ice
         SoundPlayer.playSound(SoundIndex.WALK_ICE, SoundGroup.GAME);
-      } else if (nextBelow.hasFriction() && this.proceed) {
+      } else if (nextBelow.hasFriction() && MovementTask.proceed) {
         // Walking normally
         SoundPlayer.playSound(SoundIndex.WALK, SoundGroup.GAME);
       }
-      if (this.proceed && objects.sendsToShop(nextAbove)) {
+      if (MovementTask.proceed && objects.sendsToShop(nextAbove)) {
         // Send player to shop
         bag.getShop(objects.sendsToWhichShop(nextAbove)).showShop();
       }
     } while (loopCheck);
   }
 
-  private boolean checkLoopCondition(final FantastleObjectModel below,
+  private static boolean checkLoopCondition(final FantastleObjectModel below,
       final FantastleObjectModel nextBelow,
       final FantastleObjectModel nextAbove) {
-    return this.proceed
-        && !this.em.isEffectActive(EffectConstants.EFFECT_STICKY)
-        && !nextBelow.hasFriction()
-        && MovementTask.checkSolid(this.saved, below, nextBelow, nextAbove);
+    return MovementTask.proceed
+        && !MovementTask.em.isEffectActive(EffectConstants.EFFECT_STICKY)
+        && !nextBelow.hasFriction() && MovementTask
+            .checkSolid(MovementTask.saved, below, nextBelow, nextAbove);
   }
 
   private static boolean checkSolid(final FantastleObjectModel inside,
@@ -276,33 +273,36 @@ final class MovementTask extends Thread {
     }
   }
 
-  private void updatePositionAbsolute(final int x, final int y, final int z) {
+  private static void updatePositionAbsolute(final int x, final int y,
+      final int z) {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
     m.savePlayerLocation();
-    this.vwMgr.saveViewingWindow();
+    GameView.saveViewingWindow();
     try {
       if (!(m.getCell(x, y, z, Layers.OBJECT).isSolid())) {
         m.setPlayerLocationX(x);
         m.setPlayerLocationY(y);
         m.setPlayerLocationZ(z);
-        this.vwMgr.setViewingWindowLocationX(m.getPlayerLocationY()
-            - GameViewingWindowManager.getOffsetFactorX());
-        this.vwMgr.setViewingWindowLocationY(m.getPlayerLocationX()
-            - GameViewingWindowManager.getOffsetFactorY());
-        this.saved = m.getCell(m.getPlayerLocationX(), m.getPlayerLocationY(),
-            m.getPlayerLocationZ(), Layers.OBJECT);
+        GameView
+            .setViewingWindowLocationX(m.getPlayerLocationY()
+                - GameView.getOffsetFactorX());
+        GameView
+            .setViewingWindowLocationY(m.getPlayerLocationX()
+                - GameView.getOffsetFactorY());
+        MovementTask.saved = m.getCell(m.getPlayerLocationX(),
+            m.getPlayerLocationY(), m.getPlayerLocationZ(), Layers.OBJECT);
         app.getMazeManager().setDirty(true);
         final int px = m.getPlayerLocationX();
         final int py = m.getPlayerLocationY();
         final int pz = m.getPlayerLocationZ();
         m.updateVisibleSquares(px, py, pz);
-        this.redrawMaze();
+        MovementTask.redrawMaze();
       }
     } catch (final ArrayIndexOutOfBoundsException ae) {
       m.restorePlayerLocation();
-      this.vwMgr.restoreViewingWindow();
+      GameView.restoreViewingWindow();
       bag.showMessage("Can't go outside the maze");
     }
   }
@@ -316,7 +316,7 @@ final class MovementTask extends Thread {
     }
   }
 
-  private void redrawMaze() {
-    this.gui.redrawMaze();
+  private static void redrawMaze() {
+    GameGUI.redrawMaze();
   }
 }
