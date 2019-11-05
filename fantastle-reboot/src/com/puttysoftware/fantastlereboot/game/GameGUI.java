@@ -68,9 +68,9 @@ class GameGUI {
     GameGUI.eventFlag = false;
   }
 
-  static void viewingWindowSizeChanged(final EffectManager em) {
+  static void viewingWindowSizeChanged() {
     GameGUI.setUpGUI();
-    GameGUI.updateGameGUI(em);
+    GameGUI.updateGameGUI();
     GameGUI.deferredRedraw = true;
   }
 
@@ -102,12 +102,13 @@ class GameGUI {
     GameGUI.messageLabel.setText(msg);
   }
 
-  private static void resetBorderPane(final EffectManager em) {
+  private static void resetBorderPane() {
     GameGUI.borderPane.removeAll();
     GameGUI.borderPane.add(GameGUI.outputPane, BorderLayout.CENTER);
     GameGUI.borderPane.add(GameGUI.messageLabel, BorderLayout.NORTH);
     GameGUI.borderPane.add(StatGUI.getStatsPane(), BorderLayout.EAST);
-    GameGUI.borderPane.add(em.getEffectMessageContainer(), BorderLayout.SOUTH);
+    GameGUI.borderPane.add(EffectManager.getEffectMessageContainer(),
+        BorderLayout.SOUTH);
   }
 
   public static void redrawMaze() {
@@ -122,12 +123,10 @@ class GameGUI {
       v = m.getPlayerLocationY();
       final int z = m.getPlayerLocationZ();
       final FantastleObjectModel ev = new Nothing();
-      for (x = GameView
-          .getViewingWindowLocationX(); x <= GameView
-              .getLowerRightViewingWindowLocationX(); x++) {
-        for (y = GameView
-            .getViewingWindowLocationY(); y <= GameView
-                .getLowerRightViewingWindowLocationY(); y++) {
+      for (x = GameView.getViewingWindowLocationX(); x <= GameView
+          .getLowerRightViewingWindowLocationX(); x++) {
+        for (y = GameView.getViewingWindowLocationY(); y <= GameView
+            .getLowerRightViewingWindowLocationY(); y++) {
           xFix = x - GameView.getViewingWindowLocationX();
           yFix = y - GameView.getViewingWindowLocationY();
           visible = app.getMazeManager().getMaze().isSquareVisible(u, v, y, x);
@@ -269,8 +268,8 @@ class GameGUI {
     GameGUI.knm = true;
   }
 
-  static void updateGameGUI(final EffectManager em) {
-    GameGUI.resetBorderPane(em);
+  static void updateGameGUI() {
+    GameGUI.resetBorderPane();
     StatGUI.updateImages();
     StatGUI.updateStats();
   }
@@ -322,8 +321,7 @@ class GameGUI {
 
     public static void handleMovement(final KeyEvent e) {
       try {
-        final GameLogicManager glm = FantastleReboot.getBagOStuff()
-            .getGameManager();
+        final Game glm = FantastleReboot.getBagOStuff().getGameManager();
         final int keyCode = e.getKeyCode();
         switch (keyCode) {
         case KeyEvent.VK_LEFT:

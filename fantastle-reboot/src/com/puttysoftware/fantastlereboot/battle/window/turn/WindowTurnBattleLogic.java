@@ -20,7 +20,7 @@ import com.puttysoftware.fantastlereboot.creatures.monsters.MonsterFactory;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.effects.Effect;
-import com.puttysoftware.fantastlereboot.game.GameLogicManager;
+import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
@@ -308,7 +308,7 @@ public class WindowTurnBattleLogic extends Battle {
     try {
       final BagOStuff app = FantastleReboot.getBagOStuff();
       final BagOStuff bag = FantastleReboot.getBagOStuff();
-      final GameLogicManager gm = app.getGameManager();
+      final Game gm = app.getGameManager();
       if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
         SoundPlayer.playSound(SoundIndex.DRAW_SWORD, SoundGroup.BATTLE);
         MusicPlayer.playMusic(MusicIndex.NORMAL_WINDOW_BATTLE, MusicGroup.BATTLE);

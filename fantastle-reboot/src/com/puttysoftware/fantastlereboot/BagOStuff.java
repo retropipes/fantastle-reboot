@@ -30,7 +30,7 @@ import com.puttysoftware.fantastlereboot.battle.map.turn.MapTurnBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.window.time.WindowTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.window.turn.WindowTurnBattleLogic;
 //import com.puttysoftware.fantastlereboot.editor.MazeEditor;
-import com.puttysoftware.fantastlereboot.game.GameLogicManager;
+import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
@@ -44,7 +44,7 @@ import com.puttysoftware.updater.ProductData;
 public class BagOStuff {
   // Fields
   private AboutDialog about;
-  private GameLogicManager gameMgr;
+  private Game gameMgr;
   private MazeManager mazeMgr;
   private MenuManager menuMgr;
   private GeneralHelpManager gHelpMgr;
@@ -96,7 +96,7 @@ public class BagOStuff {
   void postConstruct() {
     this.about = new AboutDialog(BagOStuff.getVersionString());
     this.guiMgr = new GUIManager();
-    this.gameMgr = new GameLogicManager();
+    this.gameMgr = new Game();
     this.mazeMgr = new MazeManager();
     this.menuMgr = new MenuManager();
     this.gHelpMgr = new GeneralHelpManager();
@@ -172,7 +172,7 @@ public class BagOStuff {
     PreferencesManager.resetPrefs();
   }
 
-  public GameLogicManager getGameManager() {
+  public Game getGameManager() {
     return this.gameMgr;
   }
 

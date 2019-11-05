@@ -23,16 +23,14 @@ import com.puttysoftware.fantastlereboot.utilities.FantastleObjectModelList;
 
 final class MovementTask extends Thread {
   // Fields
-  private static EffectManager em;
   private static FantastleObjectModel saved;
   private static boolean proceed;
   private static boolean relative;
   private static int moveX, moveY, moveZ;
 
   // Constructors
-  public MovementTask(final EffectManager effect) {
+  public MovementTask() {
     this.setName("Movement Handler");
-    MovementTask.em = effect;
     MovementTask.saved = new OpenSpace();
   }
 
@@ -130,11 +128,11 @@ final class MovementTask extends Thread {
   }
 
   private static void decayEffects() {
-    MovementTask.em.decayEffects();
+    EffectManager.decayEffects();
   }
 
   private static int[] doEffects(final int x, final int y) {
-    return MovementTask.em.doEffects(x, y);
+    return EffectManager.doEffects(x, y);
   }
 
   private static boolean checkSolidAbsolute(final FantastleObjectModel inside,
@@ -254,7 +252,7 @@ final class MovementTask extends Thread {
       final FantastleObjectModel nextBelow,
       final FantastleObjectModel nextAbove) {
     return MovementTask.proceed
-        && !MovementTask.em.isEffectActive(EffectConstants.EFFECT_STICKY)
+        && !EffectManager.isEffectActive(EffectConstants.EFFECT_STICKY)
         && !nextBelow.hasFriction() && MovementTask
             .checkSolid(MovementTask.saved, below, nextBelow, nextAbove);
   }
@@ -285,12 +283,10 @@ final class MovementTask extends Thread {
         m.setPlayerLocationX(x);
         m.setPlayerLocationY(y);
         m.setPlayerLocationZ(z);
-        GameView
-            .setViewingWindowLocationX(m.getPlayerLocationY()
-                - GameView.getOffsetFactorX());
-        GameView
-            .setViewingWindowLocationY(m.getPlayerLocationX()
-                - GameView.getOffsetFactorY());
+        GameView.setViewingWindowLocationX(
+            m.getPlayerLocationY() - GameView.getOffsetFactorX());
+        GameView.setViewingWindowLocationY(
+            m.getPlayerLocationX() - GameView.getOffsetFactorY());
         MovementTask.saved = m.getCell(m.getPlayerLocationX(),
             m.getPlayerLocationY(), m.getPlayerLocationZ(), Layers.OBJECT);
         app.getMazeManager().setDirty(true);

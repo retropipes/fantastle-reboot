@@ -28,42 +28,40 @@ import com.puttysoftware.fantastlereboot.objects.Player;
 import com.puttysoftware.fantastlereboot.objects.temporary.ArrowType;
 import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 
-public final class GameLogicManager {
+public final class Game {
   // Fields
-  private boolean savedGameFlag;
-  private boolean stateChanged;
-  private ObjectInventory objectInv;
-  private boolean pullInProgress;
-  private boolean using;
-  private FantastleObjectModel objectBeingUsed;
-  private String gameOverMessage;
-  private ArrowType activeArrowType;
-  private boolean isTeleporting;
+  private static boolean savedGameFlag;
+  private static boolean stateChanged;
+  private static ObjectInventory objectInv;
+  private static boolean pullInProgress;
+  private static boolean using;
+  private static FantastleObjectModel objectBeingUsed;
+  private static String gameOverMessage;
+  private static ArrowType activeArrowType;
+  private static boolean isTeleporting;
   private final ScoreTracker scorer;
-  private final EffectManager em;
   private final MovementTask mt;
 
   // Constructors
-  public GameLogicManager() {
-    this.em = new EffectManager();
+  public Game() {
     this.scorer = new ScoreTracker();
-    this.mt = new MovementTask(this.em);
+    this.mt = new MovementTask();
     this.mt.start();
-    this.pullInProgress = false;
-    this.using = false;
-    this.savedGameFlag = false;
-    this.isTeleporting = false;
-    this.activeArrowType = ArrowType.WOODEN;
-    this.savedGameFlag = false;
-    this.stateChanged = true;
+    Game.pullInProgress = false;
+    Game.using = false;
+    Game.savedGameFlag = false;
+    Game.isTeleporting = false;
+    Game.activeArrowType = ArrowType.WOODEN;
+    Game.savedGameFlag = false;
+    Game.stateChanged = true;
   }
 
   // Methods
   public boolean newGame() {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     final JFrame owner = bag.getOutputFrame();
-    this.em.deactivateAllEffects();
-    if (this.savedGameFlag) {
+    EffectManager.deactivateAllEffects();
+    if (Game.savedGameFlag) {
       if (PartyManager.getParty() != null) {
         return true;
       } else {
@@ -88,16 +86,16 @@ public final class GameLogicManager {
   }
 
   public void deactivateAllEffects() {
-    this.em.deactivateAllEffects();
+    EffectManager.deactivateAllEffects();
   }
 
   public void viewingWindowSizeChanged() {
-    GameGUI.viewingWindowSizeChanged(this.em);
+    GameGUI.viewingWindowSizeChanged();
     this.resetViewingWindow();
   }
 
   public void stateChanged() {
-    this.stateChanged = true;
+    Game.stateChanged = true;
   }
 
   public ScoreTracker getScoreTracker() {
@@ -105,19 +103,19 @@ public final class GameLogicManager {
   }
 
   public void setArrowType(final ArrowType type) {
-    this.activeArrowType = type;
+    Game.activeArrowType = type;
   }
 
   void arrowDone() {
-    this.activeArrowType = ArrowType.WOODEN;
+    Game.activeArrowType = ArrowType.WOODEN;
   }
 
   public void setSavedGameFlag(final boolean value) {
-    this.savedGameFlag = value;
+    Game.savedGameFlag = value;
   }
 
   public void activateEffect(final int effectID) {
-    this.em.activateEffect(effectID, -1);
+    EffectManager.activateEffect(effectID, -1);
   }
 
   public void setStatusMessage(final String msg) {
@@ -148,7 +146,7 @@ public final class GameLogicManager {
   }
 
   public void resetViewingWindowAndPlayerLocation() {
-    GameLogicManager.resetPlayerLocation();
+    Game.resetPlayerLocation();
     this.resetViewingWindow();
   }
 
@@ -172,35 +170,35 @@ public final class GameLogicManager {
   }
 
   public void resetObjectInventory() {
-    this.objectInv = new ObjectInventory();
+    Game.objectInv = new ObjectInventory();
   }
 
   public boolean isTeleporting() {
-    return this.isTeleporting;
+    return Game.isTeleporting;
   }
 
   public boolean usingAnItem() {
-    return this.using;
+    return Game.using;
   }
 
   public void setUsingAnItem(final boolean isUsing) {
-    this.using = isUsing;
+    Game.using = isUsing;
   }
 
   public boolean isPullInProgress() {
-    return this.pullInProgress;
+    return Game.pullInProgress;
   }
 
   public void setPullInProgress(final boolean pulling) {
-    this.pullInProgress = pulling;
+    Game.pullInProgress = pulling;
   }
 
   public void activateEffect(final int effectID, final int duration) {
-    this.em.activateEffect(effectID, duration);
+    EffectManager.activateEffect(effectID, duration);
   }
 
   int[] doEffects(final int x, final int y) {
-    return this.em.doEffects(x, y);
+    return EffectManager.doEffects(x, y);
   }
 
   public static boolean isFloorBelow() {
@@ -276,7 +274,7 @@ public final class GameLogicManager {
   }
 
   public void fireArrow(final int x, final int y) {
-    final ArrowTask at = new ArrowTask(x, y, this.activeArrowType);
+    final ArrowTask at = new ArrowTask(x, y, Game.activeArrowType);
     at.start();
   }
 
@@ -293,7 +291,7 @@ public final class GameLogicManager {
   }
 
   public void exitGame() {
-    this.stateChanged = true;
+    Game.stateChanged = true;
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
     // Restore the maze
@@ -306,7 +304,7 @@ public final class GameLogicManager {
       app.getMazeManager().setLoaded(false);
     }
     // Reset saved game flag
-    this.savedGameFlag = false;
+    Game.savedGameFlag = false;
     app.getMazeManager().setDirty(false);
     // Exit game
     this.hideOutput();
@@ -356,14 +354,14 @@ public final class GameLogicManager {
     final Maze m = app.getMazeManager().getMaze();
     if (app.getMazeManager().getLoaded()) {
       app.getGUIManager().hideGUI();
-      if (this.stateChanged) {
+      if (Game.stateChanged) {
         // Initialize only if the maze state has changed
         app.getMazeManager().getMaze()
             .switchLevel(app.getMazeManager().getMaze().getStartLevel());
-        this.stateChanged = false;
+        Game.stateChanged = false;
       }
       // Make sure message area is attached to the border pane
-      GameGUI.updateGameGUI(this.em);
+      GameGUI.updateGameGUI();
       // Make sure initial area player is in is visible
       final int px = m.getPlayerLocationX();
       final int py = m.getPlayerLocationY();
@@ -397,8 +395,8 @@ public final class GameLogicManager {
     m.restore();
     this.setSavedGameFlag(false);
     this.scorer.resetScore();
-    GameLogicManager.decay();
-    this.objectInv = new ObjectInventory();
+    Game.decay();
+    Game.objectInv = new ObjectInventory();
     final boolean playerExists = m.doesPlayerExist();
     if (playerExists) {
       m.save();
@@ -415,9 +413,9 @@ public final class GameLogicManager {
     final boolean playerExists = m.doesPlayerExist();
     if (playerExists) {
       this.scorer.resetScore();
-      GameLogicManager.resetPlayerLocation();
+      Game.resetPlayerLocation();
       this.resetViewingWindow();
-      GameLogicManager.decay();
+      Game.decay();
       this.redrawMaze();
     }
   }
@@ -429,9 +427,9 @@ public final class GameLogicManager {
     final boolean playerExists = m.doesPlayerExist();
     if (playerExists) {
       m.restore();
-      GameLogicManager.resetPlayerLocation();
+      Game.resetPlayerLocation();
       this.resetViewingWindow();
-      GameLogicManager.decay();
+      Game.decay();
       this.redrawMaze();
     } else {
       this.solvedMaze();
@@ -440,16 +438,16 @@ public final class GameLogicManager {
 
   private void gameOver() {
     SoundPlayer.playSound(SoundIndex.GAME_OVER, SoundGroup.GAME);
-    if (this.gameOverMessage == null) {
+    if (Game.gameOverMessage == null) {
       Messager.showDialog("You have died - Game Over!");
     } else {
-      Messager.showDialog(this.gameOverMessage);
+      Messager.showDialog(Game.gameOverMessage);
     }
     this.solvedMaze();
   }
 
   public void gameOverWithMessage(final String msg) {
-    this.gameOverMessage = msg;
+    Game.gameOverMessage = msg;
   }
 
   public void solvedMaze() {
@@ -466,9 +464,9 @@ public final class GameLogicManager {
       app.getMazeManager().setLoaded(false);
     }
     // Wipe the inventory
-    this.objectInv = new ObjectInventory();
+    Game.objectInv = new ObjectInventory();
     // Reset saved game flag
-    this.savedGameFlag = false;
+    Game.savedGameFlag = false;
     app.getMazeManager().setDirty(false);
     if (this.scorer.checkScore()) {
       app.playHighScoreSound();
@@ -479,11 +477,11 @@ public final class GameLogicManager {
   }
 
   public ObjectInventory getObjectInventory() {
-    return this.objectInv;
+    return Game.objectInv;
   }
 
   public void setObjectInventory(final ObjectInventory newObjectInventory) {
-    this.objectInv = newObjectInventory;
+    Game.objectInv = newObjectInventory;
   }
 
   public void useItemHandler(final int x, final int y) {
@@ -511,21 +509,21 @@ public final class GameLogicManager {
         Messager.showMessage("Aim within the maze");
       }
       if (this.usingAnItem()) {
-        this.objectInv.use(this.objectBeingUsed);
+        Game.objectInv.use(Game.objectBeingUsed);
         this.redrawMaze();
       }
     }
   }
 
   public void controllableTeleport() {
-    this.isTeleporting = true;
+    Game.isTeleporting = true;
     Messager.showMessage("Click to set destination");
   }
 
   void controllableTeleportHandler(final int x, final int y) {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
-    if (this.isTeleporting) {
+    if (Game.isTeleporting) {
       final int xOffset = GameView.getViewingWindowLocationX()
           - GameView.getOffsetFactorX();
       final int yOffset = GameView.getViewingWindowLocationY()
@@ -537,7 +535,7 @@ public final class GameLogicManager {
       final int destZ = m.getPlayerLocationZ();
       this.updatePositionAbsolute(destX, destY, destZ);
       SoundPlayer.playSound(SoundIndex.TELEPORT, SoundGroup.GAME);
-      this.isTeleporting = false;
+      Game.isTeleporting = false;
     }
   }
 
