@@ -46,6 +46,7 @@ import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
+import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.maze.Extension;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.Tile;
@@ -294,7 +295,7 @@ public class PreferencesManager {
         if (formerMode == BagOStuff.STATUS_GUI) {
           app.getGUIManager().hideGUI();
         } else if (formerMode == BagOStuff.STATUS_GAME) {
-          app.getGameManager().hideOutput();
+          Game.hideOutput();
           // } else if (formerMode == BagOStuff.STATUS_EDITOR) {
           // app.getEditor().hideOutput();
         }
@@ -318,7 +319,7 @@ public class PreferencesManager {
         if (formerMode == BagOStuff.STATUS_GUI) {
           app.getGUIManager().showGUI();
         } else if (formerMode == BagOStuff.STATUS_GAME) {
-          app.getGameManager().showOutput();
+          Game.showOutput();
           // } else if (formerMode == BagOStuff.STATUS_EDITOR) {
           // app.getEditor().showOutput();
         }

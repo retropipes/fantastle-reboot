@@ -17,6 +17,7 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.VersionException;
+import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.PrefixHandler;
 import com.puttysoftware.fantastlereboot.maze.SuffixHandler;
@@ -50,7 +51,7 @@ public class GameLoadTask extends Thread {
       this.loadFrame.setVisible(true);
       final BagOStuff app = FantastleReboot.getBagOStuff();
       int startW;
-      app.getGameManager().setSavedGameFlag(false);
+      Game.setSavedGameFlag(false);
       final File tempLock = new File(Maze.getMazeTempFolder() + "lock.tmp");
       Maze gameMaze = new Maze();
       // Unlock the file
@@ -74,14 +75,14 @@ public class GameLoadTask extends Thread {
       final boolean playerExists = gameMaze.doesPlayerExist();
       if (playerExists) {
         app.getMazeManager().getMaze().setPlayerToStart();
-        app.getGameManager().resetViewingWindow();
+        Game.resetViewingWindow();
       }
       gameMaze.save();
       // Final cleanup
-      app.getGameManager().stateChanged();
+      Game.stateChanged();
       app.getMazeManager().setLoaded(true);
       CommonDialogs.showDialog(sg + " loaded.");
-      app.getGameManager().playMaze();
+      Game.playMaze();
       app.getMazeManager().handleDeferredSuccess(true, false, null);
     } catch (final VersionException ve) {
       CommonDialogs.showDialog("Loading the " + sg.toLowerCase()

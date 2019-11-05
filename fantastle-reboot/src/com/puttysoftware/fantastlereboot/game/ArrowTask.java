@@ -52,7 +52,7 @@ public class ArrowTask extends Thread {
     final int px = m.getPlayerLocationX();
     final int py = m.getPlayerLocationY();
     final int pz = m.getPlayerLocationZ();
-    final int[] mod = app.getGameManager().doEffects(this.x, this.y);
+    final int[] mod = Game.doEffects(this.x, this.y);
     this.x = mod[0];
     this.y = mod[1];
     int cumX = this.x;
@@ -75,9 +75,9 @@ public class ArrowTask extends Thread {
         break;
       }
       if (!o.isDirectionallySolid(incX, incY)) {
-        app.getGameManager().redrawOneSquare(px + cumX, py + cumY, a);
+        Game.redrawOneSquare(px + cumX, py + cumY, a);
       }
-      app.getGameManager().redrawOneSquare(px + cumX, py + cumY,
+      Game.redrawOneSquare(px + cumX, py + cumY,
           new OpenSpace());
       cumX += incX;
       cumY += incY;
@@ -88,7 +88,7 @@ public class ArrowTask extends Thread {
       }
     }
     SoundPlayer.playSound(SoundIndex.ARROW_DIE, SoundGroup.GAME);
-    app.getGameManager().arrowDone();
+    Game.arrowDone();
   }
 
   private static boolean arrowHitCheck(final int inX, final int inY,

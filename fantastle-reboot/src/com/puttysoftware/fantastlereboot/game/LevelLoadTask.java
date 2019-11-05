@@ -40,13 +40,13 @@ public class LevelLoadTask extends Thread {
       this.loadFrame.setVisible(true);
       final BagOStuff app = FantastleReboot.getBagOStuff();
       final Maze gameMaze = app.getMazeManager().getMaze();
-      app.getGameManager().disableEvents();
+      Game.disableEvents();
       gameMaze.switchLevelOffset(this.level);
       gameMaze.offsetPlayerLocationW(this.level);
       PartyManager.getParty().offsetMonsterLevel(this.level);
-      app.getGameManager().resetViewingWindow();
-      app.getGameManager().enableEvents();
-      app.getGameManager().redrawMaze();
+      Game.resetViewingWindow();
+      Game.enableEvents();
+      Game.redrawMaze();
     } catch (final Exception ex) {
       FantastleReboot.logError(ex);
     } finally {

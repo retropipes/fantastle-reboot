@@ -44,7 +44,6 @@ import com.puttysoftware.updater.ProductData;
 public class BagOStuff {
   // Fields
   private AboutDialog about;
-  private Game gameMgr;
   private MazeManager mazeMgr;
   private MenuManager menuMgr;
   private GeneralHelpManager gHelpMgr;
@@ -96,7 +95,6 @@ public class BagOStuff {
   void postConstruct() {
     this.about = new AboutDialog(BagOStuff.getVersionString());
     this.guiMgr = new GUIManager();
-    this.gameMgr = new Game();
     this.mazeMgr = new MazeManager();
     this.menuMgr = new MenuManager();
     this.gHelpMgr = new GeneralHelpManager();
@@ -170,10 +168,6 @@ public class BagOStuff {
 
   public void resetPreferences() {
     PreferencesManager.resetPrefs();
-  }
-
-  public Game getGameManager() {
-    return this.gameMgr;
   }
 
   public MazeManager getMazeManager() {
@@ -307,7 +301,7 @@ public class BagOStuff {
     } else if (this.getMode() == BagOStuff.STATUS_GUI) {
       return this.getGUIManager().getGUIFrame();
     } else {
-      return this.getGameManager().getOutputFrame();
+      return Game.getOutputFrame();
       // } else if (this.getMode() == BagOStuff.STATUS_GAME) {
       // return this.getGameManager().getOutputFrame();
       // } else {
@@ -317,7 +311,7 @@ public class BagOStuff {
 
   public void showMessage(final String msg) {
     if (this.currentMode == BagOStuff.STATUS_GAME) {
-      this.getGameManager().setStatusMessage(msg);
+      Game.setStatusMessage(msg);
     } else if (this.currentMode == BagOStuff.STATUS_BATTLE) {
       this.getBattle().setStatusMessage(msg);
     } else {

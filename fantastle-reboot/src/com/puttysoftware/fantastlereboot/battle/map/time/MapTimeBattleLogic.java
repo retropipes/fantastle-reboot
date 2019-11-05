@@ -35,6 +35,7 @@ import com.puttysoftware.fantastlereboot.creatures.monsters.MonsterFactory;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.effects.Effect;
+import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItem;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
@@ -104,7 +105,7 @@ public class MapTimeBattleLogic extends Battle {
     // Level Up Check
     if (playerCharacter.checkLevelUp()) {
       playerCharacter.levelUp();
-      FantastleReboot.getBagOStuff().getGameManager().keepNextMessage();
+      Game.keepNextMessage();
       bag.showMessage("You reached level " + playerCharacter.getLevel() + ".");
     }
     Maze m = bag.getMazeManager().getMaze();
@@ -114,7 +115,7 @@ public class MapTimeBattleLogic extends Battle {
   private void doBattleInternal(final Maze bMaze, final MapBattle b) {
     // Initialize Battle
     final BagOStuff bag = FantastleReboot.getBagOStuff();
-    FantastleReboot.getBagOStuff().getGameManager().hideOutput();
+    Game.hideOutput();
     bag.setInBattle();
     this.battleMaze = bMaze;
     this.pde = AbstractDamageEngine.getPlayerInstance();
@@ -161,8 +162,8 @@ public class MapTimeBattleLogic extends Battle {
     Maze m = bag.getMazeManager().getMaze();
     m.postBattle(m.getPlayerLocationX(), m.getPlayerLocationY());
     // Return to whence we came
-    bag.getGameManager().showOutput();
-    bag.getGameManager().redrawMaze();
+    Game.showOutput();
+    Game.redrawMaze();
   }
 
   private void clearStatusMessage() {
@@ -337,7 +338,8 @@ public class MapTimeBattleLogic extends Battle {
           if (isParty) {
             SoundPlayer.playSound(SoundIndex.PARTY_COUNTER, SoundGroup.BATTLE);
           } else {
-            SoundPlayer.playSound(SoundIndex.MONSTER_COUNTER, SoundGroup.BATTLE);
+            SoundPlayer.playSound(SoundIndex.MONSTER_COUNTER,
+                SoundGroup.BATTLE);
           }
           SoundPlayer.playSound(SoundIndex.CRITICAL, SoundGroup.BATTLE);
         } else if (activeDE.weaponCrit()) {
@@ -348,7 +350,8 @@ public class MapTimeBattleLogic extends Battle {
           if (isParty) {
             SoundPlayer.playSound(SoundIndex.PARTY_COUNTER, SoundGroup.BATTLE);
           } else {
-            SoundPlayer.playSound(SoundIndex.MONSTER_COUNTER, SoundGroup.BATTLE);
+            SoundPlayer.playSound(SoundIndex.MONSTER_COUNTER,
+                SoundGroup.BATTLE);
           }
         }
         displayDamageString = displayDamagePrefix + activeName + " hits "
@@ -1030,8 +1033,7 @@ public class MapTimeBattleLogic extends Battle {
         return false;
       } else if (stealChance >= 100) {
         // Succeeded, unless target has 0 Gold
-        final RandomRange stole = new RandomRange(0,
-            activeEnemy.getGold());
+        final RandomRange stole = new RandomRange(0, activeEnemy.getGold());
         stealAmount = stole.generate();
         if (stealAmount == 0) {
           this.setStatusMessage(activeBC.getName()
@@ -1050,8 +1052,7 @@ public class MapTimeBattleLogic extends Battle {
         final int randomChance = chance.generate();
         if (randomChance <= stealChance) {
           // Succeeded
-          final RandomRange stole = new RandomRange(0,
-              activeEnemy.getGold());
+          final RandomRange stole = new RandomRange(0, activeEnemy.getGold());
           stealAmount = stole.generate();
           if (stealAmount == 0) {
             this.setStatusMessage(activeBC.getName()
@@ -1201,7 +1202,6 @@ public class MapTimeBattleLogic extends Battle {
           if (!message.equals(Effect.getNullMessage())) {
             this.setStatusMessage(message);
             try {
-              
               Thread.sleep(PreferencesManager.getBattleSpeed());
             } catch (final InterruptedException ie) {
               // Ignore
@@ -1243,7 +1243,6 @@ public class MapTimeBattleLogic extends Battle {
           if (!message.equals(Effect.getNullMessage())) {
             this.setStatusMessage(message);
             try {
-              
               Thread.sleep(PreferencesManager.getBattleSpeed());
             } catch (final InterruptedException ie) {
               // Ignore

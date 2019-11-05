@@ -321,77 +321,76 @@ class GameGUI {
 
     public static void handleMovement(final KeyEvent e) {
       try {
-        final Game glm = FantastleReboot.getBagOStuff().getGameManager();
         final int keyCode = e.getKeyCode();
         switch (keyCode) {
         case KeyEvent.VK_LEFT:
           if (e.isShiftDown()) {
-            glm.updatePositionRelative(-1, -1, 0);
+            Game.updatePositionRelative(-1, -1, 0);
           } else {
-            glm.updatePositionRelative(-1, 0, 0);
+            Game.updatePositionRelative(-1, 0, 0);
           }
           break;
         case KeyEvent.VK_DOWN:
           if (e.isShiftDown()) {
-            glm.updatePositionRelative(-1, 1, 0);
+            Game.updatePositionRelative(-1, 1, 0);
           } else {
-            glm.updatePositionRelative(0, 1, 0);
+            Game.updatePositionRelative(0, 1, 0);
           }
           break;
         case KeyEvent.VK_RIGHT:
           if (e.isShiftDown()) {
-            glm.updatePositionRelative(1, 1, 0);
+            Game.updatePositionRelative(1, 1, 0);
           } else {
-            glm.updatePositionRelative(1, 0, 0);
+            Game.updatePositionRelative(1, 0, 0);
           }
           break;
         case KeyEvent.VK_UP:
           if (e.isShiftDown()) {
-            glm.updatePositionRelative(1, -1, 0);
+            Game.updatePositionRelative(1, -1, 0);
           } else {
-            glm.updatePositionRelative(0, -1, 0);
+            Game.updatePositionRelative(0, -1, 0);
           }
           break;
         case KeyEvent.VK_ENTER:
           if (e.isShiftDown()) {
-            glm.updatePositionRelative(0, 0, 0);
+            Game.updatePositionRelative(0, 0, 0);
           }
           break;
         case KeyEvent.VK_NUMPAD7:
         case KeyEvent.VK_Q:
-          glm.updatePositionRelative(-1, -1, 0);
+          Game.updatePositionRelative(-1, -1, 0);
           break;
         case KeyEvent.VK_NUMPAD8:
         case KeyEvent.VK_W:
-          glm.updatePositionRelative(0, -1, 0);
+          Game.updatePositionRelative(0, -1, 0);
           break;
         case KeyEvent.VK_NUMPAD9:
         case KeyEvent.VK_E:
-          glm.updatePositionRelative(1, -1, 0);
+          Game.updatePositionRelative(1, -1, 0);
           break;
         case KeyEvent.VK_NUMPAD4:
         case KeyEvent.VK_A:
-          glm.updatePositionRelative(-1, 0, 0);
+          Game.updatePositionRelative(-1, 0, 0);
           break;
         case KeyEvent.VK_NUMPAD5:
         case KeyEvent.VK_S:
-          glm.updatePositionRelative(0, 0, 0);
+          Game.updatePositionRelative(0, 0, 0);
           break;
         case KeyEvent.VK_NUMPAD6:
         case KeyEvent.VK_D:
-          glm.updatePositionRelative(1, 0, 0);
+          Game.updatePositionRelative(1, 0, 0);
           break;
         case KeyEvent.VK_NUMPAD1:
         case KeyEvent.VK_Z:
-          glm.updatePositionRelative(-1, 1, 0);
+          Game.updatePositionRelative(-1, 1, 0);
           break;
         case KeyEvent.VK_NUMPAD2:
         case KeyEvent.VK_X:
-          glm.updatePositionRelative(0, 1, 0);
+          Game.updatePositionRelative(0, 1, 0);
           break;
         case KeyEvent.VK_NUMPAD3:
         case KeyEvent.VK_C:
-          glm.updatePositionRelative(1, 1, 0);
+          Game.updatePositionRelative(1, 1, 0);
           break;
         default:
           break;
@@ -425,13 +424,13 @@ class GameGUI {
             app.getMazeManager();
             success = MazeManager.saveGame();
             if (success) {
-              app.getGameManager().exitGame();
+              Game.exitGame();
             }
           } else if (status == JOptionPane.NO_OPTION) {
-            app.getGameManager().exitGame();
+            Game.exitGame();
           }
         } else {
-          app.getGameManager().exitGame();
+          Game.exitGame();
         }
       } catch (final Exception ex) {
         FantastleReboot.logError(ex);

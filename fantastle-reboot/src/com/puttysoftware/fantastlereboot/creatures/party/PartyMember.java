@@ -7,7 +7,6 @@ package com.puttysoftware.fantastlereboot.creatures.party;
 
 import java.io.IOException;
 
-import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.VersionException;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
@@ -19,6 +18,7 @@ import com.puttysoftware.fantastlereboot.creatures.genders.Gender;
 import com.puttysoftware.fantastlereboot.creatures.personalities.Personality;
 import com.puttysoftware.fantastlereboot.creatures.races.Race;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
+import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.loaders.AvatarImageLoader;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;
@@ -166,7 +166,7 @@ public class PartyMember extends Creature {
 
   @Override
   public int getSpeed() {
-    
+
     final int difficulty = PreferencesManager
         .getGameDifficulty();
     final int base = this.getBaseSpeed();
@@ -219,7 +219,7 @@ public class PartyMember extends Creature {
     this.setGold(PartyMember.START_GOLD);
     this.setExperience(0L);
     this.getItems().resetInventory();
-    FantastleReboot.getBagOStuff().getGameManager().deactivateAllEffects();
+    Game.deactivateAllEffects();
     final Page nextLevelEquation = new Page(3, 1, 0, true);
     final double value = BASE_COEFF;
     nextLevelEquation.setCoefficient(1, value);

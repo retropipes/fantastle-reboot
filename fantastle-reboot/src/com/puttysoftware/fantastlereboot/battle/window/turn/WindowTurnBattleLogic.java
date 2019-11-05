@@ -306,16 +306,15 @@ public class WindowTurnBattleLogic extends Battle {
   @Override
   public void doBattle() {
     try {
-      final BagOStuff app = FantastleReboot.getBagOStuff();
       final BagOStuff bag = FantastleReboot.getBagOStuff();
-      final Game gm = app.getGameManager();
       if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
         SoundPlayer.playSound(SoundIndex.DRAW_SWORD, SoundGroup.BATTLE);
-        MusicPlayer.playMusic(MusicIndex.NORMAL_WINDOW_BATTLE, MusicGroup.BATTLE);
+        MusicPlayer.playMusic(MusicIndex.NORMAL_WINDOW_BATTLE,
+            MusicGroup.BATTLE);
       }
       bag.setInBattle();
-      gm.hideOutput();
-      gm.stopMovement();
+      Game.hideOutput();
+      Game.stopMovement();
       this.enemy = MonsterFactory.getNewMonsterInstance();
       this.enemy.loadCreature();
       this.enemyDidDamage = false;
@@ -340,7 +339,7 @@ public class WindowTurnBattleLogic extends Battle {
     // Level Up Check
     if (playerCharacter.checkLevelUp()) {
       playerCharacter.levelUp();
-      FantastleReboot.getBagOStuff().getGameManager().keepNextMessage();
+      Game.keepNextMessage();
       bag.showMessage("You reached level " + playerCharacter.getLevel() + ".");
     }
   }
@@ -644,8 +643,8 @@ public class WindowTurnBattleLogic extends Battle {
     Maze m = bag.getMazeManager().getMaze();
     m.postBattle(m.getPlayerLocationX(), m.getPlayerLocationY());
     // Return to whence we came
-    bag.getGameManager().showOutput();
-    bag.getGameManager().redrawMaze();
+    Game.showOutput();
+    Game.redrawMaze();
   }
 
   @Override

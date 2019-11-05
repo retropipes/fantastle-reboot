@@ -19,11 +19,11 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.game.Game;
 
 public class Messager {
   public static void showMessage(final String msg) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    app.getGameManager().setStatusMessage(msg);
+    Game.setStatusMessage(msg);
   }
 
   public static void showDialog(final String msg) {

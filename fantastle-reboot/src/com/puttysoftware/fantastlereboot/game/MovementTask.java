@@ -120,7 +120,7 @@ final class MovementTask extends Thread {
       final int pz = m.getPlayerLocationZ();
       if (m.hasMonster(px, py, pz)) {
         if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
-          bag.getGameManager().stopMovement();
+          Game.stopMovement();
           bag.getBattle().doBattle();
         }
       }

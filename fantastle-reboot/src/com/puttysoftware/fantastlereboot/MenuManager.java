@@ -31,6 +31,7 @@ import javax.swing.KeyStroke;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.creatures.characterfiles.CharacterRegistration;
+import com.puttysoftware.fantastlereboot.game.Game;
 //import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.InventoryViewer;
 import com.puttysoftware.fantastlereboot.game.NoteManager;
@@ -666,7 +667,7 @@ public class MenuManager {
               }
             }
             if (saved) {
-              app.getGameManager().hideOutput();
+              Game.hideOutput();
               app.getGUIManager().showGUI();
             }
           }
@@ -719,33 +720,33 @@ public class MenuManager {
           // me.toggleLayer();
         } else if (cmd.equals("New Game")) {
           // Start a new game
-          final boolean proceed = app.getGameManager().newGame();
+          final boolean proceed = Game.newGame();
           if (proceed) {
             new GenerateTask(true).start();
           }
         } else if (cmd.equals("Play")) {
           // Play the current maze
-          app.getGameManager().playMaze();
+          Game.playMaze();
           // } else if (cmd.equals("Edit")) {
           // // Edit the current maze
           // me.editMaze();
         } else if (cmd.equals("Show Equipment...")) {
-          if (!app.getGameManager().usingAnItem()) {
+          if (!Game.usingAnItem()) {
             InventoryViewer.showEquipmentDialog();
           }
         } else if (cmd.equals("Reset Current Level")) {
-          if (!app.getGameManager().usingAnItem()) {
+          if (!Game.usingAnItem()) {
             final int result = Messager.showConfirmDialog(
                 "Are you sure you want to reset the current level?",
                 "Fantastle");
             if (result == JOptionPane.YES_OPTION) {
-              app.getGameManager().resetCurrentLevel();
+              Game.resetCurrentLevel();
             }
           }
         } else if (cmd.equals("Show Current Score")) {
-          app.getGameManager().showCurrentScore();
+          Game.showCurrentScore();
         } else if (cmd.equals("Show Score Table")) {
-          app.getGameManager().showScoreTable();
+          Game.showScoreTable();
         } else if (cmd.equals("Register Character...")) {
           // Register Character
           CharacterRegistration.registerCharacter();

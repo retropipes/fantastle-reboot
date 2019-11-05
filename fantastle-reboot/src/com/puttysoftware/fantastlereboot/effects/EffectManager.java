@@ -24,8 +24,8 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 
 import com.puttysoftware.diane.utilties.DirectionResolver;
-import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Messager;
+import com.puttysoftware.fantastlereboot.game.Game;
 
 public class EffectManager {
   // Fields
@@ -91,7 +91,7 @@ public class EffectManager {
         if (!EffectManager.activeEffects[x].isActive()) {
           // Clear effect grid
           EffectManager.clearGridEntry(x);
-          FantastleReboot.getBagOStuff().getGameManager().keepNextMessage();
+          Game.keepNextMessage();
           Messager.showMessage("You feel normal again.");
         }
       }

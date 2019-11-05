@@ -30,30 +30,24 @@ import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 
 public final class Game {
   // Fields
-  private static boolean savedGameFlag;
-  private static boolean stateChanged;
+  private static boolean savedGameFlag = false;
+  private static boolean stateChanged = true;
   private static ObjectInventory objectInv;
-  private static boolean pullInProgress;
-  private static boolean using;
+  private static boolean pullInProgress = false;
+  private static boolean using = false;
   private static FantastleObjectModel objectBeingUsed;
   private static String gameOverMessage;
-  private static ArrowType activeArrowType;
-  private static boolean isTeleporting;
+  private static ArrowType activeArrowType = ArrowType.WOODEN;
+  private static boolean isTeleporting = false;
   private static MovementTask mt = new MovementTask();
 
   // Constructors
-  public Game() {
-    Game.pullInProgress = false;
-    Game.using = false;
-    Game.savedGameFlag = false;
-    Game.isTeleporting = false;
-    Game.activeArrowType = ArrowType.WOODEN;
-    Game.savedGameFlag = false;
-    Game.stateChanged = true;
+  private Game() {
+    // Do nothing
   }
 
   // Methods
-  public boolean newGame() {
+  public static boolean newGame() {
     if (!Game.mt.isAlive()) {
       Game.mt.start();
     }
@@ -71,81 +65,81 @@ public final class Game {
     }
   }
 
-  public void enableEvents() {
+  public static void enableEvents() {
     MovementTask.fireStepActions();
     GameGUI.enableEvents();
   }
 
-  public void disableEvents() {
+  public static void disableEvents() {
     GameGUI.disableEvents();
   }
 
-  public void stopMovement() {
+  public static void stopMovement() {
     MovementTask.stopMovement();
   }
 
-  public void deactivateAllEffects() {
+  public static void deactivateAllEffects() {
     EffectManager.deactivateAllEffects();
   }
 
-  public void viewingWindowSizeChanged() {
+  public static void viewingWindowSizeChanged() {
     GameGUI.viewingWindowSizeChanged();
-    this.resetViewingWindow();
+    Game.resetViewingWindow();
   }
 
-  public void stateChanged() {
+  public static void stateChanged() {
     Game.stateChanged = true;
   }
 
-  public void setArrowType(final ArrowType type) {
+  public static void setArrowType(final ArrowType type) {
     Game.activeArrowType = type;
   }
 
-  void arrowDone() {
+  static void arrowDone() {
     Game.activeArrowType = ArrowType.WOODEN;
   }
 
-  public void setSavedGameFlag(final boolean value) {
+  public static void setSavedGameFlag(final boolean value) {
     Game.savedGameFlag = value;
   }
 
-  public void activateEffect(final int effectID) {
+  public static void activateEffect(final int effectID) {
     EffectManager.activateEffect(effectID, -1);
   }
 
-  public void setStatusMessage(final String msg) {
+  public static void setStatusMessage(final String msg) {
     GameGUI.setStatusMessage(msg);
   }
 
-  public void updatePositionRelative(final int dirX, final int dirY,
+  public static void updatePositionRelative(final int dirX, final int dirY,
       final int dirZ) {
     Game.mt.moveRelative(dirX, dirY, dirZ);
   }
 
-  public boolean tryUpdatePositionAbsolute(final int x, final int y,
+  public static boolean tryUpdatePositionAbsolute(final int x, final int y,
       final int z) {
     return MovementTask.tryAbsolute(x, y, z);
   }
 
-  public void updatePositionAbsolute(final int x, final int y, final int z) {
+  public static void updatePositionAbsolute(final int x, final int y, final int z) {
     Game.mt.moveAbsolute(x, y, z);
   }
 
-  public void redrawMaze() {
+  public static void redrawMaze() {
     GameGUI.redrawMaze();
   }
 
-  public void redrawOneSquare(final int inX, final int inY,
+  public static void redrawOneSquare(final int inX, final int inY,
       final FantastleObjectModel obj4) {
     GameGUI.redrawOneSquare(inX, inY, obj4);
   }
 
-  public void resetViewingWindowAndPlayerLocation() {
+  public static void resetViewingWindowAndPlayerLocation() {
     Game.resetPlayerLocation();
-    this.resetViewingWindow();
+    Game.resetViewingWindow();
   }
 
-  public void resetViewingWindow() {
+  public static void resetViewingWindow() {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
     if (m != null) {
@@ -164,35 +158,35 @@ public final class Game {
     }
   }
 
-  public void resetObjectInventory() {
+  public static void resetObjectInventory() {
     Game.objectInv = new ObjectInventory();
   }
 
-  public boolean isTeleporting() {
+  public static boolean isTeleporting() {
     return Game.isTeleporting;
   }
 
-  public boolean usingAnItem() {
+  public static boolean usingAnItem() {
     return Game.using;
   }
 
-  public void setUsingAnItem(final boolean isUsing) {
+  public static void setUsingAnItem(final boolean isUsing) {
     Game.using = isUsing;
   }
 
-  public boolean isPullInProgress() {
+  public static boolean isPullInProgress() {
     return Game.pullInProgress;
   }
 
-  public void setPullInProgress(final boolean pulling) {
+  public static void setPullInProgress(final boolean pulling) {
     Game.pullInProgress = pulling;
   }
 
-  public void activateEffect(final int effectID, final int duration) {
+  public static void activateEffect(final int effectID, final int duration) {
     EffectManager.activateEffect(effectID, duration);
   }
 
-  int[] doEffects(final int x, final int y) {
+  static int[] doEffects(final int x, final int y) {
     return EffectManager.doEffects(x, y);
   }
 
@@ -268,16 +262,16 @@ public final class Game {
     }
   }
 
-  public void fireArrow(final int x, final int y) {
+  public static void fireArrow(final int x, final int y) {
     final ArrowTask at = new ArrowTask(x, y, Game.activeArrowType);
     at.start();
   }
 
-  public void goToLevelOffset(final int level) {
+  public static void goToLevelOffset(final int level) {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
     final boolean levelExists = m.doesLevelExistOffset(level);
-    this.stopMovement();
+    Game.stopMovement();
     if (levelExists) {
       new LevelLoadTask(level).start();
     } else {
@@ -285,7 +279,7 @@ public final class Game {
     }
   }
 
-  public void exitGame() {
+  public static void exitGame() {
     Game.stateChanged = true;
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
@@ -294,7 +288,7 @@ public final class Game {
     m.resetVisibleSquares();
     final boolean playerExists = m.doesPlayerExist();
     if (playerExists) {
-      this.resetViewingWindowAndPlayerLocation();
+      Game.resetViewingWindowAndPlayerLocation();
     } else {
       app.getMazeManager().setLoaded(false);
     }
@@ -302,27 +296,27 @@ public final class Game {
     Game.savedGameFlag = false;
     app.getMazeManager().setDirty(false);
     // Exit game
-    this.hideOutput();
+    Game.hideOutput();
     app.getGUIManager().showGUI();
   }
 
-  public void invalidateScore() {
+  public static void invalidateScore() {
     ScoreTracker.invalidateScore();
   }
 
-  public void showCurrentScore() {
+  public static void showCurrentScore() {
     ScoreTracker.showCurrentScore();
   }
 
-  public void showScoreTable() {
+  public static void showScoreTable() {
     ScoreTracker.showScoreTable();
   }
 
-  public void validateScore() {
+  public static void validateScore() {
     ScoreTracker.validateScore();
   }
 
-  public JFrame getOutputFrame() {
+  public static JFrame getOutputFrame() {
     return GameGUI.getOutputFrame();
   }
 
@@ -340,11 +334,11 @@ public final class Game {
         m.getPlayerLocationZ(), morphInto.getLayer());
   }
 
-  public void keepNextMessage() {
+  public static void keepNextMessage() {
     GameGUI.keepNextMessage();
   }
 
-  public void playMaze() {
+  public static void playMaze() {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
     if (app.getMazeManager().getLoaded()) {
@@ -362,33 +356,33 @@ public final class Game {
       final int py = m.getPlayerLocationY();
       final int pz = m.getPlayerLocationZ();
       m.updateVisibleSquares(px, py, pz);
-      this.showOutput();
-      this.redrawMaze();
+      Game.showOutput();
+      Game.redrawMaze();
     } else {
       CommonDialogs.showDialog("No Maze Opened");
     }
   }
 
-  public void updateStats() {
+  public static void updateStats() {
     // Update stats
     GameGUI.updateStats();
     // Check for game over
     if (!PartyManager.getParty().getLeader().isAlive()) {
-      this.gameOver();
+      Game.gameOver();
     }
   }
 
-  public void resetCurrentLevel() {
-    this.resetLevel();
+  public static void resetCurrentLevel() {
+    Game.resetLevel();
   }
 
-  public void resetGameState() {
-    this.deactivateAllEffects();
+  public static void resetGameState() {
+    Game.deactivateAllEffects();
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
     app.getMazeManager().setDirty(false);
     m.restore();
-    this.setSavedGameFlag(false);
+    Game.setSavedGameFlag(false);
     ScoreTracker.resetScore();
     Game.decay();
     Game.objectInv = new ObjectInventory();
@@ -398,9 +392,9 @@ public final class Game {
     }
   }
 
-  public void resetLevel() {
+  public static void resetLevel() {
     PartyManager.getParty().getLeader().healAndRegenerateFully();
-    this.deactivateAllEffects();
+    Game.deactivateAllEffects();
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
     app.getMazeManager().setDirty(true);
@@ -409,52 +403,52 @@ public final class Game {
     if (playerExists) {
       ScoreTracker.resetScore();
       Game.resetPlayerLocation();
-      this.resetViewingWindow();
+      Game.resetViewingWindow();
       Game.decay();
-      this.redrawMaze();
+      Game.redrawMaze();
     }
   }
 
-  public void solvedLevel() {
-    this.deactivateAllEffects();
+  public static void solvedLevel() {
+    Game.deactivateAllEffects();
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
     final boolean playerExists = m.doesPlayerExist();
     if (playerExists) {
       m.restore();
       Game.resetPlayerLocation();
-      this.resetViewingWindow();
+      Game.resetViewingWindow();
       Game.decay();
-      this.redrawMaze();
+      Game.redrawMaze();
     } else {
-      this.solvedMaze();
+      Game.solvedMaze();
     }
   }
 
-  private void gameOver() {
+  private static void gameOver() {
     SoundPlayer.playSound(SoundIndex.GAME_OVER, SoundGroup.GAME);
     if (Game.gameOverMessage == null) {
       Messager.showDialog("You have died - Game Over!");
     } else {
       Messager.showDialog(Game.gameOverMessage);
     }
-    this.solvedMaze();
+    Game.solvedMaze();
   }
 
-  public void gameOverWithMessage(final String msg) {
+  public static void gameOverWithMessage(final String msg) {
     Game.gameOverMessage = msg;
   }
 
-  public void solvedMaze() {
+  public static void solvedMaze() {
     PartyManager.getParty().getLeader().healAndRegenerateFully();
-    this.deactivateAllEffects();
+    Game.deactivateAllEffects();
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
     // Restore the maze
     m.restore();
     final boolean playerExists = m.doesPlayerExist();
     if (playerExists) {
-      this.resetViewingWindowAndPlayerLocation();
+      Game.resetViewingWindowAndPlayerLocation();
     } else {
       app.getMazeManager().setLoaded(false);
     }
@@ -467,19 +461,19 @@ public final class Game {
       app.playHighScoreSound();
     }
     ScoreTracker.commitScore();
-    this.hideOutput();
+    Game.hideOutput();
     app.getGUIManager().showGUI();
   }
 
-  public ObjectInventory getObjectInventory() {
+  public static ObjectInventory getObjectInventory() {
     return Game.objectInv;
   }
 
-  public void setObjectInventory(final ObjectInventory newObjectInventory) {
+  public static void setObjectInventory(final ObjectInventory newObjectInventory) {
     Game.objectInv = newObjectInventory;
   }
 
-  public void useItemHandler(final int x, final int y) {
+  public static void useItemHandler(final int x, final int y) {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
     final int xOffset = GameView.getViewingWindowLocationX()
@@ -491,31 +485,31 @@ public final class Game {
     final int destY = y / ImageConstants.SIZE
         + GameView.getViewingWindowLocationY() + xOffset - yOffset;
     final int destZ = m.getPlayerLocationZ();
-    if (this.usingAnItem() && app.getMode() == BagOStuff.STATUS_GAME) {
+    if (Game.usingAnItem() && app.getMode() == BagOStuff.STATUS_GAME) {
       try {
         final FantastleObjectModel target = m.getCell(destX, destY, destZ,
             Layers.OBJECT);
         if (target instanceof Player) {
-          this.setUsingAnItem(false);
+          Game.setUsingAnItem(false);
           Messager.showMessage("Don't aim at yourself!");
         }
       } catch (final ArrayIndexOutOfBoundsException ae) {
-        this.setUsingAnItem(false);
+        Game.setUsingAnItem(false);
         Messager.showMessage("Aim within the maze");
       }
-      if (this.usingAnItem()) {
+      if (Game.usingAnItem()) {
         Game.objectInv.use(Game.objectBeingUsed);
-        this.redrawMaze();
+        Game.redrawMaze();
       }
     }
   }
 
-  public void controllableTeleport() {
+  public static void controllableTeleport() {
     Game.isTeleporting = true;
     Messager.showMessage("Click to set destination");
   }
 
-  void controllableTeleportHandler(final int x, final int y) {
+  static void controllableTeleportHandler(final int x, final int y) {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
     if (Game.isTeleporting) {
@@ -528,21 +522,21 @@ public final class Game {
       final int destY = y / ImageConstants.SIZE
           + GameView.getViewingWindowLocationY() + xOffset - yOffset;
       final int destZ = m.getPlayerLocationZ();
-      this.updatePositionAbsolute(destX, destY, destZ);
+      Game.updatePositionAbsolute(destX, destY, destZ);
       SoundPlayer.playSound(SoundIndex.TELEPORT, SoundGroup.GAME);
       Game.isTeleporting = false;
     }
   }
 
-  public void showOutput() {
+  public static void showOutput() {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     bag.setInGame();
     MusicPlayer.playMusic(MusicIndex.DUNGEON, MusicGroup.GAME);
     GameGUI.showOutput();
   }
 
-  public void hideOutput() {
-    this.stopMovement();
+  public static void hideOutput() {
+    Game.stopMovement();
     GameGUI.hideOutput();
   }
 }

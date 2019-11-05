@@ -12,6 +12,7 @@ import javax.swing.WindowConstants;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.randomrange.RandomRange;
 
@@ -42,7 +43,7 @@ public class GenerateTask extends Thread {
       final BagOStuff app = FantastleReboot.getBagOStuff();
       Maze gameMaze = app.getMazeManager().getMaze();
       if (!this.scratch) {
-        app.getGameManager().disableEvents();
+        Game.disableEvents();
       } else {
         gameMaze = new Maze();
         app.getMazeManager().setMaze(gameMaze);
@@ -68,7 +69,7 @@ public class GenerateTask extends Thread {
         final boolean playerExists = gameMaze.doesPlayerExist();
         if (playerExists) {
           gameMaze.setPlayerToStart();
-          app.getGameManager().resetViewingWindow();
+          Game.resetViewingWindow();
         }
       } else {
         int startR, startC, startF;
@@ -86,12 +87,12 @@ public class GenerateTask extends Thread {
       gameMaze.save();
       // Final cleanup
       if (this.scratch) {
-        app.getGameManager().stateChanged();
+        Game.stateChanged();
         app.getMenuManager().checkFlags();
       } else {
-        app.getGameManager().resetViewingWindow();
-        app.getGameManager().enableEvents();
-        app.getGameManager().redrawMaze();
+        Game.resetViewingWindow();
+        Game.enableEvents();
+        Game.redrawMaze();
       }
     } catch (final Throwable t) {
       FantastleReboot.logError(t);
