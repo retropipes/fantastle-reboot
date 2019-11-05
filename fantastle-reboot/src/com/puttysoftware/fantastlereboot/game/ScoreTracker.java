@@ -27,10 +27,10 @@ import com.puttysoftware.scoremanager.ScoreManager;
 
 public class ScoreTracker {
   // Fields
-  private String scoresFile;
-  private SavedScoreManager ssMgr;
-  private long score;
-  private boolean scoreValid;
+  private static String scoresFile = "";
+  private static SavedScoreManager ssMgr;
+  private static long score = 0L;
+  private static boolean scoreValid = false;
   private static final String MAC_PREFIX = "HOME";
   private static final String WIN_PREFIX = "APPDATA";
   private static final String UNIX_PREFIX = "HOME";
@@ -39,42 +39,39 @@ public class ScoreTracker {
   private static final String UNIX_DIR = "/.fantastle/scores/";
 
   // Constructors
-  public ScoreTracker() {
-    this.scoresFile = "";
-    this.scoreValid = false;
-    this.score = 0L;
-    this.ssMgr = null;
+  private ScoreTracker() {
+    // Do nothing
   }
 
   // Methods
-  public boolean checkScore() {
-    if (this.scoreValid) {
-      return this.ssMgr.checkScore(this.score);
+  public static boolean checkScore() {
+    if (ScoreTracker.scoreValid) {
+      return ScoreTracker.ssMgr.checkScore(ScoreTracker.score);
     } else {
       return false;
     }
   }
 
-  public void commitScore() {
-    if (this.scoreValid) {
-      final boolean result = this.ssMgr.addScore(this.score);
+  public static void commitScore() {
+    if (ScoreTracker.scoreValid) {
+      final boolean result = ScoreTracker.ssMgr.addScore(ScoreTracker.score);
       if (result) {
-        this.ssMgr.viewTable();
+        ScoreTracker.ssMgr.viewTable();
       }
     }
   }
 
-  public void invalidateScore() {
-    this.scoreValid = false;
+  public static void invalidateScore() {
+    ScoreTracker.scoreValid = false;
   }
 
-  public void resetScore() {
-    this.score = 0L;
+  public static void resetScore() {
+    ScoreTracker.score = 0L;
   }
 
-  public void setScoreFile(final String filename) {
+  public static void setScoreFile(final String filename) {
     // Check validity
-    if (this.scoreValid) {
+    if (ScoreTracker.scoreValid) {
       // Check filename argument
       if (filename != null) {
         if (filename.equals("")) {
@@ -89,51 +86,51 @@ public class ScoreTracker {
       if (!parent.exists()) {
         parent.mkdirs();
       }
-      this.scoresFile = sf.getAbsolutePath();
-      this.ssMgr = new SavedScoreManager(1, 10,
+      ScoreTracker.scoresFile = sf.getAbsolutePath();
+      ScoreTracker.ssMgr = new SavedScoreManager(1, 10,
           ScoreManager.SORT_ORDER_ASCENDING, 0L, "Fantastle Scores",
-          new String[] { "points" }, this.scoresFile);
+          new String[] { "points" }, ScoreTracker.scoresFile);
     }
   }
 
-  public void incrementScore() {
-    this.score++;
+  public static void incrementScore() {
+    ScoreTracker.score++;
   }
 
-  public void deductStep() {
-    this.score--;
+  public static void deductStep() {
+    ScoreTracker.score--;
   }
 
-  public void updateScore(final long increment) {
-    this.score += increment;
+  public static void updateScore(final long increment) {
+    ScoreTracker.score += increment;
   }
 
-  public void validateScore() {
-    this.scoreValid = true;
+  public static void validateScore() {
+    ScoreTracker.scoreValid = true;
   }
 
-  public long getScore() {
-    return this.score;
+  public static long getScore() {
+    return ScoreTracker.score;
   }
 
-  public void setScore(final long newScore) {
-    this.score = newScore;
+  public static void setScore(final long newScore) {
+    ScoreTracker.score = newScore;
   }
 
   public static String getScoreUnits() {
     return "points";
   }
 
-  public void showCurrentScore() {
-    if (this.scoreValid) {
-      Messager.showDialog("Your current score: " + this.score + " points");
+  public static void showCurrentScore() {
+    if (ScoreTracker.scoreValid) {
+      Messager.showDialog("Your current score: " + ScoreTracker.score + " points");
     } else {
       Messager.showDialog("The current score is not available at this time.");
     }
   }
 
-  public void showScoreTable() {
-    this.ssMgr.viewTable();
+  public static void showScoreTable() {
+    ScoreTracker.ssMgr.viewTable();
   }
 
   private static String getScoreDirPrefix() {

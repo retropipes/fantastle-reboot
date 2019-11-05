@@ -39,14 +39,10 @@ public final class Game {
   private static String gameOverMessage;
   private static ArrowType activeArrowType;
   private static boolean isTeleporting;
-  private final ScoreTracker scorer;
-  private final MovementTask mt;
+  private static MovementTask mt = new MovementTask();
 
   // Constructors
   public Game() {
-    this.scorer = new ScoreTracker();
-    this.mt = new MovementTask();
-    this.mt.start();
     Game.pullInProgress = false;
     Game.using = false;
     Game.savedGameFlag = false;
@@ -58,6 +54,9 @@ public final class Game {
 
   // Methods
   public boolean newGame() {
+    if (!Game.mt.isAlive()) {
+      Game.mt.start();
+    }
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     final JFrame owner = bag.getOutputFrame();
     EffectManager.deactivateAllEffects();
@@ -98,10 +97,6 @@ public final class Game {
     Game.stateChanged = true;
   }
 
-  public ScoreTracker getScoreTracker() {
-    return this.scorer;
-  }
-
   public void setArrowType(final ArrowType type) {
     Game.activeArrowType = type;
   }
@@ -124,7 +119,7 @@ public final class Game {
 
   public void updatePositionRelative(final int dirX, final int dirY,
       final int dirZ) {
-    this.mt.moveRelative(dirX, dirY, dirZ);
+    Game.mt.moveRelative(dirX, dirY, dirZ);
   }
 
   public boolean tryUpdatePositionAbsolute(final int x, final int y,
@@ -133,7 +128,7 @@ public final class Game {
   }
 
   public void updatePositionAbsolute(final int x, final int y, final int z) {
-    this.mt.moveAbsolute(x, y, z);
+    Game.mt.moveAbsolute(x, y, z);
   }
 
   public void redrawMaze() {
@@ -312,19 +307,19 @@ public final class Game {
   }
 
   public void invalidateScore() {
-    this.scorer.invalidateScore();
+    ScoreTracker.invalidateScore();
   }
 
   public void showCurrentScore() {
-    this.scorer.showCurrentScore();
+    ScoreTracker.showCurrentScore();
   }
 
   public void showScoreTable() {
-    this.scorer.showScoreTable();
+    ScoreTracker.showScoreTable();
   }
 
   public void validateScore() {
-    this.scorer.validateScore();
+    ScoreTracker.validateScore();
   }
 
   public JFrame getOutputFrame() {
@@ -394,7 +389,7 @@ public final class Game {
     app.getMazeManager().setDirty(false);
     m.restore();
     this.setSavedGameFlag(false);
-    this.scorer.resetScore();
+    ScoreTracker.resetScore();
     Game.decay();
     Game.objectInv = new ObjectInventory();
     final boolean playerExists = m.doesPlayerExist();
@@ -412,7 +407,7 @@ public final class Game {
     m.restore();
     final boolean playerExists = m.doesPlayerExist();
     if (playerExists) {
-      this.scorer.resetScore();
+      ScoreTracker.resetScore();
       Game.resetPlayerLocation();
       this.resetViewingWindow();
       Game.decay();
@@ -468,10 +463,10 @@ public final class Game {
     // Reset saved game flag
     Game.savedGameFlag = false;
     app.getMazeManager().setDirty(false);
-    if (this.scorer.checkScore()) {
+    if (ScoreTracker.checkScore()) {
       app.playHighScoreSound();
     }
-    this.scorer.commitScore();
+    ScoreTracker.commitScore();
     this.hideOutput();
     app.getGUIManager().showGUI();
   }
