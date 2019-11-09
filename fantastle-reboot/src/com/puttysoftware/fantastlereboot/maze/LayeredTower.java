@@ -488,8 +488,8 @@ final class LayeredTower implements Cloneable {
     }
     // Pass 4: Add monsters
     int space = this.getColumns() * this.getRows();
-    int monsterMin = space / 64;
-    int monsterMax = space / 32;
+    int monsterMin = space / 32;
+    int monsterMax = space / 16;
     final RandomRange howMany = new RandomRange(monsterMin, monsterMax);
     final int generateHowMany = howMany.generate();
     for (y = 0; y < generateHowMany; y++) {
@@ -586,10 +586,6 @@ final class LayeredTower implements Cloneable {
         obj.tickTimer();
       }
     }
-    // Check for battle
-    final int px = this.getPlayerRow();
-    final int py = this.getPlayerColumn();
-    MonsterLocationManager.checkForBattle(px, py);
   }
 
   public static boolean radialScan(final int cx, final int cy, final int r,

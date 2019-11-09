@@ -42,33 +42,27 @@ public final class MonsterLocationManager {
     }
   }
 
-  private static void moveMonster(final int locX, final int locY,
+  private static boolean checkMoveMonster(final int locX, final int locY,
       final int moveX, final int moveY) {
     if (DATA != null) {
+      if (DATA.getCell(locY, locX)
+          && !DATA.getCell(locY + moveY, locX + moveX)) {
+        return true;
+      }
+      return false;
+    }
+    return true;
+  }
+
+  private static void moveMonster(final int locX, final int locY,
+      final int moveX, final int moveY) {
+    if (checkMoveMonster(locX, locY, moveX, moveY)) {
       DATA.setCell(false, locY, locX);
       DATA.setCell(true, locY + moveY, locX + moveX);
     }
   }
 
-  private static void moveOneMonster(final Maze maze, final int moveX,
-      final int moveY, final int locX, final int locY) {
-    if (DATA != null) {
-      final int pz = maze.getPlayerLocationZ();
-      final int rows = DATA.getShape()[1];
-      final int cols = DATA.getShape()[0];
-      if (locX + moveX >= 0 && locX + moveX < cols && locY + moveY >= 0
-          && locY + moveY < rows) {
-        final FantastleObjectModel there = maze.getCell(locX + moveX,
-            locY + moveY, pz, Layers.OBJECT);
-        if (!there.isSolid() && !hasMonster(locX + moveX, locY + moveY)) {
-          // Move the monster
-          moveMonster(locX, locY, moveX, moveY);
-        }
-      }
-    }
-  }
-
-  public static void checkForBattle(final int px, final int py) {
+  public static boolean checkForBattle(final int px, final int py) {
     // If the player is now standing on a monster...
     if (hasMonster(px, py)) {
       // ... and we aren't already in battle...
@@ -77,23 +71,38 @@ public final class MonsterLocationManager {
         // ... start a battle with that monster!
         Game.stopMovement();
         bag.getBattle().doBattle(px, py);
+        return true;
       }
     }
+    return false;
   }
 
   public static void moveAllMonsters(final Maze maze) {
     if (DATA != null) {
-      int x, y;
-      final int rows = DATA.getShape()[1];
-      final int cols = DATA.getShape()[0];
+      int locX, locY;
+      final int rows = DATA.getShape()[1] - 1;
+      final int cols = DATA.getShape()[0] - 1;
+      final int px = maze.getPlayerLocationX();
+      final int py = maze.getPlayerLocationY();
+      final int pz = maze.getPlayerLocationZ();
       // Tick all object timers
-      for (x = 0; x < cols; x++) {
-        for (y = 0; y < rows; y++) {
-          int objMovedX = RandomRange.generate(-1, 1);
-          int objMovedY = RandomRange.generate(-1, 1);
-          if (MonsterLocationManager.hasMonster(x, y)) {
-            MonsterLocationManager.moveOneMonster(maze, objMovedX, objMovedY,
-                x + objMovedX, y + objMovedY);
+      for (locX = 0; locX < cols; locX++) {
+        for (locY = 0; locY < rows; locY++) {
+          int moveX = RandomRange.generate(-1, 1);
+          int moveY = RandomRange.generate(-1, 1);
+          if (MonsterLocationManager.hasMonster(locX, locY)) {
+            if (locX + moveX >= 0 && locX + moveX < cols && locY + moveY >= 0
+                && locY + moveY < rows) {
+              FantastleObjectModel there = maze.getCell(locX + moveX,
+                  locY + moveY, pz, Layers.OBJECT);
+              boolean checkMove = checkMoveMonster(locX, locY, moveX, moveY);
+              if (!there.isSolid() && checkMove) {
+                // Move the monster
+                moveMonster(locX, locY, moveX, moveY);
+                // Check for battle
+                checkForBattle(px, py);
+              }
+            }
           }
         }
       }
@@ -106,8 +115,10 @@ public final class MonsterLocationManager {
     removeMonster(locX, locY);
     // Generate a new monster
     final int pz = maze.getPlayerLocationZ();
-    final RandomRange row = new RandomRange(0, maze.getRows() - 1);
-    final RandomRange column = new RandomRange(0, maze.getColumns() - 1);
+    final int rows = DATA.getShape()[1] - 1;
+    final int cols = DATA.getShape()[0] - 1;
+    final RandomRange row = new RandomRange(0, rows);
+    final RandomRange column = new RandomRange(0, cols);
     int genX = row.generate();
     int genY = column.generate();
     FantastleObjectModel currObj = maze.getCell(genX, genY, pz, Layers.OBJECT);

@@ -180,6 +180,8 @@ class GameGUI {
       GameGUI.outputPane.repaint();
       GameGUI.outputFrame.pack();
       GameGUI.showOutput();
+      // Check for battle
+      MonsterLocationManager.checkForBattle(u, v);
     }
   }
 
