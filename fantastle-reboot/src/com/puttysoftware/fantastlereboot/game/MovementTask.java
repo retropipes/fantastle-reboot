@@ -48,6 +48,7 @@ final class MovementTask extends Thread {
           MovementTask.updatePositionAbsolute(MovementTask.moveX,
               MovementTask.moveY, MovementTask.moveZ);
         }
+        MovementTask.checkForBattle();
       }
     } catch (final Throwable t) {
       FantastleReboot.logError(t);
@@ -110,7 +111,7 @@ final class MovementTask extends Thread {
     MovementTask.checkGameOver();
   }
 
-  static void checkForBattle() {
+  private static void checkForBattle() {
     // Check for battle
     BagOStuff bag = FantastleReboot.getBagOStuff();
     if (!bag.inBattle()) {
