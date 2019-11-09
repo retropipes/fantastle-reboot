@@ -55,6 +55,7 @@ public final class Game {
     final JFrame owner = bag.getOutputFrame();
     EffectManager.initialize();
     EffectManager.deactivateAllEffects();
+    GameGUI.viewingWindowSizeChanged();
     if (Game.savedGameFlag) {
       if (PartyManager.getParty() != null) {
         return true;
