@@ -53,6 +53,7 @@ public final class Game {
     }
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     final JFrame owner = bag.getOutputFrame();
+    EffectManager.initialize();
     EffectManager.deactivateAllEffects();
     if (Game.savedGameFlag) {
       if (PartyManager.getParty() != null) {
