@@ -102,7 +102,7 @@ public class Maze {
   }
 
   public void tickTimers(final int floor) {
-    this.mazeData.tickTimers(this, floor);
+    this.mazeData.tickTimers(floor);
   }
 
   public void resetVisibleSquares() {

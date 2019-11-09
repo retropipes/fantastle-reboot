@@ -15,6 +15,7 @@ import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.maze.MonsterLocationManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
@@ -38,8 +39,11 @@ final class MovementTask extends Thread {
   @Override
   public void run() {
     try {
+      final BagOStuff bag = FantastleReboot.getBagOStuff();
       while (true) {
         this.waitForWork();
+        final Maze maze = bag.getMazeManager().getMaze();
+        MonsterLocationManager.moveAllMonsters(maze);
         if (MovementTask.relative) {
           MovementTask.updatePositionRelative(MovementTask.moveX,
               MovementTask.moveY, MovementTask.moveZ);

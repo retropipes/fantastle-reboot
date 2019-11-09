@@ -576,7 +576,7 @@ final class LayeredTower implements Cloneable {
     return this.verticalWraparoundEnabled;
   }
 
-  public void tickTimers(final Maze maze, final int floor) {
+  public void tickTimers(final int floor) {
     int x, y;
     // Tick all object timers
     for (x = 0; x < this.getColumns(); x++) {
@@ -584,14 +584,12 @@ final class LayeredTower implements Cloneable {
         final FantastleObjectModel obj = this.getCell(y, x, floor,
             Layers.OBJECT);
         obj.tickTimer();
-        int objMovedX = RandomRange.generate(-1, 1);
-        int objMovedY = RandomRange.generate(-1, 1);
-        if (MonsterLocationManager.hasMonster(x, y)) {
-          MonsterLocationManager.moveOneMonster(maze, objMovedX, objMovedY,
-              x + objMovedX, y + objMovedY);
-        }
       }
     }
+    // Check for battle
+    final int px = this.getPlayerRow();
+    final int py = this.getPlayerColumn();
+    MonsterLocationManager.checkForBattle(px, py);
   }
 
   public static boolean radialScan(final int cx, final int cy, final int r,
