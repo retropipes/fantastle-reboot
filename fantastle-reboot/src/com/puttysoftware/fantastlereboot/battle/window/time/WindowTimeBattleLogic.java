@@ -28,6 +28,7 @@ import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.maze.MonsterLocationManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 import com.puttysoftware.fantastlereboot.spells.SpellCaster;
@@ -44,6 +45,8 @@ public class WindowTimeBattleLogic extends Battle {
   private final AbstractDamageEngine pde;
   private final AbstractDamageEngine ede;
   WindowTimeBattleGUI battleGUI;
+  private int bx;
+  private int by;
   private final Timer battleTimer;
   private static final int BASE_RUN_CHANCE = 80;
   private static final int RUN_CHANCE_DIFF_FACTOR = 5;
@@ -316,7 +319,9 @@ public class WindowTimeBattleLogic extends Battle {
 
   // Methods
   @Override
-  public void doBattle() {
+  public void doBattle(final int x, final int y) {
+    this.bx = x;
+    this.by = y;
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     try {
       if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
@@ -343,20 +348,24 @@ public class WindowTimeBattleLogic extends Battle {
   }
 
   @Override
-  public void doBattleByProxy() {
+  public void doBattleByProxy(final int x, final int y) {
+    this.bx = x;
+    this.by = y;
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     this.enemy = MonsterFactory.getNewMonsterInstance();
     this.enemy.loadCreature();
     final PartyMember playerCharacter = PartyManager.getParty().getLeader();
-    final Creature m = this.enemy;
-    playerCharacter.offsetExperience(m.getExperience());
-    playerCharacter.offsetGold(m.getGold());
+    final Creature monster = this.enemy;
+    playerCharacter.offsetExperience(monster.getExperience());
+    playerCharacter.offsetGold(monster.getGold());
     // Level Up Check
     if (playerCharacter.checkLevelUp()) {
       playerCharacter.levelUp();
       Game.keepNextMessage();
       bag.showMessage("You reached level " + playerCharacter.getLevel() + ".");
     }
+    final Maze m = bag.getMazeManager().getMaze();
+    MonsterLocationManager.postBattle(m, this.bx, this.by);
   }
 
   @Override
@@ -655,8 +664,8 @@ public class WindowTimeBattleLogic extends Battle {
     // Leave Battle
     this.battleGUI.getOutputFrame().setVisible(false);
     // Post-battle stuff
-    Maze m = bag.getMazeManager().getMaze();
-    m.postBattle(m.getPlayerLocationX(), m.getPlayerLocationY());
+    final Maze m = bag.getMazeManager().getMaze();
+    MonsterLocationManager.postBattle(m, this.bx, this.by);
     // Return to whence we came
     Game.showOutput();
     Game.redrawMaze();

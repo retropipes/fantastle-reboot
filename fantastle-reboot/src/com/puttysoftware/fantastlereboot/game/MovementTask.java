@@ -48,7 +48,6 @@ final class MovementTask extends Thread {
           MovementTask.updatePositionAbsolute(MovementTask.moveX,
               MovementTask.moveY, MovementTask.moveZ);
         }
-        MovementTask.checkForBattle();
       }
     } catch (final Throwable t) {
       FantastleReboot.logError(t);
@@ -109,23 +108,6 @@ final class MovementTask extends Thread {
     PartyManager.getParty().fireStepActions();
     GameGUI.updateStats();
     MovementTask.checkGameOver();
-  }
-
-  private static void checkForBattle() {
-    // Check for battle
-    BagOStuff bag = FantastleReboot.getBagOStuff();
-    if (!bag.inBattle()) {
-      final Maze m = bag.getMazeManager().getMaze();
-      final int px = m.getPlayerLocationX();
-      final int py = m.getPlayerLocationY();
-      final int pz = m.getPlayerLocationZ();
-      if (m.hasMonster(px, py, pz)) {
-        if (bag.getMode() != BagOStuff.STATUS_BATTLE) {
-          Game.stopMovement();
-          bag.getBattle().doBattle();
-        }
-      }
-    }
   }
 
   private static void decayEffects() {

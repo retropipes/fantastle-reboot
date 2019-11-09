@@ -25,6 +25,7 @@ import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
+import com.puttysoftware.fantastlereboot.maze.MonsterLocationManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.Nothing;
@@ -146,7 +147,7 @@ class GameGUI {
               BufferedImageIcon img5 = null;
               boolean playerSquare = (u == y && v == x);
               boolean noteSquare = m.hasNote(x, y, z);
-              boolean monsterSquare = m.hasMonster(xFix, y, z);
+              boolean monsterSquare = MonsterLocationManager.hasMonster(x, y);
               if (monsterSquare && PreferencesManager.monstersVisible()) {
                 obj3 = MonsterObjectFactory.createMonster();
                 img3 = obj3.getGameImage();
@@ -217,7 +218,7 @@ class GameGUI {
           BufferedImageIcon img6 = obj6.getGameImage();
           boolean playerSquare = (u == y && v == x);
           boolean noteSquare = m.hasNote(x, y, z);
-          boolean monsterSquare = m.hasMonster(xFix, y, z);
+          boolean monsterSquare = MonsterLocationManager.hasMonster(x, y);
           if (monsterSquare && PreferencesManager.monstersVisible()) {
             obj3 = MonsterObjectFactory.createMonster();
             img3 = obj3.getGameImage();

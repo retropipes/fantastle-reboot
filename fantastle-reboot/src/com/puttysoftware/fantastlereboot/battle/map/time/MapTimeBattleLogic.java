@@ -41,6 +41,7 @@ import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.maze.MonsterLocationManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
@@ -66,6 +67,8 @@ public class MapTimeBattleLogic extends Battle {
   private MapAIContext myContext;
   private MapAIContext enemyContext;
   private final Timer battleTimer;
+  private int bx;
+  private int by;
   private static final int ITEM_ACTION_POINTS = 6;
   private static final int STEAL_ACTION_POINTS = 3;
   private static final int DRAIN_ACTION_POINTS = 3;
@@ -89,14 +92,18 @@ public class MapTimeBattleLogic extends Battle {
   }
 
   @Override
-  public void doBattle() {
+  public void doBattle(final int x, final int y) {
+    this.bx = x;
+    this.by = y;
     final Maze m = Maze.getTemporaryBattleCopy();
     final MapBattle b = new MapBattle();
     this.doBattleInternal(m, b);
   }
 
   @Override
-  public void doBattleByProxy() {
+  public void doBattleByProxy(final int x, final int y) {
+    this.bx = x;
+    this.by = y;
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     final Creature proxyEnemy = MonsterFactory.getNewMonsterInstance();
     final PartyMember playerCharacter = PartyManager.getParty().getLeader();
@@ -108,8 +115,8 @@ public class MapTimeBattleLogic extends Battle {
       Game.keepNextMessage();
       bag.showMessage("You reached level " + playerCharacter.getLevel() + ".");
     }
-    Maze m = bag.getMazeManager().getMaze();
-    m.postBattle(m.getPlayerLocationX(), m.getPlayerLocationY());
+    final Maze m = bag.getMazeManager().getMaze();
+    MonsterLocationManager.postBattle(m, this.bx, this.by);
   }
 
   private void doBattleInternal(final Maze bMaze, final MapBattle b) {
@@ -160,7 +167,7 @@ public class MapTimeBattleLogic extends Battle {
     this.hideBattle();
     // Post-battle stuff
     Maze m = bag.getMazeManager().getMaze();
-    m.postBattle(m.getPlayerLocationX(), m.getPlayerLocationY());
+    MonsterLocationManager.postBattle(m, this.bx, this.by);
     // Return to whence we came
     Game.showOutput();
     Game.redrawMaze();

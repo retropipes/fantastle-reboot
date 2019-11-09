@@ -22,9 +22,9 @@ public abstract class Battle {
 
   public abstract void resetGUI();
 
-  public abstract void doBattle();
+  public abstract void doBattle(int x, int y);
 
-  public abstract void doBattleByProxy();
+  public abstract void doBattleByProxy(int x, int y);
 
   public abstract void setStatusMessage(final String msg);
 
@@ -50,15 +50,15 @@ public abstract class Battle {
 
   public abstract void displayBattleStats();
 
-  public abstract boolean doPlayerActions(final int actionType);
+  public abstract boolean doPlayerActions(int actionType);
 
   public abstract BattleResults getResult();
 
   public abstract void doResult();
 
-  public abstract void setResult(final BattleResults resultCode);
+  public abstract void setResult(BattleResults resultCode);
 
-  public abstract void maintainEffects(final boolean player);
+  public abstract void maintainEffects(boolean player);
 
   // Methods specific to map battles
   public abstract boolean updatePosition(int x, int y);
