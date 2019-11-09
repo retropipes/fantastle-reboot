@@ -82,8 +82,6 @@ public final class MonsterLocationManager {
       int locX, locY;
       final int rows = DATA.getShape()[1] - 1;
       final int cols = DATA.getShape()[0] - 1;
-      final int px = maze.getPlayerLocationX();
-      final int py = maze.getPlayerLocationY();
       final int pz = maze.getPlayerLocationZ();
       // Tick all object timers
       for (locX = 0; locX < cols; locX++) {
@@ -99,8 +97,6 @@ public final class MonsterLocationManager {
               if (!there.isSolid() && checkMove) {
                 // Move the monster
                 moveMonster(locX, locY, moveX, moveY);
-                // Check for battle
-                checkForBattle(px, py);
               }
             }
           }
