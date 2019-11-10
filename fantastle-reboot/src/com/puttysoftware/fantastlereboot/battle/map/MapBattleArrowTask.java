@@ -12,6 +12,7 @@ import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
+import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
@@ -73,22 +74,11 @@ public class MapBattleArrowTask extends Thread {
             hit = (BattleCharacter) o;
             final Faith shooter = this.active.getCreature().getFaith();
             final Faith target = hit.getCreature().getFaith();
-            final int mult = (int) (shooter
-                .getMultiplierForOtherFaith(target.getFaithID()) * 10);
+            final int damage = FaithManager.getFaithAdjustedDamage(
+                shooter.getFaithID(), target.getFaithID(), 5);
             final Battle bl = app.getBattle();
-            if (mult == 0) {
-              hit.getCreature().doDamage(1);
-              bl.setStatusMessage("Ow, you got shot! It didn't hurt much.");
-            } else if (mult == 5) {
-              hit.getCreature().doDamage(3);
-              bl.setStatusMessage("Ow, you got shot! It hurt a little bit.");
-            } else if (mult == 10) {
-              hit.getCreature().doDamage(5);
-              bl.setStatusMessage("Ow, you got shot! It hurt somewhat.");
-            } else if (mult == 20) {
-              hit.getCreature().doDamage(8);
-              bl.setStatusMessage("Ow, you got shot! It hurt significantly!");
-            }
+            hit.getCreature().doDamage(damage);
+            bl.setStatusMessage("Ow, " + target.getName() + " got shot!");
           }
         }
         if (!res) {

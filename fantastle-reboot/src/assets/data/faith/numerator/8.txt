@@ -1,0 +1,13 @@
+Wooden
+Scorch
+Freeze
+Shadow
+Vortex
+Charge
+Sacred
+Beauty
+Liquid
+Normal
+Poison
+Plasma
+Magnet

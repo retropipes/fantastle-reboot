@@ -7,7 +7,7 @@ package com.puttysoftware.fantastlereboot.battle.damageengines;
 
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
-import com.puttysoftware.fantastlereboot.creatures.faiths.FaithConstants;
+import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.items.Equipment;
 import com.puttysoftware.fantastlereboot.items.EquipmentCategoryConstants;
 import com.puttysoftware.fantastlereboot.items.EquipmentSlotConstants;
@@ -84,7 +84,7 @@ class EasyDamageEngine extends AbstractDamageEngine {
           final int multiplier = rDamage.generate();
           // Weapon Faith Power Boost
           double faithMultiplier = CommonDamageEngineParts.FAITH_MULT_START;
-          final int fc = FaithConstants.FAITHS_COUNT;
+          final int fc = FaithManager.FAITHS;
           final Equipment mainHand = acting.getItems()
               .getEquipmentInSlot(EquipmentSlotConstants.SLOT_MAINHAND);
           final Equipment offHand = acting.getItems()

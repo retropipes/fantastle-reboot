@@ -2,11 +2,10 @@ package com.puttysoftware.fantastlereboot.loaders;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
-import com.puttysoftware.fantastlereboot.creatures.faiths.FaithConstants;
+import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.creatures.genders.GenderConstants;
 import com.puttysoftware.fantastlereboot.creatures.personalities.PersonalityConstants;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
@@ -39,70 +38,66 @@ public class DataLoader {
     }
   }
 
-  public static double[] loadFaithData(final int f) {
-    final String name = Integer.toString(f);
+  public static String[] loadFaithNameData() {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class
-            .getResourceAsStream("/assets/data/faith/" + name + ".txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/faith/names.txt"))) {
       // Fetch data
-      final int[] rawData = new int[FaithConstants.FAITHS_COUNT];
-      for (int x = 0; x < rawData.length; x++) {
-        try {
-          rawData[x] = rsr.readInt();
-        } catch (final NumberFormatException nfe) {
-          rawData[x] = -3;
-        }
+      final String[] data = new String[FaithManager.FAITHS];
+      for (int x = 0; x < data.length; x++) {
+        data[x] = rsr.readString();
       }
-      // Parse raw data
-      final double[] finalData = new double[rawData.length];
-      for (int x = 0; x < rawData.length; x++) {
-        double d = 0.0;
-        final int i = rawData[x];
-        if (i == -2) {
-          d = 0.5;
-        } else if (i == -1) {
-          d = 2.0 / 3.0;
-        } else if (i == 1) {
-          d = 1.5;
-        } else if (i == 2) {
-          d = 2.0;
-        } else if (i == 0) {
-          d = 1.0;
-        } else {
-          d = 0.0;
-        }
-        finalData[x] = d;
-      }
-      return finalData;
+      return data;
     } catch (final IOException e) {
       FantastleReboot.logError(e);
       return null;
     }
   }
 
-  public static Hashtable<Integer, String> loadFaithPowerData(final int f,
-      final int p) {
+  public static int[] loadFaithColorData(final int f) {
+    final String name = Integer.toString(f);
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class
-            .getResourceAsStream("/assets/data/faith/powers.txt"))) {
+        DataLoader.class.getResourceAsStream(
+            "/assets/data/faith/colors/" + name + ".txt"))) {
       // Fetch data
-      final ArrayList<String> rawData = new ArrayList<>();
-      String line = "";
-      while (line != null) {
-        line = rsr.readString();
-        if (line != null) {
-          rawData.add(line);
-        }
+      final int[] data = new int[FaithManager.FAITHS];
+      for (int x = 0; x < data.length; x++) {
+        data[x] = rsr.readInt();
       }
-      // Parse raw data
-      final Hashtable<Integer, String> finalData = new Hashtable<>();
-      for (String entry : rawData) {
-        String[] splitEntry = entry.split(" = ");
-        int key = Integer.parseInt(splitEntry[0]);
-        String value = splitEntry[1];
-        finalData.putIfAbsent(key, value);
+      return data;
+    } catch (final IOException e) {
+      FantastleReboot.logError(e);
+      return null;
+    }
+  }
+
+  public static int[] loadFaithNumeratorData(final int f) {
+    final String name = Integer.toString(f);
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
+        DataLoader.class.getResourceAsStream(
+            "/assets/data/faith/numerator/" + name + ".txt"))) {
+      // Fetch data
+      final int[] data = new int[FaithManager.FAITHS];
+      for (int x = 0; x < data.length; x++) {
+        data[x] = rsr.readInt();
       }
-      return finalData;
+      return data;
+    } catch (final IOException e) {
+      FantastleReboot.logError(e);
+      return null;
+    }
+  }
+
+  public static int[] loadFaithDenominatorData(final int f) {
+    final String name = Integer.toString(f);
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
+        DataLoader.class.getResourceAsStream(
+            "/assets/data/faith/denominator/" + name + ".txt"))) {
+      // Fetch data
+      final int[] data = new int[FaithManager.FAITHS];
+      for (int x = 0; x < data.length; x++) {
+        data[x] = rsr.readInt();
+      }
+      return data;
     } catch (final IOException e) {
       FantastleReboot.logError(e);
       return null;

@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.items;
 
-import com.puttysoftware.fantastlereboot.creatures.faiths.FaithConstants;
+import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 
 public class EquipmentFactory {
   // Private constructor
@@ -76,7 +76,7 @@ public class EquipmentFactory {
   public static Equipment createFaithPoweredEquipment(final Equipment oldE,
       final int faithID, final int bonus) {
     final Equipment e = new Equipment(oldE);
-    final String fpName = FaithConstants.getFaithPowerName(faithID, bonus);
+    final String fpName = FaithManager.getFaithPowerName(faithID, bonus);
     e.applyFaithPower(faithID, fpName);
     return e;
   }
