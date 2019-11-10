@@ -7,6 +7,7 @@ package com.puttysoftware.fantastlereboot.game;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
@@ -15,25 +16,17 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import com.puttysoftware.diane.loaders.ImageCompositor;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.DrawGrid;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
-import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
-import com.puttysoftware.fantastlereboot.maze.MonsterLocationManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.objectmodel.Layers;
-import com.puttysoftware.fantastlereboot.objects.Nothing;
-import com.puttysoftware.fantastlereboot.objects.OpenSpace;
-import com.puttysoftware.fantastlereboot.objects.Player;
-import com.puttysoftware.fantastlereboot.objects.temporary.Darkness;
-import com.puttysoftware.fantastlereboot.objects.temporary.NoteObject;
-import com.puttysoftware.images.BufferedImageIcon;
+import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 
 class GameGUI {
   // Fields
@@ -41,14 +34,11 @@ class GameGUI {
   private static Container borderPane;
   private static JLabel messageLabel;
   private static DrawGrid drawGrid;
-  private static GameDraw outputPane;
+  private static JPanel outputPane;
+  private static GameDraw drawingThread;
   private static boolean knm;
   private static boolean deferredRedraw = false;
   private static boolean eventFlag = true;
-  private static final OpenSpace OPEN = new OpenSpace();
-  private static final Darkness DARK = new Darkness();
-  private static final NoteObject NOTE = new NoteObject();
-  private static final Player PLAYER = new Player();
 
   // Constructors
   private GameGUI() {
@@ -116,67 +106,14 @@ class GameGUI {
   public static void redrawMaze() {
     // Draw the maze, if it is visible
     if (GameGUI.outputFrame.isVisible()) {
-      final BagOStuff app = FantastleReboot.getBagOStuff();
-      final Maze m = app.getMazeManager().getMaze();
-      MonsterLocationManager.moveAllMonsters(m);
-      int x, y, u, v;
-      int xFix, yFix;
-      boolean visible;
-      u = m.getPlayerLocationX();
-      v = m.getPlayerLocationY();
-      final int z = m.getPlayerLocationZ();
-      final FantastleObjectModel ev = new Nothing();
-      for (x = GameView.getViewingWindowLocationX(); x <= GameView
-          .getLowerRightViewingWindowLocationX(); x++) {
-        for (y = GameView.getViewingWindowLocationY(); y <= GameView
-            .getLowerRightViewingWindowLocationY(); y++) {
-          xFix = x - GameView.getViewingWindowLocationX();
-          yFix = y - GameView.getViewingWindowLocationY();
-          visible = app.getMazeManager().getMaze().isSquareVisible(u, v, y, x);
-          try {
-            if (visible) {
-              final FantastleObjectModel obj1 = m.getCell(y, x,
-                  m.getPlayerLocationZ(), Layers.GROUND);
-              final FantastleObjectModel obj2 = m.getCell(y, x,
-                  m.getPlayerLocationZ(), Layers.OBJECT);
-              final BufferedImageIcon img1 = obj1.getGameImage();
-              final BufferedImageIcon img2 = obj2.getGameImage();
-              FantastleObjectModel obj3 = OPEN;
-              BufferedImageIcon img3 = obj3.getGameImage();
-              FantastleObjectModel obj4 = OPEN;
-              BufferedImageIcon img4 = obj4.getGameImage();
-              boolean playerSquare = (u == y && v == x);
-              boolean noteSquare = m.hasNote(x, y, z);
-              if (playerSquare) {
-                obj3 = PLAYER;
-                img3 = obj3.getGameImage();
-              }
-              if (noteSquare) {
-                obj4 = NOTE;
-                img4 = obj4.getGameImage();
-              }
-              String cacheName = generateCacheName(obj1, obj2, obj3, obj4);
-              GameGUI.drawGrid.setImageCell(
-                  ImageCompositor.composite(cacheName, img1, img2, img3, img4),
-                  xFix, yFix);
-            } else {
-              GameGUI.drawGrid.setImageCell(DARK.getImage(), xFix, yFix);
-            }
-          } catch (final ArrayIndexOutOfBoundsException ae) {
-            GameGUI.drawGrid.setImageCell(ev.getGameImage(), xFix, yFix);
-          }
-        }
-      }
+      GameGUI.drawingThread.requestDraw();
       if (GameGUI.knm) {
         GameGUI.knm = false;
       } else {
         GameGUI.setStatusMessage(" ");
       }
-      GameGUI.outputPane.repaint();
       GameGUI.outputFrame.pack();
       GameGUI.showOutput();
-      // Check for battle
-      MonsterLocationManager.checkForBattle(u, v);
     }
   }
 
@@ -184,52 +121,7 @@ class GameGUI {
       final FantastleObjectModel obj5) {
     // Draw the maze, if it is visible
     if (GameGUI.outputFrame.isVisible() && obj5 != null) {
-      final BagOStuff app = FantastleReboot.getBagOStuff();
-      final Maze m = app.getMazeManager().getMaze();
-      final int z = m.getPlayerLocationZ();
-      int x, y, u, v;
-      x = inX;
-      y = inY;
-      int xFix, yFix;
-      boolean visible;
-      u = m.getPlayerLocationX();
-      v = m.getPlayerLocationY();
-      final FantastleObjectModel ev = new Nothing();
-      xFix = x - GameView.getViewingWindowLocationX();
-      yFix = y - GameView.getViewingWindowLocationY();
-      visible = app.getMazeManager().getMaze().isSquareVisible(u, v, y, x);
-      try {
-        if (visible) {
-          final FantastleObjectModel obj1 = m.getCell(y, x,
-              m.getPlayerLocationZ(), Layers.GROUND);
-          final FantastleObjectModel obj2 = m.getCell(y, x,
-              m.getPlayerLocationZ(), Layers.OBJECT);
-          final BufferedImageIcon img1 = obj1.getGameImage();
-          final BufferedImageIcon img2 = obj2.getGameImage();
-          FantastleObjectModel obj3 = OPEN;
-          BufferedImageIcon img3 = obj3.getGameImage();
-          FantastleObjectModel obj4 = OPEN;
-          BufferedImageIcon img4 = obj4.getGameImage();
-          BufferedImageIcon img5 = obj5.getGameImage();
-          boolean playerSquare = (u == y && v == x);
-          boolean noteSquare = m.hasNote(x, y, z);
-          if (playerSquare) {
-            obj3 = PLAYER;
-            img3 = obj3.getGameImage();
-          }
-          if (noteSquare) {
-            obj4 = NOTE;
-            img4 = obj4.getGameImage();
-          }
-          String cacheName = generateCacheName(obj1, obj2, obj3, obj4, obj5);
-          GameGUI.drawGrid.setImageCell(ImageCompositor.composite(cacheName,
-              img1, img2, img3, img4, img5), xFix, yFix);
-        } else {
-          GameGUI.drawGrid.setImageCell(DARK.getImage(), xFix, yFix);
-        }
-      } catch (final ArrayIndexOutOfBoundsException ae) {
-        GameGUI.drawGrid.setImageCell(ev.getGameImage(), xFix, yFix);
-      }
+      GameGUI.drawingThread.requestDrawOne(inX, inY, obj5);
       if (GameGUI.knm) {
         GameGUI.knm = false;
       } else {
@@ -239,19 +131,6 @@ class GameGUI {
       GameGUI.outputFrame.pack();
       GameGUI.showOutput();
     }
-  }
-
-  private static String
-      generateCacheName(final FantastleObjectModel... objects) {
-    StringBuilder result = new StringBuilder();
-    for (FantastleObjectModel object : objects) {
-      if (object != null) {
-        result.append(object.getUniqueID());
-        result.append("_");
-      }
-    }
-    result.append("cache");
-    return result.toString();
   }
 
   public static void keepNextMessage() {
@@ -272,7 +151,13 @@ class GameGUI {
     GameGUI.messageLabel.setOpaque(true);
     GameGUI.outputFrame = new JFrame("FantastleReboot");
     GameGUI.drawGrid = new DrawGrid(PreferencesManager.getViewingWindowSize());
-    GameGUI.outputPane = new GameDraw(GameGUI.drawGrid);
+    GameGUI.outputPane = new JPanel();
+    final int vSize = PreferencesManager.getViewingWindowSize();
+    final int gSize = ImageConstants.SIZE;
+    GameGUI.outputPane
+        .setPreferredSize(new Dimension(vSize * gSize, vSize * gSize));
+    GameGUI.drawingThread = new GameDraw(GameGUI.drawGrid, GameGUI.outputPane);
+    GameGUI.drawingThread.start();
     GameGUI.outputFrame.setContentPane(GameGUI.borderPane);
     GameGUI.outputFrame
         .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
