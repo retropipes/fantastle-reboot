@@ -11,6 +11,7 @@ import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.MainWindow;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
@@ -25,7 +26,8 @@ public class GenerateTask extends Thread {
   public GenerateTask(final boolean startFromScratch) {
     this.scratch = startFromScratch;
     this.setName("Level Generator");
-    this.generateFrame = new JFrame("Generating...");
+    this.generateFrame = MainWindow.getOutputFrame();
+    this.generateFrame.setTitle("Generating...");
     final JProgressBar loadBar = new JProgressBar();
     loadBar.setIndeterminate(true);
     this.generateFrame.getContentPane().add(loadBar);

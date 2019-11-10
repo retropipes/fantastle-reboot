@@ -11,6 +11,7 @@ import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.MainWindow;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 
@@ -23,7 +24,8 @@ public class LevelLoadTask extends Thread {
   public LevelLoadTask(final int offset) {
     this.level = offset;
     this.setName("Level Loader");
-    this.loadFrame = new JFrame("Loading...");
+    this.loadFrame = MainWindow.getOutputFrame();
+    this.loadFrame.setTitle("Loading...");
     final JProgressBar loadBar = new JProgressBar();
     loadBar.setIndeterminate(true);
     this.loadFrame.getContentPane().add(loadBar);

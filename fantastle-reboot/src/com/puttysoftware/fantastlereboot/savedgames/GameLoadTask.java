@@ -16,6 +16,7 @@ import javax.swing.WindowConstants;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.MainWindow;
 import com.puttysoftware.fantastlereboot.VersionException;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.maze.Maze;
@@ -32,7 +33,8 @@ public class GameLoadTask extends Thread {
   public GameLoadTask(final String file) {
     this.filename = file;
     this.setName("Game Loader");
-    this.loadFrame = new JFrame("Loading...");
+    this.loadFrame = MainWindow.getOutputFrame();
+    this.loadFrame.setTitle("Loading");
     final JProgressBar loadBar = new JProgressBar();
     loadBar.setIndeterminate(true);
     this.loadFrame.getContentPane().add(loadBar);

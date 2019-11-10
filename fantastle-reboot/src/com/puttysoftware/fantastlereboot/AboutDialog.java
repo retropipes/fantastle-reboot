@@ -64,7 +64,8 @@ public class AboutDialog implements AboutHandler {
 
   private void setUpGUI(final String ver) {
     this.handler = new EventHandler();
-    this.aboutFrame = new JFrame("About Fantastle");
+    this.aboutFrame = MainWindow.getOutputFrame();
+    this.aboutFrame.setTitle("About Fantastle");
     this.aboutPane = new Container();
     this.textPane = new Container();
     this.buttonPane = new Container();

@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.MainWindow;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
@@ -61,7 +62,8 @@ public class StatisticsViewer {
 
   private static void setUpGUI() {
     if (!inited) {
-      statisticsFrame = new JFrame("Statistics");
+      statisticsFrame = MainWindow.getOutputFrame();
+      statisticsFrame.setTitle("Statistics");
       statisticsPane = new JPanel();
       statisticsPane.setLayout(new BorderLayout());
       contentPane = new JPanel();

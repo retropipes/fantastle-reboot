@@ -22,6 +22,7 @@ import javax.swing.WindowConstants;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.DrawGrid;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.MainWindow;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
@@ -149,7 +150,8 @@ class GameGUI {
     GameGUI.borderPane.setLayout(new BorderLayout());
     GameGUI.messageLabel = new JLabel(" ");
     GameGUI.messageLabel.setOpaque(true);
-    GameGUI.outputFrame = new JFrame("FantastleReboot");
+    GameGUI.outputFrame = MainWindow.getOutputFrame();
+    GameGUI.outputFrame.setTitle("Game");
     GameGUI.drawGrid = new DrawGrid(PreferencesManager.getViewingWindowSize());
     GameGUI.outputPane = new JPanel();
     final int vSize = PreferencesManager.getViewingWindowSize();

@@ -47,7 +47,8 @@ class Loader extends Thread {
   // Constructors
   public Loader() {
     // Set up wait frame
-    this.waitFrame = new JFrame("Loading...");
+    this.waitFrame = MainWindow.getOutputFrame();
+    this.waitFrame.setTitle("Loading...");
     this.waitLabel = new JLabel();
     this.waitProgress = new JProgressBar();
     this.waitProgress.setMinimum(0);

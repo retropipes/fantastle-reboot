@@ -435,7 +435,8 @@ public class PreferencesManager {
 
   private static void setUpGUI() {
     PreferencesManager.handler = new EventHandler();
-    PreferencesManager.prefFrame = new JFrame("Preferences");
+    PreferencesManager.prefFrame = MainWindow.getOutputFrame();
+    PreferencesManager.prefFrame.setTitle("Preferences");
     PreferencesManager.prefTabPane = new JTabbedPane();
     PreferencesManager.mainPrefPane = new Container();
     editorPane = new Container();

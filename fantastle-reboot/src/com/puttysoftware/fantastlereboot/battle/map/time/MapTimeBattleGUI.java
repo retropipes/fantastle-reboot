@@ -28,6 +28,7 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.diane.loaders.ImageCompositor;
 import com.puttysoftware.fantastlereboot.DrawGrid;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.MainWindow;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
@@ -229,7 +230,8 @@ class MapTimeBattleGUI {
     effectBarPane.add(this.be.getEffectsPane(), BorderLayout.CENTER);
     this.messageLabel = new JLabel(" ");
     this.messageLabel.setOpaque(true);
-    this.battleFrame = new JFrame("Battle");
+    this.battleFrame = MainWindow.getOutputFrame();
+    this.battleFrame.setTitle("Battle");
     this.battleFrame.setContentPane(borderPane);
     this.spell = new JButton("Cast Spell");
     this.steal = new JButton("Steal");
@@ -342,7 +344,7 @@ class MapTimeBattleGUI {
 
     @Override
     public void keyPressed(final KeyEvent e) {
-      
+
       if (!PreferencesManager.oneMove()) {
         if (e.isShiftDown()) {
           this.handleArrows(e);
@@ -354,7 +356,7 @@ class MapTimeBattleGUI {
 
     @Override
     public void keyReleased(final KeyEvent e) {
-      
+
       if (PreferencesManager.oneMove()) {
         if (e.isShiftDown()) {
           this.handleArrows(e);

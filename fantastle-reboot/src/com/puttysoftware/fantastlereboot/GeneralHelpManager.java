@@ -35,7 +35,8 @@ public class GeneralHelpManager {
   // Constructors
   public GeneralHelpManager() {
     this.hv = HelpLoader.getHelpViewer();
-    this.helpFrame = new JFrame("Fantastle Help");
+    this.helpFrame = MainWindow.getOutputFrame();
+    this.helpFrame.setTitle("Fantastle Help");
     this.helpFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
     this.helpFrame.setLayout(new FlowLayout());
     this.helpFrame.add(this.hv.getHelp());

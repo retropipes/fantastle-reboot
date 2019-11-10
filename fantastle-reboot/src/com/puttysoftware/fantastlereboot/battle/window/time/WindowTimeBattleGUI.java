@@ -17,6 +17,7 @@ import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.MainWindow;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
@@ -34,7 +35,8 @@ public class WindowTimeBattleGUI {
   // Constructor
   public WindowTimeBattleGUI() {
     // Initialize GUI
-    this.battleFrame = new JFrame("Battle");
+    this.battleFrame = MainWindow.getOutputFrame();
+    this.battleFrame.setTitle("Battle");
     Container holderPane, iconPane, messagePane, buttonPane, timerPane;
     holderPane = new Container();
     iconPane = new Container();

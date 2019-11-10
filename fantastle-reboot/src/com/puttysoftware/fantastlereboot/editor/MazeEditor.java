@@ -41,6 +41,7 @@ import javax.swing.border.EmptyBorder;
 import com.puttysoftware.diane.loaders.ImageCompositor;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.MainWindow;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.game.Game;
@@ -672,7 +673,7 @@ public class MazeEditor {
     if (this.outputFrame != null) {
       this.outputFrame.dispose();
     }
-    this.outputFrame = new JFrame("Editor");
+    this.outputFrame = MainWindow.getOutputFrame();
     this.outputPane = new Container();
     this.secondaryPane = new Container();
     this.borderPane = new Container();
