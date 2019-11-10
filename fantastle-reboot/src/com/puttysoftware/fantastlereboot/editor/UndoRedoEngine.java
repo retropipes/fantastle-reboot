@@ -21,7 +21,6 @@ package com.puttysoftware.fantastlereboot.editor;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 
 class UndoRedoEngine {
-  // public class UndoRedoEngine {
   // Fields
   private final LinkStack undoHistory;
   private final LinkStack redoHistory;

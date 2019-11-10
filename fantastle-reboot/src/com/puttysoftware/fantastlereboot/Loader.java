@@ -97,8 +97,8 @@ class Loader extends Thread {
       this.updateWaitProgress(87);
       // Final tasks
       BagOStuff bag = FantastleReboot.getBagOStuff();
-      bag.postConstruct();
       bag.getObjects().initializeObjects();
+      bag.postConstruct();
       bag.getGeneralHelpManager().updateHelpSize();
       FantastleReboot.doLateOSIntegration();
       this.updateWaitProgress(100);

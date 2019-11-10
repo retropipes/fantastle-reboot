@@ -23,22 +23,19 @@ import javax.swing.JFrame;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
-import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.map.time.MapTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.map.turn.MapTurnBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.window.time.WindowTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.window.turn.WindowTurnBattleLogic;
-//import com.puttysoftware.fantastlereboot.editor.MazeEditor;
+import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.utilities.FantastleObjectModelList;
-import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.updater.ProductData;
 
 public class BagOStuff {
@@ -47,13 +44,12 @@ public class BagOStuff {
   private MazeManager mazeMgr;
   private MenuManager menuMgr;
   private GeneralHelpManager gHelpMgr;
-  // private MazeEditor editor;
+  private MazeEditor editor;
   private GUIManager guiMgr;
   private final FantastleObjectModelList objects;
   private final CombatItemList combatItems;
   private Shop weapons, armor, healer, bank, regenerator, spells, items, socks,
       enhancements, faiths;
-  private BufferedImageIcon microLogo;
   private WindowTurnBattleLogic windowTurnBattle;
   private WindowTimeBattleLogic windowTimeBattle;
   private MapTurnBattleLogic mapTurnBattle;
@@ -102,7 +98,7 @@ public class BagOStuff {
     this.windowTimeBattle = new WindowTimeBattleLogic();
     this.mapTurnBattle = new MapTurnBattleLogic();
     this.mapTimeBattle = new MapTimeBattleLogic();
-    // this.editor = new MazeEditor();
+    this.editor = new MazeEditor();
     this.weapons = new Shop(ShopTypes.WEAPONS);
     this.armor = new Shop(ShopTypes.ARMOR);
     this.healer = new Shop(ShopTypes.HEALER);
@@ -116,9 +112,6 @@ public class BagOStuff {
     // Attempt to load extras
     final Object extras = PluginLoader.loadPlugin("ExtrasPlugin");
     PluginLoader.addPluginMenus(extras);
-    // Cache Micro Logo
-    this.microLogo = UserInterfaceImageLoader
-        .load(UserInterfaceImageIndex.MICRO_LOGO);
   }
 
   public void setInGUI() {
@@ -177,10 +170,10 @@ public class BagOStuff {
   public GeneralHelpManager getGeneralHelpManager() {
     return this.gHelpMgr;
   }
-  //
-  // public MazeEditor getEditor() {
-  // return this.editor;
-  // }
+
+  public MazeEditor getEditor() {
+    return this.editor;
+  }
 
   public AboutDialog getAboutDialog() {
     return this.about;
@@ -265,10 +258,6 @@ public class BagOStuff {
     this.windowTurnBattle.resetGUI();
   }
 
-  public BufferedImageIcon getMicroLogo() {
-    return this.microLogo;
-  }
-
   public void playHighScoreSound() {
     SoundPlayer.playSound(SoundIndex.HIGH_SCORE, SoundGroup.USER_INTERFACE);
   }
@@ -300,12 +289,10 @@ public class BagOStuff {
       return this.getBattle().getOutputFrame();
     } else if (this.getMode() == BagOStuff.STATUS_GUI) {
       return this.getGUIManager().getGUIFrame();
-    } else {
+    } else if (this.getMode() == BagOStuff.STATUS_GAME) {
       return Game.getOutputFrame();
-      // } else if (this.getMode() == BagOStuff.STATUS_GAME) {
-      // return this.getGameManager().getOutputFrame();
-      // } else {
-      // return this.getEditor().getOutputFrame();
+    } else {
+      return this.getEditor().getOutputFrame();
     }
   }
 
