@@ -82,6 +82,7 @@ public class PreferencesManager {
   private static boolean useTimeBattleEngine;
   private static int difficultySetting = PreferencesManager.DEFAULT_DIFFICULTY;
   private static int viewingWindowIndex;
+  private static int updateCheckIntervalIndex;
   private static boolean[] soundsEnabled = new boolean[PreferencesManager.SOUNDS_LENGTH];
   private static boolean[] musicEnabled = new boolean[PreferencesManager.MUSIC_LENGTH];
   private static String lastDirOpen;
@@ -338,7 +339,10 @@ public class PreferencesManager {
     for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
       PreferencesManager.music[x].setSelected(isMusicGroupEnabledImpl(x));
     }
-    checkUpdatesStartup.setSelected(checkUpdatesStartupEnabled);
+    PreferencesManager.updateCheckInterval
+        .setSelectedIndex(PreferencesManager.updateCheckIntervalIndex);
+    PreferencesManager.checkUpdatesStartup
+        .setSelected(PreferencesManager.checkUpdatesStartupEnabled);
     PreferencesManager.difficultyChoices
         .setSelectedIndex(PreferencesManager.difficultySetting);
     PreferencesManager.moveOneAtATime
@@ -363,7 +367,10 @@ public class PreferencesManager {
     for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
       setMusicGroupEnabled(x, PreferencesManager.music[x].isSelected());
     }
-    checkUpdatesStartupEnabled = checkUpdatesStartup.isSelected();
+    PreferencesManager.updateCheckIntervalIndex = PreferencesManager.updateCheckInterval
+        .getSelectedIndex();
+    PreferencesManager.checkUpdatesStartupEnabled = checkUpdatesStartup
+        .isSelected();
     PreferencesManager.difficultySetting = PreferencesManager.difficultyChoices
         .getSelectedIndex();
     PreferencesManager.moveOneAtATimeEnabled = PreferencesManager.moveOneAtATime
@@ -580,8 +587,8 @@ public class PreferencesManager {
           PreferencesManager.soundsEnabled[x] = Boolean
               .parseBoolean(s.readLine());
         }
-        PreferencesManager.updateCheckInterval
-            .setSelectedIndex(Integer.parseInt(s.readLine()));
+        PreferencesManager.updateCheckIntervalIndex = Integer
+            .parseInt(s.readLine());
         PreferencesManager.lastDirOpen = s.readLine();
         PreferencesManager.lastDirSave = s.readLine();
         PreferencesManager.lastFilterUsed = Integer.parseInt(s.readLine());
@@ -630,8 +637,8 @@ public class PreferencesManager {
         for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
           s.write(Boolean.toString(PreferencesManager.soundsEnabled[x]) + "\n");
         }
-        s.write(Integer.toString(
-            PreferencesManager.updateCheckInterval.getSelectedIndex()) + "\n");
+        s.write(Integer.toString(PreferencesManager.updateCheckIntervalIndex)
+            + "\n");
         s.write(PreferencesManager.lastDirOpen + "\n");
         s.write(PreferencesManager.lastDirSave + "\n");
         s.write(Integer.toString(PreferencesManager.lastFilterUsed) + "\n");
@@ -729,8 +736,8 @@ public class PreferencesManager {
           PreferencesManager.soundsEnabled[x] = Boolean
               .parseBoolean(s.readLine());
         }
-        PreferencesManager.updateCheckInterval
-            .setSelectedIndex(Integer.parseInt(s.readLine()));
+        PreferencesManager.updateCheckIntervalIndex = Integer
+            .parseInt(s.readLine());
         PreferencesManager.lastFilterUsed = Integer.parseInt(s.readLine());
         PreferencesManager.difficultySetting = Integer.parseInt(s.readLine());
         PreferencesManager.mapBattleEngine
@@ -766,8 +773,8 @@ public class PreferencesManager {
         for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
           s.write(Boolean.toString(PreferencesManager.soundsEnabled[x]) + "\n");
         }
-        s.write(Integer.toString(
-            PreferencesManager.updateCheckInterval.getSelectedIndex()) + "\n");
+        s.write(Integer.toString(PreferencesManager.updateCheckIntervalIndex)
+            + "\n");
         s.write(Integer.toString(PreferencesManager.lastFilterUsed) + "\n");
         s.write(Integer.toString(PreferencesManager.difficultySetting) + "\n");
         s.write(Boolean.toString(PreferencesManager.useMapBattleEngine) + "\n");
