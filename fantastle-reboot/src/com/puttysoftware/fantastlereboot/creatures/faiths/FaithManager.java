@@ -89,7 +89,7 @@ public class FaithManager {
             .loadFaithNumeratorData(faithID);
         FaithConstants.FAITH_DENOMINATOR_CACHE[faithID] = DataLoader
             .loadFaithDenominatorData(faithID);
-        String faithName = getFaithName(faithID);
+        String faithName = FaithConstants.FAITH_NAME_CACHE[faithID];
         ColorShader faithShader = new ColorShader(faithName, faithColor);
         FaithConstants.FAITH_SHADER_CACHE.put(faithID, faithShader);
         FaithManager.CACHE[faithID] = new Faith(faithID);
