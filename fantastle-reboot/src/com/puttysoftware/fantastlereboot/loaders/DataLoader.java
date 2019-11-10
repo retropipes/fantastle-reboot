@@ -59,7 +59,7 @@ public class DataLoader {
         DataLoader.class.getResourceAsStream(
             "/assets/data/faith/colors/" + name + ".txt"))) {
       // Fetch data
-      final int[] data = new int[FaithManager.FAITHS];
+      final int[] data = new int[4];
       for (int x = 0; x < data.length; x++) {
         data[x] = rsr.readInt();
       }
