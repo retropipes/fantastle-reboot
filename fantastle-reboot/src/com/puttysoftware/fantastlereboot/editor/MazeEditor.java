@@ -98,12 +98,8 @@ public class MazeEditor {
     this.mazeChanged = true;
   }
 
-  public EditorViewingWindowManager getViewManager() {
+  private EditorViewingWindowManager getViewManager() {
     return this.evMgr;
-  }
-
-  public EditorLocationManager getLocationManager() {
-    return this.elMgr;
   }
 
   public void updateEditorPosition(final int x, final int y, final int z,
@@ -858,7 +854,7 @@ public class MazeEditor {
   private class EventHandler
       implements AdjustmentListener, MouseListener, WindowListener {
     public EventHandler() {
-      // TODO Auto-generated constructor stub
+      super();
     }
 
     // handle scrollbars

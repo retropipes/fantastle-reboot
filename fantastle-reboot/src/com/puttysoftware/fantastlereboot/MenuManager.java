@@ -714,6 +714,7 @@ public class MenuManager {
           final boolean proceed = Game.newGame();
           if (proceed) {
             new GenerateTask(true).start();
+            me.mazeChanged();
           }
         } else if (cmd.equals("Play")) {
           // Play the current maze
