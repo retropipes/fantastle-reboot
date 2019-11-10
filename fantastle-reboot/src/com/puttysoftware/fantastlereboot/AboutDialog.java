@@ -26,6 +26,8 @@ import java.awt.desktop.AboutEvent;
 import java.awt.desktop.AboutHandler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -55,6 +57,13 @@ public class AboutDialog implements AboutHandler {
   }
 
   public void showAboutDialog() {
+    this.aboutFrame = MainWindow.getOutputFrame();
+    this.aboutFrame.setTitle("About Fantastle");
+    this.aboutFrame.getRootPane().setDefaultButton(this.aboutOK);
+    this.aboutFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+    this.aboutFrame.addWindowListener(this.handler);
+    this.aboutFrame.setContentPane(this.aboutPane);
+    this.aboutFrame.pack();
     this.aboutFrame.setVisible(true);
   }
 
@@ -64,16 +73,12 @@ public class AboutDialog implements AboutHandler {
 
   private void setUpGUI(final String ver) {
     this.handler = new EventHandler();
-    this.aboutFrame = MainWindow.getOutputFrame();
-    this.aboutFrame.setTitle("About Fantastle");
     this.aboutPane = new Container();
     this.textPane = new Container();
     this.buttonPane = new Container();
     this.logoPane = new Container();
     this.aboutOK = new JButton("OK");
     this.aboutOK.setDefaultCapable(true);
-    this.aboutFrame.getRootPane().setDefaultButton(this.aboutOK);
-    this.aboutFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
     this.aboutPane.setLayout(new BorderLayout());
     this.logoPane.setLayout(new FlowLayout());
     this.logoPane.add(new JLabel("",
@@ -91,13 +96,10 @@ public class AboutDialog implements AboutHandler {
     this.aboutPane.add(this.logoPane, BorderLayout.WEST);
     this.aboutPane.add(this.textPane, BorderLayout.CENTER);
     this.aboutPane.add(this.buttonPane, BorderLayout.SOUTH);
-    this.aboutFrame.setResizable(false);
     this.aboutOK.addActionListener(this.handler);
-    this.aboutFrame.setContentPane(this.aboutPane);
-    this.aboutFrame.pack();
   }
 
-  private class EventHandler implements ActionListener {
+  private class EventHandler implements ActionListener, WindowListener {
     public EventHandler() {
       // TODO Auto-generated constructor stub
     }
@@ -114,6 +116,42 @@ public class AboutDialog implements AboutHandler {
       } catch (final Exception ex) {
         FantastleReboot.logError(ex);
       }
+    }
+
+    @Override
+    public void windowOpened(WindowEvent inE) {
+      // Do nothing
+    }
+
+    @Override
+    public void windowClosing(WindowEvent inE) {
+      AboutDialog.this.aboutFrame.getRootPane().setDefaultButton(null);
+      AboutDialog.this.aboutFrame.removeWindowListener(this);
+    }
+
+    @Override
+    public void windowClosed(WindowEvent inE) {
+      // Do nothing
+    }
+
+    @Override
+    public void windowIconified(WindowEvent inE) {
+      // Do nothing
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent inE) {
+      // Do nothing
+    }
+
+    @Override
+    public void windowActivated(WindowEvent inE) {
+      // Do nothing
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent inE) {
+      // Do nothing
     }
   }
 }
