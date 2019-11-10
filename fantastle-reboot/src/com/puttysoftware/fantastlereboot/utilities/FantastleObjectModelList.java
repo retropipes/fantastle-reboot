@@ -15,7 +15,6 @@ import com.puttysoftware.fantastlereboot.maze.FormatConstants;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectActions;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
-import com.puttysoftware.fantastlereboot.objectmodel.MonsterObjectModel;
 import com.puttysoftware.fantastlereboot.objects.ArmorShop;
 import com.puttysoftware.fantastlereboot.objects.BankShop;
 import com.puttysoftware.fantastlereboot.objects.BonusShop;
@@ -32,7 +31,6 @@ import com.puttysoftware.fantastlereboot.objects.SpellShop;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.fantastlereboot.objects.Wall;
 import com.puttysoftware.fantastlereboot.objects.WeaponShop;
-import com.puttysoftware.fantastlereboot.objects.temporary.MonsterObjectFactory;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.xio.XDataReader;
 
@@ -62,10 +60,6 @@ public final class FantastleObjectModelList {
     this.allActionList = DataLoader.loadObjectActionData();
     this.allShopActionList = DataLoader
         .loadObjectActionAddonData(FantastleObjectActions.SHOP);
-  }
-
-  public void updateMonster() {
-    this.allObjectList.set(0, MonsterObjectFactory.createMonster());
   }
 
   public boolean movesRandomly(FantastleObjectModel obj) {
@@ -268,8 +262,6 @@ public final class FantastleObjectModelList {
     }
     if (instance == null) {
       return null;
-    } else if (instance instanceof MonsterObjectModel) {
-      return MonsterObjectFactory.createMonster();
     } else {
       try {
         return instance.getClass().getConstructor().newInstance();

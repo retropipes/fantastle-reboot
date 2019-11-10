@@ -32,7 +32,6 @@ import com.puttysoftware.fantastlereboot.objects.Nothing;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Player;
 import com.puttysoftware.fantastlereboot.objects.temporary.Darkness;
-import com.puttysoftware.fantastlereboot.objects.temporary.MonsterObjectFactory;
 import com.puttysoftware.fantastlereboot.objects.temporary.NoteObject;
 import com.puttysoftware.images.BufferedImageIcon;
 
@@ -146,27 +145,20 @@ class GameGUI {
               BufferedImageIcon img3 = obj3.getGameImage();
               FantastleObjectModel obj4 = OPEN;
               BufferedImageIcon img4 = obj4.getGameImage();
-              FantastleObjectModel obj5 = OPEN;
-              BufferedImageIcon img5 = obj5.getGameImage();
               boolean playerSquare = (u == y && v == x);
               boolean noteSquare = m.hasNote(x, y, z);
-              boolean monsterSquare = MonsterLocationManager.hasMonster(x, y);
-              if (monsterSquare && PreferencesManager.monstersVisible()) {
-                obj3 = MonsterObjectFactory.createMonster();
+              if (playerSquare) {
+                obj3 = PLAYER;
                 img3 = obj3.getGameImage();
               }
-              if (playerSquare) {
-                obj4 = PLAYER;
+              if (noteSquare) {
+                obj4 = NOTE;
                 img4 = obj4.getGameImage();
               }
-              if (noteSquare) {
-                obj5 = NOTE;
-                img5 = obj5.getGameImage();
-              }
-              String cacheName = generateCacheName(obj1, obj2, obj3, obj4,
-                  obj5);
-              GameGUI.drawGrid.setImageCell(ImageCompositor.composite(cacheName,
-                  img1, img2, img3, img4, img5), xFix, yFix);
+              String cacheName = generateCacheName(obj1, obj2, obj3, obj4);
+              GameGUI.drawGrid.setImageCell(
+                  ImageCompositor.composite(cacheName, img1, img2, img3, img4),
+                  xFix, yFix);
             } else {
               GameGUI.drawGrid.setImageCell(DARK.getImage(), xFix, yFix);
             }
@@ -189,9 +181,9 @@ class GameGUI {
   }
 
   public static void redrawOneSquare(final int inX, final int inY,
-      final FantastleObjectModel obj6) {
+      final FantastleObjectModel obj5) {
     // Draw the maze, if it is visible
-    if (GameGUI.outputFrame.isVisible() && obj6 != null) {
+    if (GameGUI.outputFrame.isVisible() && obj5 != null) {
       final BagOStuff app = FantastleReboot.getBagOStuff();
       final Maze m = app.getMazeManager().getMaze();
       final int z = m.getPlayerLocationZ();
@@ -218,28 +210,20 @@ class GameGUI {
           BufferedImageIcon img3 = obj3.getGameImage();
           FantastleObjectModel obj4 = OPEN;
           BufferedImageIcon img4 = obj4.getGameImage();
-          FantastleObjectModel obj5 = OPEN;
           BufferedImageIcon img5 = obj5.getGameImage();
-          BufferedImageIcon img6 = obj6.getGameImage();
           boolean playerSquare = (u == y && v == x);
           boolean noteSquare = m.hasNote(x, y, z);
-          boolean monsterSquare = MonsterLocationManager.hasMonster(x, y);
-          if (monsterSquare && PreferencesManager.monstersVisible()) {
-            obj3 = MonsterObjectFactory.createMonster();
+          if (playerSquare) {
+            obj3 = PLAYER;
             img3 = obj3.getGameImage();
           }
-          if (playerSquare) {
-            obj4 = PLAYER;
+          if (noteSquare) {
+            obj4 = NOTE;
             img4 = obj4.getGameImage();
           }
-          if (noteSquare) {
-            obj5 = NOTE;
-            img5 = obj5.getGameImage();
-          }
-          String cacheName = generateCacheName(obj1, obj2, obj3, obj4, obj5,
-              obj6);
+          String cacheName = generateCacheName(obj1, obj2, obj3, obj4, obj5);
           GameGUI.drawGrid.setImageCell(ImageCompositor.composite(cacheName,
-              img1, img2, img3, img4, img5, img6), xFix, yFix);
+              img1, img2, img3, img4, img5), xFix, yFix);
         } else {
           GameGUI.drawGrid.setImageCell(DARK.getImage(), xFix, yFix);
         }

@@ -63,9 +63,7 @@ public class PreferencesManager {
   private static JCheckBox[] sounds = new JCheckBox[PreferencesManager.SOUNDS_LENGTH];
   private static JCheckBox[] music = new JCheckBox[PreferencesManager.MUSIC_LENGTH];
   // private static JCheckBox checkUpdatesStartup;
-  // private static JCheckBox checkBetaUpdatesStartup;
   private static JCheckBox moveOneAtATime;
-  private static JCheckBox monstersVisible;
   private static JCheckBox mapBattleEngine;
   private static JCheckBox timeBattleEngine;
   // private static JComboBox<String> editorFillChoices;
@@ -79,9 +77,7 @@ public class PreferencesManager {
   private static ExportImportManager eiMgr = new ExportImportManager();
   // private static int editorFill;
   // private static boolean checkUpdatesStartupEnabled;
-  // private static boolean checkBetaUpdatesStartupEnabled;
   private static boolean moveOneAtATimeEnabled;
-  private static boolean monstersVisibleEnabled;
   private static boolean useMapBattleEngine;
   private static boolean useTimeBattleEngine;
   private static int difficultySetting = PreferencesManager.DEFAULT_DIFFICULTY;
@@ -189,10 +185,6 @@ public class PreferencesManager {
   // public static boolean shouldCheckUpdatesAtStartup() {
   // return checkUpdatesStartupEnabled;
   // }
-  //
-  // public static boolean shouldCheckBetaUpdatesAtStartup() {
-  // return checkBetaUpdatesStartupEnabled;
-  // }
 
   public static boolean oneMove() {
     return PreferencesManager.moveOneAtATimeEnabled;
@@ -210,8 +202,9 @@ public class PreferencesManager {
     PreferencesManager.viewingWindowIndex = value;
   }
 
+  @Deprecated
   public static boolean monstersVisible() {
-    return PreferencesManager.monstersVisibleEnabled;
+    return false;
   }
 
   public static boolean isSoundGroupEnabled(final SoundGroup group) {
@@ -351,13 +344,10 @@ public class PreferencesManager {
       PreferencesManager.music[x].setSelected(isMusicGroupEnabledImpl(x));
     }
     // checkUpdatesStartup.setSelected(checkUpdatesStartupEnabled);
-    // checkBetaUpdatesStartup.setSelected(checkBetaUpdatesStartupEnabled);
     PreferencesManager.difficultyChoices
         .setSelectedIndex(PreferencesManager.difficultySetting);
     PreferencesManager.moveOneAtATime
         .setSelected(PreferencesManager.moveOneAtATimeEnabled);
-    PreferencesManager.monstersVisible
-        .setSelected(PreferencesManager.monstersVisibleEnabled);
     PreferencesManager.mapBattleEngine
         .setSelected(PreferencesManager.useMapBattleEngine);
     PreferencesManager.timeBattleEngine
@@ -379,18 +369,10 @@ public class PreferencesManager {
       setMusicGroupEnabled(x, PreferencesManager.music[x].isSelected());
     }
     // checkUpdatesStartupEnabled = checkUpdatesStartup.isSelected();
-    // checkBetaUpdatesStartupEnabled = checkBetaUpdatesStartup
-    // .isSelected();
     PreferencesManager.difficultySetting = PreferencesManager.difficultyChoices
         .getSelectedIndex();
     PreferencesManager.moveOneAtATimeEnabled = PreferencesManager.moveOneAtATime
         .isSelected();
-    boolean oldMonstersVisibleEnabled = PreferencesManager.monstersVisibleEnabled;
-    PreferencesManager.monstersVisibleEnabled = PreferencesManager.monstersVisible
-        .isSelected();
-    if (PreferencesManager.monstersVisibleEnabled != oldMonstersVisibleEnabled) {
-      FantastleReboot.getBagOStuff().getObjects().updateMonster();
-    }
     PreferencesManager.useMapBattleEngine = PreferencesManager.mapBattleEngine
         .isSelected();
     PreferencesManager.useTimeBattleEngine = PreferencesManager.timeBattleEngine
@@ -415,15 +397,11 @@ public class PreferencesManager {
     defaultEnableMusicGroups();
     // checkUpdatesStartup.setSelected(true);
     // checkUpdatesStartupEnabled = true;
-    // checkBetaUpdatesStartup.setSelected(true);
-    // checkBetaUpdatesStartupEnabled = true;
     PreferencesManager.difficultySetting = PreferencesManager.DEFAULT_DIFFICULTY;
     PreferencesManager.difficultyChoices
         .setSelectedIndex(PreferencesManager.difficultySetting);
     PreferencesManager.moveOneAtATime.setSelected(true);
     PreferencesManager.moveOneAtATimeEnabled = true;
-    PreferencesManager.monstersVisible.setSelected(false);
-    PreferencesManager.monstersVisibleEnabled = false;
     PreferencesManager.mapBattleEngine.setSelected(false);
     PreferencesManager.useMapBattleEngine = false;
     PreferencesManager.timeBattleEngine.setSelected(false);
@@ -498,10 +476,7 @@ public class PreferencesManager {
         true);
     // checkUpdatesStartup = new JCheckBox("Check for Updates at Startup",
     // true);
-    // checkBetaUpdatesStartup = new JCheckBox(
-    // "Check for Beta Updates at Startup", true);
     moveOneAtATime = new JCheckBox("One Move at a Time", true);
-    monstersVisible = new JCheckBox("Show monsters on map", false);
     mapBattleEngine = new JCheckBox("Use map battle engine", false);
     timeBattleEngine = new JCheckBox("Use time battle engine", false);
     // updateCheckIntervalValues = new String[] { "Daily",
@@ -528,11 +503,7 @@ public class PreferencesManager {
     }
     miscPane.setLayout(new GridLayout(PreferencesManager.GRID_LENGTH, 1));
     // miscPane.add(checkUpdatesStartup);
-    // if (BagOStuff.isBetaModeEnabled()) {
-    // miscPane.add(checkBetaUpdatesStartup);
-    // }
     miscPane.add(moveOneAtATime);
-    miscPane.add(monstersVisible);
     miscPane.add(mapBattleEngine);
     miscPane.add(timeBattleEngine);
     // miscPane.add(new JLabel("Check How Often For Updates"));
@@ -611,7 +582,7 @@ public class PreferencesManager {
         // Read and discard
         s.readLine();
         // PreferencesManager.editorFillIndex = Integer.parseInt(s.readLine());
-        // Read and discard
+        // Read and discard check for updates setting
         s.readLine();
         // PreferencesManager.checkUpdatesStartup.setSelected(Boolean.parseBoolean(s.readLine()));
         PreferencesManager.moveOneAtATimeEnabled = Boolean
@@ -620,19 +591,13 @@ public class PreferencesManager {
           PreferencesManager.soundsEnabled[x] = Boolean
               .parseBoolean(s.readLine());
         }
-        // Read and discard
+        // Read and discard update check interval setting
         s.readLine();
         // PreferencesManager.updateCheckInterval.setSelectedIndex(Integer.parseInt(s.readLine()));
         PreferencesManager.lastDirOpen = s.readLine();
         PreferencesManager.lastDirSave = s.readLine();
-        // Read and discard
-        s.readLine();
-        // PreferencesManager.checkBetaUpdatesStartupEnabled =
-        // Boolean.parseBoolean(s.readLine());
         PreferencesManager.lastFilterUsed = Integer.parseInt(s.readLine());
         PreferencesManager.difficultySetting = Integer.parseInt(s.readLine());
-        PreferencesManager.monstersVisibleEnabled = Boolean
-            .parseBoolean(s.readLine());
         PreferencesManager.useMapBattleEngine = Boolean
             .parseBoolean(s.readLine());
         PreferencesManager.useTimeBattleEngine = Boolean
@@ -684,13 +649,8 @@ public class PreferencesManager {
         // PreferencesManager.updateCheckInterval.getSelectedIndex()) + "\n");
         s.write(PreferencesManager.lastDirOpen + "\n");
         s.write(PreferencesManager.lastDirSave + "\n");
-        s.write("false\n");
-        // s.write(Boolean.toString(PreferencesManager.checkBetaUpdatesStartupEnabled)
-        // + "\n");
         s.write(Integer.toString(PreferencesManager.lastFilterUsed) + "\n");
         s.write(Integer.toString(PreferencesManager.difficultySetting) + "\n");
-        s.write(
-            Boolean.toString(PreferencesManager.monstersVisibleEnabled) + "\n");
         s.write(Boolean.toString(PreferencesManager.useMapBattleEngine) + "\n");
         s.write(
             Boolean.toString(PreferencesManager.useTimeBattleEngine) + "\n");
@@ -793,14 +753,8 @@ public class PreferencesManager {
         s.readLine();
         // PreferencesManager.updateCheckInterval
         // .setSelectedIndex(Integer.parseInt(s.readLine()));
-        // Read and discard
-        s.readLine();
-        // PreferencesManager.checkBetaUpdatesStartup
-        // .setSelected(Boolean.parseBoolean(s.readLine()));
         PreferencesManager.lastFilterUsed = Integer.parseInt(s.readLine());
         PreferencesManager.difficultySetting = Integer.parseInt(s.readLine());
-        PreferencesManager.monstersVisible
-            .setSelected(Boolean.parseBoolean(s.readLine()));
         PreferencesManager.mapBattleEngine
             .setSelected(Boolean.parseBoolean(s.readLine()));
         PreferencesManager.timeBattleEngine
@@ -839,13 +793,8 @@ public class PreferencesManager {
         s.write("0\n");
         // s.write(Integer.toString(
         // PreferencesManager.updateCheckInterval.getSelectedIndex()) + "\n");
-        s.write("false\n");
-        // s.write(Boolean.toString(PreferencesManager.checkBetaUpdatesStartupEnabled)
-        // + "\n");
         s.write(Integer.toString(PreferencesManager.lastFilterUsed) + "\n");
         s.write(Integer.toString(PreferencesManager.difficultySetting) + "\n");
-        s.write(
-            Boolean.toString(PreferencesManager.monstersVisibleEnabled) + "\n");
         s.write(Boolean.toString(PreferencesManager.useMapBattleEngine) + "\n");
         s.write(
             Boolean.toString(PreferencesManager.useTimeBattleEngine) + "\n");
