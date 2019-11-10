@@ -56,6 +56,7 @@ public class AboutDialog implements AboutHandler {
   }
 
   public void showAboutDialog() {
+    FantastleReboot.getBagOStuff().setInAbout();
     this.aboutFrame = MainWindow.getOutputFrame();
     this.aboutFrame.setTitle("About Fantastle");
     this.aboutFrame.getRootPane().setDefaultButton(this.aboutOK);
