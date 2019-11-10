@@ -23,7 +23,6 @@ import javax.swing.JFrame;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
-import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.map.time.MapTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.map.turn.MapTurnBattleLogic;
@@ -35,10 +34,8 @@ import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.utilities.FantastleObjectModelList;
-import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.updater.ProductData;
 
 public class BagOStuff {
@@ -53,7 +50,6 @@ public class BagOStuff {
   private final CombatItemList combatItems;
   private Shop weapons, armor, healer, bank, regenerator, spells, items, socks,
       enhancements, faiths;
-  private BufferedImageIcon microLogo;
   private WindowTurnBattleLogic windowTurnBattle;
   private WindowTimeBattleLogic windowTimeBattle;
   private MapTurnBattleLogic mapTurnBattle;
@@ -116,9 +112,6 @@ public class BagOStuff {
     // Attempt to load extras
     final Object extras = PluginLoader.loadPlugin("ExtrasPlugin");
     PluginLoader.addPluginMenus(extras);
-    // Cache Micro Logo
-    this.microLogo = UserInterfaceImageLoader
-        .load(UserInterfaceImageIndex.MICRO_LOGO);
   }
 
   public void setInGUI() {
@@ -263,10 +256,6 @@ public class BagOStuff {
     this.windowTimeBattle.resetGUI();
     this.mapTurnBattle.resetGUI();
     this.windowTurnBattle.resetGUI();
-  }
-
-  public BufferedImageIcon getMicroLogo() {
-    return this.microLogo;
   }
 
   public void playHighScoreSound() {
