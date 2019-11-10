@@ -33,37 +33,29 @@ import com.puttysoftware.images.BufferedImageIcon;
 
 public class GUIManager {
   // Fields
-  private final JFrame guiFrame;
+  private JFrame guiFrame;
   private final Container guiPane;
   private final JLabel logoLabel;
 
   // Constructors
   public GUIManager() {
-    this.guiFrame = MainWindow.getOutputFrame();
-    this.guiFrame.setTitle("Fantastle Reboot");
-    this.guiPane = this.guiFrame.getContentPane();
-    this.guiFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    this.guiFrame.setLayout(new GridLayout(1, 1));
+    this.guiPane = new Container();
+    this.guiPane.setLayout(new GridLayout(1, 1));
     this.logoLabel = new JLabel("", null, SwingConstants.CENTER);
     this.logoLabel.setBorder(new EmptyBorder(0, 0, 0, 0));
     this.guiPane.add(this.logoLabel);
-    this.guiFrame.setResizable(false);
     final BufferedImageIcon logo = UserInterfaceImageLoader
         .load(UserInterfaceImageIndex.LOGO);
     this.logoLabel.setIcon(logo);
-    this.guiFrame.pack();
   }
 
   // Methods
-  public JFrame getGUIFrame() {
-    if (this.guiFrame.isVisible()) {
-      return this.guiFrame;
-    } else {
-      return null;
-    }
-  }
-
   public void showGUI() {
+    this.guiFrame = MainWindow.getOutputFrame();
+    this.guiFrame.setTitle("Fantastle Reboot");
+    this.guiFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    this.guiFrame.setContentPane(this.guiPane);
+    this.guiFrame.pack();
     final BagOStuff app = FantastleReboot.getBagOStuff();
     app.setInGUI();
     app.getMenuManager().attachMenus();

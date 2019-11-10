@@ -283,17 +283,7 @@ public class BagOStuff {
   }
 
   public JFrame getOutputFrame() {
-    if (this.getMode() == BagOStuff.STATUS_PREFS) {
-      return PreferencesManager.getPrefFrame();
-    } else if (this.getMode() == BagOStuff.STATUS_BATTLE) {
-      return this.getBattle().getOutputFrame();
-    } else if (this.getMode() == BagOStuff.STATUS_GUI) {
-      return this.getGUIManager().getGUIFrame();
-    } else if (this.getMode() == BagOStuff.STATUS_GAME) {
-      return Game.getOutputFrame();
-    } else {
-      return this.getEditor().getOutputFrame();
-    }
+    return MainWindow.getOutputFrame();
   }
 
   public void showMessage(final String msg) {
