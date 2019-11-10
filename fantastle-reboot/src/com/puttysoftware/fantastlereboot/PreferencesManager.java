@@ -272,11 +272,17 @@ public class PreferencesManager {
       PreferencesManager.guiSetUp = true;
     }
     if (FantastleReboot.inFantastleReboot()) {
+      PreferencesManager.prefFrame = MainWindow.getOutputFrame();
+      PreferencesManager.prefFrame.setTitle("Preferences");
+      PreferencesManager.prefFrame.getRootPane().setDefaultButton(prefsOK);
+      PreferencesManager.prefFrame.setContentPane(mainPrefPane);
+      PreferencesManager.prefFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+      PreferencesManager.prefFrame.addWindowListener(handler);
+      PreferencesManager.prefFrame.pack();
       final BagOStuff app = FantastleReboot.getBagOStuff();
       app.setInPrefs();
       app.getMenuManager().attachMenus();
       app.getMenuManager().setPrefMenus();
-      PreferencesManager.prefFrame.setVisible(true);
       if (app.getMode() == BagOStuff.STATUS_BATTLE) {
         app.getBattle().getOutputFrame().setVisible(false);
       } else {
@@ -289,6 +295,7 @@ public class PreferencesManager {
           app.getEditor().hideOutput();
         }
       }
+      PreferencesManager.prefFrame.setVisible(true);
     }
   }
 
@@ -300,6 +307,8 @@ public class PreferencesManager {
     if (FantastleReboot.inFantastleReboot()) {
       final BagOStuff app = FantastleReboot.getBagOStuff();
       PreferencesManager.prefFrame.setVisible(false);
+      PreferencesManager.prefFrame.getRootPane().setDefaultButton(null);
+      PreferencesManager.prefFrame.removeWindowListener(handler);
       PreferencesManager.fileMgr.writePreferencesFile();
       if (app.getMode() == BagOStuff.STATUS_BATTLE) {
         app.getBattle().getOutputFrame().setVisible(true);
@@ -435,8 +444,6 @@ public class PreferencesManager {
 
   private static void setUpGUI() {
     PreferencesManager.handler = new EventHandler();
-    PreferencesManager.prefFrame = MainWindow.getOutputFrame();
-    PreferencesManager.prefFrame.setTitle("Preferences");
     PreferencesManager.prefTabPane = new JTabbedPane();
     PreferencesManager.mainPrefPane = new Container();
     editorPane = new Container();
@@ -447,7 +454,6 @@ public class PreferencesManager {
     buttonPane = new Container();
     prefsOK = new JButton("OK");
     prefsOK.setDefaultCapable(true);
-    prefFrame.getRootPane().setDefaultButton(prefsOK);
     prefsCancel = new JButton("Cancel");
     prefsCancel.setDefaultCapable(false);
     prefsExport = new JButton("Export...");
@@ -485,11 +491,7 @@ public class PreferencesManager {
         "Weekly", "Every 2nd Week", "Monthly" };
     updateCheckInterval = new JComboBox<>(updateCheckIntervalValues);
     difficultyChoices = new JComboBox<>(DIFFICULTY_CHOICE_NAMES);
-    prefFrame.setContentPane(mainPrefPane);
-    prefFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-    prefFrame.addWindowListener(handler);
     mainPrefPane.setLayout(new BorderLayout());
-    prefFrame.setResizable(false);
     editorPane.setLayout(new GridLayout(PreferencesManager.GRID_LENGTH, 1));
     editorPane.add(new JLabel("Default fill for new mazes:"));
     editorPane.add(editorFillChoices);
@@ -534,7 +536,6 @@ public class PreferencesManager {
     prefsCancel.addActionListener(handler);
     prefsExport.addActionListener(handler);
     prefsImport.addActionListener(handler);
-    prefFrame.pack();
   }
 
   private static class PreferencesFileManager {
