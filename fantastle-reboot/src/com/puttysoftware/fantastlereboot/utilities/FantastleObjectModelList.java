@@ -107,7 +107,7 @@ public final class FantastleObjectModelList {
       }
     }
     if (count == 0) {
-      return null;
+      return new FantastleObjectModel[0];
     } else {
       final FantastleObjectModel[] all = new FantastleObjectModel[count];
       for (x = 0; x < count; x++) {
@@ -129,7 +129,7 @@ public final class FantastleObjectModelList {
       }
     }
     if (count == 0) {
-      return null;
+      return new BufferedImageIcon[0];
     } else {
       final BufferedImageIcon[] all = new BufferedImageIcon[count];
       for (x = 0; x < count; x++) {
@@ -151,7 +151,7 @@ public final class FantastleObjectModelList {
       }
     }
     if (count == 0) {
-      return null;
+      return new FantastleObjectModel[0];
     } else {
       final FantastleObjectModel[] all = new FantastleObjectModel[count];
       for (x = 0; x < count; x++) {
@@ -173,7 +173,7 @@ public final class FantastleObjectModelList {
       }
     }
     if (count == 0) {
-      return null;
+      return new BufferedImageIcon[0];
     } else {
       final BufferedImageIcon[] all = new BufferedImageIcon[count];
       for (x = 0; x < count; x++) {
@@ -195,7 +195,7 @@ public final class FantastleObjectModelList {
       }
     }
     if (count == 0) {
-      return null;
+      return new int[0];
     } else {
       final int[] allCarryableUIDs = new int[count];
       for (x = 0; x < count; x++) {
@@ -217,7 +217,7 @@ public final class FantastleObjectModelList {
       }
     }
     if (count == 0) {
-      return null;
+      return new FantastleObjectModel[0];
     } else {
       final FantastleObjectModel[] allRequired = new FantastleObjectModel[count];
       for (x = 0; x < count; x++) {
@@ -240,7 +240,7 @@ public final class FantastleObjectModelList {
       }
     }
     if (count == 0) {
-      return null;
+      return new FantastleObjectModel[0];
     } else {
       final FantastleObjectModel[] allWithoutPrereq = new FantastleObjectModel[count];
       for (x = 0; x < count; x++) {
