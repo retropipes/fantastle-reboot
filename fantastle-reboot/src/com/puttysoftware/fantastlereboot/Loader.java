@@ -39,13 +39,13 @@ import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 
-class CacheTask extends Thread {
+class Loader extends Thread {
   private JFrame waitFrame;
   private JLabel waitLabel;
   private JProgressBar waitProgress;
 
   // Constructors
-  public CacheTask() {
+  public Loader() {
     // Set up wait frame
     this.waitFrame = new JFrame("Loading...");
     this.waitLabel = new JLabel();

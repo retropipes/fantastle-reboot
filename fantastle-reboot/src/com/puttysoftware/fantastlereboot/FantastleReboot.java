@@ -104,6 +104,8 @@ public class FantastleReboot {
 
   public static void main(final String[] args) {
     try {
+      // OS Integration
+      NATIVITY.configureLookAndFeel();
       // Compute action cap
       Creature.computeActionCap(FantastleReboot.BATTLE_MAZE_SIZE,
           FantastleReboot.BATTLE_MAZE_SIZE);
@@ -111,17 +113,10 @@ public class FantastleReboot {
       PreferencesManager.setDefaultPrefs();
       // Create the Bag O'Stuff
       FantastleReboot.bag = new BagOStuff();
-      // OS Integration
-      NATIVITY.configureLookAndFeel();
       // Load stuff
-      FantastleReboot.showLoadingScreen();
+      new Loader().start();
     } catch (final Throwable t) {
       FantastleReboot.logError(t);
     }
-  }
-
-  private static void showLoadingScreen() {
-    CacheTask loader = new CacheTask();
-    loader.start();
   }
 }
