@@ -15,7 +15,6 @@ import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MonsterLocationManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
@@ -39,11 +38,8 @@ final class MovementTask extends Thread {
   @Override
   public void run() {
     try {
-      final BagOStuff bag = FantastleReboot.getBagOStuff();
       while (true) {
         this.waitForWork();
-        final Maze maze = bag.getMazeManager().getMaze();
-        MonsterLocationManager.moveAllMonsters(maze);
         if (MovementTask.relative) {
           MovementTask.updatePositionRelative(MovementTask.moveX,
               MovementTask.moveY, MovementTask.moveZ);
@@ -187,7 +183,7 @@ final class MovementTask extends Thread {
             bag.getMazeManager().setDirty(true);
             MovementTask.fireStepActions();
             MovementTask.decayEffects();
-            MovementTask.redrawMaze();
+            GameGUI.redrawMaze();
             if (MovementTask.proceed) {
               MovementTask.saved = m.getCell(px, py, pz, Layers.OBJECT);
             }
@@ -281,7 +277,7 @@ final class MovementTask extends Thread {
         final int py = m.getPlayerLocationY();
         final int pz = m.getPlayerLocationZ();
         m.updateVisibleSquares(px, py, pz);
-        MovementTask.redrawMaze();
+        GameGUI.redrawMaze();
       }
     } catch (final ArrayIndexOutOfBoundsException ae) {
       m.restorePlayerLocation();
@@ -297,9 +293,5 @@ final class MovementTask extends Thread {
           "You have died! You lose 10% of your experience and all your Gold, but you are healed fully.");
       PartyManager.getParty().getLeader().onDeath(-10);
     }
-  }
-
-  private static void redrawMaze() {
-    GameGUI.redrawMaze();
   }
 }
