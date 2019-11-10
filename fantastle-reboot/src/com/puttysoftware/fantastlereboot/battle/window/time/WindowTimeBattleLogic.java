@@ -3,8 +3,6 @@ package com.puttysoftware.fantastlereboot.battle.window.time;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.JFrame;
-
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
@@ -72,8 +70,13 @@ public class WindowTimeBattleLogic extends Battle {
   }
 
   @Override
-  public JFrame getOutputFrame() {
-    return this.battleGUI.getOutputFrame();
+  public void showBattle() {
+    this.battleGUI.getOutputFrame().setVisible(true);
+  }
+
+  @Override
+  public void hideBattle() {
+    this.battleGUI.getOutputFrame().setVisible(false);
   }
 
   @Override

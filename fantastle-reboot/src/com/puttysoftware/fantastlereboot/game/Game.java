@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.MainWindow;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
@@ -51,8 +52,7 @@ public final class Game {
     if (!Game.mt.isAlive()) {
       Game.mt.start();
     }
-    final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final JFrame owner = bag.getOutputFrame();
+    final JFrame owner = MainWindow.getOutputFrame();
     EffectManager.initialize();
     EffectManager.deactivateAllEffects();
     GameGUI.viewingWindowSizeChanged();
@@ -123,7 +123,8 @@ public final class Game {
     return MovementTask.tryAbsolute(x, y, z);
   }
 
-  public static void updatePositionAbsolute(final int x, final int y, final int z) {
+  public static void updatePositionAbsolute(final int x, final int y,
+      final int z) {
     Game.mt.moveAbsolute(x, y, z);
   }
 
@@ -471,7 +472,8 @@ public final class Game {
     return Game.objectInv;
   }
 
-  public static void setObjectInventory(final ObjectInventory newObjectInventory) {
+  public static void
+      setObjectInventory(final ObjectInventory newObjectInventory) {
     Game.objectInv = newObjectInventory;
   }
 

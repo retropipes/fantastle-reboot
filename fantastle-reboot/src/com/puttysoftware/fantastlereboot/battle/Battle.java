@@ -5,8 +5,6 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.battle;
 
-import javax.swing.JFrame;
-
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
@@ -18,7 +16,9 @@ public abstract class Battle {
   }
 
   // Generic Methods
-  public abstract JFrame getOutputFrame();
+  public abstract void showBattle();
+
+  public abstract void hideBattle();
 
   public abstract void resetGUI();
 

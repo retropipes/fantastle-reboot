@@ -18,8 +18,6 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot;
 
-import javax.swing.JFrame;
-
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
@@ -77,7 +75,8 @@ public class BagOStuff {
   public static final int STATUS_EDITOR = 2;
   public static final int STATUS_PREFS = 3;
   public static final int STATUS_BATTLE = 4;
-  public static final int STATUS_NULL = 5;
+  public static final int STATUS_ABOUT = 5;
+  public static final int STATUS_NULL = 6;
 
   // Constructors
   public BagOStuff() {
@@ -137,6 +136,11 @@ public class BagOStuff {
   public void setInBattle() {
     this.formerMode = this.currentMode;
     this.currentMode = BagOStuff.STATUS_BATTLE;
+  }
+
+  public void setInAbout() {
+    this.formerMode = this.currentMode;
+    this.currentMode = BagOStuff.STATUS_ABOUT;
   }
 
   public boolean inBattle() {
@@ -282,8 +286,29 @@ public class BagOStuff {
         + BagOStuff.VERSION_BUGFIX + rt;
   }
 
-  public JFrame getOutputFrame() {
-    return MainWindow.getOutputFrame();
+  public void restoreFormerMode() {
+    switch (this.formerMode) {
+    case STATUS_GUI:
+      this.guiMgr.showGUI();
+      break;
+    case STATUS_GAME:
+      Game.showOutput();
+      break;
+    case STATUS_EDITOR:
+      this.editor.showOutput();
+      break;
+    case STATUS_PREFS:
+      PreferencesManager.showPrefs();
+      break;
+    case STATUS_BATTLE:
+      this.getBattle().showBattle();
+      break;
+    case STATUS_ABOUT:
+      this.about.showAboutDialog();
+      break;
+    default:
+      break;
+    }
   }
 
   public void showMessage(final String msg) {

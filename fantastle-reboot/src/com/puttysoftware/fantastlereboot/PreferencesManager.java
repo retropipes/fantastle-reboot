@@ -45,7 +45,6 @@ import javax.swing.JTabbedPane;
 
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
-import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.maze.Extension;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.Tile;
@@ -281,18 +280,6 @@ public class PreferencesManager {
       app.setInPrefs();
       app.getMenuManager().attachMenus();
       app.getMenuManager().setPrefMenus();
-      if (app.getMode() == BagOStuff.STATUS_BATTLE) {
-        app.getBattle().getOutputFrame().setVisible(false);
-      } else {
-        final int formerMode = app.getFormerMode();
-        if (formerMode == BagOStuff.STATUS_GUI) {
-          app.getGUIManager().hideGUI();
-        } else if (formerMode == BagOStuff.STATUS_GAME) {
-          Game.hideOutput();
-        } else if (formerMode == BagOStuff.STATUS_EDITOR) {
-          app.getEditor().hideOutput();
-        }
-      }
       PreferencesManager.prefFrame.setVisible(true);
     }
   }
@@ -303,23 +290,11 @@ public class PreferencesManager {
       PreferencesManager.guiSetUp = true;
     }
     if (FantastleReboot.inFantastleReboot()) {
-      final BagOStuff app = FantastleReboot.getBagOStuff();
       PreferencesManager.prefFrame.setVisible(false);
       PreferencesManager.prefFrame.getRootPane().setDefaultButton(null);
       PreferencesManager.prefFrame.removeWindowListener(handler);
       PreferencesManager.fileMgr.writePreferencesFile();
-      if (app.getMode() == BagOStuff.STATUS_BATTLE) {
-        app.getBattle().getOutputFrame().setVisible(true);
-      } else {
-        final int formerMode = app.getFormerMode();
-        if (formerMode == BagOStuff.STATUS_GUI) {
-          app.getGUIManager().showGUI();
-        } else if (formerMode == BagOStuff.STATUS_GAME) {
-          Game.showOutput();
-        } else if (formerMode == BagOStuff.STATUS_EDITOR) {
-          app.getEditor().showOutput();
-        }
-      }
+      FantastleReboot.getBagOStuff().restoreFormerMode();
     }
   }
 

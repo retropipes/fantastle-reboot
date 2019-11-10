@@ -125,11 +125,11 @@ public class AboutDialog implements AboutHandler {
     public void windowClosing(WindowEvent inE) {
       AboutDialog.this.aboutFrame.getRootPane().setDefaultButton(null);
       AboutDialog.this.aboutFrame.removeWindowListener(this);
+      FantastleReboot.getBagOStuff().restoreFormerMode();
     }
 
     @Override
     public void windowClosed(WindowEvent inE) {
-      // Do nothing
     }
 
     @Override

@@ -8,7 +8,6 @@ package com.puttysoftware.fantastlereboot.battle.map.time;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
@@ -86,11 +85,6 @@ public class MapTimeBattleLogic extends Battle {
   }
 
   // Methods
-  @Override
-  public JFrame getOutputFrame() {
-    return this.battleGUI.getOutputFrame();
-  }
-
   @Override
   public void doBattle(final int x, final int y) {
     this.bx = x;
@@ -900,11 +894,13 @@ public class MapTimeBattleLogic extends Battle {
     return null;
   }
 
-  private void showBattle() {
+  @Override
+  public void showBattle() {
     this.battleGUI.showBattle();
   }
 
-  private void hideBattle() {
+  @Override
+  public void hideBattle() {
     this.battleGUI.hideBattle();
   }
 

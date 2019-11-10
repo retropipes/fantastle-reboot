@@ -5,7 +5,6 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.battle.map.turn;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
@@ -83,11 +82,6 @@ public class MapTurnBattleLogic extends Battle {
   }
 
   // Methods
-  @Override
-  public JFrame getOutputFrame() {
-    return this.battleGUI.getOutputFrame();
-  }
-
   @Override
   public void doBattle(final int x, final int y) {
     this.bx = x;
@@ -1004,11 +998,13 @@ public class MapTurnBattleLogic extends Battle {
     return null;
   }
 
-  private void showBattle() {
+  @Override
+  public void showBattle() {
     this.battleGUI.showBattle();
   }
 
-  private void hideBattle() {
+  @Override
+  public void hideBattle() {
     this.battleGUI.hideBattle();
   }
 
