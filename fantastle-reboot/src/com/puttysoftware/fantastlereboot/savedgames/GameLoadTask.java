@@ -11,7 +11,6 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JProgressBar;
-import javax.swing.WindowConstants;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
@@ -38,9 +37,6 @@ public class GameLoadTask extends Thread {
     final JProgressBar loadBar = new JProgressBar();
     loadBar.setIndeterminate(true);
     this.loadFrame.getContentPane().add(loadBar);
-    this.loadFrame.setResizable(false);
-    this.loadFrame
-        .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     this.loadFrame.pack();
   }
 

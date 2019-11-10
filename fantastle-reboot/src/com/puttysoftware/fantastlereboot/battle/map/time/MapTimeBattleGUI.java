@@ -22,7 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.KeyStroke;
-import javax.swing.WindowConstants;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.diane.loaders.ImageCompositor;
@@ -268,9 +267,6 @@ class MapTimeBattleGUI {
     this.item.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
         .put(KeyStroke.getKeyStroke(KeyEvent.VK_I, modKey), "Use Item");
     this.item.getActionMap().put("Use Item", handler);
-    this.battleFrame
-        .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-    this.battleFrame.setResizable(false);
     BufferedImageIcon darknessImage = ObjectImageLoader
         .load(ObjectImageIndex.DARKNESS);
     this.drawGrid = new DrawGrid(

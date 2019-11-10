@@ -35,7 +35,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
-import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.puttysoftware.diane.loaders.ImageCompositor;
@@ -679,8 +678,6 @@ public class MazeEditor {
     this.borderPane = new Container();
     this.borderPane.setLayout(new BorderLayout());
     this.outputFrame.setContentPane(this.borderPane);
-    this.outputFrame
-        .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     this.drawGrid = new JLabel[EditorViewingWindowManager
         .getViewingWindowSizeX()][EditorViewingWindowManager
             .getViewingWindowSizeY()];
@@ -700,7 +697,6 @@ public class MazeEditor {
     this.gridbag = new GridBagLayout();
     this.c = new GridBagConstraints();
     this.outputPane.setLayout(this.gridbag);
-    this.outputFrame.setResizable(false);
     this.c.fill = GridBagConstraints.BOTH;
     this.secondaryPane.setLayout(
         new GridLayout(EditorViewingWindowManager.getViewingWindowSizeX(),

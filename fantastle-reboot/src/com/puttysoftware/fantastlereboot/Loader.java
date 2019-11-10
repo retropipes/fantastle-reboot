@@ -25,7 +25,6 @@ import java.awt.GridBagLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
-import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
@@ -62,10 +61,6 @@ class Loader extends Thread {
     content.add(this.waitLabel, c);
     c.gridy = 1;
     content.add(this.waitProgress, c);
-    this.waitFrame
-        .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-    this.waitFrame.setResizable(false);
-    this.waitFrame.setAlwaysOnTop(true);
   }
 
   @Override

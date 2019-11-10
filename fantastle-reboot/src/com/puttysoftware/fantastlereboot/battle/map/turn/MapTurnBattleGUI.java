@@ -20,7 +20,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-import javax.swing.WindowConstants;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.diane.loaders.ImageCompositor;
@@ -226,9 +225,6 @@ class MapTurnBattleGUI {
     this.end.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
         .put(KeyStroke.getKeyStroke(KeyEvent.VK_E, modKey), "End Turn");
     this.end.getActionMap().put("End Turn", handler);
-    this.battleFrame
-        .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-    this.battleFrame.setResizable(false);
     this.drawGrid = new DrawGrid(
         MapBattleViewingWindowManager.getViewingWindowSize());
     BufferedImageIcon darknessImage = ObjectImageLoader

@@ -7,7 +7,6 @@ package com.puttysoftware.fantastlereboot.maze;
 
 import javax.swing.JFrame;
 import javax.swing.JProgressBar;
-import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
@@ -31,9 +30,6 @@ public class GenerateTask extends Thread {
     final JProgressBar loadBar = new JProgressBar();
     loadBar.setIndeterminate(true);
     this.generateFrame.getContentPane().add(loadBar);
-    this.generateFrame.setResizable(false);
-    this.generateFrame
-        .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     this.generateFrame.pack();
   }
 

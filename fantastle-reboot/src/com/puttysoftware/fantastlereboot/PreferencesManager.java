@@ -42,7 +42,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
-import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
@@ -276,7 +275,6 @@ public class PreferencesManager {
       PreferencesManager.prefFrame.setTitle("Preferences");
       PreferencesManager.prefFrame.getRootPane().setDefaultButton(prefsOK);
       PreferencesManager.prefFrame.setContentPane(mainPrefPane);
-      PreferencesManager.prefFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
       PreferencesManager.prefFrame.addWindowListener(handler);
       PreferencesManager.prefFrame.pack();
       final BagOStuff app = FantastleReboot.getBagOStuff();

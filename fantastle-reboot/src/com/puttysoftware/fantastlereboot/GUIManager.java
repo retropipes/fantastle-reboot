@@ -24,7 +24,6 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
@@ -53,7 +52,6 @@ public class GUIManager {
   public void showGUI() {
     this.guiFrame = MainWindow.getOutputFrame();
     this.guiFrame.setTitle("Fantastle Reboot");
-    this.guiFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     this.guiFrame.setContentPane(this.guiPane);
     this.guiFrame.pack();
     final BagOStuff app = FantastleReboot.getBagOStuff();

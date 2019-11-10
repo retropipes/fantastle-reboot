@@ -17,7 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.DrawGrid;
@@ -161,9 +160,6 @@ class GameGUI {
     GameGUI.drawingThread = new GameDraw(GameGUI.drawGrid, GameGUI.outputPane);
     GameGUI.drawingThread.start();
     GameGUI.outputFrame.setContentPane(GameGUI.borderPane);
-    GameGUI.outputFrame
-        .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-    GameGUI.outputFrame.setResizable(false);
     GameGUI.outputFrame.addKeyListener(handler);
     GameGUI.outputFrame.addWindowListener(handler);
   }

@@ -33,7 +33,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
@@ -53,14 +52,13 @@ public class AboutDialog implements AboutHandler {
   // Methods
   @Override
   public void handleAbout(AboutEvent inE) {
-    this.aboutFrame.setVisible(true);
+    this.showAboutDialog();
   }
 
   public void showAboutDialog() {
     this.aboutFrame = MainWindow.getOutputFrame();
     this.aboutFrame.setTitle("About Fantastle");
     this.aboutFrame.getRootPane().setDefaultButton(this.aboutOK);
-    this.aboutFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
     this.aboutFrame.addWindowListener(this.handler);
     this.aboutFrame.setContentPane(this.aboutPane);
     this.aboutFrame.pack();

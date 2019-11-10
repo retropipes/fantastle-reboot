@@ -21,7 +21,6 @@ package com.puttysoftware.fantastlereboot;
 import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
-import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.loaders.HelpLoader;
 import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
@@ -37,7 +36,6 @@ public class GeneralHelpManager {
     this.hv = HelpLoader.getHelpViewer();
     this.helpFrame = MainWindow.getOutputFrame();
     this.helpFrame.setTitle("Fantastle Help");
-    this.helpFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
     this.helpFrame.setLayout(new FlowLayout());
     this.helpFrame.add(this.hv.getHelp());
     // if (FantastleReboot.getBagOStuff().getPrefsManager()
@@ -49,7 +47,6 @@ public class GeneralHelpManager {
         ImageConstants.MAX_WINDOW_SIZE);
     // }
     this.helpFrame.pack();
-    this.helpFrame.setResizable(false);
   }
 
   // Methods

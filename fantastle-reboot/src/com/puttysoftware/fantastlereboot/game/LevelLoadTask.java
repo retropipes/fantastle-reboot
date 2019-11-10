@@ -7,7 +7,6 @@ package com.puttysoftware.fantastlereboot.game;
 
 import javax.swing.JFrame;
 import javax.swing.JProgressBar;
-import javax.swing.WindowConstants;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
@@ -29,9 +28,6 @@ public class LevelLoadTask extends Thread {
     final JProgressBar loadBar = new JProgressBar();
     loadBar.setIndeterminate(true);
     this.loadFrame.getContentPane().add(loadBar);
-    this.loadFrame.setResizable(false);
-    this.loadFrame
-        .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     this.loadFrame.pack();
   }
 
