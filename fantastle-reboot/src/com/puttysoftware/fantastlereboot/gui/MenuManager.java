@@ -183,6 +183,18 @@ public class MenuManager {
   }
 
   public void setMainMenus() {
+    this.fileClose.setEnabled(false);
+    this.fileSave.setEnabled(false);
+    this.fileSaveAs.setEnabled(false);
+    this.playPlay.setEnabled(false);
+    this.playEdit.setEnabled(false);
+    this.gameNewGame.setEnabled(true);
+    this.gameRegisterCharacter.setEnabled(true);
+    this.gameUnregisterCharacter.setEnabled(true);
+    this.gameRemoveCharacter.setEnabled(true);
+    this.debugResetPreferences.setEnabled(true);
+    this.helpAbout.setEnabled(true);
+    this.helpObjectHelp.setEnabled(true);
     this.fileNew.setEnabled(true);
     this.fileOpen.setEnabled(true);
     this.fileExit.setEnabled(true);
@@ -578,19 +590,19 @@ public class MenuManager {
   }
 
   private void setInitialMenuState() {
-    this.fileNew.setEnabled(true);
-    this.fileOpen.setEnabled(true);
+    this.fileNew.setEnabled(false);
+    this.fileOpen.setEnabled(false);
     this.fileClose.setEnabled(false);
     this.fileSave.setEnabled(false);
     this.fileSaveAs.setEnabled(false);
-    this.fileExit.setEnabled(true);
+    this.fileExit.setEnabled(false);
     this.editUndo.setEnabled(false);
     this.editRedo.setEnabled(false);
     this.editCutLevel.setEnabled(false);
     this.editCopyLevel.setEnabled(false);
     this.editPasteLevel.setEnabled(false);
     this.editInsertLevelFromClipboard.setEnabled(false);
-    this.editPreferences.setEnabled(true);
+    this.editPreferences.setEnabled(false);
     this.editClearHistory.setEnabled(false);
     this.editGoTo.setEnabled(false);
     this.editUpOneFloor.setEnabled(false);
@@ -604,19 +616,21 @@ public class MenuManager {
     this.editMazePreferences.setEnabled(false);
     this.playPlay.setEnabled(false);
     this.playEdit.setEnabled(false);
-    this.gameNewGame.setEnabled(true);
+    this.gameNewGame.setEnabled(false);
     this.gameEquipment.setEnabled(false);
     this.gameInventory.setEnabled(false);
     this.gameUse.setEnabled(false);
     this.gameReset.setEnabled(false);
     this.gameShowScore.setEnabled(false);
     this.gameShowTable.setEnabled(false);
-    this.gameRegisterCharacter.setEnabled(true);
-    this.gameUnregisterCharacter.setEnabled(true);
-    this.gameRemoveCharacter.setEnabled(true);
-    this.debugResetPreferences.setEnabled(true);
-    this.helpAbout.setEnabled(true);
-    this.helpObjectHelp.setEnabled(true);
+    this.gameRegisterCharacter.setEnabled(false);
+    this.gameUnregisterCharacter.setEnabled(false);
+    this.gameRemoveCharacter.setEnabled(false);
+    this.gameEditNote.setEnabled(false);
+    this.gameViewStats.setEnabled(false);
+    this.debugResetPreferences.setEnabled(false);
+    this.helpAbout.setEnabled(false);
+    this.helpObjectHelp.setEnabled(false);
   }
 
   private class EventHandler implements ActionListener {
