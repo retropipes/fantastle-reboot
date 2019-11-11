@@ -18,8 +18,6 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot;
 
-import javax.swing.JMenuBar;
-
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
@@ -46,10 +44,8 @@ import com.puttysoftware.updater.ProductData;
 
 public class BagOStuff {
   // Fields
-  private JMenuBar mainMenuBar;
   private AboutDialog about;
   private MazeManager mazeMgr;
-  private MenuManager menuMgr;
   private GeneralHelpManager gHelpMgr;
   private MazeEditor editor;
   private GUIManager guiMgr;
@@ -101,8 +97,6 @@ public class BagOStuff {
     this.about = new AboutDialog(BagOStuff.getVersionString());
     this.guiMgr = new GUIManager();
     this.mazeMgr = new MazeManager();
-    this.mainMenuBar = new JMenuBar();
-    this.menuMgr = new MenuManager(this.mainMenuBar);
     this.gHelpMgr = new GeneralHelpManager();
     this.windowTurnBattle = new WindowTurnBattleLogic();
     this.windowTimeBattle = new WindowTimeBattleLogic();
@@ -119,7 +113,6 @@ public class BagOStuff {
     this.socks = new Shop(ShopTypes.SOCKS);
     this.enhancements = new Shop(ShopTypes.ENHANCEMENTS);
     this.faiths = new Shop(ShopTypes.FAITH_POWERS);
-    FantastleReboot.attachMenus(this.mainMenuBar);
     // Attempt to load extras
     final Object extras = PluginLoader.loadPlugin("ExtrasPlugin");
     PluginLoader.addPluginMenus(extras);
@@ -173,7 +166,7 @@ public class BagOStuff {
   }
 
   public MenuManager getMenuManager() {
-    return this.menuMgr;
+    return FantastleReboot.getMenuManager();
   }
 
   public GUIManager getGUIManager() {

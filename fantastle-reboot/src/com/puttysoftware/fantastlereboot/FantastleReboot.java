@@ -26,6 +26,7 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.errorlogger.ErrorLogger;
 import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
+import com.puttysoftware.fantastlereboot.gui.MenuManager;
 import com.puttysoftware.fantastlereboot.gui.PreferencesLauncher;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
@@ -50,6 +51,8 @@ public class FantastleReboot {
   private static final NativeIntegration NATIVITY = new NativeIntegration();
   private static boolean IN_FANTASTLE = true;
   private static final int BATTLE_MAZE_SIZE = 16;
+  private static MenuManager menus;
+  private static final JMenuBar mainMenuBar = new JMenuBar();
 
   // Methods
   public static BagOStuff getBagOStuff() {
@@ -90,8 +93,8 @@ public class FantastleReboot {
     FantastleReboot.IN_FANTASTLE = false;
   }
 
-  static void attachMenus(JMenuBar defaultMenuBar) {
-    NATIVITY.setDefaultMenuBar(defaultMenuBar);
+  static MenuManager getMenuManager() {
+    return FantastleReboot.menus;
   }
 
   static void doLateOSIntegration() {
@@ -106,8 +109,10 @@ public class FantastleReboot {
 
   public static void main(final String[] args) {
     try {
-      // OS Integration
+      // Early OS Integration
       NATIVITY.configureLookAndFeel();
+      menus = new MenuManager(mainMenuBar);
+      NATIVITY.setDefaultMenuBar(mainMenuBar);
       // Compute action cap
       Creature.computeActionCap(FantastleReboot.BATTLE_MAZE_SIZE,
           FantastleReboot.BATTLE_MAZE_SIZE);
