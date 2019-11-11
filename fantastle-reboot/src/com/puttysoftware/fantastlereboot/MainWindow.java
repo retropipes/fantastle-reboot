@@ -17,6 +17,7 @@ public final class MainWindow {
     this.frame = new JFrame();
     this.frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     this.frame.setResizable(false);
+    this.frame.setVisible(true);
   }
 
   public static MainWindow getOutputFrame() {
@@ -32,10 +33,6 @@ public final class MainWindow {
 
   public void pack() {
     this.frame.pack();
-  }
-
-  public void setVisible(final boolean b) {
-    this.frame.setVisible(b);
   }
 
   public void addWindowListener(final WindowListener l) {

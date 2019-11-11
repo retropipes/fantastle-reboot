@@ -72,7 +72,6 @@ class GameGUI {
     GameGUI.outputFrame.setContentPane(GameGUI.borderPane);
     GameGUI.outputFrame.addKeyListener(handler);
     GameGUI.outputFrame.addWindowListener(handler);
-    GameGUI.outputFrame.setVisible(true);
     if (GameGUI.deferredRedraw) {
       GameGUI.deferredRedraw = false;
       GameGUI.redrawMaze();
@@ -83,7 +82,6 @@ class GameGUI {
   public static void hideOutput() {
     GameGUI.outputFrame.removeWindowListener(handler);
     GameGUI.outputFrame.removeKeyListener(handler);
-    GameGUI.outputFrame.setVisible(false);
   }
 
   public static void setStatusMessage(final String msg) {
@@ -100,19 +98,19 @@ class GameGUI {
   }
 
   public static void redrawMaze() {
-    // Draw the maze, if it is visible
-      GameGUI.drawingThread.requestDraw();
-      if (GameGUI.knm) {
-        GameGUI.knm = false;
-      } else {
-        GameGUI.setStatusMessage(" ");
-      }
-      GameGUI.outputFrame.pack();
+    // Draw the maze
+    GameGUI.drawingThread.requestDraw();
+    if (GameGUI.knm) {
+      GameGUI.knm = false;
+    } else {
+      GameGUI.setStatusMessage(" ");
+    }
+    GameGUI.outputFrame.pack();
   }
 
   public static void redrawOneSquare(final int inX, final int inY,
       final FantastleObjectModel obj5) {
-    // Draw the maze, if it is visible
+    // Draw the maze
     if (obj5 != null) {
       GameGUI.drawingThread.requestDrawOne(inX, inY, obj5);
       if (GameGUI.knm) {

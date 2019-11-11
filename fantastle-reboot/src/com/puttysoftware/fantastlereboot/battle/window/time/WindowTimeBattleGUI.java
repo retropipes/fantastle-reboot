@@ -120,7 +120,6 @@ public class WindowTimeBattleGUI {
     this.drain.setEnabled(true);
     this.item.setEnabled(true);
     this.done.setEnabled(false);
-    this.battleFrame.setVisible(true);
   }
 
   final void showBattle() {
@@ -129,12 +128,10 @@ public class WindowTimeBattleGUI {
     this.battleFrame.setContentPane(this.holderPane);
     this.battleFrame.setDefaultButton(this.done);
     this.battleFrame.pack();
-    this.battleFrame.setVisible(true);
   }
 
   final void hideBattle() {
     this.battleFrame.setDefaultButton(null);
-    this.battleFrame.setVisible(false);
   }
 
   final void pack() {

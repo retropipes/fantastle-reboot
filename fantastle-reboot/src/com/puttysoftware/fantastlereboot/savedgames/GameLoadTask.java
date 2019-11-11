@@ -48,7 +48,6 @@ public class GameLoadTask extends Thread {
       content.add(loadBar);
       this.loadFrame.setContentPane(content);
       this.loadFrame.pack();
-      this.loadFrame.setVisible(true);
       final BagOStuff app = FantastleReboot.getBagOStuff();
       int startW;
       Game.setSavedGameFlag(false);
@@ -101,8 +100,6 @@ public class GameLoadTask extends Thread {
           .handleDeferredSuccess(false, false, null);
     } catch (final Exception ex) {
       FantastleReboot.logError(ex);
-    } finally {
-      this.loadFrame.setVisible(false);
     }
   }
 }

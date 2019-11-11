@@ -52,12 +52,10 @@ public class GeneralHelpManager {
     this.helpFrame.setContentPane(this.helpContent);
     this.helpFrame.pack();
     this.helpFrame.addWindowListener(this.handler);
-    this.helpFrame.setVisible(true);
   }
 
   public void hideHelp() {
     this.helpFrame.removeWindowListener(this.handler);
-    this.helpFrame.setVisible(false);
     FantastleReboot.getBagOStuff().restoreFormerMode();
   }
 

@@ -433,7 +433,6 @@ public class MazeEditor {
   public void editMaze() {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     if (bag.getMazeManager().getLoaded()) {
-      bag.getGUIManager().hideGUI();
       bag.setInEditor();
       // Reset game state
       Game.resetGameState();
@@ -622,12 +621,10 @@ public class MazeEditor {
     this.outputFrame = MainWindow.getOutputFrame();
     this.outputFrame.setContentPane(this.borderPane);
     this.outputFrame.addWindowListener(this.mhandler);
-    this.outputFrame.setVisible(true);
   }
 
   public void hideOutput() {
     this.outputFrame.removeWindowListener(this.mhandler);
-    this.outputFrame.setVisible(false);
   }
 
   void disableOutput() {

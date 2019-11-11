@@ -299,7 +299,7 @@ public class BagOStuff {
       this.guiMgr.showGUI();
       break;
     case STATUS_GAME:
-      Game.showOutput();
+      Game.playDungeonMusic();
       break;
     case STATUS_EDITOR:
       this.editor.showOutput();

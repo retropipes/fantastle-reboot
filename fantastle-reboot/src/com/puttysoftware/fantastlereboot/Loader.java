@@ -99,7 +99,6 @@ class Loader extends Thread {
       FantastleReboot.doLateOSIntegration();
       this.updateWaitProgress(100);
       // Exit Wait Mode
-      this.exitWaitMode();
       bag.playLogoSound();
       bag.getGUIManager().showGUI();
     } catch (Throwable t) {
@@ -112,14 +111,9 @@ class Loader extends Thread {
     this.waitLabel.setIcon(
         UserInterfaceImageLoader.load(UserInterfaceImageIndex.LOADING));
     this.waitFrame.pack();
-    this.waitFrame.setVisible(true);
   }
 
   private void updateWaitProgress(final int value) {
     this.waitProgress.setValue(value);
-  }
-
-  private void exitWaitMode() {
-    this.waitFrame.setVisible(false);
   }
 }

@@ -56,12 +56,7 @@ public class GUIManager {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     app.setInGUI();
     app.getMenuManager().attachMenus();
-    this.guiFrame.setVisible(true);
     app.getMenuManager().setMainMenus();
     app.getMenuManager().checkFlags();
-  }
-
-  public void hideGUI() {
-    this.guiFrame.setVisible(false);
   }
 }

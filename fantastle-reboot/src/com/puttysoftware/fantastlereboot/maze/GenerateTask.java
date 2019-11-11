@@ -40,7 +40,6 @@ public class GenerateTask extends Thread {
       this.generateFrame.setTitle("Generating...");
       this.generateFrame.setContentPane(this.content);
       this.generateFrame.pack();
-      this.generateFrame.setVisible(true);
       final BagOStuff app = FantastleReboot.getBagOStuff();
       Maze gameMaze = app.getMazeManager().getMaze();
       if (!this.scratch) {

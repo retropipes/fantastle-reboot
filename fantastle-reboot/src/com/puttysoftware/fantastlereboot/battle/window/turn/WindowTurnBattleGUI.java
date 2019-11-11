@@ -119,12 +119,10 @@ public class WindowTurnBattleGUI {
     this.battleFrame.setContentPane(this.holderPane);
     this.battleFrame.setDefaultButton(this.done);
     this.battleFrame.pack();
-    this.battleFrame.setVisible(true);
   }
 
   final void hideBattle() {
     this.battleFrame.setDefaultButton(null);
-    this.battleFrame.setVisible(false);
   }
 
   final void pack() {

@@ -38,7 +38,6 @@ public class LevelLoadTask extends Thread {
       this.loadFrame.setTitle("Loading...");
       this.loadFrame.setContentPane(this.content);
       this.loadFrame.pack();
-      this.loadFrame.setVisible(true);
       final BagOStuff app = FantastleReboot.getBagOStuff();
       final Maze gameMaze = app.getMazeManager().getMaze();
       Game.disableEvents();

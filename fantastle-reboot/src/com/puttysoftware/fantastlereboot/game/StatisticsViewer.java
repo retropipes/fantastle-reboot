@@ -53,7 +53,6 @@ public class StatisticsViewer {
         }
       }
       statisticsFrame.pack();
-      statisticsFrame.setVisible(true);
     } else {
       CommonDialogs.showDialog("Nothing to display");
     }
@@ -73,7 +72,7 @@ public class StatisticsViewer {
       btnOK.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(final ActionEvent e) {
-          statisticsFrame.setVisible(false);
+          Game.showOutput();
         }
       });
       statisticsValues = new JLabel[StatConstants.MAX_DISPLAY_STATS];

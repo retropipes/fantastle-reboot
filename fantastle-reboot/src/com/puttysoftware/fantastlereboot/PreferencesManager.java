@@ -266,7 +266,6 @@ public class PreferencesManager {
       app.setInPrefs();
       app.getMenuManager().attachMenus();
       app.getMenuManager().setPrefMenus();
-      PreferencesManager.prefFrame.setVisible(true);
     }
   }
 
@@ -276,7 +275,6 @@ public class PreferencesManager {
       PreferencesManager.guiSetUp = true;
     }
     if (FantastleReboot.inFantastleReboot()) {
-      PreferencesManager.prefFrame.setVisible(false);
       PreferencesManager.prefFrame.setDefaultButton(null);
       PreferencesManager.prefFrame.removeWindowListener(handler);
       PreferencesManager.fileMgr.writePreferencesFile();

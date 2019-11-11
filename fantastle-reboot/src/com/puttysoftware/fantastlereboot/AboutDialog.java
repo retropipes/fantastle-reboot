@@ -62,11 +62,10 @@ public class AboutDialog implements AboutHandler {
     this.aboutFrame.addWindowListener(this.handler);
     this.aboutFrame.setContentPane(this.aboutPane);
     this.aboutFrame.pack();
-    this.aboutFrame.setVisible(true);
   }
 
   void hideAboutDialog() {
-    this.aboutFrame.setVisible(false);
+    this.aboutFrame.removeWindowListener(this.handler);
   }
 
   private void setUpGUI(final String ver) {

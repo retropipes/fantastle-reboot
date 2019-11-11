@@ -337,7 +337,6 @@ public final class Game {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     final Maze m = bag.getMazeManager().getMaze();
     if (bag.getMazeManager().getLoaded()) {
-      bag.getGUIManager().hideGUI();
       if (Game.stateChanged) {
         // Initialize only if the maze state has changed
         bag.getMazeManager().getMaze()
@@ -354,7 +353,7 @@ public final class Game {
       final int pz = m.getPlayerLocationZ();
       m.updateVisibleSquares(px, py, pz);
       bag.setInGame();
-      Game.showOutput();
+      Game.playDungeonMusic();
       Game.redrawMaze();
     } else {
       CommonDialogs.showDialog("No Maze Opened");
@@ -527,8 +526,12 @@ public final class Game {
     }
   }
 
-  public static void showOutput() {
+  public static void playDungeonMusic() {
     MusicPlayer.playMusic(MusicIndex.DUNGEON, MusicGroup.GAME);
+    GameGUI.showOutput();
+  }
+
+  public static void showOutput() {
     GameGUI.showOutput();
   }
 

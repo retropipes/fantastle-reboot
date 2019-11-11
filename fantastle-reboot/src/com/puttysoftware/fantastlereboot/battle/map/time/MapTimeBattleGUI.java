@@ -124,13 +124,11 @@ class MapTimeBattleGUI {
     this.battleFrame.setTitle("Battle");
     this.battleFrame.setContentPane(this.borderPane);
     this.battleFrame.addKeyListener(this.handler);
-    this.battleFrame.setVisible(true);
     FantastleReboot.getBagOStuff().getMenuManager().attachMenus();
   }
 
   void hideBattle() {
     this.battleFrame.removeKeyListener(this.handler);
-    this.battleFrame.setVisible(false);
   }
 
   void redrawBattle(final Maze battleMaze) {
