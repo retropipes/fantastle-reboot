@@ -89,6 +89,7 @@ public class GenerateTask extends Thread {
       if (this.scratch) {
         Game.stateChanged();
         app.getMenuManager().checkFlags();
+        app.getGUIManager().showGUI();
       } else {
         Game.resetViewingWindow();
         Game.enableEvents();
