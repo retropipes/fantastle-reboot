@@ -39,7 +39,6 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 
@@ -51,7 +50,7 @@ import com.puttysoftware.fantastlereboot.objects.Tile;
 
 public class PreferencesManager {
   // Fields
-  private static JFrame prefFrame;
+  private static MainWindow prefFrame;
   private static JTabbedPane prefTabPane;
   private static Container mainPrefPane, buttonPane, miscPane, soundPane,
       musicPane;
@@ -251,19 +250,6 @@ public class PreferencesManager {
     PreferencesManager.musicEnabled[mus] = status;
   }
 
-  public static JFrame getPrefFrame() {
-    if (!PreferencesManager.guiSetUp) {
-      setUpGUI();
-      PreferencesManager.guiSetUp = true;
-    }
-    if (PreferencesManager.prefFrame != null
-        && PreferencesManager.prefFrame.isVisible()) {
-      return PreferencesManager.prefFrame;
-    } else {
-      return null;
-    }
-  }
-
   public static void showPrefs() {
     if (!PreferencesManager.guiSetUp) {
       setUpGUI();
@@ -272,7 +258,7 @@ public class PreferencesManager {
     if (FantastleReboot.inFantastleReboot()) {
       PreferencesManager.prefFrame = MainWindow.getOutputFrame();
       PreferencesManager.prefFrame.setTitle("Preferences");
-      PreferencesManager.prefFrame.getRootPane().setDefaultButton(prefsOK);
+      PreferencesManager.prefFrame.setDefaultButton(prefsOK);
       PreferencesManager.prefFrame.setContentPane(mainPrefPane);
       PreferencesManager.prefFrame.addWindowListener(handler);
       PreferencesManager.prefFrame.pack();
@@ -291,7 +277,7 @@ public class PreferencesManager {
     }
     if (FantastleReboot.inFantastleReboot()) {
       PreferencesManager.prefFrame.setVisible(false);
-      PreferencesManager.prefFrame.getRootPane().setDefaultButton(null);
+      PreferencesManager.prefFrame.setDefaultButton(null);
       PreferencesManager.prefFrame.removeWindowListener(handler);
       PreferencesManager.fileMgr.writePreferencesFile();
       FantastleReboot.getBagOStuff().restoreFormerMode();
@@ -410,8 +396,6 @@ public class PreferencesManager {
         .importPreferencesFile(PreferencesManager.eiMgr.getImportSource());
     if (!result) {
       Messager.showErrorDialog("Import Failed!", "Preferences");
-    } else {
-      PreferencesManager.prefFrame.repaint();
     }
   }
 
@@ -767,15 +751,15 @@ public class PreferencesManager {
     }
 
     public File getImportSource() {
-      final FileDialog chooser = new FileDialog(PreferencesManager.prefFrame,
-          "Import", FileDialog.LOAD);
+      final FileDialog chooser = new FileDialog((java.awt.Frame) null, "Import",
+          FileDialog.LOAD);
       chooser.setVisible(true);
       return new File(chooser.getDirectory() + chooser.getFile());
     }
 
     public File getExportDestination() {
-      final FileDialog chooser = new FileDialog(PreferencesManager.prefFrame,
-          "Export", FileDialog.SAVE);
+      final FileDialog chooser = new FileDialog((java.awt.Frame) null, "Export",
+          FileDialog.SAVE);
       chooser.setVisible(true);
       return new File(chooser.getDirectory() + chooser.getFile());
     }

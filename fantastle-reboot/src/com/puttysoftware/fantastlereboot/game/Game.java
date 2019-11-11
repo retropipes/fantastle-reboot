@@ -5,12 +5,9 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.game;
 
-import javax.swing.JFrame;
-
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.MainWindow;
 import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
@@ -52,7 +49,6 @@ public final class Game {
     if (!Game.mt.isAlive()) {
       Game.mt.start();
     }
-    final JFrame owner = MainWindow.getOutputFrame();
     EffectManager.initialize();
     EffectManager.deactivateAllEffects();
     GameGUI.viewingWindowSizeChanged();
@@ -60,10 +56,10 @@ public final class Game {
       if (PartyManager.getParty() != null) {
         return true;
       } else {
-        return PartyManager.createParty(owner);
+        return PartyManager.createParty();
       }
     } else {
-      return PartyManager.createParty(owner);
+      return PartyManager.createParty();
     }
   }
 
@@ -317,10 +313,6 @@ public final class Game {
 
   public static void validateScore() {
     ScoreTracker.validateScore();
-  }
-
-  public static JFrame getOutputFrame() {
-    return GameGUI.getOutputFrame();
   }
 
   public static void decay() {

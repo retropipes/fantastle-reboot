@@ -40,7 +40,7 @@ public class PartyManager {
   }
 
   // Methods
-  public static boolean createParty(final JFrame owner) {
+  public static boolean createParty() {
     PartyManager.party = new Party();
     int mem = 0;
     final PartyMember[] pickMembers = CharacterLoader

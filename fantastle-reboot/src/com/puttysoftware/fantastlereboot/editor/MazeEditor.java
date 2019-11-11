@@ -31,7 +31,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
@@ -58,7 +57,7 @@ import com.puttysoftware.images.BufferedImageIcon;
 
 public class MazeEditor {
   // Declarations
-  private JFrame outputFrame;
+  private MainWindow outputFrame;
   private Container outputPane, secondaryPane, borderPane;
   private GridBagLayout gridbag;
   private GridBagConstraints c;
@@ -616,14 +615,6 @@ public class MazeEditor {
           }
         }
       }
-    }
-  }
-
-  public boolean isOutputVisible() {
-    if (this.outputFrame == null) {
-      return false;
-    } else {
-      return this.outputFrame.isVisible();
     }
   }
 

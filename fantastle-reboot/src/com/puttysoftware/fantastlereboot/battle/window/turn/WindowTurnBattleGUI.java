@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
@@ -25,7 +24,7 @@ import com.puttysoftware.images.BufferedImageIcon;
 
 public class WindowTurnBattleGUI {
   // Fields
-  JFrame battleFrame;
+  private MainWindow battleFrame;
   private final JLabel iconLabel;
   private final Container holderPane;
   private final JTextArea messageArea;
@@ -118,13 +117,13 @@ public class WindowTurnBattleGUI {
     this.battleFrame = MainWindow.getOutputFrame();
     this.battleFrame.setTitle("Battle");
     this.battleFrame.setContentPane(this.holderPane);
-    this.battleFrame.getRootPane().setDefaultButton(this.done);
+    this.battleFrame.setDefaultButton(this.done);
     this.battleFrame.pack();
     this.battleFrame.setVisible(true);
   }
 
   final void hideBattle() {
-    this.battleFrame.getRootPane().setDefaultButton(null);
+    this.battleFrame.setDefaultButton(null);
     this.battleFrame.setVisible(false);
   }
 

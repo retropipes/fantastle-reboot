@@ -5,7 +5,8 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.maze;
 
-import javax.swing.JFrame;
+import java.awt.Container;
+
 import javax.swing.JProgressBar;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
@@ -18,25 +19,27 @@ import com.puttysoftware.randomrange.RandomRange;
 
 public class GenerateTask extends Thread {
   // Fields
-  private final JFrame generateFrame;
+  private MainWindow generateFrame;
   private final boolean scratch;
+  private final Container content = new Container();
 
   // Constructors
   public GenerateTask(final boolean startFromScratch) {
     this.scratch = startFromScratch;
     this.setName("Level Generator");
-    this.generateFrame = MainWindow.getOutputFrame();
-    this.generateFrame.setTitle("Generating...");
     final JProgressBar loadBar = new JProgressBar();
     loadBar.setIndeterminate(true);
-    this.generateFrame.getContentPane().add(loadBar);
-    this.generateFrame.pack();
+    this.content.add(loadBar);
   }
 
   // Methods
   @Override
   public void run() {
     try {
+      this.generateFrame = MainWindow.getOutputFrame();
+      this.generateFrame.setTitle("Generating...");
+      this.generateFrame.setContentPane(this.content);
+      this.generateFrame.pack();
       this.generateFrame.setVisible(true);
       final BagOStuff app = FantastleReboot.getBagOStuff();
       Maze gameMaze = app.getMazeManager().getMaze();
@@ -90,12 +93,11 @@ public class GenerateTask extends Thread {
       } else {
         Game.resetViewingWindow();
         Game.enableEvents();
+        Game.showOutput();
         Game.redrawMaze();
       }
     } catch (final Throwable t) {
       FantastleReboot.logError(t);
-    } finally {
-      this.generateFrame.setVisible(false);
     }
   }
 }

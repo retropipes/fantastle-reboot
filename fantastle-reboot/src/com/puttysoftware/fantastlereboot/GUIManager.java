@@ -21,7 +21,6 @@ package com.puttysoftware.fantastlereboot;
 import java.awt.Container;
 import java.awt.GridLayout;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -32,7 +31,7 @@ import com.puttysoftware.images.BufferedImageIcon;
 
 public class GUIManager {
   // Fields
-  private JFrame guiFrame;
+  private MainWindow guiFrame;
   private final Container guiPane;
   private final JLabel logoLabel;
 

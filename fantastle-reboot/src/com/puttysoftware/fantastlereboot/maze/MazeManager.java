@@ -11,13 +11,11 @@ import java.awt.desktop.QuitResponse;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.MainWindow;
 import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
@@ -129,11 +127,6 @@ public final class MazeManager implements QuitHandler {
   public void setDirty(final boolean newDirty) {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     this.isDirty = newDirty;
-    final JFrame frame = MainWindow.getOutputFrame();
-    if (frame != null) {
-      frame.getRootPane().putClientProperty("Window.documentModified",
-          Boolean.valueOf(newDirty));
-    }
     bag.getMenuManager().checkFlags();
   }
 

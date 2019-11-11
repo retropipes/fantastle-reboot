@@ -805,7 +805,7 @@ public class WindowTimeBattleLogic extends Battle {
         // Strip Extra Newline Character
         gui.stripExtraNewLine();
         // Pack Battle Frame
-        gui.battleFrame.pack();
+        gui.pack();
       }
     }
   }

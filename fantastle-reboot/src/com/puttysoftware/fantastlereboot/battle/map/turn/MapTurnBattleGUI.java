@@ -16,7 +16,6 @@ import java.awt.event.KeyListener;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
@@ -41,7 +40,7 @@ import com.puttysoftware.images.BufferedImageIcon;
 
 class MapTurnBattleGUI {
   // Fields
-  private JFrame battleFrame;
+  private MainWindow battleFrame;
   private MapBattleDraw battlePane;
   private JLabel messageLabel;
   private final MapBattleViewingWindowManager vwMgr;
@@ -96,66 +95,62 @@ class MapTurnBattleGUI {
   }
 
   void redrawBattle(final MapTurnBattleDefinitions bd) {
-    // Draw the battle, if it is visible
-    if (this.battleFrame.isVisible()) {
-      int x, y;
-      int xFix, yFix;
-      final int xView = this.vwMgr.getViewingWindowLocationX();
-      final int yView = this.vwMgr.getViewingWindowLocationY();
-      final int xlView = this.vwMgr.getLowerRightViewingWindowLocationX();
-      final int ylView = this.vwMgr.getLowerRightViewingWindowLocationY();
-      for (x = xView; x <= xlView; x++) {
-        for (y = yView; y <= ylView; y++) {
-          xFix = x - xView;
-          yFix = y - yView;
-          try {
-            final FantastleObjectModel obj1 = bd.getBattleMaze().getCell(y, x,
-                0, Layers.GROUND);
-            final FantastleObjectModel obj2 = bd.getBattleMaze().getCell(y, x,
-                0, Layers.OBJECT);
-            String cacheName = generateCacheName(obj1, obj2);
-            final BufferedImageIcon icon1 = obj1.getBattleImage();
-            final BufferedImageIcon icon2 = obj2.getBattleImage();
-            this.drawGrid.setImageCell(
-                ImageCompositor.composite(cacheName, icon1, icon2), xFix, yFix);
-          } catch (final ArrayIndexOutOfBoundsException ae) {
-            final Nothing ev = new Nothing();
-            this.drawGrid.setImageCell(ev.getBattleImage(), xFix, yFix);
-          }
+    // Draw the battle
+    int x, y;
+    int xFix, yFix;
+    final int xView = this.vwMgr.getViewingWindowLocationX();
+    final int yView = this.vwMgr.getViewingWindowLocationY();
+    final int xlView = this.vwMgr.getLowerRightViewingWindowLocationX();
+    final int ylView = this.vwMgr.getLowerRightViewingWindowLocationY();
+    for (x = xView; x <= xlView; x++) {
+      for (y = yView; y <= ylView; y++) {
+        xFix = x - xView;
+        yFix = y - yView;
+        try {
+          final FantastleObjectModel obj1 = bd.getBattleMaze().getCell(y, x, 0,
+              Layers.GROUND);
+          final FantastleObjectModel obj2 = bd.getBattleMaze().getCell(y, x, 0,
+              Layers.OBJECT);
+          String cacheName = generateCacheName(obj1, obj2);
+          final BufferedImageIcon icon1 = obj1.getBattleImage();
+          final BufferedImageIcon icon2 = obj2.getBattleImage();
+          this.drawGrid.setImageCell(
+              ImageCompositor.composite(cacheName, icon1, icon2), xFix, yFix);
+        } catch (final ArrayIndexOutOfBoundsException ae) {
+          final Nothing ev = new Nothing();
+          this.drawGrid.setImageCell(ev.getBattleImage(), xFix, yFix);
         }
       }
-      this.battlePane.repaint();
-      this.battleFrame.pack();
     }
+    this.battlePane.repaint();
+    this.battleFrame.pack();
   }
 
   void redrawOneBattleSquare(final MapTurnBattleDefinitions bd, final int x,
       final int y, final FantastleObjectModel obj3) {
-    // Draw the battle, if it is visible
-    if (this.battleFrame.isVisible()) {
-      try {
-        int xFix, yFix;
-        final int xView = this.vwMgr.getViewingWindowLocationX();
-        final int yView = this.vwMgr.getViewingWindowLocationY();
-        xFix = y - xView;
-        yFix = x - yView;
-        final FantastleObjectModel obj1 = bd.getBattleMaze().getCell(y, x, 0,
-            Layers.GROUND);
-        final FantastleObjectModel obj2 = bd.getBattleMaze().getCell(y, x, 0,
-            Layers.OBJECT);
-        String cacheName = generateCacheName(obj1, obj2, obj3);
-        final BufferedImageIcon icon1 = obj1.getBattleImage();
-        final BufferedImageIcon icon2 = obj2.getBattleImage();
-        final BufferedImageIcon icon3 = obj3.getBattleImage();
-        this.drawGrid.setImageCell(
-            ImageCompositor.composite(cacheName, icon1, icon2, icon3), xFix,
-            yFix);
-        this.battlePane.repaint();
-      } catch (final ArrayIndexOutOfBoundsException ae) {
-        // Do nothing
-      }
-      this.battleFrame.pack();
+    // Draw the battle
+    try {
+      int xFix, yFix;
+      final int xView = this.vwMgr.getViewingWindowLocationX();
+      final int yView = this.vwMgr.getViewingWindowLocationY();
+      xFix = y - xView;
+      yFix = x - yView;
+      final FantastleObjectModel obj1 = bd.getBattleMaze().getCell(y, x, 0,
+          Layers.GROUND);
+      final FantastleObjectModel obj2 = bd.getBattleMaze().getCell(y, x, 0,
+          Layers.OBJECT);
+      String cacheName = generateCacheName(obj1, obj2, obj3);
+      final BufferedImageIcon icon1 = obj1.getBattleImage();
+      final BufferedImageIcon icon2 = obj2.getBattleImage();
+      final BufferedImageIcon icon3 = obj3.getBattleImage();
+      this.drawGrid.setImageCell(
+          ImageCompositor.composite(cacheName, icon1, icon2, icon3), xFix,
+          yFix);
+      this.battlePane.repaint();
+    } catch (final ArrayIndexOutOfBoundsException ae) {
+      // Do nothing
     }
+    this.battleFrame.pack();
   }
 
   private static String

@@ -13,7 +13,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,7 +29,7 @@ import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 
 class GameGUI {
   // Fields
-  private static JFrame outputFrame;
+  private static MainWindow outputFrame;
   private static Container borderPane;
   private static JLabel messageLabel;
   private static DrawGrid drawGrid;
@@ -52,12 +51,12 @@ class GameGUI {
   }
 
   public static void enableEvents() {
-    GameGUI.outputFrame.setEnabled(true);
+    GameGUI.borderPane.setEnabled(true);
     GameGUI.eventFlag = true;
   }
 
   public static void disableEvents() {
-    GameGUI.outputFrame.setEnabled(false);
+    GameGUI.borderPane.setEnabled(false);
     GameGUI.eventFlag = false;
   }
 
@@ -65,10 +64,6 @@ class GameGUI {
     GameGUI.setUpGUI();
     GameGUI.updateGameGUI();
     GameGUI.deferredRedraw = true;
-  }
-
-  public static JFrame getOutputFrame() {
-    return GameGUI.outputFrame;
   }
 
   public static void showOutput() {
@@ -106,7 +101,6 @@ class GameGUI {
 
   public static void redrawMaze() {
     // Draw the maze, if it is visible
-    if (GameGUI.outputFrame.isVisible()) {
       GameGUI.drawingThread.requestDraw();
       if (GameGUI.knm) {
         GameGUI.knm = false;
@@ -114,13 +108,12 @@ class GameGUI {
         GameGUI.setStatusMessage(" ");
       }
       GameGUI.outputFrame.pack();
-    }
   }
 
   public static void redrawOneSquare(final int inX, final int inY,
       final FantastleObjectModel obj5) {
     // Draw the maze, if it is visible
-    if (GameGUI.outputFrame.isVisible() && obj5 != null) {
+    if (obj5 != null) {
       GameGUI.drawingThread.requestDrawOne(inX, inY, obj5);
       if (GameGUI.knm) {
         GameGUI.knm = false;

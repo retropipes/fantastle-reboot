@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -24,7 +23,7 @@ import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 
 public class StatisticsViewer {
   // Fields
-  static JFrame statisticsFrame;
+  static MainWindow statisticsFrame;
   private static JPanel statisticsPane;
   private static JPanel contentPane;
   private static JPanel buttonPane;

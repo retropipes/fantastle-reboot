@@ -22,7 +22,6 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
@@ -39,7 +38,7 @@ import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 
 class Loader extends Thread {
-  private JFrame waitFrame;
+  private MainWindow waitFrame;
   private JLabel waitLabel;
   private JProgressBar waitProgress;
 
@@ -53,7 +52,7 @@ class Loader extends Thread {
     this.waitProgress.setMinimum(0);
     this.waitProgress.setMaximum(100);
     this.waitProgress.setValue(0);
-    Container content = this.waitFrame.getContentPane();
+    Container content = new Container();
     content.setLayout(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
     c.gridx = 0;
@@ -61,6 +60,7 @@ class Loader extends Thread {
     content.add(this.waitLabel, c);
     c.gridy = 1;
     content.add(this.waitProgress, c);
+    this.waitFrame.setContentPane(content);
   }
 
   @Override

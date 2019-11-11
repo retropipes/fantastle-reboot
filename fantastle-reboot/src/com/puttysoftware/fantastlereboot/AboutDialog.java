@@ -30,7 +30,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
@@ -39,7 +38,7 @@ import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 
 public class AboutDialog implements AboutHandler {
   // Fields
-  private JFrame aboutFrame;
+  private MainWindow aboutFrame;
   private Container aboutPane, textPane, buttonPane, logoPane;
   private JButton aboutOK;
   private EventHandler handler;
@@ -59,7 +58,7 @@ public class AboutDialog implements AboutHandler {
     FantastleReboot.getBagOStuff().setInAbout();
     this.aboutFrame = MainWindow.getOutputFrame();
     this.aboutFrame.setTitle("About Fantastle");
-    this.aboutFrame.getRootPane().setDefaultButton(this.aboutOK);
+    this.aboutFrame.setDefaultButton(this.aboutOK);
     this.aboutFrame.addWindowListener(this.handler);
     this.aboutFrame.setContentPane(this.aboutPane);
     this.aboutFrame.pack();
@@ -124,7 +123,7 @@ public class AboutDialog implements AboutHandler {
 
     @Override
     public void windowClosing(WindowEvent inE) {
-      AboutDialog.this.aboutFrame.getRootPane().setDefaultButton(null);
+      AboutDialog.this.aboutFrame.setDefaultButton(null);
       AboutDialog.this.aboutFrame.removeWindowListener(this);
       FantastleReboot.getBagOStuff().restoreFormerMode();
     }

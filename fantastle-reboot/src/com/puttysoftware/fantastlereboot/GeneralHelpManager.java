@@ -23,15 +23,13 @@ import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import javax.swing.JFrame;
-
 import com.puttysoftware.fantastlereboot.loaders.HelpLoader;
 import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 import com.puttysoftware.help.HTMLHelpViewer;
 
 public class GeneralHelpManager {
   // Fields
-  private JFrame helpFrame;
+  private MainWindow helpFrame;
   private final EventHandler handler = new EventHandler();
   private final Container helpContent;
   private final HTMLHelpViewer hv;

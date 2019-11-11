@@ -5,11 +5,11 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.savedgames;
 
+import java.awt.Container;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
@@ -26,18 +26,12 @@ import com.puttysoftware.fileutils.ZipUtilities;
 public class GameLoadTask extends Thread {
   // Fields
   private final String filename;
-  private final JFrame loadFrame;
+  private MainWindow loadFrame;
 
   // Constructors
   public GameLoadTask(final String file) {
     this.filename = file;
     this.setName("Game Loader");
-    this.loadFrame = MainWindow.getOutputFrame();
-    this.loadFrame.setTitle("Loading");
-    final JProgressBar loadBar = new JProgressBar();
-    loadBar.setIndeterminate(true);
-    this.loadFrame.getContentPane().add(loadBar);
-    this.loadFrame.pack();
   }
 
   // Methods
@@ -46,6 +40,14 @@ public class GameLoadTask extends Thread {
     final String sg = "Game";
     final File mazeFile = new File(this.filename);
     try {
+      this.loadFrame = MainWindow.getOutputFrame();
+      this.loadFrame.setTitle("Loading");
+      final JProgressBar loadBar = new JProgressBar();
+      loadBar.setIndeterminate(true);
+      final Container content = new Container();
+      content.add(loadBar);
+      this.loadFrame.setContentPane(content);
+      this.loadFrame.pack();
       this.loadFrame.setVisible(true);
       final BagOStuff app = FantastleReboot.getBagOStuff();
       int startW;
