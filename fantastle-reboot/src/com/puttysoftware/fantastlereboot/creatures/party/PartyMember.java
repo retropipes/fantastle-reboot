@@ -7,8 +7,6 @@ package com.puttysoftware.fantastlereboot.creatures.party;
 
 import java.io.IOException;
 
-import com.puttysoftware.fantastlereboot.PreferencesManager;
-import com.puttysoftware.fantastlereboot.VersionException;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.castes.Caste;
@@ -19,6 +17,8 @@ import com.puttysoftware.fantastlereboot.creatures.personalities.Personality;
 import com.puttysoftware.fantastlereboot.creatures.races.Race;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
 import com.puttysoftware.fantastlereboot.game.Game;
+import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.VersionException;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.loaders.AvatarImageLoader;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;

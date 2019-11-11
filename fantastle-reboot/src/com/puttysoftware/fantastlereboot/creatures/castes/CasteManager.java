@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.creatures.castes;
 
-import com.puttysoftware.fantastlereboot.Messager;
+import com.puttysoftware.fantastlereboot.gui.Messager;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
 import com.puttysoftware.fantastlereboot.spells.SpellBookManager;
 

@@ -4,13 +4,13 @@ import javax.swing.JOptionPane;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
+import com.puttysoftware.fantastlereboot.gui.Messager;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;

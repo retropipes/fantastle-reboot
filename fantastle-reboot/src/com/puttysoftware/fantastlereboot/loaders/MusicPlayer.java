@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.Properties;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
+import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.loaders.mod.ModuleLoader;
 import com.puttysoftware.randomrange.RandomRange;
 

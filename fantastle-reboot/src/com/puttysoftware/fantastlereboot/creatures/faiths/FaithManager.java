@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.Hashtable;
 
 import com.puttysoftware.diane.loaders.ColorShader;
-import com.puttysoftware.fantastlereboot.Messager;
+import com.puttysoftware.fantastlereboot.gui.Messager;
 import com.puttysoftware.fantastlereboot.loaders.DataLoader;
 import com.puttysoftware.randomrange.RandomRange;
 

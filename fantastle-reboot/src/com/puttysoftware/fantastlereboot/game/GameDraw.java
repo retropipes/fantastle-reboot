@@ -6,9 +6,9 @@ import javax.swing.JPanel;
 
 import com.puttysoftware.diane.loaders.ImageCompositor;
 import com.puttysoftware.fantastlereboot.BagOStuff;
-import com.puttysoftware.fantastlereboot.DrawGrid;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.DrawGrid;
+import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MonsterLocationManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;

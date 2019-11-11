@@ -18,6 +18,8 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot;
 
+import javax.swing.JMenuBar;
+
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
@@ -28,6 +30,12 @@ import com.puttysoftware.fantastlereboot.battle.window.time.WindowTimeBattleLogi
 import com.puttysoftware.fantastlereboot.battle.window.turn.WindowTurnBattleLogic;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.Game;
+import com.puttysoftware.fantastlereboot.gui.AboutDialog;
+import com.puttysoftware.fantastlereboot.gui.GUIManager;
+import com.puttysoftware.fantastlereboot.gui.GeneralHelpManager;
+import com.puttysoftware.fantastlereboot.gui.MenuManager;
+import com.puttysoftware.fantastlereboot.gui.PluginLoader;
+import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
@@ -38,6 +46,7 @@ import com.puttysoftware.updater.ProductData;
 
 public class BagOStuff {
   // Fields
+  private JMenuBar mainMenuBar;
   private AboutDialog about;
   private MazeManager mazeMgr;
   private MenuManager menuMgr;
@@ -92,7 +101,8 @@ public class BagOStuff {
     this.about = new AboutDialog(BagOStuff.getVersionString());
     this.guiMgr = new GUIManager();
     this.mazeMgr = new MazeManager();
-    this.menuMgr = new MenuManager();
+    this.mainMenuBar = new JMenuBar();
+    this.menuMgr = new MenuManager(this.mainMenuBar);
     this.gHelpMgr = new GeneralHelpManager();
     this.windowTurnBattle = new WindowTurnBattleLogic();
     this.windowTimeBattle = new WindowTimeBattleLogic();
@@ -109,6 +119,7 @@ public class BagOStuff {
     this.socks = new Shop(ShopTypes.SOCKS);
     this.enhancements = new Shop(ShopTypes.ENHANCEMENTS);
     this.faiths = new Shop(ShopTypes.FAITH_POWERS);
+    FantastleReboot.attachMenus(this.mainMenuBar);
     // Attempt to load extras
     final Object extras = PluginLoader.loadPlugin("ExtrasPlugin");
     PluginLoader.addPluginMenus(extras);

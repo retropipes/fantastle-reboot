@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ai.map;
 
-import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 
 public final class MapAIRoutinePicker {
   // Constructors

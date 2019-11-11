@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Any questions should be directed to the author via email at: fantastle@worldwizard.net
  */
-package com.puttysoftware.fantastlereboot;
+package com.puttysoftware.fantastlereboot.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -33,6 +33,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 

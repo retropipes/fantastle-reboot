@@ -24,8 +24,8 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 
 import com.puttysoftware.diane.utilties.DirectionResolver;
-import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.game.Game;
+import com.puttysoftware.fantastlereboot.gui.Messager;
 
 public class EffectManager {
   // Fields

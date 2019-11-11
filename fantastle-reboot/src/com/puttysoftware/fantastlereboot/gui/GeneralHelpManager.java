@@ -16,13 +16,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Any questions should be directed to the author via email at: fantastle@worldwizard.net
  */
-package com.puttysoftware.fantastlereboot;
+package com.puttysoftware.fantastlereboot.gui;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.loaders.HelpLoader;
 import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 import com.puttysoftware.help.HTMLHelpViewer;

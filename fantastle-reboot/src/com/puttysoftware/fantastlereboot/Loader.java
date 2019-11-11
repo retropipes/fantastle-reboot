@@ -28,6 +28,7 @@ import javax.swing.JProgressBar;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
+import com.puttysoftware.fantastlereboot.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.loaders.AttributeImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.AvatarImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.BossImageLoader;

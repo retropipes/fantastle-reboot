@@ -5,8 +5,8 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.battle.damageengines;
 
-import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
+import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 
 public abstract class AbstractDamageEngine {
   // Methods

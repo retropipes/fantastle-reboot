@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.ai.window;
 
-import com.puttysoftware.fantastlereboot.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 
 public final class WindowAIRoutinePicker {
   // Methods

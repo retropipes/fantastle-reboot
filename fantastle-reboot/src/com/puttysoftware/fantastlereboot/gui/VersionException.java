@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot;
+package com.puttysoftware.fantastlereboot.gui;
 
 import java.io.IOException;
 

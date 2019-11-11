@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.VersionException;
+import com.puttysoftware.fantastlereboot.gui.VersionException;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Tile;

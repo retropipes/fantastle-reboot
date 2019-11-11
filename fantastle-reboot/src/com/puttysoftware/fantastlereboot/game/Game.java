@@ -8,13 +8,13 @@ package com.puttysoftware.fantastlereboot.game;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.Messager;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
+import com.puttysoftware.fantastlereboot.gui.Messager;
 import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.GenerateTask;
@@ -345,7 +345,6 @@ public final class Game {
       }
       // Make sure message area is attached to the border pane
       bag.getMenuManager().setGameMenus();
-      bag.getMenuManager().attachMenus();
       GameGUI.updateGameGUI();
       // Make sure initial area player is in is visible
       final int px = m.getPlayerLocationX();

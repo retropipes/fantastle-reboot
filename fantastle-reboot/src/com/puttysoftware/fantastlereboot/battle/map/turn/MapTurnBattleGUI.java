@@ -22,16 +22,16 @@ import javax.swing.KeyStroke;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.diane.loaders.ImageCompositor;
-import com.puttysoftware.fantastlereboot.DrawGrid;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.MainWindow;
-import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleDraw;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleEffects;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleViewingWindowManager;
+import com.puttysoftware.fantastlereboot.gui.DrawGrid;
+import com.puttysoftware.fantastlereboot.gui.MainWindow;
+import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
@@ -85,7 +85,6 @@ class MapTurnBattleGUI {
     this.battleFrame.setTitle("Battle");
     this.battleFrame.setContentPane(this.borderPane);
     this.battleFrame.addKeyListener(this.handler);
-    FantastleReboot.getBagOStuff().getMenuManager().attachMenus();
   }
 
   void hideBattle() {

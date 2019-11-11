@@ -1,10 +1,12 @@
-package com.puttysoftware.fantastlereboot;
+package com.puttysoftware.fantastlereboot.gui;
 
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 
 import javax.swing.JMenu;
+
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 
 public class PluginLoader {
   public static Object loadPlugin(final String name) {

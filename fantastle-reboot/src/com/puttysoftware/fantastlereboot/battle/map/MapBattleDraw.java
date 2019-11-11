@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import com.puttysoftware.fantastlereboot.DrawGrid;
+import com.puttysoftware.fantastlereboot.gui.DrawGrid;
 import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 
 public class MapBattleDraw extends JPanel {

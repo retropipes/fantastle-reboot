@@ -26,6 +26,8 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.errorlogger.ErrorLogger;
 import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
+import com.puttysoftware.fantastlereboot.gui.PreferencesLauncher;
+import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.integration.NativeIntegration;
 
@@ -88,7 +90,7 @@ public class FantastleReboot {
     FantastleReboot.IN_FANTASTLE = false;
   }
 
-  public static void attachMenus(JMenuBar defaultMenuBar) {
+  static void attachMenus(JMenuBar defaultMenuBar) {
     NATIVITY.setDefaultMenuBar(defaultMenuBar);
   }
 

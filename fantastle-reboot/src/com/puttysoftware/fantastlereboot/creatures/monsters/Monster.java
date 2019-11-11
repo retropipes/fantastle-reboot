@@ -5,7 +5,6 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.creatures.monsters;
 
-import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.ai.map.AbstractMapAIRoutine;
 import com.puttysoftware.fantastlereboot.ai.map.MapAIRoutinePicker;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
@@ -15,6 +14,7 @@ import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
+import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.loaders.MonsterImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.MonsterNames;

@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Any questions should be directed to the author via email at: fantastle@worldwizard.net
  */
-package com.puttysoftware.fantastlereboot;
+package com.puttysoftware.fantastlereboot.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +30,8 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.fantastlereboot.BagOStuff;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.characterfiles.CharacterRegistration;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.Game;
@@ -42,7 +44,7 @@ import com.puttysoftware.fantastlereboot.maze.MazeManager;
 
 public class MenuManager {
   // Fields
-  private JMenuBar mainMenuBar;
+  private final JMenuBar mainMenuBar;
   private JMenu fileMenu, editMenu, gameMenu, debugMenu, helpMenu;
   private JMenu playMenu;
   private JMenuItem fileNew;
@@ -75,7 +77,8 @@ public class MenuManager {
   private final EventHandler handler;
 
   // Constructors
-  public MenuManager() {
+  public MenuManager(final JMenuBar menuBar) {
+    this.mainMenuBar = menuBar;
     this.handler = new EventHandler();
     this.createAccelerators();
     this.createMenus();
@@ -85,10 +88,6 @@ public class MenuManager {
   // Methods
   public void appendNewMenu(JMenu newMenu) {
     this.mainMenuBar.add(newMenu);
-  }
-
-  public void attachMenus() {
-    FantastleReboot.attachMenus(this.mainMenuBar);
   }
 
   public void setGameMenus() {
@@ -402,7 +401,6 @@ public class MenuManager {
   }
 
   private void createMenus() {
-    this.mainMenuBar = new JMenuBar();
     this.fileMenu = new JMenu("File");
     this.editMenu = new JMenu("Edit");
     this.playMenu = new JMenu("Play");

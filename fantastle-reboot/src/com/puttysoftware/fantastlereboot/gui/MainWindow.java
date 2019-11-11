@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot;
+package com.puttysoftware.fantastlereboot.gui;
 
 import java.awt.Container;
 import java.awt.event.KeyListener;

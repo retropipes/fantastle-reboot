@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot;
+package com.puttysoftware.fantastlereboot.gui;
 
 import java.awt.desktop.PreferencesEvent;
 import java.awt.desktop.PreferencesHandler;

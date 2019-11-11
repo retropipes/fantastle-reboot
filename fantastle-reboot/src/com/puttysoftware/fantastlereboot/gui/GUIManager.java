@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Any questions should be directed to the author via email at: fantastle@worldwizard.net
  */
-package com.puttysoftware.fantastlereboot;
+package com.puttysoftware.fantastlereboot.gui;
 
 import java.awt.Container;
 import java.awt.GridLayout;
@@ -25,6 +25,8 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.puttysoftware.fantastlereboot.BagOStuff;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -55,7 +57,6 @@ public class GUIManager {
     this.guiFrame.pack();
     final BagOStuff app = FantastleReboot.getBagOStuff();
     app.setInGUI();
-    app.getMenuManager().attachMenus();
     app.getMenuManager().setMainMenus();
     app.getMenuManager().checkFlags();
   }

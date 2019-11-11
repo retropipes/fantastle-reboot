@@ -20,7 +20,7 @@ package com.puttysoftware.fantastlereboot.game;
 
 import java.io.File;
 
-import com.puttysoftware.fantastlereboot.Messager;
+import com.puttysoftware.fantastlereboot.gui.Messager;
 import com.puttysoftware.fantastlereboot.maze.Extension;
 import com.puttysoftware.scoremanager.SavedScoreManager;
 import com.puttysoftware.scoremanager.ScoreManager;

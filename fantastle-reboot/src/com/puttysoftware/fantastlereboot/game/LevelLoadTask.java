@@ -11,8 +11,8 @@ import javax.swing.JProgressBar;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.MainWindow;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 
 public class LevelLoadTask extends Thread {

@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.creatures.genders;
 
-import com.puttysoftware.fantastlereboot.Messager;
+import com.puttysoftware.fantastlereboot.gui.Messager;
 
 public class GenderManager {
   private static boolean CACHE_CREATED = false;

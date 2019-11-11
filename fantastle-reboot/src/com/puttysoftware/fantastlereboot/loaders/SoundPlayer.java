@@ -5,9 +5,9 @@ import java.util.Properties;
 
 import com.puttysoftware.diane.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.PreferencesManager;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
+import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class SoundPlayer {

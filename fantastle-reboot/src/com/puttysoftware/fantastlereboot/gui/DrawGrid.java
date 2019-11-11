@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot;
+package com.puttysoftware.fantastlereboot.gui;
 
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.storage.ObjectStorage;

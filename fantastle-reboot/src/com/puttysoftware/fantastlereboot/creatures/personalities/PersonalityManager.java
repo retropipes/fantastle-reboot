@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.creatures.personalities;
 
-import com.puttysoftware.fantastlereboot.Messager;
+import com.puttysoftware.fantastlereboot.gui.Messager;
 
 public class PersonalityManager {
   private static boolean CACHE_CREATED = false;

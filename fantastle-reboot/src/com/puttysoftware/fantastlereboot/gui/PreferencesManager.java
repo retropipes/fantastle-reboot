@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Any questions should be directed to the author via email at: fantastle@worldwizard.net
  */
-package com.puttysoftware.fantastlereboot;
+package com.puttysoftware.fantastlereboot.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -42,6 +42,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 
+import com.puttysoftware.fantastlereboot.BagOStuff;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.maze.Extension;
@@ -264,7 +266,6 @@ public class PreferencesManager {
       PreferencesManager.prefFrame.pack();
       final BagOStuff app = FantastleReboot.getBagOStuff();
       app.setInPrefs();
-      app.getMenuManager().attachMenus();
       app.getMenuManager().setPrefMenus();
     }
   }
