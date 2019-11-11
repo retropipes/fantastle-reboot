@@ -432,34 +432,37 @@ public class MazeEditor {
   }
 
   public void editMaze() {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    if (app.getMazeManager().getLoaded()) {
-      app.getGUIManager().hideGUI();
-      app.setInEditor();
+    final BagOStuff bag = FantastleReboot.getBagOStuff();
+    if (bag.getMazeManager().getLoaded()) {
+      bag.getGUIManager().hideGUI();
+      bag.setInEditor();
       // Reset game state
       Game.resetGameState();
       // Create the managers
       if (this.mazeChanged) {
         this.elMgr = new EditorLocationManager();
         this.evMgr = new EditorViewingWindowManager();
-        final int mazeSizeX = app.getMazeManager().getMaze().getRows();
-        final int mazeSizeY = app.getMazeManager().getMaze().getColumns();
-        app.getEditor().getViewManager()
+        final int mazeSizeX = bag.getMazeManager().getMaze().getRows();
+        final int mazeSizeY = bag.getMazeManager().getMaze().getColumns();
+        bag.getEditor().getViewManager()
             .halfOffsetMaximumViewingWindowLocation(mazeSizeX, mazeSizeY);
         this.mazeChanged = false;
       }
       // Reset the level
       this.elMgr.setEditorLocationZ(0);
       this.elMgr.setEditorLocationW(0);
-      this.elMgr.setLimitsFromMaze(app.getMazeManager().getMaze());
+      this.elMgr.setLimitsFromMaze(bag.getMazeManager().getMaze());
       this.evMgr.halfOffsetMaximumViewingWindowLocationsFromMaze(
-          app.getMazeManager().getMaze());
+          bag.getMazeManager().getMaze());
       this.setUpGUI();
       this.clearHistory();
       this.checkMenus();
       this.borderPane.removeAll();
       this.borderPane.add(this.outputPane, BorderLayout.CENTER);
       this.borderPane.add(this.picker.getPicker(), BorderLayout.EAST);
+      bag.getMenuManager().attachMenus();
+      bag.getMenuManager().setEditorMenus();
+      this.showOutput();
       this.redrawEditor();
     } else {
       Messager.showDialog("No Maze Opened");
@@ -567,8 +570,7 @@ public class MazeEditor {
                         / 2);
               }
               app.getMazeManager().getMaze().fill(
-                  PreferencesManager.getEditorDefaultFill(),
-                  new OpenSpace());
+                  PreferencesManager.getEditorDefaultFill(), new OpenSpace());
               this.checkMenus();
             }
           } catch (final NumberFormatException nf) {
@@ -626,33 +628,24 @@ public class MazeEditor {
   }
 
   public void showOutput() {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    app.getMenuManager().attachMenus();
-    app.getMenuManager().setEditorMenus();
+    this.outputFrame = MainWindow.getOutputFrame();
+    this.outputFrame.setContentPane(this.borderPane);
+    this.outputFrame.addWindowListener(this.mhandler);
     this.outputFrame.setVisible(true);
   }
 
   public void hideOutput() {
-    if (this.outputFrame != null) {
-      this.outputFrame.setVisible(false);
-    }
+    this.outputFrame.removeWindowListener(this.mhandler);
+    this.outputFrame.setVisible(false);
   }
 
   void disableOutput() {
-    this.outputFrame.setEnabled(false);
+    this.outputPane.setEnabled(false);
   }
 
   void enableOutput() {
-    this.outputFrame.setEnabled(true);
+    this.outputPane.setEnabled(true);
     this.checkMenus();
-  }
-
-  public JFrame getOutputFrame() {
-    if (this.outputFrame != null && this.outputFrame.isVisible()) {
-      return this.outputFrame;
-    } else {
-      return null;
-    }
   }
 
   public void exitEditor() {
@@ -668,16 +661,10 @@ public class MazeEditor {
   }
 
   private void setUpGUI() {
-    // Destroy the old GUI, if one exists
-    if (this.outputFrame != null) {
-      this.outputFrame.dispose();
-    }
-    this.outputFrame = MainWindow.getOutputFrame();
     this.outputPane = new Container();
     this.secondaryPane = new Container();
     this.borderPane = new Container();
     this.borderPane.setLayout(new BorderLayout());
-    this.outputFrame.setContentPane(this.borderPane);
     this.drawGrid = new JLabel[EditorViewingWindowManager
         .getViewingWindowSizeX()][EditorViewingWindowManager
             .getViewingWindowSizeY()];
@@ -729,7 +716,6 @@ public class MazeEditor {
     this.horzScroll.addAdjustmentListener(this.mhandler);
     this.vertScroll.addAdjustmentListener(this.mhandler);
     this.secondaryPane.addMouseListener(this.mhandler);
-    this.outputFrame.addWindowListener(this.mhandler);
     this.updatePicker();
     this.borderPane.add(this.picker.getPicker(), BorderLayout.EAST);
   }

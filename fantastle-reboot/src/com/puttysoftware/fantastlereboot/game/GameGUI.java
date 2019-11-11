@@ -36,6 +36,7 @@ class GameGUI {
   private static DrawGrid drawGrid;
   private static JPanel outputPane;
   private static GameDraw drawingThread;
+  private static final EventHandler handler = new EventHandler();
   private static boolean knm;
   private static boolean deferredRedraw = false;
   private static boolean eventFlag = true;
@@ -71,23 +72,23 @@ class GameGUI {
   }
 
   public static void showOutput() {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    if (!GameGUI.outputFrame.isVisible()) {
-      app.getMenuManager().setGameMenus();
-      GameGUI.outputFrame.setVisible(true);
-      app.getMenuManager().attachMenus();
-      if (GameGUI.deferredRedraw) {
-        GameGUI.deferredRedraw = false;
-        GameGUI.redrawMaze();
-      }
-      GameGUI.updateStats();
+    GameGUI.outputFrame = MainWindow.getOutputFrame();
+    GameGUI.outputFrame.setTitle("Game");
+    GameGUI.outputFrame.setContentPane(GameGUI.borderPane);
+    GameGUI.outputFrame.addKeyListener(handler);
+    GameGUI.outputFrame.addWindowListener(handler);
+    GameGUI.outputFrame.setVisible(true);
+    if (GameGUI.deferredRedraw) {
+      GameGUI.deferredRedraw = false;
+      GameGUI.redrawMaze();
     }
+    GameGUI.updateStats();
   }
 
   public static void hideOutput() {
-    if (GameGUI.outputFrame != null) {
-      GameGUI.outputFrame.setVisible(false);
-    }
+    GameGUI.outputFrame.removeWindowListener(handler);
+    GameGUI.outputFrame.removeKeyListener(handler);
+    GameGUI.outputFrame.setVisible(false);
   }
 
   public static void setStatusMessage(final String msg) {
@@ -113,7 +114,6 @@ class GameGUI {
         GameGUI.setStatusMessage(" ");
       }
       GameGUI.outputFrame.pack();
-      GameGUI.showOutput();
     }
   }
 
@@ -129,7 +129,6 @@ class GameGUI {
       }
       GameGUI.outputPane.repaint();
       GameGUI.outputFrame.pack();
-      GameGUI.showOutput();
     }
   }
 
@@ -144,13 +143,10 @@ class GameGUI {
   }
 
   private static void setUpGUI() {
-    final EventHandler handler = new EventHandler();
     GameGUI.borderPane = new Container();
     GameGUI.borderPane.setLayout(new BorderLayout());
     GameGUI.messageLabel = new JLabel(" ");
     GameGUI.messageLabel.setOpaque(true);
-    GameGUI.outputFrame = MainWindow.getOutputFrame();
-    GameGUI.outputFrame.setTitle("Game");
     GameGUI.drawGrid = new DrawGrid(PreferencesManager.getViewingWindowSize());
     GameGUI.outputPane = new JPanel();
     final int vSize = PreferencesManager.getViewingWindowSize();
@@ -159,9 +155,6 @@ class GameGUI {
         .setPreferredSize(new Dimension(vSize * gSize, vSize * gSize));
     GameGUI.drawingThread = new GameDraw(GameGUI.drawGrid, GameGUI.outputPane);
     GameGUI.drawingThread.start();
-    GameGUI.outputFrame.setContentPane(GameGUI.borderPane);
-    GameGUI.outputFrame.addKeyListener(handler);
-    GameGUI.outputFrame.addWindowListener(handler);
   }
 
   private static class EventHandler implements KeyListener, WindowListener {

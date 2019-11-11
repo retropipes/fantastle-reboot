@@ -342,23 +342,27 @@ public final class Game {
   }
 
   public static void playMaze() {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
-    if (app.getMazeManager().getLoaded()) {
-      app.getGUIManager().hideGUI();
+    final BagOStuff bag = FantastleReboot.getBagOStuff();
+    final Maze m = bag.getMazeManager().getMaze();
+    if (bag.getMazeManager().getLoaded()) {
+      bag.getGUIManager().hideGUI();
       if (Game.stateChanged) {
         // Initialize only if the maze state has changed
-        app.getMazeManager().getMaze()
-            .switchLevel(app.getMazeManager().getMaze().getStartLevel());
+        bag.getMazeManager().getMaze()
+            .switchLevel(bag.getMazeManager().getMaze().getStartLevel());
         Game.stateChanged = false;
       }
       // Make sure message area is attached to the border pane
+      bag.getMenuManager().setGameMenus();
+      bag.getMenuManager().attachMenus();
       GameGUI.updateGameGUI();
       // Make sure initial area player is in is visible
       final int px = m.getPlayerLocationX();
       final int py = m.getPlayerLocationY();
       final int pz = m.getPlayerLocationZ();
       m.updateVisibleSquares(px, py, pz);
+      bag.setInGame();
+      MusicPlayer.playMusic(MusicIndex.DUNGEON, MusicGroup.GAME);
       Game.showOutput();
       Game.redrawMaze();
     } else {
@@ -533,9 +537,6 @@ public final class Game {
   }
 
   public static void showOutput() {
-    final BagOStuff bag = FantastleReboot.getBagOStuff();
-    bag.setInGame();
-    MusicPlayer.playMusic(MusicIndex.DUNGEON, MusicGroup.GAME);
     GameGUI.showOutput();
   }
 

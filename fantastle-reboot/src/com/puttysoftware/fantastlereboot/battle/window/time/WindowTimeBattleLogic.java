@@ -668,7 +668,7 @@ public class WindowTimeBattleLogic extends Battle {
     final Maze m = bag.getMazeManager().getMaze();
     MonsterLocationManager.postBattle(m, this.bx, this.by);
     // Return to whence we came
-    Game.showOutput();
+    bag.restoreFormerMode();
     Game.redrawMaze();
   }
 
