@@ -1284,8 +1284,6 @@ public class MapTimeBattleLogic extends Battle {
 
   @Override
   public void resetGUI() {
-    // Destroy old GUI
-    this.battleGUI.getOutputFrame().dispose();
     // Create new GUI
     this.battleGUI = new MapTimeBattleGUI();
   }

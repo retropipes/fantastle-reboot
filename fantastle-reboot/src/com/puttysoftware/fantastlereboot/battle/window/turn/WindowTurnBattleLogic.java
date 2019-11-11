@@ -62,12 +62,12 @@ public class WindowTurnBattleLogic extends Battle {
 
   @Override
   public void showBattle() {
-    this.battleGUI.getOutputFrame().setVisible(true);
+    this.battleGUI.showBattle();
   }
 
   @Override
   public void hideBattle() {
-    this.battleGUI.getOutputFrame().setVisible(false);
+    this.battleGUI.hideBattle();
   }
 
   @Override
@@ -484,7 +484,7 @@ public class WindowTurnBattleLogic extends Battle {
     this.displayBattleStats();
     this.setStatusMessage("*** End of Round ***");
     this.stripExtraNewLine();
-    this.battleGUI.getOutputFrame().pack();
+    this.battleGUI.pack();
   }
 
   final void updateMessageAreaEnemyFleeFailed() {
@@ -555,8 +555,6 @@ public class WindowTurnBattleLogic extends Battle {
 
   @Override
   public void resetGUI() {
-    // Destroy old GUI
-    this.battleGUI.getOutputFrame().dispose();
     // Create new GUI
     this.battleGUI = new WindowTurnBattleGUI();
   }
@@ -650,7 +648,7 @@ public class WindowTurnBattleLogic extends Battle {
   public final void battleDone() {
     BagOStuff bag = FantastleReboot.getBagOStuff();
     // Leave Battle
-    this.battleGUI.getOutputFrame().setVisible(false);
+    this.battleGUI.hideBattle();
     // Post-battle stuff
     final Maze m = bag.getMazeManager().getMaze();
     MonsterLocationManager.postBattle(m, this.bx, this.by);

@@ -47,6 +47,8 @@ class MapTurnBattleGUI {
   private final MapBattleViewingWindowManager vwMgr;
   private final MapTurnBattleStats bs;
   private final MapBattleEffects be;
+  private final EventHandler handler = new EventHandler();
+  private Container borderPane;
   private DrawGrid drawGrid;
   boolean eventHandlersOn;
   private JButton spell, steal, drain, item, end;
@@ -62,10 +64,6 @@ class MapTurnBattleGUI {
   }
 
   // Methods
-  JFrame getOutputFrame() {
-    return this.battleFrame;
-  }
-
   MapBattleViewingWindowManager getViewManager() {
     return this.vwMgr;
   }
@@ -84,14 +82,17 @@ class MapTurnBattleGUI {
   }
 
   void showBattle() {
+    this.battleFrame = MainWindow.getOutputFrame();
+    this.battleFrame.setTitle("Battle");
+    this.battleFrame.setContentPane(this.borderPane);
+    this.battleFrame.addKeyListener(this.handler);
     this.battleFrame.setVisible(true);
     FantastleReboot.getBagOStuff().getMenuManager().attachMenus();
   }
 
   void hideBattle() {
-    if (this.battleFrame != null) {
-      this.battleFrame.setVisible(false);
-    }
+    this.battleFrame.removeKeyListener(this.handler);
+    this.battleFrame.setVisible(false);
   }
 
   void redrawBattle(final MapTurnBattleDefinitions bd) {
@@ -174,15 +175,11 @@ class MapTurnBattleGUI {
   }
 
   private void setUpGUI() {
-    final EventHandler handler = new EventHandler();
-    final Container borderPane = new Container();
+    this.borderPane = new Container();
     final Container buttonPane = new Container();
-    borderPane.setLayout(new BorderLayout());
+    this.borderPane.setLayout(new BorderLayout());
     this.messageLabel = new JLabel(" ");
     this.messageLabel.setOpaque(true);
-    this.battleFrame = MainWindow.getOutputFrame();
-    this.battleFrame.setTitle("Battle");
-    this.battleFrame.setContentPane(borderPane);
     this.spell = new JButton("Cast Spell");
     this.steal = new JButton("Steal");
     this.drain = new JButton("Drain");
@@ -199,11 +196,11 @@ class MapTurnBattleGUI {
     this.drain.setFocusable(false);
     this.item.setFocusable(false);
     this.end.setFocusable(false);
-    this.spell.addActionListener(handler);
-    this.steal.addActionListener(handler);
-    this.drain.addActionListener(handler);
-    this.item.addActionListener(handler);
-    this.end.addActionListener(handler);
+    this.spell.addActionListener(this.handler);
+    this.steal.addActionListener(this.handler);
+    this.drain.addActionListener(this.handler);
+    this.item.addActionListener(this.handler);
+    this.end.addActionListener(this.handler);
     int modKey;
     if (System.getProperty("os.name").equalsIgnoreCase("Mac OS X")) {
       modKey = InputEvent.META_DOWN_MASK;
@@ -212,19 +209,19 @@ class MapTurnBattleGUI {
     }
     this.spell.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
         .put(KeyStroke.getKeyStroke(KeyEvent.VK_C, modKey), "Cast Spell");
-    this.spell.getActionMap().put("Cast Spell", handler);
+    this.spell.getActionMap().put("Cast Spell", this.handler);
     this.steal.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
         .put(KeyStroke.getKeyStroke(KeyEvent.VK_T, modKey), "Steal");
-    this.steal.getActionMap().put("Steal", handler);
+    this.steal.getActionMap().put("Steal", this.handler);
     this.drain.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
         .put(KeyStroke.getKeyStroke(KeyEvent.VK_D, modKey), "Drain");
-    this.drain.getActionMap().put("Drain", handler);
+    this.drain.getActionMap().put("Drain", this.handler);
     this.item.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
         .put(KeyStroke.getKeyStroke(KeyEvent.VK_I, modKey), "Use Item");
-    this.item.getActionMap().put("Use Item", handler);
+    this.item.getActionMap().put("Use Item", this.handler);
     this.end.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
         .put(KeyStroke.getKeyStroke(KeyEvent.VK_E, modKey), "End Turn");
-    this.end.getActionMap().put("End Turn", handler);
+    this.end.getActionMap().put("End Turn", this.handler);
     this.drawGrid = new DrawGrid(
         MapBattleViewingWindowManager.getViewingWindowSize());
     BufferedImageIcon darknessImage = ObjectImageLoader
@@ -237,12 +234,11 @@ class MapTurnBattleGUI {
       }
     }
     this.battlePane = new MapBattleDraw(this.drawGrid);
-    borderPane.add(this.battlePane, BorderLayout.CENTER);
-    borderPane.add(buttonPane, BorderLayout.WEST);
-    borderPane.add(this.messageLabel, BorderLayout.NORTH);
-    borderPane.add(this.bs.getStatsPane(), BorderLayout.EAST);
-    borderPane.add(this.be.getEffectsPane(), BorderLayout.SOUTH);
-    this.battleFrame.addKeyListener(handler);
+    this.borderPane.add(this.battlePane, BorderLayout.CENTER);
+    this.borderPane.add(buttonPane, BorderLayout.WEST);
+    this.borderPane.add(this.messageLabel, BorderLayout.NORTH);
+    this.borderPane.add(this.bs.getStatsPane(), BorderLayout.EAST);
+    this.borderPane.add(this.be.getEffectsPane(), BorderLayout.SOUTH);
   }
 
   void turnEventHandlersOff() {
@@ -303,7 +299,6 @@ class MapTurnBattleGUI {
 
     @Override
     public void keyPressed(final KeyEvent e) {
-
       if (!PreferencesManager.oneMove()) {
         if (e.isShiftDown()) {
           this.handleArrows(e);
@@ -315,7 +310,6 @@ class MapTurnBattleGUI {
 
     @Override
     public void keyReleased(final KeyEvent e) {
-
       if (PreferencesManager.oneMove()) {
         if (e.isShiftDown()) {
           this.handleArrows(e);

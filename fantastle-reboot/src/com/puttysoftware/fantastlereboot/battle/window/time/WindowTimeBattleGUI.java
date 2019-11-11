@@ -27,6 +27,7 @@ import com.puttysoftware.images.BufferedImageIcon;
 public class WindowTimeBattleGUI {
   // Fields
   JFrame battleFrame;
+  private final Container holderPane;
   private final JLabel iconLabel;
   private final JTextArea messageArea;
   private final JProgressBar myActionBar, enemyActionBar;
@@ -35,10 +36,8 @@ public class WindowTimeBattleGUI {
   // Constructor
   public WindowTimeBattleGUI() {
     // Initialize GUI
-    this.battleFrame = MainWindow.getOutputFrame();
-    this.battleFrame.setTitle("Battle");
-    Container holderPane, iconPane, messagePane, buttonPane, timerPane;
-    holderPane = new Container();
+    Container iconPane, messagePane, buttonPane, timerPane;
+    this.holderPane = new Container();
     iconPane = new Container();
     messagePane = new Container();
     buttonPane = new Container();
@@ -56,12 +55,11 @@ public class WindowTimeBattleGUI {
     this.drain = new JButton("Drain");
     this.item = new JButton("Use Item");
     this.done = new JButton("Continue");
-    this.battleFrame.getRootPane().setDefaultButton(this.done);
     iconPane.setLayout(new FlowLayout());
     messagePane.setLayout(new FlowLayout());
     buttonPane.setLayout(new GridLayout(4, 2));
     timerPane.setLayout(new FlowLayout());
-    holderPane.setLayout(new BorderLayout());
+    this.holderPane.setLayout(new BorderLayout());
     iconPane.add(this.iconLabel);
     messagePane.add(this.messageArea);
     buttonPane.add(this.attack);
@@ -73,13 +71,10 @@ public class WindowTimeBattleGUI {
     buttonPane.add(this.done);
     timerPane.add(this.myActionBar);
     timerPane.add(this.enemyActionBar);
-    holderPane.add(iconPane, BorderLayout.WEST);
-    holderPane.add(messagePane, BorderLayout.CENTER);
-    holderPane.add(buttonPane, BorderLayout.EAST);
-    holderPane.add(timerPane, BorderLayout.SOUTH);
-    this.battleFrame.setContentPane(holderPane);
-    this.battleFrame.setResizable(false);
-    this.battleFrame.pack();
+    this.holderPane.add(iconPane, BorderLayout.WEST);
+    this.holderPane.add(messagePane, BorderLayout.CENTER);
+    this.holderPane.add(buttonPane, BorderLayout.EAST);
+    this.holderPane.add(timerPane, BorderLayout.SOUTH);
     // Initialize Event Handlers
     final BattleEventHandler handler = new BattleEventHandler();
     this.attack.addActionListener(handler);
@@ -129,8 +124,22 @@ public class WindowTimeBattleGUI {
     this.battleFrame.setVisible(true);
   }
 
-  public JFrame getOutputFrame() {
-    return this.battleFrame;
+  final void showBattle() {
+    this.battleFrame = MainWindow.getOutputFrame();
+    this.battleFrame.setTitle("Battle");
+    this.battleFrame.setContentPane(this.holderPane);
+    this.battleFrame.getRootPane().setDefaultButton(this.done);
+    this.battleFrame.pack();
+    this.battleFrame.setVisible(true);
+  }
+
+  final void hideBattle() {
+    this.battleFrame.getRootPane().setDefaultButton(null);
+    this.battleFrame.setVisible(false);
+  }
+
+  final void pack() {
+    this.battleFrame.pack();
   }
 
   final void clearMessageArea() {

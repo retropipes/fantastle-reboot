@@ -27,16 +27,15 @@ public class WindowTurnBattleGUI {
   // Fields
   JFrame battleFrame;
   private final JLabel iconLabel;
+  private final Container holderPane;
   private final JTextArea messageArea;
   private final JButton attack, flee, spell, steal, drain, item, done;
 
   // Constructor
   public WindowTurnBattleGUI() {
     // Initialize GUI
-    this.battleFrame = MainWindow.getOutputFrame();
-    this.battleFrame.setTitle("Battle");
-    Container holderPane, iconPane, messagePane, buttonPane;
-    holderPane = new Container();
+    Container iconPane, messagePane, buttonPane;
+    this.holderPane = new Container();
     iconPane = new Container();
     messagePane = new Container();
     buttonPane = new Container();
@@ -51,11 +50,10 @@ public class WindowTurnBattleGUI {
     this.drain = new JButton("Drain");
     this.item = new JButton("Use Item");
     this.done = new JButton("Continue");
-    this.battleFrame.getRootPane().setDefaultButton(this.done);
     iconPane.setLayout(new FlowLayout());
     messagePane.setLayout(new FlowLayout());
     buttonPane.setLayout(new GridLayout(2, 4));
-    holderPane.setLayout(new BorderLayout());
+    this.holderPane.setLayout(new BorderLayout());
     iconPane.add(this.iconLabel);
     messagePane.add(this.messageArea);
     buttonPane.add(this.attack);
@@ -65,12 +63,9 @@ public class WindowTurnBattleGUI {
     buttonPane.add(this.drain);
     buttonPane.add(this.item);
     buttonPane.add(this.done);
-    holderPane.add(iconPane, BorderLayout.WEST);
-    holderPane.add(messagePane, BorderLayout.CENTER);
-    holderPane.add(buttonPane, BorderLayout.SOUTH);
-    this.battleFrame.setContentPane(holderPane);
-    this.battleFrame.setResizable(false);
-    this.battleFrame.pack();
+    this.holderPane.add(iconPane, BorderLayout.WEST);
+    this.holderPane.add(messagePane, BorderLayout.CENTER);
+    this.holderPane.add(buttonPane, BorderLayout.SOUTH);
     // Initialize Event Handlers
     final BattleEventHandler handler = new BattleEventHandler();
     this.attack.addActionListener(handler);
@@ -116,11 +111,25 @@ public class WindowTurnBattleGUI {
     this.drain.setEnabled(true);
     this.item.setEnabled(true);
     this.done.setEnabled(false);
+    this.showBattle();
+  }
+
+  final void showBattle() {
+    this.battleFrame = MainWindow.getOutputFrame();
+    this.battleFrame.setTitle("Battle");
+    this.battleFrame.setContentPane(this.holderPane);
+    this.battleFrame.getRootPane().setDefaultButton(this.done);
+    this.battleFrame.pack();
     this.battleFrame.setVisible(true);
   }
 
-  public JFrame getOutputFrame() {
-    return this.battleFrame;
+  final void hideBattle() {
+    this.battleFrame.getRootPane().setDefaultButton(null);
+    this.battleFrame.setVisible(false);
+  }
+
+  final void pack() {
+    this.battleFrame.pack();
   }
 
   final void clearMessageArea() {
