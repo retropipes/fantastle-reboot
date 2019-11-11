@@ -76,7 +76,8 @@ public class BagOStuff {
   public static final int STATUS_PREFS = 3;
   public static final int STATUS_BATTLE = 4;
   public static final int STATUS_ABOUT = 5;
-  public static final int STATUS_NULL = 6;
+  public static final int STATUS_HELP = 6;
+  public static final int STATUS_NULL = 7;
 
   // Constructors
   public BagOStuff() {
@@ -141,6 +142,11 @@ public class BagOStuff {
   public void setInAbout() {
     this.formerMode = this.currentMode;
     this.currentMode = BagOStuff.STATUS_ABOUT;
+  }
+
+  public void setInHelp() {
+    this.formerMode = this.currentMode;
+    this.currentMode = BagOStuff.STATUS_HELP;
   }
 
   public boolean inBattle() {
@@ -287,7 +293,8 @@ public class BagOStuff {
   }
 
   public void restoreFormerMode() {
-    switch (this.formerMode) {
+    this.currentMode = this.formerMode;
+    switch (this.currentMode) {
     case STATUS_GUI:
       this.guiMgr.showGUI();
       break;
@@ -305,6 +312,9 @@ public class BagOStuff {
       break;
     case STATUS_ABOUT:
       this.about.showAboutDialog();
+      break;
+    case STATUS_HELP:
+      this.gHelpMgr.showHelp();
       break;
     default:
       break;

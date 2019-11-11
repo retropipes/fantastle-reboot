@@ -18,7 +18,10 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot;
 
+import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 
@@ -28,41 +31,80 @@ import com.puttysoftware.help.HTMLHelpViewer;
 
 public class GeneralHelpManager {
   // Fields
-  private final JFrame helpFrame;
+  private JFrame helpFrame;
+  private final EventHandler handler = new EventHandler();
+  private final Container helpContent;
   private final HTMLHelpViewer hv;
 
   // Constructors
   public GeneralHelpManager() {
+    this.helpContent = new Container();
     this.hv = HelpLoader.getHelpViewer();
-    this.helpFrame = MainWindow.getOutputFrame();
-    this.helpFrame.setTitle("Fantastle Help");
-    this.helpFrame.setLayout(new FlowLayout());
-    this.helpFrame.add(this.hv.getHelp());
-    // if (FantastleReboot.getBagOStuff().getPrefsManager()
-    // .isMobileModeEnabled()) {
-    // this.hv.setHelpSize(ImageConstants.MAX_MOBILE_WINDOW_SIZE,
-    // ImageConstants.MAX_MOBILE_WINDOW_SIZE);
-    // } else {
     this.hv.setHelpSize(ImageConstants.MAX_WINDOW_SIZE,
         ImageConstants.MAX_WINDOW_SIZE);
-    // }
-    this.helpFrame.pack();
+    this.helpContent.setLayout(new FlowLayout());
+    this.helpContent.add(this.hv.getHelp());
   }
 
   // Methods
   public void showHelp() {
+    FantastleReboot.getBagOStuff().setInHelp();
+    this.helpFrame = MainWindow.getOutputFrame();
+    this.helpFrame.setTitle("Fantastle Help");
+    this.helpFrame.setContentPane(this.helpContent);
+    this.helpFrame.pack();
+    this.helpFrame.addWindowListener(this.handler);
     this.helpFrame.setVisible(true);
   }
 
+  public void hideHelp() {
+    this.helpFrame.removeWindowListener(this.handler);
+    this.helpFrame.setVisible(false);
+    FantastleReboot.getBagOStuff().restoreFormerMode();
+  }
+
   public void updateHelpSize() {
-    // if (FantastleReboot.getBagOStuff().getPrefsManager()
-    // .isMobileModeEnabled()) {
-    // this.hv.setHelpSize(ImageConstants.MAX_MOBILE_WINDOW_SIZE,
-    // ImageConstants.MAX_MOBILE_WINDOW_SIZE);
-    // } else {
     this.hv.setHelpSize(ImageConstants.MAX_WINDOW_SIZE,
         ImageConstants.MAX_WINDOW_SIZE);
-    // }
-    this.helpFrame.pack();
+  }
+
+  private class EventHandler implements WindowListener {
+    public EventHandler() {
+      super();
+    }
+
+    @Override
+    public void windowOpened(WindowEvent inE) {
+      // Do nothing
+    }
+
+    @Override
+    public void windowClosing(WindowEvent inE) {
+      GeneralHelpManager.this.hideHelp();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent inE) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent inE) {
+      // Do nothing
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent inE) {
+      // Do nothing
+    }
+
+    @Override
+    public void windowActivated(WindowEvent inE) {
+      // Do nothing
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent inE) {
+      // Do nothing
+    }
   }
 }
