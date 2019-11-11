@@ -67,6 +67,7 @@ public class AboutDialog implements AboutHandler {
 
   void hideAboutDialog() {
     this.aboutFrame.removeWindowListener(this.handler);
+    FantastleReboot.getBagOStuff().restoreFormerMode();
   }
 
   private void setUpGUI(final String ver) {
