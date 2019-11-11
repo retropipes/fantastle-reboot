@@ -354,7 +354,6 @@ public final class Game {
       final int pz = m.getPlayerLocationZ();
       m.updateVisibleSquares(px, py, pz);
       bag.setInGame();
-      MusicPlayer.playMusic(MusicIndex.DUNGEON, MusicGroup.GAME);
       Game.showOutput();
       Game.redrawMaze();
     } else {
@@ -529,6 +528,7 @@ public final class Game {
   }
 
   public static void showOutput() {
+    MusicPlayer.playMusic(MusicIndex.DUNGEON, MusicGroup.GAME);
     GameGUI.showOutput();
   }
 
