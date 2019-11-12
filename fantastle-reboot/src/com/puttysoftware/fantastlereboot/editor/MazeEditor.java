@@ -36,11 +36,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
 import javax.swing.border.EmptyBorder;
 
+import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.diane.loaders.ImageCompositor;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.game.Game;
-import com.puttysoftware.fantastlereboot.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.gui.Messager;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;

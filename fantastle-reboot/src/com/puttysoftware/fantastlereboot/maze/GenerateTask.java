@@ -9,11 +9,11 @@ import java.awt.Container;
 
 import javax.swing.JProgressBar;
 
+import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.game.Game;
-import com.puttysoftware.fantastlereboot.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.randomrange.RandomRange;
 

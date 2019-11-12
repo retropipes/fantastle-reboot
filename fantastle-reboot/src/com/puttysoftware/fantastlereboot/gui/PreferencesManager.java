@@ -42,6 +42,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 
+import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;

@@ -14,12 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
+import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
 import com.puttysoftware.fantastlereboot.battle.BossRewards;
-import com.puttysoftware.fantastlereboot.gui.MainWindow;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class WindowTurnBattleGUI {

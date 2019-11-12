@@ -23,6 +23,7 @@ import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.loaders.HelpLoader;
 import com.puttysoftware.fantastlereboot.utilities.ImageConstants;

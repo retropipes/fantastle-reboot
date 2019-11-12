@@ -16,10 +16,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
-import com.puttysoftware.fantastlereboot.gui.MainWindow;
 
 public class StatisticsViewer {
   // Fields
