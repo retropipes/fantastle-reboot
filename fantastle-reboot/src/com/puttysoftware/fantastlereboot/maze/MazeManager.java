@@ -14,6 +14,7 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.files.FileExtensions;
+import com.puttysoftware.fantastlereboot.files.FileStateManager;
 import com.puttysoftware.fantastlereboot.files.GameFinder;
 import com.puttysoftware.fantastlereboot.files.GameLoader;
 import com.puttysoftware.fantastlereboot.files.GameSaver;

@@ -11,8 +11,8 @@ import java.awt.desktop.QuitResponse;
 
 import javax.swing.JOptionPane;
 
+import com.puttysoftware.fantastlereboot.files.FileStateManager;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
-import com.puttysoftware.fantastlereboot.maze.FileStateManager;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 
 final class QuitRequestManager implements QuitHandler {

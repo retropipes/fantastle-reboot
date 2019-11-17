@@ -17,7 +17,6 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.VersionException;
-import com.puttysoftware.fantastlereboot.maze.FileStateManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fileutils.ZipUtilities;

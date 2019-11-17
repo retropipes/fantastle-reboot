@@ -3,7 +3,7 @@ Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.maze;
+package com.puttysoftware.fantastlereboot.files;
 
 import javax.swing.JOptionPane;
 

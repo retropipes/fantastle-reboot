@@ -34,12 +34,12 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.files.CharacterRegistration;
+import com.puttysoftware.fantastlereboot.files.FileStateManager;
 import com.puttysoftware.fantastlereboot.game.Game;
 //import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.InventoryViewer;
 import com.puttysoftware.fantastlereboot.game.NoteManager;
 import com.puttysoftware.fantastlereboot.game.StatisticsViewer;
-import com.puttysoftware.fantastlereboot.maze.FileStateManager;
 import com.puttysoftware.fantastlereboot.maze.GenerateTask;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 
