@@ -13,9 +13,9 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.PrefixHandler;
-import com.puttysoftware.fantastlereboot.maze.SuffixHandler;
 import com.puttysoftware.fantastlereboot.utilities.FileExtensions;
+import com.puttysoftware.fantastlereboot.utilities.PrefixHandler;
+import com.puttysoftware.fantastlereboot.utilities.SuffixHandler;
 import com.puttysoftware.fileutils.ZipUtilities;
 
 public class GameSaveTask extends Thread {

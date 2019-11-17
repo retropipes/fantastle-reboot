@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.maze;
+package com.puttysoftware.fantastlereboot.utilities;
 
 import java.io.IOException;
 

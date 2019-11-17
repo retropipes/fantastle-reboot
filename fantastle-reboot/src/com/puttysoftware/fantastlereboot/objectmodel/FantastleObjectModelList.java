@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.loaders.DataLoader;
-import com.puttysoftware.fantastlereboot.maze.FormatConstants;
 import com.puttysoftware.fantastlereboot.objects.ArmorShop;
 import com.puttysoftware.fantastlereboot.objects.BankShop;
 import com.puttysoftware.fantastlereboot.objects.BonusShop;
@@ -30,6 +29,7 @@ import com.puttysoftware.fantastlereboot.objects.StairsUp;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.fantastlereboot.objects.Wall;
 import com.puttysoftware.fantastlereboot.objects.WeaponShop;
+import com.puttysoftware.fantastlereboot.utilities.FormatConstants;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.xio.XDataReader;
 

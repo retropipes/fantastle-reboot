@@ -16,6 +16,7 @@ import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.fantastlereboot.objects.WallOff;
 import com.puttysoftware.fantastlereboot.objects.WallOn;
+import com.puttysoftware.fantastlereboot.utilities.FormatConstants;
 import com.puttysoftware.fantastlereboot.utilities.RandomGenerationRule;
 import com.puttysoftware.randomrange.RandomRange;
 import com.puttysoftware.storage.FlagStorage;
