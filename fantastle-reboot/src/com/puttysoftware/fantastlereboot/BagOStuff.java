@@ -32,7 +32,6 @@ import com.puttysoftware.fantastlereboot.gui.AboutDialog;
 import com.puttysoftware.fantastlereboot.gui.GUIManager;
 import com.puttysoftware.fantastlereboot.gui.GeneralHelpManager;
 import com.puttysoftware.fantastlereboot.gui.MenuManager;
-import com.puttysoftware.fantastlereboot.gui.PluginLoader;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.items.ShopTypes;
@@ -107,9 +106,6 @@ public class BagOStuff {
     this.socks = new Shop(ShopTypes.SOCKS);
     this.enhancements = new Shop(ShopTypes.ENHANCEMENTS);
     this.faiths = new Shop(ShopTypes.FAITH_POWERS);
-    // Attempt to load extras
-    final Object extras = PluginLoader.loadPlugin("ExtrasPlugin");
-    PluginLoader.addPluginMenus(extras);
   }
 
   public void setInGUI() {

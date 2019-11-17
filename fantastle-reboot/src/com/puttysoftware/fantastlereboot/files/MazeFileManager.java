@@ -13,14 +13,6 @@ import javax.swing.JOptionPane;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.files.FileExtensions;
-import com.puttysoftware.fantastlereboot.files.FileStateManager;
-import com.puttysoftware.fantastlereboot.files.GameFinder;
-import com.puttysoftware.fantastlereboot.files.GameLoader;
-import com.puttysoftware.fantastlereboot.files.GameSaver;
-import com.puttysoftware.fantastlereboot.files.MazeFinder;
-import com.puttysoftware.fantastlereboot.files.MazeLoader;
-import com.puttysoftware.fantastlereboot.files.MazeSaver;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fileutils.FilenameChecker;
 
