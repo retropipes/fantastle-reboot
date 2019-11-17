@@ -95,6 +95,10 @@ final class LayeredTower implements Cloneable {
     return this.noteData.getNote(y, x, z);
   }
 
+  public boolean floorRangeCheck(final int floor) {
+    return floor >= 0 && floor < this.getFloors();
+  }
+
   public boolean cellRangeCheck(final int row, final int col, final int floor) {
     int fR = row;
     int fC = col;
@@ -405,6 +409,10 @@ final class LayeredTower implements Cloneable {
 
   public void offsetPlayerColumn(final int newPlayerColumn) {
     this.playerLocationData[0] += newPlayerColumn;
+  }
+
+  public void offsetPlayerFloor(final int newPlayerFloor) {
+    this.playerLocationData[2] += newPlayerFloor;
   }
 
   public void fillFloor(final FantastleObjectModel bottom,

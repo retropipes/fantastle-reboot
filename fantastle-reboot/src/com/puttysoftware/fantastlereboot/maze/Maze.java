@@ -192,6 +192,14 @@ public class Maze {
         && level >= MIN_LEVELS - 1 && level < Maze.MAX_LEVELS;
   }
 
+  public boolean floorRangeCheck(final int floor) {
+    return this.mazeData.floorRangeCheck(floor);
+  }
+
+  public boolean levelRangeCheck(final int level) {
+    return level >= MIN_LEVELS - 1 && level < Maze.MAX_LEVELS;
+  }
+
   public FantastleObjectModel getCell(final int row, final int col,
       final int floor, final int extra) {
     return this.mazeData.getCell(row, col, floor, extra);
@@ -207,6 +215,10 @@ public class Maze {
 
   public int getPlayerLocationZ() {
     return this.mazeData.getPlayerFloor();
+  }
+
+  public int getPlayerLocationW() {
+    return this.locW;
   }
 
   public int getStartLevel() {
@@ -277,12 +289,20 @@ public class Maze {
     this.mazeData.setPlayerFloor(newPlayerFloor);
   }
 
+  public void setPlayerLocationW(final int newPlayerLevel) {
+    this.startW = newPlayerLevel;
+  }
+
   public void offsetPlayerLocationX(final int newPlayerRow) {
     this.mazeData.offsetPlayerRow(newPlayerRow);
   }
 
   public void offsetPlayerLocationY(final int newPlayerColumn) {
     this.mazeData.offsetPlayerColumn(newPlayerColumn);
+  }
+
+  public void offsetPlayerLocationZ(final int newPlayerFloor) {
+    this.mazeData.offsetPlayerFloor(newPlayerFloor);
   }
 
   public void offsetPlayerLocationW(final int newPlayerLevel) {

@@ -190,38 +190,32 @@ public final class Game {
 
   public static boolean isFloorBelow() {
     final Maze m = MazeManager.getMaze();
-    return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
-        m.getPlayerLocationZ() - 1);
+    return m.floorRangeCheck(m.getPlayerLocationZ() - 1);
   }
 
   public static boolean isFloorAbove() {
     final Maze m = MazeManager.getMaze();
-    return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
-        m.getPlayerLocationZ() + 1);
+    return m.floorRangeCheck(m.getPlayerLocationZ() + 1);
   }
 
   public static boolean isLevelBelow() {
     final Maze m = MazeManager.getMaze();
-    return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
-        m.getPlayerLocationZ() - 1);
+    return m.levelRangeCheck(m.getPlayerLocationW() - 1);
   }
 
   public static boolean isLevelAbove() {
     final Maze m = MazeManager.getMaze();
-    return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
-        m.getPlayerLocationZ() + 1);
+    return m.levelRangeCheck(m.getPlayerLocationW() + 1);
   }
 
   public static boolean doesFloorExist(final int floor) {
     final Maze m = MazeManager.getMaze();
-    return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
-        floor);
+    return m.floorRangeCheck(floor);
   }
 
   public static boolean doesLevelExist(final int level) {
     final Maze m = MazeManager.getMaze();
-    return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
-        level);
+    return m.levelRangeCheck(level);
   }
 
   public static void fireArrow(final int x, final int y) {
