@@ -35,7 +35,11 @@ public class CharacterLoader {
   public static PartyMember readCharacter(final XDataReader reader)
       throws IOException {
     final int version = reader.readByte();
-    if (version < CharacterVersions.FORMAT_5) {
+    // if (version < CharacterVersions.FORMAT_1) {
+    // throw new VersionException("Invalid character version found: " +
+    // version);
+    // }
+    if (version != CharacterVersions.FORMAT_1) {
       throw new VersionException("Invalid character version found: " + version);
     }
     final int k = reader.readInt();

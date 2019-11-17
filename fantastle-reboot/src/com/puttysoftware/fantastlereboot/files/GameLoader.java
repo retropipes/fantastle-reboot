@@ -7,7 +7,6 @@ package com.puttysoftware.fantastlereboot.files;
 
 import java.awt.Container;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.JProgressBar;
@@ -51,8 +50,7 @@ public class GameLoader extends Thread {
       Game.setSavedGameFlag(false);
       final File tempLock = new File(Maze.getMazeTempFolder() + "lock.tmp");
       Maze gameMaze = new Maze();
-      // Unlock the file
-      GameFileManager.load(mazeFile, tempLock);
+      // Unzip the file
       ZipUtilities.unzipDirectory(tempLock, new File(gameMaze.getBasePath()));
       final boolean success = tempLock.delete();
       if (!success) {
@@ -86,16 +84,6 @@ public class GameLoader extends Thread {
           + " failed, due to the format version being unsupported.");
       FantastleReboot.getBagOStuff().getMazeManager()
           .handleDeferredSuccess(false, true, mazeFile);
-    } catch (final FileNotFoundException fnfe) {
-      CommonDialogs.showDialog("Loading the " + sg.toLowerCase()
-          + " failed, probably due to illegal characters in the file name.");
-      FantastleReboot.getBagOStuff().getMazeManager()
-          .handleDeferredSuccess(false, false, null);
-    } catch (final IOException ie) {
-      CommonDialogs.showDialog("Loading the " + sg.toLowerCase()
-          + " failed, due to some other type of I/O error.");
-      FantastleReboot.getBagOStuff().getMazeManager()
-          .handleDeferredSuccess(false, false, null);
     } catch (final Exception ex) {
       FantastleReboot.logError(ex);
     }

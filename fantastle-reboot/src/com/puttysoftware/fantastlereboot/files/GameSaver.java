@@ -6,13 +6,9 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.files;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
-import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fileutils.ZipUtilities;
 
 public class GameSaver extends Thread {
@@ -38,25 +34,15 @@ public class GameSaver extends Thread {
         this.filename += FileExtensions.getGameExtensionWithPeriod();
       }
       final File mazeFile = new File(this.filename);
-      final File tempLock = new File(Maze.getMazeTempFolder() + "lock.tmp");
       // Set prefix handler
       app.getMazeManager().getMaze().setPrefixHandler(new PrefixHandler());
       // Set suffix handler
       app.getMazeManager().getMaze().setSuffixHandler(new SuffixHandler());
       app.getMazeManager().getMaze().writeMaze();
+      // Zip the file
       ZipUtilities.zipDirectory(
-          new File(app.getMazeManager().getMaze().getBasePath()), tempLock);
-      // Lock the file
-      GameFileManager.save(tempLock, mazeFile);
-      final boolean delSuccess = tempLock.delete();
-      if (!delSuccess) {
-        throw new IOException("Failed to delete temporary file!");
-      }
+          new File(app.getMazeManager().getMaze().getBasePath()), mazeFile);
       bag.showMessage(sg + " saved.");
-    } catch (final FileNotFoundException fnfe) {
-      CommonDialogs.showDialog("Writing the " + sg.toLowerCase()
-          + " failed, probably due to illegal characters in the file name.");
-      success = false;
     } catch (final Exception ex) {
       FantastleReboot.logError(ex);
     }
