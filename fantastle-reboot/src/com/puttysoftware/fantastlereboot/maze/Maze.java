@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.files.FileExtensions;
 import com.puttysoftware.fantastlereboot.files.MazeVersions;
 import com.puttysoftware.fantastlereboot.files.PrefixIO;
 import com.puttysoftware.fantastlereboot.files.SuffixIO;
@@ -48,7 +49,8 @@ public class Maze {
     final long random = new RandomLongRange(0, Long.MAX_VALUE).generate();
     final String randomID = Long.toHexString(random);
     this.basePath = System.getProperty("java.io.tmpdir") + File.separator
-        + "FantastleReboot" + File.separator + randomID + ".maze";
+        + "FantastleReboot" + File.separator + randomID
+        + FileExtensions.getMazeTempExtensionWithPeriod();
     final File base = new File(this.basePath);
     final boolean success = base.mkdirs();
     if (!success) {

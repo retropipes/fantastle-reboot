@@ -48,14 +48,9 @@ public class GameLoader extends Thread {
       final BagOStuff app = FantastleReboot.getBagOStuff();
       int startW;
       Game.setSavedGameFlag(false);
-      final File tempLock = new File(Maze.getMazeTempFolder() + "lock.tmp");
       Maze gameMaze = new Maze();
       // Unzip the file
-      ZipUtilities.unzipDirectory(tempLock, new File(gameMaze.getBasePath()));
-      final boolean success = tempLock.delete();
-      if (!success) {
-        throw new IOException("Failed to delete temporary file!");
-      }
+      ZipUtilities.unzipDirectory(mazeFile, new File(gameMaze.getBasePath()));
       // Set prefix handler
       gameMaze.setPrefixHandler(new PrefixHandler());
       // Set suffix handler

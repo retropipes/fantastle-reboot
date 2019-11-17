@@ -9,6 +9,7 @@ public class FileExtensions {
   // Constants
   private static final String MAZE_EXTENSION = "maze.zip";
   private static final String GAME_EXTENSION = "savedgame.zip";
+  private static final String MAZE_TEMP_EXTENSION = "maze";
   private static final String CHARACTER_EXTENSION = "partymember.xml";
   private static final String REGISTRY_EXTENSION = "registry.xml";
   private static final String PREFERENCES_EXTENSION = "prefs.xml";
@@ -22,6 +23,10 @@ public class FileExtensions {
 
   public static String getMazeExtensionWithPeriod() {
     return "." + FileExtensions.MAZE_EXTENSION;
+  }
+
+  public static String getMazeTempExtensionWithPeriod() {
+    return "." + FileExtensions.MAZE_TEMP_EXTENSION;
   }
 
   public static String getGameExtension() {
