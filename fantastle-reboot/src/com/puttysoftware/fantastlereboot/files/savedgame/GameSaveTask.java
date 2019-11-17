@@ -3,7 +3,7 @@ Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.savedgames;
+package com.puttysoftware.fantastlereboot.files.savedgame;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,10 +12,10 @@ import java.io.IOException;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.files.FileExtensions;
+import com.puttysoftware.fantastlereboot.files.PrefixHandler;
+import com.puttysoftware.fantastlereboot.files.SuffixHandler;
 import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.files.PrefixHandler;
-import com.puttysoftware.fantastlereboot.maze.files.SuffixHandler;
-import com.puttysoftware.fantastlereboot.utilities.FileExtensions;
 import com.puttysoftware.fileutils.ZipUtilities;
 
 public class GameSaveTask extends Thread {

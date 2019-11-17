@@ -16,13 +16,13 @@ import javax.swing.JOptionPane;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.files.FileExtensions;
+import com.puttysoftware.fantastlereboot.files.savedgame.GameFinder;
+import com.puttysoftware.fantastlereboot.files.savedgame.GameLoadTask;
+import com.puttysoftware.fantastlereboot.files.savedgame.GameSaveTask;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.savedgames.GameFinder;
-import com.puttysoftware.fantastlereboot.savedgames.GameLoadTask;
-import com.puttysoftware.fantastlereboot.savedgames.GameSaveTask;
-import com.puttysoftware.fantastlereboot.utilities.FileExtensions;
 import com.puttysoftware.fileutils.FilenameChecker;
 
 public final class MazeManager implements QuitHandler {

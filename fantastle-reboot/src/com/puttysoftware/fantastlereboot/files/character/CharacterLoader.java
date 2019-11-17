@@ -3,7 +3,7 @@ Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.creatures.characterfiles;
+package com.puttysoftware.fantastlereboot.files.character;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,8 +11,8 @@ import java.io.IOException;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
+import com.puttysoftware.fantastlereboot.files.FileExtensions;
 import com.puttysoftware.fantastlereboot.gui.VersionException;
-import com.puttysoftware.fantastlereboot.utilities.FileExtensions;
 import com.puttysoftware.xio.UnexpectedTagException;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;

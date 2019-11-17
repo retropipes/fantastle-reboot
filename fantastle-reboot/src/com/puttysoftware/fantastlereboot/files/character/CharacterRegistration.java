@@ -3,7 +3,7 @@ Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.creatures.characterfiles;
+package com.puttysoftware.fantastlereboot.files.character;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
-import com.puttysoftware.fantastlereboot.utilities.FileExtensions;
+import com.puttysoftware.fantastlereboot.files.FileExtensions;
 import com.puttysoftware.fileutils.ResourceStreamReader;
 
 public class CharacterRegistration {

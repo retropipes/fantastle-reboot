@@ -10,10 +10,10 @@ import java.io.IOException;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.files.MazeVersions;
+import com.puttysoftware.fantastlereboot.files.PrefixIO;
+import com.puttysoftware.fantastlereboot.files.SuffixIO;
 import com.puttysoftware.fantastlereboot.gui.VersionException;
-import com.puttysoftware.fantastlereboot.maze.files.MazeVersions;
-import com.puttysoftware.fantastlereboot.maze.files.PrefixIO;
-import com.puttysoftware.fantastlereboot.maze.files.SuffixIO;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Tile;

@@ -3,7 +3,7 @@ Copyright (C) 2008-2010 Eric Ahnell
 
 Any questions should be directed to the author via email at: mazer5d@worldwizard.net
  */
-package com.puttysoftware.fantastlereboot.utilities;
+package com.puttysoftware.fantastlereboot.objectmodel;
 
 import com.puttysoftware.diane.utilties.Directions;
 

@@ -3,12 +3,12 @@ Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.savedgames;
+package com.puttysoftware.fantastlereboot.files.savedgame;
 
 import java.io.File;
 import java.io.FilenameFilter;
 
-import com.puttysoftware.fantastlereboot.utilities.FileExtensions;
+import com.puttysoftware.fantastlereboot.files.FileExtensions;
 
 public class GameFinder implements FilenameFilter {
   @Override

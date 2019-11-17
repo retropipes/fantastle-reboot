@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.maze.files.MazeVersions;
+import com.puttysoftware.fantastlereboot.files.MazeVersions;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModelList;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
