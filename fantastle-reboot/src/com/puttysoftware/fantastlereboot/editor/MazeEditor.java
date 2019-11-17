@@ -42,6 +42,7 @@ import com.puttysoftware.diane.loaders.ImageCompositor;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
+import com.puttysoftware.fantastlereboot.files.MazeFileManager;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.loaders.ImageConstants;
@@ -466,7 +467,7 @@ public class MazeEditor {
     if (FileStateManager.getDirty()) {
       status = FileStateManager.showSaveDialog();
       if (status == JOptionPane.YES_OPTION) {
-        saved = MazeManager.saveGame();
+        saved = MazeFileManager.saveMaze();
       } else if (status == JOptionPane.CANCEL_OPTION) {
         saved = false;
       } else {
@@ -794,7 +795,7 @@ public class MazeEditor {
       if (FileStateManager.getDirty()) {
         status = FileStateManager.showSaveDialog();
         if (status == JOptionPane.YES_OPTION) {
-          success = MazeManager.saveGame();
+          success = MazeFileManager.saveMaze();
           if (success) {
             this.exitEditor();
           }

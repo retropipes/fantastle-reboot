@@ -9,7 +9,6 @@ import java.io.File;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fileutils.ZipUtilities;
 
 public class MazeSaver extends Thread {
@@ -48,7 +47,7 @@ public class MazeSaver extends Thread {
       FantastleReboot.logError(ex);
     }
     FantastleReboot.getBagOStuff().getMazeManager();
-    MazeManager.handleDeferredSuccess(success, false, null);
+    MazeFileManager.handleDeferredSuccess(success, false, null);
   }
 
   private static boolean hasExtension(final String s) {

@@ -35,12 +35,12 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.files.CharacterRegistration;
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
+import com.puttysoftware.fantastlereboot.files.MazeFileManager;
 import com.puttysoftware.fantastlereboot.game.Game;
 //import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.InventoryViewer;
 import com.puttysoftware.fantastlereboot.game.StatisticsViewer;
 import com.puttysoftware.fantastlereboot.maze.GenerateTask;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.maze.NoteManager;
 
 public class MenuManager {
@@ -650,8 +650,7 @@ public class MenuManager {
           loaded = me.newMaze();
           FileStateManager.setLoaded(loaded);
         } else if (cmd.equals("Open...")) {
-          app.getMazeManager();
-          loaded = MazeManager.loadGame();
+          loaded = MazeFileManager.loadGame();
           FileStateManager.setLoaded(loaded);
         } else if (cmd.equals("Close")) {
           // Close the window
@@ -663,7 +662,7 @@ public class MenuManager {
             if (FileStateManager.getDirty()) {
               status = FileStateManager.showSaveDialog();
               if (status == JOptionPane.YES_OPTION) {
-                saved = MazeManager.saveGame();
+                saved = MazeFileManager.saveGame();
               } else if (status == JOptionPane.CANCEL_OPTION) {
                 saved = false;
               } else {
@@ -677,7 +676,7 @@ public class MenuManager {
           }
         } else if (cmd.equals("Save")) {
           if (FileStateManager.getLoaded()) {
-            MazeManager.saveGame();
+            MazeFileManager.saveGame();
           } else {
             CommonDialogs.showDialog("No Maze Opened");
           }

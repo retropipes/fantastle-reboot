@@ -18,7 +18,6 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.VersionException;
 import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fileutils.ZipUtilities;
 
 public class MazeLoader extends Thread {
@@ -75,12 +74,12 @@ public class MazeLoader extends Thread {
       CommonDialogs.showDialog(sg + " loaded.");
       Game.playMaze();
       app.getMazeManager();
-      MazeManager.handleDeferredSuccess(true, false, null);
+      MazeFileManager.handleDeferredSuccess(true, false, null);
     } catch (final VersionException ve) {
       CommonDialogs.showDialog("Loading the " + sg.toLowerCase()
           + " failed, due to the format version being unsupported.");
       FantastleReboot.getBagOStuff().getMazeManager();
-      MazeManager
+      MazeFileManager
           .handleDeferredSuccess(false, true, mazeFile);
     } catch (final Exception ex) {
       FantastleReboot.logError(ex);
