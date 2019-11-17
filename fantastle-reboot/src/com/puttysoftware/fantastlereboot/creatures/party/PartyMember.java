@@ -9,10 +9,10 @@ import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
-import com.puttysoftware.fantastlereboot.creatures.castes.Caste;
-import com.puttysoftware.fantastlereboot.creatures.castes.CasteManager;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.genders.Gender;
+import com.puttysoftware.fantastlereboot.creatures.jobs.Job;
+import com.puttysoftware.fantastlereboot.creatures.jobs.JobManager;
 import com.puttysoftware.fantastlereboot.creatures.personalities.Personality;
 import com.puttysoftware.fantastlereboot.creatures.races.Race;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
@@ -32,7 +32,7 @@ import com.puttysoftware.xio.XDataWriter;
 public class PartyMember extends Creature {
   // Fields
   private Race race;
-  private Caste caste;
+  private Job job;
   private Faith faith;
   private Personality personality;
   private Gender gender;
@@ -49,12 +49,12 @@ public class PartyMember extends Creature {
   private static final double BASE_COEFF = 10.0;
 
   // Constructors
-  PartyMember(final Race r, final Caste c, final Faith f, final Personality p,
+  PartyMember(final Race r, final Job j, final Faith f, final Personality p,
       final Gender g, final String n) {
     super(true, 0);
     this.name = n;
     this.race = r;
-    this.caste = c;
+    this.job = j;
     this.faith = f;
     this.personality = p;
     this.gender = g;
@@ -90,7 +90,7 @@ public class PartyMember extends Creature {
     nextLevelEquation.setCoefficient(2, value);
     nextLevelEquation.setCoefficient(3, value);
     this.setToNextLevel(nextLevelEquation);
-    this.setSpellBook(CasteManager.getSpellBookByID(this.caste.getCasteID()));
+    this.setSpellBook(JobManager.getSpellBookByID(this.job.getJobID()));
   }
 
   // Methods
@@ -125,7 +125,7 @@ public class PartyMember extends Creature {
     this.setGold(newGold);
     this.setLoad(newLoad);
     this.setExperience(newExperience);
-    final SpellBook book = CasteManager.getSpellBookByID(bookID);
+    final SpellBook book = JobManager.getSpellBookByID(bookID);
     for (int x = 0; x < known.length; x++) {
       if (known[x]) {
         book.learnSpellByID(x);
@@ -147,8 +147,8 @@ public class PartyMember extends Creature {
     return this.race;
   }
 
-  public Caste getCaste() {
-    return this.caste;
+  public Job getJob() {
+    return this.job;
   }
 
   @Override
@@ -166,9 +166,7 @@ public class PartyMember extends Creature {
 
   @Override
   public int getSpeed() {
-
-    final int difficulty = PreferencesManager
-        .getGameDifficulty();
+    final int difficulty = PreferencesManager.getGameDifficulty();
     final int base = this.getBaseSpeed();
     if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
       return (int) (base * SPEED_ADJUST_FASTEST);
@@ -193,10 +191,10 @@ public class PartyMember extends Creature {
     }
   }
 
-  public void initPostKill(final Race r, final Caste c, final Faith f,
+  public void initPostKill(final Race r, final Job c, final Faith f,
       final Personality p, final Gender g) {
     this.race = r;
-    this.caste = c;
+    this.job = c;
     this.faith = f;
     this.personality = p;
     this.gender = g;
@@ -226,7 +224,7 @@ public class PartyMember extends Creature {
     nextLevelEquation.setCoefficient(2, value);
     nextLevelEquation.setCoefficient(3, value);
     this.setToNextLevel(nextLevelEquation);
-    this.setSpellBook(CasteManager.getSpellBookByID(this.caste.getCasteID()));
+    this.setSpellBook(JobManager.getSpellBookByID(this.job.getJobID()));
     PartyManager.getParty().resetMonsterLevel();
     new GenerateTask(true).start();
   }
@@ -296,7 +294,7 @@ public class PartyMember extends Creature {
   public static PartyMember read(final XDataReader worldFile)
       throws IOException {
     final int version = worldFile.readByte();
-    if (version < FormatConstants.CHARACTER_FORMAT_2) {
+    if (version < FormatConstants.CHARACTER_FORMAT_5) {
       throw new VersionException("Invalid character version found: " + version);
     }
     final int k = worldFile.readInt();
@@ -370,7 +368,7 @@ public class PartyMember extends Creature {
     worldFile.writeInt(this.getLoad());
     worldFile.writeLong(this.getExperience());
     worldFile.writeInt(this.getRace().getRaceID());
-    worldFile.writeInt(this.getCaste().getCasteID());
+    worldFile.writeInt(this.getJob().getJobID());
     worldFile.writeInt(this.getFaith().getFaithID());
     worldFile.writeInt(this.getPersonality().getPersonalityID());
     worldFile.writeInt(this.getGender().getGenderID());

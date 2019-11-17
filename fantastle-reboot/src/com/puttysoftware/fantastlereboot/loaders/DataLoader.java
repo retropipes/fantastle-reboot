@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.creatures.genders.GenderConstants;
+import com.puttysoftware.fantastlereboot.creatures.jobs.JobConstants;
 import com.puttysoftware.fantastlereboot.creatures.personalities.PersonalityConstants;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectActions;
@@ -17,13 +17,13 @@ public class DataLoader {
     // Do nothing
   }
 
-  public static int[] loadCasteData(final int c) {
-    final String name = Integer.toString(c);
+  public static int[] loadJobData(final int j) {
+    final String name = Integer.toString(j);
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
-            .getResourceAsStream("/assets/data/caste/" + name + ".txt"))) {
+            .getResourceAsStream("/assets/data/job/" + name + ".txt"))) {
       // Fetch data
-      final int[] rawData = new int[CasteConstants.CASTES_ATTRIBUTE_COUNT];
+      final int[] rawData = new int[JobConstants.JOBS_ATTRIBUTE_COUNT];
       for (int x = 0; x < rawData.length; x++) {
         try {
           rawData[x] = rsr.readInt();

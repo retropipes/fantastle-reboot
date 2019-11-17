@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.spells;
 
-import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
+import com.puttysoftware.fantastlereboot.creatures.jobs.JobConstants;
 import com.puttysoftware.fantastlereboot.spells.books.AssassinSpellBook;
 import com.puttysoftware.fantastlereboot.spells.books.BasherSpellBook;
 import com.puttysoftware.fantastlereboot.spells.books.CurerSpellBook;
@@ -34,45 +34,45 @@ public class SpellBookManager {
 
   public static SpellBook getSpellBookByID(final int ID) {
     switch (ID) {
-    case CasteConstants.CASTE_ASSASSIN:
+    case JobConstants.JOB_ASSASSIN:
       return new AssassinSpellBook();
-    case CasteConstants.CASTE_BASHER:
+    case JobConstants.JOB_BASHER:
       return new BasherSpellBook();
-    case CasteConstants.CASTE_CURER:
+    case JobConstants.JOB_CURER:
       return new CurerSpellBook();
-    case CasteConstants.CASTE_DESTROYER:
+    case JobConstants.JOB_DESTROYER:
       return new DestroyerSpellBook();
-    case CasteConstants.CASTE_ECLECTIC:
+    case JobConstants.JOB_ECLECTIC:
       return new EclecticSpellBook();
-    case CasteConstants.CASTE_FOOL:
+    case JobConstants.JOB_FOOL:
       return new FoolSpellBook();
-    case CasteConstants.CASTE_GURU:
+    case JobConstants.JOB_GURU:
       return new GuruSpellBook();
-    case CasteConstants.CASTE_HUNTER:
+    case JobConstants.JOB_HUNTER:
       return new HunterSpellBook();
-    case CasteConstants.CASTE_JUMPER:
+    case JobConstants.JOB_JUMPER:
       return new JumperSpellBook();
-    case CasteConstants.CASTE_KNIGHT:
+    case JobConstants.JOB_KNIGHT:
       return new KnightSpellBook();
-    case CasteConstants.CASTE_LOCKSMITH:
+    case JobConstants.JOB_LOCKSMITH:
       return new LocksmithSpellBook();
-    case CasteConstants.CASTE_MONK:
+    case JobConstants.JOB_MONK:
       return new MonkSpellBook();
-    case CasteConstants.CASTE_NINJA:
+    case JobConstants.JOB_NINJA:
       return new NinjaSpellBook();
-    case CasteConstants.CASTE_OVERSEER:
+    case JobConstants.JOB_OVERSEER:
       return new OverseerSpellBook();
-    case CasteConstants.CASTE_PICKPOCKET:
+    case JobConstants.JOB_PICKPOCKET:
       return new PickpocketSpellBook();
-    case CasteConstants.CASTE_ROGUE:
+    case JobConstants.JOB_ROGUE:
       return new RogueSpellBook();
-    case CasteConstants.CASTE_SPY:
+    case JobConstants.JOB_SPY:
       return new SpySpellBook();
-    case CasteConstants.CASTE_TEACHER:
+    case JobConstants.JOB_TEACHER:
       return new TeacherSpellBook();
-    case CasteConstants.CASTE_WARLOCK:
+    case JobConstants.JOB_WARLOCK:
       return new WarlockSpellBook();
-    case CasteConstants.CASTE_YELLER:
+    case JobConstants.JOB_YELLER:
       return new YellerSpellBook();
     default:
       return null;

@@ -199,7 +199,7 @@ public class Shop {
     if (this.type == ShopTypes.WEAPONS) {
       if (this.typeResult.equals(this.typeChoices[0])) {
         this.choices = EquipmentFactory.createOneHandedWeaponNames(
-            playerCharacter.getCaste().getCasteID());
+            playerCharacter.getJob().getJobID());
         // Choose Hand
         this.handChoices = WeaponConstants.getHandChoices();
         this.handDefault = 0;
@@ -216,7 +216,7 @@ public class Shop {
         }
       } else {
         this.choices = EquipmentFactory.createTwoHandedWeaponNames(
-            playerCharacter.getCaste().getCasteID());
+            playerCharacter.getJob().getJobID());
       }
     } else if (this.type == ShopTypes.ARMOR) {
       this.choices = EquipmentFactory.createArmorNames(this.typeIndex);
@@ -463,12 +463,12 @@ public class Shop {
       playerCharacter.offsetGold(-this.cost);
       if (this.typeResult.equals(this.typeChoices[0])) {
         final Equipment bought = EquipmentFactory.createOneHandedWeapon(
-            this.index, playerCharacter.getCaste().getCasteID(), 0);
+            this.index, playerCharacter.getJob().getJobID(), 0);
         playerCharacter.getItems().equipOneHandedWeapon(playerCharacter, bought,
             this.handIndex, true);
       } else {
         final Equipment bought = EquipmentFactory.createTwoHandedWeapon(
-            this.index, playerCharacter.getCaste().getCasteID(), 0);
+            this.index, playerCharacter.getJob().getJobID(), 0);
         playerCharacter.getItems().equipTwoHandedWeapon(playerCharacter, bought,
             true);
       }

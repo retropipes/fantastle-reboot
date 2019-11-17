@@ -11,14 +11,14 @@ import java.io.IOException;
 import javax.swing.JFrame;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
-import com.puttysoftware.fantastlereboot.creatures.castes.Caste;
-import com.puttysoftware.fantastlereboot.creatures.castes.CasteManager;
 import com.puttysoftware.fantastlereboot.creatures.characterfiles.CharacterLoader;
 import com.puttysoftware.fantastlereboot.creatures.characterfiles.CharacterRegistration;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.creatures.genders.Gender;
 import com.puttysoftware.fantastlereboot.creatures.genders.GenderManager;
+import com.puttysoftware.fantastlereboot.creatures.jobs.Job;
+import com.puttysoftware.fantastlereboot.creatures.jobs.JobManager;
 import com.puttysoftware.fantastlereboot.creatures.personalities.Personality;
 import com.puttysoftware.fantastlereboot.creatures.personalities.PersonalityManager;
 import com.puttysoftware.fantastlereboot.creatures.races.Race;
@@ -127,7 +127,7 @@ public class PartyManager {
   public static PartyMember getNewPCInstance(final int r, final int c,
       final int f, final int p, final int g, final String n) {
     final Race race = RaceManager.getRace(r);
-    final Caste caste = CasteManager.getCaste(c);
+    final Job caste = JobManager.getJob(c);
     final Faith faith = FaithManager.getFaith(f);
     final Personality personality = PersonalityManager.getPersonality(p);
     final Gender gender = GenderManager.getGender(g);
@@ -136,7 +136,7 @@ public class PartyManager {
 
   public static void updatePostKill() {
     final PartyMember leader = getParty().getLeader();
-    leader.initPostKill(leader.getRace(), leader.getCaste(), leader.getFaith(),
+    leader.initPostKill(leader.getRace(), leader.getJob(), leader.getFaith(),
         leader.getPersonality(), leader.getGender());
   }
 
@@ -146,7 +146,7 @@ public class PartyManager {
     if (name != null) {
       final Race race = RaceManager.selectRace();
       if (race != null) {
-        final Caste caste = CasteManager.selectCaste();
+        final Job caste = JobManager.selectJob();
         if (caste != null) {
           final Faith faith = FaithManager.selectFaith();
           if (faith != null) {

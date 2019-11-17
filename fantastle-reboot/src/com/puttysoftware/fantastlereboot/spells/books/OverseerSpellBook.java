@@ -3,7 +3,7 @@ package com.puttysoftware.fantastlereboot.spells.books;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
-import com.puttysoftware.fantastlereboot.creatures.castes.CasteConstants;
+import com.puttysoftware.fantastlereboot.creatures.jobs.JobConstants;
 import com.puttysoftware.fantastlereboot.effects.DamageEffect;
 import com.puttysoftware.fantastlereboot.effects.DrainEffect;
 import com.puttysoftware.fantastlereboot.effects.Effect;
@@ -77,6 +77,6 @@ public class OverseerSpellBook extends SpellBook {
 
   @Override
   public int getID() {
-    return CasteConstants.CASTE_OVERSEER;
+    return JobConstants.JOB_OVERSEER;
   }
 }

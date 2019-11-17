@@ -346,7 +346,7 @@ public class ItemInventory {
       iqu.setQuantity(dr.readInt());
       iqu.setUses(dr.readInt());
       counter++;
-      if (formatVersion == FormatConstants.CHARACTER_FORMAT_2
+      if (formatVersion == FormatConstants.CHARACTER_FORMAT_5
           && counter >= ItemInventory.COMBAT_ITEM_COUNT_V2) {
         break;
       }
