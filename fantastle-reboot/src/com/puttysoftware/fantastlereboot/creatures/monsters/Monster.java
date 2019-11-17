@@ -54,8 +54,8 @@ public final class Monster extends Creature {
 
   // Constructors
   Monster() {
-    super(new ItemInventory(), 1, FaithManager.getRandomFaith(), JobManager.getRandomJob(),
-        RaceManager.getRandomRace());
+    super(new ItemInventory(), 1, FaithManager.getRandomFaith(),
+        JobManager.getRandomJob(), RaceManager.getRandomRace());
     this.setWindowAI(Monster.getInitialWindowAI());
     this.setMapAI(Monster.getInitialMapAI());
     final SpellBook spells = SpellBookManager
@@ -77,7 +77,27 @@ public final class Monster extends Creature {
   }
 
   @Override
-  protected void levelUpHook() {
+  public void onKillEnemy() {
+    // Do nothing
+  }
+
+  @Override
+  public void onAnnihilateEnemy() {
+    // Do nothing
+  }
+
+  @Override
+  public void onGotKilled() {
+    // Do nothing
+  }
+
+  @Override
+  public void onGotAnnihilated() {
+    // Do nothing
+  }
+
+  @Override
+  protected void onLevelUp() {
     // Do nothing
   }
 

@@ -82,7 +82,7 @@ public class PartyMember extends Creature {
 
   // Transformers
   @Override
-  protected void levelUpHook() {
+  protected void onLevelUp() {
     Race r = this.getRace();
     this.offsetStrength(StatConstants.GAIN_STRENGTH
         + r.getAttribute(RaceConstants.ATTRIBUTE_STRENGTH_PER_LEVEL));
@@ -266,10 +266,20 @@ public class PartyMember extends Creature {
     this.permanentMP++;
   }
 
-  public void onDeath(final int penalty) {
-    this.offsetExperiencePercentage(penalty);
-    this.healAndRegenerateFully();
-    this.setGold(0);
+  @Override
+  public void onKillEnemy() {
+  }
+
+  @Override
+  public void onAnnihilateEnemy() {
+  }
+
+  @Override
+  public void onGotKilled() {
+  }
+
+  @Override
+  public void onGotAnnihilated() {
   }
 
   @Override

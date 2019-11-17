@@ -66,7 +66,27 @@ public class BossMonster extends Creature {
   }
 
   @Override
-  protected void levelUpHook() {
+  public void onKillEnemy() {
+    // Do nothing
+  }
+
+  @Override
+  public void onAnnihilateEnemy() {
+    // Do nothing
+  }
+
+  @Override
+  public void onGotKilled() {
+    // Do nothing
+  }
+
+  @Override
+  public void onGotAnnihilated() {
+    // Do nothing
+  }
+
+  @Override
+  protected void onLevelUp() {
     // Do nothing
   }
 

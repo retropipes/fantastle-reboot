@@ -1323,12 +1323,12 @@ public class MapTimeBattleLogic extends Battle {
         } else if (this.result == BattleResults.LOST) {
           this.setStatusMessage("The Boss defeated you...");
           SoundPlayer.playSound(SoundIndex.GAME_OVER, SoundGroup.BATTLE);
-          PartyManager.getParty().getLeader().onDeath(-10);
+          PartyManager.getParty().getLeader().onGotKilled();
         } else if (this.result == BattleResults.ANNIHILATED) {
           this.setStatusMessage(
               "The Boss defeated you without suffering damage... you were annihilated!");
           SoundPlayer.playSound(SoundIndex.GAME_OVER, SoundGroup.BATTLE);
-          PartyManager.getParty().getLeader().onDeath(-20);
+          PartyManager.getParty().getLeader().onGotAnnihilated();
         } else if (this.result == BattleResults.DRAW) {
           this.setStatusMessage(
               "The Boss battle was a draw. You are fully healed!");

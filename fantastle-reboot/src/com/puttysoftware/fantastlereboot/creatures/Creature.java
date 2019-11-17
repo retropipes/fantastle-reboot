@@ -637,10 +637,10 @@ public abstract class Creature {
 
   public final void levelUp() {
     this.offsetLevel(1);
-    this.levelUpHook();
+    this.onLevelUp();
   }
 
-  protected abstract void levelUpHook();
+  protected abstract void onLevelUp();
 
   public final void offsetAgility(final int value) {
     this.stats[StatConstants.STAT_AGILITY].offsetValue(value);
@@ -736,6 +736,14 @@ public abstract class Creature {
     this.stats[StatConstants.STAT_VITALITY].offsetValue(value);
     this.fixStatValue(StatConstants.STAT_VITALITY);
   }
+
+  public abstract void onKillEnemy();
+
+  public abstract void onGotKilled();
+
+  public abstract void onAnnihilateEnemy();
+
+  public abstract void onGotAnnihilated();
 
   public final void regenerate(final int amount) {
     this.offsetCurrentMP(amount);
