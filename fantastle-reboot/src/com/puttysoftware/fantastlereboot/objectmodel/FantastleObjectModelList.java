@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.loaders.DataLoader;
+import com.puttysoftware.fantastlereboot.maze.MazeVersions;
 import com.puttysoftware.fantastlereboot.objects.ArmorShop;
 import com.puttysoftware.fantastlereboot.objects.BankShop;
 import com.puttysoftware.fantastlereboot.objects.BonusShop;
@@ -29,7 +30,6 @@ import com.puttysoftware.fantastlereboot.objects.StairsUp;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.fantastlereboot.objects.Wall;
 import com.puttysoftware.fantastlereboot.objects.WeaponShop;
-import com.puttysoftware.fantastlereboot.utilities.FileVersions;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.xio.XDataReader;
 
@@ -289,14 +289,14 @@ public final class FantastleObjectModelList {
     final FantastleObjectModel[] objects = this.getAllObjects();
     FantastleObjectModel o = null;
     int UID = -1;
-    if (formatVersion == FileVersions.FORMAT_LATEST) {
+    if (formatVersion == MazeVersions.FORMAT_LATEST) {
       UID = reader.readInt();
     }
     for (int x = 0; x < objects.length; x++) {
       try {
         FantastleObjectModel instance;
         instance = objects[x].getClass().getConstructor().newInstance();
-        if (formatVersion == FileVersions.FORMAT_LATEST) {
+        if (formatVersion == MazeVersions.FORMAT_LATEST) {
           o = instance.readObject(reader, UID);
           if (o != null) {
             return o;
@@ -319,7 +319,7 @@ public final class FantastleObjectModelList {
       try {
         FantastleObjectModel instance;
         instance = objects[x].getClass().getConstructor().newInstance();
-        if (formatVersion == FileVersions.FORMAT_LATEST) {
+        if (formatVersion == MazeVersions.FORMAT_LATEST) {
           o = instance.readObject(reader, UID);
           if (o != null) {
             return o;

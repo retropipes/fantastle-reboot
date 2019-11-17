@@ -13,7 +13,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.AttributeImageIndex;
 import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.utilities.FileVersions;
+import com.puttysoftware.fantastlereboot.maze.MazeVersions;
 import com.puttysoftware.randomrange.RandomRange;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
@@ -336,7 +336,7 @@ public abstract class FantastleObject extends GameObject
       if (savedIdent != -1) {
         this.savedObject = FantastleReboot.getBagOStuff().getObjects()
             .readSavedObject(reader, savedIdent,
-                FileVersions.FORMAT_LATEST);
+                MazeVersions.FORMAT_LATEST);
       }
       final int cc = this.customCountersLength();
       for (int x = 0; x < cc; x++) {

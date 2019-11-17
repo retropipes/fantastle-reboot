@@ -17,7 +17,6 @@ import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.fantastlereboot.objects.WallOff;
 import com.puttysoftware.fantastlereboot.objects.WallOn;
-import com.puttysoftware.fantastlereboot.utilities.FileVersions;
 import com.puttysoftware.randomrange.RandomRange;
 import com.puttysoftware.storage.FlagStorage;
 import com.puttysoftware.xio.XDataReader;
@@ -659,7 +658,7 @@ final class LayeredTower implements Cloneable {
         for (z = 0; z < lt.getFloors(); z++) {
           for (e = 0; e < Layers.COUNT; e++) {
             lt.setCell(FantastleReboot.getBagOStuff().getObjects().readObject(
-                reader, FileVersions.FORMAT_LATEST), y, x, z, e);
+                reader, MazeVersions.FORMAT_LATEST), y, x, z, e);
             if (lt.getCell(y, x, z, e) == null) {
               return null;
             }
