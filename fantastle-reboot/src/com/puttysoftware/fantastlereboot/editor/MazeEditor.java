@@ -46,12 +46,12 @@ import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModelList;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.Nothing;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.StairsDown;
 import com.puttysoftware.fantastlereboot.objects.StairsUp;
-import com.puttysoftware.fantastlereboot.utilities.FantastleObjectModelList;
 import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 import com.puttysoftware.images.BufferedImageIcon;
 

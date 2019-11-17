@@ -39,7 +39,7 @@ import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
-import com.puttysoftware.fantastlereboot.utilities.FantastleObjectModelList;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModelList;
 import com.puttysoftware.updater.ProductData;
 
 public class BagOStuff {

@@ -22,7 +22,7 @@ import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.utilities.FantastleObjectModelList;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModelList;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 

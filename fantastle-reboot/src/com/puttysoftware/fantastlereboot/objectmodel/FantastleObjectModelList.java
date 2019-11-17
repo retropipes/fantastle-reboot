@@ -3,7 +3,7 @@ Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.utilities;
+package com.puttysoftware.fantastlereboot.objectmodel;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -12,9 +12,6 @@ import java.util.ArrayList;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.loaders.DataLoader;
 import com.puttysoftware.fantastlereboot.maze.FormatConstants;
-import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectActions;
-import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.ArmorShop;
 import com.puttysoftware.fantastlereboot.objects.BankShop;
 import com.puttysoftware.fantastlereboot.objects.BonusShop;
@@ -28,6 +25,8 @@ import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.RegenerateShop;
 import com.puttysoftware.fantastlereboot.objects.SealingWall;
 import com.puttysoftware.fantastlereboot.objects.SpellShop;
+import com.puttysoftware.fantastlereboot.objects.StairsDown;
+import com.puttysoftware.fantastlereboot.objects.StairsUp;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.fantastlereboot.objects.Wall;
 import com.puttysoftware.fantastlereboot.objects.WeaponShop;
@@ -51,7 +50,8 @@ public final class FantastleObjectModelList {
         new OpenSpace(), new Nothing(), new BonusShop(), new ElementalShop(),
         new HealShop(), new Ice(), new ItemShop(), new RegenerateShop(),
         new SealingWall(), new NecklaceShop(), new SpellShop(), new Tile(),
-        new Wall(), new WeaponShop(), new Wall() };
+        new Wall(), new WeaponShop(), new Wall(), new StairsUp(),
+        new StairsDown() };
     this.allObjectList.clear();
     // Populate lists
     for (int z = 0; z < allObjects.length; z++) {
@@ -60,6 +60,16 @@ public final class FantastleObjectModelList {
     this.allActionList = DataLoader.loadObjectActionData();
     this.allShopActionList = DataLoader
         .loadObjectActionAddonData(FantastleObjectActions.SHOP);
+  }
+
+  public boolean sendsDown(FantastleObjectModel obj) {
+    return this.allActionList[obj.getUniqueID()]
+        .get(FantastleObjectActions.DOWN_1_FLOOR);
+  }
+
+  public boolean sendsUp(FantastleObjectModel obj) {
+    return this.allActionList[obj.getUniqueID()]
+        .get(FantastleObjectActions.UP_1_FLOOR);
   }
 
   public boolean movesRandomly(FantastleObjectModel obj) {

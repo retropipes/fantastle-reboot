@@ -16,10 +16,10 @@ import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
+import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModelList;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Wall;
-import com.puttysoftware.fantastlereboot.utilities.FantastleObjectModelList;
 
 final class MovementTask extends Thread {
   // Fields
@@ -108,6 +108,7 @@ final class MovementTask extends Thread {
     PartyManager.getParty().fireStepActions();
     GameGUI.updateStats();
     MovementTask.checkGameOver();
+    MovementTask.checkStairs();
   }
 
   private static void decayEffects() {
@@ -188,30 +189,14 @@ final class MovementTask extends Thread {
               MovementTask.saved = m.getCell(px, py, pz, Layers.OBJECT);
             }
           } else {
-            // Move failed - object is solid in that direction
-            SoundPlayer.playSound(SoundIndex.WALK_FAILED, SoundGroup.GAME);
-            bag.showMessage("Can't go that way");
-            MovementTask.fireStepActions();
-            MovementTask.decayEffects();
+            MovementTask.moveFailed();
           }
         } catch (final ArrayIndexOutOfBoundsException ae) {
-          GameView.restoreViewingWindow();
-          m.restorePlayerLocation();
-          // Move failed - attempted to go outside the maze
-          SoundPlayer.playSound(SoundIndex.WALK_FAILED, SoundGroup.GAME);
-          bag.showMessage("Can't go that way");
-          nextAbove = new OpenSpace();
-          MovementTask.decayEffects();
-          MovementTask.proceed = false;
+          MovementTask.moveFailed();
         }
         MovementTask.fireStepActions();
       } else {
-        // Move failed - pre-move check failed
-        SoundPlayer.playSound(SoundIndex.WALK_FAILED, SoundGroup.GAME);
-        bag.showMessage("Can't go that way");
-        MovementTask.fireStepActions();
-        MovementTask.decayEffects();
-        MovementTask.proceed = false;
+        MovementTask.moveFailed();
       }
       px = m.getPlayerLocationX();
       py = m.getPlayerLocationY();
@@ -256,9 +241,8 @@ final class MovementTask extends Thread {
 
   private static void updatePositionAbsolute(final int x, final int y,
       final int z) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
     final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = bag.getMazeManager().getMaze();
     m.savePlayerLocation();
     GameView.saveViewingWindow();
     try {
@@ -272,7 +256,7 @@ final class MovementTask extends Thread {
             m.getPlayerLocationX() - GameView.getOffsetFactorY());
         MovementTask.saved = m.getCell(m.getPlayerLocationX(),
             m.getPlayerLocationY(), m.getPlayerLocationZ(), Layers.OBJECT);
-        app.getMazeManager().setDirty(true);
+        bag.getMazeManager().setDirty(true);
         final int px = m.getPlayerLocationX();
         final int py = m.getPlayerLocationY();
         final int pz = m.getPlayerLocationZ();
@@ -280,9 +264,47 @@ final class MovementTask extends Thread {
         GameGUI.redrawMaze();
       }
     } catch (final ArrayIndexOutOfBoundsException ae) {
-      m.restorePlayerLocation();
-      GameView.restoreViewingWindow();
-      bag.showMessage("Can't go outside the maze");
+      MovementTask.moveFailed();
+    }
+  }
+
+  private static void moveFailed() {
+    // Move failed
+    final BagOStuff bag = FantastleReboot.getBagOStuff();
+    final Maze m = bag.getMazeManager().getMaze();
+    m.restorePlayerLocation();
+    GameView.restoreViewingWindow();
+    SoundPlayer.playSound(SoundIndex.WALK_FAILED, SoundGroup.GAME);
+    Game.setStatusMessage("Can't go that way");
+    MovementTask.fireStepActions();
+    MovementTask.decayEffects();
+    MovementTask.proceed = false;
+  }
+
+  private static void checkStairs() {
+    final BagOStuff bag = FantastleReboot.getBagOStuff();
+    final FantastleObjectModelList objects = bag.getObjects();
+    final Maze m = bag.getMazeManager().getMaze();
+    final int px = m.getPlayerLocationX();
+    final int py = m.getPlayerLocationY();
+    final int pz = m.getPlayerLocationZ();
+    final FantastleObjectModel below = m.getCell(px, py, pz, Layers.GROUND);
+    if (objects.sendsDown(below)) {
+      if (Game.isFloorBelow()) {
+        // Going down...
+        SoundPlayer.playSound(SoundIndex.DOWN, SoundGroup.GAME);
+        MovementTask.updatePositionAbsolute(px, py, pz + 1);
+      } else {
+        MovementTask.moveFailed();
+      }
+    } else if (objects.sendsUp(below)) {
+      if (Game.isFloorAbove()) {
+        // Going up...
+        SoundPlayer.playSound(SoundIndex.UP, SoundGroup.GAME);
+        MovementTask.updatePositionAbsolute(px, py, pz - 1);
+      } else {
+        MovementTask.moveFailed();
+      }
     }
   }
 
