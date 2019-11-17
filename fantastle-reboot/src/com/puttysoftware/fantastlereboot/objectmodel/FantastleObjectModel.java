@@ -6,7 +6,6 @@ import com.puttysoftware.diane.loaders.ColorShader;
 import com.puttysoftware.diane.objectmodel.ObjectModel;
 import com.puttysoftware.fantastlereboot.assets.AttributeImageIndex;
 import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
-import com.puttysoftware.fantastlereboot.utilities.RandomGenerationRule;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 

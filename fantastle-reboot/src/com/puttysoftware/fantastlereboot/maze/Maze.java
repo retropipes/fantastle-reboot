@@ -14,7 +14,7 @@ import com.puttysoftware.fantastlereboot.gui.VersionException;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Tile;
-import com.puttysoftware.fantastlereboot.utilities.FormatConstants;
+import com.puttysoftware.fantastlereboot.utilities.FileVersions;
 import com.puttysoftware.fantastlereboot.utilities.PrefixIO;
 import com.puttysoftware.fantastlereboot.utilities.SuffixIO;
 import com.puttysoftware.randomrange.RandomLongRange;
@@ -331,7 +331,7 @@ public class Maze {
   }
 
   private int readMazeMetafile(final XDataReader reader) throws IOException {
-    int ver = FormatConstants.MAZE_FORMAT_LATEST;
+    int ver = FileVersions.FORMAT_LATEST;
     if (this.prefixHandler != null) {
       ver = this.prefixHandler.readPrefix(reader);
     }
@@ -350,12 +350,12 @@ public class Maze {
   }
 
   private void readMazeLevel(final XDataReader reader) throws IOException {
-    this.readMazeLevel(reader, FormatConstants.MAZE_FORMAT_LATEST);
+    this.readMazeLevel(reader, FileVersions.FORMAT_LATEST);
   }
 
   private void readMazeLevel(final XDataReader reader, final int formatVersion)
       throws IOException {
-    if (formatVersion == FormatConstants.MAZE_FORMAT_LATEST) {
+    if (formatVersion == FileVersions.FORMAT_LATEST) {
       this.mazeData = LayeredTower.readLayeredTowerV1(reader);
       this.mazeData.readSavedTowerState(reader, formatVersion);
     } else {

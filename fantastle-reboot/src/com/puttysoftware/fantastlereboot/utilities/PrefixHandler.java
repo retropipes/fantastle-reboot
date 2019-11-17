@@ -6,7 +6,7 @@ import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
 public class PrefixHandler implements PrefixIO {
-  private static final byte FORMAT_VERSION = (byte) FormatConstants.MAZE_FORMAT_LATEST;
+  private static final byte FORMAT_VERSION = (byte) FileVersions.FORMAT_LATEST;
 
   @Override
   public int readPrefix(final XDataReader reader) throws IOException {

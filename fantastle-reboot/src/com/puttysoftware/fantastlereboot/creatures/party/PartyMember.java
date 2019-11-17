@@ -21,7 +21,6 @@ import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.loaders.AvatarImageLoader;
 import com.puttysoftware.fantastlereboot.maze.GenerateTask;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
-import com.puttysoftware.fantastlereboot.utilities.FormatConstants;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.page.Page;
 import com.puttysoftware.xio.XDataReader;
@@ -276,7 +275,7 @@ public class PartyMember extends Creature {
   public static PartyMember read(final XDataReader worldFile)
       throws IOException {
     final int version = worldFile.readByte();
-    if (version < FormatConstants.CHARACTER_FORMAT_5) {
+    if (version < CharacterVersions.FORMAT_5) {
       throw new VersionException("Invalid character version found: " + version);
     }
     final int k = worldFile.readInt();
@@ -327,7 +326,7 @@ public class PartyMember extends Creature {
   }
 
   public void write(final XDataWriter worldFile) throws IOException {
-    worldFile.writeByte(FormatConstants.CHARACTER_FORMAT_LATEST);
+    worldFile.writeByte(CharacterVersions.FORMAT_LATEST);
     worldFile.writeInt(this.kills);
     worldFile.writeInt(this.getPermanentAttackPoints());
     worldFile.writeInt(this.getPermanentDefensePoints());

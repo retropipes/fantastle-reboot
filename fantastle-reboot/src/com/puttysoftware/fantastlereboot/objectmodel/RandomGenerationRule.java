@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.utilities;
+package com.puttysoftware.fantastlereboot.objectmodel;
 
 import com.puttysoftware.fantastlereboot.maze.Maze;
 

@@ -16,7 +16,6 @@ import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.utilities.FormatConstants;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
@@ -25,7 +24,6 @@ public class ItemInventory {
   private ItemUseQuantity[] entries;
   private Equipment[] equipment;
   private Socks socks;
-  private static final int COMBAT_ITEM_COUNT_V2 = 2;
 
   // Constructors
   public ItemInventory(final boolean hasCombatItems) {
@@ -341,15 +339,9 @@ public class ItemInventory {
   public static ItemInventory readItemInventory(final XDataReader dr,
       final int formatVersion) throws IOException {
     final ItemInventory ii = new ItemInventory(true);
-    int counter = 0;
     for (final ItemUseQuantity iqu : ii.entries) {
       iqu.setQuantity(dr.readInt());
       iqu.setUses(dr.readInt());
-      counter++;
-      if (formatVersion == FormatConstants.CHARACTER_FORMAT_5
-          && counter >= ItemInventory.COMBAT_ITEM_COUNT_V2) {
-        break;
-      }
     }
     for (int x = 0; x < ii.equipment.length; x++) {
       final Equipment ei = Equipment.readEquipment(dr);
