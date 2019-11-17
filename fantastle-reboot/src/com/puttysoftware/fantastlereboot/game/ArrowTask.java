@@ -19,12 +19,11 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot.game;
 
 import com.puttysoftware.diane.utilties.DirectionResolver;
-import com.puttysoftware.fantastlereboot.BagOStuff;
-import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
@@ -47,8 +46,7 @@ public class ArrowTask extends Thread {
   @Override
   public void run() {
     boolean res = true;
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     final int px = m.getPlayerLocationX();
     final int py = m.getPlayerLocationY();
     final int pz = m.getPlayerLocationZ();
@@ -92,7 +90,7 @@ public class ArrowTask extends Thread {
 
   private static boolean arrowHitCheck(final int inX, final int inY,
       final int pz) {
-    final Maze maze = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
+    final Maze maze = MazeManager.getMaze();
     return maze.cellRangeCheck(inX, inY, pz)
         && !maze.getCell(inX, inY, pz, Layers.OBJECT).isSolid();
   }

@@ -20,6 +20,7 @@ import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.GenerateTask;
 import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
@@ -139,8 +140,7 @@ public final class Game {
   }
 
   public static void resetViewingWindow() {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     if (m != null) {
       GameView.setViewingWindowLocationX(
           m.getPlayerLocationY() - GameView.getOffsetFactorX());
@@ -150,8 +150,7 @@ public final class Game {
   }
 
   public static void resetPlayerLocation() {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     if (m != null) {
       m.setPlayerToStart();
     }
@@ -190,43 +189,37 @@ public final class Game {
   }
 
   public static boolean isFloorBelow() {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
         m.getPlayerLocationZ() - 1);
   }
 
   public static boolean isFloorAbove() {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
         m.getPlayerLocationZ() + 1);
   }
 
   public static boolean isLevelBelow() {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
         m.getPlayerLocationZ() - 1);
   }
 
   public static boolean isLevelAbove() {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
         m.getPlayerLocationZ() + 1);
   }
 
   public static boolean doesFloorExist(final int floor) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
         floor);
   }
 
   public static boolean doesLevelExist(final int level) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
         level);
   }
@@ -237,8 +230,7 @@ public final class Game {
   }
 
   public static void goToLevelOffset(final int level) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     final boolean levelExists = m.doesLevelExistOffset(level);
     Game.stopMovement();
     if (levelExists) {
@@ -251,7 +243,7 @@ public final class Game {
   public static void exitGame() {
     Game.stateChanged = true;
     final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     // Restore the maze
     m.restore();
     m.resetVisibleSquares();
@@ -286,15 +278,13 @@ public final class Game {
   }
 
   public static void decay() {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     m.setCell(new OpenSpace(), m.getPlayerLocationX(), m.getPlayerLocationY(),
         m.getPlayerLocationZ(), Layers.OBJECT);
   }
 
   public static void morph(final FantastleObjectModel morphInto) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     m.setCell(morphInto, m.getPlayerLocationX(), m.getPlayerLocationY(),
         m.getPlayerLocationZ(), morphInto.getLayer());
   }
@@ -305,12 +295,12 @@ public final class Game {
 
   public static void playMaze() {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final Maze m = bag.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     if (FileStateManager.getLoaded()) {
       if (Game.stateChanged) {
         // Initialize only if the maze state has changed
-        bag.getMazeManager().getMaze()
-            .switchLevel(bag.getMazeManager().getMaze().getStartLevel());
+        MazeManager.getMaze()
+            .switchLevel(MazeManager.getMaze().getStartLevel());
         Game.stateChanged = false;
       }
       // Make sure message area is attached to the border pane
@@ -344,8 +334,7 @@ public final class Game {
 
   public static void resetGameState() {
     Game.deactivateAllEffects();
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     FileStateManager.setDirty(false);
     m.restore();
     Game.setSavedGameFlag(false);
@@ -361,8 +350,7 @@ public final class Game {
   public static void resetLevel() {
     PartyManager.getParty().getLeader().healAndRegenerateFully();
     Game.deactivateAllEffects();
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     FileStateManager.setDirty(true);
     m.restore();
     final boolean playerExists = m.doesPlayerExist();
@@ -377,8 +365,7 @@ public final class Game {
 
   public static void solvedLevel() {
     Game.deactivateAllEffects();
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     final boolean playerExists = m.doesPlayerExist();
     if (playerExists) {
       m.restore();
@@ -409,7 +396,7 @@ public final class Game {
     PartyManager.getParty().getLeader().healAndRegenerateFully();
     Game.deactivateAllEffects();
     final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     // Restore the maze
     m.restore();
     final boolean playerExists = m.doesPlayerExist();
@@ -442,7 +429,7 @@ public final class Game {
 
   public static void useItemHandler(final int x, final int y) {
     final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     final int xOffset = GameView.getViewingWindowLocationX()
         - GameView.getOffsetFactorX();
     final int yOffset = GameView.getViewingWindowLocationY()
@@ -477,8 +464,7 @@ public final class Game {
   }
 
   static void controllableTeleportHandler(final int x, final int y) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     if (Game.isTeleporting) {
       final int xOffset = GameView.getViewingWindowLocationX()
           - GameView.getOffsetFactorX();

@@ -9,6 +9,7 @@ import java.io.File;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fileutils.ZipUtilities;
 
 public class GameSaver extends Thread {
@@ -26,7 +27,6 @@ public class GameSaver extends Thread {
     boolean success = true;
     final String sg = "Game";
     try {
-      final BagOStuff app = FantastleReboot.getBagOStuff();
       final BagOStuff bag = FantastleReboot.getBagOStuff();
       // filename check
       final boolean hasExtension = GameSaver.hasExtension(this.filename);
@@ -35,20 +35,18 @@ public class GameSaver extends Thread {
       }
       final File mazeFile = new File(this.filename);
       // Set prefix handler
-      app.getMazeManager().getMaze().setPrefixHandler(new PrefixHandler());
+      MazeManager.getMaze().setPrefixHandler(new PrefixHandler());
       // Set suffix handler
-      app.getMazeManager().getMaze().setSuffixHandler(new SuffixHandler());
-      app.getMazeManager().getMaze().writeMaze();
+      MazeManager.getMaze().setSuffixHandler(new SuffixHandler());
+      MazeManager.getMaze().writeMaze();
       // Zip the file
-      ZipUtilities.zipDirectory(
-          new File(app.getMazeManager().getMaze().getBasePath()), mazeFile);
+      ZipUtilities.zipDirectory(new File(MazeManager.getMaze().getBasePath()),
+          mazeFile);
       bag.showMessage(sg + " saved.");
     } catch (final Exception ex) {
       FantastleReboot.logError(ex);
     }
-    FantastleReboot.getBagOStuff().getMazeManager();
-    MazeFileManager
-        .handleDeferredSuccess(success, false, null);
+    MazeFileManager.handleDeferredSuccess(success, false, null);
   }
 
   private static boolean hasExtension(final String s) {

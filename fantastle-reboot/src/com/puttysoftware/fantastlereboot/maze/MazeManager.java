@@ -7,18 +7,18 @@ package com.puttysoftware.fantastlereboot.maze;
 
 public final class MazeManager {
   // Fields
-  private Maze gameMaze;
+  private static Maze gameMaze;
 
   // Constructors
-  public MazeManager() {
+  private MazeManager() {
   }
 
   // Methods
-  public Maze getMaze() {
-    return this.gameMaze;
+  public static Maze getMaze() {
+    return gameMaze;
   }
 
-  public void setMaze(final Maze newMaze) {
-    this.gameMaze = newMaze;
+  public static void setMaze(final Maze newMaze) {
+    gameMaze = newMaze;
   }
 }

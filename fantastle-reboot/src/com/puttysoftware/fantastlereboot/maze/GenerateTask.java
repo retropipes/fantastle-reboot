@@ -42,12 +42,12 @@ public class GenerateTask extends Thread {
       this.generateFrame.setContentPane(this.content);
       this.generateFrame.pack();
       final BagOStuff app = FantastleReboot.getBagOStuff();
-      Maze gameMaze = app.getMazeManager().getMaze();
+      Maze gameMaze = MazeManager.getMaze();
       if (!this.scratch) {
         Game.disableEvents();
       } else {
         gameMaze = new Maze();
-        app.getMazeManager().setMaze(gameMaze);
+        MazeManager.setMaze(gameMaze);
       }
       gameMaze.addLevel(Maze.getMaxRows(), Maze.getMaxColumns(),
           Maze.getMaxFloors());

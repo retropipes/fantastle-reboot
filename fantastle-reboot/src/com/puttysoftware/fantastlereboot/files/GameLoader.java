@@ -13,11 +13,11 @@ import javax.swing.JProgressBar;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.diane.gui.MainWindow;
-import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.VersionException;
 import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fileutils.ZipUtilities;
 
 public class GameLoader extends Thread {
@@ -45,7 +45,6 @@ public class GameLoader extends Thread {
       content.add(loadBar);
       this.loadFrame.setContentPane(content);
       this.loadFrame.pack();
-      final BagOStuff app = FantastleReboot.getBagOStuff();
       int startW;
       Game.setSavedGameFlag(false);
       Maze gameMaze = new Maze();
@@ -59,12 +58,12 @@ public class GameLoader extends Thread {
       if (gameMaze == null) {
         throw new IOException("Unknown object encountered.");
       }
-      app.getMazeManager().setMaze(gameMaze);
+      MazeManager.setMaze(gameMaze);
       startW = gameMaze.getStartLevel();
       gameMaze.switchLevel(startW);
       final boolean playerExists = gameMaze.doesPlayerExist();
       if (playerExists) {
-        app.getMazeManager().getMaze().setPlayerToStart();
+        MazeManager.getMaze().setPlayerToStart();
         Game.resetViewingWindow();
       }
       gameMaze.save();
@@ -73,12 +72,10 @@ public class GameLoader extends Thread {
       FileStateManager.setLoaded(true);
       CommonDialogs.showDialog(sg + " loaded.");
       Game.playMaze();
-      app.getMazeManager();
       MazeFileManager.handleDeferredSuccess(true, false, null);
     } catch (final VersionException ve) {
       CommonDialogs.showDialog("Loading the " + sg.toLowerCase()
           + " failed, due to the format version being unsupported.");
-      FantastleReboot.getBagOStuff().getMazeManager();
       MazeFileManager.handleDeferredSuccess(false, true, mazeFile);
     } catch (final Exception ex) {
       FantastleReboot.logError(ex);

@@ -38,14 +38,12 @@ import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModelList;
 import com.puttysoftware.updater.ProductData;
 
 public class BagOStuff {
   // Fields
   private AboutDialog about;
-  private MazeManager mazeMgr;
   private GeneralHelpManager gHelpMgr;
   private MazeEditor editor;
   private GUIManager guiMgr;
@@ -96,7 +94,6 @@ public class BagOStuff {
   void postConstruct() {
     this.about = new AboutDialog(BagOStuff.getVersionString());
     this.guiMgr = new GUIManager();
-    this.mazeMgr = new MazeManager();
     this.gHelpMgr = new GeneralHelpManager();
     this.windowTurnBattle = new WindowTurnBattleLogic();
     this.windowTimeBattle = new WindowTimeBattleLogic();
@@ -175,10 +172,6 @@ public class BagOStuff {
 
   public void resetPreferences() {
     PreferencesManager.resetPrefs();
-  }
-
-  public MazeManager getMazeManager() {
-    return this.mazeMgr;
   }
 
   public GeneralHelpManager getGeneralHelpManager() {

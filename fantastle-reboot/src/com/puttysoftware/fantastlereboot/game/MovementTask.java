@@ -16,6 +16,7 @@ import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModelList;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
@@ -80,8 +81,7 @@ final class MovementTask extends Thread {
   }
 
   public static boolean tryAbsolute(final int x, final int y, final int z) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     if (m.cellRangeCheck(x, y, z)) {
       final FantastleObjectModel below = m.getCell(m.getPlayerLocationX(),
           m.getPlayerLocationY(), m.getPlayerLocationZ(), Layers.GROUND);
@@ -98,8 +98,7 @@ final class MovementTask extends Thread {
   }
 
   static void fireStepActions() {
-    BagOStuff bag = FantastleReboot.getBagOStuff();
-    final Maze m = bag.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     final int px = m.getPlayerLocationX();
     final int py = m.getPlayerLocationY();
     final int pz = m.getPlayerLocationZ();
@@ -136,7 +135,7 @@ final class MovementTask extends Thread {
   private static void updatePositionRelative(final int dirX, final int dirY,
       final int dirZ) {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final Maze m = bag.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     final FantastleObjectModelList objects = bag.getObjects();
     int px = m.getPlayerLocationX();
     int py = m.getPlayerLocationY();
@@ -238,8 +237,7 @@ final class MovementTask extends Thread {
 
   private static void updatePositionAbsolute(final int x, final int y,
       final int z) {
-    final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final Maze m = bag.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     m.savePlayerLocation();
     GameView.saveViewingWindow();
     if (m.cellRangeCheck(x, y, z)) {
@@ -267,8 +265,7 @@ final class MovementTask extends Thread {
 
   private static void moveFailed() {
     // Move failed
-    final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final Maze m = bag.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     m.restorePlayerLocation();
     GameView.restoreViewingWindow();
     SoundPlayer.playSound(SoundIndex.WALK_FAILED, SoundGroup.GAME);
@@ -281,7 +278,7 @@ final class MovementTask extends Thread {
   private static void checkStairs() {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     final FantastleObjectModelList objects = bag.getObjects();
-    final Maze m = bag.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     final int px = m.getPlayerLocationX();
     final int py = m.getPlayerLocationY();
     final int pz = m.getPlayerLocationZ();

@@ -5,12 +5,12 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import com.puttysoftware.diane.loaders.ImageCompositor;
-import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.gui.DrawGrid;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.loaders.ImageConstants;
 import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.maze.MonsterLocationManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
@@ -84,8 +84,7 @@ class GameDraw extends Thread {
   }
 
   private void draw() {
-    final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final Maze m = bag.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     MonsterLocationManager.moveAllMonsters(m);
     int x, y, u, v;
     int xFix, yFix;
@@ -154,8 +153,7 @@ class GameDraw extends Thread {
   }
 
   private void drawOne() {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = app.getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     MonsterLocationManager.moveAllMonsters(m);
     int x, y, u, v;
     int xFix, yFix;
@@ -169,7 +167,7 @@ class GameDraw extends Thread {
     final FantastleObjectModel obj5 = this.drawObj;
     xFix = x - GameView.getViewingWindowLocationX();
     yFix = y - GameView.getViewingWindowLocationY();
-    visible = app.getMazeManager().getMaze().isSquareVisible(u, v, y, x);
+    visible = MazeManager.getMaze().isSquareVisible(u, v, y, x);
     inBounds = (x >= 0 && x < Maze.getMaxRows() && y >= 0
         && y < Maze.getMaxColumns());
     if (inBounds) {

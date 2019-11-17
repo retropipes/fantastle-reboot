@@ -10,10 +10,10 @@ import java.awt.Container;
 import javax.swing.JProgressBar;
 
 import com.puttysoftware.diane.gui.MainWindow;
-import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.maze.MazeManager;
 
 public class LevelLoadTask extends Thread {
   // Fields
@@ -38,8 +38,7 @@ public class LevelLoadTask extends Thread {
       this.loadFrame.setTitle("Loading...");
       this.loadFrame.setContentPane(this.content);
       this.loadFrame.pack();
-      final BagOStuff app = FantastleReboot.getBagOStuff();
-      final Maze gameMaze = app.getMazeManager().getMaze();
+      final Maze gameMaze = MazeManager.getMaze();
       Game.disableEvents();
       gameMaze.switchLevelOffset(this.level);
       gameMaze.offsetPlayerLocationW(this.level);

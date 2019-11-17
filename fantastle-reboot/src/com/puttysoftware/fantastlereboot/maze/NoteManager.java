@@ -1,7 +1,6 @@
 package com.puttysoftware.fantastlereboot.maze;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
-import com.puttysoftware.fantastlereboot.FantastleReboot;
 
 public class NoteManager {
   private NoteManager() {
@@ -9,7 +8,7 @@ public class NoteManager {
   }
 
   public static void editNote() {
-    final Maze m = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
+    final Maze m = MazeManager.getMaze();
     final int x = m.getPlayerLocationX();
     final int y = m.getPlayerLocationY();
     final int z = m.getPlayerLocationZ();
