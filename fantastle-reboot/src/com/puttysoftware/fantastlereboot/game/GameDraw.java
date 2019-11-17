@@ -9,6 +9,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.gui.DrawGrid;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.loaders.ImageConstants;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MonsterLocationManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
@@ -18,7 +19,6 @@ import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Player;
 import com.puttysoftware.fantastlereboot.objects.temporary.Darkness;
 import com.puttysoftware.fantastlereboot.objects.temporary.NoteObject;
-import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class GameDraw extends Thread {

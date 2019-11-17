@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.maze;
+package com.puttysoftware.fantastlereboot.maze.files;
 
 public class MazeVersions {
   public static final int FORMAT_LATEST = 2;

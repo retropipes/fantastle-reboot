@@ -19,8 +19,8 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.VersionException;
 import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.utilities.PrefixHandler;
-import com.puttysoftware.fantastlereboot.utilities.SuffixHandler;
+import com.puttysoftware.fantastlereboot.maze.files.PrefixHandler;
+import com.puttysoftware.fantastlereboot.maze.files.SuffixHandler;
 import com.puttysoftware.fileutils.ZipUtilities;
 
 public class GameLoadTask extends Thread {

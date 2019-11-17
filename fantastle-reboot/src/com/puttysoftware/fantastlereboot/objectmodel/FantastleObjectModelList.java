@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.loaders.DataLoader;
-import com.puttysoftware.fantastlereboot.maze.MazeVersions;
+import com.puttysoftware.fantastlereboot.maze.files.MazeVersions;
 import com.puttysoftware.fantastlereboot.objects.ArmorShop;
 import com.puttysoftware.fantastlereboot.objects.BankShop;
 import com.puttysoftware.fantastlereboot.objects.BonusShop;

@@ -26,7 +26,6 @@ import java.awt.event.WindowListener;
 import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.loaders.HelpLoader;
-import com.puttysoftware.fantastlereboot.utilities.ImageConstants;
 import com.puttysoftware.help.HTMLHelpViewer;
 
 public class GeneralHelpManager {
@@ -35,13 +34,13 @@ public class GeneralHelpManager {
   private final EventHandler handler = new EventHandler();
   private final Container helpContent;
   private final HTMLHelpViewer hv;
+  private static final int MAX_WINDOW_SIZE = 700;
 
   // Constructors
   public GeneralHelpManager() {
     this.helpContent = new Container();
     this.hv = HelpLoader.getHelpViewer();
-    this.hv.setHelpSize(ImageConstants.MAX_WINDOW_SIZE,
-        ImageConstants.MAX_WINDOW_SIZE);
+    this.hv.setHelpSize(MAX_WINDOW_SIZE, MAX_WINDOW_SIZE);
     this.helpContent.setLayout(new FlowLayout());
     this.helpContent.add(this.hv.getHelp());
   }
@@ -62,8 +61,7 @@ public class GeneralHelpManager {
   }
 
   public void updateHelpSize() {
-    this.hv.setHelpSize(ImageConstants.MAX_WINDOW_SIZE,
-        ImageConstants.MAX_WINDOW_SIZE);
+    this.hv.setHelpSize(MAX_WINDOW_SIZE, MAX_WINDOW_SIZE);
   }
 
   private class EventHandler implements WindowListener {

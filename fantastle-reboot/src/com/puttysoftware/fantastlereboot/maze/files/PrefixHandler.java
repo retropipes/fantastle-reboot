@@ -1,8 +1,7 @@
-package com.puttysoftware.fantastlereboot.utilities;
+package com.puttysoftware.fantastlereboot.maze.files;
 
 import java.io.IOException;
 
-import com.puttysoftware.fantastlereboot.maze.MazeVersions;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 

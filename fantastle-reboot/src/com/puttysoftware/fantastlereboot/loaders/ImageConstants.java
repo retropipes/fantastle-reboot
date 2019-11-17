@@ -16,11 +16,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Any questions should be directed to the author via email at: fantastle@worldwizard.net
  */
-package com.puttysoftware.fantastlereboot.utilities;
+package com.puttysoftware.fantastlereboot.loaders;
 
 public class ImageConstants {
-  public static final int MAX_MOBILE_WINDOW_SIZE = 320;
-  public static final int MAX_WINDOW_SIZE = 700;
   public static final int SIZE = 64;
 
   private ImageConstants() {
