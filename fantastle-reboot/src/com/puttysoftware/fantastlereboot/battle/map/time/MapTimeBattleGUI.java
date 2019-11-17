@@ -30,16 +30,15 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
+import com.puttysoftware.fantastlereboot.battle.map.MapBattleDefinitions;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleDraw;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleEffects;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleViewingWindowManager;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
-import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.Nothing;
-import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class MapTimeBattleGUI {
@@ -130,7 +129,7 @@ class MapTimeBattleGUI {
     this.battleFrame.removeKeyListener(this.handler);
   }
 
-  void redrawBattle(final Maze battleMaze) {
+  void redrawBattle(final MapBattleDefinitions mbd) {
     // Draw the battle
     int x, y;
     int xFix, yFix;
@@ -142,10 +141,10 @@ class MapTimeBattleGUI {
       for (y = yView; y <= ylView; y++) {
         xFix = x - xView;
         yFix = y - yView;
-        if (battleMaze.cellRangeCheck(y, x, 0)) {
-          final FantastleObjectModel obj1 = battleMaze.getCell(y, x, 0,
+        if (mbd.getBattleMaze().cellRangeCheck(y, x, 0)) {
+          final FantastleObjectModel obj1 = mbd.getBattleMaze().getCell(y, x, 0,
               Layers.GROUND);
-          final FantastleObjectModel obj2 = battleMaze.getCell(y, x, 0,
+          final FantastleObjectModel obj2 = mbd.getBattleMaze().getCell(y, x, 0,
               Layers.OBJECT);
           String cacheName = generateCacheName(obj1, obj2);
           final BufferedImageIcon icon1 = obj1.getBattleImage();
@@ -162,20 +161,20 @@ class MapTimeBattleGUI {
     this.battleFrame.pack();
   }
 
-  void redrawOneBattleSquare(final Maze battleMaze, final int x, final int y,
-      final FantastleObjectModel obj3) {
+  void redrawOneBattleSquare(final MapBattleDefinitions mbd, final int x,
+      final int y, final FantastleObjectModel obj3) {
     // Draw the battle
-    if (battleMaze.cellRangeCheck(y, x, 0)) {
+    if (mbd.getBattleMaze().cellRangeCheck(y, x, 0)) {
       int xFix, yFix;
       final int xView = this.vwMgr.getViewingWindowLocationX();
       final int yView = this.vwMgr.getViewingWindowLocationY();
       xFix = y - xView;
       yFix = x - yView;
-      final FantastleObjectModel obj1 = battleMaze.getCell(y, x, 0,
+      final FantastleObjectModel obj1 = mbd.getBattleMaze().getCell(y, x, 0,
           Layers.GROUND);
-      final FantastleObjectModel obj2 = battleMaze.getCell(y, x, 0,
+      final FantastleObjectModel obj2 = mbd.getBattleMaze().getCell(y, x, 0,
           Layers.OBJECT);
-      String cacheName = generateCacheName(obj1, obj2);
+      String cacheName = generateCacheName(obj1, obj2, obj3);
       final BufferedImageIcon icon1 = obj1.getBattleImage();
       final BufferedImageIcon icon2 = obj2.getBattleImage();
       final BufferedImageIcon icon3 = obj3.getBattleImage();
@@ -198,9 +197,9 @@ class MapTimeBattleGUI {
     return result.toString();
   }
 
-  void updateStatsAndEffects(final BattleCharacter active) {
-    this.bs.updateStats(active);
-    this.be.updateEffects(active);
+  void updateStatsAndEffects(final MapBattleDefinitions mbd) {
+    this.bs.updateStats(mbd.getActiveCharacter());
+    this.be.updateEffects(mbd.getActiveCharacter());
   }
 
   private void setUpGUI() {

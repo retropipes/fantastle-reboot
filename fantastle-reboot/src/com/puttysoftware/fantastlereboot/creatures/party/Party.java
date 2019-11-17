@@ -6,6 +6,8 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.creatures.party;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
@@ -20,26 +22,35 @@ import com.puttysoftware.xio.XDataWriter;
 
 public class Party {
   // Fields
-  private PartyMember members;
-  private BattleCharacter battlers;
+  private ArrayList<PartyMember> members;
+  private ArrayList<BattleCharacter> battlers;
   private int leaderID;
   private int activePCs;
   private int monsterLevel;
+  private static final int MAX_SIZE = 1;
 
   // Constructors
   public Party() {
-    this.members = null;
+    this.members = new ArrayList<>();
+    this.battlers = new ArrayList<>();
     this.leaderID = 0;
     this.activePCs = 0;
     this.monsterLevel = 0;
   }
 
   // Methods
-  private void generateBattleCharacters() {
-    this.battlers = new BattleCharacter(this.members);
+  public static int getMaxMembers() {
+    return Party.MAX_SIZE;
   }
 
-  public BattleCharacter getBattleCharacters() {
+  private void generateBattleCharacters() {
+    this.battlers.clear();
+    for (PartyMember member : this.members) {
+      this.battlers.add(new BattleCharacter(member));
+    }
+  }
+
+  public List<BattleCharacter> getBattleCharacters() {
     if (this.battlers == null) {
       this.generateBattleCharacters();
     }
@@ -47,7 +58,14 @@ public class Party {
   }
 
   public long getPartyMaxToNextLevel() {
-    return this.members.getToNextLevelValue();
+    long result = 0L;
+    for (PartyMember member : this.members) {
+      long value = member.getToNextLevelValue();
+      if (value > result) {
+        result = value;
+      }
+    }
+    return result;
   }
 
   public int getMonsterLevel() {
@@ -79,58 +97,70 @@ public class Party {
   }
 
   public PartyMember getLeader() {
-    return this.members;
+    return this.members.get(this.leaderID);
   }
 
   public void checkPartyLevelUp() {
-    // Level Up Check
-    if (this.members.checkLevelUp()) {
-      this.members.levelUp();
-      SoundPlayer.playSound(SoundIndex.LEVEL_UP, SoundGroup.GAME);
-      CommonDialogs.showTitledDialog(this.members.getName() + " reached level "
-          + this.members.getLevel() + "!", "Level Up");
+    for (PartyMember member : this.members) {
+      // Level Up Check
+      if (member.checkLevelUp()) {
+        member.levelUp();
+        SoundPlayer.playSound(SoundIndex.LEVEL_UP, SoundGroup.GAME);
+        CommonDialogs.showTitledDialog(
+            member.getName() + " reached level " + member.getLevel() + "!",
+            "Level Up");
+      }
     }
   }
 
   public boolean isAlive() {
-    return this.members.isAlive();
+    boolean result = false;
+    for (PartyMember member : this.members) {
+      result |= member.isAlive();
+    }
+    return result;
   }
 
   public void fireStepActions() {
-    this.members.getItems().fireStepActions(this.members);
+    for (PartyMember member : this.members) {
+      member.getItems().fireStepActions(member);
+    }
   }
 
   boolean addPartyMember(final PartyMember member) {
-    this.members = member;
-    return true;
+    if (this.members.size() < Party.MAX_SIZE) {
+      this.members.add(member);
+      return true;
+    }
+    return false;
   }
 
   static Party read(final XDataReader worldFile) throws IOException {
-    worldFile.readInt();
+    final Party pty = new Party();
+    final int mem = worldFile.readInt();
     final int lid = worldFile.readInt();
     final int apc = worldFile.readInt();
     final int lvl = worldFile.readInt();
-    final Party pty = new Party();
     pty.leaderID = lid;
     pty.activePCs = apc;
     pty.monsterLevel = lvl;
-    final boolean present = worldFile.readBoolean();
-    if (present) {
-      pty.members = CharacterLoader.readCharacter(worldFile);
+    for (int m = 0; m < mem; m++) {
+      final boolean present = worldFile.readBoolean();
+      if (present) {
+        pty.members.add(CharacterLoader.readCharacter(worldFile));
+      }
     }
     return pty;
   }
 
   void write(final XDataWriter worldFile) throws IOException {
-    worldFile.writeInt(1);
+    worldFile.writeInt(this.members.size());
     worldFile.writeInt(this.leaderID);
     worldFile.writeInt(this.activePCs);
     worldFile.writeInt(this.monsterLevel);
-    if (this.members == null) {
-      worldFile.writeBoolean(false);
-    } else {
+    for (PartyMember member : this.members) {
       worldFile.writeBoolean(true);
-      CharacterSaver.writeCharacter(worldFile, this.members);
+      CharacterSaver.writeCharacter(worldFile, member);
     }
   }
 }

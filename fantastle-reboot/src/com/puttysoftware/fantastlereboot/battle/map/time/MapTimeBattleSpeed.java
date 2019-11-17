@@ -18,7 +18,6 @@ class MapTimeBattleSpeed {
 
   // Method
   static int getSpeed() {
-    
     return PreferencesManager.getBattleSpeed()
         / MapTimeBattleSpeed.SPEED_FACTOR;
   }

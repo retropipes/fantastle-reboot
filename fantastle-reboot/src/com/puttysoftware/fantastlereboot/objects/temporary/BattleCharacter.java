@@ -23,6 +23,10 @@ public final class BattleCharacter extends FantastleObject {
     this.resetActions();
   }
 
+  public boolean isLocationSet() {
+    return this.creature.getX() != -1 && this.creature.getY() != -1;
+  }
+
   public int getX() {
     return this.creature.getX();
   }

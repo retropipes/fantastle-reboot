@@ -140,6 +140,7 @@ public class BossMonster extends Creature {
     this.setAttacksPerRound(1);
     this.setSpellsPerRound(1);
     this.image = this.getInitialImage();
+    this.healAndRegenerateFully();
   }
 
   private int getInitialStrength() {

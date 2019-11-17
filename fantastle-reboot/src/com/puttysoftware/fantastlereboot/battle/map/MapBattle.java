@@ -5,21 +5,29 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.battle.map;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.puttysoftware.fantastlereboot.creatures.monsters.MonsterFactory;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 
 public class MapBattle {
   // Fields
-  private final BattleCharacter monster;
+  private final List<BattleCharacter> monsters;
 
   // Constructors
   public MapBattle() {
     super();
-    this.monster = new BattleCharacter(MonsterFactory.getNewMonsterInstance());
+    final int monsterCount = 1;
+    this.monsters = new ArrayList<>();
+    for (int m = 0; m < monsterCount; m++) {
+      this.monsters
+          .add(new BattleCharacter(MonsterFactory.getNewMonsterInstance()));
+    }
   }
 
   // Methods
-  public BattleCharacter getBattlers() {
-    return this.monster;
+  public List<BattleCharacter> getBattlers() {
+    return this.monsters;
   }
 }

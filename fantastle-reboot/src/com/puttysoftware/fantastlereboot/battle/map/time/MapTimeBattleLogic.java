@@ -5,6 +5,8 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.battle.map.time;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -13,9 +15,9 @@ import javax.swing.JOptionPane;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.ai.AIContext;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.ai.map.AutoMapAI;
-import com.puttysoftware.fantastlereboot.ai.map.MapAIContext;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
@@ -26,6 +28,7 @@ import com.puttysoftware.fantastlereboot.battle.BossRewards;
 import com.puttysoftware.fantastlereboot.battle.damageengines.AbstractDamageEngine;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattle;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleArrowTask;
+import com.puttysoftware.fantastlereboot.battle.map.MapBattleDefinitions;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.monsters.BossMonster;
@@ -52,7 +55,7 @@ import com.puttysoftware.randomrange.RandomRange;
 
 public class MapTimeBattleLogic extends Battle {
   // Fields
-  private Maze battleMaze;
+  private MapBattleDefinitions mbd;
   private AbstractDamageEngine pde;
   private AbstractDamageEngine ede;
   private final AutoMapAI auto;
@@ -62,10 +65,8 @@ public class MapTimeBattleLogic extends Battle {
   private boolean resultDoneAlready;
   private boolean lastAIActionResult;
   MapTimeBattleGUI battleGUI;
-  private BattleCharacter me;
-  private BattleCharacter enemy;
-  private MapAIContext myContext;
-  private MapAIContext enemyContext;
+  private List<BattleCharacter> friends;
+  private List<BattleCharacter> enemies;
   private final Timer battleTimer;
   private int bx;
   private int by;
@@ -119,35 +120,38 @@ public class MapTimeBattleLogic extends Battle {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     Game.hideOutput();
     bag.setInBattle();
-    this.battleMaze = bMaze;
+    this.mbd = new MapBattleDefinitions();
+    this.mbd.setBattleMaze(bMaze);
     this.pde = AbstractDamageEngine.getPlayerInstance();
     this.ede = AbstractDamageEngine.getEnemyInstance();
     this.resultDoneAlready = false;
     this.result = BattleResults.IN_PROGRESS;
     // Generate Friends
-    this.me = PartyManager.getParty().getBattleCharacters();
+    this.friends = PartyManager.getParty().getBattleCharacters();
     // Generate Enemies
-    this.enemy = b.getBattlers();
-    this.enemy.getCreature().healAndRegenerateFully();
-    this.enemy.getCreature().loadCreature();
-    // Create AI Contexts
-    this.myContext = new MapAIContext(this.me, bMaze);
-    this.enemyContext = new MapAIContext(this.enemy, bMaze);
-    // Reset
-    this.me.resetActions();
-    this.enemy.resetActions();
-    // Set Action Bars
-    this.battleGUI.setMaxPlayerActionBarValue(
-        PartyManager.getParty().getLeader().getActionBarSpeed());
-    this.battleGUI.setMaxEnemyActionBarValue(
-        this.enemy.getCreature().getActionBarSpeed());
+    this.enemies = b.getBattlers();
+    // Merge, Create AI Contexts, Configure Action Bars
+    for (BattleCharacter friend : this.friends) {
+      this.mbd.addBattler(friend);
+      this.battleGUI
+          .setMaxPlayerActionBarValue(friend.getCreature().getActionBarSpeed());
+    }
+    for (BattleCharacter enemy : this.enemies) {
+      this.mbd.addBattler(enemy);
+      this.battleGUI
+          .setMaxEnemyActionBarValue(enemy.getCreature().getActionBarSpeed());
+    }
+    // Reset Inactive Indicators and Action Counters
+    this.mbd.resetBattlers();
     // Set Character Locations
     this.setCharacterLocations();
     // Clear status message
     this.clearStatusMessage();
     // Start Battle
-    this.battleGUI.getViewManager().setViewingWindowCenterX(this.me.getY());
-    this.battleGUI.getViewManager().setViewingWindowCenterY(this.me.getX());
+    this.battleGUI.getViewManager()
+        .setViewingWindowCenterX(this.mbd.getActiveCharacter().getY());
+    this.battleGUI.getViewManager()
+        .setViewingWindowCenterY(this.mbd.getActiveCharacter().getX());
     SoundPlayer.playSound(SoundIndex.DRAW_SWORD, SoundGroup.BATTLE);
     MusicPlayer.playMusic(MusicIndex.NORMAL_MAP_BATTLE, MusicGroup.BATTLE);
     this.showBattle();
@@ -212,18 +216,19 @@ public class MapTimeBattleLogic extends Battle {
 
   @Override
   public void executeNextAIAction() {
-    if (this.enemy != null && this.enemy.getCreature() != null
-        && this.enemy.getCreature().getMapAI() != null) {
-      final BattleCharacter active = this.enemy;
+    if (this.mbd != null && this.mbd.getActiveCharacter() != null
+        && this.mbd.getActiveCharacter().getCreature() != null
+        && this.mbd.getActiveCharacter().getCreature().getMapAI() != null) {
+      final BattleCharacter active = this.mbd.getActiveCharacter();
       if (active.getCreature().isAlive()) {
-        final int action = active.getCreature().getMapAI()
-            .getNextAction(this.getEnemy(), this.enemyContext);
+        final int action = active.getCreature().getMapAI().getNextAction(
+            this.mbd.getActiveCharacter().getCreature(),
+            this.mbd.getActiveAIContext());
         switch (action) {
         case AIRoutine.ACTION_MOVE:
           final int x = active.getCreature().getMapAI().getMoveX();
           final int y = active.getCreature().getMapAI().getMoveY();
-          this.lastAIActionResult = this.updatePositionInternal(x, y,
-              this.enemy, this.me, this.ede, this.enemyContext, false);
+          this.lastAIActionResult = this.updatePosition(x, y);
           active.getCreature().getMapAI()
               .setLastResult(this.lastAIActionResult);
           break;
@@ -244,6 +249,7 @@ public class MapTimeBattleLogic extends Battle {
           break;
         default:
           this.lastAIActionResult = true;
+          this.endTurn();
           break;
         }
       }
@@ -255,20 +261,21 @@ public class MapTimeBattleLogic extends Battle {
     return this.lastAIActionResult;
   }
 
-  private void executeAutoAI(final BattleCharacter acting,
-      final BattleCharacter theEnemy, final MapAIContext theContext) {
+  private void executeAutoAI(final BattleCharacter acting) {
     final int action = this.auto.getNextAction(acting.getCreature(),
-        theContext);
+        this.mbd.getBattlerAI(acting));
     switch (action) {
     case AIRoutine.ACTION_MOVE:
       final int x = this.auto.getMoveX();
       final int y = this.auto.getMoveY();
       final int activeTID = acting.getTeamID();
+      final BattleCharacter theEnemy = (activeTID == Creature.TEAM_PARTY
+          ? this.mbd.getFirstBattlerNotOnTeam(Creature.TEAM_PARTY)
+          : this.mbd.getFirstBattlerOnTeam(Creature.TEAM_PARTY));
       final AbstractDamageEngine activeDE = (activeTID == Creature.TEAM_PARTY
           ? this.ede
           : this.pde);
-      this.updatePositionInternal(x, y, acting, theEnemy, activeDE, theContext,
-          false);
+      this.updatePositionInternal(x, y, false, acting, theEnemy, activeDE);
       break;
     default:
       break;
@@ -388,169 +395,65 @@ public class MapTimeBattleLogic extends Battle {
   }
 
   private void setCharacterLocations() {
-    final RandomRange randX = new RandomRange(0, this.battleMaze.getRows() - 1);
-    final RandomRange randY = new RandomRange(0,
-        this.battleMaze.getColumns() - 1);
-    int rx, ry;
-    // Set Player Location
-    if (this.me != null) {
-      if (this.me.isActive() && this.me.getCreature().getX() == -1
-          && this.me.getCreature().getY() == -1) {
-        rx = randX.generate();
-        ry = randY.generate();
-        FantastleObjectModel obj = this.battleMaze.getCell(rx, ry, 0,
-            Layers.OBJECT);
-        while (obj.isSolid()) {
-          rx = randX.generate();
-          ry = randY.generate();
-          obj = this.battleMaze.getCell(rx, ry, 0, Layers.OBJECT);
-        }
-        this.me.setX(rx);
-        this.me.setY(ry);
-        this.battleMaze.setCell(this.me, rx, ry, 0, Layers.OBJECT);
-      }
-    }
-    // Set Enemy Location
-    if (this.enemy != null) {
-      if (this.enemy.isActive() && this.enemy.getCreature().getX() == -1
-          && this.enemy.getCreature().getY() == -1) {
-        rx = randX.generate();
-        ry = randY.generate();
-        FantastleObjectModel obj = this.battleMaze.getCell(rx, ry, 0,
-            Layers.OBJECT);
-        while (obj.isSolid()) {
-          rx = randX.generate();
-          ry = randY.generate();
-          obj = this.battleMaze.getCell(rx, ry, 0, Layers.OBJECT);
-        }
-        this.enemy.setX(rx);
-        this.enemy.setY(ry);
-        this.battleMaze.setCell(this.enemy, rx, ry, 0, Layers.OBJECT);
-      }
-    }
+    this.mbd.setLocations();
   }
 
   private int getGold() {
-    return this.enemy.getCreature().getGold();
+    return this.mbd.getTeamEnemyGold(Creature.TEAM_PARTY);
   }
 
   private boolean isTeamAlive(final int teamID) {
-    if (teamID == Creature.TEAM_PARTY) {
-      return this.me.getCreature().isAlive();
-    } else {
-      return this.enemy.getCreature().isAlive();
-    }
+    return this.mbd.isTeamAlive(teamID);
   }
 
   private boolean areTeamEnemiesAlive(final int teamID) {
-    if (teamID == Creature.TEAM_PARTY) {
-      return this.enemy.getCreature().isAlive();
-    } else {
-      return this.me.getCreature().isAlive();
-    }
+    return this.mbd.areTeamEnemiesAlive(teamID);
   }
 
   private boolean areTeamEnemiesDeadOrGone(final int teamID) {
-    if (teamID == Creature.TEAM_PARTY) {
-      int deadCount = 0;
-      if (this.enemy != null) {
-        final boolean res = this.enemy.getCreature().isAlive()
-            && this.enemy.isActive();
-        if (res) {
-          return false;
-        }
-        if (!this.enemy.getCreature().isAlive()) {
-          deadCount++;
-        }
-      }
-      return (deadCount > 0);
-    } else {
-      int deadCount = 0;
-      if (this.me != null) {
-        final boolean res = this.me.getCreature().isAlive()
-            && this.me.isActive();
-        if (res) {
-          return false;
-        }
-        if (!this.me.getCreature().isAlive()) {
-          deadCount++;
-        }
-      }
-      return (deadCount > 0);
-    }
+    return this.mbd.areTeamEnemiesDeadOrGone(teamID);
   }
 
   private boolean areTeamEnemiesGone(final int teamID) {
-    if (teamID == Creature.TEAM_PARTY) {
-      boolean res = true;
-      if (this.enemy != null) {
-        if (this.enemy.getCreature().isAlive()) {
-          res = res && !this.enemy.isActive();
-          if (!res) {
-            return false;
-          }
-        }
-      }
-      return true;
-    } else {
-      boolean res = true;
-      if (this.me != null) {
-        if (this.me.getCreature().isAlive()) {
-          res = res && !this.me.isActive();
-          if (!res) {
-            return false;
-          }
-        }
-      }
-      return true;
-    }
+    return this.mbd.areTeamEnemiesGone(teamID);
   }
 
   private boolean isTeamGone(final int teamID) {
-    if (teamID == Creature.TEAM_PARTY) {
-      boolean res = true;
-      if (this.me != null) {
-        if (this.me.getCreature().isAlive()) {
-          res = res && !this.me.isActive();
-          if (!res) {
-            return false;
-          }
-        }
-      }
-      return true;
-    } else {
-      boolean res = true;
-      if (this.enemy != null) {
-        if (this.enemy.getCreature().isAlive()) {
-          res = res && !this.enemy.isActive();
-          if (!res) {
-            return false;
-          }
-        }
-      }
-      return true;
-    }
+    return this.mbd.isTeamGone(teamID);
   }
 
   @Override
   public boolean updatePosition(final int x, final int y) {
-    BattleCharacter theEnemy = this.enemy;
-    final AbstractDamageEngine activeDE = this.pde;
+    final int activeTID = this.mbd.getActiveCharacter().getTeamID();
+    BattleCharacter theEnemy = (activeTID == Creature.TEAM_PARTY
+        ? this.mbd.getFirstBattlerNotOnTeam(Creature.TEAM_PARTY)
+        : this.mbd.getFirstBattlerOnTeam(Creature.TEAM_PARTY));
+    final AbstractDamageEngine activeDE = (activeTID == Creature.TEAM_PARTY
+        ? this.ede
+        : this.pde);
     if (x == 0 && y == 0) {
-      theEnemy = this.me;
+      theEnemy = this.mbd.getActiveCharacter();
     }
-    return this.updatePositionInternal(x, y, this.me, theEnemy, activeDE,
-        this.myContext, true);
+    return this.updatePositionInternal(x, y, true,
+        this.mbd.getActiveCharacter(), theEnemy, activeDE);
   }
 
   @Override
   public void fireArrow(final int x, final int y) {
-    // Fire arrow
-    this.updateStatsAndEffects();
-    this.battleGUI.turnEventHandlersOff();
-    final MapBattleArrowTask at = new MapBattleArrowTask(x, y, this.battleMaze,
-        this.me);
-    at.start();
+    if (this.mbd.getActiveCharacter().getCurrentActions() > 0) {
+      // Has actions left
+      this.mbd.getActiveCharacter().act(1);
+      this.updateStatsAndEffects();
+      this.battleGUI.turnEventHandlersOff();
+      final MapBattleArrowTask at = new MapBattleArrowTask(x, y,
+          this.mbd.getBattleMaze(), this.mbd.getActiveCharacter());
+      at.start();
+    } else {
+      // Deny arrow - out of actions
+      if (!this.mbd.getActiveCharacter().getCreature().hasMapAI()) {
+        this.setStatusMessage("Out of actions!");
+      }
+    }
   }
 
   @Override
@@ -567,8 +470,8 @@ public class MapTimeBattleLogic extends Battle {
       // Set dead character to inactive
       hit.deactivate();
       // Remove character from battle
-      this.battleMaze.setCell(new OpenSpace(), hit.getX(), hit.getY(), 0,
-          Layers.OBJECT);
+      this.mbd.getBattleMaze().setCell(new OpenSpace(), hit.getX(), hit.getY(),
+          0, Layers.OBJECT);
     }
     // Check result
     final BattleResults currResult = this.getResult();
@@ -580,208 +483,228 @@ public class MapTimeBattleLogic extends Battle {
   }
 
   private boolean updatePositionInternal(final int x, final int y,
-      final BattleCharacter active, final BattleCharacter theEnemy,
-      final AbstractDamageEngine activeDE, final MapAIContext activeContext,
-      boolean updateView) {
+      final boolean useAP, final BattleCharacter active,
+      final BattleCharacter theEnemy, final AbstractDamageEngine activeDE) {
     this.updateAllAIContexts();
     int px = active.getX();
     int py = active.getY();
-    final Maze m = this.battleMaze;
+    final Maze m = this.mbd.getBattleMaze();
     FantastleObjectModel next = null;
     FantastleObjectModel nextGround = null;
     FantastleObjectModel currGround = null;
     active.saveLocation();
-    if (updateView) {
-      this.battleGUI.getViewManager().saveViewingWindow();
-    }
-    if (m.cellRangeCheck(px + x, py + y, 0)) {
+    this.battleGUI.getViewManager().saveViewingWindow();
+    if (this.mbd.getBattleMaze().cellRangeCheck(px + x, py + y, 0)) {
       next = m.getCell(px + x, py + y, 0, Layers.OBJECT);
       nextGround = m.getCell(px + x, py + y, 0, Layers.GROUND);
     }
-    if (m.cellRangeCheck(px, py, 0)) {
+    if (this.mbd.getBattleMaze().cellRangeCheck(px, py, 0)) {
       currGround = m.getCell(px, py, 0, Layers.GROUND);
     }
     if (next != null && nextGround != null && currGround != null) {
       if (!next.isSolid()) {
-        // Move
-        FantastleObjectModel obj1 = null;
-        FantastleObjectModel obj2 = null;
-        FantastleObjectModel obj3 = null;
-        FantastleObjectModel obj4 = null;
-        FantastleObjectModel obj6 = null;
-        FantastleObjectModel obj7 = null;
-        FantastleObjectModel obj8 = null;
-        FantastleObjectModel obj9 = null;
-        if (m.cellRangeCheck(px + 1, py - 1, 0)) {
-          obj1 = m.getCell(px + 1, py - 1, 0, Layers.OBJECT);
-        }
-        if (m.cellRangeCheck(px, py - 1, 0)) {
-          obj2 = m.getCell(px, py - 1, 0, Layers.OBJECT);
-        }
-        if (m.cellRangeCheck(px - 1, py - 1, 0)) {
-          obj3 = m.getCell(px - 1, py - 1, 0, Layers.OBJECT);
-        }
-        if (m.cellRangeCheck(px - 1, py, 0)) {
-          obj4 = m.getCell(px - 1, py, 0, Layers.OBJECT);
-        }
-        if (m.cellRangeCheck(px + 1, py - 1, 0)) {
-          obj6 = m.getCell(px + 1, py - 1, 0, Layers.OBJECT);
-        }
-        if (m.cellRangeCheck(px - 1, py + 1, 0)) {
-          obj7 = m.getCell(px - 1, py + 1, 0, Layers.OBJECT);
-        }
-        if (m.cellRangeCheck(px, py + 1, 0)) {
-          obj8 = m.getCell(px, py + 1, 0, Layers.OBJECT);
-        }
-        if (m.cellRangeCheck(px + 1, py + 1, 0)) {
-          obj9 = m.getCell(px + 1, py + 1, 0, Layers.OBJECT);
-        }
-        // Auto-attack check
-        if (obj1 != null) {
-          if (obj1 instanceof BattleCharacter) {
-            if (!((x == -1 && y == 0) || (x == -1 && y == -1)
-                || (x == 0 && y == -1))) {
-              final BattleCharacter bc1 = (BattleCharacter) obj1;
-              if (bc1.getTeamID() != active.getTeamID()) {
-                this.executeAutoAI(bc1, active, activeContext);
+        if ((useAP
+            && this.getActiveActionCounter() >= AIContext.getDefaultAPCost())
+            || !useAP) {
+          // Move
+          FantastleObjectModel obj1 = null;
+          FantastleObjectModel obj2 = null;
+          FantastleObjectModel obj3 = null;
+          FantastleObjectModel obj4 = null;
+          FantastleObjectModel obj6 = null;
+          FantastleObjectModel obj7 = null;
+          FantastleObjectModel obj8 = null;
+          FantastleObjectModel obj9 = null;
+          if (this.mbd.getBattleMaze().cellRangeCheck(px - 1, py - 1, 0)) {
+            obj1 = m.getCell(px - 1, py - 1, 0, Layers.OBJECT);
+          }
+          if (this.mbd.getBattleMaze().cellRangeCheck(px, py - 1, 0)) {
+            obj2 = m.getCell(px, py - 1, 0, Layers.OBJECT);
+          }
+          if (this.mbd.getBattleMaze().cellRangeCheck(px + 1, py - 1, 0)) {
+            obj3 = m.getCell(px + 1, py - 1, 0, Layers.OBJECT);
+          }
+          if (this.mbd.getBattleMaze().cellRangeCheck(px - 1, py, 0)) {
+            obj4 = m.getCell(px - 1, py, 0, Layers.OBJECT);
+          }
+          if (this.mbd.getBattleMaze().cellRangeCheck(px + 1, py - 1, 0)) {
+            obj6 = m.getCell(px + 1, py - 1, 0, Layers.OBJECT);
+          }
+          if (this.mbd.getBattleMaze().cellRangeCheck(px - 1, py + 1, 0)) {
+            obj7 = m.getCell(px - 1, py + 1, 0, Layers.OBJECT);
+          }
+          if (this.mbd.getBattleMaze().cellRangeCheck(px, py + 1, 0)) {
+            obj8 = m.getCell(px, py + 1, 0, Layers.OBJECT);
+          }
+          if (this.mbd.getBattleMaze().cellRangeCheck(px + 1, py + 1, 0)) {
+            obj9 = m.getCell(px + 1, py + 1, 0, Layers.OBJECT);
+          }
+          // Auto-attack check
+          if (obj1 != null) {
+            if (obj1 instanceof BattleCharacter) {
+              if (!((x == -1 && y == 0) || (x == -1 && y == -1)
+                  || (x == 0 && y == -1))) {
+                final BattleCharacter bc1 = (BattleCharacter) obj1;
+                if (bc1.getTeamID() != active.getTeamID()) {
+                  this.executeAutoAI(bc1);
+                }
               }
             }
           }
-        }
-        if (obj2 != null) {
-          if (obj2 instanceof BattleCharacter) {
-            if (y == 1) {
-              final BattleCharacter bc2 = (BattleCharacter) obj2;
-              if (bc2.getTeamID() != active.getTeamID()) {
-                this.executeAutoAI(bc2, active, activeContext);
+          if (obj2 != null) {
+            if (obj2 instanceof BattleCharacter) {
+              if (y == 1) {
+                final BattleCharacter bc2 = (BattleCharacter) obj2;
+                if (bc2.getTeamID() != active.getTeamID()) {
+                  this.executeAutoAI(bc2);
+                }
               }
             }
           }
-        }
-        if (obj3 != null) {
-          if (obj3 instanceof BattleCharacter) {
-            if (!((x == 0 && y == -1) || (x == 1 && y == -1)
-                || (x == 1 && y == 0))) {
-              final BattleCharacter bc3 = (BattleCharacter) obj3;
-              if (bc3.getTeamID() != active.getTeamID()) {
-                this.executeAutoAI(bc3, active, activeContext);
+          if (obj3 != null) {
+            if (obj3 instanceof BattleCharacter) {
+              if (!((x == 0 && y == -1) || (x == 1 && y == -1)
+                  || (x == 1 && y == 0))) {
+                final BattleCharacter bc3 = (BattleCharacter) obj3;
+                if (bc3.getTeamID() != active.getTeamID()) {
+                  this.executeAutoAI(bc3);
+                }
               }
             }
           }
-        }
-        if (obj4 != null) {
-          if (obj4 instanceof BattleCharacter) {
-            if (x == 1) {
-              final BattleCharacter bc4 = (BattleCharacter) obj4;
-              if (bc4.getTeamID() != active.getTeamID()) {
-                this.executeAutoAI(bc4, active, activeContext);
+          if (obj4 != null) {
+            if (obj4 instanceof BattleCharacter) {
+              if (x == 1) {
+                final BattleCharacter bc4 = (BattleCharacter) obj4;
+                if (bc4.getTeamID() != active.getTeamID()) {
+                  this.executeAutoAI(bc4);
+                }
               }
             }
           }
-        }
-        if (obj6 != null) {
-          if (obj6 instanceof BattleCharacter) {
-            if (x == -1) {
-              final BattleCharacter bc6 = (BattleCharacter) obj6;
-              if (bc6.getTeamID() != active.getTeamID()) {
-                this.executeAutoAI(bc6, active, activeContext);
+          if (obj6 != null) {
+            if (obj6 instanceof BattleCharacter) {
+              if (x == -1) {
+                final BattleCharacter bc6 = (BattleCharacter) obj6;
+                if (bc6.getTeamID() != active.getTeamID()) {
+                  this.executeAutoAI(bc6);
+                }
               }
             }
           }
-        }
-        if (obj7 != null) {
-          if (obj7 instanceof BattleCharacter) {
-            if (!((x == -1 && y == 0) || (x == -1 && y == 1)
-                || (x == 0 && y == 1))) {
-              final BattleCharacter bc7 = (BattleCharacter) obj7;
-              if (bc7.getTeamID() != active.getTeamID()) {
-                this.executeAutoAI(bc7, active, activeContext);
+          if (obj7 != null) {
+            if (obj7 instanceof BattleCharacter) {
+              if (!((x == -1 && y == 0) || (x == -1 && y == 1)
+                  || (x == 0 && y == 1))) {
+                final BattleCharacter bc7 = (BattleCharacter) obj7;
+                if (bc7.getTeamID() != active.getTeamID()) {
+                  this.executeAutoAI(bc7);
+                }
               }
             }
           }
-        }
-        if (obj8 != null) {
-          if (obj8 instanceof BattleCharacter) {
-            if (y == -1) {
-              final BattleCharacter bc8 = (BattleCharacter) obj8;
-              if (bc8.getTeamID() != active.getTeamID()) {
-                this.executeAutoAI(bc8, active, activeContext);
+          if (obj8 != null) {
+            if (obj8 instanceof BattleCharacter) {
+              if (y == -1) {
+                final BattleCharacter bc8 = (BattleCharacter) obj8;
+                if (bc8.getTeamID() != active.getTeamID()) {
+                  this.executeAutoAI(bc8);
+                }
               }
             }
           }
-        }
-        if (obj9 != null) {
-          if (obj9 instanceof BattleCharacter) {
-            if (!((x == 0 && y == 1) || (x == 1 && y == 1)
-                || (x == 1 && y == 0))) {
-              final BattleCharacter bc9 = (BattleCharacter) obj9;
-              if (bc9.getTeamID() != active.getTeamID()) {
-                this.executeAutoAI(bc9, active, activeContext);
+          if (obj9 != null) {
+            if (obj9 instanceof BattleCharacter) {
+              if (!((x == 0 && y == 1) || (x == 1 && y == 1)
+                  || (x == 1 && y == 0))) {
+                final BattleCharacter bc9 = (BattleCharacter) obj9;
+                if (bc9.getTeamID() != active.getTeamID()) {
+                  this.executeAutoAI(bc9);
+                }
               }
             }
           }
-        }
-        m.setCell(active.getSavedObject(), px, py, 0, Layers.OBJECT);
-        active.offsetX(x);
-        active.offsetY(y);
-        px += x;
-        py += y;
-        if (updateView) {
+          m.setCell(active.getSavedObject(), px, py, 0, Layers.OBJECT);
+          active.offsetX(x);
+          active.offsetY(y);
+          px += x;
+          py += y;
           this.battleGUI.getViewManager().offsetViewingWindowLocationX(y);
           this.battleGUI.getViewManager().offsetViewingWindowLocationY(x);
+          active.setSavedObject(m.getCell(px, py, 0, Layers.OBJECT));
+          m.setCell(active, px, py, 0, Layers.OBJECT);
+          this.decrementActiveActionCounterBy(AIContext.getDefaultAPCost());
+          SoundPlayer.playSound(SoundIndex.WALK, SoundGroup.BATTLE);
+        } else {
+          // Deny move - out of actions
+          if (!this.mbd.getActiveCharacter().getCreature().hasMapAI()) {
+            this.setStatusMessage("Out of moves!");
+          }
+          return false;
         }
-        active.setSavedObject(m.getCell(px, py, 0, Layers.OBJECT));
-        m.setCell(active, px, py, 0, Layers.OBJECT);
-        SoundPlayer.playSound(SoundIndex.WALK, SoundGroup.BATTLE);
       } else {
         if (next instanceof BattleCharacter) {
-          // Attack
-          final BattleCharacter bc = (BattleCharacter) next;
-          if (bc.getTeamID() == active.getTeamID()) {
-            // Attack Friend?
-            if (!active.getCreature().hasMapAI()) {
-              final int confirm = CommonDialogs
-                  .showConfirmDialog("Attack Friend?", "Battle");
-              if (confirm != JOptionPane.YES_OPTION) {
+          if ((useAP && this.getActiveAttackCounter() > 0) || !useAP) {
+            // Attack
+            final BattleCharacter bc = (BattleCharacter) next;
+            if (bc.getTeamID() == active.getTeamID()) {
+              // Attack Friend?
+              if (!active.getCreature().hasMapAI()) {
+                final int confirm = CommonDialogs
+                    .showConfirmDialog("Attack Friend?", "Battle");
+                if (confirm != JOptionPane.YES_OPTION) {
+                  return false;
+                }
+              } else {
                 return false;
               }
-            } else {
-              return false;
             }
-          }
-          // Do damage
-          this.computeDamage(theEnemy.getCreature(), active.getCreature(),
-              activeDE);
-          // Handle low health for party members
-          if (theEnemy.getCreature().isAlive()
-              && theEnemy.getTeamID() == Creature.TEAM_PARTY
-              && theEnemy.getCreature()
-                  .getCurrentHP() <= theEnemy.getCreature().getMaximumHP() * 3
-                      / 10) {
-            SoundPlayer.playSound(SoundIndex.LOW_HEALTH, SoundGroup.BATTLE);
-          }
-          // Handle enemy death
-          if (!theEnemy.getCreature().isAlive()) {
-            if (theEnemy.getTeamID() != Creature.TEAM_PARTY) {
-              // Update victory spoils
-              this.battleExp = theEnemy.getCreature().getExperience();
+            if (useAP) {
+              this.decrementActiveAttackCounter();
             }
-            // Remove effects from dead character
-            bc.getCreature().stripAllEffects();
-            // Set dead character to inactive
-            bc.deactivate();
-            // Remove character from battle
-            m.setCell(new OpenSpace(), bc.getX(), bc.getY(), 0, Layers.OBJECT);
-          }
-          // Handle self death
-          if (!active.getCreature().isAlive()) {
-            // Remove effects from dead character
-            active.getCreature().stripAllEffects();
-            // Set dead character to inactive
-            active.deactivate();
-            // Remove character from battle
-            m.setCell(new OpenSpace(), active.getX(), active.getY(), 0,
-                Layers.OBJECT);
+            // Do damage
+            this.computeDamage(theEnemy.getCreature(), active.getCreature(),
+                activeDE);
+            // Handle low health for party members
+            if (theEnemy.getCreature().isAlive()
+                && theEnemy.getTeamID() == Creature.TEAM_PARTY
+                && theEnemy.getCreature()
+                    .getCurrentHP() <= theEnemy.getCreature().getMaximumHP() * 3
+                        / 10) {
+              SoundPlayer.playSound(SoundIndex.LOW_HEALTH, SoundGroup.BATTLE);
+            }
+            // Handle enemy death
+            if (!theEnemy.getCreature().isAlive()) {
+              if (theEnemy.getTeamID() != Creature.TEAM_PARTY) {
+                // Update victory spoils
+                this.battleExp = theEnemy.getCreature().getExperience();
+              }
+              // Remove effects from dead character
+              bc.getCreature().stripAllEffects();
+              // Set dead character to inactive
+              bc.deactivate();
+              // Remove character from battle
+              this.mbd.getBattleMaze().setCell(new OpenSpace(), bc.getX(),
+                  bc.getY(), 0, Layers.OBJECT);
+            }
+            // Handle self death
+            if (!active.getCreature().isAlive()) {
+              // Remove effects from dead character
+              active.getCreature().stripAllEffects();
+              // Set dead character to inactive
+              active.deactivate();
+              // Remove character from battle
+              this.mbd.getBattleMaze().setCell(new OpenSpace(), active.getX(),
+                  active.getY(), 0, Layers.OBJECT);
+              // End turn
+              this.endTurn();
+            }
+          } else {
+            // Deny attack - out of actions
+            if (!this.mbd.getActiveCharacter().getCreature().hasMapAI()) {
+              this.setStatusMessage("Out of attacks!");
+            }
+            return false;
           }
         } else {
           // Move Failed
@@ -798,18 +721,14 @@ public class MapTimeBattleLogic extends Battle {
         final int confirm = CommonDialogs
             .showConfirmDialog("Embrace Cowardice?", "Battle");
         if (confirm != JOptionPane.YES_OPTION) {
-          if (updateView) {
-            this.battleGUI.getViewManager().restoreViewingWindow();
-          }
+          this.battleGUI.getViewManager().restoreViewingWindow();
           SoundPlayer.playSound(SoundIndex.RUN, SoundGroup.BATTLE);
           active.restoreLocation();
           return false;
         }
       }
       // Flee
-      if (updateView) {
-        this.battleGUI.getViewManager().restoreViewingWindow();
-      }
+      this.battleGUI.getViewManager().restoreViewingWindow();
       active.restoreLocation();
       // Set fled character to inactive
       active.deactivate();
@@ -825,10 +744,8 @@ public class MapTimeBattleLogic extends Battle {
         this.result = currResult;
         this.doResult();
       }
-      if (updateView) {
-        this.battleGUI.getViewManager().setViewingWindowCenterX(py);
-        this.battleGUI.getViewManager().setViewingWindowCenterY(px);
-      }
+      this.battleGUI.getViewManager().setViewingWindowCenterX(py);
+      this.battleGUI.getViewManager().setViewingWindowCenterY(px);
       this.redrawBattle();
       return true;
     }
@@ -839,23 +756,21 @@ public class MapTimeBattleLogic extends Battle {
       this.result = currResult;
       this.doResult();
     }
-    if (updateView) {
-      this.battleGUI.getViewManager().setViewingWindowCenterX(py);
-      this.battleGUI.getViewManager().setViewingWindowCenterY(px);
-    }
+    this.battleGUI.getViewManager().setViewingWindowCenterX(py);
+    this.battleGUI.getViewManager().setViewingWindowCenterY(px);
     this.redrawBattle();
     return true;
   }
 
   @Override
   public Creature getEnemy() {
-    return this.enemy.getCreature();
+    return this.getEnemyBC().getCreature();
   }
 
-  private BattleCharacter getEnemyBC(final BattleCharacter acting) {
-    final int px = acting.getX();
-    final int py = acting.getY();
-    final Maze m = this.battleMaze;
+  private BattleCharacter getEnemyBC() {
+    final int px = this.mbd.getActiveCharacter().getX();
+    final int py = this.mbd.getActiveCharacter().getY();
+    final Maze m = this.mbd.getBattleMaze();
     FantastleObjectModel next = null;
     for (int x = -1; x <= 1; x++) {
       for (int y = -1; y <= 1; y++) {
@@ -889,12 +804,12 @@ public class MapTimeBattleLogic extends Battle {
 
   @Override
   public boolean castSpell() {
-    BattleCharacter activeBC = this.me;
+    BattleCharacter activeBC = this.mbd.getActiveCharacter();
     Creature active = null;
     if (activeBC != null) {
       active = activeBC.getCreature();
     }
-    BattleCharacter enemyBC = this.getEnemyBC(this.me);
+    BattleCharacter enemyBC = this.getEnemyBC();
     Creature activeEnemy = null;
     if (enemyBC != null) {
       activeEnemy = enemyBC.getCreature();
@@ -938,12 +853,12 @@ public class MapTimeBattleLogic extends Battle {
 
   @Override
   public boolean useItem() {
-    BattleCharacter activeBC = this.me;
+    BattleCharacter activeBC = this.mbd.getActiveCharacter();
     Creature active = null;
     if (activeBC != null) {
       active = activeBC.getCreature();
     }
-    BattleCharacter enemyBC = this.getEnemyBC(this.me);
+    BattleCharacter enemyBC = this.getEnemyBC();
     Creature activeEnemy = null;
     if (enemyBC != null) {
       activeEnemy = enemyBC.getCreature();
@@ -987,12 +902,12 @@ public class MapTimeBattleLogic extends Battle {
 
   @Override
   public boolean steal() {
-    BattleCharacter activeBC = this.me;
+    BattleCharacter activeBC = this.mbd.getActiveCharacter();
     Creature active = null;
     if (activeBC != null) {
       active = activeBC.getCreature();
     }
-    BattleCharacter enemyBC = this.getEnemyBC(this.me);
+    BattleCharacter enemyBC = this.getEnemyBC();
     Creature activeEnemy = null;
     if (enemyBC != null) {
       activeEnemy = enemyBC.getCreature();
@@ -1070,12 +985,12 @@ public class MapTimeBattleLogic extends Battle {
 
   @Override
   public boolean drain() {
-    BattleCharacter activeBC = this.me;
+    BattleCharacter activeBC = this.mbd.getActiveCharacter();
     Creature active = null;
     if (activeBC != null) {
       active = activeBC.getCreature();
     }
-    BattleCharacter enemyBC = this.getEnemyBC(this.me);
+    BattleCharacter enemyBC = this.getEnemyBC();
     Creature activeEnemy = null;
     if (enemyBC != null) {
       activeEnemy = enemyBC.getCreature();
@@ -1160,28 +1075,47 @@ public class MapTimeBattleLogic extends Battle {
   }
 
   private void redrawBattle() {
-    this.battleGUI.redrawBattle(this.battleMaze);
+    this.battleGUI.redrawBattle(this.mbd);
   }
 
   @Override
   public void redrawOneBattleSquare(final int x, final int y,
       final FantastleObjectModel obj3) {
-    this.battleGUI.redrawOneBattleSquare(this.battleMaze, x, y, obj3);
+    this.battleGUI.redrawOneBattleSquare(this.mbd, x, y, obj3);
   }
 
   private void updateStatsAndEffects() {
-    this.battleGUI.updateStatsAndEffects(this.me);
+    this.battleGUI.updateStatsAndEffects(this.mbd);
+  }
+
+  private int getActiveActionCounter() {
+    return this.mbd.getActiveCharacter().getCurrentActions();
+  }
+
+  private int getActiveAttackCounter() {
+    return this.mbd.getActiveCharacter().getCurrentActions();
+  }
+
+  private void decrementActiveActionCounterBy(final int amount) {
+    this.mbd.getActiveCharacter().act(amount);
+  }
+
+  private void decrementActiveAttackCounter() {
+    this.mbd.getActiveCharacter().act(1);
   }
 
   @Override
   public void maintainEffects(final boolean player) {
-    if (player) {
-      if (this.me != null && this.me.isActive()) {
-        final Creature active = this.me.getCreature();
+    final Iterator<BattleCharacter> iter = this.mbd.battlerIterator();
+    while (iter.hasNext()) {
+      BattleCharacter battler = iter.next();
+      // Maintain Effects
+      if (battler != null && battler.isActive()) {
+        final Creature active = battler.getCreature();
         // Use Effects
         active.useEffects();
         // Display all effect messages
-        final String effectMessages = this.me.getCreature()
+        final String effectMessages = battler.getCreature()
             .getAllCurrentEffectMessages();
         final String[] individualEffectMessages = effectMessages.split("\n");
         for (final String message : individualEffectMessages) {
@@ -1203,66 +1137,29 @@ public class MapTimeBattleLogic extends Battle {
         active.cullInactiveEffects();
         // Handle death caused by effects
         if (!active.isAlive()) {
-          if (this.me.getTeamID() != Creature.TEAM_PARTY) {
+          if (battler.getTeamID() != Creature.TEAM_PARTY) {
             // Update victory spoils
-            this.battleExp = this.me.getCreature().getExperience();
+            this.battleExp = battler.getCreature().getExperience();
           }
           // Set dead character to inactive
-          this.me.deactivate();
+          battler.deactivate();
           // Remove effects from dead character
           active.stripAllEffects();
           // Remove character from battle
-          this.battleMaze.setCell(new OpenSpace(), this.me.getX(),
-              this.me.getY(), 0, Layers.OBJECT);
-        }
-      }
-    } else {
-      if (this.enemy != null && this.enemy.isActive()) {
-        final Creature active = this.enemy.getCreature();
-        // Use Effects
-        active.useEffects();
-        // Display all effect messages
-        final String effectMessages = this.enemy.getCreature()
-            .getAllCurrentEffectMessages();
-        final String[] individualEffectMessages = effectMessages.split("\n");
-        for (final String message : individualEffectMessages) {
-          if (!message.equals(Effect.getNullMessage())) {
-            this.setStatusMessage(message);
-            try {
-              Thread.sleep(PreferencesManager.getBattleSpeed());
-            } catch (final InterruptedException ie) {
-              // Ignore
-            }
+          this.mbd.getBattleMaze().setCell(new OpenSpace(), battler.getX(),
+              battler.getY(), 0, Layers.OBJECT);
+          if (this.mbd.getActiveCharacter().getName()
+              .equals(battler.getName())) {
+            // Active character died, end turn
+            this.endTurn();
           }
-        }
-        // Handle low health for party members
-        if (active.isAlive() && active.getTeamID() == Creature.TEAM_PARTY
-            && active.getCurrentHP() <= active.getMaximumHP() * 3 / 10) {
-          SoundPlayer.playSound(SoundIndex.LOW_HEALTH, SoundGroup.BATTLE);
-        }
-        // Cull Inactive Effects
-        active.cullInactiveEffects();
-        // Handle death caused by effects
-        if (!active.isAlive()) {
-          if (this.enemy.getTeamID() != Creature.TEAM_PARTY) {
-            // Update victory spoils
-            this.battleExp = this.enemy.getCreature().getExperience();
-          }
-          // Set dead character to inactive
-          this.enemy.deactivate();
-          // Remove effects from dead character
-          active.stripAllEffects();
-          // Remove character from battle
-          this.battleMaze.setCell(new OpenSpace(), this.enemy.getX(),
-              this.enemy.getY(), 0, Layers.OBJECT);
         }
       }
     }
   }
 
   private void updateAllAIContexts() {
-    this.myContext.updateContext(this.battleMaze);
-    this.enemyContext.updateContext(this.battleMaze);
+    this.mbd.updateBattlerAIContexts();
   }
 
   @Override
@@ -1467,6 +1364,7 @@ public class MapTimeBattleLogic extends Battle {
 
   @Override
   public boolean arrowHitCheck(int inX, int inY) {
-    return !this.battleMaze.getCell(inX, inY, 0, Layers.OBJECT).isSolid();
+    return !this.mbd.getBattleMaze().getCell(inX, inY, 0, Layers.OBJECT)
+        .isSolid();
   }
 }

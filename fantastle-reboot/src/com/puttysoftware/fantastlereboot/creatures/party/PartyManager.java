@@ -28,7 +28,6 @@ public class PartyManager {
   // Fields
   private static Party party;
   private static int bank = 0;
-  private static final int PARTY_SIZE = 1;
   private final static String[] buttonNames = new String[] { "Done", "Create",
       "Pick" };
 
@@ -41,9 +40,10 @@ public class PartyManager {
   public static boolean createParty() {
     PartyManager.party = new Party();
     int mem = 0;
+    int maxMem = Party.getMaxMembers();
     final PartyMember[] pickMembers = CharacterLoader
         .loadAllRegisteredCharacters();
-    for (int x = 0; x < PartyManager.PARTY_SIZE; x++) {
+    for (int x = 0; x < maxMem; x++) {
       PartyMember pc = null;
       if (pickMembers == null) {
         // No characters registered - must create one

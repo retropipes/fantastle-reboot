@@ -28,6 +28,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
+import com.puttysoftware.fantastlereboot.battle.map.MapBattleDefinitions;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleDraw;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleEffects;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleViewingWindowManager;
@@ -91,7 +92,7 @@ class MapTurnBattleGUI {
     this.battleFrame.removeKeyListener(this.handler);
   }
 
-  void redrawBattle(final MapTurnBattleDefinitions bd) {
+  void redrawBattle(final MapBattleDefinitions mbd) {
     // Draw the battle
     int x, y;
     int xFix, yFix;
@@ -103,10 +104,10 @@ class MapTurnBattleGUI {
       for (y = yView; y <= ylView; y++) {
         xFix = x - xView;
         yFix = y - yView;
-        if (bd.getBattleMaze().cellRangeCheck(y, x, 0)) {
-          final FantastleObjectModel obj1 = bd.getBattleMaze().getCell(y, x, 0,
+        if (mbd.getBattleMaze().cellRangeCheck(y, x, 0)) {
+          final FantastleObjectModel obj1 = mbd.getBattleMaze().getCell(y, x, 0,
               Layers.GROUND);
-          final FantastleObjectModel obj2 = bd.getBattleMaze().getCell(y, x, 0,
+          final FantastleObjectModel obj2 = mbd.getBattleMaze().getCell(y, x, 0,
               Layers.OBJECT);
           String cacheName = generateCacheName(obj1, obj2);
           final BufferedImageIcon icon1 = obj1.getBattleImage();
@@ -123,18 +124,18 @@ class MapTurnBattleGUI {
     this.battleFrame.pack();
   }
 
-  void redrawOneBattleSquare(final MapTurnBattleDefinitions bd, final int x,
+  void redrawOneBattleSquare(final MapBattleDefinitions mbd, final int x,
       final int y, final FantastleObjectModel obj3) {
     // Draw the battle
-    if (bd.getBattleMaze().cellRangeCheck(y, x, 0)) {
+    if (mbd.getBattleMaze().cellRangeCheck(y, x, 0)) {
       int xFix, yFix;
       final int xView = this.vwMgr.getViewingWindowLocationX();
       final int yView = this.vwMgr.getViewingWindowLocationY();
       xFix = y - xView;
       yFix = x - yView;
-      final FantastleObjectModel obj1 = bd.getBattleMaze().getCell(y, x, 0,
+      final FantastleObjectModel obj1 = mbd.getBattleMaze().getCell(y, x, 0,
           Layers.GROUND);
-      final FantastleObjectModel obj2 = bd.getBattleMaze().getCell(y, x, 0,
+      final FantastleObjectModel obj2 = mbd.getBattleMaze().getCell(y, x, 0,
           Layers.OBJECT);
       String cacheName = generateCacheName(obj1, obj2, obj3);
       final BufferedImageIcon icon1 = obj1.getBattleImage();
@@ -159,9 +160,9 @@ class MapTurnBattleGUI {
     return result.toString();
   }
 
-  void updateStatsAndEffects(final MapTurnBattleDefinitions bd) {
-    this.bs.updateStats(bd.getActiveCharacter());
-    this.be.updateEffects(bd.getActiveCharacter());
+  void updateStatsAndEffects(final MapBattleDefinitions mbd) {
+    this.bs.updateStats(mbd.getActiveCharacter());
+    this.be.updateEffects(mbd.getActiveCharacter());
   }
 
   private void setUpGUI() {
