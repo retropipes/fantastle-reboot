@@ -3,19 +3,15 @@ Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot;
-
-import java.awt.desktop.QuitEvent;
-import java.awt.desktop.QuitHandler;
-import java.awt.desktop.QuitResponse;
+package com.puttysoftware.fantastlereboot.maze;
 
 import javax.swing.JOptionPane;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
+import com.puttysoftware.fantastlereboot.BagOStuff;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 
-public final class FileStateManager implements QuitHandler {
+public final class FileStateManager {
   // Fields
   private static boolean loaded = false;
   private static boolean isDirty = false;
@@ -26,28 +22,6 @@ public final class FileStateManager implements QuitHandler {
   }
 
   // Methods
-  @Override
-  public void handleQuitRequestWith(QuitEvent inE, QuitResponse inResponse) {
-    boolean saved = true;
-    int status = JOptionPane.DEFAULT_OPTION;
-    if (FileStateManager.getDirty()) {
-      status = FileStateManager.showSaveDialog();
-      if (status == JOptionPane.YES_OPTION) {
-        saved = MazeManager.saveGame();
-      } else if (status == JOptionPane.CANCEL_OPTION) {
-        saved = false;
-      } else {
-        FileStateManager.setDirty(false);
-      }
-    }
-    if (saved) {
-      PreferencesManager.writePrefs();
-      inResponse.performQuit();
-    } else {
-      inResponse.cancelQuit();
-    }
-  }
-
   public static int showSaveDialog() {
     String type, source;
     final BagOStuff bag = FantastleReboot.getBagOStuff();

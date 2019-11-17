@@ -19,11 +19,11 @@ import javax.swing.JPanel;
 
 import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.FileStateManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.gui.DrawGrid;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.loaders.ImageConstants;
+import com.puttysoftware.fantastlereboot.maze.FileStateManager;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 

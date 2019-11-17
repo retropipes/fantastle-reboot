@@ -102,7 +102,7 @@ public class FantastleReboot {
     CommonDialogs.setIcon(
         UserInterfaceImageLoader.load(UserInterfaceImageIndex.MICRO_LOGO));
     NATIVITY.setQuitStrategy(QuitStrategy.NORMAL_EXIT);
-    NATIVITY.setQuitHandler(new FileStateManager());
+    NATIVITY.setQuitHandler(new QuitRequestManager());
     NATIVITY.setPreferencesHandler(new PreferencesLauncher());
     NATIVITY.setAboutHandler(FantastleReboot.bag.getAboutDialog());
   }
