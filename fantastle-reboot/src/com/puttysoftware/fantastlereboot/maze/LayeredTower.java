@@ -8,10 +8,9 @@ package com.puttysoftware.fantastlereboot.maze;
 import java.io.IOException;
 import java.util.Arrays;
 
-import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.files.MazeVersions;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModelList;
+import com.puttysoftware.fantastlereboot.objectmodel.GameObjects;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objectmodel.RandomGenerationRule;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
@@ -439,8 +438,6 @@ final class LayeredTower implements Cloneable {
 
   public void fillFloorRandomly(final Maze maze, final int z, final int w) {
     // Pre-Pass
-    final FantastleObjectModelList objects = FantastleReboot.getBagOStuff()
-        .getObjects();
     final FantastleObjectModel pass1FillBottom = new Tile();
     final FantastleObjectModel pass1FillTop = new OpenSpace();
     final RandomRange row = new RandomRange(0, this.getRows() - 1);
@@ -453,7 +450,7 @@ final class LayeredTower implements Cloneable {
     final int columns = this.getColumns();
     final int rows = this.getRows();
     for (e = 0; e < Layers.COUNT; e++) {
-      final FantastleObjectModel[] objectsWithoutPrerequisites = objects
+      final FantastleObjectModel[] objectsWithoutPrerequisites = GameObjects
           .getAllWithoutPrerequisiteAndNotRequired(e);
       if (objectsWithoutPrerequisites != null) {
         r = new RandomRange(0, objectsWithoutPrerequisites.length - 1);
@@ -465,8 +462,8 @@ final class LayeredTower implements Cloneable {
                 e);
             if (okay) {
               this.setCell(
-                  objects.getNewInstanceByUniqueID(placeObj.getUniqueID()), y,
-                  x, z, e);
+                  GameObjects.getNewInstanceByUniqueID(placeObj.getUniqueID()),
+                  y, x, z, e);
             }
           }
         }
@@ -474,7 +471,7 @@ final class LayeredTower implements Cloneable {
     }
     // Pass 3
     for (int layer = 0; layer < Layers.COUNT; layer++) {
-      final FantastleObjectModel[] requiredObjects = objects
+      final FantastleObjectModel[] requiredObjects = GameObjects
           .getAllRequired(layer);
       if (requiredObjects != null) {
         int randomColumn, randomRow;
@@ -498,7 +495,7 @@ final class LayeredTower implements Cloneable {
             if (currObj.shouldGenerateObject(maze, randomRow, randomColumn, z,
                 w, layer)) {
               this.setCell(
-                  objects.getNewInstanceByUniqueID(currObj.getUniqueID()),
+                  GameObjects.getNewInstanceByUniqueID(currObj.getUniqueID()),
                   randomColumn, randomRow, z, layer);
             } else {
               while (!currObj.shouldGenerateObject(maze, randomColumn,
@@ -507,7 +504,7 @@ final class LayeredTower implements Cloneable {
                 randomColumn = column.generate();
               }
               this.setCell(
-                  objects.getNewInstanceByUniqueID(currObj.getUniqueID()),
+                  GameObjects.getNewInstanceByUniqueID(currObj.getUniqueID()),
                   randomColumn, randomRow, z, layer);
             }
           }
@@ -685,8 +682,9 @@ final class LayeredTower implements Cloneable {
       for (y = 0; y < lt.getRows(); y++) {
         for (z = 0; z < lt.getFloors(); z++) {
           for (e = 0; e < Layers.COUNT; e++) {
-            lt.setCell(FantastleReboot.getBagOStuff().getObjects()
-                .readObject(reader, MazeVersions.FORMAT_LATEST), y, x, z, e);
+            lt.setCell(
+                GameObjects.readObject(reader, MazeVersions.FORMAT_LATEST), y,
+                x, z, e);
             if (lt.getCell(y, x, z, e) == null) {
               return null;
             }
@@ -747,8 +745,8 @@ final class LayeredTower implements Cloneable {
       for (y = 0; y < sizeX; y++) {
         for (z = 0; z < sizeZ; z++) {
           for (e = 0; e < Layers.COUNT; e++) {
-            this.savedTowerState.setCell(FantastleReboot.getBagOStuff()
-                .getObjects().readObject(reader, formatVersion), y, x, z, e);
+            this.savedTowerState.setCell(
+                GameObjects.readObject(reader, formatVersion), y, x, z, e);
           }
         }
       }

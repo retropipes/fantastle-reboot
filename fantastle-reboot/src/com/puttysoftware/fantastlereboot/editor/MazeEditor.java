@@ -49,7 +49,7 @@ import com.puttysoftware.fantastlereboot.loaders.ImageConstants;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModelList;
+import com.puttysoftware.fantastlereboot.objectmodel.GameObjects;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.Nothing;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
@@ -66,7 +66,6 @@ public class MazeEditor {
   private JScrollBar vertScroll, horzScroll;
   private final EventHandler mhandler;
   private EditorPicturePicker picker;
-  private final FantastleObjectModelList objectList;
   private final FantastleObjectModel[] groundObjects;
   private final FantastleObjectModel[] objectObjects;
   private final BufferedImageIcon[] groundEditorAppearances;
@@ -85,12 +84,11 @@ public class MazeEditor {
   public MazeEditor() {
     this.mhandler = new EventHandler();
     this.engine = new UndoRedoEngine();
-    this.objectList = FantastleReboot.getBagOStuff().getObjects();
-    this.groundObjects = this.objectList.getAllGroundLayerObjects();
-    this.objectObjects = this.objectList.getAllObjectLayerObjects();
-    this.groundEditorAppearances = this.objectList
+    this.groundObjects = GameObjects.getAllGroundLayerObjects();
+    this.objectObjects = GameObjects.getAllObjectLayerObjects();
+    this.groundEditorAppearances = GameObjects
         .getAllGroundLayerEditorAppearances();
-    this.objectEditorAppearances = this.objectList
+    this.objectEditorAppearances = GameObjects
         .getAllObjectLayerEditorAppearances();
     this.mazeChanged = true;
   }

@@ -20,9 +20,8 @@ package com.puttysoftware.fantastlereboot.game;
 
 import java.io.IOException;
 
-import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModelList;
+import com.puttysoftware.fantastlereboot.objectmodel.GameObjects;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
@@ -35,9 +34,7 @@ public class ObjectInventory implements Cloneable {
 
   // Constructors
   public ObjectInventory() {
-    final FantastleObjectModelList list = FantastleReboot.getBagOStuff()
-        .getObjects();
-    this.uidList = list.getAllCarryableUIDs();
+    this.uidList = GameObjects.getAllCarryableUIDs();
     this.contents = new int[this.uidList.length];
     this.uses = new int[this.uidList.length][this.MAX_QUANTITY];
   }

@@ -18,7 +18,7 @@ import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModelList;
+import com.puttysoftware.fantastlereboot.objectmodel.GameObjects;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Wall;
@@ -137,7 +137,6 @@ final class MovementTask extends Thread {
       final int dirZ) {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     final Maze m = MazeManager.getMaze();
-    final FantastleObjectModelList objects = bag.getObjects();
     int px = m.getPlayerLocationX();
     int py = m.getPlayerLocationY();
     int pz = m.getPlayerLocationZ();
@@ -206,9 +205,9 @@ final class MovementTask extends Thread {
         // Walking normally
         SoundPlayer.playSound(SoundIndex.WALK, SoundGroup.GAME);
       }
-      if (MovementTask.proceed && objects.sendsToShop(nextAbove)) {
+      if (MovementTask.proceed && GameObjects.sendsToShop(nextAbove)) {
         // Send player to shop
-        bag.getShop(objects.sendsToWhichShop(nextAbove)).showShop();
+        bag.getShop(GameObjects.sendsToWhichShop(nextAbove)).showShop();
       }
     } while (loopCheck);
   }
@@ -277,14 +276,12 @@ final class MovementTask extends Thread {
   }
 
   private static void checkFloorChange() {
-    final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final FantastleObjectModelList objects = bag.getObjects();
     final Maze m = MazeManager.getMaze();
     final int px = m.getPlayerLocationX();
     final int py = m.getPlayerLocationY();
     final int pz = m.getPlayerLocationZ();
     final FantastleObjectModel below = m.getCell(px, py, pz, Layers.GROUND);
-    if (objects.sendsDown(below)) {
+    if (GameObjects.sendsDown(below)) {
       if (Game.isFloorBelow()) {
         // Going down...
         SoundPlayer.playSound(SoundIndex.FALLING, SoundGroup.GAME);
@@ -292,7 +289,7 @@ final class MovementTask extends Thread {
       } else {
         MovementTask.moveFailed();
       }
-    } else if (objects.sendsUp(below)) {
+    } else if (GameObjects.sendsUp(below)) {
       if (Game.isFloorAbove()) {
         // Going up...
         SoundPlayer.playSound(SoundIndex.SPRING, SoundGroup.GAME);
@@ -300,7 +297,7 @@ final class MovementTask extends Thread {
       } else {
         MovementTask.moveFailed();
       }
-    } else if (objects.sendsDown2(below)) {
+    } else if (GameObjects.sendsDown2(below)) {
       if (Game.areTwoFloorsBelow()) {
         // Going down 2...
         SoundPlayer.playSound(SoundIndex.FALLING, SoundGroup.GAME);
@@ -308,7 +305,7 @@ final class MovementTask extends Thread {
       } else {
         MovementTask.moveFailed();
       }
-    } else if (objects.sendsUp2(below)) {
+    } else if (GameObjects.sendsUp2(below)) {
       if (Game.areTwoFloorsAbove()) {
         // Going up 2...
         SoundPlayer.playSound(SoundIndex.SPRING, SoundGroup.GAME);
@@ -320,14 +317,12 @@ final class MovementTask extends Thread {
   }
 
   private static void checkLevelChange() {
-    final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final FantastleObjectModelList objects = bag.getObjects();
     final Maze m = MazeManager.getMaze();
     final int px = m.getPlayerLocationX();
     final int py = m.getPlayerLocationY();
     final int pz = m.getPlayerLocationZ();
     final FantastleObjectModel below = m.getCell(px, py, pz, Layers.GROUND);
-    if (objects.sendsNext(below)) {
+    if (GameObjects.sendsNext(below)) {
       if (Game.isLevelBelow()) {
         // Going deeper...
         SoundPlayer.playSound(SoundIndex.DOWN, SoundGroup.GAME);
@@ -335,7 +330,7 @@ final class MovementTask extends Thread {
       } else {
         MovementTask.moveFailed();
       }
-    } else if (objects.sendsPrevious(below)) {
+    } else if (GameObjects.sendsPrevious(below)) {
       if (Game.isLevelAbove()) {
         // Going shallower...
         SoundPlayer.playSound(SoundIndex.UP, SoundGroup.GAME);

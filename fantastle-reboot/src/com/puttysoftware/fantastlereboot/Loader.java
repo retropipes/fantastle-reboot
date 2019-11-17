@@ -37,6 +37,7 @@ import com.puttysoftware.fantastlereboot.loaders.ItemImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
+import com.puttysoftware.fantastlereboot.objectmodel.GameObjects;
 
 class Loader extends Thread {
   private MainWindow waitFrame;
@@ -94,7 +95,7 @@ class Loader extends Thread {
       this.updateWaitProgress(87);
       // Final tasks
       BagOStuff bag = FantastleReboot.getBagOStuff();
-      bag.getObjects().initializeObjects();
+      GameObjects.initializeObjects();
       bag.postConstruct();
       bag.getGeneralHelpManager().updateHelpSize();
       FantastleReboot.doLateOSIntegration();

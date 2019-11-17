@@ -38,7 +38,6 @@ import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModelList;
 import com.puttysoftware.updater.ProductData;
 
 public class BagOStuff {
@@ -47,7 +46,6 @@ public class BagOStuff {
   private GeneralHelpManager gHelpMgr;
   private MazeEditor editor;
   private GUIManager guiMgr;
-  private final FantastleObjectModelList objects;
   private final CombatItemList combatItems;
   private Shop weapons, armor, healer, bank, regenerator, spells, items, socks,
       enhancements, faiths;
@@ -84,7 +82,6 @@ public class BagOStuff {
 
   // Constructors
   public BagOStuff() {
-    this.objects = new FantastleObjectModelList();
     this.combatItems = new CombatItemList();
     this.currentMode = BagOStuff.STATUS_NULL;
     this.formerMode = BagOStuff.STATUS_NULL;
@@ -326,10 +323,6 @@ public class BagOStuff {
     } else {
       CommonDialogs.showDialog(msg);
     }
-  }
-
-  public FantastleObjectModelList getObjects() {
-    return this.objects;
   }
 
   public CombatItemList getCombatItems() {

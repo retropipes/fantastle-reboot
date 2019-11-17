@@ -9,7 +9,6 @@ import java.io.IOException;
 
 import com.puttysoftware.diane.loaders.ColorShader;
 import com.puttysoftware.diane.objectmodel.GameObject;
-import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.AttributeImageIndex;
 import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 import com.puttysoftware.fantastlereboot.files.MazeVersions;
@@ -334,7 +333,7 @@ public abstract class FantastleObject extends GameObject
     if (uid == this.getUniqueID()) {
       final int savedIdent = reader.readInt();
       if (savedIdent != -1) {
-        this.savedObject = FantastleReboot.getBagOStuff().getObjects()
+        this.savedObject = GameObjects
             .readSavedObject(reader, savedIdent,
                 MazeVersions.FORMAT_LATEST);
       }
