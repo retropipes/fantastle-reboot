@@ -11,7 +11,7 @@ import com.puttysoftware.storage.CloneableObject;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
-public class MazeNote extends CloneableObject {
+class MazeNote extends CloneableObject {
   // Fields
   private String contents;
 

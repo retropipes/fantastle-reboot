@@ -1,9 +1,7 @@
-package com.puttysoftware.fantastlereboot.game;
+package com.puttysoftware.fantastlereboot.maze;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeNote;
 
 public class NoteManager {
   private NoteManager() {

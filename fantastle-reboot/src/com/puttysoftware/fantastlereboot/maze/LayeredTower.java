@@ -63,7 +63,7 @@ final class LayeredTower implements Cloneable {
     Arrays.fill(this.findResult, -1);
     this.horizontalWraparoundEnabled = false;
     this.verticalWraparoundEnabled = false;
-    this.visionMode = MazeConstants.VISION_MODE_EXPLORE_AND_LOS;
+    this.visionMode = VisionModes.EXPLORE_AND_LOS;
     this.visionModeExploreRadius = 2;
     this.visionRadius = MAX_VISION_RADIUS;
     this.regionSize = 8;
@@ -152,8 +152,7 @@ final class LayeredTower implements Cloneable {
   }
 
   public void updateVisibleSquares(final int xp, final int yp, final int zp) {
-    if ((this.visionMode
-        | MazeConstants.VISION_MODE_EXPLORE) == this.visionMode) {
+    if ((this.visionMode | VisionModes.EXPLORE) == this.visionMode) {
       for (int x = xp - this.visionModeExploreRadius; x <= xp
           + this.visionModeExploreRadius; x++) {
         for (int y = yp - this.visionModeExploreRadius; y <= yp
@@ -176,8 +175,7 @@ final class LayeredTower implements Cloneable {
             // Ignore
           }
           if (!alreadyVisible) {
-            if ((this.visionMode
-                | MazeConstants.VISION_MODE_LOS) == this.visionMode) {
+            if ((this.visionMode | VisionModes.LOS) == this.visionMode) {
               if (this.isSquareVisibleLOS(x, y, xp, yp)) {
                 try {
                   this.visionData.setCell(true, fx, fy, zp);
@@ -200,15 +198,13 @@ final class LayeredTower implements Cloneable {
 
   public boolean isSquareVisible(final int x1, final int y1, final int x2,
       final int y2) {
-    if (this.visionMode == MazeConstants.VISION_MODE_NONE) {
+    if (this.visionMode == VisionModes.NONE) {
       return true;
     } else {
       boolean result = false;
-      if ((this.visionMode
-          | MazeConstants.VISION_MODE_EXPLORE) == this.visionMode) {
+      if ((this.visionMode | VisionModes.EXPLORE) == this.visionMode) {
         result = result || this.isSquareVisibleExplore(x2, y2);
-        if (result && (this.visionMode
-            | MazeConstants.VISION_MODE_LOS) == this.visionMode) {
+        if (result && (this.visionMode | VisionModes.LOS) == this.visionMode) {
           if (this.areCoordsInBounds(x1, y1, x2, y2)) {
             // In bounds
             result = result || this.isSquareVisibleLOS(x1, y1, x2, y2);
@@ -658,8 +654,8 @@ final class LayeredTower implements Cloneable {
       for (y = 0; y < lt.getRows(); y++) {
         for (z = 0; z < lt.getFloors(); z++) {
           for (e = 0; e < Layers.COUNT; e++) {
-            lt.setCell(FantastleReboot.getBagOStuff().getObjects().readObject(
-                reader, MazeVersions.FORMAT_LATEST), y, x, z, e);
+            lt.setCell(FantastleReboot.getBagOStuff().getObjects()
+                .readObject(reader, MazeVersions.FORMAT_LATEST), y, x, z, e);
             if (lt.getCell(y, x, z, e) == null) {
               return null;
             }
