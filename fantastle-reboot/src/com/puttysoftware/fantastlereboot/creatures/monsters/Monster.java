@@ -53,12 +53,10 @@ public final class Monster extends Creature {
 
   // Constructors
   Monster() {
-    super(true, 1);
+    super(true, 1, FaithManager.getRandomFaith(), JobManager.getRandomJob(),
+        RaceManager.getRandomRace());
     this.setWindowAI(Monster.getInitialWindowAI());
     this.setMapAI(Monster.getInitialMapAI());
-    this.setFaith(FaithManager.getRandomFaith());
-    this.setJob(JobManager.getRandomJob());
-    this.setRace(RaceManager.getRandomRace());
     final SpellBook spells = SpellBookManager
         .getEnemySpellBookByID(PreferencesManager.getGameDifficulty());
     spells.learnAllSpells();

@@ -38,10 +38,8 @@ public class BossMonster extends Creature {
 
   // Constructors
   BossMonster() {
-    super(true, 1);
-    this.setFaith(FaithManager.getFaith(BossMonster.FAITH_ID));
-    this.setJob(JobManager.getJob(JOB_ID));
-    this.setRace(RaceManager.getRace(RACE_ID));
+    super(true, 1, FaithManager.getFaith(BossMonster.FAITH_ID),
+        JobManager.getJob(JOB_ID), RaceManager.getRace(RACE_ID));
     this.setWindowAI(BossMonster.getInitialWindowAI());
     this.setMapAI(MapAIRoutinePicker.getNextRoutine());
     final SpellBook spells = new BossSpellBook();

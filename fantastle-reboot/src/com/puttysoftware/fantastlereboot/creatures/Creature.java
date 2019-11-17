@@ -55,7 +55,11 @@ public abstract class Creature {
   public static final double SPEED_ADJUST_FASTEST = 2.0;
 
   // Constructor
-  protected Creature(final boolean hasCombatItems, final int tid) {
+  protected Creature(final boolean hasCombatItems, final int tid, final Faith f,
+      final Job j, final Race r) {
+    this.faith = f;
+    this.job = j;
+    this.race = r;
     this.teamID = tid;
     this.stats = new Statistic[StatConstants.MAX_STORED_STATS];
     for (int x = 0; x < StatConstants.MAX_STORED_STATS; x++) {

@@ -42,7 +42,7 @@ public class PartyMember extends Creature {
 
   // Constructors
   PartyMember(final Race r, final Job j, final Faith f, final String n) {
-    super(true, 0);
+    super(true, 0, f, j, r);
     this.name = n;
     this.permanentAttack = 0;
     this.permanentDefense = 0;
@@ -53,9 +53,6 @@ public class PartyMember extends Creature {
     this.avatarHairID = 0;
     this.avatarSkinID = 0;
     this.setLevel(1);
-    this.setRace(r);
-    this.setJob(j);
-    this.setFaith(f);
     this.setStrength(StatConstants.GAIN_STRENGTH
         + r.getAttribute(RaceConstants.ATTRIBUTE_STRENGTH_PER_LEVEL));
     this.setBlock(StatConstants.GAIN_BLOCK
@@ -97,8 +94,8 @@ public class PartyMember extends Creature {
         + r.getAttribute(RaceConstants.ATTRIBUTE_BLOCK_PER_LEVEL));
     this.offsetVitality(StatConstants.GAIN_VITALITY
         + r.getAttribute(RaceConstants.ATTRIBUTE_VITALITY_PER_LEVEL));
-    this.offsetIntelligence(StatConstants.GAIN_INTELLIGENCE + r
-        .getAttribute(RaceConstants.ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
+    this.offsetIntelligence(StatConstants.GAIN_INTELLIGENCE
+        + r.getAttribute(RaceConstants.ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
     this.offsetAgility(StatConstants.GAIN_AGILITY
         + r.getAttribute(RaceConstants.ATTRIBUTE_AGILITY_PER_LEVEL));
     this.offsetLuck(StatConstants.GAIN_LUCK
@@ -171,8 +168,8 @@ public class PartyMember extends Creature {
         + r.getAttribute(RaceConstants.ATTRIBUTE_BLOCK_PER_LEVEL));
     this.setVitality(StatConstants.GAIN_VITALITY
         + r.getAttribute(RaceConstants.ATTRIBUTE_VITALITY_PER_LEVEL));
-    this.setIntelligence(StatConstants.GAIN_INTELLIGENCE + r
-        .getAttribute(RaceConstants.ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
+    this.setIntelligence(StatConstants.GAIN_INTELLIGENCE
+        + r.getAttribute(RaceConstants.ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
     this.setAgility(StatConstants.GAIN_AGILITY
         + r.getAttribute(RaceConstants.ATTRIBUTE_AGILITY_PER_LEVEL));
     this.setLuck(StatConstants.GAIN_LUCK
