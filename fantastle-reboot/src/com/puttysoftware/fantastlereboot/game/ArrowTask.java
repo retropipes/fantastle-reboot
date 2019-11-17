@@ -61,9 +61,9 @@ public class ArrowTask extends Thread {
     final int incY = this.y;
     m.tickTimers(pz);
     FantastleObjectModel o = null;
-    try {
+    if (m.cellRangeCheck(px + cumX, py + cumY, pz)) {
       o = m.getCell(px + cumX, py + cumY, pz, Layers.OBJECT);
-    } catch (final ArrayIndexOutOfBoundsException ae) {
+    } else {
       o = new Wall();
     }
     final FantastleObjectModel a = ArrowFactory.createArrow(this.at,
@@ -77,13 +77,12 @@ public class ArrowTask extends Thread {
       if (!o.isDirectionallySolid(incX, incY)) {
         Game.redrawOneSquare(px + cumX, py + cumY, a);
       }
-      Game.redrawOneSquare(px + cumX, py + cumY,
-          new OpenSpace());
+      Game.redrawOneSquare(px + cumX, py + cumY, new OpenSpace());
       cumX += incX;
       cumY += incY;
-      try {
+      if (m.cellRangeCheck(px + cumX, py + cumY, pz)) {
         o = m.getCell(px + cumX, py + cumY, pz, Layers.OBJECT);
-      } catch (final ArrayIndexOutOfBoundsException ae) {
+      } else {
         o = new Wall();
       }
     }
@@ -93,7 +92,8 @@ public class ArrowTask extends Thread {
 
   private static boolean arrowHitCheck(final int inX, final int inY,
       final int pz) {
-    return !FantastleReboot.getBagOStuff().getMazeManager()
-        .getMazeCell(inX, inY, pz, Layers.OBJECT).isSolid();
+    final Maze maze = FantastleReboot.getBagOStuff().getMazeManager().getMaze();
+    return maze.cellRangeCheck(inX, inY, pz)
+        && !maze.getCell(inX, inY, pz, Layers.OBJECT).isSolid();
   }
 }

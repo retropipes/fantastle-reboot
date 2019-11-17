@@ -142,7 +142,7 @@ class MapTimeBattleGUI {
       for (y = yView; y <= ylView; y++) {
         xFix = x - xView;
         yFix = y - yView;
-        try {
+        if (battleMaze.cellRangeCheck(y, x, 0)) {
           final FantastleObjectModel obj1 = battleMaze.getCell(y, x, 0,
               Layers.GROUND);
           final FantastleObjectModel obj2 = battleMaze.getCell(y, x, 0,
@@ -152,7 +152,7 @@ class MapTimeBattleGUI {
           final BufferedImageIcon icon2 = obj2.getBattleImage();
           this.drawGrid.setImageCell(
               ImageCompositor.composite(cacheName, icon1, icon2), xFix, yFix);
-        } catch (final ArrayIndexOutOfBoundsException ae) {
+        } else {
           final Nothing ev = new Nothing();
           this.drawGrid.setImageCell(ev.getBattleImage(), xFix, yFix);
         }
@@ -165,7 +165,7 @@ class MapTimeBattleGUI {
   void redrawOneBattleSquare(final Maze battleMaze, final int x, final int y,
       final FantastleObjectModel obj3) {
     // Draw the battle
-    try {
+    if (battleMaze.cellRangeCheck(y, x, 0)) {
       int xFix, yFix;
       final int xView = this.vwMgr.getViewingWindowLocationX();
       final int yView = this.vwMgr.getViewingWindowLocationY();
@@ -183,8 +183,6 @@ class MapTimeBattleGUI {
           ImageCompositor.composite(cacheName, icon1, icon2, icon3), xFix,
           yFix);
       this.battlePane.repaint();
-    } catch (final ArrayIndexOutOfBoundsException ae) {
-      // Do nothing
     }
     this.battleFrame.pack();
   }

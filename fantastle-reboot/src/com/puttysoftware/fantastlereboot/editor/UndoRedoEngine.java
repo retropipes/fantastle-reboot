@@ -78,6 +78,11 @@ class UndoRedoEngine {
     }
   }
 
+  public boolean isDataValid() {
+    return this.destX != -1 && this.destY != -1 && this.destZ != -1
+        && this.destW != -1 && this.destE != -1;
+  }
+
   public boolean tryUndo() {
     return !this.undoHistory.isEmpty();
   }

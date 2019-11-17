@@ -19,7 +19,6 @@ import com.puttysoftware.fantastlereboot.files.GameFinder;
 import com.puttysoftware.fantastlereboot.files.GameLoader;
 import com.puttysoftware.fantastlereboot.files.GameSaver;
 import com.puttysoftware.fantastlereboot.game.Game;
-import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fileutils.FilenameChecker;
 
 public final class MazeManager {
@@ -57,15 +56,6 @@ public final class MazeManager {
     FileStateManager.setDirty(false);
     Game.stateChanged();
     FantastleReboot.getBagOStuff().getMenuManager().checkFlags();
-  }
-
-  public FantastleObjectModel getMazeCell(final int x, final int y, final int z,
-      final int e) {
-    try {
-      return this.gameMaze.getCell(x, y, z, e);
-    } catch (final ArrayIndexOutOfBoundsException ae) {
-      return null;
-    }
   }
 
   public static boolean loadGame() {

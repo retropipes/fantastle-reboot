@@ -497,9 +497,9 @@ public abstract class Creature {
   }
 
   public final int getStat(final int stat) {
-    try {
+    if (Creature.statBoundsCheck(stat)) {
       return this.stats[stat].getValue();
-    } catch (final ArrayIndexOutOfBoundsException aioob) {
+    } else {
       switch (stat) {
       case StatConstants.STAT_ATTACK:
         return this.getAttack();
@@ -527,36 +527,30 @@ public abstract class Creature {
     }
   }
 
+  private static boolean statBoundsCheck(final int stat) {
+    return stat >= 0 && stat < StatConstants.MAX_STORED_STATS;
+  }
+
   private boolean getHasStatMin(final int stat) {
-    try {
-      return this.stats[stat].hasMin();
-    } catch (final ArrayIndexOutOfBoundsException aioob) {
-      return false;
-    }
+    return Creature.statBoundsCheck(stat) && this.stats[stat].hasMin();
   }
 
   private boolean getHasStatMax(final int stat) {
-    try {
-      return this.stats[stat].hasMax();
-    } catch (final ArrayIndexOutOfBoundsException aioob) {
-      return false;
-    }
+    return Creature.statBoundsCheck(stat) && this.stats[stat].hasMax();
   }
 
   private int getStatMin(final int stat) {
-    try {
+    if (Creature.statBoundsCheck(stat)) {
       return this.stats[stat].getMinVal();
-    } catch (final ArrayIndexOutOfBoundsException aioob) {
-      return 0;
     }
+    return 0;
   }
 
   private int getStatMax(final int stat) {
-    try {
+    if (Creature.statBoundsCheck(stat)) {
       return this.stats[stat].getMaxID();
-    } catch (final ArrayIndexOutOfBoundsException aioob) {
-      return 0;
     }
+    return 0;
   }
 
   public final int getStrength() {
@@ -857,10 +851,8 @@ public abstract class Creature {
   }
 
   private void setStatFixed(final int stat, final int value) {
-    try {
+    if (Creature.statBoundsCheck(stat)) {
       this.stats[stat].setValue(value);
-    } catch (final ArrayIndexOutOfBoundsException aioob) {
-      // Do nothing
     }
   }
 

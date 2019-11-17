@@ -192,73 +192,43 @@ public final class Game {
   public static boolean isFloorBelow() {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
-    try {
-      m.getCell(m.getPlayerLocationX(), m.getPlayerLocationY(),
-          m.getPlayerLocationZ() - 1, Layers.OBJECT);
-      return true;
-    } catch (final ArrayIndexOutOfBoundsException ae) {
-      return false;
-    }
+    return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
+        m.getPlayerLocationZ() - 1);
   }
 
   public static boolean isFloorAbove() {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
-    try {
-      m.getCell(m.getPlayerLocationX(), m.getPlayerLocationY(),
-          m.getPlayerLocationZ() + 1, Layers.OBJECT);
-      return true;
-    } catch (final ArrayIndexOutOfBoundsException ae) {
-      return false;
-    }
+    return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
+        m.getPlayerLocationZ() + 1);
   }
 
   public static boolean isLevelBelow() {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
-    try {
-      m.getCell(m.getPlayerLocationX(), m.getPlayerLocationY(),
-          m.getPlayerLocationZ() - 1, Layers.OBJECT);
-      return true;
-    } catch (final ArrayIndexOutOfBoundsException ae) {
-      return false;
-    }
+    return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
+        m.getPlayerLocationZ() - 1);
   }
 
   public static boolean isLevelAbove() {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
-    try {
-      m.getCell(m.getPlayerLocationX(), m.getPlayerLocationY(),
-          m.getPlayerLocationZ() + 1, Layers.OBJECT);
-      return true;
-    } catch (final ArrayIndexOutOfBoundsException ae) {
-      return false;
-    }
+    return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
+        m.getPlayerLocationZ() + 1);
   }
 
   public static boolean doesFloorExist(final int floor) {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
-    try {
-      m.getCell(m.getPlayerLocationX(), m.getPlayerLocationY(), floor,
-          Layers.OBJECT);
-      return true;
-    } catch (final ArrayIndexOutOfBoundsException ae) {
-      return false;
-    }
+    return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
+        floor);
   }
 
   public static boolean doesLevelExist(final int level) {
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
-    try {
-      m.getCell(m.getPlayerLocationX(), m.getPlayerLocationY(),
-          m.getPlayerLocationZ(), Layers.OBJECT);
-      return true;
-    } catch (final ArrayIndexOutOfBoundsException ae) {
-      return false;
-    }
+    return m.cellRangeCheck(m.getPlayerLocationX(), m.getPlayerLocationY(),
+        level);
   }
 
   public static void fireArrow(final int x, final int y) {
@@ -483,14 +453,14 @@ public final class Game {
         + GameView.getViewingWindowLocationY() + xOffset - yOffset;
     final int destZ = m.getPlayerLocationZ();
     if (Game.usingAnItem() && app.getMode() == BagOStuff.STATUS_GAME) {
-      try {
+      if (m.cellRangeCheck(destX, destY, destZ)) {
         final FantastleObjectModel target = m.getCell(destX, destY, destZ,
             Layers.OBJECT);
         if (target instanceof Player) {
           Game.setUsingAnItem(false);
           Game.setStatusMessage("Don't aim at yourself!");
         }
-      } catch (final ArrayIndexOutOfBoundsException ae) {
+      } else {
         Game.setUsingAnItem(false);
         Game.setStatusMessage("Aim within the maze");
       }

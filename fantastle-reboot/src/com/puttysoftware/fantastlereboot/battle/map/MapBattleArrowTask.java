@@ -52,9 +52,9 @@ public class MapBattleArrowTask extends Thread {
       final int incX = this.x;
       final int incY = this.y;
       FantastleObjectModel o = null;
-      try {
+      if (m.cellRangeCheck(px + cumX, py + cumY, 0)) {
         o = m.getCell(px + cumX, py + cumY, 0, Layers.OBJECT);
-      } catch (final ArrayIndexOutOfBoundsException ae) {
+      } else {
         o = new Wall();
       }
       final int newDir = DirectionResolver.resolve(incX, incY);
@@ -93,9 +93,9 @@ public class MapBattleArrowTask extends Thread {
             new OpenSpace());
         cumX += incX;
         cumY += incY;
-        try {
+        if (m.cellRangeCheck(px + cumX, py + cumY, 0)) {
           o = m.getCell(px + cumX, py + cumY, 0, Layers.OBJECT);
-        } catch (final ArrayIndexOutOfBoundsException ae) {
+        } else {
           res = false;
         }
       }

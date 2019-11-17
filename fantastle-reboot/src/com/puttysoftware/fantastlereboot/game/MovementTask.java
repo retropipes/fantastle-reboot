@@ -80,18 +80,17 @@ final class MovementTask extends Thread {
   }
 
   public static boolean tryAbsolute(final int x, final int y, final int z) {
-    try {
-      final BagOStuff app = FantastleReboot.getBagOStuff();
-      final Maze m = app.getMazeManager().getMaze();
+    final BagOStuff app = FantastleReboot.getBagOStuff();
+    final Maze m = app.getMazeManager().getMaze();
+    if (m.cellRangeCheck(x, y, z)) {
       final FantastleObjectModel below = m.getCell(m.getPlayerLocationX(),
           m.getPlayerLocationY(), m.getPlayerLocationZ(), Layers.GROUND);
       final FantastleObjectModel nextBelow = m.getCell(x, y, z, Layers.GROUND);
       final FantastleObjectModel nextAbove = m.getCell(x, y, z, Layers.OBJECT);
       return MovementTask.checkSolidAbsolute(MovementTask.saved, below,
           nextBelow, nextAbove);
-    } catch (final ArrayIndexOutOfBoundsException ae) {
-      return false;
     }
+    return false;
   }
 
   public static void stopMovement() {
@@ -154,26 +153,23 @@ final class MovementTask extends Thread {
     FantastleObjectModel nextAbove = new Wall();
     boolean loopCheck = true;
     do {
-      try {
+      if (m.cellRangeCheck(px, py, pz)) {
         below = m.getCell(px, py, pz, Layers.GROUND);
-      } catch (final ArrayIndexOutOfBoundsException ae) {
+      } else {
         below = new OpenSpace();
       }
-      try {
+      if (m.cellRangeCheck(px + fX, py + fY, pz + fZ)) {
         nextBelow = m.getCell(px + fX, py + fY, pz + fZ, Layers.GROUND);
-      } catch (final ArrayIndexOutOfBoundsException ae) {
-        nextBelow = new OpenSpace();
-      }
-      try {
         nextAbove = m.getCell(px + fX, py + fY, pz + fZ, Layers.OBJECT);
-      } catch (final ArrayIndexOutOfBoundsException ae) {
+      } else {
+        nextBelow = new OpenSpace();
         nextAbove = new Wall();
       }
       MovementTask.proceed = true;
       if (MovementTask.proceed) {
         m.savePlayerLocation();
         GameView.saveViewingWindow();
-        try {
+        if (m.cellRangeCheck(px + fX, py + fY, pz + fZ)) {
           if (MovementTask.checkSolid(MovementTask.saved, below, nextBelow,
               nextAbove)) {
             m.offsetPlayerLocationX(fX);
@@ -192,7 +188,7 @@ final class MovementTask extends Thread {
           } else {
             MovementTask.moveFailed();
           }
-        } catch (final ArrayIndexOutOfBoundsException ae) {
+        } else {
           MovementTask.moveFailed();
         }
         MovementTask.fireStepActions();
@@ -246,7 +242,7 @@ final class MovementTask extends Thread {
     final Maze m = bag.getMazeManager().getMaze();
     m.savePlayerLocation();
     GameView.saveViewingWindow();
-    try {
+    if (m.cellRangeCheck(x, y, z)) {
       if (!(m.getCell(x, y, z, Layers.OBJECT).isSolid())) {
         m.setPlayerLocationX(x);
         m.setPlayerLocationY(y);
@@ -264,7 +260,7 @@ final class MovementTask extends Thread {
         m.updateVisibleSquares(px, py, pz);
         GameGUI.redrawMaze();
       }
-    } catch (final ArrayIndexOutOfBoundsException ae) {
+    } else {
       MovementTask.moveFailed();
     }
   }

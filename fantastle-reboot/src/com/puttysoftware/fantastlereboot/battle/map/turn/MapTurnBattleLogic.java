@@ -682,12 +682,12 @@ public class MapTurnBattleLogic extends Battle {
     FantastleObjectModel currGround = null;
     active.saveLocation();
     this.battleGUI.getViewManager().saveViewingWindow();
-    try {
+    if (this.bd.getBattleMaze().cellRangeCheck(px + x, py + y, 0)) {
       next = m.getCell(px + x, py + y, 0, Layers.OBJECT);
       nextGround = m.getCell(px + x, py + y, 0, Layers.GROUND);
+    }
+    if (this.bd.getBattleMaze().cellRangeCheck(px, py, 0)) {
       currGround = m.getCell(px, py, 0, Layers.GROUND);
-    } catch (final ArrayIndexOutOfBoundsException aioob) {
-      // Ignore
     }
     if (next != null && nextGround != null && currGround != null) {
       if (!next.isSolid()) {
@@ -703,45 +703,29 @@ public class MapTurnBattleLogic extends Battle {
           FantastleObjectModel obj7 = null;
           FantastleObjectModel obj8 = null;
           FantastleObjectModel obj9 = null;
-          try {
+          if (this.bd.getBattleMaze().cellRangeCheck(px - 1, py - 1, 0)) {
             obj1 = m.getCell(px - 1, py - 1, 0, Layers.OBJECT);
-          } catch (final ArrayIndexOutOfBoundsException aioob) {
-            // Ignore
           }
-          try {
+          if (this.bd.getBattleMaze().cellRangeCheck(px, py - 1, 0)) {
             obj2 = m.getCell(px, py - 1, 0, Layers.OBJECT);
-          } catch (final ArrayIndexOutOfBoundsException aioob) {
-            // Ignore
           }
-          try {
+          if (this.bd.getBattleMaze().cellRangeCheck(px + 1, py - 1, 0)) {
             obj3 = m.getCell(px + 1, py - 1, 0, Layers.OBJECT);
-          } catch (final ArrayIndexOutOfBoundsException aioob) {
-            // Ignore
           }
-          try {
+          if (this.bd.getBattleMaze().cellRangeCheck(px - 1, py, 0)) {
             obj4 = m.getCell(px - 1, py, 0, Layers.OBJECT);
-          } catch (final ArrayIndexOutOfBoundsException aioob) {
-            // Ignore
           }
-          try {
+          if (this.bd.getBattleMaze().cellRangeCheck(px + 1, py - 1, 0)) {
             obj6 = m.getCell(px + 1, py - 1, 0, Layers.OBJECT);
-          } catch (final ArrayIndexOutOfBoundsException aioob) {
-            // Ignore
           }
-          try {
+          if (this.bd.getBattleMaze().cellRangeCheck(px - 1, py + 1, 0)) {
             obj7 = m.getCell(px - 1, py + 1, 0, Layers.OBJECT);
-          } catch (final ArrayIndexOutOfBoundsException aioob) {
-            // Ignore
           }
-          try {
+          if (this.bd.getBattleMaze().cellRangeCheck(px, py + 1, 0)) {
             obj8 = m.getCell(px, py + 1, 0, Layers.OBJECT);
-          } catch (final ArrayIndexOutOfBoundsException aioob) {
-            // Ignore
           }
-          try {
+          if (this.bd.getBattleMaze().cellRangeCheck(px + 1, py + 1, 0)) {
             obj9 = m.getCell(px + 1, py + 1, 0, Layers.OBJECT);
-          } catch (final ArrayIndexOutOfBoundsException aioob) {
-            // Ignore
           }
           // Auto-attack check
           if (obj1 != null) {
@@ -981,10 +965,8 @@ public class MapTurnBattleLogic extends Battle {
         if (x == 0 && y == 0) {
           continue;
         }
-        try {
+        if (m.cellRangeCheck(px + x, py + y, 0)) {
           next = m.getCell(px + x, py + y, 0, Layers.OBJECT);
-        } catch (final ArrayIndexOutOfBoundsException aioob) {
-          // Ignore
         }
         if (next != null) {
           if (next.isSolid()) {

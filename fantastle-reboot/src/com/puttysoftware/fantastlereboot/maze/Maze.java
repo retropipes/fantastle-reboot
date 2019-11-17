@@ -182,6 +182,16 @@ public class Maze {
     return this.mazeData.getNote(x, y, z);
   }
 
+  public boolean cellRangeCheck(final int row, final int col, final int floor) {
+    return this.mazeData.cellRangeCheck(row, col, floor);
+  }
+
+  public boolean cellRangeCheck(final int row, final int col, final int floor,
+      final int level, final int extra) {
+    return this.mazeData.cellRangeCheck(row, col, floor, extra)
+        && level >= MIN_LEVELS - 1 && level < Maze.MAX_LEVELS;
+  }
+
   public FantastleObjectModel getCell(final int row, final int col,
       final int floor, final int extra) {
     return this.mazeData.getCell(row, col, floor, extra);

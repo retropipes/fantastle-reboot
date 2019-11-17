@@ -95,6 +95,35 @@ final class LayeredTower implements Cloneable {
     return this.noteData.getNote(y, x, z);
   }
 
+  public boolean cellRangeCheck(final int row, final int col, final int floor) {
+    int fR = row;
+    int fC = col;
+    final int fF = floor;
+    if (this.verticalWraparoundEnabled) {
+      fC = this.normalizeColumn(fC);
+    }
+    if (this.horizontalWraparoundEnabled) {
+      fR = this.normalizeRow(fR);
+    }
+    return fR >= 0 && fR < MAX_ROWS && fC >= 0 && fC < MAX_COLUMNS && fF >= 0
+        && fF < MAX_FLOORS;
+  }
+
+  public boolean cellRangeCheck(final int row, final int col, final int floor,
+      final int extra) {
+    int fR = row;
+    int fC = col;
+    final int fF = floor;
+    if (this.verticalWraparoundEnabled) {
+      fC = this.normalizeColumn(fC);
+    }
+    if (this.horizontalWraparoundEnabled) {
+      fR = this.normalizeRow(fR);
+    }
+    return fR >= 0 && fR < MAX_ROWS && fC >= 0 && fC < MAX_COLUMNS && fF >= 0
+        && fF < MAX_FLOORS && extra >= 0 && extra < Layers.COUNT;
+  }
+
   public FantastleObjectModel getCell(final int row, final int col,
       final int floor, final int extra) {
     int fR = row;
@@ -169,25 +198,19 @@ final class LayeredTower implements Cloneable {
             fy = y;
           }
           boolean alreadyVisible = false;
-          try {
+          if (this.cellRangeCheck(fx, fy, zp)) {
             alreadyVisible = this.visionData.getCell(fx, fy, zp);
-          } catch (final ArrayIndexOutOfBoundsException aioobe) {
-            // Ignore
           }
           if (!alreadyVisible) {
             if ((this.visionMode | VisionModes.LOS) == this.visionMode) {
               if (this.isSquareVisibleLOS(x, y, xp, yp)) {
-                try {
+                if (this.cellRangeCheck(fx, fy, zp)) {
                   this.visionData.setCell(true, fx, fy, zp);
-                } catch (final ArrayIndexOutOfBoundsException aioobe) {
-                  // Ignore
                 }
               }
             } else {
-              try {
+              if (this.cellRangeCheck(fx, fy, zp)) {
                 this.visionData.setCell(true, fx, fy, zp);
-              } catch (final ArrayIndexOutOfBoundsException aioobe) {
-                // Ignore
               }
             }
           }
@@ -261,9 +284,9 @@ final class LayeredTower implements Cloneable {
     } else {
       fy2 = y2;
     }
-    try {
+    if (this.cellRangeCheck(fx2, fy2, zLoc)) {
       return this.visionData.getCell(fx2, fy2, zLoc);
-    } catch (final ArrayIndexOutOfBoundsException aioobe) {
+    } else {
       return true;
     }
   }
@@ -296,7 +319,7 @@ final class LayeredTower implements Cloneable {
         break;
       }
       // Does object block LOS?
-      try {
+      if (this.cellRangeCheck(fx1, fy1, zLoc)) {
         final FantastleObjectModel obj = this.getCell(fx1, fy1, zLoc,
             Layers.OBJECT);
         if (obj.isSightBlocking()) {
@@ -305,7 +328,7 @@ final class LayeredTower implements Cloneable {
             return false;
           }
         }
-      } catch (final ArrayIndexOutOfBoundsException aioobe) {
+      } else {
         // Void blocks LOS
         return false;
       }

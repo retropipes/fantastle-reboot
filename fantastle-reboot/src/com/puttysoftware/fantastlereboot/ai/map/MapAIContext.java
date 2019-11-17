@@ -16,12 +16,16 @@ import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 public class MapAIContext extends AIContext {
   private final int[][] apCosts;
   private final int[][] creatureLocations;
+  private final int xBound;
+  private final int yBound;
 
   // Constructor
   public MapAIContext(final BattleCharacter creature, final Maze arena) {
     super(creature);
-    this.apCosts = new int[arena.getRows()][arena.getColumns()];
-    this.creatureLocations = new int[arena.getRows()][arena.getColumns()];
+    this.xBound = arena.getRows();
+    this.yBound = arena.getColumns();
+    this.apCosts = new int[this.xBound][this.yBound];
+    this.creatureLocations = new int[this.xBound][this.yBound];
   }
 
   // Methods
@@ -50,6 +54,10 @@ public class MapAIContext extends AIContext {
     }
   }
 
+  private boolean rangeCheck(final int x, final int y) {
+    return x >= 0 && x < this.xBound && y >= 0 && y < this.yBound;
+  }
+
   @Override
   public Point isEnemyNearby(final int minRadius, final int maxRadius) {
     int fMinR = minRadius;
@@ -74,13 +82,11 @@ public class MapAIContext extends AIContext {
         if (Math.abs(u - x) < fMinR && Math.abs(v - y) < fMinR) {
           continue;
         }
-        try {
+        if (this.rangeCheck(u, v) && this.rangeCheck(u - x, v - y)) {
           if (this.creatureLocations[u][v] != -1
               && this.creatureLocations[u][v] != this.myTeam) {
             return new Point(u - x, v - y);
           }
-        } catch (final ArrayIndexOutOfBoundsException aioob) {
-          // Ignore
         }
       }
     }
@@ -99,13 +105,11 @@ public class MapAIContext extends AIContext {
         if (Math.abs(u - x) < fMinR && Math.abs(v - y) < fMinR) {
           continue;
         }
-        try {
+        if (this.rangeCheck(u, v)) {
           if (this.creatureLocations[u][v] != -1
               && this.creatureLocations[u][v] != this.myTeam) {
             return new Point(u + x, v + y);
           }
-        } catch (final ArrayIndexOutOfBoundsException aioob) {
-          // Ignore
         }
       }
     }
