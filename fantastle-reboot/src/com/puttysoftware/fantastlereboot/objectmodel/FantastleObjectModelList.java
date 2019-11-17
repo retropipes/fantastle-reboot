@@ -22,11 +22,15 @@ import com.puttysoftware.fantastlereboot.objects.ItemShop;
 import com.puttysoftware.fantastlereboot.objects.NecklaceShop;
 import com.puttysoftware.fantastlereboot.objects.Nothing;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
+import com.puttysoftware.fantastlereboot.objects.Pit;
 import com.puttysoftware.fantastlereboot.objects.RegenerateShop;
 import com.puttysoftware.fantastlereboot.objects.SealingWall;
 import com.puttysoftware.fantastlereboot.objects.SpellShop;
+import com.puttysoftware.fantastlereboot.objects.Spring;
 import com.puttysoftware.fantastlereboot.objects.StairsDown;
 import com.puttysoftware.fantastlereboot.objects.StairsUp;
+import com.puttysoftware.fantastlereboot.objects.SuperPit;
+import com.puttysoftware.fantastlereboot.objects.SuperSpring;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.fantastlereboot.objects.Wall;
 import com.puttysoftware.fantastlereboot.objects.WeaponShop;
@@ -51,7 +55,8 @@ public final class FantastleObjectModelList {
         new HealShop(), new Ice(), new ItemShop(), new RegenerateShop(),
         new SealingWall(), new NecklaceShop(), new SpellShop(), new Tile(),
         new Wall(), new WeaponShop(), new Wall(), new StairsUp(),
-        new StairsDown() };
+        new StairsDown(), new Pit(), new Spring(), new SuperPit(),
+        new SuperSpring() };
     this.allObjectList.clear();
     // Populate lists
     for (int z = 0; z < allObjects.length; z++) {
@@ -70,6 +75,26 @@ public final class FantastleObjectModelList {
   public boolean sendsUp(FantastleObjectModel obj) {
     return this.allActionList[obj.getUniqueID()]
         .get(FantastleObjectActions.UP_1_FLOOR);
+  }
+
+  public boolean sendsDown2(FantastleObjectModel obj) {
+    return this.allActionList[obj.getUniqueID()]
+        .get(FantastleObjectActions.DOWN_2_FLOORS);
+  }
+
+  public boolean sendsUp2(FantastleObjectModel obj) {
+    return this.allActionList[obj.getUniqueID()]
+        .get(FantastleObjectActions.UP_2_FLOORS);
+  }
+
+  public boolean sendsNext(FantastleObjectModel obj) {
+    return this.allActionList[obj.getUniqueID()]
+        .get(FantastleObjectActions.NEXT_LEVEL);
+  }
+
+  public boolean sendsPrevious(FantastleObjectModel obj) {
+    return this.allActionList[obj.getUniqueID()]
+        .get(FantastleObjectActions.PREVIOUS_LEVEL);
   }
 
   public boolean movesRandomly(FantastleObjectModel obj) {

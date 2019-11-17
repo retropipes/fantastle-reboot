@@ -107,7 +107,8 @@ final class MovementTask extends Thread {
     PartyManager.getParty().fireStepActions();
     GameGUI.updateStats();
     MovementTask.checkGameOver();
-    MovementTask.checkStairs();
+    MovementTask.checkFloorChange();
+    MovementTask.checkLevelChange();
   }
 
   private static void decayEffects() {
@@ -275,7 +276,7 @@ final class MovementTask extends Thread {
     MovementTask.proceed = false;
   }
 
-  private static void checkStairs() {
+  private static void checkFloorChange() {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     final FantastleObjectModelList objects = bag.getObjects();
     final Maze m = MazeManager.getMaze();
@@ -286,7 +287,7 @@ final class MovementTask extends Thread {
     if (objects.sendsDown(below)) {
       if (Game.isFloorBelow()) {
         // Going down...
-        SoundPlayer.playSound(SoundIndex.DOWN, SoundGroup.GAME);
+        SoundPlayer.playSound(SoundIndex.FALLING, SoundGroup.GAME);
         MovementTask.updatePositionAbsolute(px, py, pz + 1);
       } else {
         MovementTask.moveFailed();
@@ -294,8 +295,51 @@ final class MovementTask extends Thread {
     } else if (objects.sendsUp(below)) {
       if (Game.isFloorAbove()) {
         // Going up...
-        SoundPlayer.playSound(SoundIndex.UP, SoundGroup.GAME);
+        SoundPlayer.playSound(SoundIndex.SPRING, SoundGroup.GAME);
         MovementTask.updatePositionAbsolute(px, py, pz - 1);
+      } else {
+        MovementTask.moveFailed();
+      }
+    } else if (objects.sendsDown2(below)) {
+      if (Game.areTwoFloorsBelow()) {
+        // Going down 2...
+        SoundPlayer.playSound(SoundIndex.FALLING, SoundGroup.GAME);
+        MovementTask.updatePositionAbsolute(px, py, pz - 2);
+      } else {
+        MovementTask.moveFailed();
+      }
+    } else if (objects.sendsUp2(below)) {
+      if (Game.areTwoFloorsAbove()) {
+        // Going up 2...
+        SoundPlayer.playSound(SoundIndex.SPRING, SoundGroup.GAME);
+        MovementTask.updatePositionAbsolute(px, py, pz - 2);
+      } else {
+        MovementTask.moveFailed();
+      }
+    }
+  }
+
+  private static void checkLevelChange() {
+    final BagOStuff bag = FantastleReboot.getBagOStuff();
+    final FantastleObjectModelList objects = bag.getObjects();
+    final Maze m = MazeManager.getMaze();
+    final int px = m.getPlayerLocationX();
+    final int py = m.getPlayerLocationY();
+    final int pz = m.getPlayerLocationZ();
+    final FantastleObjectModel below = m.getCell(px, py, pz, Layers.GROUND);
+    if (objects.sendsNext(below)) {
+      if (Game.isLevelBelow()) {
+        // Going deeper...
+        SoundPlayer.playSound(SoundIndex.DOWN, SoundGroup.GAME);
+        Game.goToLevelOffset(1);
+      } else {
+        MovementTask.moveFailed();
+      }
+    } else if (objects.sendsPrevious(below)) {
+      if (Game.isLevelAbove()) {
+        // Going shallower...
+        SoundPlayer.playSound(SoundIndex.UP, SoundGroup.GAME);
+        Game.goToLevelOffset(-1);
       } else {
         MovementTask.moveFailed();
       }

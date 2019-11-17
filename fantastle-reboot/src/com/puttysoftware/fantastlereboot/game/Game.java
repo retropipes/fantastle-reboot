@@ -198,6 +198,16 @@ public final class Game {
     return m.floorRangeCheck(m.getPlayerLocationZ() + 1);
   }
 
+  public static boolean areTwoFloorsBelow() {
+    final Maze m = MazeManager.getMaze();
+    return m.floorRangeCheck(m.getPlayerLocationZ() - 2);
+  }
+
+  public static boolean areTwoFloorsAbove() {
+    final Maze m = MazeManager.getMaze();
+    return m.floorRangeCheck(m.getPlayerLocationZ() + 2);
+  }
+
   public static boolean isLevelBelow() {
     final Maze m = MazeManager.getMaze();
     return m.levelRangeCheck(m.getPlayerLocationW() - 1);
