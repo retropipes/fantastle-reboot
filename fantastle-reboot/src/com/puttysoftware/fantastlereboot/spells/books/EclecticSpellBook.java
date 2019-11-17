@@ -77,6 +77,6 @@ public class EclecticSpellBook extends SpellBook {
 
   @Override
   public int getID() {
-    return JobConstants.JOB_ECLECTIC;
+    return JobConstants.ECLECTIC;
   }
 }

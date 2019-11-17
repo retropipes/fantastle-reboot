@@ -74,6 +74,6 @@ public class CurerSpellBook extends SpellBook {
 
   @Override
   public int getID() {
-    return JobConstants.JOB_CURER;
+    return JobConstants.CURER;
   }
 }

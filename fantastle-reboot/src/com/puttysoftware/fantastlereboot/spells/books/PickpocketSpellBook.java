@@ -77,6 +77,6 @@ public class PickpocketSpellBook extends SpellBook {
 
   @Override
   public int getID() {
-    return JobConstants.JOB_PICKPOCKET;
+    return JobConstants.PICKPOCKET;
   }
 }

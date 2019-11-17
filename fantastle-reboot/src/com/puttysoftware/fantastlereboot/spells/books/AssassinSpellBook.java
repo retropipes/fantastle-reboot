@@ -88,6 +88,6 @@ public class AssassinSpellBook extends SpellBook {
 
   @Override
   public int getID() {
-    return JobConstants.JOB_ASSASSIN;
+    return JobConstants.ASSASSIN;
   }
 }

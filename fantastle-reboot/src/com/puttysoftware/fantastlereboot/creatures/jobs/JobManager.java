@@ -9,7 +9,7 @@ public class JobManager {
   private static Job[] CACHE;
 
   public static Job selectJob() {
-    final String[] names = JobConstants.JOB_NAMES;
+    final String[] names = JobConstants.NAMES;
     String dialogResult = null;
     dialogResult = CommonDialogs.showInputDialog("Select a Job", "Select Job",
         names, names[0]);
@@ -33,8 +33,8 @@ public class JobManager {
   public static Job getJob(final int casteID) {
     if (!JobManager.CACHE_CREATED) {
       // Create cache
-      JobManager.CACHE = new Job[JobConstants.JOBS_COUNT];
-      for (int x = 0; x < JobConstants.JOBS_COUNT; x++) {
+      JobManager.CACHE = new Job[JobConstants.COUNT];
+      for (int x = 0; x < JobConstants.COUNT; x++) {
         JobManager.CACHE[x] = new Job(x);
       }
       JobManager.CACHE_CREATED = true;

@@ -16,7 +16,7 @@ public class Job {
   }
 
   public String getName() {
-    return JobConstants.JOB_NAMES[this.jobID];
+    return JobConstants.NAMES[this.jobID];
   }
 
   public int getJobID() {

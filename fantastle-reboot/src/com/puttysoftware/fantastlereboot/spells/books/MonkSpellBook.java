@@ -77,6 +77,6 @@ public class MonkSpellBook extends SpellBook {
 
   @Override
   public int getID() {
-    return JobConstants.JOB_MONK;
+    return JobConstants.MONK;
   }
 }

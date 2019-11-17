@@ -16,7 +16,7 @@ public class Race {
   }
 
   public String getName() {
-    return RaceConstants.RACE_NAMES[this.raceID];
+    return RaceConstants.NAMES[this.raceID];
   }
 
   public int getRaceID() {

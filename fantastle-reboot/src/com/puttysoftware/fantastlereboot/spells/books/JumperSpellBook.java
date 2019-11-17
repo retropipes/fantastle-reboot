@@ -77,6 +77,6 @@ public class JumperSpellBook extends SpellBook {
 
   @Override
   public int getID() {
-    return JobConstants.JOB_JUMPER;
+    return JobConstants.JUMPER;
   }
 }

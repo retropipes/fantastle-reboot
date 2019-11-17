@@ -10,10 +10,8 @@ import java.io.IOException;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
-import com.puttysoftware.fantastlereboot.creatures.genders.Gender;
 import com.puttysoftware.fantastlereboot.creatures.jobs.Job;
 import com.puttysoftware.fantastlereboot.creatures.jobs.JobManager;
-import com.puttysoftware.fantastlereboot.creatures.personalities.Personality;
 import com.puttysoftware.fantastlereboot.creatures.races.Race;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
 import com.puttysoftware.fantastlereboot.game.Game;
@@ -34,8 +32,6 @@ public class PartyMember extends Creature {
   private Race race;
   private Job job;
   private Faith faith;
-  private Personality personality;
-  private Gender gender;
   private final String name;
   private int permanentAttack;
   private int permanentDefense;
@@ -49,15 +45,12 @@ public class PartyMember extends Creature {
   private static final double BASE_COEFF = 10.0;
 
   // Constructors
-  PartyMember(final Race r, final Job j, final Faith f, final Personality p,
-      final Gender g, final String n) {
+  PartyMember(final Race r, final Job j, final Faith f, final String n) {
     super(true, 0);
     this.name = n;
     this.race = r;
     this.job = j;
     this.faith = f;
-    this.personality = p;
-    this.gender = g;
     this.permanentAttack = 0;
     this.permanentDefense = 0;
     this.permanentHP = 0;
@@ -67,18 +60,18 @@ public class PartyMember extends Creature {
     this.avatarHairID = 0;
     this.avatarSkinID = 0;
     this.setLevel(1);
-    this.setStrength(StatConstants.GAIN_STRENGTH + this.race
-        .getAttribute(RaceConstants.RACE_ATTRIBUTE_STRENGTH_PER_LEVEL));
+    this.setStrength(StatConstants.GAIN_STRENGTH
+        + this.race.getAttribute(RaceConstants.ATTRIBUTE_STRENGTH_PER_LEVEL));
     this.setBlock(StatConstants.GAIN_BLOCK
-        + this.race.getAttribute(RaceConstants.RACE_ATTRIBUTE_BLOCK_PER_LEVEL));
-    this.setVitality(StatConstants.GAIN_VITALITY + this.race
-        .getAttribute(RaceConstants.RACE_ATTRIBUTE_VITALITY_PER_LEVEL));
+        + this.race.getAttribute(RaceConstants.ATTRIBUTE_BLOCK_PER_LEVEL));
+    this.setVitality(StatConstants.GAIN_VITALITY
+        + this.race.getAttribute(RaceConstants.ATTRIBUTE_VITALITY_PER_LEVEL));
     this.setIntelligence(StatConstants.GAIN_INTELLIGENCE + this.race
-        .getAttribute(RaceConstants.RACE_ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
-    this.setAgility(StatConstants.GAIN_AGILITY + this.race
-        .getAttribute(RaceConstants.RACE_ATTRIBUTE_AGILITY_PER_LEVEL));
+        .getAttribute(RaceConstants.ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
+    this.setAgility(StatConstants.GAIN_AGILITY
+        + this.race.getAttribute(RaceConstants.ATTRIBUTE_AGILITY_PER_LEVEL));
     this.setLuck(StatConstants.GAIN_LUCK
-        + this.race.getAttribute(RaceConstants.RACE_ATTRIBUTE_LUCK_PER_LEVEL));
+        + this.race.getAttribute(RaceConstants.ATTRIBUTE_LUCK_PER_LEVEL));
     this.setAttacksPerRound(1);
     this.setSpellsPerRound(1);
     this.healAndRegenerateFully();
@@ -101,18 +94,18 @@ public class PartyMember extends Creature {
   // Transformers
   @Override
   protected void levelUpHook() {
-    this.offsetStrength(StatConstants.GAIN_STRENGTH + this.race
-        .getAttribute(RaceConstants.RACE_ATTRIBUTE_STRENGTH_PER_LEVEL));
+    this.offsetStrength(StatConstants.GAIN_STRENGTH
+        + this.race.getAttribute(RaceConstants.ATTRIBUTE_STRENGTH_PER_LEVEL));
     this.offsetBlock(StatConstants.GAIN_BLOCK
-        + this.race.getAttribute(RaceConstants.RACE_ATTRIBUTE_BLOCK_PER_LEVEL));
-    this.offsetVitality(StatConstants.GAIN_VITALITY + this.race
-        .getAttribute(RaceConstants.RACE_ATTRIBUTE_VITALITY_PER_LEVEL));
+        + this.race.getAttribute(RaceConstants.ATTRIBUTE_BLOCK_PER_LEVEL));
+    this.offsetVitality(StatConstants.GAIN_VITALITY
+        + this.race.getAttribute(RaceConstants.ATTRIBUTE_VITALITY_PER_LEVEL));
     this.offsetIntelligence(StatConstants.GAIN_INTELLIGENCE + this.race
-        .getAttribute(RaceConstants.RACE_ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
-    this.offsetAgility(StatConstants.GAIN_AGILITY + this.race
-        .getAttribute(RaceConstants.RACE_ATTRIBUTE_AGILITY_PER_LEVEL));
+        .getAttribute(RaceConstants.ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
+    this.offsetAgility(StatConstants.GAIN_AGILITY
+        + this.race.getAttribute(RaceConstants.ATTRIBUTE_AGILITY_PER_LEVEL));
     this.offsetLuck(StatConstants.GAIN_LUCK
-        + this.race.getAttribute(RaceConstants.RACE_ATTRIBUTE_LUCK_PER_LEVEL));
+        + this.race.getAttribute(RaceConstants.ATTRIBUTE_LUCK_PER_LEVEL));
     this.healAndRegenerateFully();
   }
 
@@ -156,14 +149,6 @@ public class PartyMember extends Creature {
     return this.faith;
   }
 
-  protected Personality getPersonality() {
-    return this.personality;
-  }
-
-  protected Gender getGender() {
-    return this.gender;
-  }
-
   @Override
   public int getSpeed() {
     final int difficulty = PreferencesManager.getGameDifficulty();
@@ -191,26 +176,23 @@ public class PartyMember extends Creature {
     }
   }
 
-  public void initPostKill(final Race r, final Job c, final Faith f,
-      final Personality p, final Gender g) {
+  public void initPostKill(final Race r, final Job j, final Faith f) {
     this.race = r;
-    this.job = c;
+    this.job = j;
     this.faith = f;
-    this.personality = p;
-    this.gender = g;
     this.setLevel(1);
-    this.setStrength(StatConstants.GAIN_STRENGTH + this.race
-        .getAttribute(RaceConstants.RACE_ATTRIBUTE_STRENGTH_PER_LEVEL));
+    this.setStrength(StatConstants.GAIN_STRENGTH
+        + this.race.getAttribute(RaceConstants.ATTRIBUTE_STRENGTH_PER_LEVEL));
     this.setBlock(StatConstants.GAIN_BLOCK
-        + this.race.getAttribute(RaceConstants.RACE_ATTRIBUTE_BLOCK_PER_LEVEL));
-    this.setVitality(StatConstants.GAIN_VITALITY + this.race
-        .getAttribute(RaceConstants.RACE_ATTRIBUTE_VITALITY_PER_LEVEL));
+        + this.race.getAttribute(RaceConstants.ATTRIBUTE_BLOCK_PER_LEVEL));
+    this.setVitality(StatConstants.GAIN_VITALITY
+        + this.race.getAttribute(RaceConstants.ATTRIBUTE_VITALITY_PER_LEVEL));
     this.setIntelligence(StatConstants.GAIN_INTELLIGENCE + this.race
-        .getAttribute(RaceConstants.RACE_ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
-    this.setAgility(StatConstants.GAIN_AGILITY + this.race
-        .getAttribute(RaceConstants.RACE_ATTRIBUTE_AGILITY_PER_LEVEL));
+        .getAttribute(RaceConstants.ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
+    this.setAgility(StatConstants.GAIN_AGILITY
+        + this.race.getAttribute(RaceConstants.ATTRIBUTE_AGILITY_PER_LEVEL));
     this.setLuck(StatConstants.GAIN_LUCK
-        + this.race.getAttribute(RaceConstants.RACE_ATTRIBUTE_LUCK_PER_LEVEL));
+        + this.race.getAttribute(RaceConstants.ATTRIBUTE_LUCK_PER_LEVEL));
     this.setAttacksPerRound(1);
     this.setSpellsPerRound(1);
     this.healAndRegenerateFully();
@@ -317,17 +299,15 @@ public class PartyMember extends Creature {
     final int load = worldFile.readInt();
     final long exp = worldFile.readLong();
     final int r = worldFile.readInt();
-    final int c = worldFile.readInt();
+    final int j = worldFile.readInt();
     final int f = worldFile.readInt();
-    final int p = worldFile.readInt();
-    final int g = worldFile.readInt();
     final int max = worldFile.readInt();
     final boolean[] known = new boolean[max];
     for (int x = 0; x < max; x++) {
       known[x] = worldFile.readBoolean();
     }
     final String n = worldFile.readString();
-    final PartyMember pm = PartyManager.getNewPCInstance(r, c, f, p, g, n);
+    final PartyMember pm = PartyManager.getNewPCInstance(r, j, f, n);
     pm.setStrength(strength);
     pm.setBlock(block);
     pm.setAgility(agility);
@@ -342,7 +322,7 @@ public class PartyMember extends Creature {
     pm.permanentDefense = pDef;
     pm.permanentHP = pHP;
     pm.permanentMP = pMP;
-    pm.loadPartyMember(lvl, cHP, cMP, gld, load, exp, c, known);
+    pm.loadPartyMember(lvl, cHP, cMP, gld, load, exp, j, known);
     return pm;
   }
 
@@ -370,8 +350,6 @@ public class PartyMember extends Creature {
     worldFile.writeInt(this.getRace().getRaceID());
     worldFile.writeInt(this.getJob().getJobID());
     worldFile.writeInt(this.getFaith().getFaithID());
-    worldFile.writeInt(this.getPersonality().getPersonalityID());
-    worldFile.writeInt(this.getGender().getGenderID());
     final int max = this.getSpellBook().getSpellCount();
     worldFile.writeInt(max);
     for (int x = 0; x < max; x++) {

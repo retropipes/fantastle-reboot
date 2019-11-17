@@ -5,9 +5,7 @@ import java.util.ArrayList;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
-import com.puttysoftware.fantastlereboot.creatures.genders.GenderConstants;
 import com.puttysoftware.fantastlereboot.creatures.jobs.JobConstants;
-import com.puttysoftware.fantastlereboot.creatures.personalities.PersonalityConstants;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectActions;
 import com.puttysoftware.fileutils.ResourceStreamReader;
@@ -23,7 +21,7 @@ public class DataLoader {
         DataLoader.class
             .getResourceAsStream("/assets/data/job/" + name + ".txt"))) {
       // Fetch data
-      final int[] rawData = new int[JobConstants.JOBS_ATTRIBUTE_COUNT];
+      final int[] rawData = new int[JobConstants.ATTRIBUTES_COUNT];
       for (int x = 0; x < rawData.length; x++) {
         try {
           rawData[x] = rsr.readInt();
@@ -104,27 +102,6 @@ public class DataLoader {
     }
   }
 
-  public static int[] loadGenderData(final int g) {
-    final String name = Integer.toString(g);
-    try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class
-            .getResourceAsStream("/assets/data/gender/" + name + ".txt"))) {
-      // Fetch data
-      final int[] rawData = new int[GenderConstants.GENDERS_ATTRIBUTE_COUNT];
-      for (int x = 0; x < rawData.length; x++) {
-        try {
-          rawData[x] = rsr.readInt();
-        } catch (final NumberFormatException nfe) {
-          rawData[x] = 0;
-        }
-      }
-      return rawData;
-    } catch (final IOException e) {
-      FantastleReboot.logError(e);
-      return null;
-    }
-  }
-
   public static String[] loadMonsterData() {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
@@ -160,34 +137,13 @@ public class DataLoader {
     }
   }
 
-  public static int[] loadPersonalityData(final int p) {
-    final String name = Integer.toString(p);
-    try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class.getResourceAsStream(
-            "/assets/data/personality/" + name + ".txt"))) {
-      // Fetch data
-      final int[] rawData = new int[PersonalityConstants.PERSONALITY_ATTRIBUTES_COUNT];
-      for (int x = 0; x < rawData.length; x++) {
-        try {
-          rawData[x] = rsr.readInt();
-        } catch (final NumberFormatException nfe) {
-          rawData[x] = 0;
-        }
-      }
-      return rawData;
-    } catch (final IOException e) {
-      FantastleReboot.logError(e);
-      return null;
-    }
-  }
-
   public static int[] loadRaceData(final int r) {
     final String name = Integer.toString(r);
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class
             .getResourceAsStream("/assets/data/race/" + name + ".txt"))) {
       // Fetch data
-      final int[] rawData = new int[RaceConstants.RACE_ATTRIBUTE_COUNT];
+      final int[] rawData = new int[RaceConstants.ATTRIBUTES_COUNT];
       for (int x = 0; x < rawData.length; x++) {
         try {
           rawData[x] = rsr.readInt();

@@ -77,6 +77,6 @@ public class OverseerSpellBook extends SpellBook {
 
   @Override
   public int getID() {
-    return JobConstants.JOB_OVERSEER;
+    return JobConstants.OVERSEER;
   }
 }

@@ -77,6 +77,6 @@ public class GuruSpellBook extends SpellBook {
 
   @Override
   public int getID() {
-    return JobConstants.JOB_GURU;
+    return JobConstants.GURU;
   }
 }

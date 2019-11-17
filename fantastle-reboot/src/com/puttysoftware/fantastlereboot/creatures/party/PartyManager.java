@@ -15,12 +15,8 @@ import com.puttysoftware.fantastlereboot.creatures.characterfiles.CharacterLoade
 import com.puttysoftware.fantastlereboot.creatures.characterfiles.CharacterRegistration;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
-import com.puttysoftware.fantastlereboot.creatures.genders.Gender;
-import com.puttysoftware.fantastlereboot.creatures.genders.GenderManager;
 import com.puttysoftware.fantastlereboot.creatures.jobs.Job;
 import com.puttysoftware.fantastlereboot.creatures.jobs.JobManager;
-import com.puttysoftware.fantastlereboot.creatures.personalities.Personality;
-import com.puttysoftware.fantastlereboot.creatures.personalities.PersonalityManager;
 import com.puttysoftware.fantastlereboot.creatures.races.Race;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceManager;
 import com.puttysoftware.xio.XDataReader;
@@ -124,20 +120,17 @@ public class PartyManager {
     }
   }
 
-  public static PartyMember getNewPCInstance(final int r, final int c,
-      final int f, final int p, final int g, final String n) {
+  public static PartyMember getNewPCInstance(final int r, final int j,
+      final int f, final String n) {
     final Race race = RaceManager.getRace(r);
-    final Job caste = JobManager.getJob(c);
+    final Job job = JobManager.getJob(j);
     final Faith faith = FaithManager.getFaith(f);
-    final Personality personality = PersonalityManager.getPersonality(p);
-    final Gender gender = GenderManager.getGender(g);
-    return new PartyMember(race, caste, faith, personality, gender, n);
+    return new PartyMember(race, job, faith, n);
   }
 
   public static void updatePostKill() {
     final PartyMember leader = getParty().getLeader();
-    leader.initPostKill(leader.getRace(), leader.getJob(), leader.getFaith(),
-        leader.getPersonality(), leader.getGender());
+    leader.initPostKill(leader.getRace(), leader.getJob(), leader.getFaith());
   }
 
   private static PartyMember createNewPC() {
@@ -150,15 +143,7 @@ public class PartyManager {
         if (caste != null) {
           final Faith faith = FaithManager.selectFaith();
           if (faith != null) {
-            final Personality personality = PersonalityManager
-                .selectPersonality();
-            if (personality != null) {
-              final Gender gender = GenderManager.selectGender();
-              if (gender != null) {
-                return new PartyMember(race, caste, faith, personality, gender,
-                    name);
-              }
-            }
+            return new PartyMember(race, caste, faith, name);
           }
         }
       }

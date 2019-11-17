@@ -77,6 +77,6 @@ public class WarlockSpellBook extends SpellBook {
 
   @Override
   public int getID() {
-    return JobConstants.JOB_WARLOCK;
+    return JobConstants.WARLOCK;
   }
 }

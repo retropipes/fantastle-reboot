@@ -87,6 +87,6 @@ public class YellerSpellBook extends SpellBook {
 
   @Override
   public int getID() {
-    return JobConstants.JOB_YELLER;
+    return JobConstants.YELLER;
   }
 }

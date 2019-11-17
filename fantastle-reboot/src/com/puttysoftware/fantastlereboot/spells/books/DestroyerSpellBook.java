@@ -74,6 +74,6 @@ public class DestroyerSpellBook extends SpellBook {
 
   @Override
   public int getID() {
-    return JobConstants.JOB_DESTROYER;
+    return JobConstants.DESTROYER;
   }
 }

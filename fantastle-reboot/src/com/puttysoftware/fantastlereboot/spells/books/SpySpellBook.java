@@ -77,6 +77,6 @@ public class SpySpellBook extends SpellBook {
 
   @Override
   public int getID() {
-    return JobConstants.JOB_SPY;
+    return JobConstants.SPY;
   }
 }

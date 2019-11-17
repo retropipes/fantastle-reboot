@@ -77,6 +77,6 @@ public class KnightSpellBook extends SpellBook {
 
   @Override
   public int getID() {
-    return JobConstants.JOB_KNIGHT;
+    return JobConstants.KNIGHT;
   }
 }

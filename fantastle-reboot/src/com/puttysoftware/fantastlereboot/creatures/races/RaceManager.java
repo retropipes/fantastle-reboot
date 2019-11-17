@@ -7,7 +7,7 @@ public class RaceManager {
   private static Race[] CACHE;
 
   public static Race selectRace() {
-    final String[] names = RaceConstants.RACE_NAMES;
+    final String[] names = RaceConstants.NAMES;
     String dialogResult = null;
     dialogResult = CommonDialogs.showInputDialog("Select a Race", "Select Race",
         names, names[0]);
