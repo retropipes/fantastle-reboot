@@ -8,6 +8,7 @@ package com.puttysoftware.fantastlereboot.game;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.FileStateManager;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
@@ -181,7 +182,7 @@ final class MovementTask extends Thread {
             py += fY;
             GameView.offsetViewingWindowLocationX(fY);
             GameView.offsetViewingWindowLocationY(fX);
-            bag.getMazeManager().setDirty(true);
+            FileStateManager.setDirty(true);
             MovementTask.fireStepActions();
             MovementTask.decayEffects();
             GameGUI.redrawMaze();
@@ -256,7 +257,7 @@ final class MovementTask extends Thread {
             m.getPlayerLocationX() - GameView.getOffsetFactorY());
         MovementTask.saved = m.getCell(m.getPlayerLocationX(),
             m.getPlayerLocationY(), m.getPlayerLocationZ(), Layers.OBJECT);
-        bag.getMazeManager().setDirty(true);
+        FileStateManager.setDirty(true);
         final int px = m.getPlayerLocationX();
         final int py = m.getPlayerLocationY();
         final int pz = m.getPlayerLocationZ();

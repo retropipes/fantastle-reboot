@@ -41,6 +41,7 @@ import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.diane.loaders.ImageCompositor;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.FileStateManager;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.loaders.ImageConstants;
@@ -285,7 +286,7 @@ public class MazeEditor {
           this.elMgr.getEditorLocationZ(), this.elMgr.getEditorLocationE());
       this.checkStairPair(this.elMgr.getEditorLocationZ(),
           this.elMgr.getEditorLocationW());
-      app.getMazeManager().setDirty(true);
+      FileStateManager.setDirty(true);
       this.checkMenus();
       this.redrawEditor();
     } catch (final ArrayIndexOutOfBoundsException aioob) {
@@ -432,7 +433,7 @@ public class MazeEditor {
 
   public void editMaze() {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
-    if (bag.getMazeManager().getLoaded()) {
+    if (FileStateManager.getLoaded()) {
       bag.setInEditor();
       // Reset game state
       Game.resetGameState();
@@ -471,15 +472,14 @@ public class MazeEditor {
     boolean success = true;
     boolean saved = true;
     int status = 0;
-    if (app.getMazeManager().getDirty()) {
-      app.getMazeManager();
-      status = MazeManager.showSaveDialog();
+    if (FileStateManager.getDirty()) {
+      status = FileStateManager.showSaveDialog();
       if (status == JOptionPane.YES_OPTION) {
         saved = MazeManager.saveGame();
       } else if (status == JOptionPane.CANCEL_OPTION) {
         saved = false;
       } else {
-        app.getMazeManager().setDirty(false);
+        FileStateManager.setDirty(false);
       }
     }
     if (saved) {
@@ -798,19 +798,17 @@ public class MazeEditor {
 
   public void handleCloseWindow() {
     try {
-      final BagOStuff app = FantastleReboot.getBagOStuff();
       boolean success = false;
       int status = JOptionPane.DEFAULT_OPTION;
-      if (app.getMazeManager().getDirty()) {
-        app.getMazeManager();
-        status = MazeManager.showSaveDialog();
+      if (FileStateManager.getDirty()) {
+        status = FileStateManager.showSaveDialog();
         if (status == JOptionPane.YES_OPTION) {
           success = MazeManager.saveGame();
           if (success) {
             this.exitEditor();
           }
         } else if (status == JOptionPane.NO_OPTION) {
-          app.getMazeManager().setDirty(false);
+          FileStateManager.setDirty(false);
           this.exitEditor();
         }
       } else {

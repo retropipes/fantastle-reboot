@@ -9,6 +9,7 @@ import java.io.File;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fileutils.ZipUtilities;
 
 public class GameSaver extends Thread {
@@ -46,7 +47,8 @@ public class GameSaver extends Thread {
     } catch (final Exception ex) {
       FantastleReboot.logError(ex);
     }
-    FantastleReboot.getBagOStuff().getMazeManager()
+    FantastleReboot.getBagOStuff().getMazeManager();
+    MazeManager
         .handleDeferredSuccess(success, false, null);
   }
 

@@ -32,6 +32,7 @@ import javax.swing.KeyStroke;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.FileStateManager;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.files.CharacterRegistration;
 import com.puttysoftware.fantastlereboot.game.Game;
@@ -324,13 +325,12 @@ public class MenuManager {
   }
 
   public void checkFlags() {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    if (app.getMazeManager().getDirty()) {
+    if (FileStateManager.getDirty()) {
       this.setMenusDirtyOn();
     } else {
       this.setMenusDirtyOff();
     }
-    if (app.getMazeManager().getLoaded()) {
+    if (FileStateManager.getLoaded()) {
       this.setMenusLoadedOn();
     } else {
       this.setMenusLoadedOff();
@@ -648,10 +648,11 @@ public class MenuManager {
         final String cmd = e.getActionCommand();
         if (cmd.equals("New...")) {
           loaded = me.newMaze();
-          app.getMazeManager().setLoaded(loaded);
+          FileStateManager.setLoaded(loaded);
         } else if (cmd.equals("Open...")) {
-          loaded = app.getMazeManager().loadGame();
-          app.getMazeManager().setLoaded(loaded);
+          app.getMazeManager();
+          loaded = MazeManager.loadGame();
+          FileStateManager.setLoaded(loaded);
         } else if (cmd.equals("Close")) {
           // Close the window
           if (app.getMode() == BagOStuff.STATUS_EDITOR) {
@@ -659,15 +660,14 @@ public class MenuManager {
           } else if (app.getMode() == BagOStuff.STATUS_GAME) {
             boolean saved = true;
             int status = 0;
-            if (app.getMazeManager().getDirty()) {
-              app.getMazeManager();
-              status = MazeManager.showSaveDialog();
+            if (FileStateManager.getDirty()) {
+              status = FileStateManager.showSaveDialog();
               if (status == JOptionPane.YES_OPTION) {
                 saved = MazeManager.saveGame();
               } else if (status == JOptionPane.CANCEL_OPTION) {
                 saved = false;
               } else {
-                app.getMazeManager().setDirty(false);
+                FileStateManager.setDirty(false);
               }
             }
             if (saved) {
@@ -676,7 +676,7 @@ public class MenuManager {
             }
           }
         } else if (cmd.equals("Save")) {
-          if (app.getMazeManager().getLoaded()) {
+          if (FileStateManager.getLoaded()) {
             MazeManager.saveGame();
           } else {
             CommonDialogs.showDialog("No Maze Opened");

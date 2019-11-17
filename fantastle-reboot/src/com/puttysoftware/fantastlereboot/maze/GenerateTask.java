@@ -12,6 +12,7 @@ import javax.swing.JProgressBar;
 import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.FileStateManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
@@ -65,7 +66,7 @@ public class GenerateTask extends Thread {
         gameMaze.setStartRow(startR);
         gameMaze.setStartColumn(startC);
         gameMaze.setStartFloor(startF);
-        app.getMazeManager().setLoaded(true);
+        FileStateManager.setLoaded(true);
         final boolean playerExists = gameMaze.doesPlayerExist();
         if (playerExists) {
           gameMaze.setPlayerToStart();

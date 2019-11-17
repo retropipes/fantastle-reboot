@@ -18,8 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.puttysoftware.diane.gui.MainWindow;
-import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.FileStateManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.gui.DrawGrid;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
@@ -271,14 +271,11 @@ class GameGUI {
     @Override
     public void windowClosing(final WindowEvent we) {
       try {
-        final BagOStuff app = FantastleReboot.getBagOStuff();
         boolean success = false;
         int status = 0;
-        if (app.getMazeManager().getDirty()) {
-          app.getMazeManager();
-          status = MazeManager.showSaveDialog();
+        if (FileStateManager.getDirty()) {
+          status = FileStateManager.showSaveDialog();
           if (status == JOptionPane.YES_OPTION) {
-            app.getMazeManager();
             success = MazeManager.saveGame();
             if (success) {
               Game.exitGame();

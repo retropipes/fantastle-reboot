@@ -8,6 +8,7 @@ package com.puttysoftware.fantastlereboot.game;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.FileStateManager;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
@@ -288,11 +289,11 @@ public final class Game {
     if (playerExists) {
       Game.resetViewingWindowAndPlayerLocation();
     } else {
-      app.getMazeManager().setLoaded(false);
+      FileStateManager.setLoaded(false);
     }
     // Reset saved game flag
     Game.savedGameFlag = false;
-    app.getMazeManager().setDirty(false);
+    FileStateManager.setDirty(false);
     // Exit game
     Game.hideOutput();
     app.getGUIManager().showGUI();
@@ -335,7 +336,7 @@ public final class Game {
   public static void playMaze() {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     final Maze m = bag.getMazeManager().getMaze();
-    if (bag.getMazeManager().getLoaded()) {
+    if (FileStateManager.getLoaded()) {
       if (Game.stateChanged) {
         // Initialize only if the maze state has changed
         bag.getMazeManager().getMaze()
@@ -375,7 +376,7 @@ public final class Game {
     Game.deactivateAllEffects();
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
-    app.getMazeManager().setDirty(false);
+    FileStateManager.setDirty(false);
     m.restore();
     Game.setSavedGameFlag(false);
     ScoreTracker.resetScore();
@@ -392,7 +393,7 @@ public final class Game {
     Game.deactivateAllEffects();
     final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = app.getMazeManager().getMaze();
-    app.getMazeManager().setDirty(true);
+    FileStateManager.setDirty(true);
     m.restore();
     final boolean playerExists = m.doesPlayerExist();
     if (playerExists) {
@@ -445,13 +446,13 @@ public final class Game {
     if (playerExists) {
       Game.resetViewingWindowAndPlayerLocation();
     } else {
-      app.getMazeManager().setLoaded(false);
+      FileStateManager.setLoaded(false);
     }
     // Wipe the inventory
     Game.objectInv = new ObjectInventory();
     // Reset saved game flag
     Game.savedGameFlag = false;
-    app.getMazeManager().setDirty(false);
+    FileStateManager.setDirty(false);
     if (ScoreTracker.checkScore()) {
       app.playHighScoreSound();
     }
