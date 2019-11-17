@@ -57,6 +57,9 @@ public class CharacterSaver {
       writer.writeBoolean(character.getSpellBook().isSpellKnown(x));
     }
     writer.writeString(character.getName());
+    writer.writeInt(character.getAvatarFamilyID());
+    writer.writeInt(character.getAvatarSkinID());
+    writer.writeInt(character.getAvatarHairID());
     character.getItems().writeItemInventory(writer);
   }
 
