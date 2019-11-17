@@ -32,7 +32,8 @@ public class CharacterLoader {
     }
   }
 
-  public static PartyMember readCharacter(final XDataReader reader) throws IOException {
+  public static PartyMember readCharacter(final XDataReader reader)
+      throws IOException {
     final int version = reader.readByte();
     if (version < CharacterVersions.FORMAT_5) {
       throw new VersionException("Invalid character version found: " + version);
@@ -65,7 +66,11 @@ public class CharacterLoader {
       known[x] = reader.readBoolean();
     }
     final String n = reader.readString();
-    final PartyMember pm = PartyManager.getNewPCInstance(r, j, f, n);
+    final int aFamily = reader.readInt();
+    final int aSkin = reader.readInt();
+    final int aHair = reader.readInt();
+    final ItemInventory ii = ItemInventory.readItemInventory(reader, version);
+    final PartyMember pm = PartyManager.getNewPCInstance(ii, r, j, f, n);
     pm.setStrength(strength);
     pm.setBlock(block);
     pm.setAgility(agility);
@@ -75,7 +80,8 @@ public class CharacterLoader {
     pm.setAttacksPerRound(apr);
     pm.setSpellsPerRound(spr);
     pm.setItems(ItemInventory.readItemInventory(reader, version));
-    pm.loadPartyMember(lvl, cHP, cMP, gld, load, exp, j, known, k, pAtk, pDef, pHP, pMP);
+    pm.loadPartyMember(lvl, cHP, cMP, gld, load, exp, j, known, k, pAtk, pDef,
+        pHP, pMP, aFamily, aSkin, aHair);
     return pm;
   }
 

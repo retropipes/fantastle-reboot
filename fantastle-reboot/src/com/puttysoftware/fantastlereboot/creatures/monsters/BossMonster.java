@@ -14,6 +14,7 @@ import com.puttysoftware.fantastlereboot.creatures.jobs.JobManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceManager;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.loaders.BossImageLoader;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
 import com.puttysoftware.fantastlereboot.spells.books.BossSpellBook;
@@ -38,7 +39,7 @@ public class BossMonster extends Creature {
 
   // Constructors
   BossMonster() {
-    super(true, 1, FaithManager.getFaith(BossMonster.FAITH_ID),
+    super(new ItemInventory(), 1, FaithManager.getFaith(BossMonster.FAITH_ID),
         JobManager.getJob(JOB_ID), RaceManager.getRace(RACE_ID));
     this.setWindowAI(BossMonster.getInitialWindowAI());
     this.setMapAI(MapAIRoutinePicker.getNextRoutine());

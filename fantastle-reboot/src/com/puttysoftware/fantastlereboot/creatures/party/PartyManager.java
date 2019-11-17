@@ -20,6 +20,7 @@ import com.puttysoftware.fantastlereboot.creatures.races.RaceManager;
 import com.puttysoftware.fantastlereboot.files.CharacterLoader;
 import com.puttysoftware.fantastlereboot.files.CharacterRegistration;
 import com.puttysoftware.fantastlereboot.files.CharacterSaver;
+import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
@@ -121,12 +122,12 @@ public class PartyManager {
     }
   }
 
-  public static PartyMember getNewPCInstance(final int r, final int j,
-      final int f, final String n) {
+  public static PartyMember getNewPCInstance(final ItemInventory ii,
+      final int r, final int j, final int f, final String n) {
     final Race race = RaceManager.getRace(r);
     final Job job = JobManager.getJob(j);
     final Faith faith = FaithManager.getFaith(f);
-    return new PartyMember(race, job, faith, n);
+    return new PartyMember(ii, race, job, faith, n);
   }
 
   public static void updatePostKill() {
@@ -144,7 +145,8 @@ public class PartyManager {
         if (caste != null) {
           final Faith faith = FaithManager.selectFaith();
           if (faith != null) {
-            return new PartyMember(race, caste, faith, name);
+            ItemInventory ii = new ItemInventory();
+            return new PartyMember(ii, race, caste, faith, name);
           }
         }
       }

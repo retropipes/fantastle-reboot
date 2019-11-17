@@ -55,7 +55,7 @@ public abstract class Creature {
   public static final double SPEED_ADJUST_FASTEST = 2.0;
 
   // Constructor
-  protected Creature(final boolean hasCombatItems, final int tid, final Faith f,
+  protected Creature(final ItemInventory ii, final int tid, final Faith f,
       final Job j, final Race r) {
     this.faith = f;
     this.job = j;
@@ -82,7 +82,7 @@ public abstract class Creature {
     this.effectList = new ArrayList<>(Creature.MAX_EFFECTS);
     this.spellsKnown = null;
     this.windowAI = null;
-    this.items = new ItemInventory(hasCombatItems);
+    this.items = ii;
     this.toNextLevel = null;
     this.perfectBonusGold = this.getInitialPerfectBonusGold();
     this.xLoc = -1;

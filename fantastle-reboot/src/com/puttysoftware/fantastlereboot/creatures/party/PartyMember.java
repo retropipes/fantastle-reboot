@@ -14,6 +14,7 @@ import com.puttysoftware.fantastlereboot.creatures.races.Race;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.loaders.AvatarImageLoader;
 import com.puttysoftware.fantastlereboot.maze.GenerateTask;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
@@ -35,8 +36,9 @@ public class PartyMember extends Creature {
   private static final double BASE_COEFF = 10.0;
 
   // Constructors
-  PartyMember(final Race r, final Job j, final Faith f, final String n) {
-    super(true, 0, f, j, r);
+  PartyMember(final ItemInventory ii, final Race r, final Job j, final Faith f,
+      final String n) {
+    super(ii, Creature.TEAM_PARTY, f, j, r);
     this.name = n;
     this.permanentAttack = 0;
     this.permanentDefense = 0;
@@ -100,7 +102,8 @@ public class PartyMember extends Creature {
   public void loadPartyMember(final int newLevel, final int chp, final int cmp,
       final int newGold, final int newLoad, final long newExperience,
       final int bookID, final boolean[] known, final int k, final int pAtk,
-      final int pDef, final int pHP, final int pMP) {
+      final int pDef, final int pHP, final int pMP, final int aFamily,
+      final int aSkin, final int aHair) {
     this.setLevel(newLevel);
     this.setCurrentHP(chp);
     this.setCurrentMP(cmp);
@@ -112,6 +115,9 @@ public class PartyMember extends Creature {
     this.permanentDefense = pDef;
     this.permanentHP = pHP;
     this.permanentMP = pMP;
+    this.avatarFamilyID = aFamily;
+    this.avatarSkinID = aSkin;
+    this.avatarHairID = aHair;
     final SpellBook book = JobManager.getSpellBookByID(bookID);
     for (int x = 0; x < known.length; x++) {
       if (known[x]) {
@@ -210,6 +216,18 @@ public class PartyMember extends Creature {
   @Override
   public int getMaximumMP() {
     return super.getMaximumMP() + this.getPermanentMPPoints();
+  }
+
+  public int getAvatarFamilyID() {
+    return this.avatarFamilyID;
+  }
+
+  public int getAvatarSkinID() {
+    return this.avatarSkinID;
+  }
+
+  public int getAvatarHairID() {
+    return this.avatarHairID;
   }
 
   public int getPermanentAttackPoints() {

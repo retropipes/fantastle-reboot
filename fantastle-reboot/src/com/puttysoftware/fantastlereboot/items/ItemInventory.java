@@ -26,25 +26,17 @@ public class ItemInventory {
   private Socks socks;
 
   // Constructors
-  public ItemInventory(final boolean hasCombatItems) {
-    this.resetInventory(hasCombatItems);
+  public ItemInventory() {
+    this.resetInventory();
   }
 
   // Methods
-  public void resetInventory() {
-    this.resetInventory(true);
-  }
-
-  private void resetInventory(final boolean hasCombatItems) {
-    if (hasCombatItems) {
-      final CombatItemList cil = new CombatItemList();
-      final Item[] items = cil.getAllItems();
-      this.entries = new ItemUseQuantity[items.length];
-      for (int x = 0; x < items.length; x++) {
-        this.entries[x] = new ItemUseQuantity(items[x], 0, 0);
-      }
-    } else {
-      this.entries = null;
+  public final void resetInventory() {
+    final CombatItemList cil = new CombatItemList();
+    final Item[] items = cil.getAllItems();
+    this.entries = new ItemUseQuantity[items.length];
+    for (int x = 0; x < items.length; x++) {
+      this.entries[x] = new ItemUseQuantity(items[x], 0, 0);
     }
     this.equipment = new Equipment[EquipmentSlotConstants.MAX_SLOTS];
     this.socks = null;
@@ -338,7 +330,7 @@ public class ItemInventory {
 
   public static ItemInventory readItemInventory(final XDataReader dr,
       final int formatVersion) throws IOException {
-    final ItemInventory ii = new ItemInventory(true);
+    final ItemInventory ii = new ItemInventory();
     for (final ItemUseQuantity iqu : ii.entries) {
       iqu.setQuantity(dr.readInt());
       iqu.setUses(dr.readInt());

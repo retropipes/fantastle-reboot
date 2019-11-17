@@ -16,6 +16,7 @@ import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceManager;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.loaders.MonsterImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.MonsterNames;
@@ -53,7 +54,7 @@ public final class Monster extends Creature {
 
   // Constructors
   Monster() {
-    super(true, 1, FaithManager.getRandomFaith(), JobManager.getRandomJob(),
+    super(new ItemInventory(), 1, FaithManager.getRandomFaith(), JobManager.getRandomJob(),
         RaceManager.getRandomRace());
     this.setWindowAI(Monster.getInitialWindowAI());
     this.setMapAI(Monster.getInitialMapAI());
