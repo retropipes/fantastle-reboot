@@ -1,6 +1,7 @@
 package com.puttysoftware.fantastlereboot.creatures.races;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.randomrange.RandomRange;
 
 public class RaceManager {
   private static boolean CACHE_CREATED = false;
@@ -24,7 +25,19 @@ public class RaceManager {
     }
   }
 
-  public static Race getRace(final int casteID) {
+  public static Race getRace(final int raceID) {
+    RaceManager.initCachesIfNeeded();
+    return RaceManager.CACHE[raceID];
+  }
+
+  public static Race getRandomRace() {
+    RaceManager.initCachesIfNeeded();
+    final int raceID = new RandomRange(0, RaceManager.CACHE.length - 1)
+        .generate();
+    return RaceManager.CACHE[raceID];
+  }
+
+  private static void initCachesIfNeeded() {
     if (!RaceManager.CACHE_CREATED) {
       // Create cache
       RaceManager.CACHE = new Race[RaceConstants.RACES_COUNT];
@@ -33,6 +46,5 @@ public class RaceManager {
       }
       RaceManager.CACHE_CREATED = true;
     }
-    return RaceManager.CACHE[casteID];
   }
 }

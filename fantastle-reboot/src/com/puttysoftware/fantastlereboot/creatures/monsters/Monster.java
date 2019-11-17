@@ -10,10 +10,11 @@ import com.puttysoftware.fantastlereboot.ai.map.MapAIRoutinePicker;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.ai.window.WindowAIRoutinePicker;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
-import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
+import com.puttysoftware.fantastlereboot.creatures.jobs.JobManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
+import com.puttysoftware.fantastlereboot.creatures.races.RaceManager;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.loaders.MonsterImageLoader;
@@ -26,8 +27,7 @@ import com.puttysoftware.randomrange.RandomRange;
 
 public final class Monster extends Creature {
   // Fields
-  private String type;
-  private Faith faith;
+  private String name;
   // Constants
   protected static final double MINIMUM_EXPERIENCE_RANDOM_VARIANCE = -5.0 / 2.0;
   protected static final double MAXIMUM_EXPERIENCE_RANDOM_VARIANCE = 5.0 / 2.0;
@@ -56,10 +56,11 @@ public final class Monster extends Creature {
     super(true, 1);
     this.setWindowAI(Monster.getInitialWindowAI());
     this.setMapAI(Monster.getInitialMapAI());
-    this.faith = FaithManager.getRandomFaith();
-    
-    final SpellBook spells = SpellBookManager.getEnemySpellBookByID(
-        PreferencesManager.getGameDifficulty());
+    this.setFaith(FaithManager.getRandomFaith());
+    this.setJob(JobManager.getRandomJob());
+    this.setRace(RaceManager.getRandomRace());
+    final SpellBook spells = SpellBookManager
+        .getEnemySpellBookByID(PreferencesManager.getGameDifficulty());
     spells.learnAllSpells();
     this.setSpellBook(spells);
     this.image = this.getInitialImage();
@@ -68,12 +69,7 @@ public final class Monster extends Creature {
   // Methods
   @Override
   public String getName() {
-    return this.getFaith().getName() + " " + this.type;
-  }
-
-  @Override
-  public Faith getFaith() {
-    return this.faith;
+    return this.name;
   }
 
   @Override
@@ -97,9 +93,7 @@ public final class Monster extends Creature {
 
   @Override
   public int getSpeed() {
-    
-    final int difficulty = PreferencesManager
-        .getGameDifficulty();
+    final int difficulty = PreferencesManager.getGameDifficulty();
     final int base = this.getBaseSpeed();
     if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
       return (int) (base * SPEED_ADJUST_SLOWEST);
@@ -130,11 +124,11 @@ public final class Monster extends Creature {
   }
 
   final String getType() {
-    return this.type;
+    return this.name;
   }
 
   final void setType(final String newType) {
-    this.type = newType;
+    this.name = newType;
   }
 
   protected double adjustForLevelDifference() {
@@ -250,9 +244,7 @@ public final class Monster extends Creature {
   }
 
   private static int getStatMultiplierForDifficulty() {
-    
-    final int difficulty = PreferencesManager
-        .getGameDifficulty();
+    final int difficulty = PreferencesManager.getGameDifficulty();
     if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
       return STAT_MULT_VERY_EASY;
     } else {
@@ -277,9 +269,7 @@ public final class Monster extends Creature {
   }
 
   private static double getGoldMultiplierForDifficulty() {
-    
-    final int difficulty = PreferencesManager
-        .getGameDifficulty();
+    final int difficulty = PreferencesManager.getGameDifficulty();
     if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
       return GOLD_MULT_VERY_EASY;
     } else {
@@ -304,9 +294,7 @@ public final class Monster extends Creature {
   }
 
   private static double getExpMultiplierForDifficulty() {
-    
-    final int difficulty = PreferencesManager
-        .getGameDifficulty();
+    final int difficulty = PreferencesManager.getGameDifficulty();
     if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
       return EXP_MULT_VERY_EASY;
     } else {

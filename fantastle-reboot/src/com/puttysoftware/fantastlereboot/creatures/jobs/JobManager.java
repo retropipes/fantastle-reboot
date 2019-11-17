@@ -3,6 +3,7 @@ package com.puttysoftware.fantastlereboot.creatures.jobs;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
 import com.puttysoftware.fantastlereboot.spells.SpellBookManager;
+import com.puttysoftware.randomrange.RandomRange;
 
 public class JobManager {
   private static boolean CACHE_CREATED = false;
@@ -30,7 +31,19 @@ public class JobManager {
     return SpellBookManager.getSpellBookByID(ID);
   }
 
-  public static Job getJob(final int casteID) {
+  public static Job getJob(final int jobID) {
+    JobManager.initCachesIfNeeded();
+    return JobManager.CACHE[jobID];
+  }
+
+  public static Job getRandomJob() {
+    JobManager.initCachesIfNeeded();
+    final int jobID = new RandomRange(0, JobManager.CACHE.length - 1)
+        .generate();
+    return JobManager.CACHE[jobID];
+  }
+
+  private static void initCachesIfNeeded() {
     if (!JobManager.CACHE_CREATED) {
       // Create cache
       JobManager.CACHE = new Job[JobConstants.COUNT];
@@ -39,6 +52,5 @@ public class JobManager {
       }
       JobManager.CACHE_CREATED = true;
     }
-    return JobManager.CACHE[casteID];
   }
 }

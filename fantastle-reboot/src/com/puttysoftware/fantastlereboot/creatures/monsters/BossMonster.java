@@ -9,9 +9,10 @@ import com.puttysoftware.fantastlereboot.ai.map.MapAIRoutinePicker;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.ai.window.VeryHardWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
-import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
+import com.puttysoftware.fantastlereboot.creatures.jobs.JobManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.creatures.races.RaceManager;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.loaders.BossImageLoader;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
@@ -31,10 +32,16 @@ public class BossMonster extends Creature {
   private static final int STAT_MULT_NORMAL = 5;
   private static final int STAT_MULT_HARD = 8;
   private static final int STAT_MULT_VERY_HARD = 12;
+  private static final int FAITH_ID = 9;
+  private static final int JOB_ID = 3;
+  private static final int RACE_ID = 1;
 
   // Constructors
   BossMonster() {
     super(true, 1);
+    this.setFaith(FaithManager.getFaith(BossMonster.FAITH_ID));
+    this.setJob(JobManager.getJob(JOB_ID));
+    this.setRace(RaceManager.getRace(RACE_ID));
     this.setWindowAI(BossMonster.getInitialWindowAI());
     this.setMapAI(MapAIRoutinePicker.getNextRoutine());
     final SpellBook spells = new BossSpellBook();
@@ -55,11 +62,6 @@ public class BossMonster extends Creature {
   }
 
   @Override
-  public Faith getFaith() {
-    return FaithManager.getFaith(0);
-  }
-
-  @Override
   public boolean checkLevelUp() {
     return false;
   }
@@ -76,9 +78,7 @@ public class BossMonster extends Creature {
 
   @Override
   public int getSpeed() {
-    
-    final int difficulty = PreferencesManager
-        .getGameDifficulty();
+    final int difficulty = PreferencesManager.getGameDifficulty();
     final int base = this.getBaseSpeed();
     if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
       return (int) (base * SPEED_ADJUST_SLOWEST);
@@ -170,9 +170,7 @@ public class BossMonster extends Creature {
   }
 
   private static int getStatMultiplierForDifficulty() {
-    
-    final int difficulty = PreferencesManager
-        .getGameDifficulty();
+    final int difficulty = PreferencesManager.getGameDifficulty();
     if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
       return STAT_MULT_VERY_EASY;
     } else {
@@ -197,9 +195,7 @@ public class BossMonster extends Creature {
   }
 
   private static int getMinimumStatForDifficulty() {
-    
-    final int difficulty = PreferencesManager
-        .getGameDifficulty();
+    final int difficulty = PreferencesManager.getGameDifficulty();
     if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
       return MINIMUM_STAT_VALUE_VERY_EASY;
     } else {

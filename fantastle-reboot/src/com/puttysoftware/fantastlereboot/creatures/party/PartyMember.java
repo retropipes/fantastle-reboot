@@ -28,9 +28,6 @@ import com.puttysoftware.xio.XDataWriter;
 
 public class PartyMember extends Creature {
   // Fields
-  private Race race;
-  private Job job;
-  private Faith faith;
   private final String name;
   private int permanentAttack;
   private int permanentDefense;
@@ -47,9 +44,6 @@ public class PartyMember extends Creature {
   PartyMember(final Race r, final Job j, final Faith f, final String n) {
     super(true, 0);
     this.name = n;
-    this.race = r;
-    this.job = j;
-    this.faith = f;
     this.permanentAttack = 0;
     this.permanentDefense = 0;
     this.permanentHP = 0;
@@ -59,18 +53,21 @@ public class PartyMember extends Creature {
     this.avatarHairID = 0;
     this.avatarSkinID = 0;
     this.setLevel(1);
+    this.setRace(r);
+    this.setJob(j);
+    this.setFaith(f);
     this.setStrength(StatConstants.GAIN_STRENGTH
-        + this.race.getAttribute(RaceConstants.ATTRIBUTE_STRENGTH_PER_LEVEL));
+        + r.getAttribute(RaceConstants.ATTRIBUTE_STRENGTH_PER_LEVEL));
     this.setBlock(StatConstants.GAIN_BLOCK
-        + this.race.getAttribute(RaceConstants.ATTRIBUTE_BLOCK_PER_LEVEL));
+        + r.getAttribute(RaceConstants.ATTRIBUTE_BLOCK_PER_LEVEL));
     this.setVitality(StatConstants.GAIN_VITALITY
-        + this.race.getAttribute(RaceConstants.ATTRIBUTE_VITALITY_PER_LEVEL));
-    this.setIntelligence(StatConstants.GAIN_INTELLIGENCE + this.race
-        .getAttribute(RaceConstants.ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
+        + r.getAttribute(RaceConstants.ATTRIBUTE_VITALITY_PER_LEVEL));
+    this.setIntelligence(StatConstants.GAIN_INTELLIGENCE
+        + r.getAttribute(RaceConstants.ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
     this.setAgility(StatConstants.GAIN_AGILITY
-        + this.race.getAttribute(RaceConstants.ATTRIBUTE_AGILITY_PER_LEVEL));
+        + r.getAttribute(RaceConstants.ATTRIBUTE_AGILITY_PER_LEVEL));
     this.setLuck(StatConstants.GAIN_LUCK
-        + this.race.getAttribute(RaceConstants.ATTRIBUTE_LUCK_PER_LEVEL));
+        + r.getAttribute(RaceConstants.ATTRIBUTE_LUCK_PER_LEVEL));
     this.setAttacksPerRound(1);
     this.setSpellsPerRound(1);
     this.healAndRegenerateFully();
@@ -82,7 +79,7 @@ public class PartyMember extends Creature {
     nextLevelEquation.setCoefficient(2, value);
     nextLevelEquation.setCoefficient(3, value);
     this.setToNextLevel(nextLevelEquation);
-    this.setSpellBook(JobManager.getSpellBookByID(this.job.getJobID()));
+    this.setSpellBook(JobManager.getSpellBookByID(j.getJobID()));
   }
 
   // Methods
@@ -93,18 +90,19 @@ public class PartyMember extends Creature {
   // Transformers
   @Override
   protected void levelUpHook() {
+    Race r = this.getRace();
     this.offsetStrength(StatConstants.GAIN_STRENGTH
-        + this.race.getAttribute(RaceConstants.ATTRIBUTE_STRENGTH_PER_LEVEL));
+        + r.getAttribute(RaceConstants.ATTRIBUTE_STRENGTH_PER_LEVEL));
     this.offsetBlock(StatConstants.GAIN_BLOCK
-        + this.race.getAttribute(RaceConstants.ATTRIBUTE_BLOCK_PER_LEVEL));
+        + r.getAttribute(RaceConstants.ATTRIBUTE_BLOCK_PER_LEVEL));
     this.offsetVitality(StatConstants.GAIN_VITALITY
-        + this.race.getAttribute(RaceConstants.ATTRIBUTE_VITALITY_PER_LEVEL));
-    this.offsetIntelligence(StatConstants.GAIN_INTELLIGENCE + this.race
+        + r.getAttribute(RaceConstants.ATTRIBUTE_VITALITY_PER_LEVEL));
+    this.offsetIntelligence(StatConstants.GAIN_INTELLIGENCE + r
         .getAttribute(RaceConstants.ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
     this.offsetAgility(StatConstants.GAIN_AGILITY
-        + this.race.getAttribute(RaceConstants.ATTRIBUTE_AGILITY_PER_LEVEL));
+        + r.getAttribute(RaceConstants.ATTRIBUTE_AGILITY_PER_LEVEL));
     this.offsetLuck(StatConstants.GAIN_LUCK
-        + this.race.getAttribute(RaceConstants.ATTRIBUTE_LUCK_PER_LEVEL));
+        + r.getAttribute(RaceConstants.ATTRIBUTE_LUCK_PER_LEVEL));
     this.healAndRegenerateFully();
   }
 
@@ -135,19 +133,6 @@ public class PartyMember extends Creature {
     return this.name;
   }
 
-  public Race getRace() {
-    return this.race;
-  }
-
-  public Job getJob() {
-    return this.job;
-  }
-
-  @Override
-  public Faith getFaith() {
-    return this.faith;
-  }
-
   @Override
   public int getSpeed() {
     final int difficulty = PreferencesManager.getGameDifficulty();
@@ -176,22 +161,22 @@ public class PartyMember extends Creature {
   }
 
   public void initPostKill(final Race r, final Job j, final Faith f) {
-    this.race = r;
-    this.job = j;
-    this.faith = f;
+    this.setRace(r);
+    this.setJob(j);
+    this.setFaith(f);
     this.setLevel(1);
     this.setStrength(StatConstants.GAIN_STRENGTH
-        + this.race.getAttribute(RaceConstants.ATTRIBUTE_STRENGTH_PER_LEVEL));
+        + r.getAttribute(RaceConstants.ATTRIBUTE_STRENGTH_PER_LEVEL));
     this.setBlock(StatConstants.GAIN_BLOCK
-        + this.race.getAttribute(RaceConstants.ATTRIBUTE_BLOCK_PER_LEVEL));
+        + r.getAttribute(RaceConstants.ATTRIBUTE_BLOCK_PER_LEVEL));
     this.setVitality(StatConstants.GAIN_VITALITY
-        + this.race.getAttribute(RaceConstants.ATTRIBUTE_VITALITY_PER_LEVEL));
-    this.setIntelligence(StatConstants.GAIN_INTELLIGENCE + this.race
+        + r.getAttribute(RaceConstants.ATTRIBUTE_VITALITY_PER_LEVEL));
+    this.setIntelligence(StatConstants.GAIN_INTELLIGENCE + r
         .getAttribute(RaceConstants.ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
     this.setAgility(StatConstants.GAIN_AGILITY
-        + this.race.getAttribute(RaceConstants.ATTRIBUTE_AGILITY_PER_LEVEL));
+        + r.getAttribute(RaceConstants.ATTRIBUTE_AGILITY_PER_LEVEL));
     this.setLuck(StatConstants.GAIN_LUCK
-        + this.race.getAttribute(RaceConstants.ATTRIBUTE_LUCK_PER_LEVEL));
+        + r.getAttribute(RaceConstants.ATTRIBUTE_LUCK_PER_LEVEL));
     this.setAttacksPerRound(1);
     this.setSpellsPerRound(1);
     this.healAndRegenerateFully();
@@ -205,7 +190,7 @@ public class PartyMember extends Creature {
     nextLevelEquation.setCoefficient(2, value);
     nextLevelEquation.setCoefficient(3, value);
     this.setToNextLevel(nextLevelEquation);
-    this.setSpellBook(JobManager.getSpellBookByID(this.job.getJobID()));
+    this.setSpellBook(JobManager.getSpellBookByID(j.getJobID()));
     PartyManager.getParty().resetMonsterLevel();
     new GenerateTask(true).start();
   }

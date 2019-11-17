@@ -11,7 +11,9 @@ import java.util.Arrays;
 import com.puttysoftware.fantastlereboot.ai.map.AbstractMapAIRoutine;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
+import com.puttysoftware.fantastlereboot.creatures.jobs.Job;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
+import com.puttysoftware.fantastlereboot.creatures.races.Race;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
@@ -34,6 +36,9 @@ public abstract class Creature {
   private final int perfectBonusGold;
   private int xLoc, yLoc;
   private int saveX, saveY;
+  private Race race;
+  private Job job;
+  private Faith faith;
   private static int ACTION_CAP = 1;
   private static final int MAX_EFFECTS = 100;
   private static final int BAR_SPEED_MIN = 100;
@@ -354,8 +359,28 @@ public abstract class Creature {
     return this.experience;
   }
 
-  public Faith getFaith() {
-    return null;
+  public final Faith getFaith() {
+    return this.faith;
+  }
+
+  public final Job getJob() {
+    return this.job;
+  }
+
+  public final Race getRace() {
+    return this.race;
+  }
+
+  protected final void setFaith(final Faith f) {
+    this.faith = f;
+  }
+
+  protected final void setJob(final Job j) {
+    this.job = j;
+  }
+
+  protected final void setRace(final Race r) {
+    this.race = r;
   }
 
   public final int getGold() {
