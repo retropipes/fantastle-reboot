@@ -679,7 +679,7 @@ public class MenuManager {
           if (app.getMazeManager().getLoaded()) {
             MazeManager.saveGame();
           } else {
-            Messager.showDialog("No Maze Opened");
+            CommonDialogs.showDialog("No Maze Opened");
           }
         } else if (cmd.equals("Exit")) {
           // Exit program
@@ -695,7 +695,7 @@ public class MenuManager {
           PreferencesManager.showPrefs();
         } else if (cmd.equals("Clear History")) {
           // Clear undo/redo history, confirm first
-          final int res = Messager.showConfirmDialog(
+          final int res = CommonDialogs.showConfirmDialog(
               "Are you sure you want to clear the history?", "Editor");
           if (res == JOptionPane.YES_OPTION) {
             me.clearHistory();
@@ -740,7 +740,7 @@ public class MenuManager {
           }
         } else if (cmd.equals("Reset Current Level")) {
           if (!Game.usingAnItem()) {
-            final int result = Messager.showConfirmDialog(
+            final int result = CommonDialogs.showConfirmDialog(
                 "Are you sure you want to reset the current level?",
                 "Fantastle");
             if (result == JOptionPane.YES_OPTION) {
@@ -775,7 +775,7 @@ public class MenuManager {
           StatisticsViewer.viewStatistics();
         } else if (cmd.equals("Reset Preferences")) {
           app.resetPreferences();
-          Messager.showDialog("Preferences reset to defaults.");
+          CommonDialogs.showDialog("Preferences reset to defaults.");
         } else if (cmd.equals("About Fantastle...")) {
           app.getAboutDialog().showAboutDialog();
         } else if (cmd.equals("Fantastle Help")) {

@@ -3,8 +3,8 @@ package com.puttysoftware.fantastlereboot.creatures.faiths;
 import java.awt.Color;
 import java.util.Hashtable;
 
+import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.diane.loaders.ColorShader;
-import com.puttysoftware.fantastlereboot.gui.Messager;
 import com.puttysoftware.fantastlereboot.loaders.DataLoader;
 import com.puttysoftware.randomrange.RandomRange;
 
@@ -17,7 +17,7 @@ public class FaithManager {
     FaithManager.initCachesIfNeeded();
     final String[] names = FaithConstants.FAITH_NAME_CACHE;
     String dialogResult = null;
-    dialogResult = Messager.showInputDialog("Select a Faith", "Select Faith",
+    dialogResult = CommonDialogs.showInputDialog("Select a Faith", "Select Faith",
         names, names[0]);
     if (dialogResult != null) {
       int index;

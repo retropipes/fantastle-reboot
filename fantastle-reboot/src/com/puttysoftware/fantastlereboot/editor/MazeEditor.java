@@ -36,12 +36,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
 import javax.swing.border.EmptyBorder;
 
+import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.diane.loaders.ImageCompositor;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.game.Game;
-import com.puttysoftware.fantastlereboot.gui.Messager;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
@@ -296,7 +296,7 @@ public class MazeEditor {
   }
 
   public void editObjectProperties(final int x, final int y) {
-    Messager.showMessage("This object has no properties");
+    Game.setStatusMessage("This object has no properties");
   }
 
   private void checkStairPair(final int z, final int w) {
@@ -462,7 +462,7 @@ public class MazeEditor {
       this.showOutput();
       this.redrawEditor();
     } else {
-      Messager.showDialog("No Maze Opened");
+      CommonDialogs.showDialog("No Maze Opened");
     }
   }
 
@@ -527,11 +527,11 @@ public class MazeEditor {
     }
     boolean success = true;
     String input1, input2, input3;
-    input1 = Messager.showTextInputDialog("Number of rows?", msg);
+    input1 = CommonDialogs.showTextInputDialog("Number of rows?", msg);
     if (input1 != null) {
-      input2 = Messager.showTextInputDialog("Number of columns?", msg);
+      input2 = CommonDialogs.showTextInputDialog("Number of columns?", msg);
       if (input2 != null) {
-        input3 = Messager.showTextInputDialog("Number of floors?", msg);
+        input3 = CommonDialogs.showTextInputDialog("Number of floors?", msg);
         if (input3 != null) {
           try {
             levelSizeX = Integer.parseInt(input1);
@@ -571,7 +571,7 @@ public class MazeEditor {
               this.checkMenus();
             }
           } catch (final NumberFormatException nf) {
-            Messager.showDialog(nf.getMessage());
+            CommonDialogs.showDialog(nf.getMessage());
             success = false;
           }
         } else {
@@ -593,13 +593,13 @@ public class MazeEditor {
     int locX, locY, locZ, locW;
     final String msg = "Go To...";
     String input1, input2, input3, input4;
-    input1 = Messager.showTextInputDialog("Row?", msg);
+    input1 = CommonDialogs.showTextInputDialog("Row?", msg);
     if (input1 != null) {
-      input2 = Messager.showTextInputDialog("Column?", msg);
+      input2 = CommonDialogs.showTextInputDialog("Column?", msg);
       if (input2 != null) {
-        input3 = Messager.showTextInputDialog("Floor?", msg);
+        input3 = CommonDialogs.showTextInputDialog("Floor?", msg);
         if (input3 != null) {
-          input4 = Messager.showTextInputDialog("Level?", msg);
+          input4 = CommonDialogs.showTextInputDialog("Level?", msg);
           if (input4 != null) {
             try {
               locX = Integer.parseInt(input1) - 1;
@@ -608,7 +608,7 @@ public class MazeEditor {
               locW = Integer.parseInt(input4) - 1;
               this.updateEditorPosition(locX, locY, locZ, locW);
             } catch (final NumberFormatException nf) {
-              Messager.showDialog(nf.getMessage());
+              CommonDialogs.showDialog(nf.getMessage());
             }
           }
         }
@@ -733,7 +733,7 @@ public class MazeEditor {
       this.checkMenus();
       this.redrawEditor();
     } else {
-      Messager.showMessage("Nothing to undo");
+      Game.setStatusMessage("Nothing to undo");
     }
   }
 
@@ -763,7 +763,7 @@ public class MazeEditor {
       this.checkMenus();
       this.redrawEditor();
     } else {
-      Messager.showMessage("Nothing to redo");
+      Game.setStatusMessage("Nothing to redo");
     }
   }
 

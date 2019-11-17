@@ -14,7 +14,6 @@ import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
-import com.puttysoftware.fantastlereboot.gui.Messager;
 import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.GenerateTask;
@@ -424,9 +423,9 @@ public final class Game {
   private static void gameOver() {
     SoundPlayer.playSound(SoundIndex.GAME_OVER, SoundGroup.GAME);
     if (Game.gameOverMessage == null) {
-      Messager.showDialog("You have died - Game Over!");
+      CommonDialogs.showDialog("You have died - Game Over!");
     } else {
-      Messager.showDialog(Game.gameOverMessage);
+      CommonDialogs.showDialog(Game.gameOverMessage);
     }
     Game.solvedMaze();
   }
@@ -488,11 +487,11 @@ public final class Game {
             Layers.OBJECT);
         if (target instanceof Player) {
           Game.setUsingAnItem(false);
-          Messager.showMessage("Don't aim at yourself!");
+          Game.setStatusMessage("Don't aim at yourself!");
         }
       } catch (final ArrayIndexOutOfBoundsException ae) {
         Game.setUsingAnItem(false);
-        Messager.showMessage("Aim within the maze");
+        Game.setStatusMessage("Aim within the maze");
       }
       if (Game.usingAnItem()) {
         Game.objectInv.use(Game.objectBeingUsed);
@@ -503,7 +502,7 @@ public final class Game {
 
   public static void controllableTeleport() {
     Game.isTeleporting = true;
-    Messager.showMessage("Click to set destination");
+    Game.setStatusMessage("Click to set destination");
   }
 
   static void controllableTeleportHandler(final int x, final int y) {

@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.creatures.castes;
 
-import com.puttysoftware.fantastlereboot.gui.Messager;
+import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
 import com.puttysoftware.fantastlereboot.spells.SpellBookManager;
 
@@ -11,7 +11,7 @@ public class CasteManager {
   public static Caste selectCaste() {
     final String[] names = CasteConstants.CASTE_NAMES;
     String dialogResult = null;
-    dialogResult = Messager.showInputDialog("Select a Caste", "Select Caste",
+    dialogResult = CommonDialogs.showInputDialog("Select a Caste", "Select Caste",
         names, names[0]);
     if (dialogResult != null) {
       int index;

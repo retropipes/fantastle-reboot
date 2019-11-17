@@ -10,7 +10,6 @@ import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
-import com.puttysoftware.fantastlereboot.gui.Messager;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
@@ -171,7 +170,7 @@ public class Shop {
           .getFaithID();
     }
     if (this.typeChoices != null) {
-      this.typeResult = Messager.showInputDialog(
+      this.typeResult = CommonDialogs.showInputDialog(
           this.getGoldTotals() + "Select Type", this.getShopNameFromType(),
           this.typeChoices, this.typeChoices[this.typeDefault]);
       if (this.typeResult == null) {
@@ -204,7 +203,7 @@ public class Shop {
         // Choose Hand
         this.handChoices = WeaponConstants.getHandChoices();
         this.handDefault = 0;
-        this.handResult = Messager.showInputDialog(
+        this.handResult = CommonDialogs.showInputDialog(
             this.getGoldTotals() + "Select Hand", this.getShopNameFromType(),
             this.handChoices, this.handChoices[this.handDefault]);
         if (this.handResult == null) {
@@ -278,19 +277,19 @@ public class Shop {
     // Check
     if (this.type == ShopTypes.HEALER
         && playerCharacter.getCurrentHP() == playerCharacter.getMaximumHP()) {
-      Messager.showDialog("You don't need healing.");
+      CommonDialogs.showDialog("You don't need healing.");
       return false;
     } else if (this.type == ShopTypes.REGENERATOR
         && playerCharacter.getCurrentMP() == playerCharacter.getMaximumMP()) {
-      Messager.showDialog("You don't need regeneration.");
+      CommonDialogs.showDialog("You don't need regeneration.");
       return false;
     } else if (this.type == ShopTypes.SPELLS && playerCharacter.getSpellBook()
         .getSpellsKnownCount() == playerCharacter.getSpellBook()
             .getSpellCount()) {
-      Messager.showDialog("There are no more spells to learn.");
+      CommonDialogs.showDialog("There are no more spells to learn.");
       return false;
     }
-    this.result = Messager.showInputDialog(this.getGoldTotals() + "Select",
+    this.result = CommonDialogs.showInputDialog(this.getGoldTotals() + "Select",
         this.getShopNameFromType(), this.choices,
         this.choices[this.defaultChoice]);
     if (this.result == null) {
@@ -337,7 +336,7 @@ public class Shop {
     } else if (this.type == ShopTypes.BANK) {
       String stage4Result = "";
       while (stage4Result.equals("")) {
-        stage4Result = Messager.showTextInputDialog(
+        stage4Result = CommonDialogs.showTextInputDialog(
             this.getGoldTotals() + this.result + " How Much?",
             this.getShopNameFromType());
         if (stage4Result == null) {
@@ -349,7 +348,7 @@ public class Shop {
             throw new NumberFormatException();
           }
         } catch (final NumberFormatException nf) {
-          Messager.showErrorDialog("Amount must be greater than zero.",
+          CommonDialogs.showErrorDialog("Amount must be greater than zero.",
               this.getShopNameFromType());
           stage4Result = "";
         }
@@ -417,7 +416,7 @@ public class Shop {
       final double inflatedCost = Shop.this.cost * actualInflation;
       Shop.this.cost = (int) inflatedCost;
       // Confirm
-      final int stage4Confirm = Messager.showConfirmDialog(
+      final int stage4Confirm = CommonDialogs.showConfirmDialog(
           "This will cost " + this.cost + " Gold. Are you sure?",
           this.getShopNameFromType());
       if (stage4Confirm == JOptionPane.NO_OPTION
@@ -434,20 +433,20 @@ public class Shop {
     if (this.type == ShopTypes.BANK) {
       if (this.index == 0) {
         if (playerCharacter.getGold() < this.cost) {
-          Messager.showErrorDialog("Not Enough Gold!",
+          CommonDialogs.showErrorDialog("Not Enough Gold!",
               this.getShopNameFromType());
           return false;
         }
       } else {
         if (PartyManager.getGoldInBank() < this.cost) {
-          Messager.showErrorDialog("Not Enough Gold!",
+          CommonDialogs.showErrorDialog("Not Enough Gold!",
               this.getShopNameFromType());
           return false;
         }
       }
     } else {
       if (playerCharacter.getGold() < this.cost) {
-        Messager.showErrorDialog("Not Enough Gold!",
+        CommonDialogs.showErrorDialog("Not Enough Gold!",
             this.getShopNameFromType());
         return false;
       }

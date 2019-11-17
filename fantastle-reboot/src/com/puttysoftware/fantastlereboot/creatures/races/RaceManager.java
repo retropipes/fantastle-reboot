@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.creatures.races;
 
-import com.puttysoftware.fantastlereboot.gui.Messager;
+import com.puttysoftware.commondialogs.CommonDialogs;
 
 public class RaceManager {
   private static boolean CACHE_CREATED = false;
@@ -9,7 +9,7 @@ public class RaceManager {
   public static Race selectRace() {
     final String[] names = RaceConstants.RACE_NAMES;
     String dialogResult = null;
-    dialogResult = Messager.showInputDialog("Select a Race", "Select Race",
+    dialogResult = CommonDialogs.showInputDialog("Select a Race", "Select Race",
         names, names[0]);
     if (dialogResult != null) {
       int index;

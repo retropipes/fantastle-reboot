@@ -42,6 +42,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 
+import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
@@ -387,7 +388,7 @@ public class PreferencesManager {
     final boolean result = PreferencesManager.eiMgr
         .exportPreferencesFile(PreferencesManager.eiMgr.getExportDestination());
     if (!result) {
-      Messager.showErrorDialog("Export Failed!", "Preferences");
+      CommonDialogs.showErrorDialog("Export Failed!", "Preferences");
     }
   }
 
@@ -395,7 +396,7 @@ public class PreferencesManager {
     final boolean result = PreferencesManager.eiMgr
         .importPreferencesFile(PreferencesManager.eiMgr.getImportSource());
     if (!result) {
-      Messager.showErrorDialog("Import Failed!", "Preferences");
+      CommonDialogs.showErrorDialog("Import Failed!", "Preferences");
     }
   }
 
@@ -564,7 +565,7 @@ public class PreferencesManager {
         PreferencesManager.loadPrefs();
         return true;
       } catch (final PreferencesException pe) {
-        Messager.showDialog(pe.getMessage());
+        CommonDialogs.showDialog(pe.getMessage());
         return false;
       } catch (final Exception e) {
         FantastleReboot.logWarningWithMessage(e,

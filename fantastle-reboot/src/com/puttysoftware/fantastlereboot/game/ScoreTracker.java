@@ -20,7 +20,7 @@ package com.puttysoftware.fantastlereboot.game;
 
 import java.io.File;
 
-import com.puttysoftware.fantastlereboot.gui.Messager;
+import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.maze.Extension;
 import com.puttysoftware.scoremanager.SavedScoreManager;
 import com.puttysoftware.scoremanager.ScoreManager;
@@ -123,9 +123,9 @@ public class ScoreTracker {
 
   public static void showCurrentScore() {
     if (ScoreTracker.scoreValid) {
-      Messager.showDialog("Your current score: " + ScoreTracker.score + " points");
+      CommonDialogs.showDialog("Your current score: " + ScoreTracker.score + " points");
     } else {
-      Messager.showDialog("The current score is not available at this time.");
+      CommonDialogs.showDialog("The current score is not available at this time.");
     }
   }
 

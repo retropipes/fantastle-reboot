@@ -25,7 +25,6 @@ import javax.swing.JLabel;
 
 import com.puttysoftware.diane.utilties.DirectionResolver;
 import com.puttysoftware.fantastlereboot.game.Game;
-import com.puttysoftware.fantastlereboot.gui.Messager;
 
 public class EffectManager {
   // Fields
@@ -92,7 +91,7 @@ public class EffectManager {
           // Clear effect grid
           EffectManager.clearGridEntry(x);
           Game.keepNextMessage();
-          Messager.showMessage("You feel normal again.");
+          Game.setStatusMessage("You feel normal again.");
         }
       }
     }

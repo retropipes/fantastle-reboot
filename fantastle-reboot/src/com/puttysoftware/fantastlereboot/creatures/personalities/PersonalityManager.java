@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.creatures.personalities;
 
-import com.puttysoftware.fantastlereboot.gui.Messager;
+import com.puttysoftware.commondialogs.CommonDialogs;
 
 public class PersonalityManager {
   private static boolean CACHE_CREATED = false;
@@ -9,7 +9,7 @@ public class PersonalityManager {
   public static Personality selectPersonality() {
     final String[] names = PersonalityConstants.PERSONALITY_NAMES;
     String dialogResult = null;
-    dialogResult = Messager.showInputDialog("Select a Personality",
+    dialogResult = CommonDialogs.showInputDialog("Select a Personality",
         "Select Personality", names, names[0]);
     if (dialogResult != null) {
       int index;
