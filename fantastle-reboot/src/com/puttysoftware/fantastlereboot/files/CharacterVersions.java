@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.creatures.party;
+package com.puttysoftware.fantastlereboot.files;
 
 class CharacterVersions {
   public static final byte FORMAT_5 = 5;

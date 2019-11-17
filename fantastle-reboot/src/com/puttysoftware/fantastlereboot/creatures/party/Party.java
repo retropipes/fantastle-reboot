@@ -10,6 +10,8 @@ import java.io.IOException;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
+import com.puttysoftware.fantastlereboot.files.CharacterLoader;
+import com.puttysoftware.fantastlereboot.files.CharacterSaver;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
@@ -114,7 +116,7 @@ public class Party {
     pty.monsterLevel = lvl;
     final boolean present = worldFile.readBoolean();
     if (present) {
-      pty.members = PartyMember.read(worldFile);
+      pty.members = CharacterLoader.readCharacter(worldFile);
     }
     return pty;
   }
@@ -128,7 +130,7 @@ public class Party {
       worldFile.writeBoolean(false);
     } else {
       worldFile.writeBoolean(true);
-      this.members.write(worldFile);
+      CharacterSaver.writeCharacter(worldFile, this.members);
     }
   }
 }

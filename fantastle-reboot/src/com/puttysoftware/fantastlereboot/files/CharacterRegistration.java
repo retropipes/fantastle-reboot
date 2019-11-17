@@ -3,7 +3,7 @@ Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.files.character;
+package com.puttysoftware.fantastlereboot.files;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
-import com.puttysoftware.fantastlereboot.files.FileExtensions;
 import com.puttysoftware.fileutils.ResourceStreamReader;
 
 public class CharacterRegistration {
@@ -32,7 +31,7 @@ public class CharacterRegistration {
     final String[] characterNameList = CharacterRegistration
         .getCharacterNameList();
     final String[] characterNames = new File(
-        CharacterRegistration.getBasePath()).list(new CharacterFilter());
+        CharacterRegistration.getBasePath()).list(new CharacterFinder());
     if (characterNames != null && characterNames.length > 0) {
       // Strip extension
       final int stripCount = FileExtensions.getCharacterExtensionWithPeriod()
@@ -175,7 +174,7 @@ public class CharacterRegistration {
         } else {
           CharacterRegistration.writeCharacterRegistry((String[]) null);
         }
-        CharacterLoader.deleteCharacter(res, true);
+        CharacterSaver.deleteCharacter(res, true);
       }
     }
   }
@@ -216,7 +215,7 @@ public class CharacterRegistration {
         } else {
           CharacterRegistration.writeCharacterRegistry((String[]) null);
         }
-        CharacterLoader.deleteCharacter(res, false);
+        CharacterSaver.deleteCharacter(res, false);
       }
     }
   }

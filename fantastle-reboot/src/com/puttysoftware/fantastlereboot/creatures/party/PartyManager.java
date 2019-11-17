@@ -17,8 +17,9 @@ import com.puttysoftware.fantastlereboot.creatures.jobs.Job;
 import com.puttysoftware.fantastlereboot.creatures.jobs.JobManager;
 import com.puttysoftware.fantastlereboot.creatures.races.Race;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceManager;
-import com.puttysoftware.fantastlereboot.files.character.CharacterLoader;
-import com.puttysoftware.fantastlereboot.files.character.CharacterRegistration;
+import com.puttysoftware.fantastlereboot.files.CharacterLoader;
+import com.puttysoftware.fantastlereboot.files.CharacterRegistration;
+import com.puttysoftware.fantastlereboot.files.CharacterSaver;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
@@ -48,7 +49,7 @@ public class PartyManager {
         pc = PartyManager.createNewPC();
         if (pc != null) {
           CharacterRegistration.autoregisterCharacter(pc.getName());
-          CharacterLoader.saveCharacter(pc);
+          CharacterSaver.saveCharacter(pc);
         }
       } else {
         final int response = CommonDialogs.showCustomDialog(
@@ -60,7 +61,7 @@ public class PartyManager {
           pc = PartyManager.createNewPC();
           if (pc != null) {
             CharacterRegistration.autoregisterCharacter(pc.getName());
-            CharacterLoader.saveCharacter(pc);
+            CharacterSaver.saveCharacter(pc);
           }
         }
       }

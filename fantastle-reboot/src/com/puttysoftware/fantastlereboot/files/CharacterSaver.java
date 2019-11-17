@@ -3,7 +3,7 @@ Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.files.character;
+package com.puttysoftware.fantastlereboot.files;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,60 +11,53 @@ import java.io.IOException;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
-import com.puttysoftware.fantastlereboot.files.FileExtensions;
-import com.puttysoftware.fantastlereboot.gui.VersionException;
-import com.puttysoftware.xio.UnexpectedTagException;
-import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
-public class CharacterLoader {
-  private static PartyMember loadCharacter(final String name) {
-    final String basePath = CharacterRegistration.getBasePath();
-    final String loadPath = basePath + File.separator + name
-        + FileExtensions.getCharacterExtensionWithPeriod();
-    try (XDataReader loader = new XDataReader(loadPath, "character")) {
-      return PartyMember.read(loader);
-    } catch (VersionException | UnexpectedTagException e) {
-      CharacterRegistration.autoremoveCharacter(name);
-      return null;
-    } catch (final IOException e) {
-      FantastleReboot.logError(e);
-      return null;
-    }
-  }
-
-  public static PartyMember[] loadAllRegisteredCharacters() {
-    final String[] registeredNames = CharacterRegistration
-        .getCharacterNameList();
-    if (registeredNames != null) {
-      final PartyMember[] res = new PartyMember[registeredNames.length];
-      // Load characters
-      for (int x = 0; x < registeredNames.length; x++) {
-        final String name = registeredNames[x];
-        final PartyMember characterWithName = CharacterLoader
-            .loadCharacter(name);
-        if (characterWithName != null) {
-          res[x] = characterWithName;
-        } else {
-          // Auto-removed character
-          return CharacterLoader.loadAllRegisteredCharacters();
-        }
-      }
-      return res;
-    }
-    return null;
-  }
-
+public class CharacterSaver {
   public static void saveCharacter(final PartyMember character) {
     final String basePath = CharacterRegistration.getBasePath();
     final String name = character.getName();
     final String characterFile = basePath + File.separator + name
         + FileExtensions.getCharacterExtensionWithPeriod();
-    try (XDataWriter saver = new XDataWriter(characterFile, "character")) {
-      character.write(saver);
+    try (XDataWriter writer = new XDataWriter(characterFile, "character")) {
+      CharacterSaver.writeCharacter(writer, character);
     } catch (final IOException e) {
       FantastleReboot.logError(e);
     }
+  }
+
+  public static void writeCharacter(final XDataWriter writer,
+      final PartyMember character) throws IOException {
+    writer.writeByte(CharacterVersions.FORMAT_LATEST);
+    writer.writeInt(character.getKills());
+    writer.writeInt(character.getPermanentAttackPoints());
+    writer.writeInt(character.getPermanentDefensePoints());
+    writer.writeInt(character.getPermanentHPPoints());
+    writer.writeInt(character.getPermanentMPPoints());
+    writer.writeInt(character.getStrength());
+    writer.writeInt(character.getBlock());
+    writer.writeInt(character.getAgility());
+    writer.writeInt(character.getVitality());
+    writer.writeInt(character.getIntelligence());
+    writer.writeInt(character.getLuck());
+    writer.writeInt(character.getLevel());
+    writer.writeInt(character.getCurrentHP());
+    writer.writeInt(character.getCurrentMP());
+    writer.writeInt(character.getGold());
+    writer.writeInt(character.getAttacksPerRound());
+    writer.writeInt(character.getSpellsPerRound());
+    writer.writeInt(character.getLoad());
+    writer.writeLong(character.getExperience());
+    writer.writeInt(character.getRace().getRaceID());
+    writer.writeInt(character.getJob().getJobID());
+    writer.writeInt(character.getFaith().getFaithID());
+    final int max = character.getSpellBook().getSpellCount();
+    writer.writeInt(max);
+    for (int x = 0; x < max; x++) {
+      writer.writeBoolean(character.getSpellBook().isSpellKnown(x));
+    }
+    writer.writeString(character.getName());
+    character.getItems().writeItemInventory(writer);
   }
 
   static void deleteCharacter(final String name, final boolean showResults) {

@@ -17,9 +17,9 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.files.FileExtensions;
-import com.puttysoftware.fantastlereboot.files.savedgame.GameFinder;
-import com.puttysoftware.fantastlereboot.files.savedgame.GameLoadTask;
-import com.puttysoftware.fantastlereboot.files.savedgame.GameSaveTask;
+import com.puttysoftware.fantastlereboot.files.GameFinder;
+import com.puttysoftware.fantastlereboot.files.GameLoader;
+import com.puttysoftware.fantastlereboot.files.GameSaver;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
@@ -201,7 +201,7 @@ public final class MazeManager implements QuitHandler {
               + "named com1 through com9 and lpt1 through lpt9.",
           "Load");
     } else {
-      final GameLoadTask llt = new GameLoadTask(filename);
+      final GameLoader llt = new GameLoader(filename);
       llt.start();
     }
   }
@@ -246,7 +246,7 @@ public final class MazeManager implements QuitHandler {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     final String sg = "Saved Game";
     bag.showMessage("Saving " + sg + " file...");
-    final GameSaveTask lst = new GameSaveTask(filename);
+    final GameSaver lst = new GameSaver(filename);
     lst.start();
   }
 

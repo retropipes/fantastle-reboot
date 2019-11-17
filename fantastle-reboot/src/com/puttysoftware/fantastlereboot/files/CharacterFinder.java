@@ -3,17 +3,15 @@ Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.files.character;
+package com.puttysoftware.fantastlereboot.files;
 
 import java.io.File;
 import java.io.FilenameFilter;
 
-import com.puttysoftware.fantastlereboot.files.FileExtensions;
-
-class CharacterFilter implements FilenameFilter {
+class CharacterFinder implements FilenameFilter {
   @Override
   public boolean accept(final File dir, final String name) {
-    final String ext = CharacterFilter.getExtension(name);
+    final String ext = CharacterFinder.getExtension(name);
     if (ext != null) {
       if (ext.equals(FileExtensions.getCharacterExtension())) {
         return true;

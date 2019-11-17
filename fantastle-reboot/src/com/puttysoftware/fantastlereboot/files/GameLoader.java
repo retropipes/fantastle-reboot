@@ -3,7 +3,7 @@ Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.files.savedgame;
+package com.puttysoftware.fantastlereboot.files;
 
 import java.awt.Container;
 import java.io.File;
@@ -16,20 +16,18 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.files.PrefixHandler;
-import com.puttysoftware.fantastlereboot.files.SuffixHandler;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.VersionException;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fileutils.ZipUtilities;
 
-public class GameLoadTask extends Thread {
+public class GameLoader extends Thread {
   // Fields
   private final String filename;
   private MainWindow loadFrame;
 
   // Constructors
-  public GameLoadTask(final String file) {
+  public GameLoader(final String file) {
     this.filename = file;
     this.setName("Game Loader");
   }

@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.files.savedgame;
+package com.puttysoftware.fantastlereboot.files;
 
 import java.io.File;
 import java.io.FileInputStream;
