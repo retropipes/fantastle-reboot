@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
-import com.puttysoftware.fantastlereboot.maze.Extension;
+import com.puttysoftware.fantastlereboot.utilities.FileExtensions;
 import com.puttysoftware.fileutils.ResourceStreamReader;
 
 public class CharacterRegistration {
@@ -35,7 +35,7 @@ public class CharacterRegistration {
         CharacterRegistration.getBasePath()).list(new CharacterFilter());
     if (characterNames != null && characterNames.length > 0) {
       // Strip extension
-      final int stripCount = Extension.getCharacterExtensionWithPeriod()
+      final int stripCount = FileExtensions.getCharacterExtensionWithPeriod()
           .length();
       for (int x = 0; x < characterNames.length; x++) {
         final String temp = characterNames[x];
@@ -59,7 +59,7 @@ public class CharacterRegistration {
         if (!alreadyRegistered) {
           // Verify that character file exists
           if (new File(CharacterRegistration.getBasePath() + File.separator
-              + res + Extension.getCharacterExtensionWithPeriod()).exists()) {
+              + res + FileExtensions.getCharacterExtensionWithPeriod()).exists()) {
             // Register it
             if (CharacterRegistration.ANY_FOUND && characterNameList != null) {
               final String[] newCharacterList = new String[characterNameList.length
@@ -317,7 +317,7 @@ public class CharacterRegistration {
     final ArrayList<String> registeredNames = new ArrayList<>();
     try (
         FileInputStream fis = new FileInputStream(basePath + File.separator
-            + "CharacterRegistry" + Extension.getRegistryExtensionWithPeriod());
+            + "CharacterRegistry" + FileExtensions.getRegistryExtensionWithPeriod());
         ResourceStreamReader rsr = new ResourceStreamReader(fis)) {
       String input = "";
       while (input != null) {
@@ -337,7 +337,7 @@ public class CharacterRegistration {
     final String basePath = CharacterRegistration.getBasePath();
     // Check if registry is writable
     final File regFile = new File(basePath + File.separator
-        + "CharacterRegistry" + Extension.getRegistryExtensionWithPeriod());
+        + "CharacterRegistry" + FileExtensions.getRegistryExtensionWithPeriod());
     if (!regFile.exists()) {
       // Not writable, probably because needed folders don't exist
       final File regParent = regFile.getParentFile();

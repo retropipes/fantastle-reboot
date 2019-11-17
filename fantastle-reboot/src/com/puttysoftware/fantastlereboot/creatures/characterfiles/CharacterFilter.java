@@ -8,14 +8,14 @@ package com.puttysoftware.fantastlereboot.creatures.characterfiles;
 import java.io.File;
 import java.io.FilenameFilter;
 
-import com.puttysoftware.fantastlereboot.maze.Extension;
+import com.puttysoftware.fantastlereboot.utilities.FileExtensions;
 
 class CharacterFilter implements FilenameFilter {
   @Override
   public boolean accept(final File dir, final String name) {
     final String ext = CharacterFilter.getExtension(name);
     if (ext != null) {
-      if (ext.equals(Extension.getCharacterExtension())) {
+      if (ext.equals(FileExtensions.getCharacterExtension())) {
         return true;
       } else {
         return false;

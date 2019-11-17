@@ -22,6 +22,7 @@ import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.savedgames.GameFinder;
 import com.puttysoftware.fantastlereboot.savedgames.GameLoadTask;
 import com.puttysoftware.fantastlereboot.savedgames.GameSaveTask;
+import com.puttysoftware.fantastlereboot.utilities.FileExtensions;
 import com.puttysoftware.fileutils.FilenameChecker;
 
 public final class MazeManager implements QuitHandler {
@@ -212,7 +213,7 @@ public final class MazeManager implements QuitHandler {
     while (!FilenameChecker.isFilenameOK(returnVal)) {
       returnVal = CommonDialogs.showTextInputDialog("Name?", "Save Game");
       if (returnVal != null) {
-        extension = Extension.getGameExtensionWithPeriod();
+        extension = FileExtensions.getGameExtensionWithPeriod();
         final File file = new File(
             MazeManager.getGameDirectory() + returnVal + extension);
         filename = file.getAbsolutePath();

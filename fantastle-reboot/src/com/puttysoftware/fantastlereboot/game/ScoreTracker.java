@@ -21,7 +21,7 @@ package com.puttysoftware.fantastlereboot.game;
 import java.io.File;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
-import com.puttysoftware.fantastlereboot.maze.Extension;
+import com.puttysoftware.fantastlereboot.utilities.FileExtensions;
 import com.puttysoftware.scoremanager.SavedScoreManager;
 import com.puttysoftware.scoremanager.ScoreManager;
 
@@ -166,7 +166,7 @@ public class ScoreTracker {
     b.append(ScoreTracker.getScoreDirPrefix());
     b.append(ScoreTracker.getScoreDirectory());
     b.append(filename);
-    b.append(Extension.getScoresExtensionWithPeriod());
+    b.append(FileExtensions.getScoresExtensionWithPeriod());
     return new File(b.toString());
   }
 }

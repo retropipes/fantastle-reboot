@@ -12,10 +12,10 @@ import java.io.IOException;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.maze.Extension;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.PrefixHandler;
 import com.puttysoftware.fantastlereboot.maze.SuffixHandler;
+import com.puttysoftware.fantastlereboot.utilities.FileExtensions;
 import com.puttysoftware.fileutils.ZipUtilities;
 
 public class GameSaveTask extends Thread {
@@ -38,7 +38,7 @@ public class GameSaveTask extends Thread {
       // filename check
       final boolean hasExtension = GameSaveTask.hasExtension(this.filename);
       if (!hasExtension) {
-        this.filename += Extension.getGameExtensionWithPeriod();
+        this.filename += FileExtensions.getGameExtensionWithPeriod();
       }
       final File mazeFile = new File(this.filename);
       final File tempLock = new File(Maze.getMazeTempFolder() + "lock.tmp");

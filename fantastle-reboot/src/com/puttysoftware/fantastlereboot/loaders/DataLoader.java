@@ -8,6 +8,7 @@ import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.creatures.jobs.JobConstants;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectActions;
+import com.puttysoftware.fantastlereboot.utilities.FileExtensions;
 import com.puttysoftware.fileutils.ResourceStreamReader;
 
 public class DataLoader {
@@ -18,8 +19,8 @@ public class DataLoader {
   public static int[] loadJobData(final int j) {
     final String name = Integer.toString(j);
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class
-            .getResourceAsStream("/assets/data/job/" + name + ".txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/job/" + name
+            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
       // Fetch data
       final int[] rawData = new int[JobConstants.ATTRIBUTES_COUNT];
       for (int x = 0; x < rawData.length; x++) {
@@ -38,7 +39,8 @@ public class DataLoader {
 
   public static String[] loadFaithNameData() {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class.getResourceAsStream("/assets/data/faith/names.txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/faith/names"
+            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
       // Fetch data
       final String[] data = new String[FaithManager.FAITHS];
       for (int x = 0; x < data.length; x++) {
@@ -54,8 +56,8 @@ public class DataLoader {
   public static int[] loadFaithColorData(final int f) {
     final String name = Integer.toString(f);
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class.getResourceAsStream(
-            "/assets/data/faith/colors/" + name + ".txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/faith/colors/" + name
+            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
       // Fetch data
       final int[] data = new int[4];
       for (int x = 0; x < data.length; x++) {
@@ -71,8 +73,8 @@ public class DataLoader {
   public static int[] loadFaithNumeratorData(final int f) {
     final String name = Integer.toString(f);
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class.getResourceAsStream(
-            "/assets/data/faith/numerator/" + name + ".txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/faith/numerator/"
+            + name + FileExtensions.getInternalDataExtensionWithPeriod()))) {
       // Fetch data
       final int[] data = new int[FaithManager.FAITHS];
       for (int x = 0; x < data.length; x++) {
@@ -88,8 +90,8 @@ public class DataLoader {
   public static int[] loadFaithDenominatorData(final int f) {
     final String name = Integer.toString(f);
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class.getResourceAsStream(
-            "/assets/data/faith/denominator/" + name + ".txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/faith/denominator/"
+            + name + FileExtensions.getInternalDataExtensionWithPeriod()))) {
       // Fetch data
       final int[] data = new int[FaithManager.FAITHS];
       for (int x = 0; x < data.length; x++) {
@@ -104,8 +106,8 @@ public class DataLoader {
 
   public static String[] loadMonsterData() {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class
-            .getResourceAsStream("/assets/data/monster/monsternames.txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/monster/monsternames"
+            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
       // Fetch data
       final ArrayList<String> data = new ArrayList<>();
       String raw = "0";
@@ -140,8 +142,8 @@ public class DataLoader {
   public static int[] loadRaceData(final int r) {
     final String name = Integer.toString(r);
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class
-            .getResourceAsStream("/assets/data/race/" + name + ".txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/race/" + name
+            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
       // Fetch data
       final int[] rawData = new int[RaceConstants.ATTRIBUTES_COUNT];
       for (int x = 0; x < rawData.length; x++) {
@@ -160,7 +162,8 @@ public class DataLoader {
 
   public static String[] loadMusicData() {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class.getResourceAsStream("/assets/data/music/files.txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/music/files"
+            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
       // Fetch data
       final ArrayList<String> data = new ArrayList<>();
       String raw = "0";
@@ -179,8 +182,8 @@ public class DataLoader {
 
   public static String[] loadSoundData() {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class
-            .getResourceAsStream("/assets/data/sounds/files.txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/sounds/files"
+            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
       // Fetch data
       final ArrayList<String> data = new ArrayList<>();
       String raw = "0";
@@ -199,8 +202,8 @@ public class DataLoader {
 
   public static FantastleObjectActions[] loadObjectActionData() {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class
-            .getResourceAsStream("/assets/data/objects/actions.txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/objects/actions"
+            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
       // Fetch data
       final ArrayList<FantastleObjectActions> data = new ArrayList<>();
       String raw = "0";
@@ -220,8 +223,8 @@ public class DataLoader {
   public static int[] loadObjectActionAddonData(int actionID) {
     final String name = "action-" + Integer.toString(actionID);
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class
-            .getResourceAsStream("/assets/data/objects/" + name + ".txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/objects/" + name
+            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
       // Fetch data
       final ArrayList<Integer> rawData = new ArrayList<>();
       String raw = "0";
@@ -247,8 +250,8 @@ public class DataLoader {
 
   public static String[] loadAttributeImageData() {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class
-            .getResourceAsStream("/assets/data/images/attributes.txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/images/attributes"
+            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
       // Fetch data
       final ArrayList<String> data = new ArrayList<>();
       String raw = "0";
@@ -267,7 +270,8 @@ public class DataLoader {
 
   public static String[] loadBossImageData() {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class.getResourceAsStream("/assets/data/images/boss.txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/images/boss"
+            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
       // Fetch data
       final ArrayList<String> data = new ArrayList<>();
       String raw = "0";
@@ -286,8 +290,8 @@ public class DataLoader {
 
   public static String[] loadEffectImageData() {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class
-            .getResourceAsStream("/assets/data/images/effects.txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/images/effects"
+            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
       // Fetch data
       final ArrayList<String> data = new ArrayList<>();
       String raw = "0";
@@ -306,8 +310,8 @@ public class DataLoader {
 
   public static String[] loadItemImageData() {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class
-            .getResourceAsStream("/assets/data/images/items.txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/images/items"
+            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
       // Fetch data
       final ArrayList<String> data = new ArrayList<>();
       String raw = "0";
@@ -326,8 +330,8 @@ public class DataLoader {
 
   public static String[] loadObjectImageData() {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class
-            .getResourceAsStream("/assets/data/images/objects.txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/images/objects"
+            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
       // Fetch data
       final ArrayList<String> data = new ArrayList<>();
       String raw = "0";
@@ -346,7 +350,8 @@ public class DataLoader {
 
   public static String[] loadUserInterfaceImageData() {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class.getResourceAsStream("/assets/data/images/ui.txt"))) {
+        DataLoader.class.getResourceAsStream("/assets/data/images/ui"
+            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
       // Fetch data
       final ArrayList<String> data = new ArrayList<>();
       String raw = "0";

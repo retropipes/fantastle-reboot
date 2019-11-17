@@ -48,9 +48,9 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
-import com.puttysoftware.fantastlereboot.maze.Extension;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.Tile;
+import com.puttysoftware.fantastlereboot.utilities.FileExtensions;
 
 public class PreferencesManager {
   // Fields
@@ -645,7 +645,7 @@ public class PreferencesManager {
     }
 
     private static String getPrefsFileExtension() {
-      return "." + Extension.getPreferencesExtension();
+      return "." + FileExtensions.getPreferencesExtension();
     }
 
     private static String getPrefsFileName() {

@@ -12,7 +12,7 @@ import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.gui.VersionException;
-import com.puttysoftware.fantastlereboot.maze.Extension;
+import com.puttysoftware.fantastlereboot.utilities.FileExtensions;
 import com.puttysoftware.xio.UnexpectedTagException;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
@@ -21,7 +21,7 @@ public class CharacterLoader {
   private static PartyMember loadCharacter(final String name) {
     final String basePath = CharacterRegistration.getBasePath();
     final String loadPath = basePath + File.separator + name
-        + Extension.getCharacterExtensionWithPeriod();
+        + FileExtensions.getCharacterExtensionWithPeriod();
     try (XDataReader loader = new XDataReader(loadPath, "character")) {
       return PartyMember.read(loader);
     } catch (VersionException | UnexpectedTagException e) {
@@ -59,7 +59,7 @@ public class CharacterLoader {
     final String basePath = CharacterRegistration.getBasePath();
     final String name = character.getName();
     final String characterFile = basePath + File.separator + name
-        + Extension.getCharacterExtensionWithPeriod();
+        + FileExtensions.getCharacterExtensionWithPeriod();
     try (XDataWriter saver = new XDataWriter(characterFile, "character")) {
       character.write(saver);
     } catch (final IOException e) {
@@ -70,7 +70,7 @@ public class CharacterLoader {
   static void deleteCharacter(final String name, final boolean showResults) {
     final String basePath = CharacterRegistration.getBasePath();
     final String characterFile = basePath + File.separator + name
-        + Extension.getCharacterExtensionWithPeriod();
+        + FileExtensions.getCharacterExtensionWithPeriod();
     final File toDelete = new File(characterFile);
     if (toDelete.exists()) {
       final boolean success = toDelete.delete();
