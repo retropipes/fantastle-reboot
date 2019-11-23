@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.game;
 
-import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 

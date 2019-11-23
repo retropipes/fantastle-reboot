@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.KeyStroke;
 
-import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.diane.gui.DrawGrid;
 import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.diane.loaders.ImageCompositor;

@@ -3,7 +3,7 @@ package com.puttysoftware.fantastlereboot.creatures.faiths;
 import java.awt.Color;
 import java.util.Hashtable;
 
-import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.diane.loaders.ColorShader;
 import com.puttysoftware.fantastlereboot.loaders.DataLoader;
 import com.puttysoftware.randomrange.RandomRange;

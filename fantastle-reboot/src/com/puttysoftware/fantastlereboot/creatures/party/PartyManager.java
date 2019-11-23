@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 
-import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.creatures.jobs.Job;

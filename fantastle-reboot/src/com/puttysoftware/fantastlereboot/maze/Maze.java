@@ -8,7 +8,7 @@ package com.puttysoftware.fantastlereboot.maze;
 import java.io.File;
 import java.io.IOException;
 
-import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.files.FileExtensions;
 import com.puttysoftware.fantastlereboot.files.MazeVersions;

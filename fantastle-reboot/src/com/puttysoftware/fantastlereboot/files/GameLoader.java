@@ -11,7 +11,7 @@ import java.io.IOException;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.game.Game;

@@ -20,7 +20,7 @@ package com.puttysoftware.fantastlereboot.game;
 
 import java.io.File;
 
-import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.fantastlereboot.files.FileExtensions;
 import com.puttysoftware.scoremanager.SavedScoreManager;
 import com.puttysoftware.scoremanager.ScoreManager;

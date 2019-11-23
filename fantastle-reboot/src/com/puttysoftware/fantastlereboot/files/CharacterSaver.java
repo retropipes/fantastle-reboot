@@ -8,7 +8,7 @@ package com.puttysoftware.fantastlereboot.files;
 import java.io.File;
 import java.io.IOException;
 
-import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.xio.XDataWriter;

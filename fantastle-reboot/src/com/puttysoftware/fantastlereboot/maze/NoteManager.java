@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.maze;
 
-import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.diane.gui.CommonDialogs;
 
 public class NoteManager {
   private NoteManager() {

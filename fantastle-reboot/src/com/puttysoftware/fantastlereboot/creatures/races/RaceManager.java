@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.creatures.races;
 
-import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class RaceManager {

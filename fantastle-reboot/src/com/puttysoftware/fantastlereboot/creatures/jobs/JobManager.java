@@ -1,6 +1,6 @@
 package com.puttysoftware.fantastlereboot.creatures.jobs;
 
-import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
 import com.puttysoftware.fantastlereboot.spells.SpellBookManager;
 import com.puttysoftware.randomrange.RandomRange;

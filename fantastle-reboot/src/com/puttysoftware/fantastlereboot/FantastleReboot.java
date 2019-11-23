@@ -22,7 +22,7 @@ import java.awt.desktop.QuitStrategy;
 
 import javax.swing.JMenuBar;
 
-import com.puttysoftware.commondialogs.CommonDialogs;
+import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.errorlogger.ErrorLogger;
 import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
