@@ -32,7 +32,7 @@ import com.puttysoftware.fantastlereboot.gui.AboutDialog;
 import com.puttysoftware.fantastlereboot.gui.GUIManager;
 import com.puttysoftware.fantastlereboot.gui.GeneralHelpManager;
 import com.puttysoftware.fantastlereboot.gui.MenuManager;
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
@@ -164,7 +164,7 @@ public class BagOStuff {
   }
 
   public void resetPreferences() {
-    PreferencesManager.resetPrefs();
+    Prefs.resetPrefs();
   }
 
   public GeneralHelpManager getGeneralHelpManager() {
@@ -236,14 +236,14 @@ public class BagOStuff {
   }
 
   public Battle getBattle() {
-    if (PreferencesManager.useMapBattleEngine()) {
-      if (PreferencesManager.useTimeBattleEngine()) {
+    if (Prefs.useMapBattleEngine()) {
+      if (Prefs.useTimeBattleEngine()) {
         return this.mapTimeBattle;
       } else {
         return this.mapTurnBattle;
       }
     } else {
-      if (PreferencesManager.useTimeBattleEngine()) {
+      if (Prefs.useTimeBattleEngine()) {
         return this.windowTimeBattle;
       } else {
         return this.windowTurnBattle;
@@ -295,7 +295,7 @@ public class BagOStuff {
       this.editor.showOutput();
       break;
     case STATUS_PREFS:
-      PreferencesManager.showPrefs();
+      Prefs.showPrefs();
       break;
     case STATUS_BATTLE:
       this.getBattle().showBattle();

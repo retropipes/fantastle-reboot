@@ -27,8 +27,8 @@ import com.puttysoftware.errorlogger.ErrorLogger;
 import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.gui.MenuManager;
-import com.puttysoftware.fantastlereboot.gui.PreferencesLauncher;
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.PrefsLauncher;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.integration.NativeIntegration;
 
@@ -103,7 +103,7 @@ public class FantastleReboot {
         UserInterfaceImageLoader.load(UserInterfaceImageIndex.MICRO_LOGO));
     NATIVITY.setQuitStrategy(QuitStrategy.NORMAL_EXIT);
     NATIVITY.setQuitHandler(new QuitRequestManager());
-    NATIVITY.setPreferencesHandler(new PreferencesLauncher());
+    NATIVITY.setPreferencesHandler(new PrefsLauncher());
     NATIVITY.setAboutHandler(FantastleReboot.bag.getAboutDialog());
   }
 
@@ -117,7 +117,7 @@ public class FantastleReboot {
       Creature.computeActionCap(FantastleReboot.BATTLE_MAZE_SIZE,
           FantastleReboot.BATTLE_MAZE_SIZE);
       // Set default preferences
-      PreferencesManager.setDefaultPrefs();
+      Prefs.setDefaultPrefs();
       // Create the Bag O'Stuff
       FantastleReboot.bag = new BagOStuff();
       // Load stuff

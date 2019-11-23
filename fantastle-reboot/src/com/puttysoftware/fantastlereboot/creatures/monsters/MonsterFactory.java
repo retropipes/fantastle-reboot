@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 import com.puttysoftware.randomrange.RandomRange;
@@ -23,7 +23,7 @@ public class MonsterFactory {
 
   public static ArrayList<BattleCharacter> generateMapMonsters() {
     final int partyCount = PartyManager.getParty().getMembers();
-    final int monsterCount = PreferencesManager.getMonsterCount(partyCount);
+    final int monsterCount = Prefs.getMonsterCount(partyCount);
     final int minTeamID = Creature.TEAM_ENEMY_FIRST;
     final int maxTeamID = Creature.TEAM_ENEMY_LAST
         - ((monsterCount - MAX_MONSTERS) / 5);

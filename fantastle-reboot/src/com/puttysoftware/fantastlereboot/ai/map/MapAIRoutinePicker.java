@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.ai.map;
 
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 
 public final class MapAIRoutinePicker {
   // Constructors
@@ -16,21 +16,21 @@ public final class MapAIRoutinePicker {
   // Methods
   public static AbstractMapAIRoutine getNextRoutine() {
     
-    final int difficulty = PreferencesManager
+    final int difficulty = Prefs
         .getGameDifficulty();
-    if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
+    if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
       return new VeryEasyMapAIRoutine();
     } else {
-      if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
+      if (difficulty == Prefs.DIFFICULTY_EASY) {
         return new EasyMapAIRoutine();
       } else {
-        if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
+        if (difficulty == Prefs.DIFFICULTY_NORMAL) {
           return new NormalMapAIRoutine();
         } else {
-          if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
+          if (difficulty == Prefs.DIFFICULTY_HARD) {
             return new HardMapAIRoutine();
           } else {
-            if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
+            if (difficulty == Prefs.DIFFICULTY_VERY_HARD) {
               return new VeryHardMapAIRoutine();
             } else {
               return new NormalMapAIRoutine();

@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import com.puttysoftware.diane.gui.DrawGrid;
 import com.puttysoftware.diane.loaders.ImageCompositor;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.loaders.ImageConstants;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
@@ -138,7 +138,7 @@ class GameDraw extends Thread {
     }
     final Graphics g = this.drawDestination.getGraphics();
     final int gSize = ImageConstants.SIZE;
-    final int vSize = PreferencesManager.getViewingWindowSize();
+    final int vSize = Prefs.getViewingWindowSize();
     for (x = 0; x < vSize; x++) {
       for (y = 0; y < vSize; y++) {
         g.drawImage(this.drawGrid.getImageCell(y, x), x * gSize, y * gSize,
@@ -205,7 +205,7 @@ class GameDraw extends Thread {
     }
     final Graphics g = this.drawDestination.getGraphics();
     final int gSize = ImageConstants.SIZE;
-    final int vSize = PreferencesManager.getViewingWindowSize();
+    final int vSize = Prefs.getViewingWindowSize();
     for (x = 0; x < vSize; x++) {
       for (y = 0; y < vSize; y++) {
         g.drawImage(this.drawGrid.getImageCell(y, x), x * gSize, y * gSize,

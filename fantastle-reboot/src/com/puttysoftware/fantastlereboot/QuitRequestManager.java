@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
 import com.puttysoftware.fantastlereboot.files.MazeFileManager;
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 
 final class QuitRequestManager implements QuitHandler {
   // Constructors
@@ -37,7 +37,7 @@ final class QuitRequestManager implements QuitHandler {
       }
     }
     if (saved) {
-      PreferencesManager.writePrefs();
+      Prefs.writePrefs();
       inResponse.performQuit();
     } else {
       inResponse.cancelQuit();

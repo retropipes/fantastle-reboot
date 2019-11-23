@@ -6,7 +6,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.battle.map;
 
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 
 public class MapBattleViewingWindowManager {
   // Fields
@@ -69,7 +69,7 @@ public class MapBattleViewingWindowManager {
 
   public static int getViewingWindowSize() {
     
-    return (PreferencesManager
+    return (Prefs
         .getViewingWindowSize() * VIEWING_WINDOW_SIZE_MULTIPLIER)
         + VIEWING_WINDOW_SIZE_ADDITION;
   }

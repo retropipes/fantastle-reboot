@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.battle.map;
 
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 
 public class MapBattleArrowSpeedConstants {
   // Constants
@@ -19,7 +19,7 @@ public class MapBattleArrowSpeedConstants {
   // Method
   public static int getArrowSpeed() {
     
-    return PreferencesManager.getBattleSpeed()
+    return Prefs.getBattleSpeed()
         / MapBattleArrowSpeedConstants.ARROW_SPEED_FACTOR;
   }
 }

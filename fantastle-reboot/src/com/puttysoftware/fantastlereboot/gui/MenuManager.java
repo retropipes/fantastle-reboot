@@ -696,7 +696,7 @@ public class MenuManager {
           me.redo();
         } else if (cmd.equals("Preferences...")) {
           // Show preferences dialog
-          PreferencesManager.showPrefs();
+          Prefs.showPrefs();
         } else if (cmd.equals("Clear History")) {
           // Clear undo/redo history, confirm first
           final int res = CommonDialogs.showConfirmDialog(

@@ -6,7 +6,7 @@ import java.util.Properties;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.loaders.mod.ModuleLoader;
 import com.puttysoftware.randomrange.RandomRange;
 
@@ -43,7 +43,7 @@ public class MusicPlayer {
   }
 
   public static void playMusic(final MusicIndex music, final MusicGroup group) {
-    if (PreferencesManager.isMusicGroupEnabled(group)) {
+    if (Prefs.isMusicGroupEnabled(group)) {
       if (music != null && music != MusicIndex._NONE) {
         final String filename = getMusicFilename(music);
         if (MUSIC.isPlaying()) {

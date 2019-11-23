@@ -13,7 +13,7 @@ import com.puttysoftware.fantastlereboot.creatures.jobs.JobManager;
 import com.puttysoftware.fantastlereboot.creatures.races.Race;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
 import com.puttysoftware.fantastlereboot.game.Game;
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.loaders.AvatarImageLoader;
 import com.puttysoftware.fantastlereboot.maze.GenerateTask;
@@ -138,21 +138,21 @@ public class PartyMember extends Creature {
 
   @Override
   public int getSpeed() {
-    final int difficulty = PreferencesManager.getGameDifficulty();
+    final int difficulty = Prefs.getGameDifficulty();
     final int base = this.getBaseSpeed();
-    if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
+    if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
       return (int) (base * SPEED_ADJUST_FASTEST);
     } else {
-      if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
+      if (difficulty == Prefs.DIFFICULTY_EASY) {
         return (int) (base * SPEED_ADJUST_FAST);
       } else {
-        if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
+        if (difficulty == Prefs.DIFFICULTY_NORMAL) {
           return (int) (base * SPEED_ADJUST_NORMAL);
         } else {
-          if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
+          if (difficulty == Prefs.DIFFICULTY_HARD) {
             return (int) (base * SPEED_ADJUST_SLOW);
           } else {
-            if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
+            if (difficulty == Prefs.DIFFICULTY_VERY_HARD) {
               return (int) (base * SPEED_ADJUST_SLOWEST);
             } else {
               return (int) (base * SPEED_ADJUST_NORMAL);

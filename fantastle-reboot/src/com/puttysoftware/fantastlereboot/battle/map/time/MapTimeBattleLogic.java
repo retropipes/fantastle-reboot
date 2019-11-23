@@ -37,7 +37,7 @@ import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.game.Game;
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItem;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
@@ -1122,7 +1122,7 @@ public class MapTimeBattleLogic extends Battle {
           if (!message.equals(Effect.getNullMessage())) {
             this.setStatusMessage(message);
             try {
-              Thread.sleep(PreferencesManager.getBattleSpeed());
+              Thread.sleep(Prefs.getBattleSpeed());
             } catch (final InterruptedException ie) {
               // Ignore
             }

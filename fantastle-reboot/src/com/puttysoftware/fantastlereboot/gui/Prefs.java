@@ -53,7 +53,7 @@ import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.randomrange.RandomRange;
 
-public class PreferencesManager {
+public class Prefs {
   // Fields
   private static MainWindow prefFrame;
   private static JTabbedPane prefTabPane;
@@ -62,8 +62,8 @@ public class PreferencesManager {
   private static Container editorPane;
   private static JButton prefsOK, prefsCancel;
   private static JButton prefsExport, prefsImport;
-  private static JCheckBox[] sounds = new JCheckBox[PreferencesManager.SOUNDS_LENGTH];
-  private static JCheckBox[] music = new JCheckBox[PreferencesManager.MUSIC_LENGTH];
+  private static JCheckBox[] sounds = new JCheckBox[Prefs.SOUNDS_LENGTH];
+  private static JCheckBox[] music = new JCheckBox[Prefs.MUSIC_LENGTH];
   private static JCheckBox checkUpdatesStartup;
   private static JCheckBox moveOneAtATime;
   private static JCheckBox mapBattleEngine;
@@ -82,11 +82,11 @@ public class PreferencesManager {
   private static boolean moveOneAtATimeEnabled;
   private static boolean useMapBattleEngine;
   private static boolean useTimeBattleEngine;
-  private static int difficultySetting = PreferencesManager.DEFAULT_DIFFICULTY;
+  private static int difficultySetting = Prefs.DEFAULT_DIFFICULTY;
   private static int viewingWindowIndex;
   private static int updateCheckIntervalIndex;
-  private static boolean[] soundsEnabled = new boolean[PreferencesManager.SOUNDS_LENGTH];
-  private static boolean[] musicEnabled = new boolean[PreferencesManager.MUSIC_LENGTH];
+  private static boolean[] soundsEnabled = new boolean[Prefs.SOUNDS_LENGTH];
+  private static boolean[] musicEnabled = new boolean[Prefs.MUSIC_LENGTH];
   private static String lastDirOpen;
   private static String lastDirSave;
   private static int lastFilterUsed;
@@ -132,7 +132,7 @@ public class PreferencesManager {
   private static final int PREFS_VERSION_MINOR = 0;
 
   // Constructors
-  private PreferencesManager() {
+  private Prefs() {
     super();
   }
 
@@ -151,55 +151,55 @@ public class PreferencesManager {
   }
 
   public static int getBattleSpeed() {
-    return PreferencesManager.BATTLE_SPEED;
+    return Prefs.BATTLE_SPEED;
   }
 
   public static boolean useMapBattleEngine() {
-    return PreferencesManager.useMapBattleEngine;
+    return Prefs.useMapBattleEngine;
   }
 
   public static void setMapBattleEngine(final boolean value) {
-    PreferencesManager.useMapBattleEngine = value;
+    Prefs.useMapBattleEngine = value;
   }
 
   public static boolean useTimeBattleEngine() {
-    return PreferencesManager.useTimeBattleEngine;
+    return Prefs.useTimeBattleEngine;
   }
 
   public static void setTimeBattleEngine(final boolean value) {
-    PreferencesManager.useTimeBattleEngine = value;
+    Prefs.useTimeBattleEngine = value;
   }
 
   public static int getGameDifficulty() {
-    return PreferencesManager.difficultySetting;
+    return Prefs.difficultySetting;
   }
 
   public static void setGameDifficulty(final int value) {
-    PreferencesManager.difficultySetting = value;
+    Prefs.difficultySetting = value;
   }
 
   public static String getLastDirOpen() {
-    return PreferencesManager.lastDirOpen;
+    return Prefs.lastDirOpen;
   }
 
   public static void setLastDirOpen(final String value) {
-    PreferencesManager.lastDirOpen = value;
+    Prefs.lastDirOpen = value;
   }
 
   public static String getLastDirSave() {
-    return PreferencesManager.lastDirSave;
+    return Prefs.lastDirSave;
   }
 
   public static void setLastDirSave(final String value) {
-    PreferencesManager.lastDirSave = value;
+    Prefs.lastDirSave = value;
   }
 
   public static int getLastFilterUsedIndex() {
-    return PreferencesManager.lastFilterUsed;
+    return Prefs.lastFilterUsed;
   }
 
   public static void setLastFilterUsedIndex(final int value) {
-    PreferencesManager.lastFilterUsed = value;
+    Prefs.lastFilterUsed = value;
   }
 
   public static boolean shouldCheckUpdatesAtStartup() {
@@ -207,19 +207,19 @@ public class PreferencesManager {
   }
 
   public static boolean oneMove() {
-    return PreferencesManager.moveOneAtATimeEnabled;
+    return Prefs.moveOneAtATimeEnabled;
   }
 
   public static int getViewingWindowSize() {
-    return PreferencesManager.VIEWING_WINDOW_SIZES[getViewingWindowSizeIndex()];
+    return Prefs.VIEWING_WINDOW_SIZES[getViewingWindowSizeIndex()];
   }
 
   public static int getViewingWindowSizeIndex() {
-    return PreferencesManager.viewingWindowIndex;
+    return Prefs.viewingWindowIndex;
   }
 
   public static void setViewingWindowSizeIndex(final int value) {
-    PreferencesManager.viewingWindowIndex = value;
+    Prefs.viewingWindowIndex = value;
   }
 
   public static boolean isSoundGroupEnabled(final SoundGroup group) {
@@ -227,10 +227,10 @@ public class PreferencesManager {
   }
 
   private static boolean isSoundGroupEnabledImpl(final int snd) {
-    if (!PreferencesManager.soundsEnabled[PreferencesManager.SOUNDS_ALL]) {
+    if (!Prefs.soundsEnabled[Prefs.SOUNDS_ALL]) {
       return false;
     } else {
-      return PreferencesManager.soundsEnabled[snd];
+      return Prefs.soundsEnabled[snd];
     }
   }
 
@@ -239,10 +239,10 @@ public class PreferencesManager {
   }
 
   private static boolean isMusicGroupEnabledImpl(final int mus) {
-    if (!PreferencesManager.musicEnabled[PreferencesManager.MUSIC_ALL]) {
+    if (!Prefs.musicEnabled[Prefs.MUSIC_ALL]) {
       return false;
     } else {
-      return PreferencesManager.musicEnabled[mus];
+      return Prefs.musicEnabled[mus];
     }
   }
 
@@ -251,39 +251,39 @@ public class PreferencesManager {
   }
 
   private static void defaultEnableSoundGroups() {
-    for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
-      PreferencesManager.soundsEnabled[x] = true;
+    for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
+      Prefs.soundsEnabled[x] = true;
     }
   }
 
   private static void defaultEnableMusicGroups() {
-    for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
-      PreferencesManager.musicEnabled[x] = true;
+    for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
+      Prefs.musicEnabled[x] = true;
     }
   }
 
   private static void setSoundGroupEnabledImpl(final int snd,
       final boolean status) {
-    PreferencesManager.soundsEnabled[snd] = status;
+    Prefs.soundsEnabled[snd] = status;
   }
 
   private static void setMusicGroupEnabled(final int mus,
       final boolean status) {
-    PreferencesManager.musicEnabled[mus] = status;
+    Prefs.musicEnabled[mus] = status;
   }
 
   public static void showPrefs() {
-    if (!PreferencesManager.guiSetUp) {
+    if (!Prefs.guiSetUp) {
       setUpGUI();
-      PreferencesManager.guiSetUp = true;
+      Prefs.guiSetUp = true;
     }
     if (FantastleReboot.inFantastleReboot()) {
-      PreferencesManager.prefFrame = MainWindow.getOutputFrame();
-      PreferencesManager.prefFrame.setTitle("Preferences");
-      PreferencesManager.prefFrame.setDefaultButton(prefsOK);
-      PreferencesManager.prefFrame.setContentPane(mainPrefPane);
-      PreferencesManager.prefFrame.addWindowListener(handler);
-      PreferencesManager.prefFrame.pack();
+      Prefs.prefFrame = MainWindow.getOutputFrame();
+      Prefs.prefFrame.setTitle("Preferences");
+      Prefs.prefFrame.setDefaultButton(prefsOK);
+      Prefs.prefFrame.setContentPane(mainPrefPane);
+      Prefs.prefFrame.addWindowListener(handler);
+      Prefs.prefFrame.pack();
       final BagOStuff app = FantastleReboot.getBagOStuff();
       app.setInPrefs();
       app.getMenuManager().setPrefMenus();
@@ -291,139 +291,139 @@ public class PreferencesManager {
   }
 
   private static void hidePrefs() {
-    if (!PreferencesManager.guiSetUp) {
+    if (!Prefs.guiSetUp) {
       setUpGUI();
-      PreferencesManager.guiSetUp = true;
+      Prefs.guiSetUp = true;
     }
     if (FantastleReboot.inFantastleReboot()) {
-      PreferencesManager.prefFrame.setDefaultButton(null);
-      PreferencesManager.prefFrame.removeWindowListener(handler);
-      PreferencesManager.fileMgr.writePreferencesFile();
+      Prefs.prefFrame.setDefaultButton(null);
+      Prefs.prefFrame.removeWindowListener(handler);
+      Prefs.fileMgr.writePreferencesFile();
       FantastleReboot.getBagOStuff().restoreFormerMode();
     }
   }
 
   public static void writePrefs() {
-    PreferencesManager.fileMgr.writePreferencesFile();
+    Prefs.fileMgr.writePreferencesFile();
   }
 
   public static void resetPrefs() {
-    PreferencesManager.fileMgr.deletePreferencesFile();
-    PreferencesManager.lastDirOpen = null;
-    PreferencesManager.lastDirSave = null;
+    Prefs.fileMgr.deletePreferencesFile();
+    Prefs.lastDirOpen = null;
+    Prefs.lastDirSave = null;
     resetDefaultPrefs();
   }
 
   private static void loadPrefs() {
-    if (!PreferencesManager.guiSetUp) {
+    if (!Prefs.guiSetUp) {
       setUpGUI();
-      PreferencesManager.guiSetUp = true;
+      Prefs.guiSetUp = true;
     }
     editorFillChoices.setSelectedIndex(editorFill);
-    for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
-      PreferencesManager.sounds[x].setSelected(isSoundGroupEnabledImpl(x));
+    for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
+      Prefs.sounds[x].setSelected(isSoundGroupEnabledImpl(x));
     }
-    for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
-      PreferencesManager.music[x].setSelected(isMusicGroupEnabledImpl(x));
+    for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
+      Prefs.music[x].setSelected(isMusicGroupEnabledImpl(x));
     }
-    PreferencesManager.updateCheckInterval
-        .setSelectedIndex(PreferencesManager.updateCheckIntervalIndex);
-    PreferencesManager.checkUpdatesStartup
-        .setSelected(PreferencesManager.checkUpdatesStartupEnabled);
-    PreferencesManager.difficultyChoices
-        .setSelectedIndex(PreferencesManager.difficultySetting);
-    PreferencesManager.moveOneAtATime
-        .setSelected(PreferencesManager.moveOneAtATimeEnabled);
-    PreferencesManager.mapBattleEngine
-        .setSelected(PreferencesManager.useMapBattleEngine);
-    PreferencesManager.timeBattleEngine
-        .setSelected(PreferencesManager.useTimeBattleEngine);
-    PreferencesManager.viewingWindowChoices
-        .setSelectedIndex(PreferencesManager.viewingWindowIndex);
+    Prefs.updateCheckInterval
+        .setSelectedIndex(Prefs.updateCheckIntervalIndex);
+    Prefs.checkUpdatesStartup
+        .setSelected(Prefs.checkUpdatesStartupEnabled);
+    Prefs.difficultyChoices
+        .setSelectedIndex(Prefs.difficultySetting);
+    Prefs.moveOneAtATime
+        .setSelected(Prefs.moveOneAtATimeEnabled);
+    Prefs.mapBattleEngine
+        .setSelected(Prefs.useMapBattleEngine);
+    Prefs.timeBattleEngine
+        .setSelected(Prefs.useTimeBattleEngine);
+    Prefs.viewingWindowChoices
+        .setSelectedIndex(Prefs.viewingWindowIndex);
   }
 
   private static void savePrefs() {
-    if (!PreferencesManager.guiSetUp) {
+    if (!Prefs.guiSetUp) {
       setUpGUI();
-      PreferencesManager.guiSetUp = true;
+      Prefs.guiSetUp = true;
     }
     editorFill = editorFillChoices.getSelectedIndex();
-    for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
-      setSoundGroupEnabledImpl(x, PreferencesManager.sounds[x].isSelected());
+    for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
+      setSoundGroupEnabledImpl(x, Prefs.sounds[x].isSelected());
     }
-    for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
-      setMusicGroupEnabled(x, PreferencesManager.music[x].isSelected());
+    for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
+      setMusicGroupEnabled(x, Prefs.music[x].isSelected());
     }
-    PreferencesManager.updateCheckIntervalIndex = PreferencesManager.updateCheckInterval
+    Prefs.updateCheckIntervalIndex = Prefs.updateCheckInterval
         .getSelectedIndex();
-    PreferencesManager.checkUpdatesStartupEnabled = checkUpdatesStartup
+    Prefs.checkUpdatesStartupEnabled = checkUpdatesStartup
         .isSelected();
-    PreferencesManager.difficultySetting = PreferencesManager.difficultyChoices
+    Prefs.difficultySetting = Prefs.difficultyChoices
         .getSelectedIndex();
-    PreferencesManager.moveOneAtATimeEnabled = PreferencesManager.moveOneAtATime
+    Prefs.moveOneAtATimeEnabled = Prefs.moveOneAtATime
         .isSelected();
-    PreferencesManager.useMapBattleEngine = PreferencesManager.mapBattleEngine
+    Prefs.useMapBattleEngine = Prefs.mapBattleEngine
         .isSelected();
-    PreferencesManager.useTimeBattleEngine = PreferencesManager.timeBattleEngine
+    Prefs.useTimeBattleEngine = Prefs.timeBattleEngine
         .isSelected();
-    PreferencesManager.viewingWindowIndex = PreferencesManager.viewingWindowChoices
+    Prefs.viewingWindowIndex = Prefs.viewingWindowChoices
         .getSelectedIndex();
   }
 
   public static void setDefaultPrefs() {
-    if (!PreferencesManager.fileMgr.readPreferencesFile()) {
+    if (!Prefs.fileMgr.readPreferencesFile()) {
       resetDefaultPrefs();
     }
   }
 
   private static void resetDefaultPrefs() {
-    if (!PreferencesManager.guiSetUp) {
+    if (!Prefs.guiSetUp) {
       setUpGUI();
-      PreferencesManager.guiSetUp = true;
+      Prefs.guiSetUp = true;
     }
     editorFill = 0;
     defaultEnableSoundGroups();
     defaultEnableMusicGroups();
     checkUpdatesStartup.setSelected(true);
     checkUpdatesStartupEnabled = true;
-    PreferencesManager.difficultySetting = PreferencesManager.DEFAULT_DIFFICULTY;
-    PreferencesManager.difficultyChoices
-        .setSelectedIndex(PreferencesManager.difficultySetting);
-    PreferencesManager.moveOneAtATime.setSelected(true);
-    PreferencesManager.moveOneAtATimeEnabled = true;
-    PreferencesManager.mapBattleEngine.setSelected(false);
-    PreferencesManager.useMapBattleEngine = false;
-    PreferencesManager.timeBattleEngine.setSelected(false);
-    PreferencesManager.useTimeBattleEngine = false;
-    PreferencesManager.viewingWindowIndex = PreferencesManager.DEFAULT_SIZE_INDEX;
-    PreferencesManager.viewingWindowChoices
-        .setSelectedIndex(PreferencesManager.viewingWindowIndex);
+    Prefs.difficultySetting = Prefs.DEFAULT_DIFFICULTY;
+    Prefs.difficultyChoices
+        .setSelectedIndex(Prefs.difficultySetting);
+    Prefs.moveOneAtATime.setSelected(true);
+    Prefs.moveOneAtATimeEnabled = true;
+    Prefs.mapBattleEngine.setSelected(true);
+    Prefs.useMapBattleEngine = true;
+    Prefs.timeBattleEngine.setSelected(false);
+    Prefs.useTimeBattleEngine = false;
+    Prefs.viewingWindowIndex = Prefs.DEFAULT_SIZE_INDEX;
+    Prefs.viewingWindowChoices
+        .setSelectedIndex(Prefs.viewingWindowIndex);
     updateCheckInterval.setSelectedIndex(0);
-    PreferencesManager.lastFilterUsed = PreferencesManager.FILTER_MAZE_V5;
+    Prefs.lastFilterUsed = Prefs.FILTER_MAZE_V5;
   }
 
   static void handleExport() {
-    final boolean result = PreferencesManager.eiMgr
-        .exportPreferencesFile(PreferencesManager.eiMgr.getExportDestination());
+    final boolean result = Prefs.eiMgr
+        .exportPreferencesFile(Prefs.eiMgr.getExportDestination());
     if (!result) {
       CommonDialogs.showErrorDialog("Export Failed!", "Preferences");
     }
   }
 
   static void handleImport() {
-    final boolean result = PreferencesManager.eiMgr
-        .importPreferencesFile(PreferencesManager.eiMgr.getImportSource());
+    final boolean result = Prefs.eiMgr
+        .importPreferencesFile(Prefs.eiMgr.getImportSource());
     if (!result) {
       CommonDialogs.showErrorDialog("Import Failed!", "Preferences");
     }
   }
 
   private static void setUpGUI() {
-    PreferencesManager.handler = new EventHandler();
-    PreferencesManager.prefTabPane = new JTabbedPane();
-    PreferencesManager.mainPrefPane = new Container();
+    Prefs.handler = new EventHandler();
+    Prefs.prefTabPane = new JTabbedPane();
+    Prefs.mainPrefPane = new Container();
     editorPane = new Container();
-    PreferencesManager.soundPane = new Container();
+    Prefs.soundPane = new Container();
     musicPane = new Container();
     miscPane = new Container();
     prefTabPane.setOpaque(true);
@@ -439,25 +439,25 @@ public class PreferencesManager {
     editorFillChoiceArray = new String[] { "Grass", "Dirt", "Sand", "Snow",
         "Tile", "Tundra" };
     editorFillChoices = new JComboBox<>(editorFillChoiceArray);
-    sounds[PreferencesManager.SOUNDS_ALL] = new JCheckBox("Enable ALL sounds",
+    sounds[Prefs.SOUNDS_ALL] = new JCheckBox("Enable ALL sounds",
         true);
-    sounds[PreferencesManager.SOUNDS_UI] = new JCheckBox(
+    sounds[Prefs.SOUNDS_UI] = new JCheckBox(
         "Enable user interface sounds", true);
-    sounds[PreferencesManager.SOUNDS_GAME] = new JCheckBox("Enable game sounds",
+    sounds[Prefs.SOUNDS_GAME] = new JCheckBox("Enable game sounds",
         true);
-    sounds[PreferencesManager.SOUNDS_BATTLE] = new JCheckBox(
+    sounds[Prefs.SOUNDS_BATTLE] = new JCheckBox(
         "Enable battle sounds", true);
-    sounds[PreferencesManager.SOUNDS_SHOP] = new JCheckBox("Enable shop sounds",
+    sounds[Prefs.SOUNDS_SHOP] = new JCheckBox("Enable shop sounds",
         true);
-    music[PreferencesManager.MUSIC_ALL] = new JCheckBox("Enable ALL music",
+    music[Prefs.MUSIC_ALL] = new JCheckBox("Enable ALL music",
         true);
-    music[PreferencesManager.MUSIC_UI] = new JCheckBox(
+    music[Prefs.MUSIC_UI] = new JCheckBox(
         "Enable user interface music", true);
-    music[PreferencesManager.MUSIC_GAME] = new JCheckBox("Enable game music",
+    music[Prefs.MUSIC_GAME] = new JCheckBox("Enable game music",
         true);
-    music[PreferencesManager.MUSIC_BATTLE] = new JCheckBox(
+    music[Prefs.MUSIC_BATTLE] = new JCheckBox(
         "Enable battle music", true);
-    music[PreferencesManager.MUSIC_SHOP] = new JCheckBox("Enable shop music",
+    music[Prefs.MUSIC_SHOP] = new JCheckBox("Enable shop music",
         true);
     checkUpdatesStartup = new JCheckBox("Check for Updates at Startup", true);
     moveOneAtATime = new JCheckBox("One Move at a Time", true);
@@ -468,18 +468,18 @@ public class PreferencesManager {
     updateCheckInterval = new JComboBox<>(updateCheckIntervalValues);
     difficultyChoices = new JComboBox<>(DIFFICULTY_CHOICE_NAMES);
     mainPrefPane.setLayout(new BorderLayout());
-    editorPane.setLayout(new GridLayout(PreferencesManager.GRID_LENGTH, 1));
+    editorPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     editorPane.add(new JLabel("Default fill for new mazes:"));
     editorPane.add(editorFillChoices);
-    soundPane.setLayout(new GridLayout(PreferencesManager.GRID_LENGTH, 1));
-    for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
+    soundPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
+    for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
       soundPane.add(sounds[x]);
     }
-    musicPane.setLayout(new GridLayout(PreferencesManager.GRID_LENGTH, 1));
-    for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
+    musicPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
+    for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
       musicPane.add(music[x]);
     }
-    miscPane.setLayout(new GridLayout(PreferencesManager.GRID_LENGTH, 1));
+    miscPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     miscPane.add(checkUpdatesStartup);
     miscPane.add(moveOneAtATime);
     miscPane.add(mapBattleEngine);
@@ -489,10 +489,10 @@ public class PreferencesManager {
     miscPane.add(new JLabel("Game Difficulty"));
     miscPane.add(difficultyChoices);
     final Container viewPane = new Container();
-    viewPane.setLayout(new GridLayout(PreferencesManager.GRID_LENGTH, 1));
+    viewPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     viewPane.add(new JLabel("Viewing Window Size"));
     viewingWindowChoices = new JComboBox<>(
-        PreferencesManager.VIEWING_WINDOW_SIZE_NAMES);
+        Prefs.VIEWING_WINDOW_SIZE_NAMES);
     viewPane.add(viewingWindowChoices);
     buttonPane.setLayout(new FlowLayout());
     buttonPane.add(prefsOK);
@@ -506,8 +506,8 @@ public class PreferencesManager {
     prefTabPane.addTab("View", null, viewPane, "View");
     mainPrefPane.add(prefTabPane, BorderLayout.CENTER);
     mainPrefPane.add(buttonPane, BorderLayout.SOUTH);
-    sounds[PreferencesManager.SOUNDS_ALL].addItemListener(handler);
-    music[PreferencesManager.MUSIC_ALL].addItemListener(handler);
+    sounds[Prefs.SOUNDS_ALL].addItemListener(handler);
+    music[Prefs.MUSIC_ALL].addItemListener(handler);
     prefsOK.addActionListener(handler);
     prefsCancel.addActionListener(handler);
     prefsExport.addActionListener(handler);
@@ -547,42 +547,42 @@ public class PreferencesManager {
         // Read minor version
         final int minorVersion = Short.parseShort(s.readLine());
         // Version check
-        if (majorVersion == PreferencesManager.PREFS_VERSION_MAJOR) {
-          if (minorVersion > PreferencesManager.PREFS_VERSION_MINOR) {
-            throw new PreferencesException(
+        if (majorVersion == Prefs.PREFS_VERSION_MAJOR) {
+          if (minorVersion > Prefs.PREFS_VERSION_MINOR) {
+            throw new PrefsException(
                 "Incompatible preferences minor version, using defaults.");
           }
         } else {
-          throw new PreferencesException(
+          throw new PrefsException(
               "Incompatible preferences major version, using defaults.");
         }
-        PreferencesManager.editorFill = Integer.parseInt(s.readLine());
-        PreferencesManager.checkUpdatesStartupEnabled = Boolean
+        Prefs.editorFill = Integer.parseInt(s.readLine());
+        Prefs.checkUpdatesStartupEnabled = Boolean
             .parseBoolean(s.readLine());
-        PreferencesManager.moveOneAtATimeEnabled = Boolean
+        Prefs.moveOneAtATimeEnabled = Boolean
             .parseBoolean(s.readLine());
-        for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
-          PreferencesManager.soundsEnabled[x] = Boolean
+        for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
+          Prefs.soundsEnabled[x] = Boolean
               .parseBoolean(s.readLine());
         }
-        PreferencesManager.updateCheckIntervalIndex = Integer
+        Prefs.updateCheckIntervalIndex = Integer
             .parseInt(s.readLine());
-        PreferencesManager.lastDirOpen = s.readLine();
-        PreferencesManager.lastDirSave = s.readLine();
-        PreferencesManager.lastFilterUsed = Integer.parseInt(s.readLine());
-        PreferencesManager.difficultySetting = Integer.parseInt(s.readLine());
-        PreferencesManager.useMapBattleEngine = Boolean
+        Prefs.lastDirOpen = s.readLine();
+        Prefs.lastDirSave = s.readLine();
+        Prefs.lastFilterUsed = Integer.parseInt(s.readLine());
+        Prefs.difficultySetting = Integer.parseInt(s.readLine());
+        Prefs.useMapBattleEngine = Boolean
             .parseBoolean(s.readLine());
-        PreferencesManager.useTimeBattleEngine = Boolean
+        Prefs.useTimeBattleEngine = Boolean
             .parseBoolean(s.readLine());
-        PreferencesManager.viewingWindowIndex = Integer.parseInt(s.readLine());
-        for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
-          PreferencesManager.musicEnabled[x] = Boolean
+        Prefs.viewingWindowIndex = Integer.parseInt(s.readLine());
+        for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
+          Prefs.musicEnabled[x] = Boolean
               .parseBoolean(s.readLine());
         }
-        PreferencesManager.loadPrefs();
+        Prefs.loadPrefs();
         return true;
-      } catch (final PreferencesException pe) {
+      } catch (final PrefsException pe) {
         CommonDialogs.showDialog(pe.getMessage());
         return false;
       } catch (final Exception e) {
@@ -604,29 +604,29 @@ public class PreferencesManager {
           new FileWriter(prefsFile))) {
         // Write the preferences to the file
         s.write(
-            Integer.toString(PreferencesManager.PREFS_VERSION_MAJOR) + "\n");
+            Integer.toString(Prefs.PREFS_VERSION_MAJOR) + "\n");
         s.write(
-            Integer.toString(PreferencesManager.PREFS_VERSION_MINOR) + "\n");
-        s.write(Integer.toString(PreferencesManager.editorFill) + "\n");
-        s.write(Boolean.toString(PreferencesManager.checkUpdatesStartupEnabled)
+            Integer.toString(Prefs.PREFS_VERSION_MINOR) + "\n");
+        s.write(Integer.toString(Prefs.editorFill) + "\n");
+        s.write(Boolean.toString(Prefs.checkUpdatesStartupEnabled)
             + "\n");
         s.write(
-            Boolean.toString(PreferencesManager.moveOneAtATimeEnabled) + "\n");
-        for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
-          s.write(Boolean.toString(PreferencesManager.soundsEnabled[x]) + "\n");
+            Boolean.toString(Prefs.moveOneAtATimeEnabled) + "\n");
+        for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
+          s.write(Boolean.toString(Prefs.soundsEnabled[x]) + "\n");
         }
-        s.write(Integer.toString(PreferencesManager.updateCheckIntervalIndex)
+        s.write(Integer.toString(Prefs.updateCheckIntervalIndex)
             + "\n");
-        s.write(PreferencesManager.lastDirOpen + "\n");
-        s.write(PreferencesManager.lastDirSave + "\n");
-        s.write(Integer.toString(PreferencesManager.lastFilterUsed) + "\n");
-        s.write(Integer.toString(PreferencesManager.difficultySetting) + "\n");
-        s.write(Boolean.toString(PreferencesManager.useMapBattleEngine) + "\n");
+        s.write(Prefs.lastDirOpen + "\n");
+        s.write(Prefs.lastDirSave + "\n");
+        s.write(Integer.toString(Prefs.lastFilterUsed) + "\n");
+        s.write(Integer.toString(Prefs.difficultySetting) + "\n");
+        s.write(Boolean.toString(Prefs.useMapBattleEngine) + "\n");
         s.write(
-            Boolean.toString(PreferencesManager.useTimeBattleEngine) + "\n");
-        s.write(Integer.toString(PreferencesManager.viewingWindowIndex) + "\n");
-        for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
-          s.write(Boolean.toString(PreferencesManager.musicEnabled[x]) + "\n");
+            Boolean.toString(Prefs.useTimeBattleEngine) + "\n");
+        s.write(Integer.toString(Prefs.viewingWindowIndex) + "\n");
+        for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
+          s.write(Boolean.toString(Prefs.musicEnabled[x]) + "\n");
         }
         s.close();
       } catch (final IOException ie) {
@@ -705,29 +705,29 @@ public class PreferencesManager {
         s.readLine();
         // Read and discard minor version
         s.readLine();
-        PreferencesManager.editorFill = Integer.parseInt(s.readLine());
-        PreferencesManager.checkUpdatesStartupEnabled = Boolean
+        Prefs.editorFill = Integer.parseInt(s.readLine());
+        Prefs.checkUpdatesStartupEnabled = Boolean
             .parseBoolean(s.readLine());
-        PreferencesManager.moveOneAtATime
+        Prefs.moveOneAtATime
             .setSelected(Boolean.parseBoolean(s.readLine()));
-        for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
-          PreferencesManager.soundsEnabled[x] = Boolean
+        for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
+          Prefs.soundsEnabled[x] = Boolean
               .parseBoolean(s.readLine());
         }
-        PreferencesManager.updateCheckIntervalIndex = Integer
+        Prefs.updateCheckIntervalIndex = Integer
             .parseInt(s.readLine());
-        PreferencesManager.lastFilterUsed = Integer.parseInt(s.readLine());
-        PreferencesManager.difficultySetting = Integer.parseInt(s.readLine());
-        PreferencesManager.mapBattleEngine
+        Prefs.lastFilterUsed = Integer.parseInt(s.readLine());
+        Prefs.difficultySetting = Integer.parseInt(s.readLine());
+        Prefs.mapBattleEngine
             .setSelected(Boolean.parseBoolean(s.readLine()));
-        PreferencesManager.timeBattleEngine
+        Prefs.timeBattleEngine
             .setSelected(Boolean.parseBoolean(s.readLine()));
-        PreferencesManager.viewingWindowIndex = Integer.parseInt(s.readLine());
-        for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
-          PreferencesManager.musicEnabled[x] = Boolean
+        Prefs.viewingWindowIndex = Integer.parseInt(s.readLine());
+        for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
+          Prefs.musicEnabled[x] = Boolean
               .parseBoolean(s.readLine());
         }
-        PreferencesManager.loadPrefs();
+        Prefs.loadPrefs();
         return true;
       } catch (final IOException ie) {
         FantastleReboot.logWarning(ie);
@@ -740,27 +740,27 @@ public class PreferencesManager {
           new FileWriter(exportFile))) {
         // Write the preferences to the file
         s.write(
-            Integer.toString(PreferencesManager.PREFS_VERSION_MAJOR) + "\n");
+            Integer.toString(Prefs.PREFS_VERSION_MAJOR) + "\n");
         s.write(
-            Integer.toString(PreferencesManager.PREFS_VERSION_MINOR) + "\n");
-        s.write(Integer.toString(PreferencesManager.editorFill) + "\n");
-        s.write(Boolean.toString(PreferencesManager.checkUpdatesStartupEnabled)
+            Integer.toString(Prefs.PREFS_VERSION_MINOR) + "\n");
+        s.write(Integer.toString(Prefs.editorFill) + "\n");
+        s.write(Boolean.toString(Prefs.checkUpdatesStartupEnabled)
             + "\n");
         s.write(
-            Boolean.toString(PreferencesManager.moveOneAtATimeEnabled) + "\n");
-        for (int x = 0; x < PreferencesManager.SOUNDS_LENGTH; x++) {
-          s.write(Boolean.toString(PreferencesManager.soundsEnabled[x]) + "\n");
+            Boolean.toString(Prefs.moveOneAtATimeEnabled) + "\n");
+        for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
+          s.write(Boolean.toString(Prefs.soundsEnabled[x]) + "\n");
         }
-        s.write(Integer.toString(PreferencesManager.updateCheckIntervalIndex)
+        s.write(Integer.toString(Prefs.updateCheckIntervalIndex)
             + "\n");
-        s.write(Integer.toString(PreferencesManager.lastFilterUsed) + "\n");
-        s.write(Integer.toString(PreferencesManager.difficultySetting) + "\n");
-        s.write(Boolean.toString(PreferencesManager.useMapBattleEngine) + "\n");
+        s.write(Integer.toString(Prefs.lastFilterUsed) + "\n");
+        s.write(Integer.toString(Prefs.difficultySetting) + "\n");
+        s.write(Boolean.toString(Prefs.useMapBattleEngine) + "\n");
         s.write(
-            Boolean.toString(PreferencesManager.useTimeBattleEngine) + "\n");
-        s.write(Integer.toString(PreferencesManager.viewingWindowIndex) + "\n");
-        for (int x = 0; x < PreferencesManager.MUSIC_LENGTH; x++) {
-          s.write(Boolean.toString(PreferencesManager.musicEnabled[x]) + "\n");
+            Boolean.toString(Prefs.useTimeBattleEngine) + "\n");
+        s.write(Integer.toString(Prefs.viewingWindowIndex) + "\n");
+        for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
+          s.write(Boolean.toString(Prefs.musicEnabled[x]) + "\n");
         }
         return true;
       } catch (final IOException ie) {
@@ -796,15 +796,15 @@ public class PreferencesManager {
       try {
         final String cmd = e.getActionCommand();
         if (cmd.equals("OK")) {
-          PreferencesManager.savePrefs();
-          PreferencesManager.hidePrefs();
+          Prefs.savePrefs();
+          Prefs.hidePrefs();
         } else if (cmd.equals("Cancel")) {
-          PreferencesManager.loadPrefs();
-          PreferencesManager.hidePrefs();
+          Prefs.loadPrefs();
+          Prefs.hidePrefs();
         } else if (cmd.equals("Export...")) {
-          PreferencesManager.handleExport();
+          Prefs.handleExport();
         } else if (cmd.equals("Import...")) {
-          PreferencesManager.handleImport();
+          Prefs.handleImport();
         }
       } catch (final Exception ex) {
         FantastleReboot.logError(ex);
@@ -816,34 +816,34 @@ public class PreferencesManager {
       try {
         final Object o = e.getItem();
         if (o.getClass()
-            .equals(PreferencesManager.sounds[PreferencesManager.SOUNDS_ALL]
+            .equals(Prefs.sounds[Prefs.SOUNDS_ALL]
                 .getClass())) {
           final JCheckBox check = (JCheckBox) o;
           if (check.equals(
-              PreferencesManager.sounds[PreferencesManager.SOUNDS_ALL])) {
+              Prefs.sounds[Prefs.SOUNDS_ALL])) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-              for (int x = 1; x < PreferencesManager.SOUNDS_LENGTH; x++) {
-                PreferencesManager.sounds[x].setEnabled(true);
+              for (int x = 1; x < Prefs.SOUNDS_LENGTH; x++) {
+                Prefs.sounds[x].setEnabled(true);
               }
             } else if (e.getStateChange() == ItemEvent.DESELECTED) {
-              for (int x = 1; x < PreferencesManager.SOUNDS_LENGTH; x++) {
-                PreferencesManager.sounds[x].setEnabled(false);
+              for (int x = 1; x < Prefs.SOUNDS_LENGTH; x++) {
+                Prefs.sounds[x].setEnabled(false);
               }
             }
           }
         } else if (o.getClass()
-            .equals(PreferencesManager.music[PreferencesManager.MUSIC_ALL]
+            .equals(Prefs.music[Prefs.MUSIC_ALL]
                 .getClass())) {
           final JCheckBox check = (JCheckBox) o;
           if (check
-              .equals(PreferencesManager.music[PreferencesManager.MUSIC_ALL])) {
+              .equals(Prefs.music[Prefs.MUSIC_ALL])) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-              for (int x = 1; x < PreferencesManager.MUSIC_LENGTH; x++) {
-                PreferencesManager.music[x].setEnabled(true);
+              for (int x = 1; x < Prefs.MUSIC_LENGTH; x++) {
+                Prefs.music[x].setEnabled(true);
               }
             } else if (e.getStateChange() == ItemEvent.DESELECTED) {
-              for (int x = 1; x < PreferencesManager.MUSIC_LENGTH; x++) {
-                PreferencesManager.music[x].setEnabled(false);
+              for (int x = 1; x < Prefs.MUSIC_LENGTH; x++) {
+                Prefs.music[x].setEnabled(false);
               }
             }
           }
@@ -861,7 +861,7 @@ public class PreferencesManager {
     @Override
     public void windowClosing(final WindowEvent e) {
       try {
-        PreferencesManager.hidePrefs();
+        Prefs.hidePrefs();
       } catch (final Exception ex) {
         FantastleReboot.logError(ex);
       }

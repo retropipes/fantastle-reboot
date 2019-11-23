@@ -15,7 +15,7 @@ import com.puttysoftware.fantastlereboot.creatures.jobs.JobManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceManager;
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.loaders.MonsterImageLoader;
@@ -59,7 +59,7 @@ public final class Monster extends Creature {
     this.setWindowAI(Monster.getInitialWindowAI());
     this.setMapAI(Monster.getInitialMapAI());
     final SpellBook spells = SpellBookManager
-        .getEnemySpellBookByID(PreferencesManager.getGameDifficulty());
+        .getEnemySpellBookByID(Prefs.getGameDifficulty());
     spells.learnAllSpells();
     this.setSpellBook(spells);
     this.image = this.getInitialImage();
@@ -112,21 +112,21 @@ public final class Monster extends Creature {
 
   @Override
   public int getSpeed() {
-    final int difficulty = PreferencesManager.getGameDifficulty();
+    final int difficulty = Prefs.getGameDifficulty();
     final int base = this.getBaseSpeed();
-    if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
+    if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
       return (int) (base * SPEED_ADJUST_SLOWEST);
     } else {
-      if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
+      if (difficulty == Prefs.DIFFICULTY_EASY) {
         return (int) (base * SPEED_ADJUST_SLOW);
       } else {
-        if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
+        if (difficulty == Prefs.DIFFICULTY_NORMAL) {
           return (int) (base * SPEED_ADJUST_NORMAL);
         } else {
-          if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
+          if (difficulty == Prefs.DIFFICULTY_HARD) {
             return (int) (base * SPEED_ADJUST_FAST);
           } else {
-            if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
+            if (difficulty == Prefs.DIFFICULTY_VERY_HARD) {
               return (int) (base * SPEED_ADJUST_FASTEST);
             } else {
               return (int) (base * SPEED_ADJUST_NORMAL);
@@ -264,20 +264,20 @@ public final class Monster extends Creature {
   }
 
   private static int getStatMultiplierForDifficulty() {
-    final int difficulty = PreferencesManager.getGameDifficulty();
-    if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
+    final int difficulty = Prefs.getGameDifficulty();
+    if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
       return STAT_MULT_VERY_EASY;
     } else {
-      if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
+      if (difficulty == Prefs.DIFFICULTY_EASY) {
         return STAT_MULT_EASY;
       } else {
-        if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
+        if (difficulty == Prefs.DIFFICULTY_NORMAL) {
           return STAT_MULT_NORMAL;
         } else {
-          if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
+          if (difficulty == Prefs.DIFFICULTY_HARD) {
             return STAT_MULT_HARD;
           } else {
-            if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
+            if (difficulty == Prefs.DIFFICULTY_VERY_HARD) {
               return STAT_MULT_VERY_HARD;
             } else {
               return STAT_MULT_NORMAL;
@@ -289,20 +289,20 @@ public final class Monster extends Creature {
   }
 
   private static double getGoldMultiplierForDifficulty() {
-    final int difficulty = PreferencesManager.getGameDifficulty();
-    if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
+    final int difficulty = Prefs.getGameDifficulty();
+    if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
       return GOLD_MULT_VERY_EASY;
     } else {
-      if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
+      if (difficulty == Prefs.DIFFICULTY_EASY) {
         return GOLD_MULT_EASY;
       } else {
-        if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
+        if (difficulty == Prefs.DIFFICULTY_NORMAL) {
           return GOLD_MULT_NORMAL;
         } else {
-          if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
+          if (difficulty == Prefs.DIFFICULTY_HARD) {
             return GOLD_MULT_HARD;
           } else {
-            if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
+            if (difficulty == Prefs.DIFFICULTY_VERY_HARD) {
               return GOLD_MULT_VERY_HARD;
             } else {
               return GOLD_MULT_NORMAL;
@@ -314,20 +314,20 @@ public final class Monster extends Creature {
   }
 
   private static double getExpMultiplierForDifficulty() {
-    final int difficulty = PreferencesManager.getGameDifficulty();
-    if (difficulty == PreferencesManager.DIFFICULTY_VERY_EASY) {
+    final int difficulty = Prefs.getGameDifficulty();
+    if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
       return EXP_MULT_VERY_EASY;
     } else {
-      if (difficulty == PreferencesManager.DIFFICULTY_EASY) {
+      if (difficulty == Prefs.DIFFICULTY_EASY) {
         return EXP_MULT_EASY;
       } else {
-        if (difficulty == PreferencesManager.DIFFICULTY_NORMAL) {
+        if (difficulty == Prefs.DIFFICULTY_NORMAL) {
           return EXP_MULT_NORMAL;
         } else {
-          if (difficulty == PreferencesManager.DIFFICULTY_HARD) {
+          if (difficulty == Prefs.DIFFICULTY_HARD) {
             return EXP_MULT_HARD;
           } else {
-            if (difficulty == PreferencesManager.DIFFICULTY_VERY_HARD) {
+            if (difficulty == Prefs.DIFFICULTY_VERY_HARD) {
               return EXP_MULT_VERY_HARD;
             } else {
               return EXP_MULT_NORMAL;

@@ -7,7 +7,7 @@ import com.puttysoftware.diane.loaders.SoundLoader;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class SoundPlayer {
@@ -42,7 +42,7 @@ public class SoundPlayer {
   }
 
   public static void playSound(final SoundIndex sound, final SoundGroup group) {
-    if (PreferencesManager.isSoundGroupEnabled(group)) {
+    if (Prefs.isSoundGroupEnabled(group)) {
       if (sound != null && sound != SoundIndex._NONE) {
         final String filename = getSoundFilename(sound);
         SoundLoader.play(

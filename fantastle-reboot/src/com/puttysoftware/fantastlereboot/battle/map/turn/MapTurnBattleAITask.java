@@ -7,7 +7,7 @@ package com.puttysoftware.fantastlereboot.battle.map.turn;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.battle.Battle;
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 
 public class MapTurnBattleAITask extends Thread {
   // Fields
@@ -29,7 +29,7 @@ public class MapTurnBattleAITask extends Thread {
           // Delay, for animation purposes
           try {
             
-            final int battleSpeed = PreferencesManager.getBattleSpeed();
+            final int battleSpeed = Prefs.getBattleSpeed();
             Thread.sleep(battleSpeed);
           } catch (final InterruptedException i) {
             // Ignore

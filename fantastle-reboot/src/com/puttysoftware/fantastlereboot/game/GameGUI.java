@@ -23,7 +23,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
 import com.puttysoftware.fantastlereboot.files.MazeFileManager;
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.loaders.ImageConstants;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 
@@ -138,9 +138,9 @@ class GameGUI {
     GameGUI.borderPane.setLayout(new BorderLayout());
     GameGUI.messageLabel = new JLabel(" ");
     GameGUI.messageLabel.setOpaque(true);
-    GameGUI.drawGrid = new DrawGrid(PreferencesManager.getViewingWindowSize());
+    GameGUI.drawGrid = new DrawGrid(Prefs.getViewingWindowSize());
     GameGUI.outputPane = new JPanel();
-    final int vSize = PreferencesManager.getViewingWindowSize();
+    final int vSize = Prefs.getViewingWindowSize();
     final int gSize = ImageConstants.SIZE;
     GameGUI.outputPane
         .setPreferredSize(new Dimension(vSize * gSize, vSize * gSize));
@@ -156,7 +156,7 @@ class GameGUI {
     @Override
     public void keyPressed(final KeyEvent e) {
       if (GameGUI.eventFlag) {
-        if (!PreferencesManager.oneMove()) {
+        if (!Prefs.oneMove()) {
           EventHandler.handleMovement(e);
         }
       }
@@ -165,7 +165,7 @@ class GameGUI {
     @Override
     public void keyReleased(final KeyEvent e) {
       if (GameGUI.eventFlag) {
-        if (PreferencesManager.oneMove()) {
+        if (Prefs.oneMove()) {
           EventHandler.handleMovement(e);
         }
       }

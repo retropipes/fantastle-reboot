@@ -5,7 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.battle.window.time;
 
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 
 class WindowTimeBattleSpeed {
   // Constants
@@ -19,7 +19,7 @@ class WindowTimeBattleSpeed {
   // Method
   static int getSpeed() {
     
-    return PreferencesManager.getBattleSpeed()
+    return Prefs.getBattleSpeed()
         / WindowTimeBattleSpeed.SPEED_FACTOR;
   }
 }

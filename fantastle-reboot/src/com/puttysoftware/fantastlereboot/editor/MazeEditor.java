@@ -44,7 +44,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
 import com.puttysoftware.fantastlereboot.files.MazeFileManager;
 import com.puttysoftware.fantastlereboot.game.Game;
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.loaders.ImageConstants;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
@@ -543,7 +543,7 @@ public class MazeEditor {
                         / 2);
               }
               MazeManager.getMaze().fill(
-                  PreferencesManager.getEditorDefaultFill(), new OpenSpace());
+                  Prefs.getEditorDefaultFill(), new OpenSpace());
               this.checkMenus();
             }
           } catch (final NumberFormatException nf) {

@@ -3,13 +3,13 @@ package com.puttysoftware.fantastlereboot.gui;
 import java.awt.desktop.PreferencesEvent;
 import java.awt.desktop.PreferencesHandler;
 
-public class PreferencesLauncher implements PreferencesHandler {
-  public PreferencesLauncher() {
+public class PrefsLauncher implements PreferencesHandler {
+  public PrefsLauncher() {
     super();
   }
 
   @Override
   public void handlePreferences(PreferencesEvent inE) {
-    PreferencesManager.showPrefs();
+    Prefs.showPrefs();
   }
 }

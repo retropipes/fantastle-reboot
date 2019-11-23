@@ -32,7 +32,7 @@ import com.puttysoftware.fantastlereboot.battle.map.MapBattleDefinitions;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleDraw;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleEffects;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleViewingWindowManager;
-import com.puttysoftware.fantastlereboot.gui.PreferencesManager;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
@@ -290,7 +290,7 @@ class MapTurnBattleGUI {
 
     @Override
     public void keyPressed(final KeyEvent e) {
-      if (!PreferencesManager.oneMove()) {
+      if (!Prefs.oneMove()) {
         if (e.isShiftDown()) {
           this.handleArrows(e);
         } else {
@@ -301,7 +301,7 @@ class MapTurnBattleGUI {
 
     @Override
     public void keyReleased(final KeyEvent e) {
-      if (PreferencesManager.oneMove()) {
+      if (Prefs.oneMove()) {
         if (e.isShiftDown()) {
           this.handleArrows(e);
         } else {
