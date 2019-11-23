@@ -65,11 +65,11 @@ public class BagOStuff {
       BagOStuff.PRODUCT_NAME, BagOStuff.VERSION_MAJOR, BagOStuff.VERSION_MINOR,
       BagOStuff.VERSION_BUGFIX, BagOStuff.VERSION_CODE,
       BagOStuff.VERSION_PRERELEASE);
-  private static final int VERSION_MAJOR = 5;
-  private static final int VERSION_MINOR = 1;
+  private static final int VERSION_MAJOR = 0;
+  private static final int VERSION_MINOR = 4;
   private static final int VERSION_BUGFIX = 0;
-  private static final int VERSION_CODE = ProductData.CODE_BETA;
-  private static final int VERSION_PRERELEASE = 2;
+  private static final int VERSION_CODE = ProductData.CODE_ALPHA;
+  private static final int VERSION_PRERELEASE = 1;
   public static final int STATUS_GUI = 0;
   public static final int STATUS_GAME = 1;
   public static final int STATUS_EDITOR = 2;
@@ -271,15 +271,7 @@ public class BagOStuff {
   }
 
   private static String getVersionString() {
-    final int code = pd.getCodeVersion();
-    String rt;
-    if (code < ProductData.CODE_STABLE) {
-      rt = "-beta" + BagOStuff.VERSION_PRERELEASE;
-    } else {
-      rt = "";
-    }
-    return BagOStuff.VERSION_MAJOR + "." + BagOStuff.VERSION_MINOR + "."
-        + BagOStuff.VERSION_BUGFIX + rt;
+    return pd.getVersionString();
   }
 
   public void restoreFormerMode() {
@@ -323,9 +315,5 @@ public class BagOStuff {
 
   public CombatItemList getCombatItems() {
     return this.combatItems;
-  }
-
-  public static boolean isBetaModeEnabled() {
-    return BagOStuff.VERSION_PRERELEASE > 0;
   }
 }
