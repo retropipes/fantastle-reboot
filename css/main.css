@@ -1,0 +1,784 @@
+
+/* ========================================================================= */
+/* = MODAL DIALOG                                                            */
+/* ========================================================================= */
+
+/* Used to contain the hyperlink and dialog content */
+.dialog-container {}
+
+/* Used to mark dialog link to click */
+.dialog-link {}
+
+/* Used by Javascript to inject into actual modal display */
+.dialog-content {
+    display: none;
+}
+
+/* Contains stylings to apply to the dialog content */
+.dialog-content-stylings {
+    padding: 5px;
+}
+
+/* ========================================================================= */
+/* = LAZY LOADING                                                            */
+/* ========================================================================= */
+
+/* NOTE: Assuming that using noscript plugin, so parent has this class! */
+.lazyload,
+.lazyloading img {
+    min-height: 60px;
+    min-width: 33.33%;
+}
+
+/* Only perform this when Javascript is enabled, otherwise images are hidden */
+.js .lazyload img {
+    opacity: 0.0;
+    transform: scale(0.8);
+}
+
+.lazyloading img {
+    opacity: 0.5;
+    background: #F7F7F7 url("/img/loader.gif") no-repeat center;
+}
+
+.lazyloaded img {
+    opacity: 1.0;
+    transform: scale(1.0);
+    transition: opacity 700ms;
+}
+
+/* ========================================================================= */
+/* = PROJECT                                                                 */
+/* ========================================================================= */
+
+/* Contains the project image and title */
+.project-container {}
+
+.project-container-image {
+    background-color: #FFFFFF;
+}
+
+.project-container-title {
+    padding: 10px;
+    background-color: #455A64;
+    color: #FFFFFF;
+}
+
+/* ========================================================================= */
+/* = NAVBAR MENU                                                             */
+/* ========================================================================= */
+
+/* Represents the main menu that is fixed to the left side of the page. */
+/* Has a high z-index such that children can appear outside of its width. */
+/* Using maximum width to allow hover menus of child to be visible */
+/* Because this navigation is covering the entire page, make it transparent */
+/* NOTE:
+ * Because covering entire page, disable pointer events to allow elements
+ * underneath to receive them
+ */
+/* Set scrolling for vertical part of menu */
+.main-menu {
+    display: block;
+    position: fixed;
+
+    width: 70px;
+    height: 100%;
+
+    top: 0px;
+    left: 0px;
+    z-index: 999;
+    text-align: center;
+}
+
+/* Represents the standard foreground/background colors of a menu. */
+.menu-colors {
+    background-color: #455A64;
+    color: #FFFFFF;
+}
+
+/* NOTE: Renable pointer events since parent disables them (allows hover) */
+/* NOTE: Setting width here to counterbalance 100% of parent */
+ul.menu {
+    display: block;
+
+    min-height: 100%;
+
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    text-indent: 0px;
+    white-space: nowrap;
+}
+
+ul.menu.flexible-width {
+    width: auto;
+}
+
+span.drop-right {
+    display: block;
+    box-shadow:inset 2px 0px 0px #90a4ae;
+    position: absolute;
+    left: 0px;
+    width:100%;
+    height: 100%;
+    top: 0px;
+}
+
+ul.menu li.active {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+ul.menu ul {
+    opacity:0;
+    position: absolute;
+    top: 0%;
+    left: 160%;
+    visibility: hidden;
+    -webkit-transition: all .4s ease;
+    transition: all .4s ease;
+}
+
+ul.menu li:hover > ul {
+    opacity: 1;
+    top: 0%;
+    left: 100%;
+    visibility: visible;
+}
+
+ul.menu li {
+    float: left;
+
+    /* Needed */
+    position: relative;
+}
+
+/* ========================================================================= */
+/* = PAGE ITEM                                                               */
+/* ========================================================================= */
+
+.page-item-container {
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.page-item-content {
+    padding: 35px 50px;
+}
+
+.page-item-content footer {
+    margin-top: 1em;
+}
+
+.page-item-image {
+    width: 100%;
+    height: auto;
+}
+
+.page-item-date {
+    color: #bdbdbd;
+}
+
+.page-item-title {
+    color: #000000;
+}
+
+.page-item-summary {
+    color: #757575;
+}
+
+.page-item-btn {
+    text-decoration: none;
+    color: #fff;
+    background-color: #26a69a;
+    text-align: center;
+    letter-spacing: .5px;
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+    -o-transition: .2s ease-out;
+    -ms-transition: .2s ease-out;
+    transition: .2s ease-out;
+    cursor: pointer;
+
+    border: none;
+    border-radius: 2px;
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    outline: 0;
+    padding: 0 2rem;
+    text-transform: uppercase;
+    vertical-align: middle;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.page-item-btn.page-item-btn-red {
+    background-color: #F44336;
+}
+
+/* ========================================================================= */
+/* = MISC                                                                    */
+/* ========================================================================= */
+
+html {
+    height: 100vh;
+}
+
+.minimum-viewport-height {
+    min-height: 100vh;
+}
+
+html, body {
+    margin: 0px;
+    padding: 0px;
+}
+
+.white-text {
+    color: #FFFFFF;
+}
+
+.black-overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.black-outline-text {
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.black-outline-text-2x {
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+}
+
+.row-colors {
+    background-color: #455A64;
+    color: #FFFFFF;
+}
+
+.page-colors {
+    background-color: #90a4ae;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.article-colors {
+    background-color: #FFFFFF;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.article-shadow {
+    -moz-box-shadow: 0 0 20px #5c5c5c;
+    -webkit-box-shadow: 0 0 20px #5c5c5c;
+    box-shadow: 0 0 20px #5c5c5c;
+}
+
+.transparent {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.main-content {
+    display: block;
+    position: relative;
+    padding-left: 70px;
+    width: 100%;
+    min-height: 100%;
+}
+
+.main-content article {
+    position: relative;
+    min-height: 100vh;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.main-content article header {
+    padding-top: 30px;
+}
+
+.fill-container {
+    width: 100%;
+    height: 100%;
+}
+
+.fill-container-width {
+    width: 100%;
+    height: auto;
+}
+
+.no-display {
+    display: none;
+}
+
+.horizontal-center-hack {
+    margin: 0 auto;
+}
+
+.face {
+    fill: #FFFFFF;
+    width: 6rem;
+    height: 6rem;
+}
+
+.cell {
+    position: relative;
+    border: 1px solid #FFF;
+}
+
+.center-items {
+    display: -ms-flex;
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.rounded-corners {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.rounded-corners-top {
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.rounded-corners-bottom {
+    -webkit-border-bottom-right-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+/* From materialize */
+.z-depth-1 {
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.grayscale {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.grayscale:hover {
+    -webkit-filter: grayscale(0%);
+    filter: grayscale(0%);
+}
+
+.grayscale.no-change-on-hover:hover {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    overflow: hidden;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    zoom: 1;
+} /* IE < 8 */
+
+.no-padding: {
+    padding: 0px;
+}
+
+.no-margin {
+    margin: 0px;
+}
+
+.article-title {
+    margin-top: 0px;
+}
+
+.date-color {
+    color: #BDBDBD;
+}
+
+.separator {
+    margin-left: 5px;
+    margin-right: 5px;
+    color: #BDBDBD;
+}
+
+ul.categories,
+ul.tags {
+    display: inline;
+    list-style: none;
+    line-height: 1em;
+}
+
+ul.categories li,
+ul.tags li {
+    display: inline;
+    color: #BDBDBD;
+}
+
+ul.categories li a,
+ul.tags li a {
+    color: #BDBDBD;
+}
+
+ul.categories li a:hover,
+ul.tags li a:hover {
+    color: #03a9f4;
+}
+
+.fullsize-background-image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+}
+
+.no-line-height {
+    line-height: 0;
+}
+
+/* ========================================================================= */
+/* = PARALLAX                                                                */
+/* ========================================================================= */
+
+/* Modified from keithclark.co.uk/articles/pure-css-parallax-websites/ */
+.parallax {
+    -moz-perspective: 300px;
+    -webkit-perspective: 300px;
+    perspective: 300px;
+
+    height: 500px; /* fallback for older browsers */
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    /* Fix for webkit browsers */
+    -moz-perspective-origin-x: 100%;
+    -webkit-perspective-origin-x: 100%;
+    perspective-origin-x: 100%;
+}
+
+.parallax__group {
+    position: relative;
+    height: 500px; /* fallback for older browsers */
+    height: 100vh;
+
+    -moz-transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.parallax__group--auto-height {
+    height: auto;
+}
+
+.parallax__layer {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+
+    /* Fix for webkit browsers */
+    -moz-transform-origin-x: 100%;
+    -webkit-transform-origin-x: 100%;
+    transform-origin-x: 100%;
+}
+
+.parallax__layer--fore {
+    -moz-transform: translateZ(90px) scale(.7);
+    -webkit-transform: translateZ(90px) scale(.7);
+    transform: translateZ(90px) scale(.7);
+    z-index: 1;
+}
+
+.parallax__layer--base {
+    -moz-transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    z-index: 4;
+}
+
+.parallax__layer--back {
+    -moz-transform: translateZ(-300px) scale(2);
+    -webkit-transform: translateZ(-300px) scale(2);
+    transform: translateZ(-300px) scale(2);
+    z-index: 3;
+}
+
+.parallax__layer--deep {
+    -moz-transform: translateZ(-600px) scale(3);
+    -webkit-transform: translateZ(-600px) scale(3);
+    transform: translateZ(-600px) scale(3);
+    z-index: 2;
+}
+
+/* ========================================================================= */
+/* = SPACING                                                                 */
+/* ========================================================================= */
+
+/* Materialize small */
+@media only screen and (max-width: 600px) {
+    .center-space {
+        padding: 0%;
+    }
+}
+
+/* Materialize medium */
+@media only screen and (min-width: 601px) {
+    .center-space {
+        padding: 0% 5%;
+    }
+}
+
+/* Materialize large */
+@media only screen and (min-width: 993px) {
+    .center-space {
+        padding: 0% 10%;
+    }
+}
+
+/* ========================================================================= */
+/* = HIGHLIGHT BLOCK                                                         */
+/* ========================================================================= */
+
+.highlight-block {
+    display: -ms-flex;
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+
+    text-align: center;
+
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    color: #FFFFFF;
+    background-color: rgba(240, 95, 64, 0.5);
+    opacity: 0.0;
+    transition: all 0.35s;
+}
+
+.highlight-block:hover {
+    opacity: 1.0;
+}
+
+/* ========================================================================= */
+/* = LISTS                                                                   */
+/* ========================================================================= */
+
+ul.main-page-footer li {
+    color: #FFFFFF;
+    font-size: 2em;
+}
+
+ul.main-page-footer li a {
+    color: #FFFFFF;
+}
+
+ul.no-list-float li {
+    float: none;
+}
+
+.horizontal li {
+    display: inline;
+}
+
+.no-bullets li {
+    list-style-type: none;
+    padding: 5px;
+}
+
+
+/* ========================================================================= */
+/* = COLUMNS                                                                 */
+/* ========================================================================= */
+
+.col-padding {
+    padding: 35px 50px;
+}
+
+.ignore-col-padding {
+    padding: -35px -50px;
+}
+
+.no-padding {
+    padding: 0px;
+}
+
+.columns {
+    -moz-column-gap: 10px;
+    -webkit-column-gap: 10px;
+    column-gap: 10px;
+
+    line-height: 1.5;
+}
+
+/* Materialize small */
+@media only screen and (max-width: 600px) {
+    .columns-responsive {
+        -moz-column-count: 1;
+        -webkit-column-count: 1;
+        column-count: 1;
+        columns: 1;
+    }
+}
+
+/* Materialize medium */
+@media only screen and (min-width: 601px) {
+    .columns-responsive {
+        -moz-column-count: 2;
+        -webkit-column-count: 2;
+        column-count: 2;
+        columns: 2;
+    }
+}
+
+/* Materialize large */
+@media only screen and (min-width: 993px) {
+    .columns-responsive {
+        -moz-column-count: 3;
+        -webkit-column-count: 3;
+        column-count: 3;
+        columns: 3;
+    }
+}
+
+/* ========================================================================= */
+/* = FORMS                                                                   */
+/* ========================================================================= */
+
+.large-form input[type=text] {
+    font-size: 5rem;
+    height: 7rem;
+}
+
+/* ========================================================================= */
+/* = PAGINATION                                                              */
+/* ========================================================================= */
+
+ul.pagination {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+.pagination li {
+    float: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.pagination li.active {
+    background-color: #03a9f4;
+}
+
+.pagination li.disabled a {
+    color: #999999;
+}
+
+.pagination li a {
+    color: #000000;
+}
+
+/* ========================================================================= */
+/* = PAGE SUMMARY                                                            */
+/* ========================================================================= */
+
+.masonry-flex-container,
+.flex-container {
+    display: -ms-flex;
+    display: -webkit-flex;
+    display: flex;
+    width: 100%;
+
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.flex-item {
+    position: relative;
+    display: inline-block;
+}
+
+.flex-item-spacing {
+    margin: 10px;
+}
+
+/* Materialize small */
+@media only screen and (max-width: 600px) {
+    .flex-item {
+        width: 100%;
+    }
+    .flex-item-spacing {
+        width: calc(100% - 20px);
+    }
+}
+
+/* Materialize medium */
+@media only screen and (min-width: 601px) {
+    .flex-item {
+        width: 50%;
+    }
+    .flex-item-spacing {
+        width: calc(50% - 20px);
+    }
+}
+
+/* Materialize large */
+@media only screen and (min-width: 993px) {
+    .flex-item {
+        width: 33.33%;
+    }
+    .flex-item-spacing {
+        width: calc(33.33% - 20px);
+    }
+}
+
+img {
+  max-width: 100%;
+}
