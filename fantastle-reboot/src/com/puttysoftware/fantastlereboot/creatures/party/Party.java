@@ -27,7 +27,7 @@ public class Party {
   private int leaderID;
   private int activePCs;
   private int monsterLevel;
-  private static final int MAX_SIZE = 1;
+  private static final int MAX_SIZE = 10;
 
   // Constructors
   public Party() {
@@ -39,7 +39,7 @@ public class Party {
   }
 
   // Methods
-  public static int getMaxMembers() {
+  static int getMaxMembers() {
     return Party.MAX_SIZE;
   }
 
@@ -66,6 +66,10 @@ public class Party {
       }
     }
     return result;
+  }
+
+  public int getMembers() {
+    return this.members.size();
   }
 
   public int getMonsterLevel() {
@@ -133,6 +137,42 @@ public class Party {
       return true;
     }
     return false;
+  }
+
+  public void pickLeader() {
+    final String[] pickNames = this.buildNameList();
+    final String response = CommonDialogs.showInputDialog("Pick Leader",
+        "Arrange Party", pickNames, pickNames[this.leaderID]);
+    if (response != null) {
+      int x = 0;
+      for (PartyMember member : this.members) {
+        if (member.getName().equals(response)) {
+          this.leaderID = x;
+          break;
+        }
+        x++;
+      }
+    }
+  }
+
+  private String[] buildNameList() {
+    final String[] tempNames = new String[1];
+    int nnc = 0;
+    for (PartyMember member : this.members) {
+      if (member != null) {
+        tempNames[nnc] = member.getName();
+        nnc++;
+      }
+    }
+    final String[] names = new String[nnc];
+    nnc = 0;
+    for (int x = 0; x < tempNames.length; x++) {
+      if (tempNames[x] != null) {
+        names[nnc] = tempNames[x];
+        nnc++;
+      }
+    }
+    return names;
   }
 
   static Party read(final XDataReader worldFile) throws IOException {

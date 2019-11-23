@@ -32,6 +32,7 @@ import javax.swing.KeyStroke;
 import com.puttysoftware.commondialogs.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.files.CharacterRegistration;
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
@@ -46,33 +47,29 @@ import com.puttysoftware.fantastlereboot.maze.NoteManager;
 public class MenuManager {
   // Fields
   private final JMenuBar mainMenuBar;
-  private JMenu fileMenu, editMenu, gameMenu, debugMenu, helpMenu;
-  private JMenu playMenu;
-  private JMenuItem fileNew;
-  private JMenuItem fileOpen, fileClose, fileSave, fileSaveAs, fileExit;
-  private JMenuItem editUndo, editRedo, editPreferences;
-  private JMenuItem editCutLevel, editCopyLevel, editPasteLevel,
-      editInsertLevelFromClipboard, editClearHistory, editGoTo, editUpOneFloor,
-      editDownOneFloor, editUpOneLevel, editDownOneLevel, editAddLevel,
-      editRemoveLevel, editResizeLevel, editToggleLayer, editMazePreferences;
-  private JMenuItem playPlay;
-  private JMenuItem playEdit;
-  private JMenuItem gameNewGame, gameEquipment, gameInventory, gameUse,
-      gameReset, gameShowScore, gameShowTable, gameRegisterCharacter,
-      gameUnregisterCharacter, gameRemoveCharacter, gameEditNote, gameViewStats;
+  private JMenu fileMenu, editMenu, playMenu, gameMenu, debugMenu, helpMenu;
+  private JMenuItem fileNew, fileOpen, fileClose, fileSave, fileSaveAs,
+      fileExit;
+  private JMenuItem editUndo, editRedo, editPreferences, editCutLevel,
+      editCopyLevel, editPasteLevel, editInsertLevelFromClipboard,
+      editClearHistory, editGoTo, editUpOneFloor, editDownOneFloor,
+      editUpOneLevel, editDownOneLevel, editAddLevel, editRemoveLevel,
+      editResizeLevel, editToggleLayer, editMazePreferences;
+  private JMenuItem playNewGame, playPlay, playEdit, playRegisterCharacter,
+      playUnregisterCharacter, playRemoveCharacter;
+  private JMenuItem gameEquipment, gameInventory, gameUse, gameReset,
+      gameShowScore, gameShowTable, gameEditNote, gameViewStats,
+      gameChangeLeader;
   private JMenuItem debugResetPreferences;
   private JMenuItem helpAbout, helpGeneralHelp, helpObjectHelp;
-  private KeyStroke fileNewAccel;
-  private KeyStroke fileOpenAccel, fileCloseAccel, fileSaveAccel,
+  private KeyStroke fileNewAccel, fileOpenAccel, fileCloseAccel, fileSaveAccel,
       fileSaveAsAccel;
-  private KeyStroke editPreferencesAccel;
-  private KeyStroke editUndoAccel, editRedoAccel, editCutLevelAccel,
-      editCopyLevelAccel, editPasteLevelAccel,
+  private KeyStroke editPreferencesAccel, editUndoAccel, editRedoAccel,
+      editCutLevelAccel, editCopyLevelAccel, editPasteLevelAccel,
       editInsertLevelFromClipboardAccel, editClearHistoryAccel, editGoToAccel,
       editUpOneFloorAccel, editDownOneFloorAccel, editUpOneLevelAccel,
       editDownOneLevelAccel, editToggleLayerAccel;
-  private KeyStroke playPlayMazeAccel;
-  private KeyStroke playEditMazeAccel;
+  private KeyStroke playPlayMazeAccel, playEditMazeAccel;
   private KeyStroke gameNewGameAccel, gameInventoryAccel, gameUseAccel,
       gameResetAccel, gameShowScoreAccel, gameShowTableAccel;
   private final EventHandler handler;
@@ -121,6 +118,7 @@ public class MenuManager {
     this.gameShowTable.setEnabled(true);
     this.gameEditNote.setEnabled(true);
     this.gameViewStats.setEnabled(true);
+    this.gameChangeLeader.setEnabled(true);
     this.checkFlags();
   }
 
@@ -145,6 +143,7 @@ public class MenuManager {
     this.gameShowTable.setEnabled(false);
     this.gameEditNote.setEnabled(false);
     this.gameViewStats.setEnabled(false);
+    this.gameChangeLeader.setEnabled(false);
     this.checkFlags();
   }
 
@@ -181,18 +180,19 @@ public class MenuManager {
     this.gameShowTable.setEnabled(false);
     this.gameEditNote.setEnabled(false);
     this.gameViewStats.setEnabled(false);
+    this.gameChangeLeader.setEnabled(false);
   }
 
   public void setMainMenus() {
     this.fileClose.setEnabled(false);
     this.fileSave.setEnabled(false);
     this.fileSaveAs.setEnabled(false);
+    this.playNewGame.setEnabled(true);
     this.playPlay.setEnabled(false);
     this.playEdit.setEnabled(false);
-    this.gameNewGame.setEnabled(true);
-    this.gameRegisterCharacter.setEnabled(true);
-    this.gameUnregisterCharacter.setEnabled(true);
-    this.gameRemoveCharacter.setEnabled(true);
+    this.playRegisterCharacter.setEnabled(true);
+    this.playUnregisterCharacter.setEnabled(true);
+    this.playRemoveCharacter.setEnabled(true);
     this.debugResetPreferences.setEnabled(true);
     this.helpAbout.setEnabled(true);
     this.helpObjectHelp.setEnabled(true);
@@ -225,6 +225,7 @@ public class MenuManager {
     this.gameShowTable.setEnabled(false);
     this.gameEditNote.setEnabled(false);
     this.gameViewStats.setEnabled(false);
+    this.gameChangeLeader.setEnabled(false);
     this.checkFlags();
   }
 
@@ -464,12 +465,15 @@ public class MenuManager {
     this.editToggleLayer = new JMenuItem("Toggle Layer");
     this.editToggleLayer.setAccelerator(this.editToggleLayerAccel);
     this.editMazePreferences = new JMenuItem("Maze Preferences...");
+    this.playNewGame = new JMenuItem("New Game");
+    this.playNewGame.setAccelerator(this.gameNewGameAccel);
     this.playPlay = new JMenuItem("Play");
     this.playPlay.setAccelerator(this.playPlayMazeAccel);
     this.playEdit = new JMenuItem("Edit");
     this.playEdit.setAccelerator(this.playEditMazeAccel);
-    this.gameNewGame = new JMenuItem("New Game");
-    this.gameNewGame.setAccelerator(this.gameNewGameAccel);
+    this.playRegisterCharacter = new JMenuItem("Register Character...");
+    this.playUnregisterCharacter = new JMenuItem("Unregister Character...");
+    this.playRemoveCharacter = new JMenuItem("Remove Character...");
     this.gameEquipment = new JMenuItem("Show Equipment...");
     this.gameInventory = new JMenuItem("Show Inventory...");
     this.gameInventory.setAccelerator(this.gameInventoryAccel);
@@ -481,11 +485,9 @@ public class MenuManager {
     this.gameShowScore.setAccelerator(this.gameShowScoreAccel);
     this.gameShowTable = new JMenuItem("Show Score Table");
     this.gameShowTable.setAccelerator(this.gameShowTableAccel);
-    this.gameRegisterCharacter = new JMenuItem("Register Character...");
-    this.gameUnregisterCharacter = new JMenuItem("Unregister Character...");
-    this.gameRemoveCharacter = new JMenuItem("Remove Character...");
     this.gameEditNote = new JMenuItem("Edit Note...");
     this.gameViewStats = new JMenuItem("View Statistics...");
+    this.gameChangeLeader = new JMenuItem("Change Party Leader...");
     this.debugResetPreferences = new JMenuItem("Reset Preferences");
     this.helpAbout = new JMenuItem("About Fantastle...");
     this.helpGeneralHelp = new JMenuItem("Fantastle Help");
@@ -522,10 +524,11 @@ public class MenuManager {
     this.gameReset.addActionListener(this.handler);
     this.gameShowScore.addActionListener(this.handler);
     this.gameShowTable.addActionListener(this.handler);
-    this.gameNewGame.addActionListener(this.handler);
-    this.gameRegisterCharacter.addActionListener(this.handler);
-    this.gameUnregisterCharacter.addActionListener(this.handler);
-    this.gameRemoveCharacter.addActionListener(this.handler);
+    this.gameChangeLeader.addActionListener(this.handler);
+    this.playNewGame.addActionListener(this.handler);
+    this.playRegisterCharacter.addActionListener(this.handler);
+    this.playUnregisterCharacter.addActionListener(this.handler);
+    this.playRemoveCharacter.addActionListener(this.handler);
     this.gameEditNote.addActionListener(this.handler);
     this.gameViewStats.addActionListener(this.handler);
     this.debugResetPreferences.addActionListener(this.handler);
@@ -561,20 +564,21 @@ public class MenuManager {
     this.editMenu.add(this.editResizeLevel);
     this.editMenu.add(this.editToggleLayer);
     this.editMenu.add(this.editMazePreferences);
+    this.playMenu.add(this.playNewGame);
     this.playMenu.add(this.playPlay);
     this.playMenu.add(this.playEdit);
-    this.gameMenu.add(this.gameNewGame);
+    this.playMenu.add(this.playRegisterCharacter);
+    this.playMenu.add(this.playUnregisterCharacter);
+    this.playMenu.add(this.playRemoveCharacter);
     this.gameMenu.add(this.gameEquipment);
     this.gameMenu.add(this.gameInventory);
     this.gameMenu.add(this.gameUse);
     this.gameMenu.add(this.gameReset);
     this.gameMenu.add(this.gameShowScore);
     this.gameMenu.add(this.gameShowTable);
-    this.gameMenu.add(this.gameRegisterCharacter);
-    this.gameMenu.add(this.gameUnregisterCharacter);
-    this.gameMenu.add(this.gameRemoveCharacter);
     this.gameMenu.add(this.gameEditNote);
     this.gameMenu.add(this.gameViewStats);
+    this.gameMenu.add(this.gameChangeLeader);
     this.debugMenu.add(this.debugResetPreferences);
     if (!System.getProperty("os.name").equalsIgnoreCase("Mac OS X")) {
       this.helpMenu.add(this.helpAbout);
@@ -614,20 +618,21 @@ public class MenuManager {
     this.editResizeLevel.setEnabled(false);
     this.editToggleLayer.setEnabled(false);
     this.editMazePreferences.setEnabled(false);
+    this.playNewGame.setEnabled(false);
     this.playPlay.setEnabled(false);
     this.playEdit.setEnabled(false);
-    this.gameNewGame.setEnabled(false);
+    this.playRegisterCharacter.setEnabled(false);
+    this.playUnregisterCharacter.setEnabled(false);
+    this.playRemoveCharacter.setEnabled(false);
     this.gameEquipment.setEnabled(false);
     this.gameInventory.setEnabled(false);
     this.gameUse.setEnabled(false);
     this.gameReset.setEnabled(false);
     this.gameShowScore.setEnabled(false);
     this.gameShowTable.setEnabled(false);
-    this.gameRegisterCharacter.setEnabled(false);
-    this.gameUnregisterCharacter.setEnabled(false);
-    this.gameRemoveCharacter.setEnabled(false);
     this.gameEditNote.setEnabled(false);
     this.gameViewStats.setEnabled(false);
+    this.gameChangeLeader.setEnabled(false);
     this.debugResetPreferences.setEnabled(false);
     this.helpAbout.setEnabled(false);
     this.helpObjectHelp.setEnabled(false);
@@ -772,6 +777,9 @@ public class MenuManager {
         } else if (cmd.equals("View Statistics...")) {
           // View Statistics
           StatisticsViewer.viewStatistics();
+        } else if (cmd.equals("Change Party Leader...")) {
+          // Change Party Leader
+          PartyManager.getParty().pickLeader();
         } else if (cmd.equals("Reset Preferences")) {
           app.resetPreferences();
           CommonDialogs.showDialog("Preferences reset to defaults.");

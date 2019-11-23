@@ -51,6 +51,7 @@ import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.files.FileExtensions;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.Tile;
+import com.puttysoftware.randomrange.RandomRange;
 
 public class PreferencesManager {
   // Fields
@@ -92,6 +93,10 @@ public class PreferencesManager {
   private static boolean guiSetUp = false;
   private static final int[] VIEWING_WINDOW_SIZES = new int[] { 7, 9, 11, 13,
       15, 17, 19, 21, 23, 25 };
+  private static final int[] MDM_MIN_TOP = new int[] { 5, 4, 3, 2, 1 };
+  private static final int[] MDM_MIN_BOT = new int[] { 5, 5, 5, 5, 5 };
+  private static final int[] MDM_MAX_TOP = new int[] { 5, 5, 5, 5, 5 };
+  private static final int[] MDM_MAX_BOT = new int[] { 5, 4, 3, 2, 1 };
   private static final int DEFAULT_SIZE_INDEX = 2;
   private static final String[] VIEWING_WINDOW_SIZE_NAMES = new String[] {
       "Tiny", "Small", "Medium", "Large", "Huge", "Tiny HD", "Small HD",
@@ -123,7 +128,7 @@ public class PreferencesManager {
   private static final int MUSIC_LENGTH = 5;
   private static final int SOUNDS_LENGTH = 5;
   private static final int GRID_LENGTH = 6;
-  private static final int PREFS_VERSION_MAJOR = 5;
+  private static final int PREFS_VERSION_MAJOR = 0;
   private static final int PREFS_VERSION_MINOR = 0;
 
   // Constructors
@@ -132,6 +137,19 @@ public class PreferencesManager {
   }
 
   // Methods
+  public static int getMonsterCount(final int pmCount) {
+    final int diff = getGameDifficulty();
+    int min = pmCount * MDM_MIN_TOP[diff] / MDM_MIN_BOT[diff];
+    if (min < 1) {
+      min = 1;
+    }
+    int max = pmCount * MDM_MAX_TOP[diff] / MDM_MAX_BOT[diff];
+    if (max < 1) {
+      max = 1;
+    }
+    return RandomRange.generate(min, max);
+  }
+
   public static int getBattleSpeed() {
     return PreferencesManager.BATTLE_SPEED;
   }
