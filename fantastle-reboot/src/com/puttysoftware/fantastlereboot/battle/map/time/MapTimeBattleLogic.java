@@ -101,7 +101,7 @@ public class MapTimeBattleLogic extends Battle {
     this.bx = x;
     this.by = y;
     final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final Creature proxyEnemy = MonsterFactory.getNewMonsterInstance();
+    final Creature proxyEnemy = MonsterFactory.generateMonster();
     final PartyMember playerCharacter = PartyManager.getParty().getLeader();
     playerCharacter.offsetExperience(proxyEnemy.getExperience());
     playerCharacter.offsetGold(proxyEnemy.getGold());

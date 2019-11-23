@@ -324,7 +324,7 @@ public class WindowTurnBattleLogic extends Battle {
       bag.setInBattle();
       Game.hideOutput();
       Game.stopMovement();
-      this.enemy = MonsterFactory.getNewMonsterInstance();
+      this.enemy = MonsterFactory.generateMonster();
       this.enemy.loadCreature();
       this.enemyDidDamage = false;
       this.playerDidDamage = false;
@@ -341,7 +341,7 @@ public class WindowTurnBattleLogic extends Battle {
     this.bx = x;
     this.by = y;
     final BagOStuff bag = FantastleReboot.getBagOStuff();
-    this.enemy = MonsterFactory.getNewMonsterInstance();
+    this.enemy = MonsterFactory.generateMonster();
     this.enemy.loadCreature();
     final PartyMember playerCharacter = PartyManager.getParty().getLeader();
     final Creature monster = this.enemy;

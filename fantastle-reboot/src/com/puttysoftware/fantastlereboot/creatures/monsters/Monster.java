@@ -53,8 +53,8 @@ public final class Monster extends Creature {
   private static final double EXP_MULT_VERY_HARD = 0.8;
 
   // Constructors
-  Monster() {
-    super(new ItemInventory(), 1, FaithManager.getRandomFaith(),
+  Monster(final int teamID) {
+    super(new ItemInventory(), teamID, FaithManager.getRandomFaith(),
         JobManager.getRandomJob(), RaceManager.getRandomRace());
     this.setWindowAI(Monster.getInitialWindowAI());
     this.setMapAI(Monster.getInitialMapAI());

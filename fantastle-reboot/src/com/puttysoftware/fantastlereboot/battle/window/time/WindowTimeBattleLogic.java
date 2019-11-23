@@ -336,7 +336,7 @@ public class WindowTimeBattleLogic extends Battle {
       bag.setInBattle();
       Game.hideOutput();
       Game.stopMovement();
-      this.enemy = MonsterFactory.getNewMonsterInstance();
+      this.enemy = MonsterFactory.generateMonster();
       this.enemy.loadCreature();
       this.battleGUI.setMaxPlayerActionBarValue(
           PartyManager.getParty().getLeader().getActionBarSpeed());
@@ -356,7 +356,7 @@ public class WindowTimeBattleLogic extends Battle {
     this.bx = x;
     this.by = y;
     final BagOStuff bag = FantastleReboot.getBagOStuff();
-    this.enemy = MonsterFactory.getNewMonsterInstance();
+    this.enemy = MonsterFactory.generateMonster();
     this.enemy.loadCreature();
     final PartyMember playerCharacter = PartyManager.getParty().getLeader();
     final Creature monster = this.enemy;

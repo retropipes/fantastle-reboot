@@ -101,7 +101,7 @@ public class MapTurnBattleLogic extends Battle {
     this.bx = x;
     this.by = y;
     final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final Creature monster = MonsterFactory.getNewMonsterInstance();
+    final Creature monster = MonsterFactory.generateMonster();
     final PartyMember playerCharacter = PartyManager.getParty().getLeader();
     playerCharacter.offsetExperience(monster.getExperience());
     playerCharacter.offsetGold(monster.getGold());

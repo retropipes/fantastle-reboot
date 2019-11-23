@@ -45,6 +45,9 @@ public abstract class Creature {
   private static final int BAR_SPEED_MAX = 1;
   public static final int FULL_HEAL_PERCENTAGE = 100;
   public static final int TEAM_PARTY = 0;
+  public static final int TEAM_ENEMY_FIRST = 1;
+  public static final int TEAM_ENEMY_LAST = 10;
+  public static final int TEAM_BOSS = 11;
   private static final int FUMBLE_BASE = 10;
   private static final int MAX_AGILITY_CONTRIB = 200;
   private static final int MAX_LUCK_CONTRIB = 200;
