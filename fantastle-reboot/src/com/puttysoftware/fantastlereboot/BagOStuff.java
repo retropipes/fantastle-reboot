@@ -69,7 +69,7 @@ public class BagOStuff {
   private static final int VERSION_MINOR = 4;
   private static final int VERSION_BUGFIX = 0;
   private static final int VERSION_CODE = ProductData.CODE_ALPHA;
-  private static final int VERSION_PRERELEASE = 1;
+  private static final int VERSION_PRERELEASE = 0;
   public static final int STATUS_GUI = 0;
   public static final int STATUS_GAME = 1;
   public static final int STATUS_EDITOR = 2;

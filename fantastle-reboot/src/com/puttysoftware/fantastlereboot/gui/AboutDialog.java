@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -84,13 +85,16 @@ public class AboutDialog implements AboutHandler {
     this.logoPane.add(new JLabel("",
         UserInterfaceImageLoader.load(UserInterfaceImageIndex.MINI_LOGO),
         SwingConstants.LEFT));
-    this.textPane.setLayout(new GridLayout(4, 1));
-    this.textPane.add(new JLabel("Fantastle Version: " + ver));
-    this.textPane.add(new JLabel("Author: Eric Ahnell"));
+    this.textPane.setLayout(new GridLayout(8, 1));
+    this.textPane.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+    this.textPane.add(new JLabel("Fantastle Reboot"));
+    this.textPane.add(new JLabel("A maze solving + role playing hybrid game"));
+    this.textPane.add(new JLabel("Version: " + ver));
+    this.textPane.add(new JLabel("Author: Putty Software"));
     this.textPane
-        .add(new JLabel("Web Site: http://fantastle.worldwizard.net/"));
-    this.textPane
-        .add(new JLabel("E-mail bug reports to: fantastle@worldwizard.net  "));
+        .add(new JLabel("Web Site: https://puttysoftware.github.com/fantastle-reboot/"));
+    this.textPane.add(new JLabel("Special thanks to:"));
+    this.textPane.add(new JLabel("The #IndieDevWorldOrder gang on Twitter, for feedback"));
     this.buttonPane.setLayout(new FlowLayout());
     this.buttonPane.add(this.aboutOK);
     this.aboutPane.add(this.logoPane, BorderLayout.WEST);
