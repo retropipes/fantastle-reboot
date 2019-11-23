@@ -18,11 +18,11 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot;
 
-import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import com.puttysoftware.diane.gui.MainWindow;
@@ -54,7 +54,7 @@ class Loader extends Thread {
     this.waitProgress.setMinimum(0);
     this.waitProgress.setMaximum(100);
     this.waitProgress.setValue(0);
-    Container content = new Container();
+    JPanel content = new JPanel();
     content.setLayout(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
     c.gridx = 0;
@@ -62,7 +62,7 @@ class Loader extends Thread {
     content.add(this.waitLabel, c);
     c.gridy = 1;
     content.add(this.waitProgress, c);
-    this.waitFrame.setContentPane(content);
+    this.waitFrame.attachContent(content);
   }
 
   @Override

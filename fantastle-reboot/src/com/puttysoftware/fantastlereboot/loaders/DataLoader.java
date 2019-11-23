@@ -104,6 +104,42 @@ public class DataLoader {
     }
   }
 
+  public static String[] loadGivenNameData() {
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
+        DataLoader.class.getResourceAsStream("/assets/data/names/given"
+            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
+      // Fetch data
+      final ArrayList<String> data = new ArrayList<>();
+      String raw = "0";
+      while (raw != null) {
+        raw = rsr.readString();
+        data.add(raw);
+      }
+      return data.toArray(new String[data.size()]);
+    } catch (final IOException e) {
+      FantastleReboot.logError(e);
+      return null;
+    }
+  }
+
+  public static String[] loadFamilyNameData() {
+    try (final ResourceStreamReader rsr = new ResourceStreamReader(
+        DataLoader.class.getResourceAsStream("/assets/data/names/family"
+            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
+      // Fetch data
+      final ArrayList<String> data = new ArrayList<>();
+      String raw = "0";
+      while (raw != null) {
+        raw = rsr.readString();
+        data.add(raw);
+      }
+      return data.toArray(new String[data.size()]);
+    } catch (final IOException e) {
+      FantastleReboot.logError(e);
+      return null;
+    }
+  }
+
   public static String[] loadMonsterData() {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class.getResourceAsStream("/assets/data/monster/monsternames"
@@ -115,24 +151,7 @@ public class DataLoader {
         raw = rsr.readString();
         data.add(raw);
       }
-      final Object[] arr = data.toArray();
-      final String[] tempres = new String[arr.length];
-      int count = 0;
-      for (int x = 0; x < arr.length; x++) {
-        if (arr[x] != null) {
-          tempres[x] = arr[x].toString();
-          count++;
-        }
-      }
-      final String[] res = new String[count];
-      count = 0;
-      for (final String tempre : tempres) {
-        if (tempre != null) {
-          res[count] = tempre;
-          count++;
-        }
-      }
-      return res;
+      return data.toArray(new String[data.size()]);
     } catch (final IOException e) {
       FantastleReboot.logError(e);
       return null;

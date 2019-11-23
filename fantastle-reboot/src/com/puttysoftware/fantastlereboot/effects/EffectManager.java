@@ -18,10 +18,10 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.effects;
 
-import java.awt.Container;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import com.puttysoftware.diane.utilties.DirectionResolver;
 import com.puttysoftware.fantastlereboot.game.Game;
@@ -29,7 +29,7 @@ import com.puttysoftware.fantastlereboot.game.Game;
 public class EffectManager {
   // Fields
   private static Effect[] activeEffects;
-  private static Container activeEffectMessageContainer;
+  private static JPanel activeEffectMessageJPanel;
   private static JLabel[] activeEffectMessages;
   private static int newEffectIndex;
   private static int[] activeEffectIndices;
@@ -59,13 +59,13 @@ public class EffectManager {
     EffectManager.activeEffects[EffectConstants.EFFECT_POWER_WITHER] = new PowerWither(
         0);
     // Create GUI
-    EffectManager.activeEffectMessageContainer = new Container();
+    EffectManager.activeEffectMessageJPanel = new JPanel();
     EffectManager.activeEffectMessages = new JLabel[EffectManager.MAX_ACTIVE_EFFECTS];
-    EffectManager.activeEffectMessageContainer
+    EffectManager.activeEffectMessageJPanel
         .setLayout(new GridLayout(EffectManager.MAX_ACTIVE_EFFECTS, 1));
     for (int z = 0; z < EffectManager.MAX_ACTIVE_EFFECTS; z++) {
       EffectManager.activeEffectMessages[z] = new JLabel("");
-      EffectManager.activeEffectMessageContainer
+      EffectManager.activeEffectMessageJPanel
           .add(EffectManager.activeEffectMessages[z]);
     }
     // Set up miscellaneous things
@@ -77,8 +77,8 @@ public class EffectManager {
   }
 
   // Methods
-  public static Container getEffectMessageContainer() {
-    return EffectManager.activeEffectMessageContainer;
+  public static JPanel getEffectMessageJPanel() {
+    return EffectManager.activeEffectMessageJPanel;
   }
 
   public static void decayEffects() {

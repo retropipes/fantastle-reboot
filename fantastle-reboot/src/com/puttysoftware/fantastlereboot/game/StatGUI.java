@@ -5,10 +5,10 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.game;
 
-import java.awt.Container;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.puttysoftware.fantastlereboot.assets.EffectImageIndex;
@@ -20,7 +20,7 @@ import com.puttysoftware.images.BufferedImageIcon;
 
 class StatGUI {
   // Fields
-  private static Container statsPane;
+  private static JPanel statsPane;
   private static JLabel hpLabel;
   private static JLabel mpLabel;
   private static JLabel goldLabel;
@@ -36,7 +36,7 @@ class StatGUI {
   }
 
   // Methods
-  static Container getStatsPane() {
+  static JPanel getStatsPane() {
     if (!StatGUI.guiSetUp) {
       StatGUI.setUpGUI();
       StatGUI.guiSetUp = true;
@@ -65,7 +65,7 @@ class StatGUI {
   }
 
   private static void setUpGUI() {
-    StatGUI.statsPane = new Container();
+    StatGUI.statsPane = new JPanel();
     StatGUI.statsPane.setLayout(new GridLayout(7, 1));
     StatGUI.hpLabel = new JLabel("", null, SwingConstants.LEFT);
     StatGUI.mpLabel = new JLabel("", null, SwingConstants.LEFT);

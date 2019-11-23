@@ -27,8 +27,8 @@ import com.puttysoftware.errorlogger.ErrorLogger;
 import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.gui.MenuManager;
-import com.puttysoftware.fantastlereboot.gui.PrefsLauncher;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
+import com.puttysoftware.fantastlereboot.gui.PrefsLauncher;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.integration.NativeIntegration;
 

@@ -6,10 +6,10 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.battle.map.time;
 
-import java.awt.Container;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.puttysoftware.fantastlereboot.assets.EffectImageIndex;
@@ -19,7 +19,7 @@ import com.puttysoftware.images.BufferedImageIcon;
 
 public class MapTimeBattleStats {
   // Fields
-  private Container statsPane;
+  private JPanel statsPane;
   private JLabel nameLabel;
   private JLabel teamLabel;
   private JLabel hpLabel;
@@ -34,7 +34,7 @@ public class MapTimeBattleStats {
   }
 
   // Methods
-  public Container getStatsPane() {
+  public JPanel getStatsPane() {
     return this.statsPane;
   }
 
@@ -48,7 +48,7 @@ public class MapTimeBattleStats {
   }
 
   private void setUpGUI() {
-    this.statsPane = new Container();
+    this.statsPane = new JPanel();
     this.statsPane.setLayout(new GridLayout(6, 1));
     this.nameLabel = new JLabel("", null, SwingConstants.LEFT);
     this.teamLabel = new JLabel("", null, SwingConstants.LEFT);

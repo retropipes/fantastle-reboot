@@ -1,7 +1,6 @@
 package com.puttysoftware.fantastlereboot.battle.window.time;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -11,6 +10,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
@@ -26,7 +26,7 @@ import com.puttysoftware.images.BufferedImageIcon;
 public class WindowTimeBattleGUI {
   // Fields
   private MainWindow battleFrame;
-  private final Container holderPane;
+  private final JPanel holderPane;
   private final JLabel iconLabel;
   private final JTextArea messageArea;
   private final JProgressBar myActionBar, enemyActionBar;
@@ -35,12 +35,12 @@ public class WindowTimeBattleGUI {
   // Constructor
   public WindowTimeBattleGUI() {
     // Initialize GUI
-    Container iconPane, messagePane, buttonPane, timerPane;
-    this.holderPane = new Container();
-    iconPane = new Container();
-    messagePane = new Container();
-    buttonPane = new Container();
-    timerPane = new Container();
+    JPanel iconPane, messagePane, buttonPane, timerPane;
+    this.holderPane = new JPanel();
+    iconPane = new JPanel();
+    messagePane = new JPanel();
+    buttonPane = new JPanel();
+    timerPane = new JPanel();
     this.iconLabel = new JLabel("");
     this.myActionBar = new JProgressBar(0);
     this.enemyActionBar = new JProgressBar(0);
@@ -125,7 +125,7 @@ public class WindowTimeBattleGUI {
   final void showBattle() {
     this.battleFrame = MainWindow.getOutputFrame();
     this.battleFrame.setTitle("Battle");
-    this.battleFrame.setContentPane(this.holderPane);
+    this.battleFrame.attachContent(this.holderPane);
     this.battleFrame.setDefaultButton(this.done);
     this.battleFrame.pack();
   }

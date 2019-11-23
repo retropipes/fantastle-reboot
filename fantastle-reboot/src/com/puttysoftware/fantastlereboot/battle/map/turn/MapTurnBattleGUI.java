@@ -6,7 +6,6 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.battle.map.turn;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
@@ -18,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
@@ -48,7 +48,7 @@ class MapTurnBattleGUI {
   private final MapTurnBattleStats bs;
   private final MapBattleEffects be;
   private final EventHandler handler = new EventHandler();
-  private Container borderPane;
+  private JPanel borderPane;
   private DrawGrid drawGrid;
   boolean eventHandlersOn;
   private JButton spell, steal, drain, item, end;
@@ -84,7 +84,7 @@ class MapTurnBattleGUI {
   void showBattle() {
     this.battleFrame = MainWindow.getOutputFrame();
     this.battleFrame.setTitle("Battle");
-    this.battleFrame.setContentPane(this.borderPane);
+    this.battleFrame.attachContent(this.borderPane);
     this.battleFrame.addKeyListener(this.handler);
   }
 
@@ -166,8 +166,8 @@ class MapTurnBattleGUI {
   }
 
   private void setUpGUI() {
-    this.borderPane = new Container();
-    final Container buttonPane = new Container();
+    this.borderPane = new JPanel();
+    final JPanel buttonPane = new JPanel();
     this.borderPane.setLayout(new BorderLayout());
     this.messageLabel = new JLabel(" ");
     this.messageLabel.setOpaque(true);

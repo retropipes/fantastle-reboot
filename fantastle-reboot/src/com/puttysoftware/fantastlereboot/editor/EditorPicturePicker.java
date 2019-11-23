@@ -1,7 +1,6 @@
 package com.puttysoftware.fantastlereboot.editor;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -9,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -20,10 +20,10 @@ final class EditorPicturePicker {
   // Fields
   private BufferedImageIcon[] choices;
   private JLabel[] choiceArray;
-  private final Container pickerContainer;
-  private final Container choiceContainer;
-  private final Container radioContainer;
-  private final Container choiceRadioContainer;
+  private final JPanel pickerJPanel;
+  private final JPanel choiceJPanel;
+  private final JPanel radioJPanel;
+  private final JPanel choiceRadioJPanel;
   private final ButtonGroup radioGroup;
   private JRadioButton[] radioButtons;
   private final JScrollPane scrollPane;
@@ -33,39 +33,39 @@ final class EditorPicturePicker {
   // Constructor
   public EditorPicturePicker(final BufferedImageIcon[] pictures) {
     this.handler = new EventHandler();
-    this.pickerContainer = new Container();
-    this.pickerContainer.setLayout(new BorderLayout());
-    this.choiceContainer = new Container();
-    this.radioContainer = new Container();
+    this.pickerJPanel = new JPanel();
+    this.pickerJPanel.setLayout(new BorderLayout());
+    this.choiceJPanel = new JPanel();
+    this.radioJPanel = new JPanel();
     this.radioGroup = new ButtonGroup();
-    this.choiceRadioContainer = new Container();
-    this.choiceRadioContainer.setLayout(new BorderLayout());
-    this.choiceRadioContainer.add(this.radioContainer, BorderLayout.WEST);
-    this.choiceRadioContainer.add(this.choiceContainer, BorderLayout.CENTER);
-    this.scrollPane = new JScrollPane(this.choiceRadioContainer);
+    this.choiceRadioJPanel = new JPanel();
+    this.choiceRadioJPanel.setLayout(new BorderLayout());
+    this.choiceRadioJPanel.add(this.radioJPanel, BorderLayout.WEST);
+    this.choiceRadioJPanel.add(this.choiceJPanel, BorderLayout.CENTER);
+    this.scrollPane = new JScrollPane(this.choiceRadioJPanel);
     this.scrollPane.setHorizontalScrollBarPolicy(
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     this.scrollPane.setVerticalScrollBarPolicy(
         ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-    this.pickerContainer.add(this.scrollPane, BorderLayout.CENTER);
+    this.pickerJPanel.add(this.scrollPane, BorderLayout.CENTER);
     this.updatePicker(pictures);
     this.index = 0;
   }
 
   // Methods
-  public Container getPicker() {
-    return this.pickerContainer;
+  public JPanel getPicker() {
+    return this.pickerJPanel;
   }
 
   public void disablePicker() {
-    this.pickerContainer.setEnabled(false);
+    this.pickerJPanel.setEnabled(false);
     for (final JRadioButton radioButton : this.radioButtons) {
       radioButton.setEnabled(false);
     }
   }
 
   public void enablePicker() {
-    this.pickerContainer.setEnabled(true);
+    this.pickerJPanel.setEnabled(true);
     for (final JRadioButton radioButton : this.radioButtons) {
       radioButton.setEnabled(true);
     }
@@ -73,33 +73,33 @@ final class EditorPicturePicker {
 
   public void updatePicker(final BufferedImageIcon[] newImages) {
     this.choices = newImages;
-    this.choiceContainer.removeAll();
-    this.radioContainer.removeAll();
+    this.choiceJPanel.removeAll();
+    this.radioJPanel.removeAll();
     this.radioButtons = new JRadioButton[this.choices.length];
-    this.choiceContainer.setLayout(new GridLayout(this.choices.length, 1));
-    this.radioContainer.setLayout(new GridLayout(this.choices.length, 1));
+    this.choiceJPanel.setLayout(new GridLayout(this.choices.length, 1));
+    this.radioJPanel.setLayout(new GridLayout(this.choices.length, 1));
     this.choiceArray = new JLabel[this.choices.length];
     for (int x = 0; x < this.choices.length; x++) {
       this.choiceArray[x] = new JLabel("", this.choices[x], //$NON-NLS-1$
           SwingConstants.LEFT);
       this.choiceArray[x].setOpaque(true);
-      this.choiceContainer.add(this.choiceArray[x]);
+      this.choiceJPanel.add(this.choiceArray[x]);
       this.radioButtons[x] = new JRadioButton();
       this.radioButtons[x].setOpaque(true);
       this.radioButtons[x].setActionCommand(Integer.valueOf(x).toString());
       this.radioGroup.add(this.radioButtons[x]);
       this.radioButtons[x].addActionListener(this.handler);
-      this.radioContainer.add(this.radioButtons[x]);
+      this.radioJPanel.add(this.radioButtons[x]);
     }
   }
 
   public void updatePickerLayout(final int maxHeight) {
-    final int newPreferredWidth = this.pickerContainer.getLayout()
-        .preferredLayoutSize(this.pickerContainer).width
+    final int newPreferredWidth = this.pickerJPanel.getLayout()
+        .preferredLayoutSize(this.pickerJPanel).width
         + this.scrollPane.getVerticalScrollBar().getWidth();
-    final int newPreferredHeight = Math.min(maxHeight, this.pickerContainer
-        .getLayout().preferredLayoutSize(this.pickerContainer).height);
-    this.pickerContainer
+    final int newPreferredHeight = Math.min(maxHeight, this.pickerJPanel
+        .getLayout().preferredLayoutSize(this.pickerJPanel).height);
+    this.pickerJPanel
         .setPreferredSize(new Dimension(newPreferredWidth, newPreferredHeight));
   }
 

@@ -6,7 +6,6 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.game;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -30,7 +29,7 @@ import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 class GameGUI {
   // Fields
   private static MainWindow outputFrame;
-  private static Container borderPane;
+  private static JPanel borderPane;
   private static JLabel messageLabel;
   private static DrawGrid drawGrid;
   private static JPanel outputPane;
@@ -69,7 +68,7 @@ class GameGUI {
   public static void showOutput() {
     GameGUI.outputFrame = MainWindow.getOutputFrame();
     GameGUI.outputFrame.setTitle("Game");
-    GameGUI.outputFrame.setContentPane(GameGUI.borderPane);
+    GameGUI.outputFrame.attachContent(GameGUI.borderPane);
     GameGUI.outputFrame.addKeyListener(handler);
     GameGUI.outputFrame.addWindowListener(handler);
     if (GameGUI.deferredRedraw) {
@@ -93,7 +92,7 @@ class GameGUI {
     GameGUI.borderPane.add(GameGUI.outputPane, BorderLayout.CENTER);
     GameGUI.borderPane.add(GameGUI.messageLabel, BorderLayout.NORTH);
     GameGUI.borderPane.add(StatGUI.getStatsPane(), BorderLayout.EAST);
-    GameGUI.borderPane.add(EffectManager.getEffectMessageContainer(),
+    GameGUI.borderPane.add(EffectManager.getEffectMessageJPanel(),
         BorderLayout.SOUTH);
   }
 
@@ -134,7 +133,7 @@ class GameGUI {
   }
 
   private static void setUpGUI() {
-    GameGUI.borderPane = new Container();
+    GameGUI.borderPane = new JPanel();
     GameGUI.borderPane.setLayout(new BorderLayout());
     GameGUI.messageLabel = new JLabel(" ");
     GameGUI.messageLabel.setOpaque(true);

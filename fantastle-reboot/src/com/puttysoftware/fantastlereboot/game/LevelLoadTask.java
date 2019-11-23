@@ -5,8 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.game;
 
-import java.awt.Container;
-
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import com.puttysoftware.diane.gui.MainWindow;
@@ -19,7 +18,7 @@ public class LevelLoadTask extends Thread {
   // Fields
   private MainWindow loadFrame;
   private final int level;
-  private final Container content = new Container();
+  private final JPanel content = new JPanel();
 
   // Constructors
   public LevelLoadTask(final int offset) {
@@ -36,7 +35,7 @@ public class LevelLoadTask extends Thread {
     try {
       this.loadFrame = MainWindow.getOutputFrame();
       this.loadFrame.setTitle("Loading...");
-      this.loadFrame.setContentPane(this.content);
+      this.loadFrame.attachContent(this.content);
       this.loadFrame.pack();
       final Maze gameMaze = MazeManager.getMaze();
       Game.disableEvents();

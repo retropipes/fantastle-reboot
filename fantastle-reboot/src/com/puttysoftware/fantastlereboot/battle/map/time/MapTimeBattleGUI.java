@@ -6,7 +6,6 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.battle.map.time;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -19,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.KeyStroke;
 
@@ -44,7 +44,7 @@ import com.puttysoftware.images.BufferedImageIcon;
 class MapTimeBattleGUI {
   // Fields
   private MainWindow battleFrame;
-  private Container borderPane;
+  private JPanel borderPane;
   private MapBattleDraw battlePane;
   private JLabel messageLabel;
   private JProgressBar myActionBar, enemyActionBar;
@@ -121,7 +121,7 @@ class MapTimeBattleGUI {
   void showBattle() {
     this.battleFrame = MainWindow.getOutputFrame();
     this.battleFrame.setTitle("Battle");
-    this.battleFrame.setContentPane(this.borderPane);
+    this.battleFrame.attachContent(this.borderPane);
     this.battleFrame.addKeyListener(this.handler);
   }
 
@@ -203,10 +203,10 @@ class MapTimeBattleGUI {
   }
 
   private void setUpGUI() {
-    this.borderPane = new Container();
-    final Container buttonPane = new Container();
-    final Container effectBarPane = new Container();
-    final Container barPane = new Container();
+    this.borderPane = new JPanel();
+    final JPanel buttonPane = new JPanel();
+    final JPanel effectBarPane = new JPanel();
+    final JPanel barPane = new JPanel();
     this.borderPane.setLayout(new BorderLayout());
     barPane.setLayout(new FlowLayout());
     effectBarPane.setLayout(new BorderLayout());

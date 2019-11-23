@@ -20,7 +20,6 @@ package com.puttysoftware.fantastlereboot.editor;
 
 import java.awt.Adjustable;
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -33,6 +32,7 @@ import java.awt.event.WindowListener;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.border.EmptyBorder;
 
@@ -60,7 +60,7 @@ import com.puttysoftware.images.BufferedImageIcon;
 public class MazeEditor {
   // Declarations
   private MainWindow outputFrame;
-  private Container outputPane, secondaryPane, borderPane;
+  private JPanel outputPane, secondaryPane, borderPane;
   private GridBagLayout gridbag;
   private GridBagConstraints c;
   private JScrollBar vertScroll, horzScroll;
@@ -594,7 +594,7 @@ public class MazeEditor {
 
   public void showOutput() {
     this.outputFrame = MainWindow.getOutputFrame();
-    this.outputFrame.setContentPane(this.borderPane);
+    this.outputFrame.attachContent(this.borderPane);
     this.outputFrame.addWindowListener(this.mhandler);
   }
 
@@ -622,9 +622,9 @@ public class MazeEditor {
   }
 
   private void setUpGUI() {
-    this.outputPane = new Container();
-    this.secondaryPane = new Container();
-    this.borderPane = new Container();
+    this.outputPane = new JPanel();
+    this.secondaryPane = new JPanel();
+    this.borderPane = new JPanel();
     this.borderPane.setLayout(new BorderLayout());
     this.drawGrid = new JLabel[EditorViewingWindowManager
         .getViewingWindowSizeX()][EditorViewingWindowManager

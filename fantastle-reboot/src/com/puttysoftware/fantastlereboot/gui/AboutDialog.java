@@ -19,7 +19,6 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.desktop.AboutEvent;
@@ -31,6 +30,7 @@ import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.puttysoftware.diane.gui.MainWindow;
@@ -41,7 +41,7 @@ import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 public class AboutDialog implements AboutHandler {
   // Fields
   private MainWindow aboutFrame;
-  private Container aboutPane, textPane, buttonPane, logoPane;
+  private JPanel aboutPane, textPane, buttonPane, logoPane;
   private JButton aboutOK;
   private EventHandler handler;
 
@@ -62,7 +62,7 @@ public class AboutDialog implements AboutHandler {
     this.aboutFrame.setTitle("About Fantastle");
     this.aboutFrame.setDefaultButton(this.aboutOK);
     this.aboutFrame.addWindowListener(this.handler);
-    this.aboutFrame.setContentPane(this.aboutPane);
+    this.aboutFrame.attachContent(this.aboutPane);
     this.aboutFrame.pack();
   }
 
@@ -73,10 +73,10 @@ public class AboutDialog implements AboutHandler {
 
   private void setUpGUI(final String ver) {
     this.handler = new EventHandler();
-    this.aboutPane = new Container();
-    this.textPane = new Container();
-    this.buttonPane = new Container();
-    this.logoPane = new Container();
+    this.aboutPane = new JPanel();
+    this.textPane = new JPanel();
+    this.buttonPane = new JPanel();
+    this.logoPane = new JPanel();
     this.aboutOK = new JButton("OK");
     this.aboutOK.setDefaultCapable(true);
     this.aboutPane.setLayout(new BorderLayout());

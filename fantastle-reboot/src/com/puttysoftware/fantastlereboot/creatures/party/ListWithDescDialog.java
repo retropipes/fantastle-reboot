@@ -2,7 +2,6 @@ package com.puttysoftware.fantastlereboot.creatures.party;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Point;
@@ -129,12 +128,13 @@ class ListWithDescDialog extends JDialog implements ActionListener {
     buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
     buttonPane.add(setButton);
     // Put everything together, using the content pane's BorderLayout.
-    final Container contentPane = this.getContentPane();
+    final JPanel contentPane = new JPanel();
     contentPane.add(listPane, BorderLayout.NORTH);
     contentPane.add(descPane, BorderLayout.CENTER);
     contentPane.add(buttonPane, BorderLayout.PAGE_END);
     // Initialize values.
     setValue(initialValue);
+    this.setContentPane(contentPane);
     this.pack();
     this.setLocationRelativeTo(locationComp);
   }

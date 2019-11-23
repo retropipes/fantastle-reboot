@@ -21,6 +21,8 @@ import com.puttysoftware.fantastlereboot.files.CharacterLoader;
 import com.puttysoftware.fantastlereboot.files.CharacterRegistration;
 import com.puttysoftware.fantastlereboot.files.CharacterSaver;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
+import com.puttysoftware.fantastlereboot.loaders.DataLoader;
+import com.puttysoftware.randomrange.RandomRange;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
@@ -28,8 +30,10 @@ public class PartyManager {
   // Fields
   private static Party party;
   private static int bank = 0;
-  private final static String[] buttonNames = new String[] { "Done", "Create",
+  private static final String[] buttonNames = new String[] { "Done", "Create",
       "Pick" };
+  private static String[] givenNames, familyNames;
+  private static boolean namesInited = false;
 
   // Constructors
   private PartyManager() {
@@ -97,6 +101,17 @@ public class PartyManager {
     }
   }
 
+  private static String generateDefaultName() {
+    if (!namesInited) {
+      givenNames = DataLoader.loadGivenNameData();
+      familyNames = DataLoader.loadFamilyNameData();
+      namesInited = true;
+    }
+    final int givenIndex = RandomRange.generate(0, givenNames.length - 1);
+    final int familyIndex = RandomRange.generate(0, familyNames.length - 1);
+    return givenNames[givenIndex] + " " + familyNames[familyIndex];
+  }
+
   private static void setGoldInBank(final int newGold) {
     PartyManager.bank = newGold;
   }
@@ -136,8 +151,8 @@ public class PartyManager {
   }
 
   private static PartyMember createNewPC() {
-    final String name = CommonDialogs.showTextInputDialog("Character Name",
-        "Create Character");
+    final String name = CommonDialogs.showTextInputDialogWithDefault(
+        "Character Name", "Create Character", generateDefaultName());
     if (name != null) {
       final Race race = RaceManager.selectRace();
       if (race != null) {

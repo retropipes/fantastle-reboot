@@ -83,7 +83,7 @@ public class StatisticsViewer {
       buttonPane.add(btnOK);
       statisticsPane.add(contentPane, BorderLayout.CENTER);
       statisticsPane.add(buttonPane, BorderLayout.SOUTH);
-      statisticsFrame.setContentPane(statisticsPane);
+      statisticsFrame.attachContent(statisticsPane);
       inited = true;
     }
   }

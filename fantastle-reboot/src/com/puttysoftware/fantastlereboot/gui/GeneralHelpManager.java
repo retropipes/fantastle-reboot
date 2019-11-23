@@ -18,10 +18,11 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.gui;
 
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
+import javax.swing.JPanel;
 
 import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
@@ -32,13 +33,13 @@ public class GeneralHelpManager {
   // Fields
   private MainWindow helpFrame;
   private final EventHandler handler = new EventHandler();
-  private final Container helpContent;
+  private final JPanel helpContent;
   private final HTMLHelpViewer hv;
   private static final int MAX_WINDOW_SIZE = 700;
 
   // Constructors
   public GeneralHelpManager() {
-    this.helpContent = new Container();
+    this.helpContent = new JPanel();
     this.hv = HelpLoader.getHelpViewer();
     this.hv.setHelpSize(MAX_WINDOW_SIZE, MAX_WINDOW_SIZE);
     this.helpContent.setLayout(new FlowLayout());
@@ -50,7 +51,7 @@ public class GeneralHelpManager {
     FantastleReboot.getBagOStuff().setInHelp();
     this.helpFrame = MainWindow.getOutputFrame();
     this.helpFrame.setTitle("Fantastle Help");
-    this.helpFrame.setContentPane(this.helpContent);
+    this.helpFrame.attachContent(this.helpContent);
     this.helpFrame.pack();
     this.helpFrame.addWindowListener(this.handler);
   }

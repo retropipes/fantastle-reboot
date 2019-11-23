@@ -1,7 +1,6 @@
 package com.puttysoftware.fantastlereboot.battle.window.turn;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -11,6 +10,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
@@ -26,18 +26,18 @@ public class WindowTurnBattleGUI {
   // Fields
   private MainWindow battleFrame;
   private final JLabel iconLabel;
-  private final Container holderPane;
+  private final JPanel holderPane;
   private final JTextArea messageArea;
   private final JButton attack, flee, spell, steal, drain, item, done;
 
   // Constructor
   public WindowTurnBattleGUI() {
     // Initialize GUI
-    Container iconPane, messagePane, buttonPane;
-    this.holderPane = new Container();
-    iconPane = new Container();
-    messagePane = new Container();
-    buttonPane = new Container();
+    JPanel iconPane, messagePane, buttonPane;
+    this.holderPane = new JPanel();
+    iconPane = new JPanel();
+    messagePane = new JPanel();
+    buttonPane = new JPanel();
     this.iconLabel = new JLabel("");
     this.messageArea = new JTextArea();
     this.messageArea.setOpaque(true);
@@ -116,7 +116,7 @@ public class WindowTurnBattleGUI {
   final void showBattle() {
     this.battleFrame = MainWindow.getOutputFrame();
     this.battleFrame.setTitle("Battle");
-    this.battleFrame.setContentPane(this.holderPane);
+    this.battleFrame.attachContent(this.holderPane);
     this.battleFrame.setDefaultButton(this.done);
     this.battleFrame.pack();
   }

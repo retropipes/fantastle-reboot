@@ -18,10 +18,10 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.gui;
 
-import java.awt.Container;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -35,12 +35,12 @@ import com.puttysoftware.images.BufferedImageIcon;
 public class GUIManager {
   // Fields
   private MainWindow guiFrame;
-  private final Container guiPane;
+  private final JPanel guiPane;
   private final JLabel logoLabel;
 
   // Constructors
   public GUIManager() {
-    this.guiPane = new Container();
+    this.guiPane = new JPanel();
     this.guiPane.setLayout(new GridLayout(1, 1));
     this.logoLabel = new JLabel("", null, SwingConstants.CENTER);
     this.logoLabel.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -54,7 +54,7 @@ public class GUIManager {
   public void showGUI() {
     this.guiFrame = MainWindow.getOutputFrame();
     this.guiFrame.setTitle("Fantastle Reboot");
-    this.guiFrame.setContentPane(this.guiPane);
+    this.guiFrame.attachContent(this.guiPane);
     this.guiFrame.pack();
     final BagOStuff app = FantastleReboot.getBagOStuff();
     app.setInGUI();

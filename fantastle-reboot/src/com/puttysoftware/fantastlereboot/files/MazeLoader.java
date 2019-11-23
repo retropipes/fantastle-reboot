@@ -5,10 +5,10 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.files;
 
-import java.awt.Container;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
@@ -41,9 +41,9 @@ public class MazeLoader extends Thread {
       this.loadFrame.setTitle("Loading");
       final JProgressBar loadBar = new JProgressBar();
       loadBar.setIndeterminate(true);
-      final Container content = new Container();
+      final JPanel content = new JPanel();
       content.add(loadBar);
-      this.loadFrame.setContentPane(content);
+      this.loadFrame.attachContent(content);
       this.loadFrame.pack();
       int startW;
       Game.setSavedGameFlag(false);

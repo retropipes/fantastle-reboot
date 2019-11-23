@@ -19,7 +19,6 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.FileDialog;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -40,6 +39,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import com.puttysoftware.commondialogs.CommonDialogs;
@@ -57,9 +57,9 @@ public class Prefs {
   // Fields
   private static MainWindow prefFrame;
   private static JTabbedPane prefTabPane;
-  private static Container mainPrefPane, buttonPane, miscPane, soundPane,
+  private static JPanel mainPrefPane, buttonPane, miscPane, soundPane,
       musicPane;
-  private static Container editorPane;
+  private static JPanel editorPane;
   private static JButton prefsOK, prefsCancel;
   private static JButton prefsExport, prefsImport;
   private static JCheckBox[] sounds = new JCheckBox[Prefs.SOUNDS_LENGTH];
@@ -281,7 +281,7 @@ public class Prefs {
       Prefs.prefFrame = MainWindow.getOutputFrame();
       Prefs.prefFrame.setTitle("Preferences");
       Prefs.prefFrame.setDefaultButton(prefsOK);
-      Prefs.prefFrame.setContentPane(mainPrefPane);
+      Prefs.prefFrame.attachContent(mainPrefPane);
       Prefs.prefFrame.addWindowListener(handler);
       Prefs.prefFrame.pack();
       final BagOStuff app = FantastleReboot.getBagOStuff();
@@ -421,13 +421,13 @@ public class Prefs {
   private static void setUpGUI() {
     Prefs.handler = new EventHandler();
     Prefs.prefTabPane = new JTabbedPane();
-    Prefs.mainPrefPane = new Container();
-    editorPane = new Container();
-    Prefs.soundPane = new Container();
-    musicPane = new Container();
-    miscPane = new Container();
+    Prefs.mainPrefPane = new JPanel();
+    editorPane = new JPanel();
+    Prefs.soundPane = new JPanel();
+    musicPane = new JPanel();
+    miscPane = new JPanel();
     prefTabPane.setOpaque(true);
-    buttonPane = new Container();
+    buttonPane = new JPanel();
     prefsOK = new JButton("OK");
     prefsOK.setDefaultCapable(true);
     prefsCancel = new JButton("Cancel");
@@ -488,7 +488,7 @@ public class Prefs {
     miscPane.add(updateCheckInterval);
     miscPane.add(new JLabel("Game Difficulty"));
     miscPane.add(difficultyChoices);
-    final Container viewPane = new Container();
+    final JPanel viewPane = new JPanel();
     viewPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     viewPane.add(new JLabel("Viewing Window Size"));
     viewingWindowChoices = new JComboBox<>(

@@ -5,8 +5,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.maze;
 
-import java.awt.Container;
-
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import com.puttysoftware.diane.gui.MainWindow;
@@ -22,7 +21,7 @@ public class GenerateTask extends Thread {
   // Fields
   private MainWindow generateFrame;
   private final boolean scratch;
-  private final Container content = new Container();
+  private final JPanel content = new JPanel();
 
   // Constructors
   public GenerateTask(final boolean startFromScratch) {
@@ -39,7 +38,7 @@ public class GenerateTask extends Thread {
     try {
       this.generateFrame = MainWindow.getOutputFrame();
       this.generateFrame.setTitle("Generating...");
-      this.generateFrame.setContentPane(this.content);
+      this.generateFrame.attachContent(this.content);
       this.generateFrame.pack();
       final BagOStuff app = FantastleReboot.getBagOStuff();
       Maze gameMaze = MazeManager.getMaze();
