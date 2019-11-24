@@ -1014,13 +1014,10 @@ public class MapTurnBattleLogic extends Battle {
             + " tries to steal, but nobody is there to steal from!");
         return false;
       }
-      if (stealChance <= 0) {
-        // Failed
-        this.setStatusMessage(
-            activeBC.getName() + " tries to steal, but fails!");
-        return false;
-      } else if (stealChance >= 100) {
-        // Succeeded, unless target has 0 Gold
+      final RandomRange chance = new RandomRange(0, 100);
+      final int randomChance = chance.generate();
+      if (randomChance <= stealChance) {
+        // Succeeded
         final RandomRange stole = new RandomRange(0, activeEnemy.getGold());
         stealAmount = stole.generate();
         if (stealAmount == 0) {
@@ -1036,30 +1033,10 @@ public class MapTurnBattleLogic extends Battle {
           return true;
         }
       } else {
-        final RandomRange chance = new RandomRange(0, 100);
-        final int randomChance = chance.generate();
-        if (randomChance <= stealChance) {
-          // Succeeded
-          final RandomRange stole = new RandomRange(0, activeEnemy.getGold());
-          stealAmount = stole.generate();
-          if (stealAmount == 0) {
-            this.setStatusMessage(activeBC.getName()
-                + " tries to steal, but no Gold is left to steal!");
-            return false;
-          } else {
-            activeEnemy.offsetGold(-stealAmount);
-            active.offsetGold(stealAmount);
-            this.setStatusMessage(
-                activeBC.getName() + " tries to steal, and successfully stole "
-                    + stealAmount + " Gold!");
-            return true;
-          }
-        } else {
-          // Failed
-          this.setStatusMessage(
-              activeBC.getName() + " tries to steal, but fails!");
-          return false;
-        }
+        // Failed
+        this.setStatusMessage(
+            activeBC.getName() + " tries to steal, but fails!");
+        return false;
       }
     } else {
       // Deny steal - out of actions
