@@ -113,6 +113,11 @@ class GameGUI {
 
   public static void redrawMaze() {
     // Draw the maze
+    final Graphics g = GameGUI.outputPane.getGraphics();
+    if (g == null) {
+      // Abort
+      return;
+    }
     final Maze m = MazeManager.getMaze();
     m.moveAllMonsters();
     int x, y, u, v;
@@ -168,7 +173,6 @@ class GameGUI {
         }
       }
     }
-    final Graphics g = GameGUI.outputPane.getGraphics();
     final int gSize = ImageConstants.SIZE;
     final int vSize = Prefs.getViewingWindowSize();
     for (x = 0; x < vSize; x++) {
