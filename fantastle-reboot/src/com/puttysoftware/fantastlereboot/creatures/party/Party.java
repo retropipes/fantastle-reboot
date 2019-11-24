@@ -16,6 +16,7 @@ import com.puttysoftware.fantastlereboot.files.CharacterLoader;
 import com.puttysoftware.fantastlereboot.files.CharacterSaver;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.objects.Player;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
@@ -33,7 +34,7 @@ public class Party {
   public Party() {
     this.members = new ArrayList<>();
     this.battlers = new ArrayList<>();
-    this.leaderID = 0;
+    this.leaderID = -1;
     this.activePCs = 0;
     this.monsterLevel = 0;
   }
@@ -134,6 +135,9 @@ public class Party {
   boolean addPartyMember(final PartyMember member) {
     if (this.members.size() < Party.MAX_SIZE) {
       this.members.add(member);
+      this.leaderID++;
+      Player.setAvatar(member.getAvatarFamilyID(), member.getAvatarSkinID(),
+          member.getAvatarHairID());
       return true;
     }
     return false;
@@ -148,6 +152,8 @@ public class Party {
       for (PartyMember member : this.members) {
         if (member.getName().equals(response)) {
           this.leaderID = x;
+          Player.setAvatar(member.getAvatarFamilyID(), member.getAvatarSkinID(),
+              member.getAvatarHairID());
           break;
         }
         x++;
