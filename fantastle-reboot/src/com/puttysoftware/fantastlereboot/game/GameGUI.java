@@ -28,7 +28,6 @@ import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.loaders.ImageConstants;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
-import com.puttysoftware.fantastlereboot.maze.MonsterLocationManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.Nothing;
@@ -115,7 +114,7 @@ class GameGUI {
   public static void redrawMaze() {
     // Draw the maze
     final Maze m = MazeManager.getMaze();
-    MonsterLocationManager.moveAllMonsters(m);
+    m.moveAllMonsters();
     int x, y, u, v;
     int xFix, yFix;
     boolean visible;
@@ -192,7 +191,7 @@ class GameGUI {
     // Draw the maze
     if (obj5 != null) {
       final Maze m = MazeManager.getMaze();
-      MonsterLocationManager.moveAllMonsters(m);
+      m.moveAllMonsters();
       int x, y, u, v;
       int xFix, yFix;
       boolean visible;

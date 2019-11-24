@@ -8,7 +8,10 @@ package com.puttysoftware.fantastlereboot.maze;
 import java.io.IOException;
 import java.util.Arrays;
 
+import com.puttysoftware.fantastlereboot.BagOStuff;
+import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.files.MazeVersions;
+import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.GameObjects;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
@@ -27,6 +30,7 @@ final class LayeredTower implements Cloneable {
   private final LowLevelMazeDataStore data;
   private LowLevelMazeDataStore savedTowerState;
   private final FlagStorage visionData;
+  private final FlagStorage monsterData;
   private final LowLevelNoteDataStore noteData;
   private final int[] playerStartData;
   private final int[] playerLocationData;
@@ -47,11 +51,11 @@ final class LayeredTower implements Cloneable {
   // Constructors
   public LayeredTower(final int rows, final int cols, final int floors) {
     this.data = new LowLevelMazeDataStore(cols, rows, floors, Layers.COUNT);
+    this.monsterData = new FlagStorage(cols, rows, floors);
     this.savedTowerState = new LowLevelMazeDataStore(cols, rows, floors,
         Layers.COUNT);
     this.visionData = new FlagStorage(cols, rows, floors);
     this.noteData = new LowLevelNoteDataStore(cols, rows, floors);
-    MonsterLocationManager.create(rows, cols, floors);
     this.playerStartData = new int[3];
     Arrays.fill(this.playerStartData, -1);
     this.playerLocationData = new int[3];
@@ -82,6 +86,129 @@ final class LayeredTower implements Cloneable {
   }
 
   // Methods
+  public boolean hasMonster(final int x, final int y, final int z) {
+    try {
+      return this.monsterData.getCell(y, x, z);
+    } catch (ArrayIndexOutOfBoundsException aioobe) {
+      System.err.println("Bad array access: x " + y + ", y " + x + ", z " + z);
+      int[] shape = this.monsterData.getShape();
+      System.err.println(
+          "Size: x " + shape[0] + ", y " + shape[1] + ", z " + shape[2]);
+      throw aioobe;
+    }
+  }
+
+  public void addMonster(final int x, final int y, final int z) {
+    try {
+      if (!this.monsterData.getCell(y, x, z)) {
+        this.monsterData.setCell(true, y, x, z);
+      }
+    } catch (ArrayIndexOutOfBoundsException aioobe) {
+      System.err.println("Bad array access: x " + y + ", y " + x + ", z " + z);
+      int[] shape = this.monsterData.getShape();
+      System.err.println(
+          "Size: x " + shape[0] + ", y " + shape[1] + ", z " + shape[2]);
+      throw aioobe;
+    }
+  }
+
+  public void removeMonster(final int x, final int y, final int z) {
+    try {
+      if (this.monsterData.getCell(y, x, z)) {
+        this.monsterData.setCell(false, y, x, z);
+      }
+    } catch (ArrayIndexOutOfBoundsException aioobe) {
+      System.err.println("Bad array access: x " + y + ", y " + x + ", z " + z);
+      int[] shape = this.monsterData.getShape();
+      System.err.println(
+          "Size: x " + shape[0] + ", y " + shape[1] + ", z " + shape[2]);
+      throw aioobe;
+    }
+  }
+
+  private boolean checkMoveMonster(final int locX, final int locY,
+      final int locZ, final int moveX, final int moveY) {
+    if (this.monsterData.getCell(locY, locX, locZ)
+        && !this.monsterData.getCell(locY + moveY, locX + moveX, locZ)) {
+      return true;
+    }
+    return false;
+  }
+
+  private void moveMonster(final int locX, final int locY, final int locZ,
+      final int moveX, final int moveY) {
+    if (this.checkMoveMonster(locX, locY, locZ, moveX, moveY)) {
+      this.monsterData.setCell(false, locY, locX, locZ);
+      this.monsterData.setCell(true, locY + moveY, locX + moveX, locZ);
+    }
+  }
+
+  public boolean checkForBattle(final int px, final int py, final int pz) {
+    // If the player is now standing on a monster...
+    if (this.hasMonster(px, py, pz)) {
+      // ... and we aren't already in battle...
+      final BagOStuff bag = FantastleReboot.getBagOStuff();
+      if (!bag.inBattle()) {
+        // ... start a battle with that monster!
+        Game.stopMovement();
+        bag.getBattle().doBattle(px, py);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public void moveAllMonsters(final Maze maze) {
+    int locX, locY;
+    final int rows = this.monsterData.getShape()[1] - 1;
+    final int cols = this.monsterData.getShape()[0] - 1;
+    final int pz = maze.getPlayerLocationZ();
+    // Tick all object timers
+    for (locX = 0; locX < cols; locX++) {
+      for (locY = 0; locY < rows; locY++) {
+        final int moveX = RandomRange.generate(-1, 1);
+        final int moveY = RandomRange.generate(-1, 1);
+        if (this.hasMonster(locX, locY, pz)) {
+          if (locX + moveX >= 0 && locX + moveX < cols && locY + moveY >= 0
+              && locY + moveY < rows) {
+            final FantastleObjectModel there = maze.getCell(locX + moveX,
+                locY + moveY, pz, Layers.OBJECT);
+            final boolean checkMove = this.checkMoveMonster(locX, locY, pz,
+                moveX, moveY);
+            if (!there.isSolid() && checkMove) {
+              // Move the monster
+              this.moveMonster(locX, locY, pz, moveX, moveY);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public void postBattle(final Maze maze, final int locX, final int locY) {
+    // Clear the monster just defeated
+    final int pz = maze.getPlayerLocationZ();
+    this.removeMonster(locX, locY, pz);
+    // Generate a new monster
+    final int rows = this.monsterData.getShape()[1] - 1;
+    final int cols = this.monsterData.getShape()[0] - 1;
+    final RandomRange row = new RandomRange(0, rows);
+    final RandomRange column = new RandomRange(0, cols);
+    int genX = row.generate();
+    int genY = column.generate();
+    FantastleObjectModel currObj = maze.getCell(genX, genY, pz, Layers.OBJECT);
+    if (!currObj.isSolid() && !this.hasMonster(genX, genY, pz)) {
+      this.addMonster(genX, genY, pz);
+    } else {
+      while (currObj.isSolid() || this.hasMonster(genX, genY, pz)) {
+        genX = row.generate();
+        genY = column.generate();
+        currObj = maze.getCell(genX, genY, pz, Layers.OBJECT);
+      }
+      this.addMonster(genX, genY, pz);
+    }
+  }
+
   public boolean hasNote(final int x, final int y, final int z) {
     return this.noteData.getNote(y, x, z) != null;
   }
@@ -522,17 +649,15 @@ final class LayeredTower implements Cloneable {
       int xLoc = row.generate();
       int yLoc = column.generate();
       FantastleObjectModel there = this.getCell(xLoc, yLoc, z, Layers.OBJECT);
-      if (!there.isSolid()
-          && !MonsterLocationManager.hasMonster(xLoc, yLoc, z)) {
-        MonsterLocationManager.addMonster(xLoc, yLoc, z);
+      if (!there.isSolid() && !this.hasMonster(xLoc, yLoc, z)) {
+        this.addMonster(xLoc, yLoc, z);
       } else {
-        while (there.isSolid()
-            || MonsterLocationManager.hasMonster(xLoc, yLoc, z)) {
+        while (there.isSolid() || this.hasMonster(xLoc, yLoc, z)) {
           xLoc = row.generate();
           yLoc = column.generate();
           there = this.getCell(xLoc, yLoc, z, Layers.OBJECT);
         }
-        MonsterLocationManager.addMonster(xLoc, yLoc, z);
+        this.addMonster(xLoc, yLoc, z);
       }
     }
   }

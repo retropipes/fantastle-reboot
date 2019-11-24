@@ -27,7 +27,6 @@ import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
-import com.puttysoftware.fantastlereboot.maze.MonsterLocationManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 import com.puttysoftware.fantastlereboot.spells.SpellCaster;
@@ -369,7 +368,7 @@ public class WindowTimeBattleLogic extends Battle {
       bag.showMessage("You reached level " + playerCharacter.getLevel() + ".");
     }
     final Maze m = MazeManager.getMaze();
-    MonsterLocationManager.postBattle(m, this.bx, this.by);
+    m.postBattle(this.bx, this.by);
   }
 
   @Override
@@ -667,7 +666,7 @@ public class WindowTimeBattleLogic extends Battle {
     this.battleGUI.hideBattle();
     // Post-battle stuff
     final Maze m = MazeManager.getMaze();
-    MonsterLocationManager.postBattle(m, this.bx, this.by);
+    m.postBattle(this.bx, this.by);
     // Return to whence we came
     bag.restoreFormerMode();
     Game.redrawMaze();

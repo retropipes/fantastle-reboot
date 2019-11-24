@@ -94,6 +94,30 @@ public class Maze {
     return temp;
   }
 
+  public boolean hasMonster(final int x, final int y, final int z) {
+    return this.mazeData.hasMonster(x, y, z);
+  }
+
+  public void addMonster(final int x, final int y, final int z) {
+    this.mazeData.addMonster(x, y, z);
+  }
+
+  public void removeMonster(final int x, final int y, final int z) {
+    this.mazeData.removeMonster(x, y, z);
+  }
+
+  public boolean checkForBattle(final int px, final int py, final int pz) {
+    return this.mazeData.checkForBattle(px, py, pz);
+  }
+
+  public void moveAllMonsters() {
+    this.mazeData.moveAllMonsters(this);
+  }
+
+  public void postBattle(final int locX, final int locY) {
+    this.mazeData.postBattle(this, locX, locY);
+  }
+
   public String getBasePath() {
     return this.basePath;
   }
