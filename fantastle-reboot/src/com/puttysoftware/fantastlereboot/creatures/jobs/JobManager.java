@@ -38,8 +38,7 @@ public class JobManager {
 
   public static int getRandomID() {
     JobManager.initCachesIfNeeded();
-    return new RandomRange(0, JobManager.CACHE.length - 1)
-        .generate();
+    return new RandomRange(0, JobManager.CACHE.length - 1).generate();
   }
 
   public static Job getRandomJob() {

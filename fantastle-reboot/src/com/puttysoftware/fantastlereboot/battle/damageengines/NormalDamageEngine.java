@@ -77,9 +77,11 @@ class NormalDamageEngine extends AbstractDamageEngine {
           this.dodged = false;
           RandomRange rDamage;
           if (this.crit) {
-            rDamage = new RandomRange(MULTIPLIER_MIN_CRIT, MULTIPLIER_MAX_CRIT);
+            rDamage = new RandomRange(NormalDamageEngine.MULTIPLIER_MIN_CRIT,
+                NormalDamageEngine.MULTIPLIER_MAX_CRIT);
           } else {
-            rDamage = new RandomRange(MULTIPLIER_MIN, MULTIPLIER_MAX);
+            rDamage = new RandomRange(NormalDamageEngine.MULTIPLIER_MIN,
+                NormalDamageEngine.MULTIPLIER_MAX);
           }
           final int multiplier = rDamage.generate();
           // Weapon Faith Power Boost
@@ -92,20 +94,20 @@ class NormalDamageEngine extends AbstractDamageEngine {
           if (mainHand != null && mainHand.equals(offHand)) {
             for (int z = 0; z < fc; z++) {
               final int fpl = mainHand.getFaithPowerLevel(z);
-              faithMultiplier += FAITH_INCREMENT_2H * fpl;
+              faithMultiplier += NormalDamageEngine.FAITH_INCREMENT_2H * fpl;
             }
           } else {
             if (mainHand != null) {
               for (int z = 0; z < fc; z++) {
                 final int fpl = mainHand.getFaithPowerLevel(z);
-                faithMultiplier += FAITH_INCREMENT * fpl;
+                faithMultiplier += NormalDamageEngine.FAITH_INCREMENT * fpl;
               }
             }
             if (offHand != null && offHand
                 .getEquipCategory() == EquipmentCategoryConstants.EQUIPMENT_CATEGORY_ONE_HANDED_WEAPON) {
               for (int z = 0; z < fc; z++) {
                 final int fpl = offHand.getFaithPowerLevel(z);
-                faithMultiplier += FAITH_INCREMENT * fpl;
+                faithMultiplier += NormalDamageEngine.FAITH_INCREMENT * fpl;
               }
             }
           }
@@ -116,18 +118,18 @@ class NormalDamageEngine extends AbstractDamageEngine {
           if (armor != null) {
             for (int z = 0; z < fc; z++) {
               final int fpl = armor.getFaithPowerLevel(z);
-              faithDR -= fpl * FAITH_DR_INCREMENT;
+              faithDR -= fpl * NormalDamageEngine.FAITH_DR_INCREMENT;
             }
           }
           if (offHand != null && offHand
               .getEquipCategory() == EquipmentCategoryConstants.EQUIPMENT_CATEGORY_ARMOR) {
             for (int z = 0; z < fc; z++) {
               final int fpl = offHand.getFaithPowerLevel(z);
-              faithDR -= fpl * FAITH_DR_INCREMENT;
+              faithDR -= fpl * NormalDamageEngine.FAITH_DR_INCREMENT;
             }
           }
-          final int unadjustedDamage = (int) ((rawDamage * multiplier
-              * faithMultiplier) / CommonDamageEngineParts.MULTIPLIER_DIVIDE);
+          final int unadjustedDamage = (int) (rawDamage * multiplier
+              * faithMultiplier / CommonDamageEngineParts.MULTIPLIER_DIVIDE);
           return (int) (unadjustedDamage * faithDR);
         }
       }
@@ -160,14 +162,17 @@ class NormalDamageEngine extends AbstractDamageEngine {
   }
 
   private void didPierce() {
-    this.pierce = CommonDamageEngineParts.didSpecial(PIERCE_CHANCE);
+    this.pierce = CommonDamageEngineParts
+        .didSpecial(NormalDamageEngine.PIERCE_CHANCE);
   }
 
   private void didCrit() {
-    this.crit = CommonDamageEngineParts.didSpecial(CRIT_CHANCE);
+    this.crit = CommonDamageEngineParts
+        .didSpecial(NormalDamageEngine.CRIT_CHANCE);
   }
 
   private void didFumble() {
-    this.fumble = CommonDamageEngineParts.didSpecial(FUMBLE_CHANCE);
+    this.fumble = CommonDamageEngineParts
+        .didSpecial(NormalDamageEngine.FUMBLE_CHANCE);
   }
 }

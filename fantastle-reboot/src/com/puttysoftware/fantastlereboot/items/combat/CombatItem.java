@@ -50,7 +50,7 @@ public class CombatItem extends Item {
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
     if (this == obj) {
       return true;
     }
@@ -60,7 +60,7 @@ public class CombatItem extends Item {
     if (!(obj instanceof CombatItem)) {
       return false;
     }
-    CombatItem other = (CombatItem) obj;
+    final CombatItem other = (CombatItem) obj;
     return Objects.equals(this.e, other.e) && this.sound == other.sound
         && this.target == other.target;
   }

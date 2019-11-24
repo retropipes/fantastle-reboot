@@ -80,7 +80,7 @@ public class Item {
     result = prime * result + this.buyPrice;
     result = prime * result + (this.combatUsable ? 1231 : 1237);
     result = prime * result + this.initialUses;
-    result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
+    result = prime * result + (this.name == null ? 0 : this.name.hashCode());
     result = prime * result + this.potency;
     result = prime * result + this.sellPrice;
     result = prime * result + this.weight;

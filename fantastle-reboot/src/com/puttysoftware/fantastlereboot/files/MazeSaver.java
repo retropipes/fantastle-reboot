@@ -24,7 +24,7 @@ public class MazeSaver extends Thread {
 
   @Override
   public void run() {
-    boolean success = true;
+    final boolean success = true;
     final String sg = "Game";
     try {
       final BagOStuff bag = FantastleReboot.getBagOStuff();
@@ -52,7 +52,7 @@ public class MazeSaver extends Thread {
   private static boolean hasExtension(final String s) {
     String ext = null;
     final int i = s.lastIndexOf('.');
-    if ((i > 0) && (i < s.length() - 1)) {
+    if (i > 0 && i < s.length() - 1) {
       ext = s.substring(i + 1).toLowerCase();
     }
     if (ext == null) {

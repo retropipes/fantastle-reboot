@@ -73,7 +73,7 @@ class MapTurnBattleGUI {
   }
 
   void setStatusMessage(final String msg) {
-    if (this.messageLabel.getText().length() > MAX_TEXT) {
+    if (this.messageLabel.getText().length() > MapTurnBattleGUI.MAX_TEXT) {
       this.clearStatusMessage();
     }
     if (!msg.isEmpty() && !msg.matches("\\s+")) {
@@ -109,7 +109,8 @@ class MapTurnBattleGUI {
               Layers.GROUND);
           final FantastleObjectModel obj2 = mbd.getBattleMaze().getCell(y, x, 0,
               Layers.OBJECT);
-          String cacheName = generateCacheName(obj1, obj2);
+          final String cacheName = MapTurnBattleGUI.generateCacheName(obj1,
+              obj2);
           final BufferedImageIcon icon1 = obj1.getBattleImage();
           final BufferedImageIcon icon2 = obj2.getBattleImage();
           this.drawGrid.setImageCell(
@@ -137,7 +138,8 @@ class MapTurnBattleGUI {
           Layers.GROUND);
       final FantastleObjectModel obj2 = mbd.getBattleMaze().getCell(y, x, 0,
           Layers.OBJECT);
-      String cacheName = generateCacheName(obj1, obj2, obj3);
+      final String cacheName = MapTurnBattleGUI.generateCacheName(obj1, obj2,
+          obj3);
       final BufferedImageIcon icon1 = obj1.getBattleImage();
       final BufferedImageIcon icon2 = obj2.getBattleImage();
       final BufferedImageIcon icon3 = obj3.getBattleImage();
@@ -151,8 +153,8 @@ class MapTurnBattleGUI {
 
   private static String
       generateCacheName(final FantastleObjectModel... objects) {
-    StringBuilder result = new StringBuilder();
-    for (FantastleObjectModel object : objects) {
+    final StringBuilder result = new StringBuilder();
+    for (final FantastleObjectModel object : objects) {
       result.append(object.getName());
       result.append("_");
     }
@@ -215,7 +217,7 @@ class MapTurnBattleGUI {
     this.end.getActionMap().put("End Turn", this.handler);
     this.drawGrid = new DrawGrid(
         MapBattleViewingWindowManager.getViewingWindowSize());
-    BufferedImageIcon darknessImage = ObjectImageLoader
+    final BufferedImageIcon darknessImage = ObjectImageLoader
         .load(ObjectImageIndex.DARKNESS);
     for (int x = 0; x < MapBattleViewingWindowManager
         .getViewingWindowSize(); x++) {

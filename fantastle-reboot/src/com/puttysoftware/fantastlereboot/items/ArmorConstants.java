@@ -14,10 +14,10 @@ public class ArmorConstants {
       "Pants", "Boots" };
 
   public static synchronized String[] getArmorChoices() {
-    return ARMOR_CHOICES;
+    return ArmorConstants.ARMOR_CHOICES;
   }
 
   public static synchronized String[] getArmor() {
-    return ARMOR;
+    return ArmorConstants.ARMOR;
   }
 }

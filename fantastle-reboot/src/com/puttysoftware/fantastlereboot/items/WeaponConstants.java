@@ -26,18 +26,18 @@ public class WeaponConstants {
 
   // Methods
   public static String[] getWeaponChoices() {
-    return WEAPON_CHOICES;
+    return WeaponConstants.WEAPON_CHOICES;
   }
 
   public static synchronized String[] getHandChoices() {
-    return HAND_CHOICES;
+    return WeaponConstants.HAND_CHOICES;
   }
 
   public static synchronized String[] get1HWeapons() {
-    return WEAPON_1H;
+    return WeaponConstants.WEAPON_1H;
   }
 
   public static synchronized String[] get2HWeapons() {
-    return WEAPON_2H;
+    return WeaponConstants.WEAPON_2H;
   }
 }

@@ -45,7 +45,7 @@ public class PartyManager {
   public static boolean createParty() {
     PartyManager.party = new Party();
     int mem = 0;
-    int maxMem = Party.getMaxMembers();
+    final int maxMem = Party.getMaxMembers();
     final PartyMember[] pickMembers = CharacterLoader
         .loadAllRegisteredCharacters();
     int regLen = 0;
@@ -64,12 +64,12 @@ public class PartyManager {
         final int r = RaceManager.getRandomID();
         final int j = JobManager.getRandomID();
         final int f = FaithManager.getRandomID();
-        final String n = generateDefaultName();
+        final String n = PartyManager.generateDefaultName();
         final int af = RandomRange.generate(0, 5);
         final int as = RandomRange.generate(0, 9);
         final int ah = RandomRange.generate(0, 9);
-        PartyMember pc = PartyManager.getNewPCInstance(ii, r, j, f, n, af, as,
-            ah);
+        final PartyMember pc = PartyManager.getNewPCInstance(ii, r, j, f, n, af,
+            as, ah);
         CharacterRegistration.autoregisterCharacter(pc.getName());
         CharacterSaver.saveCharacter(pc);
         regLen++;
@@ -91,8 +91,8 @@ public class PartyManager {
           }
         } else {
           final int response = CommonDialogs.showCustomDialog(
-              "Pick, Create, or Done?", "Create Party", buttonNames,
-              buttonNames[2]);
+              "Pick, Create, or Done?", "Create Party",
+              PartyManager.buttonNames, PartyManager.buttonNames[2]);
           if (response == 2) {
             pc = PartyManager.pickOnePartyMemberCreate(pickMembers);
           } else if (response == 1) {
@@ -137,14 +137,17 @@ public class PartyManager {
   }
 
   private static String generateDefaultName() {
-    if (!namesInited) {
-      givenNames = DataLoader.loadGivenNameData();
-      familyNames = DataLoader.loadFamilyNameData();
-      namesInited = true;
+    if (!PartyManager.namesInited) {
+      PartyManager.givenNames = DataLoader.loadGivenNameData();
+      PartyManager.familyNames = DataLoader.loadFamilyNameData();
+      PartyManager.namesInited = true;
     }
-    final int givenIndex = RandomRange.generate(0, givenNames.length - 1);
-    final int familyIndex = RandomRange.generate(0, familyNames.length - 1);
-    return givenNames[givenIndex] + " " + familyNames[familyIndex];
+    final int givenIndex = RandomRange.generate(0,
+        PartyManager.givenNames.length - 1);
+    final int familyIndex = RandomRange.generate(0,
+        PartyManager.familyNames.length - 1);
+    return PartyManager.givenNames[givenIndex] + " "
+        + PartyManager.familyNames[familyIndex];
   }
 
   private static void setGoldInBank(final int newGold) {
@@ -182,7 +185,7 @@ public class PartyManager {
   }
 
   public static void updatePostKill() {
-    final PartyMember leader = getParty().getLeader();
+    final PartyMember leader = PartyManager.getParty().getLeader();
     leader.initPostKill(leader.getRace(), leader.getJob(), leader.getFaith());
   }
 
@@ -190,7 +193,8 @@ public class PartyManager {
     final int randomSkin = RandomRange.generate(0, 9);
     final int randomHair = RandomRange.generate(0, 9);
     final String name = CommonDialogs.showTextInputDialogWithDefault(
-        "Character Name", "Create Character", generateDefaultName());
+        "Character Name", "Create Character",
+        PartyManager.generateDefaultName());
     if (name != null) {
       final Race race = RaceManager.selectRace();
       if (race != null) {
@@ -207,7 +211,7 @@ public class PartyManager {
                 final int avatarHair = PartyManager
                     .pickAvatarHairColor(avatarFamily, avatarSkin);
                 if (avatarHair != ImageListWithDescDialog.CANCEL) {
-                  ItemInventory ii = new ItemInventory();
+                  final ItemInventory ii = new ItemInventory();
                   return new PartyMember(ii, race, caste, faith, name,
                       avatarFamily, avatarSkin, avatarHair);
                 }
@@ -291,9 +295,9 @@ public class PartyManager {
     }
     final String[] names = new String[nnc];
     nnc = 0;
-    for (int x = 0; x < tempNames.length; x++) {
-      if (tempNames[x] != null) {
-        names[nnc] = tempNames[x];
+    for (final String tempName : tempNames) {
+      if (tempName != null) {
+        names[nnc] = tempName;
         nnc++;
       }
     }

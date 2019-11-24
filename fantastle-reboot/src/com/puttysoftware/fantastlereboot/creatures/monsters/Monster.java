@@ -102,7 +102,7 @@ public final class Monster extends Creature {
   }
 
   @Override
-  protected final int getInitialPerfectBonusGold() {
+  protected int getInitialPerfectBonusGold() {
     final int tough = this.getToughness();
     final int min = tough * Monster.PERFECT_GOLD_MIN;
     final int max = tough * Monster.PERFECT_GOLD_MAX;
@@ -142,11 +142,11 @@ public final class Monster extends Creature {
         + this.getVitality() + this.getIntelligence() + this.getLuck();
   }
 
-  final String getType() {
+  String getType() {
     return this.name;
   }
 
-  final void setType(final String newType) {
+  void setType(final String newType) {
     this.name = newType;
   }
 
@@ -163,7 +163,7 @@ public final class Monster extends Creature {
     return MapAIRoutinePicker.getNextRoutine();
   }
 
-  protected final int getBattlesToNextLevel() {
+  protected int getBattlesToNextLevel() {
     return Monster.BATTLES_START
         + (this.getLevel() + 1) * Monster.BATTLES_SCALE_FACTOR;
   }
@@ -175,7 +175,7 @@ public final class Monster extends Creature {
     } else {
       final String[] types = MonsterNames.getAllNames();
       final RandomRange r = new RandomRange(0, types.length - 1);
-      int imageID = r.generate();
+      final int imageID = r.generate();
       this.setType(types[imageID]);
       return MonsterImageLoader.load(imageID, this.getFaith());
     }
@@ -203,14 +203,14 @@ public final class Monster extends Creature {
   }
 
   private int getInitialStrength() {
-    final RandomRange r = new RandomRange(1,
-        Math.max(this.getLevel() * getStatMultiplierForDifficulty(), 1));
+    final RandomRange r = new RandomRange(1, Math
+        .max(this.getLevel() * Monster.getStatMultiplierForDifficulty(), 1));
     return r.generate();
   }
 
   private int getInitialBlock() {
     final RandomRange r = new RandomRange(0,
-        this.getLevel() * getStatMultiplierForDifficulty());
+        this.getLevel() * Monster.getStatMultiplierForDifficulty());
     return r.generate();
   }
 
@@ -223,8 +223,9 @@ public final class Monster extends Creature {
     final RandomLongRange r = new RandomLongRange(minvar, maxvar);
     final long expbase = PartyManager.getParty().getPartyMaxToNextLevel();
     final long factor = this.getBattlesToNextLevel();
-    return (int) ((expbase / factor) + r.generate()
-        * this.adjustForLevelDifference() * getExpMultiplierForDifficulty());
+    return (int) (expbase / factor
+        + r.generate() * this.adjustForLevelDifference()
+            * Monster.getExpMultiplierForDifficulty());
   }
 
   private int getInitialGold() {
@@ -233,54 +234,54 @@ public final class Monster extends Creature {
         * 4;
     final int factor = this.getBattlesToNextLevel();
     final int min = 0;
-    final int max = (needed / factor) * 2;
+    final int max = needed / factor * 2;
     final RandomRange r = new RandomRange(min, max);
     return (int) (r.generate() * this.adjustForLevelDifference()
-        * getGoldMultiplierForDifficulty());
+        * Monster.getGoldMultiplierForDifficulty());
   }
 
   private int getInitialAgility() {
-    final RandomRange r = new RandomRange(1,
-        Math.max(this.getLevel() * getStatMultiplierForDifficulty(), 1));
+    final RandomRange r = new RandomRange(1, Math
+        .max(this.getLevel() * Monster.getStatMultiplierForDifficulty(), 1));
     return r.generate();
   }
 
   private int getInitialVitality() {
-    final RandomRange r = new RandomRange(1,
-        Math.max(this.getLevel() * getStatMultiplierForDifficulty(), 1));
+    final RandomRange r = new RandomRange(1, Math
+        .max(this.getLevel() * Monster.getStatMultiplierForDifficulty(), 1));
     return r.generate();
   }
 
   private int getInitialIntelligence() {
     final RandomRange r = new RandomRange(0,
-        this.getLevel() * getStatMultiplierForDifficulty());
+        this.getLevel() * Monster.getStatMultiplierForDifficulty());
     return r.generate();
   }
 
   private int getInitialLuck() {
     final RandomRange r = new RandomRange(0,
-        this.getLevel() * getStatMultiplierForDifficulty());
+        this.getLevel() * Monster.getStatMultiplierForDifficulty());
     return r.generate();
   }
 
   private static int getStatMultiplierForDifficulty() {
     final int difficulty = Prefs.getGameDifficulty();
     if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
-      return STAT_MULT_VERY_EASY;
+      return Monster.STAT_MULT_VERY_EASY;
     } else {
       if (difficulty == Prefs.DIFFICULTY_EASY) {
-        return STAT_MULT_EASY;
+        return Monster.STAT_MULT_EASY;
       } else {
         if (difficulty == Prefs.DIFFICULTY_NORMAL) {
-          return STAT_MULT_NORMAL;
+          return Monster.STAT_MULT_NORMAL;
         } else {
           if (difficulty == Prefs.DIFFICULTY_HARD) {
-            return STAT_MULT_HARD;
+            return Monster.STAT_MULT_HARD;
           } else {
             if (difficulty == Prefs.DIFFICULTY_VERY_HARD) {
-              return STAT_MULT_VERY_HARD;
+              return Monster.STAT_MULT_VERY_HARD;
             } else {
-              return STAT_MULT_NORMAL;
+              return Monster.STAT_MULT_NORMAL;
             }
           }
         }
@@ -291,21 +292,21 @@ public final class Monster extends Creature {
   private static double getGoldMultiplierForDifficulty() {
     final int difficulty = Prefs.getGameDifficulty();
     if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
-      return GOLD_MULT_VERY_EASY;
+      return Monster.GOLD_MULT_VERY_EASY;
     } else {
       if (difficulty == Prefs.DIFFICULTY_EASY) {
-        return GOLD_MULT_EASY;
+        return Monster.GOLD_MULT_EASY;
       } else {
         if (difficulty == Prefs.DIFFICULTY_NORMAL) {
-          return GOLD_MULT_NORMAL;
+          return Monster.GOLD_MULT_NORMAL;
         } else {
           if (difficulty == Prefs.DIFFICULTY_HARD) {
-            return GOLD_MULT_HARD;
+            return Monster.GOLD_MULT_HARD;
           } else {
             if (difficulty == Prefs.DIFFICULTY_VERY_HARD) {
-              return GOLD_MULT_VERY_HARD;
+              return Monster.GOLD_MULT_VERY_HARD;
             } else {
-              return GOLD_MULT_NORMAL;
+              return Monster.GOLD_MULT_NORMAL;
             }
           }
         }
@@ -316,21 +317,21 @@ public final class Monster extends Creature {
   private static double getExpMultiplierForDifficulty() {
     final int difficulty = Prefs.getGameDifficulty();
     if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
-      return EXP_MULT_VERY_EASY;
+      return Monster.EXP_MULT_VERY_EASY;
     } else {
       if (difficulty == Prefs.DIFFICULTY_EASY) {
-        return EXP_MULT_EASY;
+        return Monster.EXP_MULT_EASY;
       } else {
         if (difficulty == Prefs.DIFFICULTY_NORMAL) {
-          return EXP_MULT_NORMAL;
+          return Monster.EXP_MULT_NORMAL;
         } else {
           if (difficulty == Prefs.DIFFICULTY_HARD) {
-            return EXP_MULT_HARD;
+            return Monster.EXP_MULT_HARD;
           } else {
             if (difficulty == Prefs.DIFFICULTY_VERY_HARD) {
-              return EXP_MULT_VERY_HARD;
+              return Monster.EXP_MULT_VERY_HARD;
             } else {
-              return EXP_MULT_NORMAL;
+              return Monster.EXP_MULT_NORMAL;
             }
           }
         }

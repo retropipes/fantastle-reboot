@@ -72,7 +72,7 @@ public final class BattleCharacter extends FantastleObject {
     return this.creature.getTeamID();
   }
 
-  public final String getTeamString() {
+  public String getTeamString() {
     if (this.getTeamID() == 0) {
       return "Team: Party";
     } else {
@@ -81,50 +81,50 @@ public final class BattleCharacter extends FantastleObject {
   }
 
   public boolean isActive() {
-    return this.getCustomFlag(FLAG_ACTIVE).get();
+    return this.getCustomFlag(BattleCharacter.FLAG_ACTIVE).get();
   }
 
   public void deactivate() {
-    this.setCustomFlag(FLAG_ACTIVE, false);
+    this.setCustomFlag(BattleCharacter.FLAG_ACTIVE, false);
   }
 
   public void activate() {
-    this.setCustomFlag(FLAG_ACTIVE, true);
+    this.setCustomFlag(BattleCharacter.FLAG_ACTIVE, true);
   }
 
   public void resetActions() {
-    this.setCustomCounter(COUNTER_ACTIONS,
+    this.setCustomCounter(BattleCharacter.COUNTER_ACTIONS,
         this.creature.getMapBattleActionsPerRound());
   }
 
   public void act(final int cost) {
-    if (this.getCustomCounter(COUNTER_ACTIONS).get() > 0) {
-      this.offsetCustomCounter(COUNTER_ACTIONS, -cost);
-      if (this.getCustomCounter(COUNTER_ACTIONS).get() < 0) {
-        this.setCustomCounter(COUNTER_ACTIONS, 0);
+    if (this.getCustomCounter(BattleCharacter.COUNTER_ACTIONS).get() > 0) {
+      this.offsetCustomCounter(BattleCharacter.COUNTER_ACTIONS, -cost);
+      if (this.getCustomCounter(BattleCharacter.COUNTER_ACTIONS).get() < 0) {
+        this.setCustomCounter(BattleCharacter.COUNTER_ACTIONS, 0);
       }
     }
   }
 
   public void actExact(final int cost) {
-    if (this.getCustomCounter(COUNTER_ACTIONS).get() >= cost) {
-      this.offsetCustomCounter(COUNTER_ACTIONS, -cost);
+    if (this.getCustomCounter(BattleCharacter.COUNTER_ACTIONS).get() >= cost) {
+      this.offsetCustomCounter(BattleCharacter.COUNTER_ACTIONS, -cost);
     }
   }
 
   public boolean canAct(final int cost) {
-    return this.getCustomCounter(COUNTER_ACTIONS).get() > 0;
+    return this.getCustomCounter(BattleCharacter.COUNTER_ACTIONS).get() > 0;
   }
 
   public boolean canActExact(final int cost) {
-    return this.getCustomCounter(COUNTER_ACTIONS).get() >= cost;
+    return this.getCustomCounter(BattleCharacter.COUNTER_ACTIONS).get() >= cost;
   }
 
   public int getCurrentActions() {
-    return this.getCustomCounter(COUNTER_ACTIONS).get();
+    return this.getCustomCounter(BattleCharacter.COUNTER_ACTIONS).get();
   }
 
-  public final String getActionString() {
+  public String getActionString() {
     return "Actions Left: " + this.getCurrentActions();
   }
 

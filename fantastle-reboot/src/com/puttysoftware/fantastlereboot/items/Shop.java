@@ -92,7 +92,7 @@ public class Shop {
       return 0;
     }
     final int cost = 15 * i * i + 15 * i
-        + (int) (Math.sqrt(Shop.getEquipmentCost(x)));
+        + (int) Math.sqrt(Shop.getEquipmentCost(x));
     if (cost < 0) {
       return 0;
     } else {
@@ -198,8 +198,8 @@ public class Shop {
     final PartyMember playerCharacter = PartyManager.getParty().getLeader();
     if (this.type == ShopTypes.WEAPONS) {
       if (this.typeResult.equals(this.typeChoices[0])) {
-        this.choices = EquipmentFactory.createOneHandedWeaponNames(
-            playerCharacter.getJob().getJobID());
+        this.choices = EquipmentFactory
+            .createOneHandedWeaponNames(playerCharacter.getJob().getJobID());
         // Choose Hand
         this.handChoices = WeaponConstants.getHandChoices();
         this.handDefault = 0;
@@ -215,8 +215,8 @@ public class Shop {
           this.handIndex = false;
         }
       } else {
-        this.choices = EquipmentFactory.createTwoHandedWeaponNames(
-            playerCharacter.getJob().getJobID());
+        this.choices = EquipmentFactory
+            .createTwoHandedWeaponNames(playerCharacter.getJob().getJobID());
       }
     } else if (this.type == ShopTypes.ARMOR) {
       this.choices = EquipmentFactory.createArmorNames(this.typeIndex);
@@ -370,7 +370,7 @@ public class Shop {
           this.twoHanded = true;
         }
         final int power = old.getPotency();
-        final int bonus = (power % (Shop.MAX_ENHANCEMENTS + 1)) + 1;
+        final int bonus = power % (Shop.MAX_ENHANCEMENTS + 1) + 1;
         this.item = EquipmentFactory.createEnhancedEquipment(old, bonus);
         this.cost = Shop.getEnhancementCost(bonus, power);
         if (this.cost == 0) {

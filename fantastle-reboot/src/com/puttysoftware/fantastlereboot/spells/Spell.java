@@ -52,14 +52,14 @@ public class Spell {
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
     if (this == obj) {
       return true;
     }
     if (!(obj instanceof Spell)) {
       return false;
     }
-    Spell other = (Spell) obj;
+    final Spell other = (Spell) obj;
     return this.cost == other.cost && Objects.equals(this.effect, other.effect)
         && this.soundEffect == other.soundEffect && this.target == other.target;
   }

@@ -68,7 +68,7 @@ public class ArrowTask extends Thread {
         DirectionResolver.resolve(incX, incY));
     SoundPlayer.playSound(SoundIndex.ARROW_SHOOT, SoundGroup.GAME);
     while (!o.isDirectionallySolid(incX, incY)) {
-      res = arrowHitCheck(px + cumX, py + cumY, pz);
+      res = ArrowTask.arrowHitCheck(px + cumX, py + cumY, pz);
       if (!res) {
         break;
       }

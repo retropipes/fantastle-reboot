@@ -23,8 +23,8 @@ import com.puttysoftware.xio.XDataWriter;
 
 public class Party {
   // Fields
-  private ArrayList<PartyMember> members;
-  private ArrayList<BattleCharacter> battlers;
+  private final ArrayList<PartyMember> members;
+  private final ArrayList<BattleCharacter> battlers;
   private int leaderID;
   private int activePCs;
   private int monsterLevel;
@@ -46,7 +46,7 @@ public class Party {
 
   private void generateBattleCharacters() {
     this.battlers.clear();
-    for (PartyMember member : this.members) {
+    for (final PartyMember member : this.members) {
       this.battlers.add(new BattleCharacter(member));
     }
   }
@@ -60,8 +60,8 @@ public class Party {
 
   public long getPartyMaxToNextLevel() {
     long result = 0L;
-    for (PartyMember member : this.members) {
-      long value = member.getToNextLevelValue();
+    for (final PartyMember member : this.members) {
+      final long value = member.getToNextLevelValue();
       if (value > result) {
         result = value;
       }
@@ -106,7 +106,7 @@ public class Party {
   }
 
   public void checkPartyLevelUp() {
-    for (PartyMember member : this.members) {
+    for (final PartyMember member : this.members) {
       // Level Up Check
       if (member.checkLevelUp()) {
         member.levelUp();
@@ -120,14 +120,14 @@ public class Party {
 
   public boolean isAlive() {
     boolean result = false;
-    for (PartyMember member : this.members) {
+    for (final PartyMember member : this.members) {
       result |= member.isAlive();
     }
     return result;
   }
 
   public void fireStepActions() {
-    for (PartyMember member : this.members) {
+    for (final PartyMember member : this.members) {
       member.getItems().fireStepActions(member);
     }
   }
@@ -149,7 +149,7 @@ public class Party {
         "Arrange Party", pickNames, pickNames[this.leaderID]);
     if (response != null) {
       int x = 0;
-      for (PartyMember member : this.members) {
+      for (final PartyMember member : this.members) {
         if (member.getName().equals(response)) {
           this.leaderID = x;
           Player.setAvatar(member.getAvatarFamilyID(), member.getAvatarSkinID(),
@@ -164,7 +164,7 @@ public class Party {
   private String[] buildNameList() {
     final String[] tempNames = new String[1];
     int nnc = 0;
-    for (PartyMember member : this.members) {
+    for (final PartyMember member : this.members) {
       if (member != null) {
         tempNames[nnc] = member.getName();
         nnc++;
@@ -172,9 +172,9 @@ public class Party {
     }
     final String[] names = new String[nnc];
     nnc = 0;
-    for (int x = 0; x < tempNames.length; x++) {
-      if (tempNames[x] != null) {
-        names[nnc] = tempNames[x];
+    for (final String tempName : tempNames) {
+      if (tempName != null) {
+        names[nnc] = tempName;
         nnc++;
       }
     }
@@ -204,7 +204,7 @@ public class Party {
     worldFile.writeInt(this.leaderID);
     worldFile.writeInt(this.activePCs);
     worldFile.writeInt(this.monsterLevel);
-    for (PartyMember member : this.members) {
+    for (final PartyMember member : this.members) {
       worldFile.writeBoolean(true);
       CharacterSaver.writeCharacter(worldFile, member);
     }

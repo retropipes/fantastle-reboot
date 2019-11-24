@@ -48,40 +48,37 @@ public class ModuleLoader {
   public synchronized void play() {
     if (this.ibxm != null) {
       this.playing = true;
-      this.playThread = new Thread(new Runnable() {
-        @Override
-        public void run() {
-          final int[] mixBuf = new int[ModuleLoader.this.ibxm
-              .getMixBufferLength()];
-          final byte[] outBuf = new byte[mixBuf.length * 4];
-          AudioFormat audioFormat = null;
-          audioFormat = new AudioFormat(ModuleLoader.SAMPLE_RATE, 16, 2, true,
-              true);
-          try (SourceDataLine audioLine = AudioSystem
-              .getSourceDataLine(audioFormat)) {
-            audioLine.open();
-            audioLine.start();
-            while (ModuleLoader.this.playing) {
-              final int count = ModuleLoader.this.getAudio(mixBuf);
-              int outIdx = 0;
-              for (int mixIdx = 0, mixEnd = count
-                  * 2; mixIdx < mixEnd; mixIdx++) {
-                int ampl = mixBuf[mixIdx];
-                if (ampl > 32767) {
-                  ampl = 32767;
-                }
-                if (ampl < -32768) {
-                  ampl = -32768;
-                }
-                outBuf[outIdx++] = (byte) (ampl >> 8);
-                outBuf[outIdx++] = (byte) ampl;
+      this.playThread = new Thread(() -> {
+        final int[] mixBuf = new int[ModuleLoader.this.ibxm
+            .getMixBufferLength()];
+        final byte[] outBuf = new byte[mixBuf.length * 4];
+        AudioFormat audioFormat = null;
+        audioFormat = new AudioFormat(ModuleLoader.SAMPLE_RATE, 16, 2, true,
+            true);
+        try (SourceDataLine audioLine = AudioSystem
+            .getSourceDataLine(audioFormat)) {
+          audioLine.open();
+          audioLine.start();
+          while (ModuleLoader.this.playing) {
+            final int count = ModuleLoader.this.getAudio(mixBuf);
+            int outIdx = 0;
+            for (int mixIdx = 0, mixEnd = count
+                * 2; mixIdx < mixEnd; mixIdx++) {
+              int ampl = mixBuf[mixIdx];
+              if (ampl > 32767) {
+                ampl = 32767;
               }
-              audioLine.write(outBuf, 0, outIdx);
+              if (ampl < -32768) {
+                ampl = -32768;
+              }
+              outBuf[outIdx++] = (byte) (ampl >> 8);
+              outBuf[outIdx++] = (byte) ampl;
             }
-            audioLine.drain();
-          } catch (final Exception e) {
-            // Ignore
+            audioLine.write(outBuf, 0, outIdx);
           }
+          audioLine.drain();
+        } catch (final Exception e) {
+          // Ignore
         }
       });
       this.playThread.start();

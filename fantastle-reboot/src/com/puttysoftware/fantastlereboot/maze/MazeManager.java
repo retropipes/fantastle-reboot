@@ -15,10 +15,10 @@ public final class MazeManager {
 
   // Methods
   public static Maze getMaze() {
-    return gameMaze;
+    return MazeManager.gameMaze;
   }
 
   public static void setMaze(final Maze newMaze) {
-    gameMaze = newMaze;
+    MazeManager.gameMaze = newMaze;
   }
 }

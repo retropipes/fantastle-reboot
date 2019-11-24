@@ -53,7 +53,7 @@ public class AboutDialog implements AboutHandler {
 
   // Methods
   @Override
-  public void handleAbout(AboutEvent inE) {
+  public void handleAbout(final AboutEvent inE) {
     this.showAboutDialog();
   }
 
@@ -91,10 +91,11 @@ public class AboutDialog implements AboutHandler {
     this.textPane.add(new JLabel("A maze solving + role playing hybrid game"));
     this.textPane.add(new JLabel("Version: " + ver));
     this.textPane.add(new JLabel("Author: Putty Software"));
-    this.textPane
-        .add(new JLabel("Web Site: https://puttysoftware.github.com/fantastle-reboot/"));
+    this.textPane.add(new JLabel(
+        "Web Site: https://puttysoftware.github.com/fantastle-reboot/"));
     this.textPane.add(new JLabel("Special thanks to:"));
-    this.textPane.add(new JLabel("The #IndieDevWorldOrder gang on Twitter, for feedback"));
+    this.textPane.add(
+        new JLabel("The #IndieDevWorldOrder gang on Twitter, for feedback"));
     this.buttonPane.setLayout(new FlowLayout());
     this.buttonPane.add(this.aboutOK);
     this.aboutPane.add(this.logoPane, BorderLayout.WEST);
@@ -123,38 +124,38 @@ public class AboutDialog implements AboutHandler {
     }
 
     @Override
-    public void windowOpened(WindowEvent inE) {
+    public void windowOpened(final WindowEvent inE) {
       // Do nothing
     }
 
     @Override
-    public void windowClosing(WindowEvent inE) {
+    public void windowClosing(final WindowEvent inE) {
       AboutDialog.this.aboutFrame.setDefaultButton(null);
       AboutDialog.this.aboutFrame.removeWindowListener(this);
       FantastleReboot.getBagOStuff().restoreFormerMode();
     }
 
     @Override
-    public void windowClosed(WindowEvent inE) {
+    public void windowClosed(final WindowEvent inE) {
     }
 
     @Override
-    public void windowIconified(WindowEvent inE) {
+    public void windowIconified(final WindowEvent inE) {
       // Do nothing
     }
 
     @Override
-    public void windowDeiconified(WindowEvent inE) {
+    public void windowDeiconified(final WindowEvent inE) {
       // Do nothing
     }
 
     @Override
-    public void windowActivated(WindowEvent inE) {
+    public void windowActivated(final WindowEvent inE) {
       // Do nothing
     }
 
     @Override
-    public void windowDeactivated(WindowEvent inE) {
+    public void windowDeactivated(final WindowEvent inE) {
       // Do nothing
     }
   }

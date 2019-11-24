@@ -65,7 +65,7 @@ class ItemUseQuantity {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((this.item == null) ? 0 : this.item.hashCode());
+    result = prime * result + (this.item == null ? 0 : this.item.hashCode());
     result = prime * result + this.quantity;
     return prime * result + this.uses;
   }

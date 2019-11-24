@@ -1,5 +1,4 @@
 package com.puttysoftware.fantastlereboot.objectmodel;
 
-public interface MonsterObjectModel
-    extends FantastleObjectModel {
+public interface MonsterObjectModel extends FantastleObjectModel {
 }

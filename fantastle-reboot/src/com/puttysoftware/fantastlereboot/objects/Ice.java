@@ -18,12 +18,14 @@ public final class Ice extends FantastleObject {
   }
 
   @Override
-  public boolean shouldGenerateObject(Maze inMaze, int inRow, int inCol,
-      int inFloor, int inLevel, int inLayer) {
+  public boolean shouldGenerateObject(final Maze inMaze, final int inRow,
+      final int inCol, final int inFloor, final int inLevel,
+      final int inLayer) {
     // Generate Ice 20% of the time
-    int dieRoll = RandomRange.generate(0, 4);
-    if (dieRoll != 0)
+    final int dieRoll = RandomRange.generate(0, 4);
+    if (dieRoll != 0) {
       return false;
+    }
     return super.shouldGenerateObject(inMaze, inRow, inCol, inFloor, inLevel,
         inLayer);
   }

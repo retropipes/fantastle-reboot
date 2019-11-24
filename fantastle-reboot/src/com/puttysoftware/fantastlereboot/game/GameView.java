@@ -34,13 +34,11 @@ public final class GameView {
   }
 
   public static int getLowerRightViewingWindowLocationX() {
-    return GameView.locX
-        + Prefs.getViewingWindowSize() - 1;
+    return GameView.locX + Prefs.getViewingWindowSize() - 1;
   }
 
   public static int getLowerRightViewingWindowLocationY() {
-    return GameView.locY
-        + Prefs.getViewingWindowSize() - 1;
+    return GameView.locY + Prefs.getViewingWindowSize() - 1;
   }
 
   public static void setViewingWindowLocationX(final int val) {

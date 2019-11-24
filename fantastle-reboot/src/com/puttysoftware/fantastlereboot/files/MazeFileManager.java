@@ -283,7 +283,7 @@ public final class MazeFileManager {
   private static String getNameWithoutExtension(final String s) {
     String ext = null;
     final int i = s.lastIndexOf('.');
-    if ((i > 0) && (i < s.length() - 1)) {
+    if (i > 0 && i < s.length() - 1) {
       ext = s.substring(0, i);
     } else {
       ext = s;
@@ -294,7 +294,7 @@ public final class MazeFileManager {
   private static String getFileNameOnly(final String s) {
     String fno = null;
     final int i = s.lastIndexOf(File.separatorChar);
-    if ((i > 0) && (i < s.length() - 1)) {
+    if (i > 0 && i < s.length() - 1) {
       fno = s.substring(i + 1);
     } else {
       fno = s;

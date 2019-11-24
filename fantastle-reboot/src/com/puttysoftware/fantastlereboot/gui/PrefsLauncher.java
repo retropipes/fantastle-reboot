@@ -9,7 +9,7 @@ public class PrefsLauncher implements PreferencesHandler {
   }
 
   @Override
-  public void handlePreferences(PreferencesEvent inE) {
+  public void handlePreferences(final PreferencesEvent inE) {
     Prefs.showPrefs();
   }
 }

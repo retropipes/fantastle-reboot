@@ -84,7 +84,7 @@ public class MenuManager {
   }
 
   // Methods
-  public void appendNewMenu(JMenu newMenu) {
+  public void appendNewMenu(final JMenu newMenu) {
     this.mainMenuBar.add(newMenu);
   }
 

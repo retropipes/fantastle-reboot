@@ -22,25 +22,25 @@ public class DirectionNameResolver {
   public static final String resolveToName(final int dir) {
     String res = null;
     if (dir == Directions.NORTH) {
-      res = NAME_NORTH;
+      res = DirectionNameResolver.NAME_NORTH;
     } else if (dir == Directions.SOUTH) {
-      res = NAME_SOUTH;
+      res = DirectionNameResolver.NAME_SOUTH;
     } else if (dir == Directions.WEST) {
-      res = NAME_WEST;
+      res = DirectionNameResolver.NAME_WEST;
     } else if (dir == Directions.EAST) {
-      res = NAME_EAST;
+      res = DirectionNameResolver.NAME_EAST;
     } else if (dir == Directions.SOUTHEAST) {
-      res = NAME_SOUTHEAST;
+      res = DirectionNameResolver.NAME_SOUTHEAST;
     } else if (dir == Directions.SOUTHWEST) {
-      res = NAME_SOUTHWEST;
+      res = DirectionNameResolver.NAME_SOUTHWEST;
     } else if (dir == Directions.NORTHWEST) {
-      res = NAME_NORTHWEST;
+      res = DirectionNameResolver.NAME_NORTHWEST;
     } else if (dir == Directions.NORTHEAST) {
-      res = NAME_NORTHEAST;
+      res = DirectionNameResolver.NAME_NORTHEAST;
     } else if (dir == Directions.NONE) {
-      res = NAME_NONE;
+      res = DirectionNameResolver.NAME_NONE;
     } else {
-      res = NAME_INVALID;
+      res = DirectionNameResolver.NAME_INVALID;
     }
     return res;
   }

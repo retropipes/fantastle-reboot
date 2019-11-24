@@ -153,7 +153,7 @@ public abstract class Creature {
   }
 
   public final void applyEffect(final Effect ie) {
-    for (Effect e : this.effectList) {
+    for (final Effect e : this.effectList) {
       if (e.isActive() && ie.equals(e)) {
         e.scaleEffect(Effect.EFFECT_ADD, this);
         return;
@@ -170,7 +170,7 @@ public abstract class Creature {
   }
 
   public final void cullInactiveEffects() {
-    for (Effect e : this.effectList) {
+    for (final Effect e : this.effectList) {
       e.deactivateEffect();
     }
   }
@@ -196,7 +196,7 @@ public abstract class Creature {
   }
 
   public final void extendEffect(final Effect ie, final int rounds) {
-    Effect e = this.get(ie);
+    final Effect e = this.get(ie);
     if (e != null) {
       e.extendEffect(rounds);
     }
@@ -216,7 +216,7 @@ public abstract class Creature {
   }
 
   private final Effect get(final Effect ie) {
-    for (Effect e : this.effectList) {
+    for (final Effect e : this.effectList) {
       if (e.isActive() && ie.equals(e)) {
         return e;
       }
@@ -228,14 +228,14 @@ public abstract class Creature {
     final int value = (int) Math
         .sqrt(Math.ceil(this.getEffectedStat(StatConstants.STAT_SPEED)
             * StatConstants.FACTOR_SPEED_MAP_ACTIONS_PER_ROUND));
-    return Math.max(1, Math.min(ACTION_CAP, value));
+    return Math.max(1, Math.min(Creature.ACTION_CAP, value));
   }
 
   public int getWindowBattleActionsPerRound() {
     final int value = (int) Math
         .sqrt(Math.ceil(this.getEffectedStat(StatConstants.STAT_SPEED)
             * StatConstants.FACTOR_SPEED_WINDOW_ACTIONS_PER_ROUND));
-    return Math.max(1, Math.min(ACTION_CAP, value));
+    return Math.max(1, Math.min(Creature.ACTION_CAP, value));
   }
 
   public static void computeActionCap(final int rows, final int cols) {
@@ -259,7 +259,7 @@ public abstract class Creature {
 
   public final String getAllCurrentEffectMessages() {
     final StringBuilder sb = new StringBuilder(Effect.getNullMessage());
-    for (Effect e : this.effectList) {
+    for (final Effect e : this.effectList) {
       sb.append(e.getCurrentMessage());
       sb.append("\n");
     }
@@ -292,7 +292,7 @@ public abstract class Creature {
 
   public final String getCompleteEffectString() {
     String s = "";
-    for (Effect e : this.effectList) {
+    for (final Effect e : this.effectList) {
       s += e.getEffectString() + "\n";
     }
     // Strip final newline character, if it exists
@@ -305,7 +305,7 @@ public abstract class Creature {
   public final int getActiveEffectCount() {
     int c;
     c = 0;
-    for (Effect e : this.effectList) {
+    for (final Effect e : this.effectList) {
       if (e.isActive()) {
         c++;
       }
@@ -318,7 +318,7 @@ public abstract class Creature {
     z = this.getActiveEffectCount();
     final String[] s = new String[z];
     int counter = 0;
-    for (Effect e : this.effectList) {
+    for (final Effect e : this.effectList) {
       s[counter] = e.getEffectString();
       counter++;
     }
@@ -343,7 +343,7 @@ public abstract class Creature {
     int s, p;
     s = 0;
     p = this.getStat(stat);
-    for (Effect e : this.effectList) {
+    for (final Effect e : this.effectList) {
       p *= e.getEffect(Effect.EFFECT_MULTIPLY);
       s += e.getEffect(Effect.EFFECT_ADD);
     }
@@ -477,8 +477,9 @@ public abstract class Creature {
   public abstract String getName();
 
   public final int getActionBarSpeed() {
-    return Math.max(BAR_SPEED_MIN, Math.min(
-        (BAR_SPEED_MAX - this.getBaseSpeed()) / BAR_SPEED_MIN, BAR_SPEED_MAX));
+    return Math.max(Creature.BAR_SPEED_MIN, Math.min(
+        (Creature.BAR_SPEED_MAX - this.getBaseSpeed()) / Creature.BAR_SPEED_MIN,
+        Creature.BAR_SPEED_MAX));
   }
 
   protected final int getBaseSpeed() {
@@ -880,13 +881,13 @@ public abstract class Creature {
   }
 
   public final void stripAllEffects() {
-    for (Effect e : this.effectList) {
+    for (final Effect e : this.effectList) {
       e.deactivateEffect();
     }
   }
 
   public final void useEffects() {
-    for (Effect e : this.effectList) {
+    for (final Effect e : this.effectList) {
       e.useEffect(this);
     }
   }
@@ -920,16 +921,14 @@ public abstract class Creature {
     final int prime = 31;
     int result = super.hashCode();
     result = prime * result + this.effectList.hashCode();
+    result = prime * result + (int) (this.experience ^ this.experience >>> 32);
+    result = prime * result + (this.items == null ? 0 : this.items.hashCode());
     result = prime * result
-        + (int) (this.experience ^ (this.experience >>> 32));
-    result = prime * result
-        + ((this.items == null) ? 0 : this.items.hashCode());
-    result = prime * result
-        + ((this.spellsKnown == null) ? 0 : this.spellsKnown.hashCode());
+        + (this.spellsKnown == null ? 0 : this.spellsKnown.hashCode());
     result = prime * result + Arrays.hashCode(this.stats);
     result = prime * result + this.teamID;
     return prime * result
-        + ((this.toNextLevel == null) ? 0 : this.toNextLevel.hashCode());
+        + (this.toNextLevel == null ? 0 : this.toNextLevel.hashCode());
   }
 
   @Override
@@ -1021,7 +1020,7 @@ public abstract class Creature {
 
   public String getAllEffectMessages(final int which) {
     String s = "";
-    for (Effect e : this.effectList) {
+    for (final Effect e : this.effectList) {
       s += e.getMessage(which) + "\n";
     }
     // Strip final newline character, if it exists

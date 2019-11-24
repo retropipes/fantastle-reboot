@@ -22,8 +22,8 @@ import com.puttysoftware.fantastlereboot.objects.temporary.NoteObject;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class GameDraw extends Thread {
-  private DrawGrid drawGrid;
-  private JPanel drawDestination;
+  private final DrawGrid drawGrid;
+  private final JPanel drawDestination;
   private boolean full;
   private int drawX;
   private int drawY;
@@ -100,8 +100,8 @@ class GameDraw extends Thread {
         xFix = x - GameView.getViewingWindowLocationX();
         yFix = y - GameView.getViewingWindowLocationY();
         visible = m.isSquareVisible(u, v, y, x);
-        inBounds = (x >= 0 && x < Maze.getMaxRows() && y >= 0
-            && y < Maze.getMaxColumns());
+        inBounds = x >= 0 && x < Maze.getMaxRows() && y >= 0
+            && y < Maze.getMaxColumns();
         if (inBounds) {
           if (visible) {
             final FantastleObjectModel obj1 = m.getCell(y, x,
@@ -110,29 +110,31 @@ class GameDraw extends Thread {
                 m.getPlayerLocationZ(), Layers.OBJECT);
             final BufferedImageIcon img1 = obj1.getGameImage();
             final BufferedImageIcon img2 = obj2.getGameImage();
-            FantastleObjectModel obj3 = OPEN;
+            FantastleObjectModel obj3 = GameDraw.OPEN;
             BufferedImageIcon img3 = obj3.getGameImage();
-            FantastleObjectModel obj4 = OPEN;
+            FantastleObjectModel obj4 = GameDraw.OPEN;
             BufferedImageIcon img4 = obj4.getGameImage();
-            boolean playerSquare = (u == y && v == x);
-            boolean noteSquare = m.hasNote(x, y, z);
+            final boolean playerSquare = u == y && v == x;
+            final boolean noteSquare = m.hasNote(x, y, z);
             if (playerSquare) {
-              obj3 = PLAYER;
+              obj3 = GameDraw.PLAYER;
               img3 = obj3.getGameImage();
             }
             if (noteSquare) {
-              obj4 = NOTE;
+              obj4 = GameDraw.NOTE;
               img4 = obj4.getGameImage();
             }
-            String cacheName = generateCacheName(obj1, obj2, obj3, obj4);
+            final String cacheName = GameDraw.generateCacheName(obj1, obj2,
+                obj3, obj4);
             this.drawGrid.setImageCell(
                 ImageCompositor.composite(cacheName, img1, img2, img3, img4),
                 xFix, yFix);
           } else {
-            this.drawGrid.setImageCell(DARK.getImage(), xFix, yFix);
+            this.drawGrid.setImageCell(GameDraw.DARK.getImage(), xFix, yFix);
           }
         } else {
-          this.drawGrid.setImageCell(NOTHING.getGameImage(), xFix, yFix);
+          this.drawGrid.setImageCell(GameDraw.NOTHING.getGameImage(), xFix,
+              yFix);
         }
       }
     }
@@ -147,8 +149,8 @@ class GameDraw extends Thread {
     }
     g.dispose();
     // Check for battle
-    int px = m.getPlayerLocationX();
-    int py = m.getPlayerLocationY();
+    final int px = m.getPlayerLocationX();
+    final int py = m.getPlayerLocationY();
     MonsterLocationManager.checkForBattle(px, py);
   }
 
@@ -168,8 +170,8 @@ class GameDraw extends Thread {
     xFix = x - GameView.getViewingWindowLocationX();
     yFix = y - GameView.getViewingWindowLocationY();
     visible = MazeManager.getMaze().isSquareVisible(u, v, y, x);
-    inBounds = (x >= 0 && x < Maze.getMaxRows() && y >= 0
-        && y < Maze.getMaxColumns());
+    inBounds = x >= 0 && x < Maze.getMaxRows() && y >= 0
+        && y < Maze.getMaxColumns();
     if (inBounds) {
       if (visible) {
         final FantastleObjectModel obj1 = m.getCell(y, x,
@@ -178,30 +180,31 @@ class GameDraw extends Thread {
             m.getPlayerLocationZ(), Layers.OBJECT);
         final BufferedImageIcon img1 = obj1.getGameImage();
         final BufferedImageIcon img2 = obj2.getGameImage();
-        FantastleObjectModel obj3 = OPEN;
+        FantastleObjectModel obj3 = GameDraw.OPEN;
         BufferedImageIcon img3 = obj3.getGameImage();
-        FantastleObjectModel obj4 = OPEN;
+        FantastleObjectModel obj4 = GameDraw.OPEN;
         BufferedImageIcon img4 = obj4.getGameImage();
-        BufferedImageIcon img5 = obj5.getGameImage();
-        boolean playerSquare = (u == y && v == x);
-        boolean noteSquare = m.hasNote(x, y, z);
+        final BufferedImageIcon img5 = obj5.getGameImage();
+        final boolean playerSquare = u == y && v == x;
+        final boolean noteSquare = m.hasNote(x, y, z);
         if (playerSquare) {
-          obj3 = PLAYER;
+          obj3 = GameDraw.PLAYER;
           img3 = obj3.getGameImage();
         }
         if (noteSquare) {
-          obj4 = NOTE;
+          obj4 = GameDraw.NOTE;
           img4 = obj4.getGameImage();
         }
-        String cacheName = generateCacheName(obj1, obj2, obj3, obj4, obj5);
+        final String cacheName = GameDraw.generateCacheName(obj1, obj2, obj3,
+            obj4, obj5);
         this.drawGrid.setImageCell(
             ImageCompositor.composite(cacheName, img1, img2, img3, img4, img5),
             xFix, yFix);
       } else {
-        this.drawGrid.setImageCell(DARK.getImage(), xFix, yFix);
+        this.drawGrid.setImageCell(GameDraw.DARK.getImage(), xFix, yFix);
       }
     } else {
-      this.drawGrid.setImageCell(NOTHING.getGameImage(), xFix, yFix);
+      this.drawGrid.setImageCell(GameDraw.NOTHING.getGameImage(), xFix, yFix);
     }
     final Graphics g = this.drawDestination.getGraphics();
     final int gSize = ImageConstants.SIZE;
@@ -217,8 +220,8 @@ class GameDraw extends Thread {
 
   private static String
       generateCacheName(final FantastleObjectModel... objects) {
-    StringBuilder result = new StringBuilder();
-    for (FantastleObjectModel object : objects) {
+    final StringBuilder result = new StringBuilder();
+    for (final FantastleObjectModel object : objects) {
       if (object != null) {
         result.append(object.getUniqueID());
         result.append("_");

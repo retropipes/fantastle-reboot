@@ -256,7 +256,7 @@ public class WindowTimeBattleLogic extends Battle {
           SoundPlayer.playSound(SoundIndex.MISSED, SoundGroup.BATTLE);
         } else if (this.damage < 0) {
           displayPlayerDamageString = "You try to hit the " + enemyName
-              + ", but are RIPOSTED for " + (-this.damage) + " damage!";
+              + ", but are RIPOSTED for " + -this.damage + " damage!";
           SoundPlayer.playSound(SoundIndex.PARTY_COUNTER, SoundGroup.BATTLE);
         } else {
           displayPlayerDamageString = "You hit the " + enemyName + " for "
@@ -299,7 +299,7 @@ public class WindowTimeBattleLogic extends Battle {
           SoundPlayer.playSound(SoundIndex.MISSED, SoundGroup.BATTLE);
         } else if (this.damage < 0) {
           displayEnemyDamageString = "The " + enemyName
-              + " tries to hit you, but you RIPOSTE for " + (-this.damage)
+              + " tries to hit you, but you RIPOSTE for " + -this.damage
               + " damage!";
           SoundPlayer.playSound(SoundIndex.MONSTER_COUNTER, SoundGroup.BATTLE);
         } else {
@@ -419,13 +419,13 @@ public class WindowTimeBattleLogic extends Battle {
     final String effectMessages = playerCharacter.getAllCurrentEffectMessages();
     final String enemyEffectMessages = this.enemy.getAllCurrentEffectMessages();
     final String nMsg = Effect.getNullMessage();
-    if (!(effectString.equals(nMsg))) {
+    if (!effectString.equals(nMsg)) {
       flag1 = true;
     }
-    if (!(effectMessages.equals(nMsg))) {
+    if (!effectMessages.equals(nMsg)) {
       flag2 = true;
     }
-    if (!(enemyEffectMessages.equals(nMsg))) {
+    if (!enemyEffectMessages.equals(nMsg)) {
       flag3 = true;
     }
     if (flag1) {
@@ -662,7 +662,7 @@ public class WindowTimeBattleLogic extends Battle {
 
   @Override
   public final void battleDone() {
-    BagOStuff bag = FantastleReboot.getBagOStuff();
+    final BagOStuff bag = FantastleReboot.getBagOStuff();
     // Leave Battle
     this.battleGUI.hideBattle();
     // Post-battle stuff
@@ -812,7 +812,7 @@ public class WindowTimeBattleLogic extends Battle {
   }
 
   @Override
-  public boolean arrowHitCheck(int inX, int inY) {
+  public boolean arrowHitCheck(final int inX, final int inY) {
     // Meaningless in Window Battles
     return false;
   }

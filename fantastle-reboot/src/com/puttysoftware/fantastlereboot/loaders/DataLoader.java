@@ -239,7 +239,7 @@ public class DataLoader {
     }
   }
 
-  public static int[] loadObjectActionAddonData(int actionID) {
+  public static int[] loadObjectActionAddonData(final int actionID) {
     final String name = "action-" + Integer.toString(actionID);
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class.getResourceAsStream("/assets/data/objects/" + name
@@ -254,8 +254,8 @@ public class DataLoader {
         }
       }
       int index = 0;
-      int[] data = new int[rawData.size()];
-      for (Integer rawItem : rawData) {
+      final int[] data = new int[rawData.size()];
+      for (final Integer rawItem : rawData) {
         data[index] = rawItem.intValue();
         index++;
       }

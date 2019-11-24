@@ -28,6 +28,7 @@ class CommonDamageEngineParts {
   }
 
   static int chance() {
-    return new RandomRange(MIN_CHANCE, MAX_CHANCE).generate();
+    return new RandomRange(CommonDamageEngineParts.MIN_CHANCE,
+        CommonDamageEngineParts.MAX_CHANCE).generate();
   }
 }

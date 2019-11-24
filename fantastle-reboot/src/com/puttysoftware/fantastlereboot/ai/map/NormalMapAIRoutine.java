@@ -43,10 +43,11 @@ class NormalMapAIRoutine extends AbstractMapAIRoutine {
     } else {
       Point there = ac.isEnemyNearby();
       if (there != null) {
-        if (CommonMapAIRoutines.check(ac, STEAL_CHANCE)) {
+        if (CommonMapAIRoutines.check(ac, NormalMapAIRoutine.STEAL_CHANCE)) {
           // Steal
           return AIRoutine.ACTION_STEAL;
-        } else if (CommonMapAIRoutines.check(ac, DRAIN_CHANCE)) {
+        } else if (CommonMapAIRoutines.check(ac,
+            NormalMapAIRoutine.DRAIN_CHANCE)) {
           // Drain MP
           return AIRoutine.ACTION_DRAIN;
         } else {
@@ -61,7 +62,7 @@ class NormalMapAIRoutine extends AbstractMapAIRoutine {
           }
         }
       } else {
-        if (CommonMapAIRoutines.check(ac, FLEE_CHANCE)) {
+        if (CommonMapAIRoutines.check(ac, NormalMapAIRoutine.FLEE_CHANCE)) {
           // Flee
           final Point awayDir = ac.runAway();
           if (awayDir == null) {
@@ -81,7 +82,7 @@ class NormalMapAIRoutine extends AbstractMapAIRoutine {
         } else {
           // Look further
           for (int x = CommonMapAIRoutines.MIN_VISION
-              + 1; x <= MAX_VISION; x++) {
+              + 1; x <= NormalMapAIRoutine.MAX_VISION; x++) {
             there = ac.isEnemyNearby(x, x);
             if (there != null) {
               // Found something hostile, move towards it

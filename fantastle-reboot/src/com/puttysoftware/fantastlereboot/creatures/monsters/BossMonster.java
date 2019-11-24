@@ -40,8 +40,9 @@ public class BossMonster extends Creature {
   // Constructors
   BossMonster() {
     super(new ItemInventory(), Creature.TEAM_BOSS,
-        FaithManager.getFaith(BossMonster.FAITH_ID), JobManager.getJob(JOB_ID),
-        RaceManager.getRace(RACE_ID));
+        FaithManager.getFaith(BossMonster.FAITH_ID),
+        JobManager.getJob(BossMonster.JOB_ID),
+        RaceManager.getRace(BossMonster.RACE_ID));
     this.setWindowAI(BossMonster.getInitialWindowAI());
     this.setMapAI(MapAIRoutinePicker.getNextRoutine());
     final SpellBook spells = new BossSpellBook();
@@ -101,21 +102,21 @@ public class BossMonster extends Creature {
     final int difficulty = Prefs.getGameDifficulty();
     final int base = this.getBaseSpeed();
     if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
-      return (int) (base * SPEED_ADJUST_SLOWEST);
+      return (int) (base * Creature.SPEED_ADJUST_SLOWEST);
     } else {
       if (difficulty == Prefs.DIFFICULTY_EASY) {
-        return (int) (base * SPEED_ADJUST_SLOW);
+        return (int) (base * Creature.SPEED_ADJUST_SLOW);
       } else {
         if (difficulty == Prefs.DIFFICULTY_NORMAL) {
-          return (int) (base * SPEED_ADJUST_NORMAL);
+          return (int) (base * Creature.SPEED_ADJUST_NORMAL);
         } else {
           if (difficulty == Prefs.DIFFICULTY_HARD) {
-            return (int) (base * SPEED_ADJUST_FAST);
+            return (int) (base * Creature.SPEED_ADJUST_FAST);
           } else {
             if (difficulty == Prefs.DIFFICULTY_VERY_HARD) {
-              return (int) (base * SPEED_ADJUST_FASTEST);
+              return (int) (base * Creature.SPEED_ADJUST_FASTEST);
             } else {
-              return (int) (base * SPEED_ADJUST_NORMAL);
+              return (int) (base * Creature.SPEED_ADJUST_NORMAL);
             }
           }
         }
@@ -145,44 +146,44 @@ public class BossMonster extends Creature {
   }
 
   private int getInitialStrength() {
-    final int min = getMinimumStatForDifficulty();
-    final RandomRange r = new RandomRange(min,
-        Math.max(this.getLevel() * getStatMultiplierForDifficulty(), min));
+    final int min = BossMonster.getMinimumStatForDifficulty();
+    final RandomRange r = new RandomRange(min, Math.max(
+        this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
     return r.generate();
   }
 
   private int getInitialBlock() {
-    final int min = getMinimumStatForDifficulty();
-    final RandomRange r = new RandomRange(min,
-        Math.max(this.getLevel() * getStatMultiplierForDifficulty(), min));
+    final int min = BossMonster.getMinimumStatForDifficulty();
+    final RandomRange r = new RandomRange(min, Math.max(
+        this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
     return r.generate();
   }
 
   private int getInitialAgility() {
-    final int min = getMinimumStatForDifficulty();
-    final RandomRange r = new RandomRange(min,
-        Math.max(this.getLevel() * getStatMultiplierForDifficulty(), min));
+    final int min = BossMonster.getMinimumStatForDifficulty();
+    final RandomRange r = new RandomRange(min, Math.max(
+        this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
     return r.generate();
   }
 
   private int getInitialVitality() {
-    final int min = getMinimumStatForDifficulty();
-    final RandomRange r = new RandomRange(min,
-        Math.max(this.getLevel() * getStatMultiplierForDifficulty(), min));
+    final int min = BossMonster.getMinimumStatForDifficulty();
+    final RandomRange r = new RandomRange(min, Math.max(
+        this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
     return r.generate();
   }
 
   private int getInitialIntelligence() {
-    final int min = getMinimumStatForDifficulty();
-    final RandomRange r = new RandomRange(min,
-        Math.max(this.getLevel() * getStatMultiplierForDifficulty(), min));
+    final int min = BossMonster.getMinimumStatForDifficulty();
+    final RandomRange r = new RandomRange(min, Math.max(
+        this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
     return r.generate();
   }
 
   private int getInitialLuck() {
-    final int min = getMinimumStatForDifficulty();
-    final RandomRange r = new RandomRange(min,
-        Math.max(this.getLevel() * getStatMultiplierForDifficulty(), min));
+    final int min = BossMonster.getMinimumStatForDifficulty();
+    final RandomRange r = new RandomRange(min, Math.max(
+        this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
     return r.generate();
   }
 
@@ -193,21 +194,21 @@ public class BossMonster extends Creature {
   private static int getStatMultiplierForDifficulty() {
     final int difficulty = Prefs.getGameDifficulty();
     if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
-      return STAT_MULT_VERY_EASY;
+      return BossMonster.STAT_MULT_VERY_EASY;
     } else {
       if (difficulty == Prefs.DIFFICULTY_EASY) {
-        return STAT_MULT_EASY;
+        return BossMonster.STAT_MULT_EASY;
       } else {
         if (difficulty == Prefs.DIFFICULTY_NORMAL) {
-          return STAT_MULT_NORMAL;
+          return BossMonster.STAT_MULT_NORMAL;
         } else {
           if (difficulty == Prefs.DIFFICULTY_HARD) {
-            return STAT_MULT_HARD;
+            return BossMonster.STAT_MULT_HARD;
           } else {
             if (difficulty == Prefs.DIFFICULTY_VERY_HARD) {
-              return STAT_MULT_VERY_HARD;
+              return BossMonster.STAT_MULT_VERY_HARD;
             } else {
-              return STAT_MULT_NORMAL;
+              return BossMonster.STAT_MULT_NORMAL;
             }
           }
         }
@@ -218,21 +219,21 @@ public class BossMonster extends Creature {
   private static int getMinimumStatForDifficulty() {
     final int difficulty = Prefs.getGameDifficulty();
     if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
-      return MINIMUM_STAT_VALUE_VERY_EASY;
+      return BossMonster.MINIMUM_STAT_VALUE_VERY_EASY;
     } else {
       if (difficulty == Prefs.DIFFICULTY_EASY) {
-        return MINIMUM_STAT_VALUE_EASY;
+        return BossMonster.MINIMUM_STAT_VALUE_EASY;
       } else {
         if (difficulty == Prefs.DIFFICULTY_NORMAL) {
-          return MINIMUM_STAT_VALUE_NORMAL;
+          return BossMonster.MINIMUM_STAT_VALUE_NORMAL;
         } else {
           if (difficulty == Prefs.DIFFICULTY_HARD) {
-            return MINIMUM_STAT_VALUE_HARD;
+            return BossMonster.MINIMUM_STAT_VALUE_HARD;
           } else {
             if (difficulty == Prefs.DIFFICULTY_VERY_HARD) {
-              return MINIMUM_STAT_VALUE_VERY_HARD;
+              return BossMonster.MINIMUM_STAT_VALUE_VERY_HARD;
             } else {
-              return MINIMUM_STAT_VALUE_NORMAL;
+              return BossMonster.MINIMUM_STAT_VALUE_NORMAL;
             }
           }
         }

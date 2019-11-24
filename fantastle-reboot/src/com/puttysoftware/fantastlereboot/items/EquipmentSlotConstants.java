@@ -18,26 +18,26 @@ public class EquipmentSlotConstants {
   private static String[] ARMOR_SLOT_NAMES = null;
 
   static synchronized String[] getSlotNames() {
-    return SLOT_NAMES;
+    return EquipmentSlotConstants.SLOT_NAMES;
   }
 
   static synchronized String[] getArmorSlotNames() {
-    if (ARMOR_SLOT_NAMES == null) {
-      if (SLOT_NAMES == null) {
+    if (EquipmentSlotConstants.ARMOR_SLOT_NAMES == null) {
+      if (EquipmentSlotConstants.SLOT_NAMES == null) {
         EquipmentSlotConstants.getSlotNames();
       }
-      final String[] temp = SLOT_NAMES;
+      final String[] temp = EquipmentSlotConstants.SLOT_NAMES;
       final String[] temp2 = new String[temp.length - 1];
       int offset = 0;
       for (int x = 0; x < temp.length; x++) {
-        if (x == SLOT_MAINHAND) {
+        if (x == EquipmentSlotConstants.SLOT_MAINHAND) {
           offset++;
         } else {
           temp2[x - offset] = temp[x];
         }
       }
-      ARMOR_SLOT_NAMES = temp2;
+      EquipmentSlotConstants.ARMOR_SLOT_NAMES = temp2;
     }
-    return ARMOR_SLOT_NAMES;
+    return EquipmentSlotConstants.ARMOR_SLOT_NAMES;
   }
 }

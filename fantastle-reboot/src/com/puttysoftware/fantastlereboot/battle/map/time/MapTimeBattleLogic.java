@@ -131,12 +131,12 @@ public class MapTimeBattleLogic extends Battle {
     // Generate Enemies
     this.enemies = b.getBattlers();
     // Merge, Create AI Contexts, Configure Action Bars
-    for (BattleCharacter friend : this.friends) {
+    for (final BattleCharacter friend : this.friends) {
       this.mbd.addBattler(friend);
       this.battleGUI
           .setMaxPlayerActionBarValue(friend.getCreature().getActionBarSpeed());
     }
-    for (BattleCharacter enemy : this.enemies) {
+    for (final BattleCharacter enemy : this.enemies) {
       this.mbd.addBattler(enemy);
       this.battleGUI
           .setMaxEnemyActionBarValue(enemy.getCreature().getActionBarSpeed());
@@ -161,11 +161,11 @@ public class MapTimeBattleLogic extends Battle {
 
   @Override
   public void battleDone() {
-    BagOStuff bag = FantastleReboot.getBagOStuff();
+    final BagOStuff bag = FantastleReboot.getBagOStuff();
     // Leave Battle
     this.hideBattle();
     // Post-battle stuff
-    Maze m = MazeManager.getMaze();
+    final Maze m = MazeManager.getMaze();
     MonsterLocationManager.postBattle(m, this.bx, this.by);
     // Return to whence we came
     bag.restoreFormerMode();
@@ -269,12 +269,12 @@ public class MapTimeBattleLogic extends Battle {
       final int x = this.auto.getMoveX();
       final int y = this.auto.getMoveY();
       final int activeTID = acting.getTeamID();
-      final BattleCharacter theEnemy = (activeTID == Creature.TEAM_PARTY
+      final BattleCharacter theEnemy = activeTID == Creature.TEAM_PARTY
           ? this.mbd.getFirstBattlerNotOnTeam(Creature.TEAM_PARTY)
-          : this.mbd.getFirstBattlerOnTeam(Creature.TEAM_PARTY));
-      final AbstractDamageEngine activeDE = (activeTID == Creature.TEAM_PARTY
+          : this.mbd.getFirstBattlerOnTeam(Creature.TEAM_PARTY);
+      final AbstractDamageEngine activeDE = activeTID == Creature.TEAM_PARTY
           ? this.ede
-          : this.pde);
+          : this.pde;
       this.updatePositionInternal(x, y, false, acting, theEnemy, activeDE);
       break;
     default:
@@ -425,12 +425,12 @@ public class MapTimeBattleLogic extends Battle {
   @Override
   public boolean updatePosition(final int x, final int y) {
     final int activeTID = this.mbd.getActiveCharacter().getTeamID();
-    BattleCharacter theEnemy = (activeTID == Creature.TEAM_PARTY
+    BattleCharacter theEnemy = activeTID == Creature.TEAM_PARTY
         ? this.mbd.getFirstBattlerNotOnTeam(Creature.TEAM_PARTY)
-        : this.mbd.getFirstBattlerOnTeam(Creature.TEAM_PARTY));
-    final AbstractDamageEngine activeDE = (activeTID == Creature.TEAM_PARTY
+        : this.mbd.getFirstBattlerOnTeam(Creature.TEAM_PARTY);
+    final AbstractDamageEngine activeDE = activeTID == Creature.TEAM_PARTY
         ? this.ede
-        : this.pde);
+        : this.pde;
     if (x == 0 && y == 0) {
       theEnemy = this.mbd.getActiveCharacter();
     }
@@ -503,8 +503,8 @@ public class MapTimeBattleLogic extends Battle {
     }
     if (next != null && nextGround != null && currGround != null) {
       if (!next.isSolid()) {
-        if ((useAP
-            && this.getActiveActionCounter() >= AIContext.getDefaultAPCost())
+        if (useAP
+            && this.getActiveActionCounter() >= AIContext.getDefaultAPCost()
             || !useAP) {
           // Move
           FantastleObjectModel obj1 = null;
@@ -542,8 +542,8 @@ public class MapTimeBattleLogic extends Battle {
           // Auto-attack check
           if (obj1 != null) {
             if (obj1 instanceof BattleCharacter) {
-              if (!((x == -1 && y == 0) || (x == -1 && y == -1)
-                  || (x == 0 && y == -1))) {
+              if (!(x == -1 && y == 0 || x == -1 && y == -1
+                  || x == 0 && y == -1)) {
                 final BattleCharacter bc1 = (BattleCharacter) obj1;
                 if (bc1.getTeamID() != active.getTeamID()) {
                   this.executeAutoAI(bc1);
@@ -563,8 +563,8 @@ public class MapTimeBattleLogic extends Battle {
           }
           if (obj3 != null) {
             if (obj3 instanceof BattleCharacter) {
-              if (!((x == 0 && y == -1) || (x == 1 && y == -1)
-                  || (x == 1 && y == 0))) {
+              if (!(x == 0 && y == -1 || x == 1 && y == -1
+                  || x == 1 && y == 0)) {
                 final BattleCharacter bc3 = (BattleCharacter) obj3;
                 if (bc3.getTeamID() != active.getTeamID()) {
                   this.executeAutoAI(bc3);
@@ -594,8 +594,8 @@ public class MapTimeBattleLogic extends Battle {
           }
           if (obj7 != null) {
             if (obj7 instanceof BattleCharacter) {
-              if (!((x == -1 && y == 0) || (x == -1 && y == 1)
-                  || (x == 0 && y == 1))) {
+              if (!(x == -1 && y == 0 || x == -1 && y == 1
+                  || x == 0 && y == 1)) {
                 final BattleCharacter bc7 = (BattleCharacter) obj7;
                 if (bc7.getTeamID() != active.getTeamID()) {
                   this.executeAutoAI(bc7);
@@ -615,8 +615,7 @@ public class MapTimeBattleLogic extends Battle {
           }
           if (obj9 != null) {
             if (obj9 instanceof BattleCharacter) {
-              if (!((x == 0 && y == 1) || (x == 1 && y == 1)
-                  || (x == 1 && y == 0))) {
+              if (!(x == 0 && y == 1 || x == 1 && y == 1 || x == 1 && y == 0)) {
                 final BattleCharacter bc9 = (BattleCharacter) obj9;
                 if (bc9.getTeamID() != active.getTeamID()) {
                   this.executeAutoAI(bc9);
@@ -644,7 +643,7 @@ public class MapTimeBattleLogic extends Battle {
         }
       } else {
         if (next instanceof BattleCharacter) {
-          if ((useAP && this.getActiveAttackCounter() > 0) || !useAP) {
+          if (useAP && this.getActiveAttackCounter() > 0 || !useAP) {
             // Attack
             final BattleCharacter bc = (BattleCharacter) next;
             if (bc.getTeamID() == active.getTeamID()) {
@@ -804,12 +803,12 @@ public class MapTimeBattleLogic extends Battle {
 
   @Override
   public boolean castSpell() {
-    BattleCharacter activeBC = this.mbd.getActiveCharacter();
+    final BattleCharacter activeBC = this.mbd.getActiveCharacter();
     Creature active = null;
     if (activeBC != null) {
       active = activeBC.getCreature();
     }
-    BattleCharacter enemyBC = this.getEnemyBC();
+    final BattleCharacter enemyBC = this.getEnemyBC();
     Creature activeEnemy = null;
     if (enemyBC != null) {
       activeEnemy = enemyBC.getCreature();
@@ -853,12 +852,12 @@ public class MapTimeBattleLogic extends Battle {
 
   @Override
   public boolean useItem() {
-    BattleCharacter activeBC = this.mbd.getActiveCharacter();
+    final BattleCharacter activeBC = this.mbd.getActiveCharacter();
     Creature active = null;
     if (activeBC != null) {
       active = activeBC.getCreature();
     }
-    BattleCharacter enemyBC = this.getEnemyBC();
+    final BattleCharacter enemyBC = this.getEnemyBC();
     Creature activeEnemy = null;
     if (enemyBC != null) {
       activeEnemy = enemyBC.getCreature();
@@ -902,12 +901,12 @@ public class MapTimeBattleLogic extends Battle {
 
   @Override
   public boolean steal() {
-    BattleCharacter activeBC = this.mbd.getActiveCharacter();
+    final BattleCharacter activeBC = this.mbd.getActiveCharacter();
     Creature active = null;
     if (activeBC != null) {
       active = activeBC.getCreature();
     }
-    BattleCharacter enemyBC = this.getEnemyBC();
+    final BattleCharacter enemyBC = this.getEnemyBC();
     Creature activeEnemy = null;
     if (enemyBC != null) {
       activeEnemy = enemyBC.getCreature();
@@ -919,7 +918,7 @@ public class MapTimeBattleLogic extends Battle {
     // Check Action Counter
     if (activeBC.canAct(MapTimeBattleLogic.STEAL_ACTION_POINTS)) {
       int stealAmount = 0;
-      int stealChance = StatConstants.CHANCE_STEAL;
+      final int stealChance = StatConstants.CHANCE_STEAL;
       activeBC.act(MapTimeBattleLogic.STEAL_ACTION_POINTS);
       if (enemyBC == null || activeEnemy == null) {
         // Failed - nobody to steal from
@@ -985,12 +984,12 @@ public class MapTimeBattleLogic extends Battle {
 
   @Override
   public boolean drain() {
-    BattleCharacter activeBC = this.mbd.getActiveCharacter();
+    final BattleCharacter activeBC = this.mbd.getActiveCharacter();
     Creature active = null;
     if (activeBC != null) {
       active = activeBC.getCreature();
     }
-    BattleCharacter enemyBC = this.getEnemyBC();
+    final BattleCharacter enemyBC = this.getEnemyBC();
     Creature activeEnemy = null;
     if (enemyBC != null) {
       activeEnemy = enemyBC.getCreature();
@@ -1108,7 +1107,7 @@ public class MapTimeBattleLogic extends Battle {
   public void maintainEffects(final boolean player) {
     final Iterator<BattleCharacter> iter = this.mbd.battlerIterator();
     while (iter.hasNext()) {
-      BattleCharacter battler = iter.next();
+      final BattleCharacter battler = iter.next();
       // Maintain Effects
       if (battler != null && battler.isActive()) {
         final Creature active = battler.getCreature();
@@ -1363,7 +1362,7 @@ public class MapTimeBattleLogic extends Battle {
   }
 
   @Override
-  public boolean arrowHitCheck(int inX, int inY) {
+  public boolean arrowHitCheck(final int inX, final int inY) {
     return !this.mbd.getBattleMaze().getCell(inX, inY, 0, Layers.OBJECT)
         .isSolid();
   }

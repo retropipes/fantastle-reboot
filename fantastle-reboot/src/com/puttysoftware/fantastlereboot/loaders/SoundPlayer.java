@@ -19,32 +19,33 @@ public class SoundPlayer {
   private static Properties fileExtensions;
 
   private static String getSoundFilename(final SoundIndex sound) {
-    if (allFilenames == null && fileExtensions == null) {
-      allFilenames = DataLoader.loadSoundData();
+    if (SoundPlayer.allFilenames == null
+        && SoundPlayer.fileExtensions == null) {
+      SoundPlayer.allFilenames = DataLoader.loadSoundData();
       try {
-        fileExtensions = new Properties();
-        fileExtensions.load(SoundPlayer.class.getResourceAsStream(
+        SoundPlayer.fileExtensions = new Properties();
+        SoundPlayer.fileExtensions.load(SoundPlayer.class.getResourceAsStream(
             "/assets/data/extensions/extensions.properties"));
-      } catch (IOException e) {
+      } catch (final IOException e) {
         FantastleReboot.logError(e);
       }
     }
-    String soundExt = fileExtensions.getProperty("sounds");
+    final String soundExt = SoundPlayer.fileExtensions.getProperty("sounds");
     if (sound == SoundIndex.WALK || sound == SoundIndex.WALK_2
         || sound == SoundIndex.WALK_3 || sound == SoundIndex.WALK_4
         || sound == SoundIndex.WALK_5 || sound == SoundIndex.WALK_6) {
       // Pick a random walk sound and play it
-      int base = SoundIndex.WALK.ordinal();
-      int offset = RandomRange.generate(0, 5);
-      return allFilenames[base + offset] + soundExt;
+      final int base = SoundIndex.WALK.ordinal();
+      final int offset = RandomRange.generate(0, 5);
+      return SoundPlayer.allFilenames[base + offset] + soundExt;
     }
-    return allFilenames[sound.ordinal()] + soundExt;
+    return SoundPlayer.allFilenames[sound.ordinal()] + soundExt;
   }
 
   public static void playSound(final SoundIndex sound, final SoundGroup group) {
     if (Prefs.isSoundGroupEnabled(group)) {
       if (sound != null && sound != SoundIndex._NONE) {
-        final String filename = getSoundFilename(sound);
+        final String filename = SoundPlayer.getSoundFilename(sound);
         SoundLoader.play(
             SoundPlayer.class.getResource("/assets/sounds/" + filename),
             FantastleReboot.getErrorHandler());

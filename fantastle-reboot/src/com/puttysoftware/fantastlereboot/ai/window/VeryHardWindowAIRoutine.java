@@ -25,13 +25,16 @@ public class VeryHardWindowAIRoutine extends AbstractWindowAIRoutine {
     if (this.spellCheck(c)) {
       // Cast a spell
       return AbstractWindowAIRoutine.ACTION_CAST_SPELL;
-    } else if (CommonWindowAIRoutines.check(STEAL_CHANCE)) {
+    } else if (CommonWindowAIRoutines
+        .check(VeryHardWindowAIRoutine.STEAL_CHANCE)) {
       // Steal
       return AbstractWindowAIRoutine.ACTION_STEAL;
-    } else if (CommonWindowAIRoutines.check(DRAIN_CHANCE)) {
+    } else if (CommonWindowAIRoutines
+        .check(VeryHardWindowAIRoutine.DRAIN_CHANCE)) {
       // Drain MP
       return AbstractWindowAIRoutine.ACTION_DRAIN;
-    } else if (CommonWindowAIRoutines.check(FLEE_CHANCE)) {
+    } else if (CommonWindowAIRoutines
+        .check(VeryHardWindowAIRoutine.FLEE_CHANCE)) {
       // Flee
       return AbstractWindowAIRoutine.ACTION_FLEE;
     } else {
@@ -43,7 +46,7 @@ public class VeryHardWindowAIRoutine extends AbstractWindowAIRoutine {
   private boolean spellCheck(final Creature c) {
     final RandomRange random = new RandomRange(1, 100);
     final int chance = random.generate();
-    if (chance <= CAST_SPELL_CHANCE) {
+    if (chance <= VeryHardWindowAIRoutine.CAST_SPELL_CHANCE) {
       final int maxIndex = CommonWindowAIRoutines.getMaxCastIndex(c);
       if (maxIndex > -1) {
         // Select a random spell to cast
@@ -51,7 +54,8 @@ public class VeryHardWindowAIRoutine extends AbstractWindowAIRoutine {
         final int randomSpellID = randomSpell.generate();
         if (randomSpellID == CommonWindowAIRoutines.SPELL_INDEX_HEAL) {
           // Healing spell was selected - is healing needed?
-          if (c.getCurrentHP() > c.getMaximumHP() * HEAL_THRESHOLD / 100) {
+          if (c.getCurrentHP() > c.getMaximumHP()
+              * VeryHardWindowAIRoutine.HEAL_THRESHOLD / 100) {
             // Do not need healing
             return false;
           }

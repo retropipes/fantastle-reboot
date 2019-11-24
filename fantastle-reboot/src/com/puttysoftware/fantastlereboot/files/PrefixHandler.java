@@ -29,7 +29,7 @@ public class PrefixHandler implements PrefixIO {
   }
 
   private static boolean checkFormatVersion(final byte version) {
-    return (version <= PrefixHandler.FORMAT_VERSION);
+    return version <= PrefixHandler.FORMAT_VERSION;
   }
 
   private static void writeFormatVersion(final XDataWriter writer)

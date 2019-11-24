@@ -31,11 +31,12 @@ public class ObjectImageLoader {
   private static Properties fileExtensions;
   private static final int MAX_INDEX = 244;
 
-  public static BufferedImageIcon load(ObjectImageIndex image) {
+  public static BufferedImageIcon load(final ObjectImageIndex image) {
     if (image != ObjectImageIndex._NONE) {
-      String imageExt = fileExtensions.getProperty("images");
-      String name = "/assets/images/objects/" + allFilenames[image.ordinal()]
-          + imageExt;
+      final String imageExt = ObjectImageLoader.fileExtensions
+          .getProperty("images");
+      final String name = "/assets/images/objects/"
+          + ObjectImageLoader.allFilenames[image.ordinal()] + imageExt;
       return ImageLoader.load(name, ObjectImageLoader.class.getResource(name),
           FantastleReboot.getErrorHandler());
     }
@@ -43,17 +44,20 @@ public class ObjectImageLoader {
   }
 
   public static void cacheAll() {
-    allFilenames = DataLoader.loadObjectImageData();
+    ObjectImageLoader.allFilenames = DataLoader.loadObjectImageData();
     try {
-      fileExtensions = new Properties();
-      fileExtensions.load(ObjectImageLoader.class.getResourceAsStream(
-          "/assets/data/extensions/extensions.properties"));
-    } catch (IOException e) {
+      ObjectImageLoader.fileExtensions = new Properties();
+      ObjectImageLoader.fileExtensions
+          .load(ObjectImageLoader.class.getResourceAsStream(
+              "/assets/data/extensions/extensions.properties"));
+    } catch (final IOException e) {
       FantastleReboot.logError(e);
     }
-    String imageExt = fileExtensions.getProperty("images");
-    for (int i = 0; i <= MAX_INDEX; i++) {
-      String name = "/assets/images/objects/" + allFilenames[i] + imageExt;
+    final String imageExt = ObjectImageLoader.fileExtensions
+        .getProperty("images");
+    for (int i = 0; i <= ObjectImageLoader.MAX_INDEX; i++) {
+      final String name = "/assets/images/objects/"
+          + ObjectImageLoader.allFilenames[i] + imageExt;
       ImageLoader.load(name, ObjectImageLoader.class.getResource(name),
           FantastleReboot.getErrorHandler());
     }

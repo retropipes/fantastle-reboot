@@ -101,18 +101,19 @@ public class FantastleReboot {
     CommonDialogs.setDefaultTitle(FantastleReboot.PROGRAM_NAME);
     CommonDialogs.setIcon(
         UserInterfaceImageLoader.load(UserInterfaceImageIndex.MICRO_LOGO));
-    NATIVITY.setQuitStrategy(QuitStrategy.NORMAL_EXIT);
-    NATIVITY.setQuitHandler(new QuitRequestManager());
-    NATIVITY.setPreferencesHandler(new PrefsLauncher());
-    NATIVITY.setAboutHandler(FantastleReboot.bag.getAboutDialog());
+    FantastleReboot.NATIVITY.setQuitStrategy(QuitStrategy.NORMAL_EXIT);
+    FantastleReboot.NATIVITY.setQuitHandler(new QuitRequestManager());
+    FantastleReboot.NATIVITY.setPreferencesHandler(new PrefsLauncher());
+    FantastleReboot.NATIVITY
+        .setAboutHandler(FantastleReboot.bag.getAboutDialog());
   }
 
   public static void main(final String[] args) {
     try {
       // Early OS Integration
-      NATIVITY.configureLookAndFeel();
-      menus = new MenuManager(mainMenuBar);
-      NATIVITY.setDefaultMenuBar(mainMenuBar);
+      FantastleReboot.NATIVITY.configureLookAndFeel();
+      FantastleReboot.menus = new MenuManager(FantastleReboot.mainMenuBar);
+      FantastleReboot.NATIVITY.setDefaultMenuBar(FantastleReboot.mainMenuBar);
       // Compute action cap
       Creature.computeActionCap(FantastleReboot.BATTLE_MAZE_SIZE,
           FantastleReboot.BATTLE_MAZE_SIZE);

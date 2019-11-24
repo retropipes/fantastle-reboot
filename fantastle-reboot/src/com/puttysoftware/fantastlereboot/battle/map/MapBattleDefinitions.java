@@ -18,7 +18,7 @@ import com.puttysoftware.randomrange.RandomRange;
 
 public class MapBattleDefinitions {
   // Fields
-  private List<BattleCharacter> battlers;
+  private final List<BattleCharacter> battlers;
   private final List<MapAIContext> aiContexts;
   private Maze battleMaze;
   private int battlerCount;
@@ -42,7 +42,7 @@ public class MapBattleDefinitions {
     final RandomRange randY = new RandomRange(0,
         this.battleMaze.getColumns() - 1);
     int rx, ry;
-    for (BattleCharacter battler : this.battlers) {
+    for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
         if (battler.getCreature().isAlive() && !battler.isLocationSet()) {
           rx = randX.generate();
@@ -62,7 +62,7 @@ public class MapBattleDefinitions {
   }
 
   public void updateBattlerAIContexts() {
-    for (MapAIContext maic : this.aiContexts) {
+    for (final MapAIContext maic : this.aiContexts) {
       if (maic != null) {
         if (maic.getCharacter().getCreature().isAlive()) {
           maic.updateContext(this.battleMaze);
@@ -72,7 +72,7 @@ public class MapBattleDefinitions {
   }
 
   public void runNewRoundHooks() {
-    for (BattleCharacter battler : this.battlers) {
+    for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
         if (battler.getCreature().isAlive()) {
           battler.getCreature().getMapAI().newRoundHook();
@@ -82,7 +82,7 @@ public class MapBattleDefinitions {
   }
 
   public boolean areTeamEnemiesAlive(final int teamID) {
-    for (BattleCharacter battler : this.battlers) {
+    for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
         if (battler.isActive() && battler.getCreature().isAlive()
             && battler.getTeamID() != teamID) {
@@ -95,7 +95,7 @@ public class MapBattleDefinitions {
 
   public int getTeamGold(final int teamID) {
     int teamGold = 0;
-    for (BattleCharacter battler : this.battlers) {
+    for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
         if (battler.getTeamID() == teamID) {
           teamGold += battler.getCreature().getGold();
@@ -107,7 +107,7 @@ public class MapBattleDefinitions {
 
   public int getTeamEnemyGold(final int teamID) {
     int teamEnemyGold = 0;
-    for (BattleCharacter battler : this.battlers) {
+    for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
         if (battler.getTeamID() != teamID) {
           teamEnemyGold += battler.getCreature().getGold();
@@ -118,7 +118,7 @@ public class MapBattleDefinitions {
   }
 
   public boolean isTeamAlive(final int teamID) {
-    for (BattleCharacter battler : this.battlers) {
+    for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
         if (battler.isActive() && battler.getCreature().isAlive()
             && battler.getTeamID() == teamID) {
@@ -130,7 +130,7 @@ public class MapBattleDefinitions {
   }
 
   public boolean areTeamEnemiesGone(final int teamID) {
-    for (BattleCharacter battler : this.battlers) {
+    for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
         if (!battler.isActive() && battler.getTeamID() != teamID) {
           return false;
@@ -141,7 +141,7 @@ public class MapBattleDefinitions {
   }
 
   public boolean isTeamGone(final int teamID) {
-    for (BattleCharacter battler : this.battlers) {
+    for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
         if (!battler.isActive() && battler.getTeamID() == teamID) {
           return false;
@@ -153,7 +153,7 @@ public class MapBattleDefinitions {
 
   public boolean areTeamEnemiesDeadOrGone(final int teamID) {
     int deadCount = 0;
-    for (BattleCharacter battler : this.battlers) {
+    for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
         if (battler.getTeamID() != teamID) {
           final boolean res = battler.getCreature().isAlive()
@@ -167,11 +167,11 @@ public class MapBattleDefinitions {
         }
       }
     }
-    return (deadCount > 0);
+    return deadCount > 0;
   }
 
   public void resetBattlers() {
-    for (BattleCharacter battler : this.battlers) {
+    for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
         if (battler.getCreature().isAlive()) {
           battler.activate();
@@ -183,7 +183,7 @@ public class MapBattleDefinitions {
   }
 
   public void roundResetBattlers() {
-    for (BattleCharacter battler : this.battlers) {
+    for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
         if (battler.getCreature().isAlive()) {
           battler.resetActions();
@@ -221,7 +221,7 @@ public class MapBattleDefinitions {
   }
 
   public MapAIContext getBattlerAI(final BattleCharacter bc) {
-    for (MapAIContext maic : this.aiContexts) {
+    for (final MapAIContext maic : this.aiContexts) {
       if (maic.getCharacter().equals(bc)) {
         return maic;
       }
@@ -242,7 +242,7 @@ public class MapBattleDefinitions {
   }
 
   public BattleCharacter getBattler(final String name) {
-    for (BattleCharacter battler : this.battlers) {
+    for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
         if (battler.getName().equals(name)) {
           return battler;
@@ -253,7 +253,7 @@ public class MapBattleDefinitions {
   }
 
   public BattleCharacter getFirstBattlerOnTeam(final int teamID) {
-    for (BattleCharacter battler : this.battlers) {
+    for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
         if (battler.getTeamID() == teamID) {
           return battler;
@@ -264,7 +264,7 @@ public class MapBattleDefinitions {
   }
 
   public BattleCharacter getFirstBattlerNotOnTeam(final int teamID) {
-    for (BattleCharacter battler : this.battlers) {
+    for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
         if (battler.getTeamID() != teamID) {
           return battler;

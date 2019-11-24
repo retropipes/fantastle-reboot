@@ -20,38 +20,39 @@ public class MusicPlayer {
   private static ModuleLoader MUSIC = new ModuleLoader();
 
   private static String getMusicFilename(final MusicIndex music) {
-    if (allFilenames == null && fileExtensions == null) {
-      allFilenames = DataLoader.loadMusicData();
+    if (MusicPlayer.allFilenames == null
+        && MusicPlayer.fileExtensions == null) {
+      MusicPlayer.allFilenames = DataLoader.loadMusicData();
       try {
-        fileExtensions = new Properties();
-        fileExtensions.load(MusicPlayer.class.getResourceAsStream(
+        MusicPlayer.fileExtensions = new Properties();
+        MusicPlayer.fileExtensions.load(MusicPlayer.class.getResourceAsStream(
             "/assets/data/extensions/extensions.properties"));
-      } catch (IOException e) {
+      } catch (final IOException e) {
         FantastleReboot.logError(e);
       }
     }
-    String musicExt = fileExtensions.getProperty("music");
+    final String musicExt = MusicPlayer.fileExtensions.getProperty("music");
     if (music == MusicIndex.DUNGEON || music == MusicIndex._DUNGEON_RANDOM_2
         || music == MusicIndex._DUNGEON_RANDOM_3
         || music == MusicIndex._DUNGEON_RANDOM_4) {
       // Pick random dungeon music and play it
-      int base = MusicIndex.DUNGEON.ordinal();
-      int offset = RandomRange.generate(0, 3);
-      return allFilenames[base + offset] + musicExt;
+      final int base = MusicIndex.DUNGEON.ordinal();
+      final int offset = RandomRange.generate(0, 3);
+      return MusicPlayer.allFilenames[base + offset] + musicExt;
     }
-    return allFilenames[music.ordinal()] + musicExt;
+    return MusicPlayer.allFilenames[music.ordinal()] + musicExt;
   }
 
   public static void playMusic(final MusicIndex music, final MusicGroup group) {
     if (Prefs.isMusicGroupEnabled(group)) {
       if (music != null && music != MusicIndex._NONE) {
-        final String filename = getMusicFilename(music);
-        if (MUSIC.isPlaying()) {
-          MUSIC.stopLoop();
+        final String filename = MusicPlayer.getMusicFilename(music);
+        if (MusicPlayer.MUSIC.isPlaying()) {
+          MusicPlayer.MUSIC.stopLoop();
         }
         try {
-          MUSIC.load("/assets/music/" + filename).play();
-        } catch (IOException e) {
+          MusicPlayer.MUSIC.load("/assets/music/" + filename).play();
+        } catch (final IOException e) {
           FantastleReboot.logWarning(e);
         }
       }

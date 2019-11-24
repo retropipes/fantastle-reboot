@@ -33,17 +33,19 @@ public class AvatarImageLoader {
 
   public static BufferedImageIcon load(final int familyID, final int skinID,
       final int hairID) {
-    if (fileExtensions == null) {
+    if (AvatarImageLoader.fileExtensions == null) {
       try {
-        fileExtensions = new Properties();
-        fileExtensions.load(AvatarImageLoader.class.getResourceAsStream(
-            "/assets/data/extensions/extensions.properties"));
-      } catch (IOException e) {
+        AvatarImageLoader.fileExtensions = new Properties();
+        AvatarImageLoader.fileExtensions
+            .load(AvatarImageLoader.class.getResourceAsStream(
+                "/assets/data/extensions/extensions.properties"));
+      } catch (final IOException e) {
         FantastleReboot.logError(e);
       }
     }
-    String imageExt = fileExtensions.getProperty("images");
-    String name = "/assets/images/avatars/" + Integer.toString(familyID)
+    final String imageExt = AvatarImageLoader.fileExtensions
+        .getProperty("images");
+    final String name = "/assets/images/avatars/" + Integer.toString(familyID)
         + Integer.toString(skinID) + Integer.toString(hairID) + imageExt;
     return ImageLoader.load(name, AvatarImageLoader.class.getResource(name),
         FantastleReboot.getErrorHandler());
@@ -51,18 +53,21 @@ public class AvatarImageLoader {
 
   public static void cacheAll() {
     try {
-      fileExtensions = new Properties();
-      fileExtensions.load(AvatarImageLoader.class.getResourceAsStream(
-          "/assets/data/extensions/extensions.properties"));
-    } catch (IOException e) {
+      AvatarImageLoader.fileExtensions = new Properties();
+      AvatarImageLoader.fileExtensions
+          .load(AvatarImageLoader.class.getResourceAsStream(
+              "/assets/data/extensions/extensions.properties"));
+    } catch (final IOException e) {
       FantastleReboot.logError(e);
     }
-    String imageExt = fileExtensions.getProperty("images");
-    for (int familyID = 0; familyID <= MAX_FAMILY_INDEX; familyID++) {
-      for (int skinID = 0; skinID <= MAX_SKIN_INDEX; skinID++) {
-        for (int hairID = 0; hairID <= MAX_HAIR_INDEX; hairID++) {
-          String name = "/assets/images/avatars/" + Integer.toString(familyID)
-              + Integer.toString(skinID) + Integer.toString(hairID) + imageExt;
+    final String imageExt = AvatarImageLoader.fileExtensions
+        .getProperty("images");
+    for (int familyID = 0; familyID <= AvatarImageLoader.MAX_FAMILY_INDEX; familyID++) {
+      for (int skinID = 0; skinID <= AvatarImageLoader.MAX_SKIN_INDEX; skinID++) {
+        for (int hairID = 0; hairID <= AvatarImageLoader.MAX_HAIR_INDEX; hairID++) {
+          final String name = "/assets/images/avatars/"
+              + Integer.toString(familyID) + Integer.toString(skinID)
+              + Integer.toString(hairID) + imageExt;
           ImageLoader.load(name, AvatarImageLoader.class.getResource(name),
               FantastleReboot.getErrorHandler());
         }

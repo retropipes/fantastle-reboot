@@ -5,9 +5,7 @@ import com.puttysoftware.fantastlereboot.gui.Prefs;
 public final class WindowAIRoutinePicker {
   // Methods
   public static AbstractWindowAIRoutine getNextRoutine() {
-    
-    final int difficulty = Prefs
-        .getGameDifficulty();
+    final int difficulty = Prefs.getGameDifficulty();
     if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
       return new VeryEasyWindowAIRoutine();
     } else {

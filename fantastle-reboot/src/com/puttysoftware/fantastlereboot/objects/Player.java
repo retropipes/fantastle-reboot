@@ -29,7 +29,7 @@ public final class Player extends FantastleObject {
 
   @Override
   protected BufferedImageIcon getGameImageHook() {
-    if (avatarRangeCheck()) {
+    if (Player.avatarRangeCheck()) {
       return AvatarImageLoader.load(Player.avatarFamily, Player.avatarSkin,
           Player.avatarHair);
     }

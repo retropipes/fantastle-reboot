@@ -5,10 +5,10 @@ public class MonsterNames {
   private static String[] MONSTER_NAMES = null;
 
   public static final String[] getAllNames() {
-    if (MONSTER_NAMES == null) {
-      MONSTER_NAMES = DataLoader.loadMonsterData();
+    if (MonsterNames.MONSTER_NAMES == null) {
+      MonsterNames.MONSTER_NAMES = DataLoader.loadMonsterData();
     }
-    return MONSTER_NAMES;
+    return MonsterNames.MONSTER_NAMES;
   }
 
   // Private constructor

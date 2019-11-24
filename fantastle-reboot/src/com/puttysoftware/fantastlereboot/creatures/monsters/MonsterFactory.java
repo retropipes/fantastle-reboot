@@ -26,13 +26,13 @@ public class MonsterFactory {
     final int monsterCount = Prefs.getMonsterCount(partyCount);
     final int minTeamID = Creature.TEAM_ENEMY_FIRST;
     final int maxTeamID = Creature.TEAM_ENEMY_LAST
-        - ((monsterCount - MAX_MONSTERS) / 5);
-    ArrayList<BattleCharacter> monsters = new ArrayList<>();
+        - (monsterCount - MonsterFactory.MAX_MONSTERS) / 5;
+    final ArrayList<BattleCharacter> monsters = new ArrayList<>();
     if (PartyManager.getParty().getMonsterLevel() == Maze.getMaxLevels() - 1) {
       monsters.add(new BattleCharacter(new BossMonster()));
     } else {
       for (int m = 0; m < monsterCount; m++) {
-        int teamID = RandomRange.generate(minTeamID, maxTeamID);
+        final int teamID = RandomRange.generate(minTeamID, maxTeamID);
         monsters.add(new BattleCharacter(new Monster(teamID)));
       }
     }

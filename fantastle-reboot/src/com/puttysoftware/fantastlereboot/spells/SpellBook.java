@@ -19,7 +19,7 @@ public abstract class SpellBook {
   }
 
   protected final SpellBookPage addSpell(final Spell sp) {
-    SpellBookPage sbp = new SpellBookPage(sp);
+    final SpellBookPage sbp = new SpellBookPage(sp);
     this.pages.add(sbp);
     return sbp;
   }
@@ -75,7 +75,7 @@ public abstract class SpellBook {
       int counter = 0;
       final String[] res = new String[max - numKnown];
       for (int x = 0; x < max; x++) {
-        SpellBookPage page = this.pages.get(x);
+        final SpellBookPage page = this.pages.get(x);
         if (!page.isKnown()) {
           res[counter] = page.getSpell().getEffect().getName();
           counter++;
@@ -125,7 +125,7 @@ public abstract class SpellBook {
     final int spellSize = this.pages.size();
     final ArrayList<String> tempnames = new ArrayList<>();
     for (x = 0; x < spellSize; x++) {
-      SpellBookPage page = this.pages.get(x);
+      final SpellBookPage page = this.pages.get(x);
       if (page.isKnown()) {
         tempnames.add(page.getSpell().getEffect().getName());
         k++;
@@ -135,7 +135,7 @@ public abstract class SpellBook {
       names = new String[k];
       k = 0;
       for (x = 0; x < spellSize; x++) {
-        SpellBookPage page = this.pages.get(x);
+        final SpellBookPage page = this.pages.get(x);
         if (page.isKnown()) {
           names[k] = page.getSpell().getEffect().getName();
           k++;
@@ -154,7 +154,7 @@ public abstract class SpellBook {
     final int spellSize = this.pages.size();
     final ArrayList<String> tempnames = new ArrayList<>();
     for (x = 0; x < spellSize; x++) {
-      SpellBookPage page = this.pages.get(x);
+      final SpellBookPage page = this.pages.get(x);
       if (page.isKnown()) {
         tempnames.add(page.getSpell().getEffect().getName());
         k++;
@@ -164,7 +164,7 @@ public abstract class SpellBook {
       names = new String[k];
       k = 0;
       for (x = 0; x < spellSize; x++) {
-        SpellBookPage page = this.pages.get(x);
+        final SpellBookPage page = this.pages.get(x);
         if (page.isKnown()) {
           names[k] = page.getSpell().getEffect().getName();
           k++;
@@ -176,7 +176,7 @@ public abstract class SpellBook {
     if (names != null) {
       k = 0;
       for (x = 0; x < spellSize; x++) {
-        SpellBookPage page = this.pages.get(x);
+        final SpellBookPage page = this.pages.get(x);
         if (page.isKnown()) {
           final int cost = page.getSpell().getCost();
           final String costStr = Integer.toString(cost);
@@ -202,7 +202,7 @@ public abstract class SpellBook {
       costs = new int[k];
       k = 0;
       for (x = 0; x < spellSize; x++) {
-        SpellBookPage page = this.pages.get(x);
+        final SpellBookPage page = this.pages.get(x);
         if (page.isKnown()) {
           costs[k] = page.getSpell().getCost();
           k++;
@@ -235,14 +235,14 @@ public abstract class SpellBook {
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
     if (this == obj) {
       return true;
     }
     if (!(obj instanceof SpellBook)) {
       return false;
     }
-    SpellBook other = (SpellBook) obj;
+    final SpellBook other = (SpellBook) obj;
     return Objects.equals(this.pages, other.pages);
   }
 }

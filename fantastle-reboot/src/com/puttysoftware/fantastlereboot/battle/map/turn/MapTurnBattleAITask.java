@@ -28,7 +28,6 @@ public class MapTurnBattleAITask extends Thread {
         if (this.b.getLastAIActionResult()) {
           // Delay, for animation purposes
           try {
-            
             final int battleSpeed = Prefs.getBattleSpeed();
             Thread.sleep(battleSpeed);
           } catch (final InterruptedException i) {

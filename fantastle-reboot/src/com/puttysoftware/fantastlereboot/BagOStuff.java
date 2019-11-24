@@ -271,7 +271,7 @@ public class BagOStuff {
   }
 
   private static String getVersionString() {
-    return pd.getVersionString();
+    return BagOStuff.pd.getVersionString();
   }
 
   public void restoreFormerMode() {

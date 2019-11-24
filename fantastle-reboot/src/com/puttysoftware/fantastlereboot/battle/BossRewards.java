@@ -21,19 +21,19 @@ public class BossRewards {
     while (dialogResult == null) {
       dialogResult = (String) JOptionPane.showInputDialog(null,
           "You get to increase a stat permanently.\nWhich Stat?",
-          "Boss Rewards", JOptionPane.QUESTION_MESSAGE, null, rewardOptions,
-          rewardOptions[0]);
+          "Boss Rewards", JOptionPane.QUESTION_MESSAGE, null,
+          BossRewards.rewardOptions, BossRewards.rewardOptions[0]);
     }
-    if (dialogResult.equals(rewardOptions[0])) {
+    if (dialogResult.equals(BossRewards.rewardOptions[0])) {
       // Attack
       player.spendPointOnAttack();
-    } else if (dialogResult.equals(rewardOptions[1])) {
+    } else if (dialogResult.equals(BossRewards.rewardOptions[1])) {
       // Defense
       player.spendPointOnDefense();
-    } else if (dialogResult.equals(rewardOptions[2])) {
+    } else if (dialogResult.equals(BossRewards.rewardOptions[2])) {
       // HP
       player.spendPointOnHP();
-    } else if (dialogResult.equals(rewardOptions[3])) {
+    } else if (dialogResult.equals(BossRewards.rewardOptions[3])) {
       // MP
       player.spendPointOnMP();
     }

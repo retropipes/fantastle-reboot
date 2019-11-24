@@ -147,8 +147,8 @@ public class Maze {
   }
 
   public boolean doesLevelExistOffset(final int level) {
-    return (this.activeLevel + level < this.levelCount
-        && this.activeLevel + level >= 0);
+    return this.activeLevel + level < this.levelCount
+        && this.activeLevel + level >= 0;
   }
 
   public boolean canAddLevel() {
@@ -193,7 +193,7 @@ public class Maze {
   public boolean cellRangeCheck(final int row, final int col, final int floor,
       final int level, final int extra) {
     return this.mazeData.cellRangeCheck(row, col, floor, extra)
-        && level >= MIN_LEVELS - 1 && level < Maze.MAX_LEVELS;
+        && level >= Maze.MIN_LEVELS - 1 && level < Maze.MAX_LEVELS;
   }
 
   public boolean floorRangeCheck(final int floor) {
@@ -201,7 +201,7 @@ public class Maze {
   }
 
   public boolean levelRangeCheck(final int level) {
-    return level >= MIN_LEVELS - 1 && level < Maze.MAX_LEVELS;
+    return level >= Maze.MIN_LEVELS - 1 && level < Maze.MAX_LEVELS;
   }
 
   public FantastleObjectModel getCell(final int row, final int col,

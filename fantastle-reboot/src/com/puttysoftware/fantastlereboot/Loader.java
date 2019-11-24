@@ -40,9 +40,9 @@ import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.fantastlereboot.objectmodel.GameObjects;
 
 class Loader extends Thread {
-  private MainWindow waitFrame;
-  private JLabel waitLabel;
-  private JProgressBar waitProgress;
+  private final MainWindow waitFrame;
+  private final JLabel waitLabel;
+  private final JProgressBar waitProgress;
 
   // Constructors
   public Loader() {
@@ -54,9 +54,9 @@ class Loader extends Thread {
     this.waitProgress.setMinimum(0);
     this.waitProgress.setMaximum(100);
     this.waitProgress.setValue(0);
-    JPanel content = new JPanel();
+    final JPanel content = new JPanel();
     content.setLayout(new GridBagLayout());
-    GridBagConstraints c = new GridBagConstraints();
+    final GridBagConstraints c = new GridBagConstraints();
     c.gridx = 0;
     c.gridy = 0;
     content.add(this.waitLabel, c);
@@ -94,7 +94,7 @@ class Loader extends Thread {
       ObjectImageLoader.cacheAll();
       this.updateWaitProgress(87);
       // Final tasks
-      BagOStuff bag = FantastleReboot.getBagOStuff();
+      final BagOStuff bag = FantastleReboot.getBagOStuff();
       GameObjects.initializeObjects();
       bag.postConstruct();
       bag.getGeneralHelpManager().updateHelpSize();
@@ -103,7 +103,7 @@ class Loader extends Thread {
       // Exit Wait Mode
       bag.playLogoSound();
       bag.getGUIManager().showGUI();
-    } catch (Throwable t) {
+    } catch (final Throwable t) {
       FantastleReboot.logError(t);
     }
   }

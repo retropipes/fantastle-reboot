@@ -29,9 +29,9 @@ public class PartyMember extends Creature {
   private int permanentHP;
   private int permanentMP;
   private int kills;
-  private int avatarFamilyID;
-  private int avatarHairID;
-  private int avatarSkinID;
+  private final int avatarFamilyID;
+  private final int avatarHairID;
+  private final int avatarSkinID;
   private static final int START_GOLD = 0;
   private static final double BASE_COEFF = 10.0;
 
@@ -67,7 +67,7 @@ public class PartyMember extends Creature {
     this.setGold(PartyMember.START_GOLD);
     this.setExperience(0L);
     final Page nextLevelEquation = new Page(3, 1, 0, true);
-    final double value = BASE_COEFF;
+    final double value = PartyMember.BASE_COEFF;
     nextLevelEquation.setCoefficient(1, value);
     nextLevelEquation.setCoefficient(2, value);
     nextLevelEquation.setCoefficient(3, value);
@@ -83,7 +83,7 @@ public class PartyMember extends Creature {
   // Transformers
   @Override
   protected void onLevelUp() {
-    Race r = this.getRace();
+    final Race r = this.getRace();
     this.offsetStrength(StatConstants.GAIN_STRENGTH
         + r.getAttribute(RaceConstants.ATTRIBUTE_STRENGTH_PER_LEVEL));
     this.offsetBlock(StatConstants.GAIN_BLOCK
@@ -137,21 +137,21 @@ public class PartyMember extends Creature {
     final int difficulty = Prefs.getGameDifficulty();
     final int base = this.getBaseSpeed();
     if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
-      return (int) (base * SPEED_ADJUST_FASTEST);
+      return (int) (base * Creature.SPEED_ADJUST_FASTEST);
     } else {
       if (difficulty == Prefs.DIFFICULTY_EASY) {
-        return (int) (base * SPEED_ADJUST_FAST);
+        return (int) (base * Creature.SPEED_ADJUST_FAST);
       } else {
         if (difficulty == Prefs.DIFFICULTY_NORMAL) {
-          return (int) (base * SPEED_ADJUST_NORMAL);
+          return (int) (base * Creature.SPEED_ADJUST_NORMAL);
         } else {
           if (difficulty == Prefs.DIFFICULTY_HARD) {
-            return (int) (base * SPEED_ADJUST_SLOW);
+            return (int) (base * Creature.SPEED_ADJUST_SLOW);
           } else {
             if (difficulty == Prefs.DIFFICULTY_VERY_HARD) {
-              return (int) (base * SPEED_ADJUST_SLOWEST);
+              return (int) (base * Creature.SPEED_ADJUST_SLOWEST);
             } else {
-              return (int) (base * SPEED_ADJUST_NORMAL);
+              return (int) (base * Creature.SPEED_ADJUST_NORMAL);
             }
           }
         }
@@ -184,7 +184,7 @@ public class PartyMember extends Creature {
     this.getItems().resetInventory();
     Game.deactivateAllEffects();
     final Page nextLevelEquation = new Page(3, 1, 0, true);
-    final double value = BASE_COEFF;
+    final double value = PartyMember.BASE_COEFF;
     nextLevelEquation.setCoefficient(1, value);
     nextLevelEquation.setCoefficient(2, value);
     nextLevelEquation.setCoefficient(3, value);

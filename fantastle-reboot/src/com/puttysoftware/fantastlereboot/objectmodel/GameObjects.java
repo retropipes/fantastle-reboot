@@ -59,60 +59,60 @@ public final class GameObjects {
         new SuperSpring() };
     GameObjects.allObjectList.clear();
     // Populate lists
-    for (int z = 0; z < allObjects.length; z++) {
-      GameObjects.allObjectList.add(allObjects[z]);
+    for (final FantastleObjectModel allObject : allObjects) {
+      GameObjects.allObjectList.add(allObject);
     }
     GameObjects.allActionList = DataLoader.loadObjectActionData();
     GameObjects.allShopActionList = DataLoader
         .loadObjectActionAddonData(FantastleObjectActions.SHOP);
   }
 
-  public static boolean sendsDown(FantastleObjectModel obj) {
+  public static boolean sendsDown(final FantastleObjectModel obj) {
     return GameObjects.allActionList[obj.getUniqueID()]
         .get(FantastleObjectActions.DOWN_1_FLOOR);
   }
 
-  public static boolean sendsUp(FantastleObjectModel obj) {
+  public static boolean sendsUp(final FantastleObjectModel obj) {
     return GameObjects.allActionList[obj.getUniqueID()]
         .get(FantastleObjectActions.UP_1_FLOOR);
   }
 
-  public static boolean sendsDown2(FantastleObjectModel obj) {
+  public static boolean sendsDown2(final FantastleObjectModel obj) {
     return GameObjects.allActionList[obj.getUniqueID()]
         .get(FantastleObjectActions.DOWN_2_FLOORS);
   }
 
-  public static boolean sendsUp2(FantastleObjectModel obj) {
+  public static boolean sendsUp2(final FantastleObjectModel obj) {
     return GameObjects.allActionList[obj.getUniqueID()]
         .get(FantastleObjectActions.UP_2_FLOORS);
   }
 
-  public static boolean sendsNext(FantastleObjectModel obj) {
+  public static boolean sendsNext(final FantastleObjectModel obj) {
     return GameObjects.allActionList[obj.getUniqueID()]
         .get(FantastleObjectActions.NEXT_LEVEL);
   }
 
-  public static boolean sendsPrevious(FantastleObjectModel obj) {
+  public static boolean sendsPrevious(final FantastleObjectModel obj) {
     return GameObjects.allActionList[obj.getUniqueID()]
         .get(FantastleObjectActions.PREVIOUS_LEVEL);
   }
 
-  public static boolean movesRandomly(FantastleObjectModel obj) {
+  public static boolean movesRandomly(final FantastleObjectModel obj) {
     return GameObjects.allActionList[obj.getUniqueID()]
         .get(FantastleObjectActions.MOVE_SELF);
   }
 
-  public static boolean startsBattle(FantastleObjectModel obj) {
+  public static boolean startsBattle(final FantastleObjectModel obj) {
     return GameObjects.allActionList[obj.getUniqueID()]
         .get(FantastleObjectActions.BATTLE);
   }
 
-  public static boolean sendsToShop(FantastleObjectModel obj) {
+  public static boolean sendsToShop(final FantastleObjectModel obj) {
     return GameObjects.allActionList[obj.getUniqueID()]
         .get(FantastleObjectActions.SHOP);
   }
 
-  public static int sendsToWhichShop(FantastleObjectModel obj) {
+  public static int sendsToWhichShop(final FantastleObjectModel obj) {
     return GameObjects.allShopActionList[obj.getUniqueID()];
   }
 
@@ -246,7 +246,7 @@ public final class GameObjects {
     int x;
     int count = 0;
     for (x = 0; x < objects.length; x++) {
-      if ((objects[x].getLayer() == layer) && objects[x].isRequired()) {
+      if (objects[x].getLayer() == layer && objects[x].isRequired()) {
         tempAllRequired[count] = objects[x];
         count++;
       }
@@ -269,7 +269,7 @@ public final class GameObjects {
     int x;
     int count = 0;
     for (x = 0; x < objects.length; x++) {
-      if ((objects[x].getLayer() == layer) && !(objects[x].isRequired())) {
+      if (objects[x].getLayer() == layer && !objects[x].isRequired()) {
         tempAllWithoutPrereq[count] = objects[x];
         count++;
       }
@@ -317,10 +317,10 @@ public final class GameObjects {
     if (formatVersion == MazeVersions.FORMAT_LATEST) {
       UID = reader.readInt();
     }
-    for (int x = 0; x < objects.length; x++) {
+    for (final FantastleObjectModel object : objects) {
       try {
         FantastleObjectModel instance;
-        instance = objects[x].getClass().getConstructor().newInstance();
+        instance = object.getClass().getConstructor().newInstance();
         if (formatVersion == MazeVersions.FORMAT_LATEST) {
           o = instance.readObject(reader, UID);
           if (o != null) {
@@ -340,10 +340,10 @@ public final class GameObjects {
       final int UID, final int formatVersion) throws IOException {
     final FantastleObjectModel[] objects = GameObjects.getAllObjects();
     FantastleObjectModel o = null;
-    for (int x = 0; x < objects.length; x++) {
+    for (final FantastleObjectModel object : objects) {
       try {
         FantastleObjectModel instance;
-        instance = objects[x].getClass().getConstructor().newInstance();
+        instance = object.getClass().getConstructor().newInstance();
         if (formatVersion == MazeVersions.FORMAT_LATEST) {
           o = instance.readObject(reader, UID);
           if (o != null) {

@@ -8,8 +8,6 @@ package com.puttysoftware.fantastlereboot.game;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -38,53 +36,52 @@ public class StatisticsViewer {
 
   // Methods
   public static void viewStatistics() {
-    setUpGUI();
+    StatisticsViewer.setUpGUI();
     final PartyMember leader = PartyManager.getParty().getLeader();
     if (leader != null) {
       for (int x = 0; x < StatConstants.MAX_DISPLAY_STATS; x++) {
         final long value = leader.getStat(x);
         if (x == StatConstants.STAT_HIT || x == StatConstants.STAT_EVADE) {
           final double fmtVal = value / 100.0;
-          statisticsValues[x].setText(
+          StatisticsViewer.statisticsValues[x].setText(
               " " + StatConstants.STAT_NAMES[x] + ": " + fmtVal + "%  ");
         } else {
-          statisticsValues[x]
+          StatisticsViewer.statisticsValues[x]
               .setText(" " + StatConstants.STAT_NAMES[x] + ": " + value + "  ");
         }
       }
-      statisticsFrame.pack();
+      StatisticsViewer.statisticsFrame.pack();
     } else {
       CommonDialogs.showDialog("Nothing to display");
     }
   }
 
   private static void setUpGUI() {
-    if (!inited) {
-      statisticsFrame = MainWindow.getOutputFrame();
-      statisticsFrame.setTitle("Statistics");
-      statisticsPane = new JPanel();
-      statisticsPane.setLayout(new BorderLayout());
-      contentPane = new JPanel();
-      contentPane.setLayout(new GridLayout(StatConstants.MAX_STATS, 1));
-      buttonPane = new JPanel();
-      buttonPane.setLayout(new FlowLayout());
-      btnOK = new JButton("OK");
-      btnOK.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(final ActionEvent e) {
-          Game.showOutput();
-        }
-      });
-      statisticsValues = new JLabel[StatConstants.MAX_DISPLAY_STATS];
+    if (!StatisticsViewer.inited) {
+      StatisticsViewer.statisticsFrame = MainWindow.getOutputFrame();
+      StatisticsViewer.statisticsFrame.setTitle("Statistics");
+      StatisticsViewer.statisticsPane = new JPanel();
+      StatisticsViewer.statisticsPane.setLayout(new BorderLayout());
+      StatisticsViewer.contentPane = new JPanel();
+      StatisticsViewer.contentPane
+          .setLayout(new GridLayout(StatConstants.MAX_STATS, 1));
+      StatisticsViewer.buttonPane = new JPanel();
+      StatisticsViewer.buttonPane.setLayout(new FlowLayout());
+      StatisticsViewer.btnOK = new JButton("OK");
+      StatisticsViewer.btnOK.addActionListener(e -> Game.showOutput());
+      StatisticsViewer.statisticsValues = new JLabel[StatConstants.MAX_DISPLAY_STATS];
       for (int x = 0; x < StatConstants.MAX_DISPLAY_STATS; x++) {
-        statisticsValues[x] = new JLabel();
-        contentPane.add(statisticsValues[x]);
+        StatisticsViewer.statisticsValues[x] = new JLabel();
+        StatisticsViewer.contentPane.add(StatisticsViewer.statisticsValues[x]);
       }
-      buttonPane.add(btnOK);
-      statisticsPane.add(contentPane, BorderLayout.CENTER);
-      statisticsPane.add(buttonPane, BorderLayout.SOUTH);
-      statisticsFrame.attachContent(statisticsPane);
-      inited = true;
+      StatisticsViewer.buttonPane.add(StatisticsViewer.btnOK);
+      StatisticsViewer.statisticsPane.add(StatisticsViewer.contentPane,
+          BorderLayout.CENTER);
+      StatisticsViewer.statisticsPane.add(StatisticsViewer.buttonPane,
+          BorderLayout.SOUTH);
+      StatisticsViewer.statisticsFrame
+          .attachContent(StatisticsViewer.statisticsPane);
+      StatisticsViewer.inited = true;
     }
   }
 }

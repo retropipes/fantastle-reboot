@@ -78,22 +78,22 @@ public class FaithManager {
   private static void initCachesIfNeeded() {
     if (!FaithManager.CACHES_INITED) {
       FaithConstants.FAITH_NAME_CACHE = DataLoader.loadFaithNameData();
-      FaithConstants.FAITH_NUMERATOR_CACHE = new int[FAITHS][FAITHS];
-      FaithConstants.FAITH_DENOMINATOR_CACHE = new int[FAITHS][FAITHS];
+      FaithConstants.FAITH_NUMERATOR_CACHE = new int[FaithManager.FAITHS][FaithManager.FAITHS];
+      FaithConstants.FAITH_DENOMINATOR_CACHE = new int[FaithManager.FAITHS][FaithManager.FAITHS];
       FaithConstants.FAITH_COLOR_CACHE = new Hashtable<>();
       FaithConstants.FAITH_SHADER_CACHE = new Hashtable<>();
       FaithManager.CACHE = new Faith[FaithManager.FAITHS];
-      for (int faithID = 0; faithID < FAITHS; faithID++) {
-        int[] colorData = DataLoader.loadFaithColorData(faithID);
-        Color faithColor = new Color(colorData[0], colorData[1], colorData[2],
-            colorData[3]);
+      for (int faithID = 0; faithID < FaithManager.FAITHS; faithID++) {
+        final int[] colorData = DataLoader.loadFaithColorData(faithID);
+        final Color faithColor = new Color(colorData[0], colorData[1],
+            colorData[2], colorData[3]);
         FaithConstants.FAITH_COLOR_CACHE.put(faithID, faithColor);
         FaithConstants.FAITH_NUMERATOR_CACHE[faithID] = DataLoader
             .loadFaithNumeratorData(faithID);
         FaithConstants.FAITH_DENOMINATOR_CACHE[faithID] = DataLoader
             .loadFaithDenominatorData(faithID);
-        String faithName = FaithConstants.FAITH_NAME_CACHE[faithID];
-        ColorShader faithShader = new ColorShader(faithName, faithColor);
+        final String faithName = FaithConstants.FAITH_NAME_CACHE[faithID];
+        final ColorShader faithShader = new ColorShader(faithName, faithColor);
         FaithConstants.FAITH_SHADER_CACHE.put(faithID, faithShader);
         FaithManager.CACHE[faithID] = new Faith(faithID);
       }

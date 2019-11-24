@@ -23,9 +23,7 @@ public abstract class AbstractDamageEngine {
   public abstract boolean weaponFumble();
 
   public static AbstractDamageEngine getPlayerInstance() {
-    
-    final int difficulty = Prefs
-        .getGameDifficulty();
+    final int difficulty = Prefs.getGameDifficulty();
     if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
       return new VeryEasyDamageEngine();
     } else {
@@ -50,9 +48,7 @@ public abstract class AbstractDamageEngine {
   }
 
   public static AbstractDamageEngine getEnemyInstance() {
-    
-    final int difficulty = Prefs
-        .getGameDifficulty();
+    final int difficulty = Prefs.getGameDifficulty();
     if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
       return new VeryHardDamageEngine();
     } else {

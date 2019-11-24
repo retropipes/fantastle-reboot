@@ -18,7 +18,6 @@ public class MapBattleArrowSpeedConstants {
 
   // Method
   public static int getArrowSpeed() {
-    
     return Prefs.getBattleSpeed()
         / MapBattleArrowSpeedConstants.ARROW_SPEED_FACTOR;
   }

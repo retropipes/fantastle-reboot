@@ -31,11 +31,12 @@ public class AttributeImageLoader {
   private static Properties fileExtensions;
   private static final int MAX_INDEX = 69;
 
-  public static BufferedImageIcon load(AttributeImageIndex image) {
+  public static BufferedImageIcon load(final AttributeImageIndex image) {
     if (image != AttributeImageIndex._NONE) {
-      String imageExt = fileExtensions.getProperty("images");
-      String name = "/assets/images/attributes/" + allFilenames[image.ordinal()]
-          + imageExt;
+      final String imageExt = AttributeImageLoader.fileExtensions
+          .getProperty("images");
+      final String name = "/assets/images/attributes/"
+          + AttributeImageLoader.allFilenames[image.ordinal()] + imageExt;
       return ImageLoader.load(name,
           AttributeImageLoader.class.getResource(name),
           FantastleReboot.getErrorHandler());
@@ -44,17 +45,20 @@ public class AttributeImageLoader {
   }
 
   public static void cacheAll() {
-    allFilenames = DataLoader.loadAttributeImageData();
+    AttributeImageLoader.allFilenames = DataLoader.loadAttributeImageData();
     try {
-      fileExtensions = new Properties();
-      fileExtensions.load(AttributeImageLoader.class.getResourceAsStream(
-          "/assets/data/extensions/extensions.properties"));
-    } catch (IOException e) {
+      AttributeImageLoader.fileExtensions = new Properties();
+      AttributeImageLoader.fileExtensions
+          .load(AttributeImageLoader.class.getResourceAsStream(
+              "/assets/data/extensions/extensions.properties"));
+    } catch (final IOException e) {
       FantastleReboot.logError(e);
     }
-    String imageExt = fileExtensions.getProperty("images");
-    for (int i = 0; i <= MAX_INDEX; i++) {
-      String name = "/assets/images/attributes/" + allFilenames[i] + imageExt;
+    final String imageExt = AttributeImageLoader.fileExtensions
+        .getProperty("images");
+    for (int i = 0; i <= AttributeImageLoader.MAX_INDEX; i++) {
+      final String name = "/assets/images/attributes/"
+          + AttributeImageLoader.allFilenames[i] + imageExt;
       ImageLoader.load(name, AttributeImageLoader.class.getResource(name),
           FantastleReboot.getErrorHandler());
     }

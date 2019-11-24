@@ -23,7 +23,8 @@ final class QuitRequestManager implements QuitHandler {
 
   // Methods
   @Override
-  public void handleQuitRequestWith(QuitEvent inE, QuitResponse inResponse) {
+  public void handleQuitRequestWith(final QuitEvent inE,
+      final QuitResponse inResponse) {
     boolean saved = true;
     int status = JOptionPane.DEFAULT_OPTION;
     if (FileStateManager.getDirty()) {

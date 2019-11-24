@@ -242,7 +242,7 @@ final class MovementTask extends Thread {
     m.savePlayerLocation();
     GameView.saveViewingWindow();
     if (m.cellRangeCheck(x, y, z)) {
-      if (!(m.getCell(x, y, z, Layers.OBJECT).isSolid())) {
+      if (!m.getCell(x, y, z, Layers.OBJECT).isSolid()) {
         m.setPlayerLocationX(x);
         m.setPlayerLocationY(y);
         m.setPlayerLocationZ(z);

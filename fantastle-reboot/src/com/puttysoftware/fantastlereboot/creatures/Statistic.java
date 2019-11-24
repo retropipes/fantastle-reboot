@@ -40,7 +40,7 @@ class Statistic {
   void offsetValueMultiply(final double newValue, final boolean max,
       final int maxValue) {
     if (max) {
-      this.value -= (int) (maxValue - (maxValue * newValue));
+      this.value -= (int) (maxValue - maxValue * newValue);
     } else {
       this.value *= newValue;
     }

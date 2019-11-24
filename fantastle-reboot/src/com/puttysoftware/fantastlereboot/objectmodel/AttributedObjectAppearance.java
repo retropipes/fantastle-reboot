@@ -41,8 +41,8 @@ class AttributedObjectAppearance extends Appearance {
       oImage = ImageShader.shade(this.getCacheName(), oImage,
           this.getShading());
     }
-    BufferedImageIcon aImage = this.attribute.getImage();
-    String comboCacheName = this.getCacheName() + "_"
+    final BufferedImageIcon aImage = this.attribute.getImage();
+    final String comboCacheName = this.getCacheName() + "_"
         + this.attribute.getCacheName();
     return ImageCompositor.composite(comboCacheName, oImage, aImage);
   }

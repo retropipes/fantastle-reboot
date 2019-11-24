@@ -31,11 +31,12 @@ public class EffectImageLoader {
   private static Properties fileExtensions;
   private static final int MAX_INDEX = 46;
 
-  public static BufferedImageIcon load(EffectImageIndex image) {
+  public static BufferedImageIcon load(final EffectImageIndex image) {
     if (image != EffectImageIndex._NONE) {
-      String imageExt = fileExtensions.getProperty("images");
-      String name = "/assets/images/effects/" + allFilenames[image.ordinal()]
-          + imageExt;
+      final String imageExt = EffectImageLoader.fileExtensions
+          .getProperty("images");
+      final String name = "/assets/images/effects/"
+          + EffectImageLoader.allFilenames[image.ordinal()] + imageExt;
       return ImageLoader.load(name, EffectImageLoader.class.getResource(name),
           FantastleReboot.getErrorHandler());
     }
@@ -43,17 +44,20 @@ public class EffectImageLoader {
   }
 
   public static void cacheAll() {
-    allFilenames = DataLoader.loadEffectImageData();
+    EffectImageLoader.allFilenames = DataLoader.loadEffectImageData();
     try {
-      fileExtensions = new Properties();
-      fileExtensions.load(EffectImageLoader.class.getResourceAsStream(
-          "/assets/data/extensions/extensions.properties"));
-    } catch (IOException e) {
+      EffectImageLoader.fileExtensions = new Properties();
+      EffectImageLoader.fileExtensions
+          .load(EffectImageLoader.class.getResourceAsStream(
+              "/assets/data/extensions/extensions.properties"));
+    } catch (final IOException e) {
       FantastleReboot.logError(e);
     }
-    String imageExt = fileExtensions.getProperty("images");
-    for (int i = 0; i <= MAX_INDEX; i++) {
-      String name = "/assets/images/effects/" + allFilenames[i] + imageExt;
+    final String imageExt = EffectImageLoader.fileExtensions
+        .getProperty("images");
+    for (int i = 0; i <= EffectImageLoader.MAX_INDEX; i++) {
+      final String name = "/assets/images/effects/"
+          + EffectImageLoader.allFilenames[i] + imageExt;
       ImageLoader.load(name, EffectImageLoader.class.getResource(name),
           FantastleReboot.getErrorHandler());
     }

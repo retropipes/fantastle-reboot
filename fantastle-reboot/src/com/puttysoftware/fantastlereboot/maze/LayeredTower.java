@@ -24,9 +24,9 @@ import com.puttysoftware.xio.XDataWriter;
 
 final class LayeredTower implements Cloneable {
   // Properties
-  private LowLevelMazeDataStore data;
+  private final LowLevelMazeDataStore data;
   private LowLevelMazeDataStore savedTowerState;
-  private FlagStorage visionData;
+  private final FlagStorage visionData;
   private final LowLevelNoteDataStore noteData;
   private final int[] playerStartData;
   private final int[] playerLocationData;
@@ -64,7 +64,7 @@ final class LayeredTower implements Cloneable {
     this.verticalWraparoundEnabled = false;
     this.visionMode = VisionModes.EXPLORE_AND_LOS;
     this.visionModeExploreRadius = 2;
-    this.visionRadius = MAX_VISION_RADIUS;
+    this.visionRadius = LayeredTower.MAX_VISION_RADIUS;
     this.regionSize = 8;
   }
 
@@ -108,8 +108,9 @@ final class LayeredTower implements Cloneable {
     if (this.horizontalWraparoundEnabled) {
       fR = this.normalizeRow(fR);
     }
-    return fR >= 0 && fR < MAX_ROWS && fC >= 0 && fC < MAX_COLUMNS && fF >= 0
-        && fF < MAX_FLOORS;
+    return fR >= 0 && fR < LayeredTower.MAX_ROWS && fC >= 0
+        && fC < LayeredTower.MAX_COLUMNS && fF >= 0
+        && fF < LayeredTower.MAX_FLOORS;
   }
 
   public boolean cellRangeCheck(final int row, final int col, final int floor,
@@ -123,8 +124,9 @@ final class LayeredTower implements Cloneable {
     if (this.horizontalWraparoundEnabled) {
       fR = this.normalizeRow(fR);
     }
-    return fR >= 0 && fR < MAX_ROWS && fC >= 0 && fC < MAX_COLUMNS && fF >= 0
-        && fF < MAX_FLOORS && extra >= 0 && extra < Layers.COUNT;
+    return fR >= 0 && fR < LayeredTower.MAX_ROWS && fC >= 0
+        && fC < LayeredTower.MAX_COLUMNS && fF >= 0
+        && fF < LayeredTower.MAX_FLOORS && extra >= 0 && extra < Layers.COUNT;
   }
 
   public FantastleObjectModel getCell(final int row, final int col,
@@ -167,8 +169,8 @@ final class LayeredTower implements Cloneable {
 
   public boolean doesPlayerExist() {
     boolean res = true;
-    for (int x = 0; x < this.playerStartData.length; x++) {
-      res = res && (this.playerStartData[x] != -1);
+    for (final int element : this.playerStartData) {
+      res = res && element != -1;
     }
     return res;
   }
@@ -512,9 +514,9 @@ final class LayeredTower implements Cloneable {
       }
     }
     // Pass 4: Add monsters
-    int space = this.getColumns() * this.getRows();
-    int monsterMin = space / 32;
-    int monsterMax = space / 16;
+    final int space = this.getColumns() * this.getRows();
+    final int monsterMin = space / 32;
+    final int monsterMax = space / 16;
     final RandomRange howMany = new RandomRange(monsterMin, monsterMax);
     final int generateHowMany = howMany.generate();
     for (y = 0; y < generateHowMany; y++) {
@@ -615,7 +617,7 @@ final class LayeredTower implements Cloneable {
 
   public static boolean radialScan(final int cx, final int cy, final int r,
       final int tx, final int ty) {
-    return (Math.abs(tx - cx) <= r && Math.abs(ty - cy) <= r);
+    return Math.abs(tx - cx) <= r && Math.abs(ty - cy) <= r;
   }
 
   public void fullScanButton(final int l) {

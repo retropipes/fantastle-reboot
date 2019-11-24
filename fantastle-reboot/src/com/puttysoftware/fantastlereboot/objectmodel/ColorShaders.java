@@ -20,94 +20,107 @@ public final class ColorShaders {
   private static ColorShader MAGNET;
 
   public static ColorShader wooden() {
-    if (WOODEN == null) {
-      WOODEN = new ColorShader("wooden", new Color(127, 63, 0, 255));
+    if (ColorShaders.WOODEN == null) {
+      ColorShaders.WOODEN = new ColorShader("wooden",
+          new Color(127, 63, 0, 255));
     }
-    return WOODEN;
+    return ColorShaders.WOODEN;
   }
 
   public static ColorShader scorch() {
-    if (SCORCH == null) {
-      SCORCH = new ColorShader("scorch", new Color(255, 0, 0, 255));
+    if (ColorShaders.SCORCH == null) {
+      ColorShaders.SCORCH = new ColorShader("scorch",
+          new Color(255, 0, 0, 255));
     }
-    return SCORCH;
+    return ColorShaders.SCORCH;
   }
 
   public static ColorShader freeze() {
-    if (FREEZE == null) {
-      FREEZE = new ColorShader("freeze", new Color(0, 255, 255, 255));
+    if (ColorShaders.FREEZE == null) {
+      ColorShaders.FREEZE = new ColorShader("freeze",
+          new Color(0, 255, 255, 255));
     }
-    return FREEZE;
+    return ColorShaders.FREEZE;
   }
 
   public static ColorShader shadow() {
-    if (SHADOW == null) {
-      SHADOW = new ColorShader("shadow", new Color(47, 47, 47, 255));
+    if (ColorShaders.SHADOW == null) {
+      ColorShaders.SHADOW = new ColorShader("shadow",
+          new Color(47, 47, 47, 255));
     }
-    return SHADOW;
+    return ColorShaders.SHADOW;
   }
 
   public static ColorShader vortex() {
-    if (VORTEX == null) {
-      VORTEX = new ColorShader("vortex", new Color(0, 255, 0, 255));
+    if (ColorShaders.VORTEX == null) {
+      ColorShaders.VORTEX = new ColorShader("vortex",
+          new Color(0, 255, 0, 255));
     }
-    return VORTEX;
+    return ColorShaders.VORTEX;
   }
 
   public static ColorShader charge() {
-    if (CHARGE == null) {
-      CHARGE = new ColorShader("charge", new Color(255, 255, 0, 255));
+    if (ColorShaders.CHARGE == null) {
+      ColorShaders.CHARGE = new ColorShader("charge",
+          new Color(255, 255, 0, 255));
     }
-    return CHARGE;
+    return ColorShaders.CHARGE;
   }
 
   public static ColorShader sacred() {
-    if (SACRED == null) {
-      SACRED = new ColorShader("sacred", new Color(223, 223, 223, 255));
+    if (ColorShaders.SACRED == null) {
+      ColorShaders.SACRED = new ColorShader("sacred",
+          new Color(223, 223, 223, 255));
     }
-    return SACRED;
+    return ColorShaders.SACRED;
   }
 
   public static ColorShader beauty() {
-    if (BEAUTY == null) {
-      BEAUTY = new ColorShader("beauty", new Color(255, 0, 255, 255));
+    if (ColorShaders.BEAUTY == null) {
+      ColorShaders.BEAUTY = new ColorShader("beauty",
+          new Color(255, 0, 255, 255));
     }
-    return BEAUTY;
+    return ColorShaders.BEAUTY;
   }
 
   public static ColorShader liquid() {
-    if (LIQUID == null) {
-      LIQUID = new ColorShader("liquid", new Color(0, 0, 255, 255));
+    if (ColorShaders.LIQUID == null) {
+      ColorShaders.LIQUID = new ColorShader("liquid",
+          new Color(0, 0, 255, 255));
     }
-    return LIQUID;
+    return ColorShaders.LIQUID;
   }
 
   public static ColorShader normal() {
-    if (NORMAL == null) {
-      NORMAL = new ColorShader("normal", new Color(127, 127, 127, 255));
+    if (ColorShaders.NORMAL == null) {
+      ColorShaders.NORMAL = new ColorShader("normal",
+          new Color(127, 127, 127, 255));
     }
-    return NORMAL;
+    return ColorShaders.NORMAL;
   }
 
   public static ColorShader poison() {
-    if (POISON == null) {
-      POISON = new ColorShader("poison", new Color(63, 0, 127, 255));
+    if (ColorShaders.POISON == null) {
+      ColorShaders.POISON = new ColorShader("poison",
+          new Color(63, 0, 127, 255));
     }
-    return POISON;
+    return ColorShaders.POISON;
   }
 
   public static ColorShader plasma() {
-    if (PLASMA == null) {
-      PLASMA = new ColorShader("plasma", new Color(63, 255, 127, 255));
+    if (ColorShaders.PLASMA == null) {
+      ColorShaders.PLASMA = new ColorShader("plasma",
+          new Color(63, 255, 127, 255));
     }
-    return PLASMA;
+    return ColorShaders.PLASMA;
   }
 
   public static ColorShader magnet() {
-    if (MAGNET == null) {
-      MAGNET = new ColorShader("magnet", new Color(255, 63, 0, 255));
+    if (ColorShaders.MAGNET == null) {
+      ColorShaders.MAGNET = new ColorShader("magnet",
+          new Color(255, 63, 0, 255));
     }
-    return MAGNET;
+    return ColorShaders.MAGNET;
   }
 
   private ColorShaders() {

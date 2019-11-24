@@ -31,11 +31,12 @@ public class ItemImageLoader {
   private static Properties fileExtensions;
   private static final int MAX_INDEX = 7;
 
-  public static BufferedImageIcon load(ItemImageIndex image) {
+  public static BufferedImageIcon load(final ItemImageIndex image) {
     if (image != ItemImageIndex._NONE) {
-      String imageExt = fileExtensions.getProperty("images");
-      String name = "/assets/images/items/" + allFilenames[image.ordinal()]
-          + imageExt;
+      final String imageExt = ItemImageLoader.fileExtensions
+          .getProperty("images");
+      final String name = "/assets/images/items/"
+          + ItemImageLoader.allFilenames[image.ordinal()] + imageExt;
       return ImageLoader.load(name, ItemImageLoader.class.getResource(name),
           FantastleReboot.getErrorHandler());
     }
@@ -43,17 +44,20 @@ public class ItemImageLoader {
   }
 
   public static void cacheAll() {
-    allFilenames = DataLoader.loadItemImageData();
+    ItemImageLoader.allFilenames = DataLoader.loadItemImageData();
     try {
-      fileExtensions = new Properties();
-      fileExtensions.load(ItemImageLoader.class.getResourceAsStream(
-          "/assets/data/extensions/extensions.properties"));
-    } catch (IOException e) {
+      ItemImageLoader.fileExtensions = new Properties();
+      ItemImageLoader.fileExtensions
+          .load(ItemImageLoader.class.getResourceAsStream(
+              "/assets/data/extensions/extensions.properties"));
+    } catch (final IOException e) {
       FantastleReboot.logError(e);
     }
-    String imageExt = fileExtensions.getProperty("images");
-    for (int i = 0; i <= MAX_INDEX; i++) {
-      String name = "/assets/images/items/" + allFilenames[i] + imageExt;
+    final String imageExt = ItemImageLoader.fileExtensions
+        .getProperty("images");
+    for (int i = 0; i <= ItemImageLoader.MAX_INDEX; i++) {
+      final String name = "/assets/images/items/"
+          + ItemImageLoader.allFilenames[i] + imageExt;
       ImageLoader.load(name, ItemImageLoader.class.getResource(name),
           FantastleReboot.getErrorHandler());
     }

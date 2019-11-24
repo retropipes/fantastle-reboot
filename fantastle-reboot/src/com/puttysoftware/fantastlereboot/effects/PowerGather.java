@@ -18,7 +18,7 @@ public class PowerGather extends Effect {
 
   @Override
   public int modifyMove1(final int arg) {
-    PartyManager.getParty().getLeader().offsetCurrentMP(MP_GAINED);
+    PartyManager.getParty().getLeader().offsetCurrentMP(PowerGather.MP_GAINED);
     return arg;
   }
 }

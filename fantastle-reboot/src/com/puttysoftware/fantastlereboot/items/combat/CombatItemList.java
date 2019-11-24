@@ -35,9 +35,9 @@ public class CombatItemList {
   }
 
   CombatItem getItemByName(final String name) {
-    for (int x = 0; x < this.allItems.length; x++) {
-      if (name.equals(this.allItems[x].getName())) {
-        return this.allItems[x];
+    for (final CombatItem allItem : this.allItems) {
+      if (name.equals(allItem.getName())) {
+        return allItem;
       }
     }
     return null;

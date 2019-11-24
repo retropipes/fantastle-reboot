@@ -69,8 +69,8 @@ class GameGUI {
     GameGUI.outputFrame = MainWindow.getOutputFrame();
     GameGUI.outputFrame.setTitle("Game");
     GameGUI.outputFrame.attachContent(GameGUI.borderPane);
-    GameGUI.outputFrame.addKeyListener(handler);
-    GameGUI.outputFrame.addWindowListener(handler);
+    GameGUI.outputFrame.addKeyListener(GameGUI.handler);
+    GameGUI.outputFrame.addWindowListener(GameGUI.handler);
     if (GameGUI.deferredRedraw) {
       GameGUI.deferredRedraw = false;
       GameGUI.redrawMaze();
@@ -79,8 +79,8 @@ class GameGUI {
   }
 
   public static void hideOutput() {
-    GameGUI.outputFrame.removeWindowListener(handler);
-    GameGUI.outputFrame.removeKeyListener(handler);
+    GameGUI.outputFrame.removeWindowListener(GameGUI.handler);
+    GameGUI.outputFrame.removeKeyListener(GameGUI.handler);
   }
 
   public static void setStatusMessage(final String msg) {

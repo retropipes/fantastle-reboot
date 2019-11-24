@@ -63,17 +63,19 @@ public class MonsterImageLoader {
 
   public static BufferedImageIcon load(final int imageID, final Faith faith) {
     final ColorShader shader = faith.getShader();
-    if (fileExtensions == null) {
+    if (MonsterImageLoader.fileExtensions == null) {
       try {
-        fileExtensions = new Properties();
-        fileExtensions.load(MonsterImageLoader.class.getResourceAsStream(
-            "/assets/data/extensions/extensions.properties"));
-      } catch (IOException e) {
+        MonsterImageLoader.fileExtensions = new Properties();
+        MonsterImageLoader.fileExtensions
+            .load(MonsterImageLoader.class.getResourceAsStream(
+                "/assets/data/extensions/extensions.properties"));
+      } catch (final IOException e) {
         FantastleReboot.logError(e);
       }
     }
-    String imageExt = fileExtensions.getProperty("images");
-    String cacheName = shader.getName() + "_" + Integer.toString(imageID);
+    final String imageExt = MonsterImageLoader.fileExtensions
+        .getProperty("images");
+    final String cacheName = shader.getName() + "_" + Integer.toString(imageID);
     return ImageCache.getCachedImage(shader,
         Integer.toString(imageID) + imageExt, cacheName);
   }
@@ -89,16 +91,16 @@ public class MonsterImageLoader {
       if (!ImageCache.cacheCreated) {
         ImageCache.createCache();
       }
-      for (ImageCacheEntry entry : ImageCache.cache) {
+      for (final ImageCacheEntry entry : ImageCache.cache) {
         if (name.equals(entry.name())) {
           // Found
           return entry.image();
         }
       }
       // Not found: Add to cache
-      BufferedImageIcon newImage = MonsterImageLoader.loadUncached(imagePath,
-          shader);
-      ImageCacheEntry newEntry = new ImageCacheEntry(newImage, name);
+      final BufferedImageIcon newImage = MonsterImageLoader
+          .loadUncached(imagePath, shader);
+      final ImageCacheEntry newEntry = new ImageCacheEntry(newImage, name);
       ImageCache.cache.add(newEntry);
       return newImage;
     }
@@ -139,14 +141,14 @@ public class MonsterImageLoader {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
       if (this == obj) {
         return true;
       }
       if (!(obj instanceof ImageCacheEntry)) {
         return false;
       }
-      ImageCacheEntry other = (ImageCacheEntry) obj;
+      final ImageCacheEntry other = (ImageCacheEntry) obj;
       return Objects.equals(this.name, other.name);
     }
   }

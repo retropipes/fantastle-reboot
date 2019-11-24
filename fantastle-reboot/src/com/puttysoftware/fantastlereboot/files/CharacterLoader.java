@@ -22,7 +22,7 @@ public class CharacterLoader {
         + FileExtensions.getCharacterExtensionWithPeriod();
     try (XDataReader loader = new XDataReader(loadPath, "character")) {
       return CharacterLoader.readCharacter(loader);
-    } catch (VersionException e) {
+    } catch (final VersionException e) {
       CharacterRegistration.autoremoveCharacter(name);
       return null;
     } catch (final IOException e) {

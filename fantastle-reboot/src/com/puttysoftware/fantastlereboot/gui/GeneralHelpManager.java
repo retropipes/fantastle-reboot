@@ -41,7 +41,8 @@ public class GeneralHelpManager {
   public GeneralHelpManager() {
     this.helpContent = new JPanel();
     this.hv = HelpLoader.getHelpViewer();
-    this.hv.setHelpSize(MAX_WINDOW_SIZE, MAX_WINDOW_SIZE);
+    this.hv.setHelpSize(GeneralHelpManager.MAX_WINDOW_SIZE,
+        GeneralHelpManager.MAX_WINDOW_SIZE);
     this.helpContent.setLayout(new FlowLayout());
     this.helpContent.add(this.hv.getHelp());
   }
@@ -62,7 +63,8 @@ public class GeneralHelpManager {
   }
 
   public void updateHelpSize() {
-    this.hv.setHelpSize(MAX_WINDOW_SIZE, MAX_WINDOW_SIZE);
+    this.hv.setHelpSize(GeneralHelpManager.MAX_WINDOW_SIZE,
+        GeneralHelpManager.MAX_WINDOW_SIZE);
   }
 
   private class EventHandler implements WindowListener {
@@ -71,36 +73,36 @@ public class GeneralHelpManager {
     }
 
     @Override
-    public void windowOpened(WindowEvent inE) {
+    public void windowOpened(final WindowEvent inE) {
       // Do nothing
     }
 
     @Override
-    public void windowClosing(WindowEvent inE) {
+    public void windowClosing(final WindowEvent inE) {
       GeneralHelpManager.this.hideHelp();
     }
 
     @Override
-    public void windowClosed(WindowEvent inE) {
+    public void windowClosed(final WindowEvent inE) {
     }
 
     @Override
-    public void windowIconified(WindowEvent inE) {
+    public void windowIconified(final WindowEvent inE) {
       // Do nothing
     }
 
     @Override
-    public void windowDeiconified(WindowEvent inE) {
+    public void windowDeiconified(final WindowEvent inE) {
       // Do nothing
     }
 
     @Override
-    public void windowActivated(WindowEvent inE) {
+    public void windowActivated(final WindowEvent inE) {
       // Do nothing
     }
 
     @Override
-    public void windowDeactivated(WindowEvent inE) {
+    public void windowDeactivated(final WindowEvent inE) {
       // Do nothing
     }
   }

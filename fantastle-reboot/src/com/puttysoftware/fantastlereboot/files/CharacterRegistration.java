@@ -42,8 +42,8 @@ public class CharacterRegistration {
         // Verify that character is not already registered
         boolean alreadyRegistered = false;
         if (characterNameList != null) {
-          for (int x = 0; x < characterNameList.length; x++) {
-            if (characterNameList[x].equalsIgnoreCase(res)) {
+          for (final String element : characterNameList) {
+            if (element.equalsIgnoreCase(res)) {
               alreadyRegistered = true;
               break;
             }
@@ -247,8 +247,8 @@ public class CharacterRegistration {
       // Verify that character is not already registered
       boolean alreadyRegistered = false;
       if (characterNameList != null) {
-        for (int x = 0; x < characterNameList.length; x++) {
-          if (characterNameList[x].equalsIgnoreCase(name)) {
+        for (final String element : characterNameList) {
+          if (element.equalsIgnoreCase(name)) {
             alreadyRegistered = true;
             break;
           }

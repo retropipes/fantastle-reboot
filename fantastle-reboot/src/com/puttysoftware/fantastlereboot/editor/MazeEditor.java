@@ -200,7 +200,8 @@ public class MazeEditor {
               Layers.GROUND);
           this.drawGrid[xFix][yFix].setIcon(obj1.getEditorImage());
         } else {
-          this.drawGrid[xFix][yFix].setIcon(NOTHING.getEditorImage());
+          this.drawGrid[xFix][yFix]
+              .setIcon(MazeEditor.NOTHING.getEditorImage());
         }
       }
     }
@@ -232,7 +233,8 @@ public class MazeEditor {
               MazeEditor.generateCacheName(obj1, obj2), obj1.getEditorImage(),
               obj2.getEditorImage()));
         } else {
-          this.drawGrid[xFix][yFix].setIcon(NOTHING.getEditorImage());
+          this.drawGrid[xFix][yFix]
+              .setIcon(MazeEditor.NOTHING.getEditorImage());
         }
       }
     }
@@ -244,8 +246,8 @@ public class MazeEditor {
 
   private static String
       generateCacheName(final FantastleObjectModel... objects) {
-    StringBuilder result = new StringBuilder();
-    for (FantastleObjectModel object : objects) {
+    final StringBuilder result = new StringBuilder();
+    for (final FantastleObjectModel object : objects) {
       result.append(object.getUniqueID());
       result.append("_");
     }
@@ -300,13 +302,13 @@ public class MazeEditor {
   }
 
   private void checkStairPair(final int z, final int w) {
-    FantastleObjectModel obj1 = MazeManager.getMaze().getCell(
+    final FantastleObjectModel obj1 = MazeManager.getMaze().getCell(
         this.elMgr.getEditorLocationX(), this.elMgr.getEditorLocationY(), z,
         Layers.OBJECT);
-    FantastleObjectModel obj2 = MazeManager.getMaze().getCell(
+    final FantastleObjectModel obj2 = MazeManager.getMaze().getCell(
         this.elMgr.getEditorLocationX(), this.elMgr.getEditorLocationY(), z + 1,
         Layers.OBJECT);
-    FantastleObjectModel obj3 = MazeManager.getMaze().getCell(
+    final FantastleObjectModel obj3 = MazeManager.getMaze().getCell(
         this.elMgr.getEditorLocationX(), this.elMgr.getEditorLocationY(), z - 1,
         Layers.OBJECT);
     if (!(obj1 instanceof StairsUp)) {
@@ -321,13 +323,13 @@ public class MazeEditor {
   }
 
   private void reverseCheckStairPair(final int z, final int w) {
-    FantastleObjectModel obj1 = MazeManager.getMaze().getCell(
+    final FantastleObjectModel obj1 = MazeManager.getMaze().getCell(
         this.elMgr.getEditorLocationX(), this.elMgr.getEditorLocationY(), z,
         Layers.OBJECT);
-    FantastleObjectModel obj2 = MazeManager.getMaze().getCell(
+    final FantastleObjectModel obj2 = MazeManager.getMaze().getCell(
         this.elMgr.getEditorLocationX(), this.elMgr.getEditorLocationY(), z + 1,
         Layers.OBJECT);
-    FantastleObjectModel obj3 = MazeManager.getMaze().getCell(
+    final FantastleObjectModel obj3 = MazeManager.getMaze().getCell(
         this.elMgr.getEditorLocationX(), this.elMgr.getEditorLocationY(), z - 1,
         Layers.OBJECT);
     if (obj1 instanceof StairsUp) {
@@ -542,8 +544,8 @@ public class MazeEditor {
                     0 - (EditorViewingWindowManager.getViewingWindowSizeY() - 1)
                         / 2);
               }
-              MazeManager.getMaze().fill(
-                  Prefs.getEditorDefaultFill(), new OpenSpace());
+              MazeManager.getMaze().fill(Prefs.getEditorDefaultFill(),
+                  new OpenSpace());
               this.checkMenus();
             }
           } catch (final NumberFormatException nf) {

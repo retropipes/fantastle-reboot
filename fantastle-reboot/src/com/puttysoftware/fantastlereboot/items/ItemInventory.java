@@ -349,8 +349,7 @@ public class ItemInventory {
       dw.writeInt(iqu.getQuantity());
       dw.writeInt(iqu.getUses());
     }
-    for (int x = 0; x < this.equipment.length; x++) {
-      final Equipment ei = this.equipment[x];
+    for (final Equipment ei : this.equipment) {
       if (ei != null) {
         ei.writeEquipment(dw);
       } else {
@@ -365,7 +364,7 @@ public class ItemInventory {
     int result = 1;
     result = prime * result + Arrays.hashCode(this.equipment);
     result = prime * result + Arrays.hashCode(this.entries);
-    return prime * result + ((this.socks == null) ? 0 : this.socks.hashCode());
+    return prime * result + (this.socks == null ? 0 : this.socks.hashCode());
   }
 
   @Override

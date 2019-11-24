@@ -40,13 +40,11 @@ public class MapBattleViewingWindowManager {
   }
 
   public void setViewingWindowCenterX(final int val) {
-    this.locX = val
-        - (MapBattleViewingWindowManager.getViewingWindowSize() / 2);
+    this.locX = val - MapBattleViewingWindowManager.getViewingWindowSize() / 2;
   }
 
   public void setViewingWindowCenterY(final int val) {
-    this.locY = val
-        - (MapBattleViewingWindowManager.getViewingWindowSize() / 2);
+    this.locY = val - MapBattleViewingWindowManager.getViewingWindowSize() / 2;
   }
 
   public void offsetViewingWindowLocationX(final int val) {
@@ -68,9 +66,8 @@ public class MapBattleViewingWindowManager {
   }
 
   public static int getViewingWindowSize() {
-    
-    return (Prefs
-        .getViewingWindowSize() * VIEWING_WINDOW_SIZE_MULTIPLIER)
-        + VIEWING_WINDOW_SIZE_ADDITION;
+    return Prefs.getViewingWindowSize()
+        * MapBattleViewingWindowManager.VIEWING_WINDOW_SIZE_MULTIPLIER
+        + MapBattleViewingWindowManager.VIEWING_WINDOW_SIZE_ADDITION;
   }
 }

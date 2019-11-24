@@ -86,8 +86,8 @@ public abstract class FantastleObject extends GameObject
   }
 
   @Override
-  public void setGameLook(final String cacheName,
-      final ObjectImageIndex image, final ColorShader shader) {
+  public void setGameLook(final String cacheName, final ObjectImageIndex image,
+      final ColorShader shader) {
     super.setGameLook(new ObjectAppearance(cacheName, image, shader));
   }
 
@@ -95,10 +95,9 @@ public abstract class FantastleObject extends GameObject
   public void setGameLook(final String cacheObjectName,
       final ObjectImageIndex objectImage, final String cacheAttributeName,
       final AttributeImageIndex attributeImage) {
-    super.setGameLook(
-        new AttributedObjectAppearance(
-            new AttributeAppearance(cacheAttributeName, attributeImage),
-            cacheObjectName, objectImage));
+    super.setGameLook(new AttributedObjectAppearance(
+        new AttributeAppearance(cacheAttributeName, attributeImage),
+        cacheObjectName, objectImage));
   }
 
   @Override
@@ -106,10 +105,9 @@ public abstract class FantastleObject extends GameObject
       final ObjectImageIndex objectImage, final ColorShader objectShader,
       final String cacheAttributeName,
       final AttributeImageIndex attributeImage) {
-    super.setGameLook(
-        new AttributedObjectAppearance(
-            new AttributeAppearance(cacheAttributeName, attributeImage),
-            cacheObjectName, objectImage, objectShader));
+    super.setGameLook(new AttributedObjectAppearance(
+        new AttributeAppearance(cacheAttributeName, attributeImage),
+        cacheObjectName, objectImage, objectShader));
   }
 
   @Override
@@ -117,11 +115,10 @@ public abstract class FantastleObject extends GameObject
       final ObjectImageIndex objectImage, final String cacheAttributeName,
       final AttributeImageIndex attributeImage,
       final ColorShader attributeShader) {
-    super.setGameLook(
-        new AttributedObjectAppearance(
-            new AttributeAppearance(cacheAttributeName, attributeImage,
-                attributeShader),
-            cacheObjectName, objectImage));
+    super.setGameLook(new AttributedObjectAppearance(
+        new AttributeAppearance(cacheAttributeName, attributeImage,
+            attributeShader),
+        cacheObjectName, objectImage));
   }
 
   @Override
@@ -129,11 +126,10 @@ public abstract class FantastleObject extends GameObject
       final ObjectImageIndex objectImage, final ColorShader objectShader,
       final String cacheAttributeName, final AttributeImageIndex attributeImage,
       final ColorShader attributeShader) {
-    super.setGameLook(
-        new AttributedObjectAppearance(
-            new AttributeAppearance(cacheAttributeName, attributeImage,
-                attributeShader),
-            cacheObjectName, objectImage, objectShader));
+    super.setGameLook(new AttributedObjectAppearance(
+        new AttributeAppearance(cacheAttributeName, attributeImage,
+            attributeShader),
+        cacheObjectName, objectImage, objectShader));
   }
 
   @Override
@@ -152,10 +148,9 @@ public abstract class FantastleObject extends GameObject
   public void setEditorLook(final String cacheObjectName,
       final ObjectImageIndex objectImage, final String cacheAttributeName,
       final AttributeImageIndex attributeImage) {
-    super.setEditorLook(
-        new AttributedObjectAppearance(
-            new AttributeAppearance(cacheAttributeName, attributeImage),
-            cacheObjectName, objectImage));
+    super.setEditorLook(new AttributedObjectAppearance(
+        new AttributeAppearance(cacheAttributeName, attributeImage),
+        cacheObjectName, objectImage));
   }
 
   @Override
@@ -163,10 +158,9 @@ public abstract class FantastleObject extends GameObject
       final ObjectImageIndex objectImage, final ColorShader objectShader,
       final String cacheAttributeName,
       final AttributeImageIndex attributeImage) {
-    super.setEditorLook(
-        new AttributedObjectAppearance(
-            new AttributeAppearance(cacheAttributeName, attributeImage),
-            cacheObjectName, objectImage, objectShader));
+    super.setEditorLook(new AttributedObjectAppearance(
+        new AttributeAppearance(cacheAttributeName, attributeImage),
+        cacheObjectName, objectImage, objectShader));
   }
 
   @Override
@@ -174,11 +168,10 @@ public abstract class FantastleObject extends GameObject
       final ObjectImageIndex objectImage, final String cacheAttributeName,
       final AttributeImageIndex attributeImage,
       final ColorShader attributeShader) {
-    super.setEditorLook(
-        new AttributedObjectAppearance(
-            new AttributeAppearance(cacheAttributeName, attributeImage,
-                attributeShader),
-            cacheObjectName, objectImage));
+    super.setEditorLook(new AttributedObjectAppearance(
+        new AttributeAppearance(cacheAttributeName, attributeImage,
+            attributeShader),
+        cacheObjectName, objectImage));
   }
 
   @Override
@@ -186,11 +179,10 @@ public abstract class FantastleObject extends GameObject
       final ObjectImageIndex objectImage, final ColorShader objectShader,
       final String cacheAttributeName, final AttributeImageIndex attributeImage,
       final ColorShader attributeShader) {
-    super.setEditorLook(
-        new AttributedObjectAppearance(
-            new AttributeAppearance(cacheAttributeName, attributeImage,
-                attributeShader),
-            cacheObjectName, objectImage, objectShader));
+    super.setEditorLook(new AttributedObjectAppearance(
+        new AttributeAppearance(cacheAttributeName, attributeImage,
+            attributeShader),
+        cacheObjectName, objectImage, objectShader));
   }
 
   @Override
@@ -209,10 +201,9 @@ public abstract class FantastleObject extends GameObject
   public void setBattleLook(final String cacheObjectName,
       final ObjectImageIndex objectImage, final String cacheAttributeName,
       final AttributeImageIndex attributeImage) {
-    super.setBattleLook(
-        new AttributedObjectAppearance(
-            new AttributeAppearance(cacheAttributeName, attributeImage),
-            cacheObjectName, objectImage));
+    super.setBattleLook(new AttributedObjectAppearance(
+        new AttributeAppearance(cacheAttributeName, attributeImage),
+        cacheObjectName, objectImage));
   }
 
   @Override
@@ -220,10 +211,9 @@ public abstract class FantastleObject extends GameObject
       final ObjectImageIndex objectImage, final ColorShader objectShader,
       final String cacheAttributeName,
       final AttributeImageIndex attributeImage) {
-    super.setBattleLook(
-        new AttributedObjectAppearance(
-            new AttributeAppearance(cacheAttributeName, attributeImage),
-            cacheObjectName, objectImage, objectShader));
+    super.setBattleLook(new AttributedObjectAppearance(
+        new AttributeAppearance(cacheAttributeName, attributeImage),
+        cacheObjectName, objectImage, objectShader));
   }
 
   @Override
@@ -231,11 +221,10 @@ public abstract class FantastleObject extends GameObject
       final ObjectImageIndex objectImage, final String cacheAttributeName,
       final AttributeImageIndex attributeImage,
       final ColorShader attributeShader) {
-    super.setBattleLook(
-        new AttributedObjectAppearance(
-            new AttributeAppearance(cacheAttributeName, attributeImage,
-                attributeShader),
-            cacheObjectName, objectImage));
+    super.setBattleLook(new AttributedObjectAppearance(
+        new AttributeAppearance(cacheAttributeName, attributeImage,
+            attributeShader),
+        cacheObjectName, objectImage));
   }
 
   @Override
@@ -243,11 +232,10 @@ public abstract class FantastleObject extends GameObject
       final ObjectImageIndex objectImage, final ColorShader objectShader,
       final String cacheAttributeName, final AttributeImageIndex attributeImage,
       final ColorShader attributeShader) {
-    super.setBattleLook(
-        new AttributedObjectAppearance(
-            new AttributeAppearance(cacheAttributeName, attributeImage,
-                attributeShader),
-            cacheObjectName, objectImage, objectShader));
+    super.setBattleLook(new AttributedObjectAppearance(
+        new AttributeAppearance(cacheAttributeName, attributeImage,
+            attributeShader),
+        cacheObjectName, objectImage, objectShader));
   }
 
   @Override
@@ -333,9 +321,8 @@ public abstract class FantastleObject extends GameObject
     if (uid == this.getUniqueID()) {
       final int savedIdent = reader.readInt();
       if (savedIdent != -1) {
-        this.savedObject = GameObjects
-            .readSavedObject(reader, savedIdent,
-                MazeVersions.FORMAT_LATEST);
+        this.savedObject = GameObjects.readSavedObject(reader, savedIdent,
+            MazeVersions.FORMAT_LATEST);
       }
       final int cc = this.customCountersLength();
       for (int x = 0; x < cc; x++) {

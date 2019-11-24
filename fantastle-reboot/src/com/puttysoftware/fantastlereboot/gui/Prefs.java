@@ -123,7 +123,7 @@ public class Prefs {
   public static final int DIFFICULTY_NORMAL = 2;
   public static final int DIFFICULTY_HARD = 3;
   public static final int DIFFICULTY_VERY_HARD = 4;
-  private static final int DEFAULT_DIFFICULTY = DIFFICULTY_NORMAL;
+  private static final int DEFAULT_DIFFICULTY = Prefs.DIFFICULTY_NORMAL;
   private static final int BATTLE_SPEED = 1000;
   private static final int MUSIC_LENGTH = 5;
   private static final int SOUNDS_LENGTH = 5;
@@ -138,12 +138,12 @@ public class Prefs {
 
   // Methods
   public static int getMonsterCount(final int pmCount) {
-    final int diff = getGameDifficulty();
-    int min = pmCount * MDM_MIN_TOP[diff] / MDM_MIN_BOT[diff];
+    final int diff = Prefs.getGameDifficulty();
+    int min = pmCount * Prefs.MDM_MIN_TOP[diff] / Prefs.MDM_MIN_BOT[diff];
     if (min < 1) {
       min = 1;
     }
-    int max = pmCount * MDM_MAX_TOP[diff] / MDM_MAX_BOT[diff];
+    int max = pmCount * Prefs.MDM_MAX_TOP[diff] / Prefs.MDM_MAX_BOT[diff];
     if (max < 1) {
       max = 1;
     }
@@ -203,7 +203,7 @@ public class Prefs {
   }
 
   public static boolean shouldCheckUpdatesAtStartup() {
-    return checkUpdatesStartupEnabled;
+    return Prefs.checkUpdatesStartupEnabled;
   }
 
   public static boolean oneMove() {
@@ -211,7 +211,7 @@ public class Prefs {
   }
 
   public static int getViewingWindowSize() {
-    return Prefs.VIEWING_WINDOW_SIZES[getViewingWindowSizeIndex()];
+    return Prefs.VIEWING_WINDOW_SIZES[Prefs.getViewingWindowSizeIndex()];
   }
 
   public static int getViewingWindowSizeIndex() {
@@ -223,7 +223,7 @@ public class Prefs {
   }
 
   public static boolean isSoundGroupEnabled(final SoundGroup group) {
-    return isSoundGroupEnabledImpl(group.ordinal());
+    return Prefs.isSoundGroupEnabledImpl(group.ordinal());
   }
 
   private static boolean isSoundGroupEnabledImpl(final int snd) {
@@ -235,7 +235,7 @@ public class Prefs {
   }
 
   public static boolean isMusicGroupEnabled(final MusicGroup group) {
-    return isMusicGroupEnabledImpl(group.ordinal());
+    return Prefs.isMusicGroupEnabledImpl(group.ordinal());
   }
 
   private static boolean isMusicGroupEnabledImpl(final int mus) {
@@ -274,15 +274,15 @@ public class Prefs {
 
   public static void showPrefs() {
     if (!Prefs.guiSetUp) {
-      setUpGUI();
+      Prefs.setUpGUI();
       Prefs.guiSetUp = true;
     }
     if (FantastleReboot.inFantastleReboot()) {
       Prefs.prefFrame = MainWindow.getOutputFrame();
       Prefs.prefFrame.setTitle("Preferences");
-      Prefs.prefFrame.setDefaultButton(prefsOK);
-      Prefs.prefFrame.attachContent(mainPrefPane);
-      Prefs.prefFrame.addWindowListener(handler);
+      Prefs.prefFrame.setDefaultButton(Prefs.prefsOK);
+      Prefs.prefFrame.attachContent(Prefs.mainPrefPane);
+      Prefs.prefFrame.addWindowListener(Prefs.handler);
       Prefs.prefFrame.pack();
       final BagOStuff app = FantastleReboot.getBagOStuff();
       app.setInPrefs();
@@ -292,12 +292,12 @@ public class Prefs {
 
   private static void hidePrefs() {
     if (!Prefs.guiSetUp) {
-      setUpGUI();
+      Prefs.setUpGUI();
       Prefs.guiSetUp = true;
     }
     if (FantastleReboot.inFantastleReboot()) {
       Prefs.prefFrame.setDefaultButton(null);
-      Prefs.prefFrame.removeWindowListener(handler);
+      Prefs.prefFrame.removeWindowListener(Prefs.handler);
       Prefs.fileMgr.writePreferencesFile();
       FantastleReboot.getBagOStuff().restoreFormerMode();
     }
@@ -311,84 +311,70 @@ public class Prefs {
     Prefs.fileMgr.deletePreferencesFile();
     Prefs.lastDirOpen = null;
     Prefs.lastDirSave = null;
-    resetDefaultPrefs();
+    Prefs.resetDefaultPrefs();
   }
 
   private static void loadPrefs() {
     if (!Prefs.guiSetUp) {
-      setUpGUI();
+      Prefs.setUpGUI();
       Prefs.guiSetUp = true;
     }
-    editorFillChoices.setSelectedIndex(editorFill);
+    Prefs.editorFillChoices.setSelectedIndex(Prefs.editorFill);
     for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
-      Prefs.sounds[x].setSelected(isSoundGroupEnabledImpl(x));
+      Prefs.sounds[x].setSelected(Prefs.isSoundGroupEnabledImpl(x));
     }
     for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
-      Prefs.music[x].setSelected(isMusicGroupEnabledImpl(x));
+      Prefs.music[x].setSelected(Prefs.isMusicGroupEnabledImpl(x));
     }
-    Prefs.updateCheckInterval
-        .setSelectedIndex(Prefs.updateCheckIntervalIndex);
-    Prefs.checkUpdatesStartup
-        .setSelected(Prefs.checkUpdatesStartupEnabled);
-    Prefs.difficultyChoices
-        .setSelectedIndex(Prefs.difficultySetting);
-    Prefs.moveOneAtATime
-        .setSelected(Prefs.moveOneAtATimeEnabled);
-    Prefs.mapBattleEngine
-        .setSelected(Prefs.useMapBattleEngine);
-    Prefs.timeBattleEngine
-        .setSelected(Prefs.useTimeBattleEngine);
-    Prefs.viewingWindowChoices
-        .setSelectedIndex(Prefs.viewingWindowIndex);
+    Prefs.updateCheckInterval.setSelectedIndex(Prefs.updateCheckIntervalIndex);
+    Prefs.checkUpdatesStartup.setSelected(Prefs.checkUpdatesStartupEnabled);
+    Prefs.difficultyChoices.setSelectedIndex(Prefs.difficultySetting);
+    Prefs.moveOneAtATime.setSelected(Prefs.moveOneAtATimeEnabled);
+    Prefs.mapBattleEngine.setSelected(Prefs.useMapBattleEngine);
+    Prefs.timeBattleEngine.setSelected(Prefs.useTimeBattleEngine);
+    Prefs.viewingWindowChoices.setSelectedIndex(Prefs.viewingWindowIndex);
   }
 
   private static void savePrefs() {
     if (!Prefs.guiSetUp) {
-      setUpGUI();
+      Prefs.setUpGUI();
       Prefs.guiSetUp = true;
     }
-    editorFill = editorFillChoices.getSelectedIndex();
+    Prefs.editorFill = Prefs.editorFillChoices.getSelectedIndex();
     for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
-      setSoundGroupEnabledImpl(x, Prefs.sounds[x].isSelected());
+      Prefs.setSoundGroupEnabledImpl(x, Prefs.sounds[x].isSelected());
     }
     for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
-      setMusicGroupEnabled(x, Prefs.music[x].isSelected());
+      Prefs.setMusicGroupEnabled(x, Prefs.music[x].isSelected());
     }
     Prefs.updateCheckIntervalIndex = Prefs.updateCheckInterval
         .getSelectedIndex();
-    Prefs.checkUpdatesStartupEnabled = checkUpdatesStartup
-        .isSelected();
-    Prefs.difficultySetting = Prefs.difficultyChoices
-        .getSelectedIndex();
-    Prefs.moveOneAtATimeEnabled = Prefs.moveOneAtATime
-        .isSelected();
-    Prefs.useMapBattleEngine = Prefs.mapBattleEngine
-        .isSelected();
-    Prefs.useTimeBattleEngine = Prefs.timeBattleEngine
-        .isSelected();
-    Prefs.viewingWindowIndex = Prefs.viewingWindowChoices
-        .getSelectedIndex();
+    Prefs.checkUpdatesStartupEnabled = Prefs.checkUpdatesStartup.isSelected();
+    Prefs.difficultySetting = Prefs.difficultyChoices.getSelectedIndex();
+    Prefs.moveOneAtATimeEnabled = Prefs.moveOneAtATime.isSelected();
+    Prefs.useMapBattleEngine = Prefs.mapBattleEngine.isSelected();
+    Prefs.useTimeBattleEngine = Prefs.timeBattleEngine.isSelected();
+    Prefs.viewingWindowIndex = Prefs.viewingWindowChoices.getSelectedIndex();
   }
 
   public static void setDefaultPrefs() {
     if (!Prefs.fileMgr.readPreferencesFile()) {
-      resetDefaultPrefs();
+      Prefs.resetDefaultPrefs();
     }
   }
 
   private static void resetDefaultPrefs() {
     if (!Prefs.guiSetUp) {
-      setUpGUI();
+      Prefs.setUpGUI();
       Prefs.guiSetUp = true;
     }
-    editorFill = 0;
-    defaultEnableSoundGroups();
-    defaultEnableMusicGroups();
-    checkUpdatesStartup.setSelected(true);
-    checkUpdatesStartupEnabled = true;
+    Prefs.editorFill = 0;
+    Prefs.defaultEnableSoundGroups();
+    Prefs.defaultEnableMusicGroups();
+    Prefs.checkUpdatesStartup.setSelected(true);
+    Prefs.checkUpdatesStartupEnabled = true;
     Prefs.difficultySetting = Prefs.DEFAULT_DIFFICULTY;
-    Prefs.difficultyChoices
-        .setSelectedIndex(Prefs.difficultySetting);
+    Prefs.difficultyChoices.setSelectedIndex(Prefs.difficultySetting);
     Prefs.moveOneAtATime.setSelected(true);
     Prefs.moveOneAtATimeEnabled = true;
     Prefs.mapBattleEngine.setSelected(true);
@@ -396,9 +382,8 @@ public class Prefs {
     Prefs.timeBattleEngine.setSelected(false);
     Prefs.useTimeBattleEngine = false;
     Prefs.viewingWindowIndex = Prefs.DEFAULT_SIZE_INDEX;
-    Prefs.viewingWindowChoices
-        .setSelectedIndex(Prefs.viewingWindowIndex);
-    updateCheckInterval.setSelectedIndex(0);
+    Prefs.viewingWindowChoices.setSelectedIndex(Prefs.viewingWindowIndex);
+    Prefs.updateCheckInterval.setSelectedIndex(0);
     Prefs.lastFilterUsed = Prefs.FILTER_MAZE_V5;
   }
 
@@ -422,96 +407,92 @@ public class Prefs {
     Prefs.handler = new EventHandler();
     Prefs.prefTabPane = new JTabbedPane();
     Prefs.mainPrefPane = new JPanel();
-    editorPane = new JPanel();
+    Prefs.editorPane = new JPanel();
     Prefs.soundPane = new JPanel();
-    musicPane = new JPanel();
-    miscPane = new JPanel();
-    prefTabPane.setOpaque(true);
-    buttonPane = new JPanel();
-    prefsOK = new JButton("OK");
-    prefsOK.setDefaultCapable(true);
-    prefsCancel = new JButton("Cancel");
-    prefsCancel.setDefaultCapable(false);
-    prefsExport = new JButton("Export...");
-    prefsExport.setDefaultCapable(false);
-    prefsImport = new JButton("Import...");
-    prefsImport.setDefaultCapable(false);
-    editorFillChoiceArray = new String[] { "Grass", "Dirt", "Sand", "Snow",
-        "Tile", "Tundra" };
-    editorFillChoices = new JComboBox<>(editorFillChoiceArray);
-    sounds[Prefs.SOUNDS_ALL] = new JCheckBox("Enable ALL sounds",
-        true);
-    sounds[Prefs.SOUNDS_UI] = new JCheckBox(
+    Prefs.musicPane = new JPanel();
+    Prefs.miscPane = new JPanel();
+    Prefs.prefTabPane.setOpaque(true);
+    Prefs.buttonPane = new JPanel();
+    Prefs.prefsOK = new JButton("OK");
+    Prefs.prefsOK.setDefaultCapable(true);
+    Prefs.prefsCancel = new JButton("Cancel");
+    Prefs.prefsCancel.setDefaultCapable(false);
+    Prefs.prefsExport = new JButton("Export...");
+    Prefs.prefsExport.setDefaultCapable(false);
+    Prefs.prefsImport = new JButton("Import...");
+    Prefs.prefsImport.setDefaultCapable(false);
+    Prefs.editorFillChoiceArray = new String[] { "Grass", "Dirt", "Sand",
+        "Snow", "Tile", "Tundra" };
+    Prefs.editorFillChoices = new JComboBox<>(Prefs.editorFillChoiceArray);
+    Prefs.sounds[Prefs.SOUNDS_ALL] = new JCheckBox("Enable ALL sounds", true);
+    Prefs.sounds[Prefs.SOUNDS_UI] = new JCheckBox(
         "Enable user interface sounds", true);
-    sounds[Prefs.SOUNDS_GAME] = new JCheckBox("Enable game sounds",
+    Prefs.sounds[Prefs.SOUNDS_GAME] = new JCheckBox("Enable game sounds", true);
+    Prefs.sounds[Prefs.SOUNDS_BATTLE] = new JCheckBox("Enable battle sounds",
         true);
-    sounds[Prefs.SOUNDS_BATTLE] = new JCheckBox(
-        "Enable battle sounds", true);
-    sounds[Prefs.SOUNDS_SHOP] = new JCheckBox("Enable shop sounds",
+    Prefs.sounds[Prefs.SOUNDS_SHOP] = new JCheckBox("Enable shop sounds", true);
+    Prefs.music[Prefs.MUSIC_ALL] = new JCheckBox("Enable ALL music", true);
+    Prefs.music[Prefs.MUSIC_UI] = new JCheckBox("Enable user interface music",
         true);
-    music[Prefs.MUSIC_ALL] = new JCheckBox("Enable ALL music",
+    Prefs.music[Prefs.MUSIC_GAME] = new JCheckBox("Enable game music", true);
+    Prefs.music[Prefs.MUSIC_BATTLE] = new JCheckBox("Enable battle music",
         true);
-    music[Prefs.MUSIC_UI] = new JCheckBox(
-        "Enable user interface music", true);
-    music[Prefs.MUSIC_GAME] = new JCheckBox("Enable game music",
+    Prefs.music[Prefs.MUSIC_SHOP] = new JCheckBox("Enable shop music", true);
+    Prefs.checkUpdatesStartup = new JCheckBox("Check for Updates at Startup",
         true);
-    music[Prefs.MUSIC_BATTLE] = new JCheckBox(
-        "Enable battle music", true);
-    music[Prefs.MUSIC_SHOP] = new JCheckBox("Enable shop music",
-        true);
-    checkUpdatesStartup = new JCheckBox("Check for Updates at Startup", true);
-    moveOneAtATime = new JCheckBox("One Move at a Time", true);
-    mapBattleEngine = new JCheckBox("Use map battle engine", false);
-    timeBattleEngine = new JCheckBox("Use time battle engine", false);
-    updateCheckIntervalValues = new String[] { "Daily", "Every 2nd Day",
+    Prefs.moveOneAtATime = new JCheckBox("One Move at a Time", true);
+    Prefs.mapBattleEngine = new JCheckBox("Use map battle engine", false);
+    Prefs.timeBattleEngine = new JCheckBox("Use time battle engine", false);
+    Prefs.updateCheckIntervalValues = new String[] { "Daily", "Every 2nd Day",
         "Weekly", "Every 2nd Week", "Monthly" };
-    updateCheckInterval = new JComboBox<>(updateCheckIntervalValues);
-    difficultyChoices = new JComboBox<>(DIFFICULTY_CHOICE_NAMES);
-    mainPrefPane.setLayout(new BorderLayout());
-    editorPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
-    editorPane.add(new JLabel("Default fill for new mazes:"));
-    editorPane.add(editorFillChoices);
-    soundPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
+    Prefs.updateCheckInterval = new JComboBox<>(
+        Prefs.updateCheckIntervalValues);
+    Prefs.difficultyChoices = new JComboBox<>(Prefs.DIFFICULTY_CHOICE_NAMES);
+    Prefs.mainPrefPane.setLayout(new BorderLayout());
+    Prefs.editorPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
+    Prefs.editorPane.add(new JLabel("Default fill for new mazes:"));
+    Prefs.editorPane.add(Prefs.editorFillChoices);
+    Prefs.soundPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
-      soundPane.add(sounds[x]);
+      Prefs.soundPane.add(Prefs.sounds[x]);
     }
-    musicPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
+    Prefs.musicPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
-      musicPane.add(music[x]);
+      Prefs.musicPane.add(Prefs.music[x]);
     }
-    miscPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
-    miscPane.add(checkUpdatesStartup);
-    miscPane.add(moveOneAtATime);
-    miscPane.add(mapBattleEngine);
-    miscPane.add(timeBattleEngine);
-    miscPane.add(new JLabel("Check How Often For Updates"));
-    miscPane.add(updateCheckInterval);
-    miscPane.add(new JLabel("Game Difficulty"));
-    miscPane.add(difficultyChoices);
+    Prefs.miscPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
+    Prefs.miscPane.add(Prefs.checkUpdatesStartup);
+    Prefs.miscPane.add(Prefs.moveOneAtATime);
+    Prefs.miscPane.add(Prefs.mapBattleEngine);
+    Prefs.miscPane.add(Prefs.timeBattleEngine);
+    Prefs.miscPane.add(new JLabel("Check How Often For Updates"));
+    Prefs.miscPane.add(Prefs.updateCheckInterval);
+    Prefs.miscPane.add(new JLabel("Game Difficulty"));
+    Prefs.miscPane.add(Prefs.difficultyChoices);
     final JPanel viewPane = new JPanel();
     viewPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     viewPane.add(new JLabel("Viewing Window Size"));
-    viewingWindowChoices = new JComboBox<>(
+    Prefs.viewingWindowChoices = new JComboBox<>(
         Prefs.VIEWING_WINDOW_SIZE_NAMES);
-    viewPane.add(viewingWindowChoices);
-    buttonPane.setLayout(new FlowLayout());
-    buttonPane.add(prefsOK);
-    buttonPane.add(prefsCancel);
-    buttonPane.add(prefsExport);
-    buttonPane.add(prefsImport);
-    prefTabPane.addTab("Editor", null, editorPane, "Editor");
-    prefTabPane.addTab("Sounds", null, soundPane, "Sounds");
-    prefTabPane.addTab("Music", null, musicPane, "Music");
-    prefTabPane.addTab("Misc.", null, miscPane, "Misc.");
-    prefTabPane.addTab("View", null, viewPane, "View");
-    mainPrefPane.add(prefTabPane, BorderLayout.CENTER);
-    mainPrefPane.add(buttonPane, BorderLayout.SOUTH);
-    sounds[Prefs.SOUNDS_ALL].addItemListener(handler);
-    music[Prefs.MUSIC_ALL].addItemListener(handler);
-    prefsOK.addActionListener(handler);
-    prefsCancel.addActionListener(handler);
-    prefsExport.addActionListener(handler);
-    prefsImport.addActionListener(handler);
+    viewPane.add(Prefs.viewingWindowChoices);
+    Prefs.buttonPane.setLayout(new FlowLayout());
+    Prefs.buttonPane.add(Prefs.prefsOK);
+    Prefs.buttonPane.add(Prefs.prefsCancel);
+    Prefs.buttonPane.add(Prefs.prefsExport);
+    Prefs.buttonPane.add(Prefs.prefsImport);
+    Prefs.prefTabPane.addTab("Editor", null, Prefs.editorPane, "Editor");
+    Prefs.prefTabPane.addTab("Sounds", null, Prefs.soundPane, "Sounds");
+    Prefs.prefTabPane.addTab("Music", null, Prefs.musicPane, "Music");
+    Prefs.prefTabPane.addTab("Misc.", null, Prefs.miscPane, "Misc.");
+    Prefs.prefTabPane.addTab("View", null, viewPane, "View");
+    Prefs.mainPrefPane.add(Prefs.prefTabPane, BorderLayout.CENTER);
+    Prefs.mainPrefPane.add(Prefs.buttonPane, BorderLayout.SOUTH);
+    Prefs.sounds[Prefs.SOUNDS_ALL].addItemListener(Prefs.handler);
+    Prefs.music[Prefs.MUSIC_ALL].addItemListener(Prefs.handler);
+    Prefs.prefsOK.addActionListener(Prefs.handler);
+    Prefs.prefsCancel.addActionListener(Prefs.handler);
+    Prefs.prefsExport.addActionListener(Prefs.handler);
+    Prefs.prefsImport.addActionListener(Prefs.handler);
   }
 
   private static class PreferencesFileManager {
@@ -546,28 +527,21 @@ public class Prefs {
               "Incompatible preferences major version, using defaults.");
         }
         Prefs.editorFill = Integer.parseInt(s.readLine());
-        Prefs.checkUpdatesStartupEnabled = Boolean
-            .parseBoolean(s.readLine());
-        Prefs.moveOneAtATimeEnabled = Boolean
-            .parseBoolean(s.readLine());
+        Prefs.checkUpdatesStartupEnabled = Boolean.parseBoolean(s.readLine());
+        Prefs.moveOneAtATimeEnabled = Boolean.parseBoolean(s.readLine());
         for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
-          Prefs.soundsEnabled[x] = Boolean
-              .parseBoolean(s.readLine());
+          Prefs.soundsEnabled[x] = Boolean.parseBoolean(s.readLine());
         }
-        Prefs.updateCheckIntervalIndex = Integer
-            .parseInt(s.readLine());
+        Prefs.updateCheckIntervalIndex = Integer.parseInt(s.readLine());
         Prefs.lastDirOpen = s.readLine();
         Prefs.lastDirSave = s.readLine();
         Prefs.lastFilterUsed = Integer.parseInt(s.readLine());
         Prefs.difficultySetting = Integer.parseInt(s.readLine());
-        Prefs.useMapBattleEngine = Boolean
-            .parseBoolean(s.readLine());
-        Prefs.useTimeBattleEngine = Boolean
-            .parseBoolean(s.readLine());
+        Prefs.useMapBattleEngine = Boolean.parseBoolean(s.readLine());
+        Prefs.useTimeBattleEngine = Boolean.parseBoolean(s.readLine());
         Prefs.viewingWindowIndex = Integer.parseInt(s.readLine());
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
-          Prefs.musicEnabled[x] = Boolean
-              .parseBoolean(s.readLine());
+          Prefs.musicEnabled[x] = Boolean.parseBoolean(s.readLine());
         }
         Prefs.loadPrefs();
         return true;
@@ -592,27 +566,21 @@ public class Prefs {
       try (final BufferedWriter s = new BufferedWriter(
           new FileWriter(prefsFile))) {
         // Write the preferences to the file
-        s.write(
-            Integer.toString(Prefs.PREFS_VERSION_MAJOR) + "\n");
-        s.write(
-            Integer.toString(Prefs.PREFS_VERSION_MINOR) + "\n");
+        s.write(Integer.toString(Prefs.PREFS_VERSION_MAJOR) + "\n");
+        s.write(Integer.toString(Prefs.PREFS_VERSION_MINOR) + "\n");
         s.write(Integer.toString(Prefs.editorFill) + "\n");
-        s.write(Boolean.toString(Prefs.checkUpdatesStartupEnabled)
-            + "\n");
-        s.write(
-            Boolean.toString(Prefs.moveOneAtATimeEnabled) + "\n");
+        s.write(Boolean.toString(Prefs.checkUpdatesStartupEnabled) + "\n");
+        s.write(Boolean.toString(Prefs.moveOneAtATimeEnabled) + "\n");
         for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
           s.write(Boolean.toString(Prefs.soundsEnabled[x]) + "\n");
         }
-        s.write(Integer.toString(Prefs.updateCheckIntervalIndex)
-            + "\n");
+        s.write(Integer.toString(Prefs.updateCheckIntervalIndex) + "\n");
         s.write(Prefs.lastDirOpen + "\n");
         s.write(Prefs.lastDirSave + "\n");
         s.write(Integer.toString(Prefs.lastFilterUsed) + "\n");
         s.write(Integer.toString(Prefs.difficultySetting) + "\n");
         s.write(Boolean.toString(Prefs.useMapBattleEngine) + "\n");
-        s.write(
-            Boolean.toString(Prefs.useTimeBattleEngine) + "\n");
+        s.write(Boolean.toString(Prefs.useTimeBattleEngine) + "\n");
         s.write(Integer.toString(Prefs.viewingWindowIndex) + "\n");
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
           s.write(Boolean.toString(Prefs.musicEnabled[x]) + "\n");
@@ -644,26 +612,19 @@ public class Prefs {
         // Read and discard minor version
         s.readLine();
         Prefs.editorFill = Integer.parseInt(s.readLine());
-        Prefs.checkUpdatesStartupEnabled = Boolean
-            .parseBoolean(s.readLine());
-        Prefs.moveOneAtATime
-            .setSelected(Boolean.parseBoolean(s.readLine()));
+        Prefs.checkUpdatesStartupEnabled = Boolean.parseBoolean(s.readLine());
+        Prefs.moveOneAtATime.setSelected(Boolean.parseBoolean(s.readLine()));
         for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
-          Prefs.soundsEnabled[x] = Boolean
-              .parseBoolean(s.readLine());
+          Prefs.soundsEnabled[x] = Boolean.parseBoolean(s.readLine());
         }
-        Prefs.updateCheckIntervalIndex = Integer
-            .parseInt(s.readLine());
+        Prefs.updateCheckIntervalIndex = Integer.parseInt(s.readLine());
         Prefs.lastFilterUsed = Integer.parseInt(s.readLine());
         Prefs.difficultySetting = Integer.parseInt(s.readLine());
-        Prefs.mapBattleEngine
-            .setSelected(Boolean.parseBoolean(s.readLine()));
-        Prefs.timeBattleEngine
-            .setSelected(Boolean.parseBoolean(s.readLine()));
+        Prefs.mapBattleEngine.setSelected(Boolean.parseBoolean(s.readLine()));
+        Prefs.timeBattleEngine.setSelected(Boolean.parseBoolean(s.readLine()));
         Prefs.viewingWindowIndex = Integer.parseInt(s.readLine());
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
-          Prefs.musicEnabled[x] = Boolean
-              .parseBoolean(s.readLine());
+          Prefs.musicEnabled[x] = Boolean.parseBoolean(s.readLine());
         }
         Prefs.loadPrefs();
         return true;
@@ -677,25 +638,19 @@ public class Prefs {
       try (final BufferedWriter s = new BufferedWriter(
           new FileWriter(exportFile))) {
         // Write the preferences to the file
-        s.write(
-            Integer.toString(Prefs.PREFS_VERSION_MAJOR) + "\n");
-        s.write(
-            Integer.toString(Prefs.PREFS_VERSION_MINOR) + "\n");
+        s.write(Integer.toString(Prefs.PREFS_VERSION_MAJOR) + "\n");
+        s.write(Integer.toString(Prefs.PREFS_VERSION_MINOR) + "\n");
         s.write(Integer.toString(Prefs.editorFill) + "\n");
-        s.write(Boolean.toString(Prefs.checkUpdatesStartupEnabled)
-            + "\n");
-        s.write(
-            Boolean.toString(Prefs.moveOneAtATimeEnabled) + "\n");
+        s.write(Boolean.toString(Prefs.checkUpdatesStartupEnabled) + "\n");
+        s.write(Boolean.toString(Prefs.moveOneAtATimeEnabled) + "\n");
         for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
           s.write(Boolean.toString(Prefs.soundsEnabled[x]) + "\n");
         }
-        s.write(Integer.toString(Prefs.updateCheckIntervalIndex)
-            + "\n");
+        s.write(Integer.toString(Prefs.updateCheckIntervalIndex) + "\n");
         s.write(Integer.toString(Prefs.lastFilterUsed) + "\n");
         s.write(Integer.toString(Prefs.difficultySetting) + "\n");
         s.write(Boolean.toString(Prefs.useMapBattleEngine) + "\n");
-        s.write(
-            Boolean.toString(Prefs.useTimeBattleEngine) + "\n");
+        s.write(Boolean.toString(Prefs.useTimeBattleEngine) + "\n");
         s.write(Integer.toString(Prefs.viewingWindowIndex) + "\n");
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
           s.write(Boolean.toString(Prefs.musicEnabled[x]) + "\n");
@@ -753,12 +708,9 @@ public class Prefs {
     public void itemStateChanged(final ItemEvent e) {
       try {
         final Object o = e.getItem();
-        if (o.getClass()
-            .equals(Prefs.sounds[Prefs.SOUNDS_ALL]
-                .getClass())) {
+        if (o.getClass().equals(Prefs.sounds[Prefs.SOUNDS_ALL].getClass())) {
           final JCheckBox check = (JCheckBox) o;
-          if (check.equals(
-              Prefs.sounds[Prefs.SOUNDS_ALL])) {
+          if (check.equals(Prefs.sounds[Prefs.SOUNDS_ALL])) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
               for (int x = 1; x < Prefs.SOUNDS_LENGTH; x++) {
                 Prefs.sounds[x].setEnabled(true);
@@ -770,11 +722,9 @@ public class Prefs {
             }
           }
         } else if (o.getClass()
-            .equals(Prefs.music[Prefs.MUSIC_ALL]
-                .getClass())) {
+            .equals(Prefs.music[Prefs.MUSIC_ALL].getClass())) {
           final JCheckBox check = (JCheckBox) o;
-          if (check
-              .equals(Prefs.music[Prefs.MUSIC_ALL])) {
+          if (check.equals(Prefs.music[Prefs.MUSIC_ALL])) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
               for (int x = 1; x < Prefs.MUSIC_LENGTH; x++) {
                 Prefs.music[x].setEnabled(true);
