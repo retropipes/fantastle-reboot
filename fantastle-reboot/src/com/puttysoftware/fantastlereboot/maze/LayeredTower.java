@@ -87,42 +87,18 @@ final class LayeredTower implements Cloneable {
 
   // Methods
   public boolean hasMonster(final int x, final int y, final int z) {
-    try {
-      return this.monsterData.getCell(y, x, z);
-    } catch (ArrayIndexOutOfBoundsException aioobe) {
-      System.err.println("Bad array access: x " + y + ", y " + x + ", z " + z);
-      int[] shape = this.monsterData.getShape();
-      System.err.println(
-          "Size: x " + shape[0] + ", y " + shape[1] + ", z " + shape[2]);
-      throw aioobe;
-    }
+    return this.monsterData.getCell(y, x, z);
   }
 
   public void addMonster(final int x, final int y, final int z) {
-    try {
-      if (!this.monsterData.getCell(y, x, z)) {
-        this.monsterData.setCell(true, y, x, z);
-      }
-    } catch (ArrayIndexOutOfBoundsException aioobe) {
-      System.err.println("Bad array access: x " + y + ", y " + x + ", z " + z);
-      int[] shape = this.monsterData.getShape();
-      System.err.println(
-          "Size: x " + shape[0] + ", y " + shape[1] + ", z " + shape[2]);
-      throw aioobe;
+    if (!this.monsterData.getCell(y, x, z)) {
+      this.monsterData.setCell(true, y, x, z);
     }
   }
 
   public void removeMonster(final int x, final int y, final int z) {
-    try {
-      if (this.monsterData.getCell(y, x, z)) {
-        this.monsterData.setCell(false, y, x, z);
-      }
-    } catch (ArrayIndexOutOfBoundsException aioobe) {
-      System.err.println("Bad array access: x " + y + ", y " + x + ", z " + z);
-      int[] shape = this.monsterData.getShape();
-      System.err.println(
-          "Size: x " + shape[0] + ", y " + shape[1] + ", z " + shape[2]);
-      throw aioobe;
+    if (this.monsterData.getCell(y, x, z)) {
+      this.monsterData.setCell(false, y, x, z);
     }
   }
 
