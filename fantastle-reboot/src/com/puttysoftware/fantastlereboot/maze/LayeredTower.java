@@ -40,9 +40,9 @@ final class LayeredTower implements Cloneable {
   private int initialVisionRadius;
   private int regionSize;
   private static final int MAX_VISION_RADIUS = 16;
-  private static final int MAX_FLOORS = 1;
-  private static final int MAX_COLUMNS = 250;
-  private static final int MAX_ROWS = 250;
+  private static final int MAX_FLOORS = 16;
+  private static final int MAX_COLUMNS = 64;
+  private static final int MAX_ROWS = 64;
 
   // Constructors
   public LayeredTower(final int rows, final int cols, final int floors) {

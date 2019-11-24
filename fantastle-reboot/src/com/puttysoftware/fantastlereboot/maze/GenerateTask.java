@@ -11,9 +11,12 @@ import javax.swing.JProgressBar;
 import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.assets.SoundGroup;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
 import com.puttysoftware.fantastlereboot.game.Game;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.randomrange.RandomRange;
 
@@ -91,6 +94,9 @@ public class GenerateTask extends Thread {
         app.getMenuManager().checkFlags();
         app.getGUIManager().showGUI();
       } else {
+        // Going deeper...
+        SoundPlayer.playSound(SoundIndex.DOWN, SoundGroup.GAME);
+        Game.goToLevelOffset(1);
         Game.resetViewingWindow();
         Game.enableEvents();
         Game.showOutput();

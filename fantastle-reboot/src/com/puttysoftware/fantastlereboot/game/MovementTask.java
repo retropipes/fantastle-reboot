@@ -15,6 +15,7 @@ import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
+import com.puttysoftware.fantastlereboot.maze.GenerateTask;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
@@ -323,12 +324,16 @@ final class MovementTask extends Thread {
     final int pz = m.getPlayerLocationZ();
     final FantastleObjectModel below = m.getCell(px, py, pz, Layers.GROUND);
     if (GameObjects.sendsNext(below)) {
-      if (Game.isLevelBelow()) {
-        // Going deeper...
+      // Going deeper...
+      if (!Game.isLevelBelow()) {
+        if (m.canAddLevel()) {
+          new GenerateTask(false).start();
+        } else {
+          MovementTask.moveFailed();
+        }
+      } else {
         SoundPlayer.playSound(SoundIndex.DOWN, SoundGroup.GAME);
         Game.goToLevelOffset(1);
-      } else {
-        MovementTask.moveFailed();
       }
     } else if (GameObjects.sendsPrevious(below)) {
       if (Game.isLevelAbove()) {

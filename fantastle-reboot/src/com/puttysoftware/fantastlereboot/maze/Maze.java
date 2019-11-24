@@ -151,6 +151,10 @@ public class Maze {
         && this.activeLevel + level >= 0);
   }
 
+  public boolean canAddLevel() {
+    return this.activeLevel + 1 < Maze.MAX_LEVELS;
+  }
+
   public boolean addLevel(final int rows, final int cols, final int floors) {
     if (this.levelCount < Maze.getMaxLevels()) {
       if (this.mazeData != null) {
