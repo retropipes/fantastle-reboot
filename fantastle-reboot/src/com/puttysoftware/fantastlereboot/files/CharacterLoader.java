@@ -83,7 +83,6 @@ public class CharacterLoader {
     pm.setLuck(luck);
     pm.setAttacksPerRound(apr);
     pm.setSpellsPerRound(spr);
-    pm.setItems(ItemInventory.readItemInventory(reader, version));
     pm.loadPartyMember(lvl, cHP, cMP, gld, load, exp, j, known, k, pAtk, pDef,
         pHP, pMP);
     return pm;
