@@ -17,7 +17,7 @@ public class CharacterSaver {
   public static void saveCharacter(final PartyMember character) {
     final String basePath = CharacterRegistration.getBasePath();
     final String name = character.getName();
-    final String characterFile = basePath + File.separator + name
+    final String characterFile = basePath + name
         + FileExtensions.getCharacterExtensionWithPeriod();
     try (XDataWriter writer = new XDataWriter(characterFile, "character")) {
       CharacterSaver.writeCharacter(writer, character);
@@ -65,7 +65,7 @@ public class CharacterSaver {
 
   static void deleteCharacter(final String name, final boolean showResults) {
     final String basePath = CharacterRegistration.getBasePath();
-    final String characterFile = basePath + File.separator + name
+    final String characterFile = basePath + name
         + FileExtensions.getCharacterExtensionWithPeriod();
     final File toDelete = new File(characterFile);
     if (toDelete.exists()) {

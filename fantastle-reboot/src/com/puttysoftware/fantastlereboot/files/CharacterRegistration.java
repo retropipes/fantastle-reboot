@@ -279,9 +279,8 @@ public class CharacterRegistration {
     // Load character registry file
     final ArrayList<String> registeredNames = new ArrayList<>();
     try (
-        FileInputStream fis = new FileInputStream(
-            basePath + File.separator + "CharacterRegistry"
-                + FileExtensions.getRegistryExtensionWithPeriod());
+        FileInputStream fis = new FileInputStream(basePath + "CharacterRegistry"
+            + FileExtensions.getRegistryExtensionWithPeriod());
         ResourceStreamReader rsr = new ResourceStreamReader(fis)) {
       String input = "";
       while (input != null) {
@@ -300,9 +299,8 @@ public class CharacterRegistration {
   private static void writeCharacterRegistry(final String... newCharacterList) {
     final String basePath = CharacterRegistration.getBasePath();
     // Check if registry is writable
-    final File regFile = new File(
-        basePath + File.separator + "CharacterRegistry"
-            + FileExtensions.getRegistryExtensionWithPeriod());
+    final File regFile = new File(basePath + "CharacterRegistry"
+        + FileExtensions.getRegistryExtensionWithPeriod());
     if (!regFile.exists()) {
       // Not writable, probably because needed folders don't exist
       final File regParent = regFile.getParentFile();

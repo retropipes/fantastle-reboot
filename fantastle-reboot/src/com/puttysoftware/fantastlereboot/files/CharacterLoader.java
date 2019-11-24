@@ -5,7 +5,6 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.files;
 
-import java.io.File;
 import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
@@ -18,7 +17,7 @@ import com.puttysoftware.xio.XDataReader;
 public class CharacterLoader {
   private static PartyMember loadCharacter(final String name) {
     final String basePath = CharacterRegistration.getBasePath();
-    final String loadPath = basePath + File.separator + name
+    final String loadPath = basePath + name
         + FileExtensions.getCharacterExtensionWithPeriod();
     try (XDataReader loader = new XDataReader(loadPath, "character")) {
       return CharacterLoader.readCharacter(loader);
