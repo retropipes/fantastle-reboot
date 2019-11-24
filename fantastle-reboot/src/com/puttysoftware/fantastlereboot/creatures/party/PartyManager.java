@@ -7,6 +7,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.creatures.party;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.diane.gui.ImageListWithDescDialog;
@@ -59,17 +60,33 @@ public class PartyManager {
     final boolean autoCreate = autoResponse != 1;
     if (autoCreate) {
       // Automatically assemble a party
+      ArrayList<Integer> toPick = new ArrayList<>();
+      for (int r = 0; r < regLen; r++) {
+        toPick.add(r);
+      }
+      int picksLeft = regLen;
       for (int x = 0; x < maxMem; x++) {
-        final ItemInventory ii = new ItemInventory();
-        final int r = RaceManager.getRandomID();
-        final int j = JobManager.getRandomID();
-        final int f = FaithManager.getRandomID();
-        final String n = PartyManager.generateDefaultName();
-        final int af = RandomRange.generate(0, 5);
-        final int as = RandomRange.generate(0, 9);
-        final int ah = RandomRange.generate(0, 9);
-        final PartyMember pc = PartyManager.getNewPCInstance(ii, r, j, f, n, af,
-            as, ah);
+        PartyMember pc;
+        if (pickMembers != null && picksLeft > 0) {
+          // Pick from the registered characters
+          int pickMax = toPick.size() - 1;
+          int pickIndex = RandomRange.generate(0, pickMax);
+          int picked = toPick.get(pickIndex);
+          toPick.remove(Integer.valueOf(pickIndex));
+          picksLeft--;
+          pc = pickMembers[picked];
+        } else {
+          // Create a new character
+          final ItemInventory ii = new ItemInventory();
+          final int r = RaceManager.getRandomID();
+          final int j = JobManager.getRandomID();
+          final int f = FaithManager.getRandomID();
+          final String n = PartyManager.generateDefaultName();
+          final int af = RandomRange.generate(0, 5);
+          final int as = RandomRange.generate(0, 9);
+          final int ah = RandomRange.generate(0, 9);
+          pc = PartyManager.getNewPCInstance(ii, r, j, f, n, af, as, ah);
+        }
         CharacterRegistration.autoregisterCharacter(pc.getName());
         CharacterSaver.saveCharacter(pc);
         regLen++;
