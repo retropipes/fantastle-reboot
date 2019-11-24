@@ -202,7 +202,7 @@ public class WindowTurnBattleGUI {
             // Pack Battle Frame
             wbg.battleFrame.pack();
             // Get out of here
-            b.doResult();
+            b.doResult(BattleResults.FLED);
             return;
           } else {
             success = b.doPlayerActions(AbstractWindowAIRoutine.ACTION_ATTACK);
@@ -248,8 +248,7 @@ public class WindowTurnBattleGUI {
         // Check result
         BattleResults bResult = b.getResult();
         if (bResult != BattleResults.IN_PROGRESS) {
-          b.setResult(bResult);
-          b.doResult();
+          b.doResult(bResult);
           return;
         }
         // Do Enemy Actions
@@ -265,8 +264,7 @@ public class WindowTurnBattleGUI {
         // Check Result
         bResult = b.getResult();
         if (bResult != BattleResults.IN_PROGRESS) {
-          b.setResult(bResult);
-          b.doResult();
+          b.doResult(bResult);
         } else {
           // Strip Extra Newline Character
           wbg.stripExtraNewLine();

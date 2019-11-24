@@ -56,7 +56,6 @@ public class MapTurnBattleLogic extends Battle {
   private AbstractDamageEngine ede;
   private final AutoMapAI auto;
   private int damage;
-  private BattleResults result;
   private int activeIndex;
   private long battleExp;
   private boolean newRound;
@@ -123,7 +122,6 @@ public class MapTurnBattleLogic extends Battle {
     this.pde = AbstractDamageEngine.getPlayerInstance();
     this.ede = AbstractDamageEngine.getEnemyInstance();
     this.resultDoneAlready = false;
-    this.result = BattleResults.IN_PROGRESS;
     // Generate Friends
     this.friends = PartyManager.getParty().getBattleCharacters();
     // Generate Enemies
@@ -182,9 +180,6 @@ public class MapTurnBattleLogic extends Battle {
   @Override
   public BattleResults getResult() {
     BattleResults currResult;
-    if (this.result != BattleResults.IN_PROGRESS) {
-      return this.result;
-    }
     if (this.areTeamEnemiesAlive(Creature.TEAM_PARTY)
         && !this.isTeamAlive(Creature.TEAM_PARTY)) {
       currResult = BattleResults.LOST;
@@ -563,8 +558,7 @@ public class MapTurnBattleLogic extends Battle {
     final BattleResults currResult = this.getResult();
     if (currResult != BattleResults.IN_PROGRESS) {
       // Battle Done
-      this.result = currResult;
-      this.doResult();
+      this.doResult(currResult);
     }
   }
 
@@ -826,8 +820,7 @@ public class MapTurnBattleLogic extends Battle {
       final BattleResults currResult = this.getResult();
       if (currResult != BattleResults.IN_PROGRESS) {
         // Battle Done
-        this.result = currResult;
-        this.doResult();
+        this.doResult(currResult);
       }
       this.battleGUI.getViewManager().setViewingWindowCenterX(py);
       this.battleGUI.getViewManager().setViewingWindowCenterY(px);
@@ -838,8 +831,7 @@ public class MapTurnBattleLogic extends Battle {
     final BattleResults currResult = this.getResult();
     if (currResult != BattleResults.IN_PROGRESS) {
       // Battle Done
-      this.result = currResult;
-      this.doResult();
+      this.doResult(currResult);
     }
     this.battleGUI.getViewManager().setViewingWindowCenterX(py);
     this.battleGUI.getViewManager().setViewingWindowCenterY(px);
@@ -1144,9 +1136,9 @@ public class MapTurnBattleLogic extends Battle {
       this.setStatusMessage("New Round");
       this.newRound = this.setNextActive(this.newRound);
       // Check result
-      this.result = this.getResult();
-      if (this.result != BattleResults.IN_PROGRESS) {
-        this.doResult();
+      BattleResults currResult = this.getResult();
+      if (currResult != BattleResults.IN_PROGRESS) {
+        this.doResult(currResult);
         return;
       }
     }
@@ -1302,56 +1294,55 @@ public class MapTurnBattleLogic extends Battle {
   }
 
   @Override
-  public void doResult() {
+  public void doResult(BattleResults result) {
     this.stopWaitingForAI();
     if (!this.resultDoneAlready) {
       // Handle Results
       this.resultDoneAlready = true;
       boolean rewardsFlag = false;
       if (this.mbd.getFirstBattlerOnTeam(Creature.TEAM_BOSS) != null) {
-        if (this.result == BattleResults.WON
-            || this.result == BattleResults.PERFECT) {
+        if (result == BattleResults.WON || result == BattleResults.PERFECT) {
           this.setStatusMessage("You defeated the Boss!");
           SoundPlayer.playSound(SoundIndex.VICTORY, SoundGroup.BATTLE);
           rewardsFlag = true;
-        } else if (this.result == BattleResults.LOST) {
+        } else if (result == BattleResults.LOST) {
           this.setStatusMessage("The Boss defeated you...");
           SoundPlayer.playSound(SoundIndex.GAME_OVER, SoundGroup.BATTLE);
           PartyManager.getParty().getLeader().onGotKilled();
-        } else if (this.result == BattleResults.ANNIHILATED) {
+        } else if (result == BattleResults.ANNIHILATED) {
           this.setStatusMessage(
               "The Boss defeated you without suffering damage... you were annihilated!");
           SoundPlayer.playSound(SoundIndex.GAME_OVER, SoundGroup.BATTLE);
           PartyManager.getParty().getLeader().onGotAnnihilated();
-        } else if (this.result == BattleResults.DRAW) {
+        } else if (result == BattleResults.DRAW) {
           this.setStatusMessage(
               "The Boss battle was a draw. You are fully healed!");
           PartyManager.getParty().getLeader()
               .healPercentage(Creature.FULL_HEAL_PERCENTAGE);
           PartyManager.getParty().getLeader()
               .regeneratePercentage(Creature.FULL_HEAL_PERCENTAGE);
-        } else if (this.result == BattleResults.FLED) {
+        } else if (result == BattleResults.FLED) {
           this.setStatusMessage("You ran away successfully!");
-        } else if (this.result == BattleResults.ENEMY_FLED) {
+        } else if (result == BattleResults.ENEMY_FLED) {
           this.setStatusMessage("The Boss ran away!");
         }
       } else {
-        if (this.result == BattleResults.WON) {
+        if (result == BattleResults.WON) {
           SoundPlayer.playSound(SoundIndex.VICTORY, SoundGroup.BATTLE);
           CommonDialogs.showTitledDialog("The party is victorious!",
               "Victory!");
           PartyManager.getParty().getLeader().offsetGold(this.getGold());
           PartyManager.getParty().getLeader().offsetExperience(this.battleExp);
-        } else if (this.result == BattleResults.LOST) {
+        } else if (result == BattleResults.LOST) {
           CommonDialogs.showTitledDialog("The party has been defeated!",
               "Defeat...");
-        } else if (this.result == BattleResults.DRAW) {
+        } else if (result == BattleResults.DRAW) {
           CommonDialogs.showTitledDialog("The battle was a draw.", "Draw");
-        } else if (this.result == BattleResults.FLED) {
+        } else if (result == BattleResults.FLED) {
           CommonDialogs.showTitledDialog("The party fled!", "Party Fled");
-        } else if (this.result == BattleResults.ENEMY_FLED) {
+        } else if (result == BattleResults.ENEMY_FLED) {
           CommonDialogs.showTitledDialog("The enemies fled!", "Enemies Fled");
-        } else if (this.result == BattleResults.IN_PROGRESS) {
+        } else if (result == BattleResults.IN_PROGRESS) {
           CommonDialogs.showTitledDialog(
               "The battle isn't over, but somehow the game thinks it is.",
               "Uh-Oh!");
@@ -1370,11 +1361,6 @@ public class MapTurnBattleLogic extends Battle {
         BossRewards.doRewards();
       }
     }
-  }
-
-  @Override
-  public void setResult(final BattleResults resultCode) {
-    // Do nothing
   }
 
   @Override

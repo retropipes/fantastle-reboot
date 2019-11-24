@@ -263,7 +263,7 @@ public class WindowTimeBattleGUI {
             // Pack Battle Frame
             wbg.battleFrame.pack();
             // Get out of here
-            b.doResult();
+            b.doResult(BattleResults.FLED);
             return;
           } else {
             success = b.doPlayerActions(AbstractWindowAIRoutine.ACTION_ATTACK);
@@ -309,8 +309,7 @@ public class WindowTimeBattleGUI {
         // Check result
         final BattleResults bResult = b.getResult();
         if (bResult != BattleResults.IN_PROGRESS) {
-          b.setResult(bResult);
-          b.doResult();
+          b.doResult(bResult);
           return;
         }
       } catch (final Throwable t) {

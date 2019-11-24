@@ -36,7 +36,6 @@ public class WindowTurnBattleLogic extends Battle {
   private boolean enemyDidDamage;
   private boolean playerDidDamage;
   private Creature enemy;
-  private BattleResults result;
   private final AbstractDamageEngine pde;
   private final AbstractDamageEngine ede;
   private WindowTurnBattleGUI battleGUI;
@@ -87,7 +86,7 @@ public class WindowTurnBattleLogic extends Battle {
       final int runChance = rf.generate();
       if (runChance <= this.computeRunChance()) {
         // Success
-        this.setResult(BattleResults.FLED);
+        this.doResult(BattleResults.FLED);
       } else {
         // Failure
         success = false;
@@ -136,7 +135,7 @@ public class WindowTurnBattleLogic extends Battle {
       final int runChance = rf.generate();
       if (runChance <= this.computeEnemyRunChance()) {
         // Success
-        this.setResult(BattleResults.ENEMY_FLED);
+        this.doResult(BattleResults.ENEMY_FLED);
       } else {
         // Failure
         this.updateMessageAreaEnemyFleeFailed();
@@ -226,86 +225,81 @@ public class WindowTurnBattleLogic extends Battle {
 
   final void displayPlayerRoundResults() {
     // Display player round results
-    if (this.result != BattleResults.ENEMY_FLED) {
-      final String enemyName = this.enemy.getName();
-      final String playerDamageString = Integer.toString(this.damage);
-      final String playerFumbleDamageString = Integer.toString(this.damage);
-      String displayPlayerDamageString = null;
-      String playerWhackString = "";
-      if (this.pde.weaponFumble()) {
-        displayPlayerDamageString = "FUMBLE! You drop your weapon, doing "
-            + playerFumbleDamageString + " damage to yourself!";
-        SoundPlayer.playSound(SoundIndex.FUMBLE, SoundGroup.BATTLE);
+    final String enemyName = this.enemy.getName();
+    final String playerDamageString = Integer.toString(this.damage);
+    final String playerFumbleDamageString = Integer.toString(this.damage);
+    String displayPlayerDamageString = null;
+    String playerWhackString = "";
+    if (this.pde.weaponFumble()) {
+      displayPlayerDamageString = "FUMBLE! You drop your weapon, doing "
+          + playerFumbleDamageString + " damage to yourself!";
+      SoundPlayer.playSound(SoundIndex.FUMBLE, SoundGroup.BATTLE);
+    } else {
+      if (this.damage == 0) {
+        displayPlayerDamageString = "You try to hit the " + enemyName
+            + ", but MISS!";
+        SoundPlayer.playSound(SoundIndex.MISSED, SoundGroup.BATTLE);
+      } else if (this.damage < 0) {
+        displayPlayerDamageString = "You try to hit the " + enemyName
+            + ", but are RIPOSTED for " + -this.damage + " damage!";
+        SoundPlayer.playSound(SoundIndex.PARTY_COUNTER, SoundGroup.BATTLE);
       } else {
-        if (this.damage == 0) {
-          displayPlayerDamageString = "You try to hit the " + enemyName
-              + ", but MISS!";
-          SoundPlayer.playSound(SoundIndex.MISSED, SoundGroup.BATTLE);
-        } else if (this.damage < 0) {
-          displayPlayerDamageString = "You try to hit the " + enemyName
-              + ", but are RIPOSTED for " + -this.damage + " damage!";
-          SoundPlayer.playSound(SoundIndex.PARTY_COUNTER, SoundGroup.BATTLE);
-        } else {
-          displayPlayerDamageString = "You hit the " + enemyName + " for "
-              + playerDamageString + " damage!";
-          SoundPlayer.playSound(SoundIndex.PARTY_HIT, SoundGroup.BATTLE);
-        }
-        if (this.pde.weaponCrit()) {
-          playerWhackString += "CRITICAL HIT!\n";
-          SoundPlayer.playSound(SoundIndex.CRITICAL, SoundGroup.BATTLE);
-        }
-        if (this.pde.weaponPierce()) {
-          playerWhackString += "Your attack pierces the " + enemyName
-              + "'s armor!\n";
-        }
+        displayPlayerDamageString = "You hit the " + enemyName + " for "
+            + playerDamageString + " damage!";
+        SoundPlayer.playSound(SoundIndex.PARTY_HIT, SoundGroup.BATTLE);
       }
-      final String displayString = playerWhackString
-          + displayPlayerDamageString;
-      this.setStatusMessage(displayString);
+      if (this.pde.weaponCrit()) {
+        playerWhackString += "CRITICAL HIT!\n";
+        SoundPlayer.playSound(SoundIndex.CRITICAL, SoundGroup.BATTLE);
+      }
+      if (this.pde.weaponPierce()) {
+        playerWhackString += "Your attack pierces the " + enemyName
+            + "'s armor!\n";
+      }
     }
+    final String displayString = playerWhackString + displayPlayerDamageString;
+    this.setStatusMessage(displayString);
   }
 
   final void displayEnemyRoundResults() {
     // Display enemy round results
-    if (this.result != BattleResults.ENEMY_FLED) {
-      final String enemyName = this.enemy.getName();
-      final String enemyDamageString = Integer.toString(this.damage);
-      final String enemyFumbleDamageString = Integer.toString(this.damage);
-      String displayEnemyDamageString = null;
-      String enemyWhackString = "";
-      if (this.ede.weaponFumble()) {
-        displayEnemyDamageString = "FUMBLE! The " + enemyName
-            + " drops its weapon, doing " + enemyFumbleDamageString
-            + " damage to itself!";
-        SoundPlayer.playSound(SoundIndex.FUMBLE, SoundGroup.BATTLE);
-        enemyWhackString = "";
+    final String enemyName = this.enemy.getName();
+    final String enemyDamageString = Integer.toString(this.damage);
+    final String enemyFumbleDamageString = Integer.toString(this.damage);
+    String displayEnemyDamageString = null;
+    String enemyWhackString = "";
+    if (this.ede.weaponFumble()) {
+      displayEnemyDamageString = "FUMBLE! The " + enemyName
+          + " drops its weapon, doing " + enemyFumbleDamageString
+          + " damage to itself!";
+      SoundPlayer.playSound(SoundIndex.FUMBLE, SoundGroup.BATTLE);
+      enemyWhackString = "";
+    } else {
+      if (this.damage == 0) {
+        displayEnemyDamageString = "The " + enemyName
+            + " tries to hit you, but MISSES!";
+        SoundPlayer.playSound(SoundIndex.MISSED, SoundGroup.BATTLE);
+      } else if (this.damage < 0) {
+        displayEnemyDamageString = "The " + enemyName
+            + " tries to hit you, but you RIPOSTE for " + -this.damage
+            + " damage!";
+        SoundPlayer.playSound(SoundIndex.MONSTER_COUNTER, SoundGroup.BATTLE);
       } else {
-        if (this.damage == 0) {
-          displayEnemyDamageString = "The " + enemyName
-              + " tries to hit you, but MISSES!";
-          SoundPlayer.playSound(SoundIndex.MISSED, SoundGroup.BATTLE);
-        } else if (this.damage < 0) {
-          displayEnemyDamageString = "The " + enemyName
-              + " tries to hit you, but you RIPOSTE for " + -this.damage
-              + " damage!";
-          SoundPlayer.playSound(SoundIndex.MONSTER_COUNTER, SoundGroup.BATTLE);
-        } else {
-          displayEnemyDamageString = "The " + enemyName + " hits you for "
-              + enemyDamageString + " damage!";
-          SoundPlayer.playSound(SoundIndex.MONSTER_HIT, SoundGroup.BATTLE);
-        }
-        if (this.ede.weaponCrit()) {
-          enemyWhackString += "CRITICAL HIT!\n";
-          SoundPlayer.playSound(SoundIndex.CRITICAL, SoundGroup.BATTLE);
-        }
-        if (this.ede.weaponPierce()) {
-          enemyWhackString += "The " + enemyName
-              + "'s attack pierces YOUR armor!\n";
-        }
+        displayEnemyDamageString = "The " + enemyName + " hits you for "
+            + enemyDamageString + " damage!";
+        SoundPlayer.playSound(SoundIndex.MONSTER_HIT, SoundGroup.BATTLE);
       }
-      final String displayString = enemyWhackString + displayEnemyDamageString;
-      this.setStatusMessage(displayString);
+      if (this.ede.weaponCrit()) {
+        enemyWhackString += "CRITICAL HIT!\n";
+        SoundPlayer.playSound(SoundIndex.CRITICAL, SoundGroup.BATTLE);
+      }
+      if (this.ede.weaponPierce()) {
+        enemyWhackString += "The " + enemyName
+            + "'s attack pierces YOUR armor!\n";
+      }
     }
+    final String displayString = enemyWhackString + displayEnemyDamageString;
+    this.setStatusMessage(displayString);
   }
 
   // Methods
@@ -327,7 +321,6 @@ public class WindowTurnBattleLogic extends Battle {
       this.enemy.loadCreature();
       this.enemyDidDamage = false;
       this.playerDidDamage = false;
-      this.setResult(BattleResults.IN_PROGRESS);
       this.battleGUI.initBattle(this.enemy.getImage());
       this.firstUpdateMessageArea();
     } catch (final Throwable t) {
@@ -360,9 +353,6 @@ public class WindowTurnBattleLogic extends Battle {
   public final BattleResults getResult() {
     final PartyMember playerCharacter = PartyManager.getParty().getLeader();
     BattleResults currResult;
-    if (this.result != BattleResults.IN_PROGRESS) {
-      return this.result;
-    }
     if (this.enemy.isAlive() && !playerCharacter.isAlive()) {
       if (!this.playerDidDamage) {
         currResult = BattleResults.ANNIHILATED;
@@ -472,9 +462,9 @@ public class WindowTurnBattleLogic extends Battle {
       this.maintainEffects(true);
       this.maintainEffects(false);
       // Check result
-      this.setResult(this.getResult());
-      if (this.result != BattleResults.IN_PROGRESS) {
-        this.doResult();
+      BattleResults currResult = this.getResult();
+      if (currResult != BattleResults.IN_PROGRESS) {
+        this.doResult(currResult);
         return;
       }
     } else {
@@ -560,65 +550,64 @@ public class WindowTurnBattleLogic extends Battle {
   }
 
   @Override
-  public void doResult() {
+  public void doResult(BattleResults result) {
     final PartyMember playerCharacter = PartyManager.getParty().getLeader();
     final Creature m = this.enemy;
     boolean rewardsFlag = false;
     if (m instanceof BossMonster) {
-      if (this.result == BattleResults.WON
-          || this.result == BattleResults.PERFECT) {
+      if (result == BattleResults.WON || result == BattleResults.PERFECT) {
         this.setStatusMessage("You defeated the Boss!");
         SoundPlayer.playSound(SoundIndex.VICTORY, SoundGroup.BATTLE);
         rewardsFlag = true;
-      } else if (this.result == BattleResults.LOST) {
+      } else if (result == BattleResults.LOST) {
         this.setStatusMessage("The Boss defeated you...");
         SoundPlayer.playSound(SoundIndex.GAME_OVER, SoundGroup.BATTLE);
         PartyManager.getParty().getLeader().onGotKilled();
-      } else if (this.result == BattleResults.ANNIHILATED) {
+      } else if (result == BattleResults.ANNIHILATED) {
         this.setStatusMessage(
             "The Boss defeated you without suffering damage... you were annihilated!");
         SoundPlayer.playSound(SoundIndex.GAME_OVER, SoundGroup.BATTLE);
         PartyManager.getParty().getLeader().onGotAnnihilated();
-      } else if (this.result == BattleResults.DRAW) {
+      } else if (result == BattleResults.DRAW) {
         this.setStatusMessage(
             "The Boss battle was a draw. You are fully healed!");
         playerCharacter.healPercentage(Creature.FULL_HEAL_PERCENTAGE);
         playerCharacter.regeneratePercentage(Creature.FULL_HEAL_PERCENTAGE);
-      } else if (this.result == BattleResults.FLED) {
+      } else if (result == BattleResults.FLED) {
         this.setStatusMessage("You ran away successfully!");
-      } else if (this.result == BattleResults.ENEMY_FLED) {
+      } else if (result == BattleResults.ENEMY_FLED) {
         this.setStatusMessage("The Boss ran away!");
       }
     } else {
-      if (this.result == BattleResults.WON) {
+      if (result == BattleResults.WON) {
         this.setStatusMessage("You gain " + m.getExperience()
             + " experience and " + m.getGold() + " Gold.");
         playerCharacter.offsetExperience(m.getExperience());
         playerCharacter.offsetGold(m.getGold());
         SoundPlayer.playSound(SoundIndex.VICTORY, SoundGroup.BATTLE);
-      } else if (this.result == BattleResults.PERFECT) {
+      } else if (result == BattleResults.PERFECT) {
         this.setStatusMessage("You gain " + m.getExperience()
             + " experience and " + m.getGold() + " Gold,\nplus "
             + m.getPerfectBonusGold() + " extra gold for a perfect fight!");
         playerCharacter.offsetExperience(m.getExperience());
         playerCharacter.offsetGold(m.getGold() + m.getPerfectBonusGold());
         SoundPlayer.playSound(SoundIndex.VICTORY, SoundGroup.BATTLE);
-      } else if (this.result == BattleResults.LOST) {
+      } else if (result == BattleResults.LOST) {
         this.setStatusMessage("You lost...");
         SoundPlayer.playSound(SoundIndex.GAME_OVER, SoundGroup.BATTLE);
         PartyManager.getParty().getLeader().onGotKilled();
-      } else if (this.result == BattleResults.ANNIHILATED) {
+      } else if (result == BattleResults.ANNIHILATED) {
         this.setStatusMessage(
             "You lost without hurting your foe... you were annihilated!");
         SoundPlayer.playSound(SoundIndex.GAME_OVER, SoundGroup.BATTLE);
         PartyManager.getParty().getLeader().onGotAnnihilated();
-      } else if (this.result == BattleResults.DRAW) {
+      } else if (result == BattleResults.DRAW) {
         this.setStatusMessage("The battle was a draw. You are fully healed!");
         playerCharacter.healPercentage(Creature.FULL_HEAL_PERCENTAGE);
         playerCharacter.regeneratePercentage(Creature.FULL_HEAL_PERCENTAGE);
-      } else if (this.result == BattleResults.FLED) {
+      } else if (result == BattleResults.FLED) {
         this.setStatusMessage("You ran away successfully!");
-      } else if (this.result == BattleResults.ENEMY_FLED) {
+      } else if (result == BattleResults.ENEMY_FLED) {
         this.setStatusMessage("The enemy runs away!");
         this.setStatusMessage(
             "Since the enemy ran away, you gain nothing for this battle.");
@@ -637,11 +626,6 @@ public class WindowTurnBattleLogic extends Battle {
     }
     // Final Cleanup
     this.battleGUI.doResultFinalCleanup(rewardsFlag);
-  }
-
-  @Override
-  public final void setResult(final BattleResults newResult) {
-    this.result = newResult;
   }
 
   @Override

@@ -56,9 +56,7 @@ public abstract class Battle {
 
   public abstract BattleResults getResult();
 
-  public abstract void doResult();
-
-  public abstract void setResult(BattleResults resultCode);
+  public abstract void doResult(BattleResults resultCode);
 
   public abstract void maintainEffects(boolean player);
 
