@@ -48,7 +48,7 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
-import com.puttysoftware.fantastlereboot.files.FileExtensions;
+import com.puttysoftware.fantastlereboot.files.CommonPaths;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.randomrange.RandomRange;
@@ -515,17 +515,6 @@ public class Prefs {
   }
 
   private static class PreferencesFileManager {
-    // Fields
-    private static final String MAC_PREFIX = "HOME";
-    private static final String WIN_PREFIX = "APPDATA";
-    private static final String UNIX_PREFIX = "HOME";
-    private static final String MAC_DIR = "/Library/Preferences/";
-    private static final String WIN_DIR = "\\Fantastle\\";
-    private static final String UNIX_DIR = "/.fantastle/";
-    private static final String MAC_FILE = "net.worldwizard.fantastle.preferences";
-    private static final String WIN_FILE = "FantastlePreferences";
-    private static final String UNIX_FILE = "FantastlePreferences";
-
     // Constructors
     public PreferencesFileManager() {
       // Do nothing
@@ -634,59 +623,8 @@ public class Prefs {
       }
     }
 
-    private static String getPrefsDirPrefix() {
-      final String osName = System.getProperty("os.name");
-      if (osName.indexOf("Mac OS X") != -1) {
-        // Mac OS X
-        return System.getenv(PreferencesFileManager.MAC_PREFIX);
-      } else if (osName.indexOf("Windows") != -1) {
-        // Windows
-        return System.getenv(PreferencesFileManager.WIN_PREFIX);
-      } else {
-        // Other - assume UNIX-like
-        return System.getenv(PreferencesFileManager.UNIX_PREFIX);
-      }
-    }
-
-    private static String getPrefsDirectory() {
-      final String osName = System.getProperty("os.name");
-      if (osName.indexOf("Mac OS X") != -1) {
-        // Mac OS X
-        return PreferencesFileManager.MAC_DIR;
-      } else if (osName.indexOf("Windows") != -1) {
-        // Windows
-        return PreferencesFileManager.WIN_DIR;
-      } else {
-        // Other - assume UNIX-like
-        return PreferencesFileManager.UNIX_DIR;
-      }
-    }
-
-    private static String getPrefsFileExtension() {
-      return "." + FileExtensions.getPreferencesExtension();
-    }
-
-    private static String getPrefsFileName() {
-      final String osName = System.getProperty("os.name");
-      if (osName.indexOf("Mac OS X") != -1) {
-        // Mac OS X
-        return PreferencesFileManager.MAC_FILE;
-      } else if (osName.indexOf("Windows") != -1) {
-        // Windows
-        return PreferencesFileManager.WIN_FILE;
-      } else {
-        // Other - assume UNIX-like
-        return PreferencesFileManager.UNIX_FILE;
-      }
-    }
-
     private static File getPrefsFile() {
-      final StringBuilder b = new StringBuilder();
-      b.append(getPrefsDirPrefix());
-      b.append(getPrefsDirectory());
-      b.append(getPrefsFileName());
-      b.append(getPrefsFileExtension());
-      return new File(b.toString());
+      return CommonPaths.getPrefsFile();
     }
   }
 

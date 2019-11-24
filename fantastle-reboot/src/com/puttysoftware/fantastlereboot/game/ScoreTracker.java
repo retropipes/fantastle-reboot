@@ -21,6 +21,7 @@ package com.puttysoftware.fantastlereboot.game;
 import java.io.File;
 
 import com.puttysoftware.diane.gui.CommonDialogs;
+import com.puttysoftware.fantastlereboot.files.CommonPaths;
 import com.puttysoftware.fantastlereboot.files.FileExtensions;
 import com.puttysoftware.scoremanager.SavedScoreManager;
 import com.puttysoftware.scoremanager.ScoreManager;
@@ -31,12 +32,6 @@ public class ScoreTracker {
   private static SavedScoreManager ssMgr;
   private static long score = 0L;
   private static boolean scoreValid = false;
-  private static final String MAC_PREFIX = "HOME";
-  private static final String WIN_PREFIX = "APPDATA";
-  private static final String UNIX_PREFIX = "HOME";
-  private static final String MAC_DIR = "/Library/Fantastle/Scores/";
-  private static final String WIN_DIR = "\\Fantastle\\Scores\\";
-  private static final String UNIX_DIR = "/.fantastle/scores/";
 
   // Constructors
   private ScoreTracker() {
@@ -88,7 +83,7 @@ public class ScoreTracker {
       }
       ScoreTracker.scoresFile = sf.getAbsolutePath();
       ScoreTracker.ssMgr = new SavedScoreManager(1, 10,
-          ScoreManager.SORT_ORDER_ASCENDING, 0L, "Fantastle Scores",
+          ScoreManager.SORT_ORDER_ASCENDING, 0L, "Scores",
           new String[] { "points" }, ScoreTracker.scoresFile);
     }
   }
@@ -123,9 +118,11 @@ public class ScoreTracker {
 
   public static void showCurrentScore() {
     if (ScoreTracker.scoreValid) {
-      CommonDialogs.showDialog("Your current score: " + ScoreTracker.score + " points");
+      CommonDialogs
+          .showDialog("Your current score: " + ScoreTracker.score + " points");
     } else {
-      CommonDialogs.showDialog("The current score is not available at this time.");
+      CommonDialogs
+          .showDialog("The current score is not available at this time.");
     }
   }
 
@@ -133,38 +130,9 @@ public class ScoreTracker {
     ScoreTracker.ssMgr.viewTable();
   }
 
-  private static String getScoreDirPrefix() {
-    final String osName = System.getProperty("os.name");
-    if (osName.indexOf("Mac OS X") != -1) {
-      // Mac OS X
-      return System.getenv(ScoreTracker.MAC_PREFIX);
-    } else if (osName.indexOf("Windows") != -1) {
-      // Windows
-      return System.getenv(ScoreTracker.WIN_PREFIX);
-    } else {
-      // Other - assume UNIX-like
-      return System.getenv(ScoreTracker.UNIX_PREFIX);
-    }
-  }
-
-  private static String getScoreDirectory() {
-    final String osName = System.getProperty("os.name");
-    if (osName.indexOf("Mac OS X") != -1) {
-      // Mac OS X
-      return ScoreTracker.MAC_DIR;
-    } else if (osName.indexOf("Windows") != -1) {
-      // Windows
-      return ScoreTracker.WIN_DIR;
-    } else {
-      // Other - assume UNIX-like
-      return ScoreTracker.UNIX_DIR;
-    }
-  }
-
   private static File getScoresFile(final String filename) {
     final StringBuilder b = new StringBuilder();
-    b.append(ScoreTracker.getScoreDirPrefix());
-    b.append(ScoreTracker.getScoreDirectory());
+    b.append(CommonPaths.getAppDirectoryFor("Scores"));
     b.append(filename);
     b.append(FileExtensions.getScoresExtensionWithPeriod());
     return new File(b.toString());

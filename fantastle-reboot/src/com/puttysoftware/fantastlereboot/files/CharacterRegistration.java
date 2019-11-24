@@ -18,12 +18,6 @@ import com.puttysoftware.fileutils.ResourceStreamReader;
 public class CharacterRegistration {
   // Fields
   private static boolean ANY_FOUND = false;
-  private static final String MAC_PREFIX = "HOME";
-  private static final String WIN_PREFIX = "APPDATA";
-  private static final String UNIX_PREFIX = "HOME";
-  private static final String MAC_DIR = "/Library/BagOStuff Support/Putty Software/FantastleReboot/Characters";
-  private static final String WIN_DIR = "\\Putty Software\\FantastleReboot\\Characters";
-  private static final String UNIX_DIR = "/.puttysoftware/tallertower/characters";
 
   // Methods
   public static void registerCharacter() {
@@ -58,7 +52,8 @@ public class CharacterRegistration {
         if (!alreadyRegistered) {
           // Verify that character file exists
           if (new File(CharacterRegistration.getBasePath() + File.separator
-              + res + FileExtensions.getCharacterExtensionWithPeriod()).exists()) {
+              + res + FileExtensions.getCharacterExtensionWithPeriod())
+                  .exists()) {
             // Register it
             if (CharacterRegistration.ANY_FOUND && characterNameList != null) {
               final String[] newCharacterList = new String[characterNameList.length
@@ -220,39 +215,8 @@ public class CharacterRegistration {
     }
   }
 
-  private static String getDirPrefix() {
-    final String osName = System.getProperty("os.name");
-    if (osName.indexOf("Mac OS X") != -1) {
-      // Mac OS X
-      return System.getenv(CharacterRegistration.MAC_PREFIX);
-    } else if (osName.indexOf("Windows") != -1) {
-      // Windows
-      return System.getenv(CharacterRegistration.WIN_PREFIX);
-    } else {
-      // Other - assume UNIX-like
-      return System.getenv(CharacterRegistration.UNIX_PREFIX);
-    }
-  }
-
-  private static String getDirectory() {
-    final String osName = System.getProperty("os.name");
-    if (osName.indexOf("Mac OS X") != -1) {
-      // Mac OS X
-      return CharacterRegistration.MAC_DIR;
-    } else if (osName.indexOf("Windows") != -1) {
-      // Windows
-      return CharacterRegistration.WIN_DIR;
-    } else {
-      // Other - assume UNIX-like
-      return CharacterRegistration.UNIX_DIR;
-    }
-  }
-
   static String getBasePath() {
-    final StringBuilder b = new StringBuilder();
-    b.append(CharacterRegistration.getDirPrefix());
-    b.append(CharacterRegistration.getDirectory());
-    return b.toString();
+    return CommonPaths.getAppDirectoryFor("Characters");
   }
 
   static String[] getCharacterNameList() {
@@ -315,8 +279,9 @@ public class CharacterRegistration {
     // Load character registry file
     final ArrayList<String> registeredNames = new ArrayList<>();
     try (
-        FileInputStream fis = new FileInputStream(basePath + File.separator
-            + "CharacterRegistry" + FileExtensions.getRegistryExtensionWithPeriod());
+        FileInputStream fis = new FileInputStream(
+            basePath + File.separator + "CharacterRegistry"
+                + FileExtensions.getRegistryExtensionWithPeriod());
         ResourceStreamReader rsr = new ResourceStreamReader(fis)) {
       String input = "";
       while (input != null) {
@@ -335,8 +300,9 @@ public class CharacterRegistration {
   private static void writeCharacterRegistry(final String... newCharacterList) {
     final String basePath = CharacterRegistration.getBasePath();
     // Check if registry is writable
-    final File regFile = new File(basePath + File.separator
-        + "CharacterRegistry" + FileExtensions.getRegistryExtensionWithPeriod());
+    final File regFile = new File(
+        basePath + File.separator + "CharacterRegistry"
+            + FileExtensions.getRegistryExtensionWithPeriod());
     if (!regFile.exists()) {
       // Not writable, probably because needed folders don't exist
       final File regParent = regFile.getParentFile();

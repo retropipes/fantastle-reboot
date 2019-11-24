@@ -17,17 +17,6 @@ import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fileutils.FilenameChecker;
 
 public final class MazeFileManager {
-  // Fields
-  private static final String MAC_PREFIX = "HOME";
-  private static final String WIN_PREFIX = "APPDATA";
-  private static final String UNIX_PREFIX = "HOME";
-  private static final String MAC_MAZE_DIR = "/Library/BagOStuff Support/Putty Software/FantastleReboot/Mazes/";
-  private static final String WIN_MAZE_DIR = "\\Putty Software\\FantastleReboot\\Mazes\\";
-  private static final String UNIX_MAZE_DIR = "/.puttysoftware/tallertower/mazes/";
-  private static final String MAC_GAME_DIR = "/Library/BagOStuff Support/Putty Software/FantastleReboot/Games/";
-  private static final String WIN_GAME_DIR = "\\Putty Software\\FantastleReboot\\Games\\";
-  private static final String UNIX_GAME_DIR = "/.puttysoftware/tallertower/games/";
-
   // Constructors
   private MazeFileManager() {
   }
@@ -164,39 +153,8 @@ public final class MazeFileManager {
     lst.start();
   }
 
-  private static String getGameDirectoryPrefix() {
-    final String osName = System.getProperty("os.name");
-    if (osName.indexOf("Mac OS X") != -1) {
-      // Mac OS X
-      return System.getenv(MazeFileManager.MAC_PREFIX);
-    } else if (osName.indexOf("Windows") != -1) {
-      // Windows
-      return System.getenv(MazeFileManager.WIN_PREFIX);
-    } else {
-      // Other - assume UNIX-like
-      return System.getenv(MazeFileManager.UNIX_PREFIX);
-    }
-  }
-
-  private static String getGameDirectoryName() {
-    final String osName = System.getProperty("os.name");
-    if (osName.indexOf("Mac OS X") != -1) {
-      // Mac OS X
-      return MazeFileManager.MAC_GAME_DIR;
-    } else if (osName.indexOf("Windows") != -1) {
-      // Windows
-      return MazeFileManager.WIN_GAME_DIR;
-    } else {
-      // Other - assume UNIX-like
-      return MazeFileManager.UNIX_GAME_DIR;
-    }
-  }
-
   private static String getGameDirectory() {
-    final StringBuilder b = new StringBuilder();
-    b.append(MazeFileManager.getGameDirectoryPrefix());
-    b.append(MazeFileManager.getGameDirectoryName());
-    return b.toString();
+    return CommonPaths.getAppDirectoryFor("Games");
   }
 
   public static boolean loadMaze() {
@@ -318,39 +276,8 @@ public final class MazeFileManager {
     lst.start();
   }
 
-  private static String getMazeDirectoryPrefix() {
-    final String osName = System.getProperty("os.name");
-    if (osName.indexOf("Mac OS X") != -1) {
-      // Mac OS X
-      return System.getenv(MazeFileManager.MAC_PREFIX);
-    } else if (osName.indexOf("Windows") != -1) {
-      // Windows
-      return System.getenv(MazeFileManager.WIN_PREFIX);
-    } else {
-      // Other - assume UNIX-like
-      return System.getenv(MazeFileManager.UNIX_PREFIX);
-    }
-  }
-
-  private static String getMazeDirectoryName() {
-    final String osName = System.getProperty("os.name");
-    if (osName.indexOf("Mac OS X") != -1) {
-      // Mac OS X
-      return MazeFileManager.MAC_MAZE_DIR;
-    } else if (osName.indexOf("Windows") != -1) {
-      // Windows
-      return MazeFileManager.WIN_MAZE_DIR;
-    } else {
-      // Other - assume UNIX-like
-      return MazeFileManager.UNIX_MAZE_DIR;
-    }
-  }
-
   private static String getMazeDirectory() {
-    final StringBuilder b = new StringBuilder();
-    b.append(MazeFileManager.getMazeDirectoryPrefix());
-    b.append(MazeFileManager.getMazeDirectoryName());
-    return b.toString();
+    return CommonPaths.getAppDirectoryFor("Mazes");
   }
 
   private static String getNameWithoutExtension(final String s) {
