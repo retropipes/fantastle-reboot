@@ -44,6 +44,8 @@ public abstract class Battle {
 
   public abstract Creature getEnemy();
 
+  public abstract Creature pickTarget();
+
   public abstract void battleDone();
 
   public abstract void displayActiveEffects();

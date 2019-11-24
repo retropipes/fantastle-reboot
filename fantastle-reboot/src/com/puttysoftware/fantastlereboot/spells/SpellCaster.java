@@ -114,11 +114,11 @@ public class SpellCaster {
       if (teamID == Creature.TEAM_PARTY) {
         return PartyManager.getParty().getLeader();
       } else {
-        return FantastleReboot.getBagOStuff().getBattle().getEnemy();
+        return FantastleReboot.getBagOStuff().getBattle().pickTarget();
       }
     case ENEMY:
       if (teamID == Creature.TEAM_PARTY) {
-        return FantastleReboot.getBagOStuff().getBattle().getEnemy();
+        return FantastleReboot.getBagOStuff().getBattle().pickTarget();
       } else {
         return PartyManager.getParty().getLeader();
       }

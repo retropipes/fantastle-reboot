@@ -701,6 +701,11 @@ public class WindowTimeBattleLogic extends Battle {
   }
 
   @Override
+  public Creature pickTarget() {
+    return this.enemy;
+  }
+
+  @Override
   public boolean updatePosition(final int x, final int y) {
     return false;
   }

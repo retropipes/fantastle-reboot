@@ -29,7 +29,6 @@ import com.puttysoftware.fantastlereboot.battle.map.MapBattleArrowTask;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleDefinitions;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
-import com.puttysoftware.fantastlereboot.creatures.monsters.BossMonster;
 import com.puttysoftware.fantastlereboot.creatures.monsters.MonsterFactory;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
@@ -850,32 +849,48 @@ public class MapTurnBattleLogic extends Battle {
   }
 
   @Override
-  public Creature getEnemy() {
-    return this.getEnemyBC().getCreature();
-  }
-
-  private BattleCharacter getEnemyBC() {
-    final int px = this.mbd.getActiveCharacter().getX();
-    final int py = this.mbd.getActiveCharacter().getY();
-    final Maze m = this.mbd.getBattleMaze();
-    FantastleObjectModel next = null;
-    for (int x = -1; x <= 1; x++) {
-      for (int y = -1; y <= 1; y++) {
-        if (x == 0 && y == 0) {
-          continue;
-        }
-        if (m.cellRangeCheck(px + x, py + y, 0)) {
-          next = m.getCell(px + x, py + y, 0, Layers.OBJECT);
-        }
-        if (next != null) {
-          if (next.isSolid()) {
-            if (next instanceof BattleCharacter) {
-              return (BattleCharacter) next;
-            }
+  public Creature pickTarget() {
+    final String[] pickNames = this.buildTargetNameList();
+    final String response = CommonDialogs.showInputDialog("Pick A Target",
+        "Target", pickNames, pickNames[0]);
+    if (response != null) {
+      final Iterator<BattleCharacter> iter = this.mbd.battlerIterator();
+      while (iter.hasNext()) {
+        BattleCharacter battler = iter.next();
+        if (battler != null) {
+          if (battler.getName().equals(response)) {
+            return battler.getCreature();
           }
         }
       }
     }
+    return null;
+  }
+
+  private String[] buildTargetNameList() {
+    final String[] tempNames = new String[1];
+    int nnc = 0;
+    final Iterator<BattleCharacter> iter = this.mbd.battlerIterator();
+    while (iter.hasNext()) {
+      BattleCharacter battler = iter.next();
+      if (battler != null) {
+        tempNames[nnc] = battler.getName();
+        nnc++;
+      }
+    }
+    final String[] names = new String[nnc];
+    nnc = 0;
+    for (final String tempName : tempNames) {
+      if (tempName != null) {
+        names[nnc] = tempName;
+        nnc++;
+      }
+    }
+    return names;
+  }
+
+  @Override
+  public Creature getEnemy() {
     return null;
   }
 
@@ -896,18 +911,15 @@ public class MapTurnBattleLogic extends Battle {
     if (activeBC != null) {
       active = activeBC.getCreature();
     }
-    final BattleCharacter enemyBC = this.getEnemyBC();
-    Creature activeEnemy = null;
-    if (enemyBC != null) {
-      activeEnemy = enemyBC.getCreature();
-    }
     if (activeBC == null || active == null) {
       // Abort
       return false;
     }
     // Check Action Counter
     if (activeBC.canAct(MapTurnBattleLogic.SPELL_ACTION_POINTS)) {
-      if (enemyBC == null || activeEnemy == null) {
+      BattleCharacter anyEnemy = this.mbd
+          .getFirstBattlerNotOnTeam(activeBC.getTeamID());
+      if (anyEnemy == null) {
         // Failed - nobody to use on
         this.setStatusMessage(activeBC.getName()
             + " tries to cast a spell, but nobody is there to cast it on!");
@@ -945,18 +957,15 @@ public class MapTurnBattleLogic extends Battle {
     if (activeBC != null) {
       active = activeBC.getCreature();
     }
-    final BattleCharacter enemyBC = this.getEnemyBC();
-    Creature activeEnemy = null;
-    if (enemyBC != null) {
-      activeEnemy = enemyBC.getCreature();
-    }
     if (activeBC == null || active == null) {
       // Abort
       return false;
     }
     // Check Action Counter
     if (activeBC.canAct(MapTurnBattleLogic.ITEM_ACTION_POINTS)) {
-      if (enemyBC == null || activeEnemy == null) {
+      BattleCharacter anyEnemy = this.mbd
+          .getFirstBattlerNotOnTeam(activeBC.getTeamID());
+      if (anyEnemy == null) {
         // Failed - nobody to use on
         this.setStatusMessage(activeBC.getName()
             + " tries to use an item, but nobody is there to use it on!");
@@ -994,11 +1003,6 @@ public class MapTurnBattleLogic extends Battle {
     if (activeBC != null) {
       active = activeBC.getCreature();
     }
-    final BattleCharacter enemyBC = this.getEnemyBC();
-    Creature activeEnemy = null;
-    if (enemyBC != null) {
-      activeEnemy = enemyBC.getCreature();
-    }
     if (activeBC == null || active == null) {
       // Abort
       return false;
@@ -1008,12 +1012,15 @@ public class MapTurnBattleLogic extends Battle {
       int stealAmount = 0;
       final int stealChance = StatConstants.CHANCE_STEAL;
       activeBC.act(MapTurnBattleLogic.STEAL_ACTION_POINTS);
-      if (enemyBC == null || activeEnemy == null) {
+      BattleCharacter anyEnemy = this.mbd
+          .getFirstBattlerNotOnTeam(activeBC.getTeamID());
+      if (anyEnemy == null) {
         // Failed - nobody to steal from
         this.setStatusMessage(activeBC.getName()
             + " tries to steal, but nobody is there to steal from!");
         return false;
       }
+      Creature activeEnemy = anyEnemy.getCreature();
       final RandomRange chance = new RandomRange(0, 100);
       final int randomChance = chance.generate();
       if (randomChance <= stealChance) {
@@ -1054,11 +1061,6 @@ public class MapTurnBattleLogic extends Battle {
     if (activeBC != null) {
       active = activeBC.getCreature();
     }
-    final BattleCharacter enemyBC = this.getEnemyBC();
-    Creature activeEnemy = null;
-    if (enemyBC != null) {
-      activeEnemy = enemyBC.getCreature();
-    }
     if (activeBC == null || active == null) {
       // Abort
       return false;
@@ -1069,12 +1071,15 @@ public class MapTurnBattleLogic extends Battle {
       int drainAmount = 0;
       drainChance = StatConstants.CHANCE_DRAIN;
       activeBC.act(MapTurnBattleLogic.DRAIN_ACTION_POINTS);
-      if (enemyBC == null || activeEnemy == null) {
+      BattleCharacter anyEnemy = this.mbd
+          .getFirstBattlerNotOnTeam(activeBC.getTeamID());
+      if (anyEnemy == null) {
         // Failed - nobody to drain from
         this.setStatusMessage(activeBC.getName()
             + " tries to drain, but nobody is there to drain from!");
         return false;
       }
+      Creature activeEnemy = anyEnemy.getCreature();
       if (drainChance <= 0) {
         // Failed
         this.setStatusMessage(
@@ -1304,7 +1309,7 @@ public class MapTurnBattleLogic extends Battle {
       // Handle Results
       this.resultDoneAlready = true;
       boolean rewardsFlag = false;
-      if (this.getEnemy() instanceof BossMonster) {
+      if (this.mbd.getFirstBattlerOnTeam(Creature.TEAM_BOSS) != null) {
         if (this.result == BattleResults.WON
             || this.result == BattleResults.PERFECT) {
           this.setStatusMessage("You defeated the Boss!");
