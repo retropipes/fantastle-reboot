@@ -241,6 +241,10 @@ public class Maze {
     return this.mazeData.getFloors();
   }
 
+  public int getLevels() {
+    return this.levelCount;
+  }
+
   public boolean doesPlayerExist() {
     return this.mazeData.doesPlayerExist();
   }

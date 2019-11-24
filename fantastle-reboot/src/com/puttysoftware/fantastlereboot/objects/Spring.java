@@ -13,7 +13,7 @@ public final class Spring extends FantastleObject {
   public boolean shouldGenerateObject(final Maze inMaze, final int inRow,
       final int inCol, final int inFloor, final int inLevel,
       final int inLayer) {
-    if (inFloor > Maze.getMaxFloors() - 1) {
+    if (inFloor >= Maze.getMaxFloors() - 1) {
       return false;
     }
     return super.shouldGenerateObject(inMaze, inRow, inCol, inFloor, inLevel,
