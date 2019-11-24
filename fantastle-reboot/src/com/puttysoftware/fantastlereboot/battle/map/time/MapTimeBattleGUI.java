@@ -43,7 +43,7 @@ import com.puttysoftware.images.BufferedImageIcon;
 
 class MapTimeBattleGUI {
   // Fields
-  private MainWindow battleFrame;
+  private final MainWindow battleFrame;
   private JPanel borderPane;
   private MapBattleDraw battlePane;
   private JLabel messageLabel;
@@ -59,6 +59,7 @@ class MapTimeBattleGUI {
 
   // Constructors
   MapTimeBattleGUI() {
+    this.battleFrame = MainWindow.getOutputFrame();
     this.vwMgr = new MapBattleViewingWindowManager();
     this.bs = new MapTimeBattleStats();
     this.be = new MapBattleEffects();
@@ -119,7 +120,6 @@ class MapTimeBattleGUI {
   }
 
   void showBattle() {
-    this.battleFrame = MainWindow.getOutputFrame();
     this.battleFrame.setTitle("Battle");
     this.battleFrame.attachContent(this.borderPane);
     this.battleFrame.addKeyListener(this.handler);

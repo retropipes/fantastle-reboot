@@ -151,7 +151,7 @@ class GameDraw extends Thread {
     // Check for battle
     final int px = m.getPlayerLocationX();
     final int py = m.getPlayerLocationY();
-    MonsterLocationManager.checkForBattle(px, py);
+    MonsterLocationManager.checkForBattle(px, py, z);
   }
 
   private void drawOne() {

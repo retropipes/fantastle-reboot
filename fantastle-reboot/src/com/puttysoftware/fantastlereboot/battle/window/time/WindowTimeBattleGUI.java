@@ -25,7 +25,7 @@ import com.puttysoftware.images.BufferedImageIcon;
 
 public class WindowTimeBattleGUI {
   // Fields
-  private MainWindow battleFrame;
+  private final MainWindow battleFrame;
   private final JPanel holderPane;
   private final JLabel iconLabel;
   private final JTextArea messageArea;
@@ -35,6 +35,7 @@ public class WindowTimeBattleGUI {
   // Constructor
   public WindowTimeBattleGUI() {
     // Initialize GUI
+    this.battleFrame = MainWindow.getOutputFrame();
     JPanel iconPane, messagePane, buttonPane, timerPane;
     this.holderPane = new JPanel();
     iconPane = new JPanel();
@@ -123,7 +124,6 @@ public class WindowTimeBattleGUI {
   }
 
   final void showBattle() {
-    this.battleFrame = MainWindow.getOutputFrame();
     this.battleFrame.setTitle("Battle");
     this.battleFrame.attachContent(this.holderPane);
     this.battleFrame.setDefaultButton(this.done);

@@ -15,38 +15,39 @@ public final class MonsterLocationManager {
     super();
   }
 
-  static void create(final int rows, final int cols) {
-    MonsterLocationManager.DATA = new FlagStorage(cols, rows);
+  static void create(final int rows, final int cols, final int floors) {
+    MonsterLocationManager.DATA = new FlagStorage(cols, rows, floors);
   }
 
-  public static boolean hasMonster(final int x, final int y) {
+  public static boolean hasMonster(final int x, final int y, final int z) {
     if (MonsterLocationManager.DATA == null) {
       return false;
     }
-    return MonsterLocationManager.DATA.getCell(y, x);
+    return MonsterLocationManager.DATA.getCell(y, x, z);
   }
 
-  public static void addMonster(final int x, final int y) {
+  public static void addMonster(final int x, final int y, final int z) {
     if (MonsterLocationManager.DATA != null) {
-      if (!MonsterLocationManager.DATA.getCell(y, x)) {
-        MonsterLocationManager.DATA.setCell(true, y, x);
+      if (!MonsterLocationManager.DATA.getCell(y, x, z)) {
+        MonsterLocationManager.DATA.setCell(true, y, x, z);
       }
     }
   }
 
-  public static void removeMonster(final int x, final int y) {
+  public static void removeMonster(final int x, final int y, final int z) {
     if (MonsterLocationManager.DATA != null) {
-      if (MonsterLocationManager.DATA.getCell(y, x)) {
-        MonsterLocationManager.DATA.setCell(false, y, x);
+      if (MonsterLocationManager.DATA.getCell(y, x, z)) {
+        MonsterLocationManager.DATA.setCell(false, y, x, z);
       }
     }
   }
 
   private static boolean checkMoveMonster(final int locX, final int locY,
-      final int moveX, final int moveY) {
+      final int locZ, final int moveX, final int moveY) {
     if (MonsterLocationManager.DATA != null) {
-      if (MonsterLocationManager.DATA.getCell(locY, locX)
-          && !MonsterLocationManager.DATA.getCell(locY + moveY, locX + moveX)) {
+      if (MonsterLocationManager.DATA.getCell(locY, locX, locZ)
+          && !MonsterLocationManager.DATA.getCell(locY + moveY, locX + moveX,
+              locZ)) {
         return true;
       }
       return false;
@@ -55,16 +56,19 @@ public final class MonsterLocationManager {
   }
 
   private static void moveMonster(final int locX, final int locY,
-      final int moveX, final int moveY) {
-    if (MonsterLocationManager.checkMoveMonster(locX, locY, moveX, moveY)) {
-      MonsterLocationManager.DATA.setCell(false, locY, locX);
-      MonsterLocationManager.DATA.setCell(true, locY + moveY, locX + moveX);
+      final int locZ, final int moveX, final int moveY) {
+    if (MonsterLocationManager.checkMoveMonster(locX, locY, locZ, moveX,
+        moveY)) {
+      MonsterLocationManager.DATA.setCell(false, locY, locX, locZ);
+      MonsterLocationManager.DATA.setCell(true, locY + moveY, locX + moveX,
+          locZ);
     }
   }
 
-  public static boolean checkForBattle(final int px, final int py) {
+  public static boolean checkForBattle(final int px, final int py,
+      final int pz) {
     // If the player is now standing on a monster...
-    if (MonsterLocationManager.hasMonster(px, py)) {
+    if (MonsterLocationManager.hasMonster(px, py, pz)) {
       // ... and we aren't already in battle...
       final BagOStuff bag = FantastleReboot.getBagOStuff();
       if (!bag.inBattle()) {
@@ -88,16 +92,17 @@ public final class MonsterLocationManager {
         for (locY = 0; locY < rows; locY++) {
           final int moveX = RandomRange.generate(-1, 1);
           final int moveY = RandomRange.generate(-1, 1);
-          if (MonsterLocationManager.hasMonster(locX, locY)) {
+          if (MonsterLocationManager.hasMonster(locX, locY, pz)) {
             if (locX + moveX >= 0 && locX + moveX < cols && locY + moveY >= 0
                 && locY + moveY < rows) {
               final FantastleObjectModel there = maze.getCell(locX + moveX,
                   locY + moveY, pz, Layers.OBJECT);
               final boolean checkMove = MonsterLocationManager
-                  .checkMoveMonster(locX, locY, moveX, moveY);
+                  .checkMoveMonster(locX, locY, pz, moveX, moveY);
               if (!there.isSolid() && checkMove) {
                 // Move the monster
-                MonsterLocationManager.moveMonster(locX, locY, moveX, moveY);
+                MonsterLocationManager.moveMonster(locX, locY, pz, moveX,
+                    moveY);
               }
             }
           }
@@ -109,9 +114,9 @@ public final class MonsterLocationManager {
   public static void postBattle(final Maze maze, final int locX,
       final int locY) {
     // Clear the monster just defeated
-    MonsterLocationManager.removeMonster(locX, locY);
-    // Generate a new monster
     final int pz = maze.getPlayerLocationZ();
+    MonsterLocationManager.removeMonster(locX, locY, pz);
+    // Generate a new monster
     final int rows = MonsterLocationManager.DATA.getShape()[1] - 1;
     final int cols = MonsterLocationManager.DATA.getShape()[0] - 1;
     final RandomRange row = new RandomRange(0, rows);
@@ -119,16 +124,17 @@ public final class MonsterLocationManager {
     int genX = row.generate();
     int genY = column.generate();
     FantastleObjectModel currObj = maze.getCell(genX, genY, pz, Layers.OBJECT);
-    if (!currObj.isSolid() && !MonsterLocationManager.hasMonster(genX, genY)) {
-      MonsterLocationManager.addMonster(genX, genY);
+    if (!currObj.isSolid()
+        && !MonsterLocationManager.hasMonster(genX, genY, pz)) {
+      MonsterLocationManager.addMonster(genX, genY, pz);
     } else {
       while (currObj.isSolid()
-          || MonsterLocationManager.hasMonster(genX, genY)) {
+          || MonsterLocationManager.hasMonster(genX, genY, pz)) {
         genX = row.generate();
         genY = column.generate();
         currObj = maze.getCell(genX, genY, pz, Layers.OBJECT);
       }
-      MonsterLocationManager.addMonster(genX, genY);
+      MonsterLocationManager.addMonster(genX, genY, pz);
     }
   }
 }

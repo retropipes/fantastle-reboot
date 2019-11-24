@@ -41,7 +41,7 @@ import com.puttysoftware.images.BufferedImageIcon;
 
 class MapTurnBattleGUI {
   // Fields
-  private MainWindow battleFrame;
+  private final MainWindow battleFrame;
   private MapBattleDraw battlePane;
   private JLabel messageLabel;
   private final MapBattleViewingWindowManager vwMgr;
@@ -56,6 +56,7 @@ class MapTurnBattleGUI {
 
   // Constructors
   MapTurnBattleGUI() {
+    this.battleFrame = MainWindow.getOutputFrame();
     this.vwMgr = new MapBattleViewingWindowManager();
     this.bs = new MapTurnBattleStats();
     this.be = new MapBattleEffects();
@@ -82,7 +83,6 @@ class MapTurnBattleGUI {
   }
 
   void showBattle() {
-    this.battleFrame = MainWindow.getOutputFrame();
     this.battleFrame.setTitle("Battle");
     this.battleFrame.attachContent(this.borderPane);
     this.battleFrame.addKeyListener(this.handler);

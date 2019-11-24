@@ -51,7 +51,7 @@ final class LayeredTower implements Cloneable {
         Layers.COUNT);
     this.visionData = new FlagStorage(cols, rows, floors);
     this.noteData = new LowLevelNoteDataStore(cols, rows, floors);
-    MonsterLocationManager.create(rows, cols);
+    MonsterLocationManager.create(rows, cols, floors);
     this.playerStartData = new int[3];
     Arrays.fill(this.playerStartData, -1);
     this.playerLocationData = new int[3];
@@ -522,16 +522,17 @@ final class LayeredTower implements Cloneable {
       int xLoc = row.generate();
       int yLoc = column.generate();
       FantastleObjectModel there = this.getCell(xLoc, yLoc, z, Layers.OBJECT);
-      if (!there.isSolid() && !MonsterLocationManager.hasMonster(xLoc, yLoc)) {
-        MonsterLocationManager.addMonster(xLoc, yLoc);
+      if (!there.isSolid()
+          && !MonsterLocationManager.hasMonster(xLoc, yLoc, z)) {
+        MonsterLocationManager.addMonster(xLoc, yLoc, z);
       } else {
         while (there.isSolid()
-            || MonsterLocationManager.hasMonster(xLoc, yLoc)) {
+            || MonsterLocationManager.hasMonster(xLoc, yLoc, z)) {
           xLoc = row.generate();
           yLoc = column.generate();
           there = this.getCell(xLoc, yLoc, z, Layers.OBJECT);
         }
-        MonsterLocationManager.addMonster(xLoc, yLoc);
+        MonsterLocationManager.addMonster(xLoc, yLoc, z);
       }
     }
   }
