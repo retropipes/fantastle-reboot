@@ -182,7 +182,6 @@ final class MovementTask extends Thread {
             FileStateManager.setDirty(true);
             MovementTask.fireStepActions();
             MovementTask.decayEffects();
-            GameGUI.redrawMaze();
             if (MovementTask.proceed) {
               MovementTask.saved = m.getCell(px, py, pz, Layers.OBJECT);
             }
@@ -212,6 +211,7 @@ final class MovementTask extends Thread {
         bag.getShop(GameObjects.sendsToWhichShop(nextAbove)).showShop();
       }
     } while (loopCheck);
+    GameGUI.redrawMaze();
   }
 
   private static boolean checkLoopCondition(final FantastleObjectModel below,
