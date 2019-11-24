@@ -37,7 +37,7 @@ public class PartyMember extends Creature {
 
   // Constructors
   PartyMember(final ItemInventory ii, final Race r, final Job j, final Faith f,
-      final String n) {
+      final String n, final int af, final int as, final int ah) {
     super(ii, Creature.TEAM_PARTY, f, j, r);
     this.name = n;
     this.permanentAttack = 0;
@@ -45,9 +45,9 @@ public class PartyMember extends Creature {
     this.permanentHP = 0;
     this.permanentMP = 0;
     this.kills = 0;
-    this.avatarFamilyID = 0;
-    this.avatarHairID = 0;
-    this.avatarSkinID = 0;
+    this.avatarFamilyID = af;
+    this.avatarSkinID = as;
+    this.avatarHairID = ah;
     this.setLevel(1);
     this.setStrength(StatConstants.GAIN_STRENGTH
         + r.getAttribute(RaceConstants.ATTRIBUTE_STRENGTH_PER_LEVEL));
@@ -102,8 +102,7 @@ public class PartyMember extends Creature {
   public void loadPartyMember(final int newLevel, final int chp, final int cmp,
       final int newGold, final int newLoad, final long newExperience,
       final int bookID, final boolean[] known, final int k, final int pAtk,
-      final int pDef, final int pHP, final int pMP, final int aFamily,
-      final int aSkin, final int aHair) {
+      final int pDef, final int pHP, final int pMP) {
     this.setLevel(newLevel);
     this.setCurrentHP(chp);
     this.setCurrentMP(cmp);
@@ -115,9 +114,6 @@ public class PartyMember extends Creature {
     this.permanentDefense = pDef;
     this.permanentHP = pHP;
     this.permanentMP = pMP;
-    this.avatarFamilyID = aFamily;
-    this.avatarSkinID = aSkin;
-    this.avatarHairID = aHair;
     final SpellBook book = JobManager.getSpellBookByID(bookID);
     for (int x = 0; x < known.length; x++) {
       if (known[x]) {
