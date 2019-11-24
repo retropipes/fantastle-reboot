@@ -18,6 +18,7 @@ import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.maze.GenerateTask;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
+import com.puttysoftware.fantastlereboot.maze.MonsterLocationManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.GameObjects;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
@@ -110,6 +111,7 @@ final class MovementTask extends Thread {
     MovementTask.checkGameOver();
     MovementTask.checkFloorChange();
     MovementTask.checkLevelChange();
+    MonsterLocationManager.checkForBattle(px, py, pz);
   }
 
   private static void decayEffects() {
