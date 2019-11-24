@@ -92,13 +92,15 @@ class GameDraw extends Thread {
     boolean inBounds;
     u = m.getPlayerLocationX();
     v = m.getPlayerLocationY();
+    final int viewX = GameView.getViewingWindowLocationX();
+    final int viewY = GameView.getViewingWindowLocationY();
+    final int viewLRX = GameView.getLowerRightViewingWindowLocationX();
+    final int viewLRY = GameView.getLowerRightViewingWindowLocationY();
     final int z = m.getPlayerLocationZ();
-    for (x = GameView.getViewingWindowLocationX(); x <= GameView
-        .getLowerRightViewingWindowLocationX(); x++) {
-      for (y = GameView.getViewingWindowLocationY(); y <= GameView
-          .getLowerRightViewingWindowLocationY(); y++) {
-        xFix = x - GameView.getViewingWindowLocationX();
-        yFix = y - GameView.getViewingWindowLocationY();
+    for (x = viewX; x <= viewLRX; x++) {
+      for (y = viewY; y <= viewLRY; y++) {
+        xFix = x - viewX;
+        yFix = y - viewY;
         visible = m.isSquareVisible(u, v, y, x);
         inBounds = x >= 0 && x < Maze.getMaxRows() && y >= 0
             && y < Maze.getMaxColumns();
