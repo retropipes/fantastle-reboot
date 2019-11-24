@@ -36,10 +36,14 @@ public class JobManager {
     return JobManager.CACHE[jobID];
   }
 
-  public static Job getRandomJob() {
+  public static int getRandomID() {
     JobManager.initCachesIfNeeded();
-    final int jobID = new RandomRange(0, JobManager.CACHE.length - 1)
+    return new RandomRange(0, JobManager.CACHE.length - 1)
         .generate();
+  }
+
+  public static Job getRandomJob() {
+    final int jobID = JobManager.getRandomID();
     return JobManager.CACHE[jobID];
   }
 

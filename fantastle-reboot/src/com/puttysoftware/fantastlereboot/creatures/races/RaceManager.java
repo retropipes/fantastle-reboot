@@ -30,10 +30,13 @@ public class RaceManager {
     return RaceManager.CACHE[raceID];
   }
 
-  public static Race getRandomRace() {
+  public static int getRandomID() {
     RaceManager.initCachesIfNeeded();
-    final int raceID = new RandomRange(0, RaceManager.CACHE.length - 1)
-        .generate();
+    return new RandomRange(0, RaceManager.CACHE.length - 1).generate();
+  }
+
+  public static Race getRandomRace() {
+    final int raceID = RaceManager.getRandomID();
     return RaceManager.CACHE[raceID];
   }
 

@@ -17,8 +17,8 @@ public class FaithManager {
     FaithManager.initCachesIfNeeded();
     final String[] names = FaithConstants.FAITH_NAME_CACHE;
     String dialogResult = null;
-    dialogResult = CommonDialogs.showInputDialog("Select a Faith", "Select Faith",
-        names, names[0]);
+    dialogResult = CommonDialogs.showInputDialog("Select a Faith",
+        "Select Faith", names, names[0]);
     if (dialogResult != null) {
       int index;
       for (index = 0; index < names.length; index++) {
@@ -37,10 +37,13 @@ public class FaithManager {
     return FaithManager.CACHE[faithID];
   }
 
-  public static Faith getRandomFaith() {
+  public static int getRandomID() {
     FaithManager.initCachesIfNeeded();
-    final int faithID = new RandomRange(0, FaithManager.CACHE.length - 1)
-        .generate();
+    return new RandomRange(0, FaithManager.CACHE.length - 1).generate();
+  }
+
+  public static Faith getRandomFaith() {
+    final int faithID = FaithManager.getRandomID();
     return FaithManager.CACHE[faithID];
   }
 

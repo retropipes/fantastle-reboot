@@ -48,34 +48,67 @@ public class PartyManager {
     int maxMem = Party.getMaxMembers();
     final PartyMember[] pickMembers = CharacterLoader
         .loadAllRegisteredCharacters();
-    for (int x = 0; x < maxMem; x++) {
-      PartyMember pc = null;
-      if (pickMembers == null) {
-        // No characters registered - must create one
-        pc = PartyManager.createNewPC();
-        if (pc != null) {
-          CharacterRegistration.autoregisterCharacter(pc.getName());
-          CharacterSaver.saveCharacter(pc);
-        }
-      } else {
-        final int response = CommonDialogs.showCustomDialog(
-            "Pick, Create, or Done?", "Create Party", buttonNames,
-            buttonNames[2]);
-        if (response == 2) {
-          pc = PartyManager.pickOnePartyMemberCreate(pickMembers);
-        } else if (response == 1) {
+    int regLen = 0;
+    if (pickMembers != null) {
+      regLen = pickMembers.length;
+    }
+    final String[] autoButtons = new String[] { "Automatically", "Manually" };
+    final int autoResponse = CommonDialogs.showCustomDialog(
+        "How should the party be assembled?", "Create Party", autoButtons,
+        autoButtons[0]);
+    final boolean manualCreate = autoResponse != 1;
+    if (manualCreate) {
+      // Manually assemble a party
+      for (int x = 0; x < maxMem; x++) {
+        PartyMember pc = null;
+        if (mem >= regLen) {
+          // No more characters registered - must create one
           pc = PartyManager.createNewPC();
           if (pc != null) {
             CharacterRegistration.autoregisterCharacter(pc.getName());
             CharacterSaver.saveCharacter(pc);
+            regLen++;
+          }
+        } else {
+          final int response = CommonDialogs.showCustomDialog(
+              "Pick, Create, or Done?", "Create Party", buttonNames,
+              buttonNames[2]);
+          if (response == 2) {
+            pc = PartyManager.pickOnePartyMemberCreate(pickMembers);
+          } else if (response == 1) {
+            pc = PartyManager.createNewPC();
+            if (pc != null) {
+              CharacterRegistration.autoregisterCharacter(pc.getName());
+              CharacterSaver.saveCharacter(pc);
+              regLen++;
+            }
           }
         }
+        if (pc == null) {
+          break;
+        }
+        PartyManager.party.addPartyMember(pc);
+        mem++;
       }
-      if (pc == null) {
-        break;
+    } else {
+      // Automatically assemble a party
+      for (int x = 0; x < maxMem; x++) {
+        final ItemInventory ii = new ItemInventory();
+        final int r = RaceManager.getRandomID();
+        final int j = JobManager.getRandomID();
+        final int f = FaithManager.getRandomID();
+        final String n = generateDefaultName();
+        final int af = RandomRange.generate(0, 5);
+        final int as = RandomRange.generate(0, 9);
+        final int ah = RandomRange.generate(0, 9);
+        PartyMember pc = PartyManager.getNewPCInstance(ii, r, j, f, n, af, as,
+            ah);
+        CharacterRegistration.autoregisterCharacter(pc.getName());
+        CharacterSaver.saveCharacter(pc);
+        regLen++;
+        PartyManager.party.addPartyMember(pc);
+        mem++;
       }
-      PartyManager.party.addPartyMember(pc);
-      mem++;
     }
     if (mem == 0) {
       return false;
