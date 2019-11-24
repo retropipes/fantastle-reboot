@@ -13,7 +13,6 @@ import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.gui.VersionException;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
-import com.puttysoftware.xio.UnexpectedTagException;
 import com.puttysoftware.xio.XDataReader;
 
 public class CharacterLoader {
@@ -23,7 +22,7 @@ public class CharacterLoader {
         + FileExtensions.getCharacterExtensionWithPeriod();
     try (XDataReader loader = new XDataReader(loadPath, "character")) {
       return CharacterLoader.readCharacter(loader);
-    } catch (VersionException | UnexpectedTagException e) {
+    } catch (VersionException e) {
       CharacterRegistration.autoremoveCharacter(name);
       return null;
     } catch (final IOException e) {

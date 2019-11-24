@@ -56,8 +56,28 @@ public class PartyManager {
     final int autoResponse = CommonDialogs.showCustomDialog(
         "How should the party be assembled?", "Create Party", autoButtons,
         autoButtons[0]);
-    final boolean manualCreate = autoResponse != 1;
-    if (manualCreate) {
+    final boolean autoCreate = autoResponse != 1;
+    if (autoCreate) {
+      // Automatically assemble a party
+      for (int x = 0; x < maxMem; x++) {
+        final ItemInventory ii = new ItemInventory();
+        final int r = RaceManager.getRandomID();
+        final int j = JobManager.getRandomID();
+        final int f = FaithManager.getRandomID();
+        final String n = generateDefaultName();
+        final int af = RandomRange.generate(0, 5);
+        final int as = RandomRange.generate(0, 9);
+        final int ah = RandomRange.generate(0, 9);
+        PartyMember pc = PartyManager.getNewPCInstance(ii, r, j, f, n, af, as,
+            ah);
+        CharacterRegistration.autoregisterCharacter(pc.getName());
+        CharacterSaver.saveCharacter(pc);
+        regLen++;
+        PartyManager.party.addPartyMember(pc);
+        mem++;
+      }
+      CommonDialogs.showDialog("Party automatically assembled.");
+    } else {
       // Manually assemble a party
       for (int x = 0; x < maxMem; x++) {
         PartyMember pc = null;
@@ -87,25 +107,6 @@ public class PartyManager {
         if (pc == null) {
           break;
         }
-        PartyManager.party.addPartyMember(pc);
-        mem++;
-      }
-    } else {
-      // Automatically assemble a party
-      for (int x = 0; x < maxMem; x++) {
-        final ItemInventory ii = new ItemInventory();
-        final int r = RaceManager.getRandomID();
-        final int j = JobManager.getRandomID();
-        final int f = FaithManager.getRandomID();
-        final String n = generateDefaultName();
-        final int af = RandomRange.generate(0, 5);
-        final int as = RandomRange.generate(0, 9);
-        final int ah = RandomRange.generate(0, 9);
-        PartyMember pc = PartyManager.getNewPCInstance(ii, r, j, f, n, af, as,
-            ah);
-        CharacterRegistration.autoregisterCharacter(pc.getName());
-        CharacterSaver.saveCharacter(pc);
-        regLen++;
         PartyManager.party.addPartyMember(pc);
         mem++;
       }
