@@ -108,9 +108,8 @@ final class LayeredTower implements Cloneable {
     if (this.horizontalWraparoundEnabled) {
       fR = this.normalizeRow(fR);
     }
-    return fR >= 0 && fR < LayeredTower.MAX_ROWS && fC >= 0
-        && fC < LayeredTower.MAX_COLUMNS && fF >= 0
-        && fF < LayeredTower.MAX_FLOORS;
+    return fR >= 0 && fR < this.getRows() && fC >= 0 && fC < this.getColumns()
+        && fF >= 0 && fF < this.getFloors();
   }
 
   public boolean cellRangeCheck(final int row, final int col, final int floor,
@@ -124,9 +123,9 @@ final class LayeredTower implements Cloneable {
     if (this.horizontalWraparoundEnabled) {
       fR = this.normalizeRow(fR);
     }
-    return fR >= 0 && fR < LayeredTower.MAX_ROWS && fC >= 0
-        && fC < LayeredTower.MAX_COLUMNS && fF >= 0
-        && fF < LayeredTower.MAX_FLOORS && extra >= 0 && extra < Layers.COUNT;
+    return fR >= 0 && fR < this.getRows() && fC >= 0 && fC < this.getColumns()
+        && fF >= 0 && fF < this.getFloors() && extra >= 0
+        && extra < Layers.COUNT;
   }
 
   public FantastleObjectModel getCell(final int row, final int col,
