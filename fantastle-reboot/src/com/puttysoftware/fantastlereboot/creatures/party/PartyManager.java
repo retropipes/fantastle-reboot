@@ -8,9 +8,8 @@ package com.puttysoftware.fantastlereboot.creatures.party;
 
 import java.io.IOException;
 
-import javax.swing.JFrame;
-
 import com.puttysoftware.diane.gui.CommonDialogs;
+import com.puttysoftware.diane.gui.ListWithDescDialog;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.creatures.jobs.Job;
@@ -169,10 +168,9 @@ public class PartyManager {
     return null;
   }
 
-  public static String showCreationDialog(final JFrame owner,
-      final String labelText, final String title, final String[] input,
-      final String[] descriptions) {
-    return ListWithDescDialog.showDialog(owner, null, labelText, title, input,
+  public static String showCreationDialog(final String labelText,
+      final String title, final String[] input, final String[] descriptions) {
+    return ListWithDescDialog.showDialog(null, labelText, title, input,
         input[0], descriptions[0], descriptions);
   }
 
