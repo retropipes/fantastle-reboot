@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.puttysoftware.fantastlereboot.ai.map.MapAIContext;
 import com.puttysoftware.fantastlereboot.battle.Battle;
+import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
@@ -37,9 +38,90 @@ public class MapBattleDefinitions {
     this.aiTasks = new ArrayList<>();
   }
 
+  // Nested class
+  public class BattleState {
+    private boolean partyAlive;
+    private boolean partyGone;
+    private boolean partyDead;
+    private boolean enemiesAlive;
+    private boolean enemiesGone;
+    private boolean enemiesDead;
+
+    public BattleState() {
+      super();
+      this.partyAlive = false;
+      this.partyGone = true;
+      this.enemiesAlive = false;
+      this.enemiesGone = true;
+      int totalParty = 0;
+      int totalEnemies = 0;
+      int partyDeadOrGone = 0;
+      int enemiesDeadOrGone = 0;
+      MapBattleDefinitions mbd = MapBattleDefinitions.this;
+      Iterator<BattleCharacter> iter = mbd.battlerIterator();
+      while (iter.hasNext()) {
+        BattleCharacter battler = iter.next();
+        if (battler != null) {
+          int teamID = battler.getTeamID();
+          boolean alive = battler.getCreature().isAlive();
+          boolean active = battler.isActive();
+          if (teamID == Creature.TEAM_PARTY) {
+            if (alive && active) {
+              this.partyAlive = true;
+            }
+            this.partyGone &= !active;
+            if (!alive || !active) {
+              partyDeadOrGone++;
+            }
+            totalParty++;
+          } else {
+            if (alive && active) {
+              this.enemiesAlive = true;
+            }
+            this.enemiesGone &= !active;
+            if (!alive || !active) {
+              enemiesDeadOrGone++;
+            }
+            totalEnemies++;
+          }
+        }
+      }
+      this.partyDead = (partyDeadOrGone == totalParty);
+      this.enemiesDead = (enemiesDeadOrGone == totalEnemies);
+    }
+
+    public boolean isPartyAlive() {
+      return this.partyAlive;
+    }
+
+    public boolean isPartyGone() {
+      return this.partyGone;
+    }
+
+    public boolean isPartyDead() {
+      return this.partyDead;
+    }
+
+    public boolean areEnemiesAlive() {
+      return this.enemiesAlive;
+    }
+
+    public boolean areEnemiesGone() {
+      return this.enemiesGone;
+    }
+
+    public boolean areEnemiesDead() {
+      return this.enemiesDead;
+    }
+  }
+
   // Methods
   public Iterator<BattleCharacter> battlerIterator() {
     return this.battlers.iterator();
+  }
+
+  public BattleState getBattleState() {
+    return new BattleState();
   }
 
   public void setLocations() {
@@ -86,18 +168,6 @@ public class MapBattleDefinitions {
     }
   }
 
-  public boolean areTeamEnemiesAlive(final int teamID) {
-    for (final BattleCharacter battler : this.battlers) {
-      if (battler != null) {
-        if (battler.isActive() && battler.getCreature().isAlive()
-            && battler.getTeamID() != teamID) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
   public int getTeamGold(final int teamID) {
     int teamGold = 0;
     for (final BattleCharacter battler : this.battlers) {
@@ -120,59 +190,6 @@ public class MapBattleDefinitions {
       }
     }
     return teamEnemyGold;
-  }
-
-  public boolean isTeamAlive(final int teamID) {
-    for (final BattleCharacter battler : this.battlers) {
-      if (battler != null) {
-        if (battler.isActive() && battler.getCreature().isAlive()
-            && battler.getTeamID() == teamID) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  public boolean areTeamEnemiesGone(final int teamID) {
-    for (final BattleCharacter battler : this.battlers) {
-      if (battler != null) {
-        if (!battler.isActive() && battler.getTeamID() != teamID) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
-  public boolean isTeamGone(final int teamID) {
-    for (final BattleCharacter battler : this.battlers) {
-      if (battler != null) {
-        if (!battler.isActive() && battler.getTeamID() == teamID) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
-  public boolean areTeamEnemiesDeadOrGone(final int teamID) {
-    int deadCount = 0;
-    for (final BattleCharacter battler : this.battlers) {
-      if (battler != null) {
-        if (battler.getTeamID() != teamID) {
-          final boolean res = battler.getCreature().isAlive()
-              && battler.isActive();
-          if (res) {
-            return false;
-          }
-          if (!battler.getCreature().isAlive()) {
-            deadCount++;
-          }
-        }
-      }
-    }
-    return deadCount > 0;
   }
 
   public void resetBattlers() {

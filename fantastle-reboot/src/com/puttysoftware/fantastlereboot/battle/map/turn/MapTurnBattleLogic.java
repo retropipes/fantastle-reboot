@@ -183,29 +183,25 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public BattleResults getResult() {
+    MapBattleDefinitions.BattleState state = this.mbd.getBattleState();
     BattleResults currResult;
-    if (!this.areTeamEnemiesAlive(Creature.TEAM_PARTY)
-        && !this.isTeamAlive(Creature.TEAM_PARTY)) {
+    if (!state.areEnemiesAlive() && !state.isPartyAlive()) {
       currResult = BattleResults.DRAW;
-    } else if (this.isTeamAlive(Creature.TEAM_PARTY)
-        && !this.isTeamGone(Creature.TEAM_PARTY)
-        && this.areTeamEnemiesDeadOrGone(Creature.TEAM_PARTY)) {
+    } else if (state.areEnemiesDead() && !state.isPartyDead()) {
       if (!this.alliesTookDamage) {
         currResult = BattleResults.PERFECT;
       } else {
         currResult = BattleResults.WON;
       }
-    } else if (!this.isTeamAlive(Creature.TEAM_PARTY)
-        && !this.isTeamGone(Creature.TEAM_PARTY)
-        && !this.areTeamEnemiesDeadOrGone(Creature.TEAM_PARTY)) {
+    } else if (!state.areEnemiesDead() && state.isPartyDead()) {
       if (!this.enemiesTookDamage) {
         currResult = BattleResults.ANNIHILATED;
       } else {
         currResult = BattleResults.LOST;
       }
-    } else if (this.areTeamEnemiesGone(Creature.TEAM_PARTY)) {
+    } else if (state.areEnemiesGone()) {
       currResult = BattleResults.ENEMY_FLED;
-    } else if (this.isTeamGone(Creature.TEAM_PARTY)) {
+    } else if (state.isPartyGone()) {
       currResult = BattleResults.FLED;
     } else {
       currResult = BattleResults.IN_PROGRESS;
@@ -514,26 +510,6 @@ public class MapTurnBattleLogic extends Battle {
 
   private int getGold() {
     return this.mbd.getTeamEnemyGold(Creature.TEAM_PARTY);
-  }
-
-  private boolean isTeamAlive(final int teamID) {
-    return this.mbd.isTeamAlive(teamID);
-  }
-
-  private boolean areTeamEnemiesAlive(final int teamID) {
-    return this.mbd.areTeamEnemiesAlive(teamID);
-  }
-
-  private boolean areTeamEnemiesDeadOrGone(final int teamID) {
-    return this.mbd.areTeamEnemiesDeadOrGone(teamID);
-  }
-
-  private boolean areTeamEnemiesGone(final int teamID) {
-    return this.mbd.areTeamEnemiesGone(teamID);
-  }
-
-  private boolean isTeamGone(final int teamID) {
-    return this.mbd.isTeamGone(teamID);
   }
 
   @Override
