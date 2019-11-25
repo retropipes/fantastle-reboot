@@ -265,13 +265,10 @@ public class MapTurnBattleLogic extends Battle {
       final int x = this.auto.getMoveX();
       final int y = this.auto.getMoveY();
       final int activeTID = acting.getTeamID();
-      final BattleCharacter theEnemy = activeTID == Creature.TEAM_PARTY
-          ? this.mbd.getFirstBattlerNotOnTeam(Creature.TEAM_PARTY)
-          : this.mbd.getFirstBattlerOnTeam(Creature.TEAM_PARTY);
       final AbstractDamageEngine activeDE = activeTID == Creature.TEAM_PARTY
           ? this.ede
           : this.pde;
-      this.updatePositionInternal(x, y, false, acting, theEnemy, activeDE);
+      this.updatePositionInternal(x, y, false, acting, activeDE);
       break;
     default:
       break;
@@ -510,17 +507,11 @@ public class MapTurnBattleLogic extends Battle {
   @Override
   public boolean updatePosition(final int x, final int y) {
     final int activeTID = this.mbd.getActiveCharacter().getTeamID();
-    BattleCharacter theEnemy = activeTID == Creature.TEAM_PARTY
-        ? this.mbd.getFirstBattlerNotOnTeam(Creature.TEAM_PARTY)
-        : this.mbd.getFirstBattlerOnTeam(Creature.TEAM_PARTY);
     final AbstractDamageEngine activeDE = activeTID == Creature.TEAM_PARTY
         ? this.ede
         : this.pde;
-    if (x == 0 && y == 0) {
-      theEnemy = this.mbd.getActiveCharacter();
-    }
     return this.updatePositionInternal(x, y, true,
-        this.mbd.getActiveCharacter(), theEnemy, activeDE);
+        this.mbd.getActiveCharacter(), activeDE);
   }
 
   @Override
@@ -568,7 +559,11 @@ public class MapTurnBattleLogic extends Battle {
 
   private boolean updatePositionInternal(final int x, final int y,
       final boolean useAP, final BattleCharacter active,
-      final BattleCharacter theEnemy, final AbstractDamageEngine activeDE) {
+      final AbstractDamageEngine activeDE) {
+    if (active == null || activeDE == null) {
+      // Abort
+      return false;
+    }
     this.updateAllAIContexts();
     int px = active.getX();
     int py = active.getY();
@@ -746,21 +741,21 @@ public class MapTurnBattleLogic extends Battle {
               this.decrementActiveAttackCounter();
             }
             // Do damage
-            this.computeDamage(theEnemy.getCreature(), active.getCreature(),
+            this.computeDamage(bc.getCreature(), active.getCreature(),
                 activeDE);
             // Handle low health for party members
-            if (theEnemy.getCreature().isAlive()
-                && theEnemy.getTeamID() == Creature.TEAM_PARTY
-                && theEnemy.getCreature()
-                    .getCurrentHP() <= theEnemy.getCreature().getMaximumHP() * 3
+            if (bc.getCreature().isAlive()
+                && bc.getTeamID() == Creature.TEAM_PARTY
+                && bc.getCreature()
+                    .getCurrentHP() <= bc.getCreature().getMaximumHP() * 3
                         / 10) {
               SoundPlayer.playSound(SoundIndex.LOW_HEALTH, SoundGroup.BATTLE);
             }
             // Handle enemy death
-            if (!theEnemy.getCreature().isAlive()) {
-              if (theEnemy.getTeamID() != Creature.TEAM_PARTY) {
+            if (!bc.getCreature().isAlive()) {
+              if (bc.getTeamID() != Creature.TEAM_PARTY) {
                 // Update victory spoils
-                this.battleExp = theEnemy.getCreature().getExperience();
+                this.battleExp = bc.getCreature().getExperience();
               }
               // Remove effects from dead character
               bc.getCreature().stripAllEffects();
