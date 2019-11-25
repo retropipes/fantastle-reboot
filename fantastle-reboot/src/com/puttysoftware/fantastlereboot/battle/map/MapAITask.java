@@ -3,18 +3,18 @@ Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.battle.map.turn;
+package com.puttysoftware.fantastlereboot.battle.map;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 
-public class MapTurnBattleAITask extends Thread {
+public class MapAITask extends Thread {
   // Fields
   private final Battle b;
 
   // Constructors
-  public MapTurnBattleAITask(final Battle battle) {
+  public MapAITask(final Battle battle) {
     this.setName("Map AI Runner");
     this.b = battle;
   }

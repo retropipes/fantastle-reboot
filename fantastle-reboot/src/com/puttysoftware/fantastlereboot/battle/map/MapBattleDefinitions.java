@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.puttysoftware.fantastlereboot.ai.map.MapAIContext;
+import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
@@ -20,16 +21,20 @@ public class MapBattleDefinitions {
   // Fields
   private final List<BattleCharacter> battlers;
   private final List<MapAIContext> aiContexts;
+  private final List<MapAITask> aiTasks;
   private Maze battleMaze;
+  private final Battle battle;
   private int battlerCount;
   private int activeID;
   private static final int MAX_BATTLERS = 100;
 
   // Constructors
-  public MapBattleDefinitions() {
+  public MapBattleDefinitions(final Battle b) {
+    this.battle = b;
+    this.battlerCount = 0;
     this.battlers = new ArrayList<>();
     this.aiContexts = new ArrayList<>();
-    this.battlerCount = 0;
+    this.aiTasks = new ArrayList<>();
   }
 
   // Methods
@@ -199,8 +204,12 @@ public class MapBattleDefinitions {
       this.battlerCount++;
       if (battler.getCreature().hasMapAI()) {
         this.aiContexts.add(new MapAIContext(battler, this.battleMaze));
+        MapAITask task = new MapAITask(this.battle);
+        this.aiTasks.add(task);
+        task.start();
       } else {
         this.aiContexts.add(null);
+        this.aiTasks.add(null);
       }
       return true;
     } else {
@@ -218,6 +227,10 @@ public class MapBattleDefinitions {
 
   public MapAIContext getActiveAIContext() {
     return this.aiContexts.get(this.activeID);
+  }
+
+  public MapAITask getActiveAITask() {
+    return this.aiTasks.get(this.activeID);
   }
 
   public MapAIContext getBattlerAI(final BattleCharacter bc) {

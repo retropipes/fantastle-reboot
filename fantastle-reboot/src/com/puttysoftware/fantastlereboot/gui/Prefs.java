@@ -66,8 +66,6 @@ public class Prefs {
   private static JCheckBox[] music = new JCheckBox[Prefs.MUSIC_LENGTH];
   private static JCheckBox checkUpdatesStartup;
   private static JCheckBox moveOneAtATime;
-  private static JCheckBox mapBattleEngine;
-  private static JCheckBox timeBattleEngine;
   private static JComboBox<String> editorFillChoices;
   private static String[] editorFillChoiceArray;
   private static JComboBox<String> difficultyChoices;
@@ -80,8 +78,6 @@ public class Prefs {
   private static int editorFill;
   private static boolean checkUpdatesStartupEnabled;
   private static boolean moveOneAtATimeEnabled;
-  private static boolean useMapBattleEngine;
-  private static boolean useTimeBattleEngine;
   private static int difficultySetting = Prefs.DEFAULT_DIFFICULTY;
   private static int viewingWindowIndex;
   private static int updateCheckIntervalIndex;
@@ -152,22 +148,6 @@ public class Prefs {
 
   public static int getBattleSpeed() {
     return Prefs.BATTLE_SPEED;
-  }
-
-  public static boolean useMapBattleEngine() {
-    return Prefs.useMapBattleEngine;
-  }
-
-  public static void setMapBattleEngine(final boolean value) {
-    Prefs.useMapBattleEngine = value;
-  }
-
-  public static boolean useTimeBattleEngine() {
-    return Prefs.useTimeBattleEngine;
-  }
-
-  public static void setTimeBattleEngine(final boolean value) {
-    Prefs.useTimeBattleEngine = value;
   }
 
   public static int getGameDifficulty() {
@@ -330,8 +310,6 @@ public class Prefs {
     Prefs.checkUpdatesStartup.setSelected(Prefs.checkUpdatesStartupEnabled);
     Prefs.difficultyChoices.setSelectedIndex(Prefs.difficultySetting);
     Prefs.moveOneAtATime.setSelected(Prefs.moveOneAtATimeEnabled);
-    Prefs.mapBattleEngine.setSelected(Prefs.useMapBattleEngine);
-    Prefs.timeBattleEngine.setSelected(Prefs.useTimeBattleEngine);
     Prefs.viewingWindowChoices.setSelectedIndex(Prefs.viewingWindowIndex);
   }
 
@@ -352,8 +330,6 @@ public class Prefs {
     Prefs.checkUpdatesStartupEnabled = Prefs.checkUpdatesStartup.isSelected();
     Prefs.difficultySetting = Prefs.difficultyChoices.getSelectedIndex();
     Prefs.moveOneAtATimeEnabled = Prefs.moveOneAtATime.isSelected();
-    Prefs.useMapBattleEngine = Prefs.mapBattleEngine.isSelected();
-    Prefs.useTimeBattleEngine = Prefs.timeBattleEngine.isSelected();
     Prefs.viewingWindowIndex = Prefs.viewingWindowChoices.getSelectedIndex();
   }
 
@@ -377,10 +353,6 @@ public class Prefs {
     Prefs.difficultyChoices.setSelectedIndex(Prefs.difficultySetting);
     Prefs.moveOneAtATime.setSelected(true);
     Prefs.moveOneAtATimeEnabled = true;
-    Prefs.mapBattleEngine.setSelected(true);
-    Prefs.useMapBattleEngine = true;
-    Prefs.timeBattleEngine.setSelected(false);
-    Prefs.useTimeBattleEngine = false;
     Prefs.viewingWindowIndex = Prefs.DEFAULT_SIZE_INDEX;
     Prefs.viewingWindowChoices.setSelectedIndex(Prefs.viewingWindowIndex);
     Prefs.updateCheckInterval.setSelectedIndex(0);
@@ -441,8 +413,6 @@ public class Prefs {
     Prefs.checkUpdatesStartup = new JCheckBox("Check for Updates at Startup",
         true);
     Prefs.moveOneAtATime = new JCheckBox("One Move at a Time", true);
-    Prefs.mapBattleEngine = new JCheckBox("Use map battle engine", false);
-    Prefs.timeBattleEngine = new JCheckBox("Use time battle engine", false);
     Prefs.updateCheckIntervalValues = new String[] { "Daily", "Every 2nd Day",
         "Weekly", "Every 2nd Week", "Monthly" };
     Prefs.updateCheckInterval = new JComboBox<>(
@@ -463,8 +433,6 @@ public class Prefs {
     Prefs.miscPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     Prefs.miscPane.add(Prefs.checkUpdatesStartup);
     Prefs.miscPane.add(Prefs.moveOneAtATime);
-    Prefs.miscPane.add(Prefs.mapBattleEngine);
-    Prefs.miscPane.add(Prefs.timeBattleEngine);
     Prefs.miscPane.add(new JLabel("Check How Often For Updates"));
     Prefs.miscPane.add(Prefs.updateCheckInterval);
     Prefs.miscPane.add(new JLabel("Game Difficulty"));
@@ -537,8 +505,6 @@ public class Prefs {
         Prefs.lastDirSave = s.readLine();
         Prefs.lastFilterUsed = Integer.parseInt(s.readLine());
         Prefs.difficultySetting = Integer.parseInt(s.readLine());
-        Prefs.useMapBattleEngine = Boolean.parseBoolean(s.readLine());
-        Prefs.useTimeBattleEngine = Boolean.parseBoolean(s.readLine());
         Prefs.viewingWindowIndex = Integer.parseInt(s.readLine());
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
           Prefs.musicEnabled[x] = Boolean.parseBoolean(s.readLine());
@@ -579,8 +545,6 @@ public class Prefs {
         s.write(Prefs.lastDirSave + "\n");
         s.write(Integer.toString(Prefs.lastFilterUsed) + "\n");
         s.write(Integer.toString(Prefs.difficultySetting) + "\n");
-        s.write(Boolean.toString(Prefs.useMapBattleEngine) + "\n");
-        s.write(Boolean.toString(Prefs.useTimeBattleEngine) + "\n");
         s.write(Integer.toString(Prefs.viewingWindowIndex) + "\n");
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
           s.write(Boolean.toString(Prefs.musicEnabled[x]) + "\n");
@@ -620,8 +584,6 @@ public class Prefs {
         Prefs.updateCheckIntervalIndex = Integer.parseInt(s.readLine());
         Prefs.lastFilterUsed = Integer.parseInt(s.readLine());
         Prefs.difficultySetting = Integer.parseInt(s.readLine());
-        Prefs.mapBattleEngine.setSelected(Boolean.parseBoolean(s.readLine()));
-        Prefs.timeBattleEngine.setSelected(Boolean.parseBoolean(s.readLine()));
         Prefs.viewingWindowIndex = Integer.parseInt(s.readLine());
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
           Prefs.musicEnabled[x] = Boolean.parseBoolean(s.readLine());
@@ -649,8 +611,6 @@ public class Prefs {
         s.write(Integer.toString(Prefs.updateCheckIntervalIndex) + "\n");
         s.write(Integer.toString(Prefs.lastFilterUsed) + "\n");
         s.write(Integer.toString(Prefs.difficultySetting) + "\n");
-        s.write(Boolean.toString(Prefs.useMapBattleEngine) + "\n");
-        s.write(Boolean.toString(Prefs.useTimeBattleEngine) + "\n");
         s.write(Integer.toString(Prefs.viewingWindowIndex) + "\n");
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
           s.write(Boolean.toString(Prefs.musicEnabled[x]) + "\n");

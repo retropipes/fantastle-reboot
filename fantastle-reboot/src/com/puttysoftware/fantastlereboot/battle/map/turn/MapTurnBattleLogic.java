@@ -24,6 +24,7 @@ import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
 import com.puttysoftware.fantastlereboot.battle.BossRewards;
 import com.puttysoftware.fantastlereboot.battle.damageengines.AbstractDamageEngine;
+import com.puttysoftware.fantastlereboot.battle.map.MapAITask;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattle;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleArrowTask;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleDefinitions;
@@ -66,7 +67,6 @@ public class MapTurnBattleLogic extends Battle {
   private boolean lastAIActionResult;
   private int bx;
   private int by;
-  private final MapTurnBattleAITask ait;
   private MapTurnBattleGUI battleGUI;
   private List<BattleCharacter> friends;
   private List<BattleCharacter> enemies;
@@ -79,8 +79,6 @@ public class MapTurnBattleLogic extends Battle {
   public MapTurnBattleLogic() {
     this.battleGUI = new MapTurnBattleGUI();
     this.auto = new AutoMapAI();
-    this.ait = new MapTurnBattleAITask(this);
-    this.ait.start();
   }
 
   // Methods
@@ -117,7 +115,7 @@ public class MapTurnBattleLogic extends Battle {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     Game.hideOutput();
     bag.setInBattle();
-    this.mbd = new MapBattleDefinitions();
+    this.mbd = new MapBattleDefinitions(this);
     this.mbd.setBattleMaze(bMaze);
     this.pde = AbstractDamageEngine.getPlayerInstance();
     this.ede = AbstractDamageEngine.getEnemyInstance();
@@ -244,7 +242,10 @@ public class MapTurnBattleLogic extends Battle {
           this.lastAIActionResult = true;
           this.endTurn();
           this.stopWaitingForAI();
-          this.ait.aiWait();
+          final MapAITask task = this.mbd.getActiveAITask();
+          if (task != null) {
+            task.aiWait();
+          }
           break;
         }
       }
@@ -439,7 +440,10 @@ public class MapTurnBattleLogic extends Battle {
       if (this.mbd.getActiveCharacter().getCreature().hasMapAI()) {
         // Run AI
         this.waitForAI();
-        this.ait.aiRun();
+        final MapAITask task = this.mbd.getActiveAITask();
+        if (task != null) {
+          task.aiRun();
+        }
       } else {
         // No AI
         SoundPlayer.playSound(SoundIndex.PLAYER_UP, SoundGroup.BATTLE);

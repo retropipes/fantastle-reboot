@@ -22,10 +22,7 @@ import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
-import com.puttysoftware.fantastlereboot.battle.map.time.MapTimeBattleLogic;
 import com.puttysoftware.fantastlereboot.battle.map.turn.MapTurnBattleLogic;
-import com.puttysoftware.fantastlereboot.battle.window.time.WindowTimeBattleLogic;
-import com.puttysoftware.fantastlereboot.battle.window.turn.WindowTurnBattleLogic;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.AboutDialog;
@@ -48,10 +45,7 @@ public class BagOStuff {
   private final CombatItemList combatItems;
   private Shop weapons, armor, healer, bank, regenerator, spells, items, socks,
       enhancements, faiths;
-  private WindowTurnBattleLogic windowTurnBattle;
-  private WindowTimeBattleLogic windowTimeBattle;
   private MapTurnBattleLogic mapTurnBattle;
-  private MapTimeBattleLogic mapTimeBattle;
   private int currentMode;
   private int formerMode;
   private static final String UPDATE_SITE = "http://update.puttysoftware.com/tallertower/";
@@ -91,10 +85,7 @@ public class BagOStuff {
     this.about = new AboutDialog(BagOStuff.getVersionString());
     this.guiMgr = new GUIManager();
     this.gHelpMgr = new GeneralHelpManager();
-    this.windowTurnBattle = new WindowTurnBattleLogic();
-    this.windowTimeBattle = new WindowTimeBattleLogic();
     this.mapTurnBattle = new MapTurnBattleLogic();
-    this.mapTimeBattle = new MapTimeBattleLogic();
     this.editor = new MazeEditor();
     this.weapons = new Shop(ShopTypes.WEAPONS);
     this.armor = new Shop(ShopTypes.ARMOR);
@@ -236,26 +227,11 @@ public class BagOStuff {
   }
 
   public Battle getBattle() {
-    if (Prefs.useMapBattleEngine()) {
-      if (Prefs.useTimeBattleEngine()) {
-        return this.mapTimeBattle;
-      } else {
-        return this.mapTurnBattle;
-      }
-    } else {
-      if (Prefs.useTimeBattleEngine()) {
-        return this.windowTimeBattle;
-      } else {
-        return this.windowTurnBattle;
-      }
-    }
+    return this.mapTurnBattle;
   }
 
   public void resetBattleGUI() {
-    this.mapTimeBattle.resetGUI();
-    this.windowTimeBattle.resetGUI();
     this.mapTurnBattle.resetGUI();
-    this.windowTurnBattle.resetGUI();
   }
 
   public void playHighScoreSound() {
