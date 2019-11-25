@@ -62,8 +62,7 @@ public abstract class Battle {
 
   public abstract void maintainEffects(boolean player);
 
-  // Methods specific to map battles
-  public abstract boolean updatePosition(int x, int y);
+  public abstract void updatePosition(int x, int y);
 
   public abstract void fireArrow(int x, int y);
 
