@@ -22,7 +22,7 @@ import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
-import com.puttysoftware.fantastlereboot.battle.map.turn.MapTurnBattleLogic;
+import com.puttysoftware.fantastlereboot.battle.map.MapTurnBattleLogic;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.AboutDialog;

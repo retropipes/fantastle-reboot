@@ -42,7 +42,9 @@ public abstract class Battle {
 
   public abstract void endTurn();
 
-  public abstract Creature getEnemy();
+  public abstract Creature getActive();
+
+  public abstract Creature getEnemy(int teamID);
 
   public abstract Creature pickTarget();
 

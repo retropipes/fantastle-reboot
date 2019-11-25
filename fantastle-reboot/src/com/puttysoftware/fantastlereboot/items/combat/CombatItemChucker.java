@@ -11,7 +11,6 @@ import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.BattleTarget;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
-import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
@@ -61,16 +60,12 @@ public class CombatItemChucker {
     final BattleTarget target = cast.getTarget();
     switch (target) {
     case SELF:
-      if (teamID == Creature.TEAM_PARTY) {
-        return PartyManager.getParty().getLeader();
-      } else {
-        return FantastleReboot.getBagOStuff().getBattle().pickTarget();
-      }
+      return FantastleReboot.getBagOStuff().getBattle().getActive();
     case ENEMY:
       if (teamID == Creature.TEAM_PARTY) {
         return FantastleReboot.getBagOStuff().getBattle().pickTarget();
       } else {
-        return PartyManager.getParty().getLeader();
+        return FantastleReboot.getBagOStuff().getBattle().getEnemy(teamID);
       }
     default:
       return null;

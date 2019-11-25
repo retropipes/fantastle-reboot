@@ -3,7 +3,7 @@ Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.battle.map.turn;
+package com.puttysoftware.fantastlereboot.battle.map;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -28,10 +28,6 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
-import com.puttysoftware.fantastlereboot.battle.map.MapBattleDefinitions;
-import com.puttysoftware.fantastlereboot.battle.map.MapBattleDraw;
-import com.puttysoftware.fantastlereboot.battle.map.MapBattleEffects;
-import com.puttysoftware.fantastlereboot.battle.map.MapBattleViewingWindowManager;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;

@@ -34,7 +34,7 @@ public class Party {
   public Party() {
     this.members = new ArrayList<>();
     this.battlers = new ArrayList<>();
-    this.leaderID = -1;
+    this.leaderID = 0;
     this.activePCs = 0;
     this.monsterLevel = 0;
   }
@@ -135,7 +135,7 @@ public class Party {
   boolean addPartyMember(final PartyMember member) {
     if (this.members.size() < Party.MAX_SIZE) {
       this.members.add(member);
-      this.leaderID++;
+      this.activePCs++;
       Player.setAvatar(member.getAvatarFamilyID(), member.getAvatarSkinID(),
           member.getAvatarHairID());
       return true;
@@ -162,7 +162,7 @@ public class Party {
   }
 
   private String[] buildNameList() {
-    final String[] tempNames = new String[1];
+    final String[] tempNames = new String[Party.MAX_SIZE];
     int nnc = 0;
     for (final PartyMember member : this.members) {
       if (member != null) {

@@ -27,7 +27,7 @@ public class MapBattleDefinitions {
   private final Battle battle;
   private int battlerCount;
   private int activeID;
-  private static final int MAX_BATTLERS = 100;
+  static final int MAX_BATTLERS = 100;
 
   // Constructors
   public MapBattleDefinitions(final Battle b) {

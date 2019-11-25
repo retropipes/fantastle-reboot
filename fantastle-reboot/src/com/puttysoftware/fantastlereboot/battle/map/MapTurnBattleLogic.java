@@ -3,7 +3,7 @@ Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.battle.map.turn;
+package com.puttysoftware.fantastlereboot.battle.map;
 
 import java.util.Iterator;
 import java.util.List;
@@ -24,10 +24,6 @@ import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.BattleResults;
 import com.puttysoftware.fantastlereboot.battle.BossRewards;
 import com.puttysoftware.fantastlereboot.battle.damageengines.AbstractDamageEngine;
-import com.puttysoftware.fantastlereboot.battle.map.MapAITask;
-import com.puttysoftware.fantastlereboot.battle.map.MapBattle;
-import com.puttysoftware.fantastlereboot.battle.map.MapBattleArrowTask;
-import com.puttysoftware.fantastlereboot.battle.map.MapBattleDefinitions;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.monsters.MonsterFactory;
@@ -870,7 +866,7 @@ public class MapTurnBattleLogic extends Battle {
   }
 
   private String[] buildTargetNameList() {
-    final String[] tempNames = new String[1];
+    final String[] tempNames = new String[MapBattleDefinitions.MAX_BATTLERS];
     int nnc = 0;
     final Iterator<BattleCharacter> iter = this.mbd.battlerIterator();
     while (iter.hasNext()) {
@@ -892,8 +888,13 @@ public class MapTurnBattleLogic extends Battle {
   }
 
   @Override
-  public Creature getEnemy() {
-    return null;
+  public Creature getActive() {
+    return this.mbd.getActiveCharacter().getCreature();
+  }
+
+  @Override
+  public Creature getEnemy(int teamID) {
+    return this.mbd.getFirstBattlerNotOnTeam(teamID).getCreature();
   }
 
   @Override
