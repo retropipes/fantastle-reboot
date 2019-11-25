@@ -50,11 +50,13 @@ public class MapBattleDefinitions {
     public BattleState() {
       super();
       this.partyAlive = false;
-      this.partyGone = true;
+      this.partyGone = false;
       this.enemiesAlive = false;
-      this.enemiesGone = true;
+      this.enemiesGone = false;
       int totalParty = 0;
       int totalEnemies = 0;
+      int partyHasGone = 0;
+      int enemyHasGone = 0;
       int partyDeadOrGone = 0;
       int enemiesDeadOrGone = 0;
       MapBattleDefinitions mbd = MapBattleDefinitions.this;
@@ -69,7 +71,9 @@ public class MapBattleDefinitions {
             if (alive && active) {
               this.partyAlive = true;
             }
-            this.partyGone &= !active;
+            if (alive && !active) {
+              partyHasGone++;
+            }
             if (!alive || !active) {
               partyDeadOrGone++;
             }
@@ -78,7 +82,9 @@ public class MapBattleDefinitions {
             if (alive && active) {
               this.enemiesAlive = true;
             }
-            this.enemiesGone &= !active;
+            if (alive && !active) {
+              enemyHasGone++;
+            }
             if (!alive || !active) {
               enemiesDeadOrGone++;
             }
@@ -86,6 +92,8 @@ public class MapBattleDefinitions {
           }
         }
       }
+      this.partyGone = (partyHasGone == totalParty);
+      this.enemiesGone = (enemyHasGone == totalEnemies);
       this.partyDead = (partyDeadOrGone == totalParty);
       this.enemiesDead = (enemiesDeadOrGone == totalEnemies);
     }

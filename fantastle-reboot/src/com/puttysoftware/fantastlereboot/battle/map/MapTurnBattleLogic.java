@@ -180,29 +180,26 @@ public class MapTurnBattleLogic extends Battle {
   @Override
   public BattleResults getResult() {
     MapBattleDefinitions.BattleState state = this.mbd.getBattleState();
-    BattleResults currResult;
-    if (state.areEnemiesGone()) {
-      currResult = BattleResults.ENEMY_FLED;
-    } else if (state.isPartyGone()) {
-      currResult = BattleResults.FLED;
-    } else if (!state.areEnemiesAlive() && !state.isPartyAlive()) {
-      currResult = BattleResults.DRAW;
+    if (!state.areEnemiesAlive() && !state.isPartyAlive()) {
+      return BattleResults.DRAW;
     } else if (state.areEnemiesDead() && !state.isPartyDead()) {
       if (!this.alliesTookDamage) {
-        currResult = BattleResults.PERFECT;
+        return BattleResults.PERFECT;
       } else {
-        currResult = BattleResults.WON;
+        return BattleResults.WON;
       }
     } else if (!state.areEnemiesDead() && state.isPartyDead()) {
       if (!this.enemiesTookDamage) {
-        currResult = BattleResults.ANNIHILATED;
+        return BattleResults.ANNIHILATED;
       } else {
-        currResult = BattleResults.LOST;
+        return BattleResults.LOST;
       }
-    } else {
-      currResult = BattleResults.IN_PROGRESS;
+    } else if (state.areEnemiesAlive() && state.areEnemiesGone()) {
+      return BattleResults.ENEMY_FLED;
+    } else if (state.isPartyAlive() && state.isPartyGone()) {
+      return BattleResults.FLED;
     }
-    return currResult;
+    return BattleResults.IN_PROGRESS;
   }
 
   @Override
@@ -769,7 +766,7 @@ public class MapTurnBattleLogic extends Battle {
               bc.getCreature().stripAllEffects();
               // Set dead character to inactive
               bc.deactivate();
-              // Remove character from battle
+              // Remove dead character from battle
               this.mbd.getBattleMaze().setCell(new OpenSpace(), bc.getX(),
                   bc.getY(), 0, Layers.OBJECT);
             }
@@ -779,10 +776,10 @@ public class MapTurnBattleLogic extends Battle {
               active.getCreature().stripAllEffects();
               // Set dead character to inactive
               active.deactivate();
-              // Remove character from battle
+              // Remove dead character from battle
               this.mbd.getBattleMaze().setCell(new OpenSpace(), active.getX(),
                   active.getY(), 0, Layers.OBJECT);
-              // End turn
+              // We're dead - end our turn
               this.endTurn();
             }
           } else {
@@ -813,33 +810,23 @@ public class MapTurnBattleLogic extends Battle {
           return false;
         }
       }
-      // Flee
+      // Fled
       this.battleGUI.getViewManager().restoreViewingWindow();
       active.restoreLocation();
       // Set fled character to inactive
       active.deactivate();
-      // Remove character from battle
+      // Remove fled character from battle
       m.setCell(new OpenSpace(), active.getX(), active.getY(), 0,
           Layers.OBJECT);
-      // End Turn
+      // We fled - end our turn
       this.endTurn();
       this.updateStatsAndEffects();
-      final BattleResults currResult = this.getResult();
-      if (currResult != BattleResults.IN_PROGRESS) {
-        // Battle Done
-        this.doResult(currResult);
-      }
       this.battleGUI.getViewManager().setViewingWindowCenterX(py);
       this.battleGUI.getViewManager().setViewingWindowCenterY(px);
       this.redrawBattle();
       return true;
     }
     this.updateStatsAndEffects();
-    final BattleResults currResult = this.getResult();
-    if (currResult != BattleResults.IN_PROGRESS) {
-      // Battle Done
-      this.doResult(currResult);
-    }
     this.battleGUI.getViewManager().setViewingWindowCenterX(py);
     this.battleGUI.getViewManager().setViewingWindowCenterY(px);
     this.redrawBattle();
@@ -1276,8 +1263,7 @@ public class MapTurnBattleLogic extends Battle {
           // Remove character from battle
           this.mbd.getBattleMaze().setCell(new OpenSpace(), battler.getX(),
               battler.getY(), 0, Layers.OBJECT);
-          if (this.mbd.getActiveCharacter().getName()
-              .equals(battler.getName())) {
+          if (this.mbd.getActiveCharacter().equals(battler)) {
             // Active character died, end turn
             this.endTurn();
           }
