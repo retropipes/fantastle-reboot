@@ -241,12 +241,11 @@ public class MapTurnBattleLogic extends Battle {
           break;
         default:
           this.lastAIActionResult = true;
-          this.endTurn();
-          this.stopWaitingForAI();
           final MapAITask task = this.mbd.getActiveAITask();
           if (task != null) {
             task.aiWait();
           }
+          this.endTurn();
           break;
         }
       }
@@ -460,6 +459,7 @@ public class MapTurnBattleLogic extends Battle {
         }
       } else {
         // No AI
+        this.stopWaitingForAI();
         SoundPlayer.playSound(SoundIndex.PLAYER_UP, SoundGroup.BATTLE);
       }
       return false;
