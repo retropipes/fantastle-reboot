@@ -195,11 +195,9 @@ public class MapBattleDefinitions {
   public void resetBattlers() {
     for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
-        if (battler.getCreature().isAlive()) {
-          battler.activate();
-          battler.resetActions();
-          battler.resetLocation();
-        }
+        battler.activate();
+        battler.resetActions();
+        battler.resetLocation();
       }
     }
   }
@@ -207,7 +205,7 @@ public class MapBattleDefinitions {
   public void roundResetBattlers() {
     for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
-        if (battler.getCreature().isAlive()) {
+        if (battler.getCreature().isAlive() && battler.isActive()) {
           battler.resetActions();
         }
       }

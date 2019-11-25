@@ -185,7 +185,11 @@ public class MapTurnBattleLogic extends Battle {
   public BattleResults getResult() {
     MapBattleDefinitions.BattleState state = this.mbd.getBattleState();
     BattleResults currResult;
-    if (!state.areEnemiesAlive() && !state.isPartyAlive()) {
+    if (state.areEnemiesGone()) {
+      currResult = BattleResults.ENEMY_FLED;
+    } else if (state.isPartyGone()) {
+      currResult = BattleResults.FLED;
+    } else if (!state.areEnemiesAlive() && !state.isPartyAlive()) {
       currResult = BattleResults.DRAW;
     } else if (state.areEnemiesDead() && !state.isPartyDead()) {
       if (!this.alliesTookDamage) {
@@ -199,10 +203,6 @@ public class MapTurnBattleLogic extends Battle {
       } else {
         currResult = BattleResults.LOST;
       }
-    } else if (state.areEnemiesGone()) {
-      currResult = BattleResults.ENEMY_FLED;
-    } else if (state.isPartyGone()) {
-      currResult = BattleResults.FLED;
     } else {
       currResult = BattleResults.IN_PROGRESS;
     }
@@ -421,7 +421,8 @@ public class MapTurnBattleLogic extends Battle {
     final Iterator<BattleCharacter> iter = this.mbd.battlerIterator();
     for (int x = 0; x < this.speedArray.length; x++) {
       final BattleCharacter battler = iter.next();
-      if (battler != null && battler.getCreature().isAlive()) {
+      if (battler != null && battler.getCreature().isAlive()
+          && battler.isActive()) {
         this.speedArray[x] = (int) battler.getCreature()
             .getEffectedStat(StatConstants.STAT_AGILITY);
       } else {
@@ -456,11 +457,6 @@ public class MapTurnBattleLogic extends Battle {
       this.lastSpeed = this.speedArray[res];
       this.activeIndex = res;
       this.mbd.setActiveCharacterIndex(this.activeIndex);
-      // Check
-      if (!this.mbd.getActiveCharacter().isActive()) {
-        // Inactive, pick new active character
-        return this.setNextActive(isNewRound);
-      }
       // AI Check
       if (this.mbd.getActiveCharacter().getCreature().hasMapAI()) {
         // Run AI
