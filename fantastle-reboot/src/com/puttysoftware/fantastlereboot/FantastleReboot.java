@@ -24,11 +24,14 @@ import javax.swing.JMenuBar;
 
 import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.errorlogger.ErrorLogger;
+import com.puttysoftware.fantastlereboot.assets.SoundGroup;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.gui.MenuManager;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.gui.PrefsLauncher;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.integration.NativeIntegration;
 
@@ -36,20 +39,16 @@ public class FantastleReboot {
   // Constants
   private static BagOStuff bag;
   private static final String PROGRAM_NAME = "Fantastle Reboot";
-  private static final String ERROR_MESSAGE = "Perhaps a bug is to blame for this error message.\n"
-      + "Include the debug log with your bug report.\n"
-      + "Email bug reports to: support@puttysoftware.com\n"
-      + "Subject: Fantastle Reboot Error Report";
-  private static final String ERROR_TITLE = "Fantastle Error";
-  private static final String WARNING_MESSAGE = "Perhaps a bug is to blame for this warning message.\n"
-      + "Include the debug log with your bug report.\n"
-      + "Email bug reports to: support@puttysoftware.com\n"
-      + "Subject: Fantastle Reboot Warning Report";
-  private static final String WARNING_TITLE = "Fantastle Warning";
+  private static final String PROGRAM_LOG_NAME = "FantastleReboot";
+  private static final String ERROR_MESSAGE = "An unrecoverable error has occurred.\n"
+      + "The details have been recorded.\n" + "The program will now exit.";
+  private static final String ERROR_TITLE = "FATAL ERROR";
+  private static final String WARNING_MESSAGE = "Something has gone wrong.\n"
+      + "The details have been recorded.";
+  private static final String WARNING_TITLE = "Warning";
   private static final ErrorLogger debug = new ErrorLogger(
-      FantastleReboot.PROGRAM_NAME);
+      FantastleReboot.PROGRAM_LOG_NAME);
   private static final NativeIntegration NATIVITY = new NativeIntegration();
-  private static boolean IN_FANTASTLE = true;
   private static final int BATTLE_MAZE_SIZE = 16;
   private static MenuManager menus;
   private static final JMenuBar mainMenuBar = new JMenuBar();
@@ -64,12 +63,14 @@ public class FantastleReboot {
   }
 
   public static void logError(final Throwable t) {
+    SoundPlayer.playSound(SoundIndex.FATAL, SoundGroup.USER_INTERFACE);
     CommonDialogs.showErrorDialog(FantastleReboot.ERROR_MESSAGE,
         FantastleReboot.ERROR_TITLE);
     FantastleReboot.debug.logError(t);
   }
 
   public static void logWarning(final Throwable t) {
+    SoundPlayer.playSound(SoundIndex.ALERT, SoundGroup.USER_INTERFACE);
     CommonDialogs.showErrorDialog(FantastleReboot.WARNING_MESSAGE,
         FantastleReboot.WARNING_TITLE);
     FantastleReboot.debug.logNonFatalError(t);
@@ -77,20 +78,13 @@ public class FantastleReboot {
 
   public static void logWarningWithMessage(final Throwable t,
       final String message) {
+    SoundPlayer.playSound(SoundIndex.ALERT, SoundGroup.USER_INTERFACE);
     CommonDialogs.showErrorDialog(message, FantastleReboot.WARNING_TITLE);
     FantastleReboot.debug.logNonFatalError(t);
   }
 
   public static int getBattleMazeSize() {
     return FantastleReboot.BATTLE_MAZE_SIZE;
-  }
-
-  public static boolean inFantastleReboot() {
-    return FantastleReboot.IN_FANTASTLE;
-  }
-
-  public static void leaveFantastleReboot() {
-    FantastleReboot.IN_FANTASTLE = false;
   }
 
   static MenuManager getMenuManager() {

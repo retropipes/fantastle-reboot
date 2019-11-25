@@ -257,17 +257,15 @@ public class Prefs {
       Prefs.setUpGUI();
       Prefs.guiSetUp = true;
     }
-    if (FantastleReboot.inFantastleReboot()) {
-      Prefs.prefFrame = MainWindow.getOutputFrame();
-      Prefs.prefFrame.setTitle("Preferences");
-      Prefs.prefFrame.setDefaultButton(Prefs.prefsOK);
-      Prefs.prefFrame.attachContent(Prefs.mainPrefPane);
-      Prefs.prefFrame.addWindowListener(Prefs.handler);
-      Prefs.prefFrame.pack();
-      final BagOStuff app = FantastleReboot.getBagOStuff();
-      app.setInPrefs();
-      app.getMenuManager().setPrefMenus();
-    }
+    Prefs.prefFrame = MainWindow.getOutputFrame();
+    Prefs.prefFrame.setTitle("Preferences");
+    Prefs.prefFrame.setDefaultButton(Prefs.prefsOK);
+    Prefs.prefFrame.attachContent(Prefs.mainPrefPane);
+    Prefs.prefFrame.addWindowListener(Prefs.handler);
+    Prefs.prefFrame.pack();
+    final BagOStuff app = FantastleReboot.getBagOStuff();
+    app.setInPrefs();
+    app.getMenuManager().setPrefMenus();
   }
 
   private static void hidePrefs() {
@@ -275,12 +273,10 @@ public class Prefs {
       Prefs.setUpGUI();
       Prefs.guiSetUp = true;
     }
-    if (FantastleReboot.inFantastleReboot()) {
-      Prefs.prefFrame.setDefaultButton(null);
-      Prefs.prefFrame.removeWindowListener(Prefs.handler);
-      Prefs.fileMgr.writePreferencesFile();
-      FantastleReboot.getBagOStuff().restoreFormerMode();
-    }
+    Prefs.prefFrame.setDefaultButton(null);
+    Prefs.prefFrame.removeWindowListener(Prefs.handler);
+    Prefs.fileMgr.writePreferencesFile();
+    FantastleReboot.getBagOStuff().restoreFormerMode();
   }
 
   public static void writePrefs() {

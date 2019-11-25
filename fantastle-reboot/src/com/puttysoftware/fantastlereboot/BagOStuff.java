@@ -48,8 +48,8 @@ public class BagOStuff {
   private MapTurnBattleLogic mapTurnBattle;
   private int currentMode;
   private int formerMode;
-  private static final String UPDATE_SITE = "http://update.puttysoftware.com/tallertower/";
-  private static final String NEW_VERSION_SITE = "http://www.puttysoftware.com/tallertower/";
+  private static final String UPDATE_SITE = "https://puttysoftware.com/updater/fantastle-reboot/";
+  private static final String NEW_VERSION_SITE = "https://puttysoftware.github.com/fantastle-reboot/";
   private static final String PRODUCT_NAME = "FantastleReboot";
   private static final String COMPANY_NAME = "Putty Software";
   private static final String RDNS_COMPANY_NAME = "com.puttysoftware.tallertower";
