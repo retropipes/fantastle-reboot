@@ -159,15 +159,17 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public void battleDone() {
-    final BagOStuff bag = FantastleReboot.getBagOStuff();
-    // Leave Battle
-    this.hideBattle();
-    // Post-battle stuff
-    final Maze m = MazeManager.getMaze();
-    m.postBattle(this.bx, this.by);
-    // Return to whence we came
-    bag.restoreFormerMode();
-    Game.redrawMaze();
+    if (FantastleReboot.getBagOStuff().inBattle()) {
+      final BagOStuff bag = FantastleReboot.getBagOStuff();
+      // Leave Battle
+      this.hideBattle();
+      // Post-battle stuff
+      final Maze m = MazeManager.getMaze();
+      m.postBattle(this.bx, this.by);
+      // Return to whence we came
+      bag.restoreFormerMode();
+      Game.redrawMaze();
+    }
   }
 
   private void clearStatusMessage() {
@@ -213,6 +215,10 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public void executeNextAIAction() {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return;
+    }
     if (this.mbd != null && this.mbd.getActiveCharacter() != null
         && this.mbd.getActiveCharacter().getCreature() != null
         && this.mbd.getActiveCharacter().getCreature().getMapAI() != null) {
@@ -264,6 +270,10 @@ public class MapTurnBattleLogic extends Battle {
   }
 
   private void executeAutoAI(final BattleCharacter acting) {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return;
+    }
     final int action = this.auto.getNextAction(acting.getCreature(),
         this.mbd.getBattlerAI(acting));
     switch (action) {
@@ -283,6 +293,10 @@ public class MapTurnBattleLogic extends Battle {
 
   private void displayRoundResults(final Creature theEnemy,
       final Creature active, final AbstractDamageEngine activeDE) {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return;
+    }
     // Display round results
     final boolean isParty = active.getTeamID() == Creature.TEAM_PARTY;
     final String activeName = active.getName();
@@ -432,6 +446,10 @@ public class MapTurnBattleLogic extends Battle {
   }
 
   private boolean setNextActive(final boolean isNewRound) {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return false;
+    }
     int res = 0;
     if (isNewRound) {
       res = this.findNextSmallestSpeed(Integer.MAX_VALUE);
@@ -520,6 +538,10 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public boolean updatePosition(final int x, final int y) {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return false;
+    }
     final int activeTID = this.mbd.getActiveCharacter().getTeamID();
     final AbstractDamageEngine activeDE = activeTID == Creature.TEAM_PARTY
         ? this.ede
@@ -530,6 +552,10 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public void fireArrow(final int x, final int y) {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return;
+    }
     if (this.mbd.getActiveCharacter().getCurrentActions() > 0) {
       // Has actions left
       this.mbd.getActiveCharacter().act(1);
@@ -900,16 +926,28 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public void showBattle() {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return;
+    }
     this.battleGUI.showBattle();
   }
 
   @Override
   public void hideBattle() {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return;
+    }
     this.battleGUI.hideBattle();
   }
 
   @Override
   public boolean castSpell() {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return false;
+    }
     final BattleCharacter activeBC = this.mbd.getActiveCharacter();
     Creature active = null;
     if (activeBC != null) {
@@ -956,6 +994,10 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public boolean useItem() {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return false;
+    }
     final BattleCharacter activeBC = this.mbd.getActiveCharacter();
     Creature active = null;
     if (activeBC != null) {
@@ -1002,6 +1044,10 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public boolean steal() {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return false;
+    }
     final BattleCharacter activeBC = this.mbd.getActiveCharacter();
     Creature active = null;
     if (activeBC != null) {
@@ -1060,6 +1106,10 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public boolean drain() {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return false;
+    }
     final BattleCharacter activeBC = this.mbd.getActiveCharacter();
     Creature active = null;
     if (activeBC != null) {
@@ -1144,6 +1194,10 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public void endTurn() {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return;
+    }
     this.newRound = this.setNextActive(this.newRound);
     if (this.newRound) {
       this.setStatusMessage("New Round");
@@ -1164,12 +1218,20 @@ public class MapTurnBattleLogic extends Battle {
   }
 
   private void redrawBattle() {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return;
+    }
     this.battleGUI.redrawBattle(this.mbd);
   }
 
   @Override
   public void redrawOneBattleSquare(final int x, final int y,
       final FantastleObjectModel obj3) {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return;
+    }
     this.battleGUI.redrawOneBattleSquare(this.mbd, x, y, obj3);
   }
 
@@ -1195,6 +1257,10 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public void maintainEffects(final boolean player) {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return;
+    }
     final Iterator<BattleCharacter> iter = this.mbd.battlerIterator();
     while (iter.hasNext()) {
       final BattleCharacter battler = iter.next();
@@ -1257,20 +1323,36 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public void resetGUI() {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return;
+    }
     // Create new GUI
     this.battleGUI = new MapTurnBattleGUI();
   }
 
   @Override
   public boolean isWaitingForAI() {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return false;
+    }
     return !this.battleGUI.areEventHandlersOn();
   }
 
   private void waitForAI() {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return;
+    }
     this.battleGUI.turnEventHandlersOff();
   }
 
   private void stopWaitingForAI() {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return;
+    }
     this.battleGUI.turnEventHandlersOn();
   }
 
@@ -1286,6 +1368,10 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public boolean doPlayerActions(final int action) {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return false;
+    }
     switch (action) {
     case AIRoutine.ACTION_CAST_SPELL:
       this.castSpell();
@@ -1308,6 +1394,10 @@ public class MapTurnBattleLogic extends Battle {
 
   @Override
   public void doResult(BattleResults result) {
+    if (!FantastleReboot.getBagOStuff().inBattle()) {
+      // Abort
+      return;
+    }
     this.stopWaitingForAI();
     if (!this.resultDoneAlready) {
       // Handle Results
