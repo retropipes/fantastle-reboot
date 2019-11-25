@@ -69,7 +69,8 @@ public final class MazeFileManager {
             }
           }
           if (index != -1) {
-            final File file = new File(gameDir + rawChoices[index]);
+            final File file = new File(
+                gameDir + File.separator + rawChoices[index]);
             filename = file.getAbsolutePath();
             MazeFileManager.loadGameFile(filename);
           } else {
@@ -192,7 +193,8 @@ public final class MazeFileManager {
             }
           }
           if (index != -1) {
-            final File file = new File(gameDir + rawChoices[index]);
+            final File file = new File(
+                gameDir + File.separator + rawChoices[index]);
             filename = file.getAbsolutePath();
             MazeFileManager.loadMazeFile(filename);
           } else {

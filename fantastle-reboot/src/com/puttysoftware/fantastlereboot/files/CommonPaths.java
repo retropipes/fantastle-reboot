@@ -81,8 +81,9 @@ public class CommonPaths {
     b.append(CommonPaths.getDirectoryPrefix(fallback));
     b.append(CommonPaths.getAppDirectoryName(fallback));
     b.append(suffix);
-    b.append(File.pathSeparator);
-    return b.toString();
+    String dirname = b.toString();
+    new File(dirname).mkdirs();
+    return dirname;
   }
 
   public static File getPrefsFile() {

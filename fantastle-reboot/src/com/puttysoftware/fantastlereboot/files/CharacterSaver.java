@@ -17,7 +17,7 @@ public class CharacterSaver {
   public static void saveCharacter(final PartyMember character) {
     final String basePath = CharacterRegistration.getBasePath();
     final String name = character.getName();
-    final String characterFile = basePath + name
+    final String characterFile = basePath + File.separator + name
         + FileExtensions.getCharacterExtensionWithPeriod();
     try (XDataWriter writer = new XDataWriter(characterFile, "character")) {
       CharacterSaver.writeCharacter(writer, character);

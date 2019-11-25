@@ -133,6 +133,7 @@ public class ScoreTracker {
   private static File getScoresFile(final String filename) {
     final StringBuilder b = new StringBuilder();
     b.append(CommonPaths.getAppDirectoryFor("Scores"));
+    b.append(File.separator);
     b.append(filename);
     b.append(FileExtensions.getScoresExtensionWithPeriod());
     return new File(b.toString());
