@@ -7,6 +7,8 @@ package com.puttysoftware.fantastlereboot.battle.map;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -80,7 +82,7 @@ public class MapBattleLogic extends Battle {
   public MapBattleLogic() {
     this.battleGUI = new MapBattleGUI();
     this.auto = new AutoMapAI();
-    this.dispatch = Executors.newSingleThreadExecutor();
+    this.dispatch = Executors.newCachedThreadPool();
   }
 
   // Methods
@@ -88,55 +90,51 @@ public class MapBattleLogic extends Battle {
   public void doBattle(final int x, final int y) {
     this.bx = x;
     this.by = y;
-    Runnable task = new Runnable() {
-      @Override
-      public void run() {
-        MapBattleLogic logic = MapBattleLogic.this;
-        // Initialize Battle
-        final BagOStuff bag = FantastleReboot.getBagOStuff();
-        Game.hideOutput();
-        bag.setInBattle();
-        logic.alliesTookDamage = false;
-        logic.enemiesTookDamage = false;
-        final Maze bMaze = Maze.getTemporaryBattleCopy();
-        final MapBattle b = new MapBattle();
-        logic.mbd = new MapBattleDefinitions(logic);
-        logic.mbd.setBattleMaze(bMaze);
-        logic.pde = AbstractDamageEngine.getPlayerInstance();
-        logic.ede = AbstractDamageEngine.getEnemyInstance();
-        logic.resultDoneAlready = false;
-        // Generate Friends
-        logic.friends = PartyManager.getParty().getBattleCharacters();
-        // Generate Enemies
-        logic.enemies = b.getBattlers();
-        // Merge and Create AI Contexts
-        for (final BattleCharacter friend : logic.friends) {
-          logic.mbd.addBattler(friend);
-        }
-        for (final BattleCharacter enemy : logic.enemies) {
-          logic.mbd.addBattler(enemy);
-        }
-        // Reset Inactive Indicators and Action Counters
-        logic.mbd.resetBattlers();
-        // Generate Speed Array
-        logic.generateSpeedArray();
-        // Set Character Locations
-        logic.setCharacterLocations();
-        // Set First Active
-        logic.newRound = logic.setNextActive(true);
-        // Clear status message
-        logic.clearStatusMessage();
-        // Start Battle
-        logic.battleGUI.getViewManager()
-            .setViewingWindowCenterX(logic.mbd.getActiveCharacter().getY());
-        logic.battleGUI.getViewManager()
-            .setViewingWindowCenterY(logic.mbd.getActiveCharacter().getX());
-        SoundPlayer.playSound(SoundIndex.DRAW_SWORD, SoundGroup.BATTLE);
-        MusicPlayer.playMusic(MusicIndex.NORMAL_MAP_BATTLE, MusicGroup.BATTLE);
-        logic.showBattle();
-        logic.updateStatsAndEffects();
-        logic.redrawBattle();
+    Runnable task = () -> {
+      // Initialize Battle
+      final BagOStuff bag = FantastleReboot.getBagOStuff();
+      Game.hideOutput();
+      bag.setInBattle();
+      this.alliesTookDamage = false;
+      this.enemiesTookDamage = false;
+      final Maze bMaze = Maze.getTemporaryBattleCopy();
+      final MapBattle b = new MapBattle();
+      this.mbd = new MapBattleDefinitions(this);
+      this.mbd.setBattleMaze(bMaze);
+      this.pde = AbstractDamageEngine.getPlayerInstance();
+      this.ede = AbstractDamageEngine.getEnemyInstance();
+      this.resultDoneAlready = false;
+      // Generate Friends
+      this.friends = PartyManager.getParty().getBattleCharacters();
+      // Generate Enemies
+      this.enemies = b.getBattlers();
+      // Merge and Create AI Contexts
+      for (final BattleCharacter friend : this.friends) {
+        this.mbd.addBattler(friend);
       }
+      for (final BattleCharacter enemy : this.enemies) {
+        this.mbd.addBattler(enemy);
+      }
+      // Reset Inactive Indicators and Action Counters
+      this.mbd.resetBattlers();
+      // Generate Speed Array
+      this.generateSpeedArray();
+      // Set Character Locations
+      this.setCharacterLocations();
+      // Set First Active
+      this.newRound = this.setNextActive(true);
+      // Clear status message
+      this.clearStatusMessage();
+      // Start Battle
+      this.battleGUI.getViewManager()
+          .setViewingWindowCenterX(this.mbd.getActiveCharacter().getY());
+      this.battleGUI.getViewManager()
+          .setViewingWindowCenterY(this.mbd.getActiveCharacter().getX());
+      SoundPlayer.playSound(SoundIndex.DRAW_SWORD, SoundGroup.BATTLE);
+      MusicPlayer.playMusic(MusicIndex.NORMAL_MAP_BATTLE, MusicGroup.BATTLE);
+      this.showBattle();
+      this.updateStatsAndEffects();
+      this.redrawBattle();
     };
     this.dispatch.submit(task);
   }
@@ -162,21 +160,17 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public void battleDone() {
-    Runnable task = new Runnable() {
-      @Override
-      public void run() {
-        MapBattleLogic logic = MapBattleLogic.this;
-        if (FantastleReboot.getBagOStuff().inBattle()) {
-          final BagOStuff bag = FantastleReboot.getBagOStuff();
-          // Leave Battle
-          logic.hideBattle();
-          // Post-battle stuff
-          final Maze m = MazeManager.getMaze();
-          m.postBattle(logic.bx, logic.by);
-          // Return to whence we came
-          bag.restoreFormerMode();
-          Game.redrawMaze();
-        }
+    Runnable task = () -> {
+      if (FantastleReboot.getBagOStuff().inBattle()) {
+        final BagOStuff bag = FantastleReboot.getBagOStuff();
+        // Leave Battle
+        this.hideBattle();
+        // Post-battle stuff
+        final Maze m = MazeManager.getMaze();
+        m.postBattle(this.bx, this.by);
+        // Return to whence we came
+        bag.restoreFormerMode();
+        Game.redrawMaze();
       }
     };
     this.dispatch.submit(task);
@@ -222,55 +216,51 @@ public class MapBattleLogic extends Battle {
       // Abort
       return;
     }
-    Runnable task = new Runnable() {
-      @Override
-      public void run() {
-        MapBattleLogic logic = MapBattleLogic.this;
-        if (logic.mbd != null && logic.mbd.getActiveCharacter() != null
-            && logic.mbd.getActiveCharacter().getCreature() != null && logic.mbd
-                .getActiveCharacter().getCreature().getMapAI() != null) {
-          final BattleCharacter active = logic.mbd.getActiveCharacter();
-          if (active.getCreature().isAlive()) {
-            final int action = active.getCreature().getMapAI().getNextAction(
-                logic.mbd.getActiveCharacter().getCreature(),
-                logic.mbd.getActiveAIContext());
-            switch (action) {
-            case AIRoutine.ACTION_MOVE:
-              final int x = active.getCreature().getMapAI().getMoveX();
-              final int y = active.getCreature().getMapAI().getMoveY();
-              final int activeTID = logic.mbd.getActiveCharacter().getTeamID();
-              final AbstractDamageEngine activeDE = activeTID == Creature.TEAM_PARTY
-                  ? logic.ede
-                  : logic.pde;
-              logic.lastAIActionResult = logic.updatePositionInternal(x, y,
-                  true, logic.mbd.getActiveCharacter(), activeDE);
-              active.getCreature().getMapAI()
-                  .setLastResult(logic.lastAIActionResult);
-              break;
-            case AIRoutine.ACTION_CAST_SPELL:
-              logic.lastAIActionResult = logic.castSpell();
-              active.getCreature().getMapAI()
-                  .setLastResult(logic.lastAIActionResult);
-              break;
-            case AIRoutine.ACTION_DRAIN:
-              logic.lastAIActionResult = logic.drain();
-              active.getCreature().getMapAI()
-                  .setLastResult(logic.lastAIActionResult);
-              break;
-            case AIRoutine.ACTION_STEAL:
-              logic.lastAIActionResult = logic.steal();
-              active.getCreature().getMapAI()
-                  .setLastResult(logic.lastAIActionResult);
-              break;
-            default:
-              logic.lastAIActionResult = true;
-              final MapAITask aiTask = logic.mbd.getActiveAITask();
-              if (aiTask != null) {
-                aiTask.aiWait();
-              }
-              logic.endTurn();
-              break;
+    Runnable task = () -> {
+      if (this.mbd != null && this.mbd.getActiveCharacter() != null
+          && this.mbd.getActiveCharacter().getCreature() != null
+          && this.mbd.getActiveCharacter().getCreature().getMapAI() != null) {
+        final BattleCharacter active = this.mbd.getActiveCharacter();
+        if (active.getCreature().isAlive()) {
+          final int action = active.getCreature().getMapAI().getNextAction(
+              this.mbd.getActiveCharacter().getCreature(),
+              this.mbd.getActiveAIContext());
+          switch (action) {
+          case AIRoutine.ACTION_MOVE:
+            final int x = active.getCreature().getMapAI().getMoveX();
+            final int y = active.getCreature().getMapAI().getMoveY();
+            final int activeTID = this.mbd.getActiveCharacter().getTeamID();
+            final AbstractDamageEngine activeDE = activeTID == Creature.TEAM_PARTY
+                ? this.ede
+                : this.pde;
+            this.lastAIActionResult = this.updatePositionInternal(x, y, true,
+                this.mbd.getActiveCharacter(), activeDE);
+            active.getCreature().getMapAI()
+                .setLastResult(this.lastAIActionResult);
+            break;
+          case AIRoutine.ACTION_CAST_SPELL:
+            this.lastAIActionResult = this.castSpell();
+            active.getCreature().getMapAI()
+                .setLastResult(this.lastAIActionResult);
+            break;
+          case AIRoutine.ACTION_DRAIN:
+            this.lastAIActionResult = this.drain();
+            active.getCreature().getMapAI()
+                .setLastResult(this.lastAIActionResult);
+            break;
+          case AIRoutine.ACTION_STEAL:
+            this.lastAIActionResult = this.steal();
+            active.getCreature().getMapAI()
+                .setLastResult(this.lastAIActionResult);
+            break;
+          default:
+            this.lastAIActionResult = true;
+            final MapAITask aiTask = this.mbd.getActiveAITask();
+            if (aiTask != null) {
+              aiTask.aiWait();
             }
+            this.endTurn();
+            break;
           }
         }
       }
@@ -533,17 +523,13 @@ public class MapBattleLogic extends Battle {
       // Abort
       return;
     }
-    Runnable task = new Runnable() {
-      @Override
-      public void run() {
-        MapBattleLogic logic = MapBattleLogic.this;
-        final int activeTID = logic.mbd.getActiveCharacter().getTeamID();
-        final AbstractDamageEngine activeDE = activeTID == Creature.TEAM_PARTY
-            ? logic.ede
-            : logic.pde;
-        logic.updatePositionInternal(x, y, true, logic.mbd.getActiveCharacter(),
-            activeDE);
-      }
+    Runnable task = () -> {
+      final int activeTID = this.mbd.getActiveCharacter().getTeamID();
+      final AbstractDamageEngine activeDE = activeTID == Creature.TEAM_PARTY
+          ? this.ede
+          : this.pde;
+      this.updatePositionInternal(x, y, true, this.mbd.getActiveCharacter(),
+          activeDE);
     };
     this.dispatch.submit(task);
   }
@@ -941,46 +927,54 @@ public class MapBattleLogic extends Battle {
       // Abort
       return false;
     }
-    final BattleCharacter activeBC = this.mbd.getActiveCharacter();
-    Creature active = null;
-    if (activeBC != null) {
-      active = activeBC.getCreature();
-    }
-    if (activeBC == null || active == null) {
-      // Abort
-      return false;
-    }
-    // Check Action Counter
-    if (activeBC.canAct(MapBattleLogic.SPELL_ACTION_POINTS)) {
-      BattleCharacter anyEnemy = this.mbd
-          .getFirstBattlerNotOnTeam(activeBC.getTeamID());
-      if (anyEnemy == null) {
-        // Failed - nobody to use on
-        this.setStatusMessage(activeBC.getName()
-            + " tries to cast a spell, but nobody is there to cast it on!");
+    Callable<Boolean> task = () -> {
+      final BattleCharacter activeBC = this.mbd.getActiveCharacter();
+      Creature active = null;
+      if (activeBC != null) {
+        active = activeBC.getCreature();
+      }
+      if (activeBC == null || active == null) {
+        // Abort
         return false;
       }
-      if (!active.hasMapAI()) {
-        // Active character has no AI, or AI is turned off
-        final boolean success = SpellCaster.selectAndCastSpell(active);
-        if (success) {
-          activeBC.act(MapBattleLogic.SPELL_ACTION_POINTS);
+      // Check Action Counter
+      if (activeBC.canAct(MapBattleLogic.SPELL_ACTION_POINTS)) {
+        BattleCharacter anyEnemy = this.mbd
+            .getFirstBattlerNotOnTeam(activeBC.getTeamID());
+        if (anyEnemy == null) {
+          // Failed - nobody to use on
+          this.setStatusMessage(activeBC.getName()
+              + " tries to cast a spell, but nobody is there to cast it on!");
+          return false;
         }
-        return success;
+        if (!active.hasMapAI()) {
+          // Active character has no AI, or AI is turned off
+          final boolean success = SpellCaster.selectAndCastSpell(active);
+          if (success) {
+            activeBC.act(MapBattleLogic.SPELL_ACTION_POINTS);
+          }
+          return success;
+        } else {
+          // Active character has AI, and AI is turned on
+          final Spell spell = active.getMapAI().getSpellToCast();
+          final boolean success = SpellCaster.castSpell(spell, active);
+          if (success) {
+            activeBC.act(MapBattleLogic.SPELL_ACTION_POINTS);
+          }
+          return success;
+        }
       } else {
-        // Active character has AI, and AI is turned on
-        final Spell spell = active.getMapAI().getSpellToCast();
-        final boolean success = SpellCaster.castSpell(spell, active);
-        if (success) {
-          activeBC.act(MapBattleLogic.SPELL_ACTION_POINTS);
+        // Deny cast - out of actions
+        if (!active.hasMapAI()) {
+          this.setStatusMessage("Out of actions!");
         }
-        return success;
+        return false;
       }
-    } else {
-      // Deny cast - out of actions
-      if (!active.hasMapAI()) {
-        this.setStatusMessage("Out of actions!");
-      }
+    };
+    try {
+      return this.dispatch.submit(task).get();
+    } catch (InterruptedException | ExecutionException e) {
+      FantastleReboot.logError(e);
       return false;
     }
   }
@@ -991,46 +985,54 @@ public class MapBattleLogic extends Battle {
       // Abort
       return false;
     }
-    final BattleCharacter activeBC = this.mbd.getActiveCharacter();
-    Creature active = null;
-    if (activeBC != null) {
-      active = activeBC.getCreature();
-    }
-    if (activeBC == null || active == null) {
-      // Abort
-      return false;
-    }
-    // Check Action Counter
-    if (activeBC.canAct(MapBattleLogic.ITEM_ACTION_POINTS)) {
-      BattleCharacter anyEnemy = this.mbd
-          .getFirstBattlerNotOnTeam(activeBC.getTeamID());
-      if (anyEnemy == null) {
-        // Failed - nobody to use on
-        this.setStatusMessage(activeBC.getName()
-            + " tries to use an item, but nobody is there to use it on!");
+    Callable<Boolean> task = () -> {
+      final BattleCharacter activeBC = this.mbd.getActiveCharacter();
+      Creature active = null;
+      if (activeBC != null) {
+        active = activeBC.getCreature();
+      }
+      if (activeBC == null || active == null) {
+        // Abort
         return false;
       }
-      if (!active.hasMapAI()) {
-        // Active character has no AI, or AI is turned off
-        final boolean success = CombatItemChucker.selectAndUseItem(active);
-        if (success) {
-          activeBC.act(MapBattleLogic.ITEM_ACTION_POINTS);
+      // Check Action Counter
+      if (activeBC.canAct(MapBattleLogic.ITEM_ACTION_POINTS)) {
+        BattleCharacter anyEnemy = this.mbd
+            .getFirstBattlerNotOnTeam(activeBC.getTeamID());
+        if (anyEnemy == null) {
+          // Failed - nobody to use on
+          this.setStatusMessage(activeBC.getName()
+              + " tries to use an item, but nobody is there to use it on!");
+          return false;
         }
-        return success;
+        if (!active.hasMapAI()) {
+          // Active character has no AI, or AI is turned off
+          final boolean success = CombatItemChucker.selectAndUseItem(active);
+          if (success) {
+            activeBC.act(MapBattleLogic.ITEM_ACTION_POINTS);
+          }
+          return success;
+        } else {
+          // Active character has AI, and AI is turned on
+          final CombatItem cui = active.getMapAI().getItemToUse();
+          final boolean success = CombatItemChucker.useItem(cui, active);
+          if (success) {
+            activeBC.act(MapBattleLogic.ITEM_ACTION_POINTS);
+          }
+          return success;
+        }
       } else {
-        // Active character has AI, and AI is turned on
-        final CombatItem cui = active.getMapAI().getItemToUse();
-        final boolean success = CombatItemChucker.useItem(cui, active);
-        if (success) {
-          activeBC.act(MapBattleLogic.ITEM_ACTION_POINTS);
+        // Deny use - out of actions
+        if (!active.hasMapAI()) {
+          this.setStatusMessage("Out of actions!");
         }
-        return success;
+        return false;
       }
-    } else {
-      // Deny use - out of actions
-      if (!active.hasMapAI()) {
-        this.setStatusMessage("Out of actions!");
-      }
+    };
+    try {
+      return this.dispatch.submit(task).get();
+    } catch (InterruptedException | ExecutionException e) {
+      FantastleReboot.logError(e);
       return false;
     }
   }
@@ -1041,58 +1043,66 @@ public class MapBattleLogic extends Battle {
       // Abort
       return false;
     }
-    final BattleCharacter activeBC = this.mbd.getActiveCharacter();
-    Creature active = null;
-    if (activeBC != null) {
-      active = activeBC.getCreature();
-    }
-    if (activeBC == null || active == null) {
-      // Abort
-      return false;
-    }
-    // Check Action Counter
-    if (activeBC.canAct(MapBattleLogic.STEAL_ACTION_POINTS)) {
-      int stealAmount = 0;
-      final int stealChance = StatConstants.CHANCE_STEAL;
-      activeBC.act(MapBattleLogic.STEAL_ACTION_POINTS);
-      BattleCharacter anyEnemy = this.mbd
-          .getFirstBattlerNotOnTeam(activeBC.getTeamID());
-      if (anyEnemy == null) {
-        // Failed - nobody to steal from
-        this.setStatusMessage(activeBC.getName()
-            + " tries to steal, but nobody is there to steal from!");
+    Callable<Boolean> task = () -> {
+      final BattleCharacter activeBC = this.mbd.getActiveCharacter();
+      Creature active = null;
+      if (activeBC != null) {
+        active = activeBC.getCreature();
+      }
+      if (activeBC == null || active == null) {
+        // Abort
         return false;
       }
-      Creature activeEnemy = anyEnemy.getCreature();
-      final RandomRange chance = new RandomRange(0, 100);
-      final int randomChance = chance.generate();
-      if (randomChance <= stealChance) {
-        // Succeeded
-        final RandomRange stole = new RandomRange(0, activeEnemy.getGold());
-        stealAmount = stole.generate();
-        if (stealAmount == 0) {
+      // Check Action Counter
+      if (activeBC.canAct(MapBattleLogic.STEAL_ACTION_POINTS)) {
+        int stealAmount = 0;
+        final int stealChance = StatConstants.CHANCE_STEAL;
+        activeBC.act(MapBattleLogic.STEAL_ACTION_POINTS);
+        BattleCharacter anyEnemy = this.mbd
+            .getFirstBattlerNotOnTeam(activeBC.getTeamID());
+        if (anyEnemy == null) {
+          // Failed - nobody to steal from
           this.setStatusMessage(activeBC.getName()
-              + " tries to steal, but no Gold is left to steal!");
+              + " tries to steal, but nobody is there to steal from!");
           return false;
+        }
+        Creature activeEnemy = anyEnemy.getCreature();
+        final RandomRange chance = new RandomRange(0, 100);
+        final int randomChance = chance.generate();
+        if (randomChance <= stealChance) {
+          // Succeeded
+          final RandomRange stole = new RandomRange(0, activeEnemy.getGold());
+          stealAmount = stole.generate();
+          if (stealAmount == 0) {
+            this.setStatusMessage(activeBC.getName()
+                + " tries to steal, but no Gold is left to steal!");
+            return false;
+          } else {
+            activeEnemy.offsetGold(-stealAmount);
+            active.offsetGold(stealAmount);
+            this.setStatusMessage(
+                activeBC.getName() + " tries to steal, and successfully stole "
+                    + stealAmount + " Gold!");
+            return true;
+          }
         } else {
-          activeEnemy.offsetGold(-stealAmount);
-          active.offsetGold(stealAmount);
+          // Failed
           this.setStatusMessage(
-              activeBC.getName() + " tries to steal, and successfully stole "
-                  + stealAmount + " Gold!");
-          return true;
+              activeBC.getName() + " tries to steal, but fails!");
+          return false;
         }
       } else {
-        // Failed
-        this.setStatusMessage(
-            activeBC.getName() + " tries to steal, but fails!");
+        // Deny steal - out of actions
+        if (!active.hasMapAI()) {
+          this.setStatusMessage("Out of actions!");
+        }
         return false;
       }
-    } else {
-      // Deny steal - out of actions
-      if (!active.hasMapAI()) {
-        this.setStatusMessage("Out of actions!");
-      }
+    };
+    try {
+      return this.dispatch.submit(task).get();
+    } catch (InterruptedException | ExecutionException e) {
+      FantastleReboot.logError(e);
       return false;
     }
   }
@@ -1103,57 +1113,38 @@ public class MapBattleLogic extends Battle {
       // Abort
       return false;
     }
-    final BattleCharacter activeBC = this.mbd.getActiveCharacter();
-    Creature active = null;
-    if (activeBC != null) {
-      active = activeBC.getCreature();
-    }
-    if (activeBC == null || active == null) {
-      // Abort
-      return false;
-    }
-    // Check Action Counter
-    if (activeBC.canAct(MapBattleLogic.DRAIN_ACTION_POINTS)) {
-      int drainChance;
-      int drainAmount = 0;
-      drainChance = StatConstants.CHANCE_DRAIN;
-      activeBC.act(MapBattleLogic.DRAIN_ACTION_POINTS);
-      BattleCharacter anyEnemy = this.mbd
-          .getFirstBattlerNotOnTeam(activeBC.getTeamID());
-      if (anyEnemy == null) {
-        // Failed - nobody to drain from
-        this.setStatusMessage(activeBC.getName()
-            + " tries to drain, but nobody is there to drain from!");
+    Callable<Boolean> task = () -> {
+      final BattleCharacter activeBC = this.mbd.getActiveCharacter();
+      Creature active = null;
+      if (activeBC != null) {
+        active = activeBC.getCreature();
+      }
+      if (activeBC == null || active == null) {
+        // Abort
         return false;
       }
-      Creature activeEnemy = anyEnemy.getCreature();
-      if (drainChance <= 0) {
-        // Failed
-        this.setStatusMessage(
-            activeBC.getName() + " tries to drain, but fails!");
-        return false;
-      } else if (drainChance >= 100) {
-        // Succeeded, unless target has 0 MP
-        final RandomRange drained = new RandomRange(0,
-            activeEnemy.getCurrentMP());
-        drainAmount = drained.generate();
-        if (drainAmount == 0) {
+      // Check Action Counter
+      if (activeBC.canAct(MapBattleLogic.DRAIN_ACTION_POINTS)) {
+        int drainChance;
+        int drainAmount = 0;
+        drainChance = StatConstants.CHANCE_DRAIN;
+        activeBC.act(MapBattleLogic.DRAIN_ACTION_POINTS);
+        BattleCharacter anyEnemy = this.mbd
+            .getFirstBattlerNotOnTeam(activeBC.getTeamID());
+        if (anyEnemy == null) {
+          // Failed - nobody to drain from
           this.setStatusMessage(activeBC.getName()
-              + " tries to drain, but no MP is left to drain!");
+              + " tries to drain, but nobody is there to drain from!");
           return false;
-        } else {
-          activeEnemy.offsetCurrentMP(-drainAmount);
-          active.offsetCurrentMP(drainAmount);
-          this.setStatusMessage(
-              activeBC.getName() + " tries to drain, and successfully drains "
-                  + drainAmount + " MP!");
-          return true;
         }
-      } else {
-        final RandomRange chance = new RandomRange(0, 100);
-        final int randomChance = chance.generate();
-        if (randomChance <= drainChance) {
-          // Succeeded
+        Creature activeEnemy = anyEnemy.getCreature();
+        if (drainChance <= 0) {
+          // Failed
+          this.setStatusMessage(
+              activeBC.getName() + " tries to drain, but fails!");
+          return false;
+        } else if (drainChance >= 100) {
+          // Succeeded, unless target has 0 MP
           final RandomRange drained = new RandomRange(0,
               activeEnemy.getCurrentMP());
           drainAmount = drained.generate();
@@ -1170,17 +1161,44 @@ public class MapBattleLogic extends Battle {
             return true;
           }
         } else {
-          // Failed
-          this.setStatusMessage(
-              activeBC.getName() + " tries to drain, but fails!");
-          return false;
+          final RandomRange chance = new RandomRange(0, 100);
+          final int randomChance = chance.generate();
+          if (randomChance <= drainChance) {
+            // Succeeded
+            final RandomRange drained = new RandomRange(0,
+                activeEnemy.getCurrentMP());
+            drainAmount = drained.generate();
+            if (drainAmount == 0) {
+              this.setStatusMessage(activeBC.getName()
+                  + " tries to drain, but no MP is left to drain!");
+              return false;
+            } else {
+              activeEnemy.offsetCurrentMP(-drainAmount);
+              active.offsetCurrentMP(drainAmount);
+              this.setStatusMessage(activeBC.getName()
+                  + " tries to drain, and successfully drains " + drainAmount
+                  + " MP!");
+              return true;
+            }
+          } else {
+            // Failed
+            this.setStatusMessage(
+                activeBC.getName() + " tries to drain, but fails!");
+            return false;
+          }
         }
+      } else {
+        // Deny drain - out of actions
+        if (!active.hasMapAI()) {
+          this.setStatusMessage("Out of actions!");
+        }
+        return false;
       }
-    } else {
-      // Deny drain - out of actions
-      if (!active.hasMapAI()) {
-        this.setStatusMessage("Out of actions!");
-      }
+    };
+    try {
+      return this.dispatch.submit(task).get();
+    } catch (InterruptedException | ExecutionException e) {
+      FantastleReboot.logError(e);
       return false;
     }
   }
@@ -1191,28 +1209,24 @@ public class MapBattleLogic extends Battle {
       // Abort
       return;
     }
-    Runnable task = new Runnable() {
-      @Override
-      public void run() {
-        MapBattleLogic logic = MapBattleLogic.this;
-        logic.newRound = logic.setNextActive(logic.newRound);
-        if (logic.newRound) {
-          logic.setStatusMessage("New Round");
-          logic.newRound = logic.setNextActive(logic.newRound);
-          // Check result
-          BattleResults currResult = logic.getResult();
-          if (currResult != BattleResults.IN_PROGRESS) {
-            logic.doResult(currResult);
-            return;
-          }
+    Runnable task = () -> {
+      this.newRound = this.setNextActive(this.newRound);
+      if (this.newRound) {
+        this.setStatusMessage("New Round");
+        this.newRound = this.setNextActive(this.newRound);
+        // Check result
+        BattleResults currResult = this.getResult();
+        if (currResult != BattleResults.IN_PROGRESS) {
+          this.doResult(currResult);
+          return;
         }
-        logic.updateStatsAndEffects();
-        logic.battleGUI.getViewManager()
-            .setViewingWindowCenterX(logic.mbd.getActiveCharacter().getY());
-        logic.battleGUI.getViewManager()
-            .setViewingWindowCenterY(logic.mbd.getActiveCharacter().getX());
-        logic.redrawBattle();
       }
+      this.updateStatsAndEffects();
+      this.battleGUI.getViewManager()
+          .setViewingWindowCenterX(this.mbd.getActiveCharacter().getY());
+      this.battleGUI.getViewManager()
+          .setViewingWindowCenterY(this.mbd.getActiveCharacter().getX());
+      this.redrawBattle();
     };
     this.dispatch.submit(task);
   }
@@ -1397,67 +1411,61 @@ public class MapBattleLogic extends Battle {
       // Abort
       return;
     }
-    Runnable task = new Runnable() {
-      @Override
-      public void run() {
-        MapBattleLogic logic = MapBattleLogic.this;
-        logic.stopWaitingForAI();
-        if (!logic.resultDoneAlready) {
-          // Handle Results
-          logic.resultDoneAlready = true;
-          boolean bossFlag = logic.mbd
-              .getFirstBattlerOnTeam(Creature.TEAM_BOSS) != null;
-          boolean rewardsFlag = false;
-          if (result == BattleResults.WON) {
-            SoundPlayer.playSound(SoundIndex.VICTORY, SoundGroup.BATTLE);
-            CommonDialogs.showTitledDialog("The party is victorious!",
-                "Victory!");
-            PartyManager.getParty().getLeader().offsetGold(logic.getGold());
-            PartyManager.getParty().getLeader()
-                .offsetExperience(logic.battleExp);
-            if (bossFlag) {
-              rewardsFlag = true;
-            }
-          } else if (result == BattleResults.PERFECT) {
-            SoundPlayer.playSound(SoundIndex.VICTORY, SoundGroup.BATTLE);
-            CommonDialogs.showTitledDialog(
-                "The party is victorious, and escaped unharmed!",
-                "Perfect Victory!");
-            PartyManager.getParty().getLeader().offsetGold(logic.getGold());
-            PartyManager.getParty().getLeader()
-                .offsetExperience(logic.battleExp);
-            if (bossFlag) {
-              rewardsFlag = true;
-            }
-          } else if (result == BattleResults.LOST) {
-            CommonDialogs.showTitledDialog("The party has been defeated...",
-                "Defeat...");
-          } else if (result == BattleResults.ANNIHILATED) {
-            CommonDialogs.showTitledDialog("The party has been annihilated!",
-                "Annihilation!");
-          } else if (result == BattleResults.DRAW) {
-            CommonDialogs.showTitledDialog("The battle was a draw.", "Draw");
-          } else if (result == BattleResults.FLED) {
-            CommonDialogs.showTitledDialog("The party fled!", "Party Fled");
-          } else if (result == BattleResults.ENEMY_FLED) {
-            CommonDialogs.showTitledDialog("The enemies fled!", "Enemies Fled");
-          } else if (result == BattleResults.IN_PROGRESS) {
-            CommonDialogs.showTitledDialog(
-                "The battle isn't over, but somehow the game thinks it is.",
-                "Uh-Oh!");
-          } else {
-            CommonDialogs.showTitledDialog(
-                "The result of the battle is unknown!", "Uh-Oh!");
+    Runnable task = () -> {
+      this.stopWaitingForAI();
+      if (!this.resultDoneAlready) {
+        // Handle Results
+        this.resultDoneAlready = true;
+        boolean bossFlag = this.mbd
+            .getFirstBattlerOnTeam(Creature.TEAM_BOSS) != null;
+        boolean rewardsFlag = false;
+        if (result == BattleResults.WON) {
+          SoundPlayer.playSound(SoundIndex.VICTORY, SoundGroup.BATTLE);
+          CommonDialogs.showTitledDialog("The party is victorious!",
+              "Victory!");
+          PartyManager.getParty().getLeader().offsetGold(this.getGold());
+          PartyManager.getParty().getLeader().offsetExperience(this.battleExp);
+          if (bossFlag) {
+            rewardsFlag = true;
           }
-          // Strip effects
-          PartyManager.getParty().getLeader().stripAllEffects();
-          // Level Up Check
-          PartyManager.getParty().checkPartyLevelUp();
-          // Battle Done
-          logic.battleDone();
-          if (rewardsFlag) {
-            BossRewards.doRewards();
+        } else if (result == BattleResults.PERFECT) {
+          SoundPlayer.playSound(SoundIndex.VICTORY, SoundGroup.BATTLE);
+          CommonDialogs.showTitledDialog(
+              "The party is victorious, and escaped unharmed!",
+              "Perfect Victory!");
+          PartyManager.getParty().getLeader().offsetGold(this.getGold());
+          PartyManager.getParty().getLeader().offsetExperience(this.battleExp);
+          if (bossFlag) {
+            rewardsFlag = true;
           }
+        } else if (result == BattleResults.LOST) {
+          CommonDialogs.showTitledDialog("The party has been defeated...",
+              "Defeat...");
+        } else if (result == BattleResults.ANNIHILATED) {
+          CommonDialogs.showTitledDialog("The party has been annihilated!",
+              "Annihilation!");
+        } else if (result == BattleResults.DRAW) {
+          CommonDialogs.showTitledDialog("The battle was a draw.", "Draw");
+        } else if (result == BattleResults.FLED) {
+          CommonDialogs.showTitledDialog("The party fled!", "Party Fled");
+        } else if (result == BattleResults.ENEMY_FLED) {
+          CommonDialogs.showTitledDialog("The enemies fled!", "Enemies Fled");
+        } else if (result == BattleResults.IN_PROGRESS) {
+          CommonDialogs.showTitledDialog(
+              "The battle isn't over, but somehow the game thinks it is.",
+              "Uh-Oh!");
+        } else {
+          CommonDialogs.showTitledDialog("The result of the battle is unknown!",
+              "Uh-Oh!");
+        }
+        // Strip effects
+        PartyManager.getParty().getLeader().stripAllEffects();
+        // Level Up Check
+        PartyManager.getParty().checkPartyLevelUp();
+        // Battle Done
+        this.battleDone();
+        if (rewardsFlag) {
+          BossRewards.doRewards();
         }
       }
     };
