@@ -52,7 +52,7 @@ public class BagOStuff {
   private static final String NEW_VERSION_SITE = "https://puttysoftware.github.com/fantastle-reboot/";
   private static final String PRODUCT_NAME = "FantastleReboot";
   private static final String COMPANY_NAME = "Putty Software";
-  private static final String RDNS_COMPANY_NAME = "com.puttysoftware.tallertower";
+  private static final String RDNS_COMPANY_NAME = "com.puttysoftware.fantastlereboot";
   private static final ProductData pd = new ProductData(BagOStuff.UPDATE_SITE,
       BagOStuff.UPDATE_SITE, BagOStuff.NEW_VERSION_SITE,
       BagOStuff.RDNS_COMPANY_NAME, BagOStuff.COMPANY_NAME,
