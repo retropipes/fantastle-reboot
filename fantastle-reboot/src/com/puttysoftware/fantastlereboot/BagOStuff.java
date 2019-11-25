@@ -22,7 +22,7 @@ import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
-import com.puttysoftware.fantastlereboot.battle.map.MapTurnBattleLogic;
+import com.puttysoftware.fantastlereboot.battle.map.MapBattleLogic;
 import com.puttysoftware.fantastlereboot.editor.MazeEditor;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.AboutDialog;
@@ -45,7 +45,7 @@ public class BagOStuff {
   private final CombatItemList combatItems;
   private Shop weapons, armor, healer, bank, regenerator, spells, items, socks,
       enhancements, faiths;
-  private MapTurnBattleLogic mapTurnBattle;
+  private MapBattleLogic mapTurnBattle;
   private int currentMode;
   private int formerMode;
   private static final String UPDATE_SITE = "https://puttysoftware.com/updater/fantastle-reboot/";
@@ -85,7 +85,7 @@ public class BagOStuff {
     this.about = new AboutDialog(BagOStuff.getVersionString());
     this.guiMgr = new GUIManager();
     this.gHelpMgr = new GeneralHelpManager();
-    this.mapTurnBattle = new MapTurnBattleLogic();
+    this.mapTurnBattle = new MapBattleLogic();
     this.editor = new MazeEditor();
     this.weapons = new Shop(ShopTypes.WEAPONS);
     this.armor = new Shop(ShopTypes.ARMOR);

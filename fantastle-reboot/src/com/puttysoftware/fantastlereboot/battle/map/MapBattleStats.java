@@ -17,7 +17,7 @@ import com.puttysoftware.fantastlereboot.loaders.EffectImageLoader;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 import com.puttysoftware.images.BufferedImageIcon;
 
-public class MapTurnBattleStats {
+public class MapBattleStats {
   // Fields
   private JPanel statsPane;
   private JLabel nameLabel;
@@ -29,7 +29,7 @@ public class MapTurnBattleStats {
   private JLabel apLabel;
 
   // Constructors
-  public MapTurnBattleStats() {
+  public MapBattleStats() {
     this.setUpGUI();
     this.updateIcons();
   }

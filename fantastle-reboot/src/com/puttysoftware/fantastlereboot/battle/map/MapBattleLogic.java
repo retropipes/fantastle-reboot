@@ -46,7 +46,7 @@ import com.puttysoftware.fantastlereboot.spells.Spell;
 import com.puttysoftware.fantastlereboot.spells.SpellCaster;
 import com.puttysoftware.randomrange.RandomRange;
 
-public class MapTurnBattleLogic extends Battle {
+public class MapBattleLogic extends Battle {
   // Fields
   private MapBattleDefinitions mbd;
   private AbstractDamageEngine pde;
@@ -65,7 +65,7 @@ public class MapTurnBattleLogic extends Battle {
   private boolean enemiesTookDamage;
   private int bx;
   private int by;
-  private MapTurnBattleGUI battleGUI;
+  private MapBattleGUI battleGUI;
   private List<BattleCharacter> friends;
   private List<BattleCharacter> enemies;
   private static final int ITEM_ACTION_POINTS = 6;
@@ -74,8 +74,8 @@ public class MapTurnBattleLogic extends Battle {
   private static final int SPELL_ACTION_POINTS = 1;
 
   // Constructors
-  public MapTurnBattleLogic() {
-    this.battleGUI = new MapTurnBattleGUI();
+  public MapBattleLogic() {
+    this.battleGUI = new MapBattleGUI();
     this.auto = new AutoMapAI();
   }
 
@@ -918,7 +918,7 @@ public class MapTurnBattleLogic extends Battle {
       return false;
     }
     // Check Action Counter
-    if (activeBC.canAct(MapTurnBattleLogic.SPELL_ACTION_POINTS)) {
+    if (activeBC.canAct(MapBattleLogic.SPELL_ACTION_POINTS)) {
       BattleCharacter anyEnemy = this.mbd
           .getFirstBattlerNotOnTeam(activeBC.getTeamID());
       if (anyEnemy == null) {
@@ -931,7 +931,7 @@ public class MapTurnBattleLogic extends Battle {
         // Active character has no AI, or AI is turned off
         final boolean success = SpellCaster.selectAndCastSpell(active);
         if (success) {
-          activeBC.act(MapTurnBattleLogic.SPELL_ACTION_POINTS);
+          activeBC.act(MapBattleLogic.SPELL_ACTION_POINTS);
         }
         return success;
       } else {
@@ -939,7 +939,7 @@ public class MapTurnBattleLogic extends Battle {
         final Spell spell = active.getMapAI().getSpellToCast();
         final boolean success = SpellCaster.castSpell(spell, active);
         if (success) {
-          activeBC.act(MapTurnBattleLogic.SPELL_ACTION_POINTS);
+          activeBC.act(MapBattleLogic.SPELL_ACTION_POINTS);
         }
         return success;
       }
@@ -968,7 +968,7 @@ public class MapTurnBattleLogic extends Battle {
       return false;
     }
     // Check Action Counter
-    if (activeBC.canAct(MapTurnBattleLogic.ITEM_ACTION_POINTS)) {
+    if (activeBC.canAct(MapBattleLogic.ITEM_ACTION_POINTS)) {
       BattleCharacter anyEnemy = this.mbd
           .getFirstBattlerNotOnTeam(activeBC.getTeamID());
       if (anyEnemy == null) {
@@ -981,7 +981,7 @@ public class MapTurnBattleLogic extends Battle {
         // Active character has no AI, or AI is turned off
         final boolean success = CombatItemChucker.selectAndUseItem(active);
         if (success) {
-          activeBC.act(MapTurnBattleLogic.ITEM_ACTION_POINTS);
+          activeBC.act(MapBattleLogic.ITEM_ACTION_POINTS);
         }
         return success;
       } else {
@@ -989,7 +989,7 @@ public class MapTurnBattleLogic extends Battle {
         final CombatItem cui = active.getMapAI().getItemToUse();
         final boolean success = CombatItemChucker.useItem(cui, active);
         if (success) {
-          activeBC.act(MapTurnBattleLogic.ITEM_ACTION_POINTS);
+          activeBC.act(MapBattleLogic.ITEM_ACTION_POINTS);
         }
         return success;
       }
@@ -1018,10 +1018,10 @@ public class MapTurnBattleLogic extends Battle {
       return false;
     }
     // Check Action Counter
-    if (activeBC.canAct(MapTurnBattleLogic.STEAL_ACTION_POINTS)) {
+    if (activeBC.canAct(MapBattleLogic.STEAL_ACTION_POINTS)) {
       int stealAmount = 0;
       final int stealChance = StatConstants.CHANCE_STEAL;
-      activeBC.act(MapTurnBattleLogic.STEAL_ACTION_POINTS);
+      activeBC.act(MapBattleLogic.STEAL_ACTION_POINTS);
       BattleCharacter anyEnemy = this.mbd
           .getFirstBattlerNotOnTeam(activeBC.getTeamID());
       if (anyEnemy == null) {
@@ -1080,11 +1080,11 @@ public class MapTurnBattleLogic extends Battle {
       return false;
     }
     // Check Action Counter
-    if (activeBC.canAct(MapTurnBattleLogic.DRAIN_ACTION_POINTS)) {
+    if (activeBC.canAct(MapBattleLogic.DRAIN_ACTION_POINTS)) {
       int drainChance;
       int drainAmount = 0;
       drainChance = StatConstants.CHANCE_DRAIN;
-      activeBC.act(MapTurnBattleLogic.DRAIN_ACTION_POINTS);
+      activeBC.act(MapBattleLogic.DRAIN_ACTION_POINTS);
       BattleCharacter anyEnemy = this.mbd
           .getFirstBattlerNotOnTeam(activeBC.getTeamID());
       if (anyEnemy == null) {
@@ -1287,7 +1287,7 @@ public class MapTurnBattleLogic extends Battle {
       return;
     }
     // Create new GUI
-    this.battleGUI = new MapTurnBattleGUI();
+    this.battleGUI = new MapBattleGUI();
   }
 
   @Override

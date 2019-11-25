@@ -35,13 +35,13 @@ import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.Nothing;
 import com.puttysoftware.images.BufferedImageIcon;
 
-class MapTurnBattleGUI {
+class MapBattleGUI {
   // Fields
   private final MainWindow battleFrame;
   private MapBattleDraw battlePane;
   private JLabel messageLabel;
   private final MapBattleViewingWindowManager vwMgr;
-  private final MapTurnBattleStats bs;
+  private final MapBattleStats bs;
   private final MapBattleEffects be;
   private final EventHandler handler = new EventHandler();
   private JPanel borderPane;
@@ -51,10 +51,10 @@ class MapTurnBattleGUI {
   private static final int MAX_TEXT = 1000;
 
   // Constructors
-  MapTurnBattleGUI() {
+  MapBattleGUI() {
     this.battleFrame = MainWindow.getOutputFrame();
     this.vwMgr = new MapBattleViewingWindowManager();
-    this.bs = new MapTurnBattleStats();
+    this.bs = new MapBattleStats();
     this.be = new MapBattleEffects();
     this.setUpGUI();
     this.eventHandlersOn = true;
@@ -70,7 +70,7 @@ class MapTurnBattleGUI {
   }
 
   void setStatusMessage(final String msg) {
-    if (this.messageLabel.getText().length() > MapTurnBattleGUI.MAX_TEXT) {
+    if (this.messageLabel.getText().length() > MapBattleGUI.MAX_TEXT) {
       this.clearStatusMessage();
     }
     if (!msg.isEmpty() && !msg.matches("\\s+")) {
@@ -105,7 +105,7 @@ class MapTurnBattleGUI {
               Layers.GROUND);
           final FantastleObjectModel obj2 = mbd.getBattleMaze().getCell(y, x, 0,
               Layers.OBJECT);
-          final String cacheName = MapTurnBattleGUI.generateCacheName(obj1,
+          final String cacheName = MapBattleGUI.generateCacheName(obj1,
               obj2);
           final BufferedImageIcon icon1 = obj1.getBattleImage();
           final BufferedImageIcon icon2 = obj2.getBattleImage();
@@ -134,7 +134,7 @@ class MapTurnBattleGUI {
           Layers.GROUND);
       final FantastleObjectModel obj2 = mbd.getBattleMaze().getCell(y, x, 0,
           Layers.OBJECT);
-      final String cacheName = MapTurnBattleGUI.generateCacheName(obj1, obj2,
+      final String cacheName = MapBattleGUI.generateCacheName(obj1, obj2,
           obj3);
       final BufferedImageIcon icon1 = obj1.getBattleImage();
       final BufferedImageIcon icon2 = obj2.getBattleImage();
@@ -325,7 +325,7 @@ class MapTurnBattleGUI {
           }
         }
         final Battle bl = FantastleReboot.getBagOStuff().getBattle();
-        final MapTurnBattleGUI bg = MapTurnBattleGUI.this;
+        final MapBattleGUI bg = MapBattleGUI.this;
         if (bg.eventHandlersOn) {
           final int keyCode = e.getKeyCode();
           switch (keyCode) {
@@ -395,7 +395,7 @@ class MapTurnBattleGUI {
           }
         }
         final Battle bl = FantastleReboot.getBagOStuff().getBattle();
-        final MapTurnBattleGUI bg = MapTurnBattleGUI.this;
+        final MapBattleGUI bg = MapBattleGUI.this;
         if (bg.eventHandlersOn) {
           final int keyCode = e.getKeyCode();
           switch (keyCode) {
