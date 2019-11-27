@@ -28,11 +28,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JButton;
@@ -40,6 +36,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 
 import com.puttysoftware.diane.gui.CommonDialogs;
@@ -52,6 +49,8 @@ import com.puttysoftware.fantastlereboot.files.CommonPaths;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.randomrange.RandomRange;
+import com.puttysoftware.xio.XDataReader;
+import com.puttysoftware.xio.XDataWriter;
 
 public class Prefs {
   // Fields
@@ -73,6 +72,10 @@ public class Prefs {
   private static String[] updateCheckIntervalValues;
   private static JComboBox<String> viewingWindowChoices;
   private static JComboBox<String> editorWindowChoices;
+  private static JSlider minRandomRoomSizeX;
+  private static JSlider maxRandomRoomSizeX;
+  private static JSlider minRandomRoomSizeY;
+  private static JSlider maxRandomRoomSizeY;
   private static EventHandler handler;
   private static PreferencesFileManager fileMgr = new PreferencesFileManager();
   private static ExportImportManager eiMgr = new ExportImportManager();
@@ -83,6 +86,10 @@ public class Prefs {
   private static int viewingWindowIndex;
   private static int editorWindowIndex;
   private static int updateCheckIntervalIndex;
+  private static int minRandomRoomSizeXIndex;
+  private static int maxRandomRoomSizeXIndex;
+  private static int minRandomRoomSizeYIndex;
+  private static int maxRandomRoomSizeYIndex;
   private static boolean[] soundsEnabled = new boolean[Prefs.SOUNDS_LENGTH];
   private static boolean[] musicEnabled = new boolean[Prefs.MUSIC_LENGTH];
   private static String lastDirOpen;
@@ -91,6 +98,9 @@ public class Prefs {
   private static boolean guiSetUp = false;
   private static final int[] VIEWING_WINDOW_SIZES = new int[] { 7, 9, 11, 13,
       15, 17, 19, 21, 23, 25 };
+  private static final int MIN_ROOM_SIZE = 3;
+  private static final int DEFAULT_ROOM_SIZE = 9;
+  private static final int MAX_ROOM_SIZE = 15;
   private static final int[] MDM_MIN_TOP = new int[] { 5, 4, 3, 2, 1 };
   private static final int[] MDM_MIN_BOT = new int[] { 5, 5, 5, 5, 5 };
   private static final int[] MDM_MAX_TOP = new int[] { 5, 5, 5, 5, 5 };
@@ -126,9 +136,10 @@ public class Prefs {
   private static final int BATTLE_SPEED = 1000;
   private static final int MUSIC_LENGTH = 5;
   private static final int SOUNDS_LENGTH = 5;
-  private static final int GRID_LENGTH = 6;
+  private static final int GRID_LENGTH = 8;
   private static final int PREFS_VERSION_MAJOR = 0;
   private static final int PREFS_VERSION_MINOR = 0;
+  private static final String DOC_TAG = "settings";
 
   // Constructors
   private Prefs() {
@@ -149,16 +160,28 @@ public class Prefs {
     return RandomRange.generate(min, max);
   }
 
+  public static int getMinimumRandomRoomSizeWide() {
+    return Prefs.minRandomRoomSizeXIndex;
+  }
+
+  public static int getMaximumRandomRoomSizeWide() {
+    return Prefs.maxRandomRoomSizeXIndex;
+  }
+
+  public static int getMinimumRandomRoomSizeTall() {
+    return Prefs.minRandomRoomSizeYIndex;
+  }
+
+  public static int getMaximumRandomRoomSizeTall() {
+    return Prefs.maxRandomRoomSizeYIndex;
+  }
+
   public static int getBattleSpeed() {
     return Prefs.BATTLE_SPEED;
   }
 
   public static int getGameDifficulty() {
     return Prefs.difficultySetting;
-  }
-
-  public static void setGameDifficulty(final int value) {
-    Prefs.difficultySetting = value;
   }
 
   public static String getLastDirOpen() {
@@ -201,20 +224,12 @@ public class Prefs {
     return Prefs.viewingWindowIndex;
   }
 
-  public static void setViewingWindowSizeIndex(final int value) {
-    Prefs.viewingWindowIndex = value;
-  }
-
   public static int getEditorWindowSize() {
     return Prefs.VIEWING_WINDOW_SIZES[Prefs.getEditorWindowSizeIndex()];
   }
 
   public static int getEditorWindowSizeIndex() {
     return Prefs.editorWindowIndex;
-  }
-
-  public static void setEditorWindowSizeIndex(final int value) {
-    Prefs.editorWindowIndex = value;
   }
 
   public static boolean isSoundGroupEnabled(final SoundGroup group) {
@@ -323,6 +338,10 @@ public class Prefs {
     Prefs.moveOneAtATime.setSelected(Prefs.moveOneAtATimeEnabled);
     Prefs.viewingWindowChoices.setSelectedIndex(Prefs.viewingWindowIndex);
     Prefs.editorWindowChoices.setSelectedIndex(Prefs.editorWindowIndex);
+    Prefs.minRandomRoomSizeX.setValue(Prefs.minRandomRoomSizeXIndex);
+    Prefs.maxRandomRoomSizeX.setValue(Prefs.maxRandomRoomSizeXIndex);
+    Prefs.minRandomRoomSizeY.setValue(Prefs.minRandomRoomSizeYIndex);
+    Prefs.maxRandomRoomSizeY.setValue(Prefs.maxRandomRoomSizeYIndex);
   }
 
   private static void savePrefs() {
@@ -344,6 +363,10 @@ public class Prefs {
     Prefs.moveOneAtATimeEnabled = Prefs.moveOneAtATime.isSelected();
     Prefs.viewingWindowIndex = Prefs.viewingWindowChoices.getSelectedIndex();
     Prefs.editorWindowIndex = Prefs.editorWindowChoices.getSelectedIndex();
+    Prefs.minRandomRoomSizeXIndex = Prefs.minRandomRoomSizeX.getValue();
+    Prefs.maxRandomRoomSizeXIndex = Prefs.maxRandomRoomSizeX.getValue();
+    Prefs.minRandomRoomSizeYIndex = Prefs.minRandomRoomSizeY.getValue();
+    Prefs.maxRandomRoomSizeYIndex = Prefs.maxRandomRoomSizeY.getValue();
   }
 
   public static void setDefaultPrefs() {
@@ -372,6 +395,14 @@ public class Prefs {
     Prefs.editorWindowChoices.setSelectedIndex(Prefs.editorWindowIndex);
     Prefs.updateCheckInterval.setSelectedIndex(0);
     Prefs.lastFilterUsed = Prefs.FILTER_MAZE_V5;
+    Prefs.minRandomRoomSizeXIndex = Prefs.DEFAULT_ROOM_SIZE;
+    Prefs.maxRandomRoomSizeXIndex = Prefs.DEFAULT_ROOM_SIZE;
+    Prefs.minRandomRoomSizeYIndex = Prefs.DEFAULT_ROOM_SIZE;
+    Prefs.maxRandomRoomSizeYIndex = Prefs.DEFAULT_ROOM_SIZE;
+    Prefs.minRandomRoomSizeX.setValue(Prefs.DEFAULT_ROOM_SIZE);
+    Prefs.maxRandomRoomSizeX.setValue(Prefs.DEFAULT_ROOM_SIZE);
+    Prefs.minRandomRoomSizeY.setValue(Prefs.DEFAULT_ROOM_SIZE);
+    Prefs.maxRandomRoomSizeY.setValue(Prefs.DEFAULT_ROOM_SIZE);
   }
 
   static void handleExport() {
@@ -433,6 +464,26 @@ public class Prefs {
     Prefs.updateCheckInterval = new JComboBox<>(
         Prefs.updateCheckIntervalValues);
     Prefs.difficultyChoices = new JComboBox<>(Prefs.DIFFICULTY_CHOICE_NAMES);
+    Prefs.minRandomRoomSizeX = new JSlider(Prefs.MIN_ROOM_SIZE,
+        Prefs.MAX_ROOM_SIZE);
+    Prefs.minRandomRoomSizeX
+        .setLabelTable(Prefs.minRandomRoomSizeX.createStandardLabels(1));
+    Prefs.minRandomRoomSizeX.setPaintLabels(true);
+    Prefs.maxRandomRoomSizeX = new JSlider(Prefs.MIN_ROOM_SIZE,
+        Prefs.MAX_ROOM_SIZE);
+    Prefs.maxRandomRoomSizeX
+        .setLabelTable(Prefs.maxRandomRoomSizeX.createStandardLabels(1));
+    Prefs.maxRandomRoomSizeX.setPaintLabels(true);
+    Prefs.minRandomRoomSizeY = new JSlider(Prefs.MIN_ROOM_SIZE,
+        Prefs.MAX_ROOM_SIZE);
+    Prefs.minRandomRoomSizeY
+        .setLabelTable(Prefs.minRandomRoomSizeY.createStandardLabels(1));
+    Prefs.minRandomRoomSizeY.setPaintLabels(true);
+    Prefs.maxRandomRoomSizeY = new JSlider(Prefs.MIN_ROOM_SIZE,
+        Prefs.MAX_ROOM_SIZE);
+    Prefs.maxRandomRoomSizeY
+        .setLabelTable(Prefs.maxRandomRoomSizeY.createStandardLabels(1));
+    Prefs.maxRandomRoomSizeY.setPaintLabels(true);
     Prefs.mainPrefPane.setLayout(new BorderLayout());
     Prefs.editorPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     Prefs.editorPane.add(new JLabel("Default fill for new mazes:"));
@@ -462,12 +513,27 @@ public class Prefs {
     Prefs.viewingWindowChoices = new JComboBox<>(
         Prefs.VIEWING_WINDOW_SIZE_NAMES);
     viewPane.add(Prefs.viewingWindowChoices);
+    final JPanel generatorPane = new JPanel();
+    generatorPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
+    generatorPane
+        .add(new JLabel("Minimum Room Size for Maze Generator (Wide)"));
+    generatorPane.add(Prefs.minRandomRoomSizeX);
+    generatorPane
+        .add(new JLabel("Maximum Room Size for Maze Generator (Wide)"));
+    generatorPane.add(Prefs.maxRandomRoomSizeX);
+    generatorPane
+        .add(new JLabel("Minimum Room Size for Maze Generator (Tall)"));
+    generatorPane.add(Prefs.minRandomRoomSizeY);
+    generatorPane
+        .add(new JLabel("Maximum Room Size for Maze Generator (Tall)"));
+    generatorPane.add(Prefs.maxRandomRoomSizeY);
     Prefs.buttonPane.setLayout(new FlowLayout());
     Prefs.buttonPane.add(Prefs.prefsOK);
     Prefs.buttonPane.add(Prefs.prefsCancel);
     Prefs.buttonPane.add(Prefs.prefsExport);
     Prefs.buttonPane.add(Prefs.prefsImport);
     Prefs.prefTabPane.addTab("Editor", null, Prefs.editorPane, "Editor");
+    Prefs.prefTabPane.addTab("Generator", null, generatorPane, "Generator");
     Prefs.prefTabPane.addTab("Sounds", null, Prefs.soundPane, "Sounds");
     Prefs.prefTabPane.addTab("Music", null, Prefs.musicPane, "Music");
     Prefs.prefTabPane.addTab("Misc.", null, Prefs.miscPane, "Misc.");
@@ -491,18 +557,17 @@ public class Prefs {
     // Methods
     public void deletePreferencesFile() {
       // Delete preferences file
-      final File prefs = PreferencesFileManager.getPrefsFile();
-      prefs.delete();
+      CommonPaths.getPrefsFile().delete();
     }
 
     public boolean readPreferencesFile() {
-      try (final BufferedReader s = new BufferedReader(
-          new FileReader(PreferencesFileManager.getPrefsFile()))) {
+      try (final XDataReader reader = new XDataReader(
+          CommonPaths.getPrefsFile().getAbsolutePath(), Prefs.DOC_TAG)) {
         // Read the preferences from the file
         // Read major version
-        final int majorVersion = Short.parseShort(s.readLine());
+        final int majorVersion = reader.readInt();
         // Read minor version
-        final int minorVersion = Short.parseShort(s.readLine());
+        final int minorVersion = reader.readInt();
         // Version check
         if (majorVersion == Prefs.PREFS_VERSION_MAJOR) {
           if (minorVersion > Prefs.PREFS_VERSION_MINOR) {
@@ -513,22 +578,26 @@ public class Prefs {
           throw new PrefsException(
               "Incompatible preferences major version, using defaults.");
         }
-        Prefs.editorFill = Integer.parseInt(s.readLine());
-        Prefs.checkUpdatesStartupEnabled = Boolean.parseBoolean(s.readLine());
-        Prefs.moveOneAtATimeEnabled = Boolean.parseBoolean(s.readLine());
+        Prefs.editorFill = reader.readInt();
+        Prefs.checkUpdatesStartupEnabled = reader.readBoolean();
+        Prefs.moveOneAtATimeEnabled = reader.readBoolean();
         for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
-          Prefs.soundsEnabled[x] = Boolean.parseBoolean(s.readLine());
+          Prefs.soundsEnabled[x] = reader.readBoolean();
         }
-        Prefs.updateCheckIntervalIndex = Integer.parseInt(s.readLine());
-        Prefs.lastDirOpen = s.readLine();
-        Prefs.lastDirSave = s.readLine();
-        Prefs.lastFilterUsed = Integer.parseInt(s.readLine());
-        Prefs.difficultySetting = Integer.parseInt(s.readLine());
-        Prefs.viewingWindowIndex = Integer.parseInt(s.readLine());
+        Prefs.updateCheckIntervalIndex = reader.readInt();
+        Prefs.lastDirOpen = reader.readString();
+        Prefs.lastDirSave = reader.readString();
+        Prefs.lastFilterUsed = reader.readInt();
+        Prefs.difficultySetting = reader.readInt();
+        Prefs.viewingWindowIndex = reader.readInt();
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
-          Prefs.musicEnabled[x] = Boolean.parseBoolean(s.readLine());
+          Prefs.musicEnabled[x] = reader.readBoolean();
         }
-        Prefs.editorWindowIndex = Integer.parseInt(s.readLine());
+        Prefs.editorWindowIndex = reader.readInt();
+        Prefs.minRandomRoomSizeXIndex = reader.readInt();
+        Prefs.maxRandomRoomSizeXIndex = reader.readInt();
+        Prefs.minRandomRoomSizeYIndex = reader.readInt();
+        Prefs.maxRandomRoomSizeYIndex = reader.readInt();
         Prefs.loadPrefs();
         return true;
       } catch (final PrefsException pe) {
@@ -543,40 +612,39 @@ public class Prefs {
 
     public void writePreferencesFile() {
       // Create the needed subdirectories, if they don't already exist
-      final File prefsFile = PreferencesFileManager.getPrefsFile();
-      final File prefsParent = new File(
-          PreferencesFileManager.getPrefsFile().getParent());
+      final File prefsFile = CommonPaths.getPrefsFile();
+      final File prefsParent = new File(prefsFile.getParent());
       if (!prefsFile.canWrite()) {
         prefsParent.mkdirs();
       }
-      try (final BufferedWriter s = new BufferedWriter(
-          new FileWriter(prefsFile))) {
+      try (final XDataWriter writer = new XDataWriter(
+          prefsFile.getAbsolutePath(), Prefs.DOC_TAG)) {
         // Write the preferences to the file
-        s.write(Integer.toString(Prefs.PREFS_VERSION_MAJOR) + "\n");
-        s.write(Integer.toString(Prefs.PREFS_VERSION_MINOR) + "\n");
-        s.write(Integer.toString(Prefs.editorFill) + "\n");
-        s.write(Boolean.toString(Prefs.checkUpdatesStartupEnabled) + "\n");
-        s.write(Boolean.toString(Prefs.moveOneAtATimeEnabled) + "\n");
+        writer.writeInt(Prefs.PREFS_VERSION_MAJOR);
+        writer.writeInt(Prefs.PREFS_VERSION_MINOR);
+        writer.writeInt(Prefs.editorFill);
+        writer.writeBoolean(Prefs.checkUpdatesStartupEnabled);
+        writer.writeBoolean(Prefs.moveOneAtATimeEnabled);
         for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
-          s.write(Boolean.toString(Prefs.soundsEnabled[x]) + "\n");
+          writer.writeBoolean(Prefs.soundsEnabled[x]);
         }
-        s.write(Integer.toString(Prefs.updateCheckIntervalIndex) + "\n");
-        s.write(Prefs.lastDirOpen + "\n");
-        s.write(Prefs.lastDirSave + "\n");
-        s.write(Integer.toString(Prefs.lastFilterUsed) + "\n");
-        s.write(Integer.toString(Prefs.difficultySetting) + "\n");
-        s.write(Integer.toString(Prefs.viewingWindowIndex) + "\n");
+        writer.writeInt(Prefs.updateCheckIntervalIndex);
+        writer.writeString(Prefs.lastDirOpen);
+        writer.writeString(Prefs.lastDirSave);
+        writer.writeInt(Prefs.lastFilterUsed);
+        writer.writeInt(Prefs.difficultySetting);
+        writer.writeInt(Prefs.viewingWindowIndex);
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
-          s.write(Boolean.toString(Prefs.musicEnabled[x]) + "\n");
+          writer.writeBoolean(Prefs.musicEnabled[x]);
         }
-        s.write(Integer.toString(Prefs.editorWindowIndex) + "\n");
+        writer.writeInt(Prefs.editorWindowIndex);
+        writer.writeInt(Prefs.minRandomRoomSizeXIndex);
+        writer.writeInt(Prefs.maxRandomRoomSizeXIndex);
+        writer.writeInt(Prefs.minRandomRoomSizeYIndex);
+        writer.writeInt(Prefs.maxRandomRoomSizeYIndex);
       } catch (final IOException ie) {
         FantastleReboot.logWarning(ie);
       }
-    }
-
-    private static File getPrefsFile() {
-      return CommonPaths.getPrefsFile();
     }
   }
 
@@ -588,27 +656,33 @@ public class Prefs {
 
     // Methods
     public boolean importPreferencesFile(final File importFile) {
-      try (final BufferedReader s = new BufferedReader(
-          new FileReader(importFile))) {
+      try (final XDataReader reader = new XDataReader(
+          importFile.getAbsolutePath(), Prefs.DOC_TAG)) {
         // Read the preferences from the file
         // Read and discard major version
-        s.readLine();
+        reader.readInt();
         // Read and discard minor version
-        s.readLine();
-        Prefs.editorFill = Integer.parseInt(s.readLine());
-        Prefs.checkUpdatesStartupEnabled = Boolean.parseBoolean(s.readLine());
-        Prefs.moveOneAtATime.setSelected(Boolean.parseBoolean(s.readLine()));
+        reader.readInt();
+        Prefs.editorFill = reader.readInt();
+        Prefs.checkUpdatesStartupEnabled = reader.readBoolean();
+        Prefs.moveOneAtATimeEnabled = reader.readBoolean();
         for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
-          Prefs.soundsEnabled[x] = Boolean.parseBoolean(s.readLine());
+          Prefs.soundsEnabled[x] = reader.readBoolean();
         }
-        Prefs.updateCheckIntervalIndex = Integer.parseInt(s.readLine());
-        Prefs.lastFilterUsed = Integer.parseInt(s.readLine());
-        Prefs.difficultySetting = Integer.parseInt(s.readLine());
-        Prefs.viewingWindowIndex = Integer.parseInt(s.readLine());
+        Prefs.updateCheckIntervalIndex = reader.readInt();
+        Prefs.lastDirOpen = reader.readString();
+        Prefs.lastDirSave = reader.readString();
+        Prefs.lastFilterUsed = reader.readInt();
+        Prefs.difficultySetting = reader.readInt();
+        Prefs.viewingWindowIndex = reader.readInt();
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
-          Prefs.musicEnabled[x] = Boolean.parseBoolean(s.readLine());
+          Prefs.musicEnabled[x] = reader.readBoolean();
         }
-        Prefs.editorWindowIndex = Integer.parseInt(s.readLine());
+        Prefs.editorWindowIndex = reader.readInt();
+        Prefs.minRandomRoomSizeXIndex = reader.readInt();
+        Prefs.maxRandomRoomSizeXIndex = reader.readInt();
+        Prefs.minRandomRoomSizeYIndex = reader.readInt();
+        Prefs.maxRandomRoomSizeYIndex = reader.readInt();
         Prefs.loadPrefs();
         return true;
       } catch (final IOException ie) {
@@ -618,25 +692,31 @@ public class Prefs {
     }
 
     public boolean exportPreferencesFile(final File exportFile) {
-      try (final BufferedWriter s = new BufferedWriter(
-          new FileWriter(exportFile))) {
+      try (final XDataWriter writer = new XDataWriter(
+          exportFile.getAbsolutePath(), Prefs.DOC_TAG)) {
         // Write the preferences to the file
-        s.write(Integer.toString(Prefs.PREFS_VERSION_MAJOR) + "\n");
-        s.write(Integer.toString(Prefs.PREFS_VERSION_MINOR) + "\n");
-        s.write(Integer.toString(Prefs.editorFill) + "\n");
-        s.write(Boolean.toString(Prefs.checkUpdatesStartupEnabled) + "\n");
-        s.write(Boolean.toString(Prefs.moveOneAtATimeEnabled) + "\n");
+        writer.writeInt(Prefs.PREFS_VERSION_MAJOR);
+        writer.writeInt(Prefs.PREFS_VERSION_MINOR);
+        writer.writeInt(Prefs.editorFill);
+        writer.writeBoolean(Prefs.checkUpdatesStartupEnabled);
+        writer.writeBoolean(Prefs.moveOneAtATimeEnabled);
         for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
-          s.write(Boolean.toString(Prefs.soundsEnabled[x]) + "\n");
+          writer.writeBoolean(Prefs.soundsEnabled[x]);
         }
-        s.write(Integer.toString(Prefs.updateCheckIntervalIndex) + "\n");
-        s.write(Integer.toString(Prefs.lastFilterUsed) + "\n");
-        s.write(Integer.toString(Prefs.difficultySetting) + "\n");
-        s.write(Integer.toString(Prefs.viewingWindowIndex) + "\n");
+        writer.writeInt(Prefs.updateCheckIntervalIndex);
+        writer.writeString(Prefs.lastDirOpen);
+        writer.writeString(Prefs.lastDirSave);
+        writer.writeInt(Prefs.lastFilterUsed);
+        writer.writeInt(Prefs.difficultySetting);
+        writer.writeInt(Prefs.viewingWindowIndex);
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
-          s.write(Boolean.toString(Prefs.musicEnabled[x]) + "\n");
+          writer.writeBoolean(Prefs.musicEnabled[x]);
         }
-        s.write(Integer.toString(Prefs.editorWindowIndex) + "\n");
+        writer.writeInt(Prefs.editorWindowIndex);
+        writer.writeInt(Prefs.minRandomRoomSizeXIndex);
+        writer.writeInt(Prefs.maxRandomRoomSizeXIndex);
+        writer.writeInt(Prefs.minRandomRoomSizeYIndex);
+        writer.writeInt(Prefs.maxRandomRoomSizeYIndex);
         return true;
       } catch (final IOException ie) {
         FantastleReboot.logWarning(ie);

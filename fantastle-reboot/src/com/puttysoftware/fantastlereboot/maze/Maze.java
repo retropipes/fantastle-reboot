@@ -497,14 +497,6 @@ public class Maze {
     this.mazeData.setFloorWraparoundEnabled(value);
   }
 
-  public int getRoomSize() {
-    return this.mazeData.getRoomSize();
-  }
-
-  public void setRoomSize(final int value) {
-    this.mazeData.setRoomSize(value);
-  }
-
   public int getVisionRadius() {
     if (this.isGlobalVisionRadiusSet()) {
       return this.getGlobalVisionRadius();

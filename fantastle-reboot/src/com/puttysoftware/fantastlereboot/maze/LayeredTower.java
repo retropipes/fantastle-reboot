@@ -42,7 +42,6 @@ final class LayeredTower implements Cloneable {
   private int visionMode;
   private int visionModeExploreRadius;
   private int visionRadius;
-  private int roomSize;
   private static final int MAX_FLOORS = 16;
   private static final int MAX_COLUMNS = 64;
   private static final int MAX_ROWS = 64;
@@ -69,7 +68,6 @@ final class LayeredTower implements Cloneable {
     this.visionMode = VisionModes.EXPLORE | VisionModes.FIELD_OF_VIEW;
     this.visionModeExploreRadius = 2;
     this.visionRadius = Maze.MAX_VISION_RADIUS;
-    this.roomSize = 8;
   }
 
   // Static methods
@@ -798,14 +796,6 @@ final class LayeredTower implements Cloneable {
     this.floorWraparoundEnabled = value;
   }
 
-  public int getRoomSize() {
-    return this.roomSize;
-  }
-
-  public void setRoomSize(final int value) {
-    this.roomSize = value;
-  }
-
   public int getVisionRadius() {
     return this.visionRadius;
   }
@@ -913,7 +903,6 @@ final class LayeredTower implements Cloneable {
     writer.writeInt(this.visionMode);
     writer.writeInt(this.visionModeExploreRadius);
     writer.writeInt(this.visionRadius);
-    writer.writeInt(this.roomSize);
   }
 
   public static LayeredTower readLayeredTowerV1(final XDataReader reader)
@@ -955,7 +944,6 @@ final class LayeredTower implements Cloneable {
     lt.visionMode = reader.readInt();
     lt.visionModeExploreRadius = reader.readInt();
     lt.visionRadius = reader.readInt();
-    lt.roomSize = reader.readInt();
     return lt;
   }
 
