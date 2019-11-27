@@ -72,6 +72,7 @@ public class Prefs {
   private static JComboBox<String> updateCheckInterval;
   private static String[] updateCheckIntervalValues;
   private static JComboBox<String> viewingWindowChoices;
+  private static JComboBox<String> editorWindowChoices;
   private static EventHandler handler;
   private static PreferencesFileManager fileMgr = new PreferencesFileManager();
   private static ExportImportManager eiMgr = new ExportImportManager();
@@ -80,6 +81,7 @@ public class Prefs {
   private static boolean moveOneAtATimeEnabled;
   private static int difficultySetting = Prefs.DEFAULT_DIFFICULTY;
   private static int viewingWindowIndex;
+  private static int editorWindowIndex;
   private static int updateCheckIntervalIndex;
   private static boolean[] soundsEnabled = new boolean[Prefs.SOUNDS_LENGTH];
   private static boolean[] musicEnabled = new boolean[Prefs.MUSIC_LENGTH];
@@ -93,7 +95,8 @@ public class Prefs {
   private static final int[] MDM_MIN_BOT = new int[] { 5, 5, 5, 5, 5 };
   private static final int[] MDM_MAX_TOP = new int[] { 5, 5, 5, 5, 5 };
   private static final int[] MDM_MAX_BOT = new int[] { 5, 4, 3, 2, 1 };
-  private static final int DEFAULT_SIZE_INDEX = 2;
+  private static final int DEFAULT_GAME_VIEW_SIZE_INDEX = 2;
+  private static final int DEFAULT_EDITOR_VIEW_SIZE_INDEX = 2;
   private static final String[] VIEWING_WINDOW_SIZE_NAMES = new String[] {
       "Tiny", "Small", "Medium", "Large", "Huge", "Tiny HD", "Small HD",
       "Medium HD", "Large HD", "Huge HD" };
@@ -202,6 +205,18 @@ public class Prefs {
     Prefs.viewingWindowIndex = value;
   }
 
+  public static int getEditorWindowSize() {
+    return Prefs.VIEWING_WINDOW_SIZES[Prefs.getEditorWindowSizeIndex()];
+  }
+
+  public static int getEditorWindowSizeIndex() {
+    return Prefs.editorWindowIndex;
+  }
+
+  public static void setEditorWindowSizeIndex(final int value) {
+    Prefs.editorWindowIndex = value;
+  }
+
   public static boolean isSoundGroupEnabled(final SoundGroup group) {
     return Prefs.isSoundGroupEnabledImpl(group.ordinal());
   }
@@ -307,6 +322,7 @@ public class Prefs {
     Prefs.difficultyChoices.setSelectedIndex(Prefs.difficultySetting);
     Prefs.moveOneAtATime.setSelected(Prefs.moveOneAtATimeEnabled);
     Prefs.viewingWindowChoices.setSelectedIndex(Prefs.viewingWindowIndex);
+    Prefs.editorWindowChoices.setSelectedIndex(Prefs.editorWindowIndex);
   }
 
   private static void savePrefs() {
@@ -327,6 +343,7 @@ public class Prefs {
     Prefs.difficultySetting = Prefs.difficultyChoices.getSelectedIndex();
     Prefs.moveOneAtATimeEnabled = Prefs.moveOneAtATime.isSelected();
     Prefs.viewingWindowIndex = Prefs.viewingWindowChoices.getSelectedIndex();
+    Prefs.editorWindowIndex = Prefs.editorWindowChoices.getSelectedIndex();
   }
 
   public static void setDefaultPrefs() {
@@ -349,8 +366,10 @@ public class Prefs {
     Prefs.difficultyChoices.setSelectedIndex(Prefs.difficultySetting);
     Prefs.moveOneAtATime.setSelected(true);
     Prefs.moveOneAtATimeEnabled = true;
-    Prefs.viewingWindowIndex = Prefs.DEFAULT_SIZE_INDEX;
+    Prefs.viewingWindowIndex = Prefs.DEFAULT_GAME_VIEW_SIZE_INDEX;
     Prefs.viewingWindowChoices.setSelectedIndex(Prefs.viewingWindowIndex);
+    Prefs.editorWindowIndex = Prefs.DEFAULT_EDITOR_VIEW_SIZE_INDEX;
+    Prefs.editorWindowChoices.setSelectedIndex(Prefs.editorWindowIndex);
     Prefs.updateCheckInterval.setSelectedIndex(0);
     Prefs.lastFilterUsed = Prefs.FILTER_MAZE_V5;
   }
@@ -418,6 +437,10 @@ public class Prefs {
     Prefs.editorPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     Prefs.editorPane.add(new JLabel("Default fill for new mazes:"));
     Prefs.editorPane.add(Prefs.editorFillChoices);
+    Prefs.editorPane.add(new JLabel("Editor Window Size"));
+    Prefs.editorWindowChoices = new JComboBox<>(
+        Prefs.VIEWING_WINDOW_SIZE_NAMES);
+    Prefs.editorPane.add(Prefs.editorWindowChoices);
     Prefs.soundPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
       Prefs.soundPane.add(Prefs.sounds[x]);
@@ -505,6 +528,7 @@ public class Prefs {
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
           Prefs.musicEnabled[x] = Boolean.parseBoolean(s.readLine());
         }
+        Prefs.editorWindowIndex = Integer.parseInt(s.readLine());
         Prefs.loadPrefs();
         return true;
       } catch (final PrefsException pe) {
@@ -545,7 +569,7 @@ public class Prefs {
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
           s.write(Boolean.toString(Prefs.musicEnabled[x]) + "\n");
         }
-        s.close();
+        s.write(Integer.toString(Prefs.editorWindowIndex) + "\n");
       } catch (final IOException ie) {
         FantastleReboot.logWarning(ie);
       }
@@ -584,6 +608,7 @@ public class Prefs {
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
           Prefs.musicEnabled[x] = Boolean.parseBoolean(s.readLine());
         }
+        Prefs.editorWindowIndex = Integer.parseInt(s.readLine());
         Prefs.loadPrefs();
         return true;
       } catch (final IOException ie) {
@@ -611,6 +636,7 @@ public class Prefs {
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
           s.write(Boolean.toString(Prefs.musicEnabled[x]) + "\n");
         }
+        s.write(Integer.toString(Prefs.editorWindowIndex) + "\n");
         return true;
       } catch (final IOException ie) {
         FantastleReboot.logWarning(ie);

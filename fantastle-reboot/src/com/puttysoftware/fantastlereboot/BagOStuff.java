@@ -23,7 +23,7 @@ import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleLogic;
-import com.puttysoftware.fantastlereboot.editor.MazeEditor;
+import com.puttysoftware.fantastlereboot.editor.Editor;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.AboutDialog;
 import com.puttysoftware.fantastlereboot.gui.GUIManager;
@@ -40,7 +40,6 @@ public class BagOStuff {
   // Fields
   private AboutDialog about;
   private GeneralHelpManager gHelpMgr;
-  private MazeEditor editor;
   private GUIManager guiMgr;
   private final CombatItemList combatItems;
   private Shop weapons, armor, healer, bank, regenerator, spells, items, socks,
@@ -86,7 +85,6 @@ public class BagOStuff {
     this.guiMgr = new GUIManager();
     this.gHelpMgr = new GeneralHelpManager();
     this.mapTurnBattle = new MapBattleLogic();
-    this.editor = new MazeEditor();
     this.weapons = new Shop(ShopTypes.WEAPONS);
     this.armor = new Shop(ShopTypes.ARMOR);
     this.healer = new Shop(ShopTypes.HEALER);
@@ -160,10 +158,6 @@ public class BagOStuff {
 
   public GeneralHelpManager getGeneralHelpManager() {
     return this.gHelpMgr;
-  }
-
-  public MazeEditor getEditor() {
-    return this.editor;
   }
 
   public AboutDialog getAboutDialog() {
@@ -260,7 +254,7 @@ public class BagOStuff {
       Game.playDungeonMusic();
       break;
     case STATUS_EDITOR:
-      this.editor.showOutput();
+      Editor.showOutput();
       break;
     case STATUS_PREFS:
       Prefs.showPrefs();

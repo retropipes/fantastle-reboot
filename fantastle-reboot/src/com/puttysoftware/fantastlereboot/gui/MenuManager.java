@@ -33,7 +33,7 @@ import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
-import com.puttysoftware.fantastlereboot.editor.MazeEditor;
+import com.puttysoftware.fantastlereboot.editor.Editor;
 import com.puttysoftware.fantastlereboot.files.CharacterRegistration;
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
 import com.puttysoftware.fantastlereboot.files.MazeFileManager;
@@ -648,11 +648,10 @@ public class MenuManager {
     public void actionPerformed(final ActionEvent e) {
       try {
         final BagOStuff app = FantastleReboot.getBagOStuff();
-        final MazeEditor me = app.getEditor();
         boolean loaded = false;
         final String cmd = e.getActionCommand();
         if (cmd.equals("New...")) {
-          loaded = me.newMaze();
+          loaded = Editor.newMaze();
           FileStateManager.setLoaded(loaded);
         } else if (cmd.equals("Open...")) {
           loaded = MazeFileManager.loadGame();
@@ -660,7 +659,7 @@ public class MenuManager {
         } else if (cmd.equals("Close")) {
           // Close the window
           if (app.getMode() == BagOStuff.STATUS_EDITOR) {
-            app.getEditor().handleCloseWindow();
+            Editor.handleCloseWindow();
           } else if (app.getMode() == BagOStuff.STATUS_GAME) {
             boolean saved = true;
             int status = 0;
@@ -690,10 +689,10 @@ public class MenuManager {
           System.exit(0);
         } else if (cmd.equals("Undo")) {
           // Undo most recent action
-          me.undo();
+          Editor.undo();
         } else if (cmd.equals("Redo")) {
           // Redo most recent undone action
-          me.redo();
+          Editor.redo();
         } else if (cmd.equals("Preferences...")) {
           // Show preferences dialog
           Prefs.showPrefs();
@@ -702,42 +701,42 @@ public class MenuManager {
           final int res = CommonDialogs.showConfirmDialog(
               "Are you sure you want to clear the history?", "Editor");
           if (res == JOptionPane.YES_OPTION) {
-            me.clearHistory();
+            Editor.clearHistory();
           }
         } else if (cmd.equals("Go To...")) {
           // Go To
-          me.goToHandler();
+          Editor.goToHandler();
         } else if (cmd.equals("Up One Floor")) {
           // Go up one floor
-          me.updateEditorPosition(0, 0, 1, 0);
+          Editor.updateEditorPosition(0, 0, 1, 0);
         } else if (cmd.equals("Down One Floor")) {
           // Go down one floor
-          me.updateEditorPosition(0, 0, -1, 0);
+          Editor.updateEditorPosition(0, 0, -1, 0);
         } else if (cmd.equals("Up One Level")) {
           // Go up one level
-          me.updateEditorPosition(0, 0, 0, 1);
+          Editor.updateEditorPosition(0, 0, 0, 1);
         } else if (cmd.equals("Down One Level")) {
           // Go down one level
-          me.updateEditorPosition(0, 0, 0, -1);
+          Editor.updateEditorPosition(0, 0, 0, -1);
         } else if (cmd.equals("Add a Level...")) {
           // Add a level
-          me.addLevel();
+          Editor.addLevel();
         } else if (cmd.equals("Toggle Layer")) {
           // Toggle current layer
-          me.toggleLayer();
+          Editor.toggleLayer();
         } else if (cmd.equals("New Game")) {
           // Start a new game
           final boolean proceed = Game.newGame();
           if (proceed) {
             new GenerateTask(true).start();
-            me.mazeChanged();
+            Editor.mazeChanged();
           }
         } else if (cmd.equals("Play")) {
           // Play the current maze
           Game.playMaze();
         } else if (cmd.equals("Edit")) {
           // Edit the current maze
-          me.editMaze();
+          Editor.editMaze();
         } else if (cmd.equals("Show Equipment...")) {
           if (!Game.usingAnItem()) {
             InventoryViewer.showEquipmentDialog();
