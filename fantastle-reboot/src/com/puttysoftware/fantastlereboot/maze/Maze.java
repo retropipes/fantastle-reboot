@@ -30,12 +30,17 @@ public class Maze {
   private int saveW;
   private int levelCount;
   private int activeLevel;
+  private int globalVisionMode;
+  private int globalVisionModeExploreRadius;
+  private int globalVisionRadius;
   private String basePath;
   private PrefixIO prefixHandler;
   private SuffixIO suffixHandler;
   private final int[] savedStart;
   private static final int MIN_LEVELS = 1;
   private static final int MAX_LEVELS = 55;
+  private static final int UNSET = -1;
+  static final int MAX_VISION_RADIUS = 16;
 
   // Constructors
   public Maze() {
@@ -45,6 +50,9 @@ public class Maze {
     this.locW = 0;
     this.saveW = 0;
     this.activeLevel = 0;
+    this.globalVisionMode = Maze.UNSET;
+    this.globalVisionModeExploreRadius = Maze.UNSET;
+    this.globalVisionRadius = Maze.UNSET;
     this.savedStart = new int[4];
     final long random = new RandomLongRange(0, Long.MAX_VALUE).generate();
     final String randomID = Long.toHexString(random);
@@ -138,8 +146,8 @@ public class Maze {
     this.mazeData.resetVisibleSquares();
   }
 
-  public void updateVisibleSquares(final int xp, final int yp, final int zp) {
-    this.mazeData.updateVisibleSquares(xp, yp, zp);
+  public void updateExploredSquares(final int xp, final int yp, final int zp) {
+    this.mazeData.updateExploredSquares(xp, yp, zp);
   }
 
   public void switchLevel(final int level) {
@@ -362,6 +370,244 @@ public class Maze {
     this.mazeData.fillFloor(bottom, top, 0);
   }
 
+  // Global settings
+  public int getGlobalVisionRadius() {
+    return this.globalVisionRadius;
+  }
+
+  public void setGlobalVisionRadius(final int value) {
+    this.globalVisionRadius = value;
+  }
+
+  public boolean isGlobalVisionRadiusSet() {
+    return this.globalVisionRadius == Maze.UNSET;
+  }
+
+  public void unsetGlobalVisionRadius() {
+    this.globalVisionRadius = Maze.UNSET;
+  }
+
+  public int getGlobalExploreExpansionRadius() {
+    return this.globalVisionModeExploreRadius;
+  }
+
+  public void setGlobalExploreExpansionRadius(final int value) {
+    this.globalVisionModeExploreRadius = value;
+  }
+
+  public boolean isGlobalExploreExpansionRadiusSet() {
+    return this.globalVisionModeExploreRadius == Maze.UNSET;
+  }
+
+  public void unsetGlobalExploreExpansionRadius() {
+    this.globalVisionModeExploreRadius = Maze.UNSET;
+  }
+
+  public boolean isGlobalVisionModeNone() {
+    return this.globalVisionMode == VisionModes.NONE;
+  }
+
+  public boolean isGlobalVisionModeExplore() {
+    return (this.globalVisionMode
+        | VisionModes.EXPLORE) == this.globalVisionMode;
+  }
+
+  public boolean isGlobalVisionModeFieldOfView() {
+    return (this.globalVisionMode
+        | VisionModes.FIELD_OF_VIEW) == this.globalVisionMode;
+  }
+
+  public boolean isGlobalVisionModeFixedRadius() {
+    return (this.globalVisionMode
+        | VisionModes.FIXED_RADIUS) == this.globalVisionMode;
+  }
+
+  public void resetGlobalVisionModeNone() {
+    this.globalVisionMode = VisionModes.NONE;
+  }
+
+  public boolean isGlobalVisionModeSet() {
+    return this.globalVisionMode == Maze.UNSET;
+  }
+
+  public void unsetGlobalVisionMode() {
+    this.globalVisionMode = Maze.UNSET;
+  }
+
+  public void addGlobalVisionModeExplore() {
+    this.removeGlobalVisionModeFixedRadius();
+    if (!this.isGlobalVisionModeExplore()) {
+      this.globalVisionMode += VisionModes.EXPLORE;
+    }
+  }
+
+  public void addGlobalVisionModeFieldOfView() {
+    if (!this.isGlobalVisionModeFieldOfView()) {
+      this.globalVisionMode += VisionModes.FIELD_OF_VIEW;
+    }
+  }
+
+  public void addGlobalVisionModeFixedRadius() {
+    this.removeGlobalVisionModeExplore();
+    if (!this.isGlobalVisionModeFixedRadius()) {
+      this.globalVisionMode += VisionModes.FIXED_RADIUS;
+    }
+  }
+
+  public void removeGlobalVisionModeExplore() {
+    if (this.isGlobalVisionModeExplore()) {
+      this.globalVisionMode -= VisionModes.EXPLORE;
+    }
+  }
+
+  public void removeGlobalVisionModeFieldOfView() {
+    if (this.isGlobalVisionModeFieldOfView()) {
+      this.globalVisionMode -= VisionModes.FIELD_OF_VIEW;
+    }
+  }
+
+  public void removeGlobalVisionModeFixedRadius() {
+    if (this.isGlobalVisionModeFixedRadius()) {
+      this.globalVisionMode -= VisionModes.FIXED_RADIUS;
+    }
+  }
+
+  // Settings
+  public boolean isHorizontalWraparoundEnabled() {
+    return this.mazeData.isHorizontalWraparoundEnabled();
+  }
+
+  public boolean isVerticalWraparoundEnabled() {
+    return this.mazeData.isVerticalWraparoundEnabled();
+  }
+
+  public boolean isFloorWraparoundEnabled() {
+    return this.mazeData.isFloorWraparoundEnabled();
+  }
+
+  public void setHorizontalWraparoundEnabled(final boolean value) {
+    this.mazeData.setHorizontalWraparoundEnabled(value);
+  }
+
+  public void setVerticalWraparoundEnabled(final boolean value) {
+    this.mazeData.setVerticalWraparoundEnabled(value);
+  }
+
+  public void setFloorWraparoundEnabled(final boolean value) {
+    this.mazeData.setFloorWraparoundEnabled(value);
+  }
+
+  public int getRoomSize() {
+    return this.mazeData.getRoomSize();
+  }
+
+  public void setRoomSize(final int value) {
+    this.mazeData.setRoomSize(value);
+  }
+
+  public int getVisionRadius() {
+    if (this.isGlobalVisionRadiusSet()) {
+      return this.getGlobalVisionRadius();
+    }
+    return this.mazeData.getVisionRadius();
+  }
+
+  public int getVisionRadiusValue() {
+    return this.mazeData.getVisionRadius();
+  }
+
+  public void setVisionRadius(final int value) {
+    this.mazeData.setVisionRadius(value);
+  }
+
+  public int getExploreExpansionRadius() {
+    if (this.isGlobalExploreExpansionRadiusSet()) {
+      return this.getGlobalExploreExpansionRadius();
+    }
+    return this.mazeData.getExploreExpansionRadius();
+  }
+
+  public int getExploreExpansionRadiusValue() {
+    return this.mazeData.getExploreExpansionRadius();
+  }
+
+  public void setExploreExpansionRadius(final int value) {
+    this.mazeData.setExploreExpansionRadius(value);
+  }
+
+  public boolean isVisionModeNone() {
+    if (this.isGlobalVisionModeSet()) {
+      return this.isGlobalVisionModeNone();
+    }
+    return this.mazeData.isVisionModeNone();
+  }
+
+  public boolean isVisionModeExplore() {
+    if (this.isGlobalVisionModeSet()) {
+      return this.isGlobalVisionModeExplore();
+    }
+    return this.mazeData.isVisionModeExplore();
+  }
+
+  public boolean isVisionModeFieldOfView() {
+    if (this.isGlobalVisionModeSet()) {
+      return this.isGlobalVisionModeFieldOfView();
+    }
+    return this.mazeData.isVisionModeFieldOfView();
+  }
+
+  public boolean isVisionModeFixedRadius() {
+    if (this.isGlobalVisionModeSet()) {
+      return this.isGlobalVisionModeFixedRadius();
+    }
+    return this.mazeData.isVisionModeFixedRadius();
+  }
+
+  public boolean isLocalVisionModeNone() {
+    return this.mazeData.isVisionModeNone();
+  }
+
+  public boolean isLocalVisionModeExplore() {
+    return this.mazeData.isVisionModeExplore();
+  }
+
+  public boolean isLocalVisionModeFieldOfView() {
+    return this.mazeData.isVisionModeFieldOfView();
+  }
+
+  public boolean isLocalVisionModeFixedRadius() {
+    return this.mazeData.isVisionModeFixedRadius();
+  }
+
+  public void resetVisionModeNone() {
+    this.mazeData.resetVisionModeNone();
+  }
+
+  public void addVisionModeExplore() {
+    this.mazeData.addVisionModeExplore();
+  }
+
+  public void addVisionModeFieldOfView() {
+    this.mazeData.addVisionModeFieldOfView();
+  }
+
+  public void addVisionModeFixedRadius() {
+    this.mazeData.addVisionModeFixedRadius();
+  }
+
+  public void removeVisionModeExplore() {
+    this.mazeData.removeVisionModeExplore();
+  }
+
+  public void removeVisionModeFieldOfView() {
+    this.mazeData.removeVisionModeFieldOfView();
+  }
+
+  public void removeVisionModeFixedRadius() {
+    this.mazeData.removeVisionModeFixedRadius();
+  }
+
+  // File I/O
   public Maze readMaze() throws IOException {
     final Maze m = new Maze();
     // Attach handlers
@@ -407,6 +653,9 @@ public class Maze {
     for (int y = 0; y < 4; y++) {
       this.savedStart[y] = reader.readInt();
     }
+    this.globalVisionMode = reader.readInt();
+    this.globalVisionModeExploreRadius = reader.readInt();
+    this.globalVisionRadius = reader.readInt();
     if (this.suffixHandler != null) {
       this.suffixHandler.readSuffix(reader, ver);
     }
@@ -464,6 +713,9 @@ public class Maze {
     for (int y = 0; y < 4; y++) {
       writer.writeInt(this.savedStart[y]);
     }
+    writer.writeInt(this.globalVisionMode);
+    writer.writeInt(this.globalVisionModeExploreRadius);
+    writer.writeInt(this.globalVisionRadius);
     if (this.suffixHandler != null) {
       this.suffixHandler.writeSuffix(writer);
     }

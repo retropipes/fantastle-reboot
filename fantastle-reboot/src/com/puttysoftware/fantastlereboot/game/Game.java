@@ -314,7 +314,7 @@ public final class Game {
       final int px = m.getPlayerLocationX();
       final int py = m.getPlayerLocationY();
       final int pz = m.getPlayerLocationZ();
-      m.updateVisibleSquares(px, py, pz);
+      m.updateExploredSquares(px, py, pz);
       bag.setInGame();
       Game.playDungeonMusic();
       Game.redrawMaze();

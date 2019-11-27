@@ -103,7 +103,7 @@ final class MovementTask extends Thread {
     final int px = m.getPlayerLocationX();
     final int py = m.getPlayerLocationY();
     final int pz = m.getPlayerLocationZ();
-    m.updateVisibleSquares(px, py, pz);
+    m.updateExploredSquares(px, py, pz);
     m.tickTimers(pz);
     PartyManager.getParty().fireStepActions();
     GameGUI.updateStats();
@@ -257,7 +257,7 @@ final class MovementTask extends Thread {
         final int px = m.getPlayerLocationX();
         final int py = m.getPlayerLocationY();
         final int pz = m.getPlayerLocationZ();
-        m.updateVisibleSquares(px, py, pz);
+        m.updateExploredSquares(px, py, pz);
         GameGUI.redrawMaze();
       }
     } else {

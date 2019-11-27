@@ -38,12 +38,11 @@ final class LayeredTower implements Cloneable {
   private final int[] findResult;
   private boolean horizontalWraparoundEnabled;
   private boolean verticalWraparoundEnabled;
+  private boolean floorWraparoundEnabled;
   private int visionMode;
   private int visionModeExploreRadius;
   private int visionRadius;
-  private int initialVisionRadius;
-  private int regionSize;
-  private static final int MAX_VISION_RADIUS = 16;
+  private int roomSize;
   private static final int MAX_FLOORS = 16;
   private static final int MAX_COLUMNS = 64;
   private static final int MAX_ROWS = 64;
@@ -66,10 +65,11 @@ final class LayeredTower implements Cloneable {
     Arrays.fill(this.findResult, -1);
     this.horizontalWraparoundEnabled = false;
     this.verticalWraparoundEnabled = false;
-    this.visionMode = VisionModes.EXPLORE_AND_LOS;
+    this.floorWraparoundEnabled = false;
+    this.visionMode = VisionModes.EXPLORE | VisionModes.FIELD_OF_VIEW;
     this.visionModeExploreRadius = 2;
-    this.visionRadius = LayeredTower.MAX_VISION_RADIUS;
-    this.regionSize = 8;
+    this.visionRadius = Maze.MAX_VISION_RADIUS;
+    this.roomSize = 8;
   }
 
   // Static methods
@@ -235,12 +235,15 @@ final class LayeredTower implements Cloneable {
       final int floor, final int extra) {
     int fR = row;
     int fC = col;
-    final int fF = floor;
+    int fF = floor;
     if (this.verticalWraparoundEnabled) {
       fC = this.normalizeColumn(fC);
     }
     if (this.horizontalWraparoundEnabled) {
       fR = this.normalizeRow(fR);
+    }
+    if (this.floorWraparoundEnabled) {
+      fF = this.normalizeFloor(fF);
     }
     return this.data.getCell(fC, fR, fF, extra);
   }
@@ -287,7 +290,7 @@ final class LayeredTower implements Cloneable {
     }
   }
 
-  public void updateVisibleSquares(final int xp, final int yp, final int zp) {
+  public void updateExploredSquares(final int xp, final int yp, final int zp) {
     if ((this.visionMode | VisionModes.EXPLORE) == this.visionMode) {
       for (int x = xp - this.visionModeExploreRadius; x <= xp
           + this.visionModeExploreRadius; x++) {
@@ -309,8 +312,9 @@ final class LayeredTower implements Cloneable {
             alreadyVisible = this.visionData.getCell(fx, fy, zp);
           }
           if (!alreadyVisible) {
-            if ((this.visionMode | VisionModes.LOS) == this.visionMode) {
-              if (this.isSquareVisibleLOS(x, y, xp, yp)) {
+            if ((this.visionMode
+                | VisionModes.FIELD_OF_VIEW) == this.visionMode) {
+              if (this.isSquareVisibleFieldOfView(x, y, xp, yp)) {
                 if (this.cellRangeCheck(fx, fy, zp)) {
                   this.visionData.setCell(true, fx, fy, zp);
                 }
@@ -332,24 +336,16 @@ final class LayeredTower implements Cloneable {
       return true;
     } else {
       boolean result = false;
-      if ((this.visionMode | VisionModes.EXPLORE) == this.visionMode) {
-        result = result || this.isSquareVisibleExplore(x2, y2);
-        if (result && (this.visionMode | VisionModes.LOS) == this.visionMode) {
-          if (this.areCoordsInBounds(x1, y1, x2, y2)) {
-            // In bounds
-            result = result || this.isSquareVisibleLOS(x1, y1, x2, y2);
-          } else {
-            // Out of bounds
-            result = result && this.isSquareVisibleLOS(x1, y1, x2, y2);
-          }
+      if (this.areCoordsInBounds(x1, y1, x2, y2)) {
+        if (result && (this.visionMode
+            | VisionModes.FIELD_OF_VIEW) == this.visionMode) {
+          result = result && this.isSquareVisibleFieldOfView(x1, y1, x2, y2);
         }
-      } else {
-        if (this.areCoordsInBounds(x1, y1, x2, y2)) {
-          // In bounds
-          result = result || this.isSquareVisibleLOS(x1, y1, x2, y2);
-        } else {
-          // Out of bounds
-          result = result && this.isSquareVisibleLOS(x1, y1, x2, y2);
+        if ((this.visionMode | VisionModes.EXPLORE) == this.visionMode) {
+          result = result && this.isSquareVisibleExplore(x2, y2);
+        } else if ((this.visionMode
+            | VisionModes.FIXED_RADIUS) == this.visionMode) {
+          result = result && this.isSquareVisibleFixedRadius(x1, y1, x2, y2);
         }
       }
       return result;
@@ -373,9 +369,9 @@ final class LayeredTower implements Cloneable {
       fy1 = y1;
       fy2 = y2;
     }
-    return fx1 >= 0 && fx1 <= this.getRows() && fx2 >= 0
-        && fx2 <= this.getRows() && fy1 >= 0 && fy1 <= this.getColumns()
-        && fy2 >= 0 && fy2 <= this.getColumns();
+    return fx1 >= -1 && fx1 <= this.getRows() && fx2 >= -1
+        && fx2 <= this.getRows() && fy1 >= -1 && fy1 <= this.getColumns()
+        && fy2 >= -1 && fy2 <= this.getColumns();
   }
 
   private boolean isSquareVisibleExplore(final int x2, final int y2) {
@@ -398,8 +394,8 @@ final class LayeredTower implements Cloneable {
     }
   }
 
-  private boolean isSquareVisibleLOS(final int x1, final int y1, final int x2,
-      final int y2) {
+  private boolean isSquareVisibleFieldOfView(final int x1, final int y1,
+      final int x2, final int y2) {
     int fx1, fx2, fy1, fy2;
     fx1 = x1;
     fx2 = x2;
@@ -425,18 +421,18 @@ final class LayeredTower implements Cloneable {
       if (fx1 == fx2 && fy1 == fy2) {
         break;
       }
-      // Does object block LOS?
+      // Does object block FoV?
       if (this.cellRangeCheck(fx1, fy1, zLoc)) {
         final FantastleObjectModel obj = this.getCell(fx1, fy1, zLoc,
             Layers.OBJECT);
         if (obj.isSightBlocking()) {
-          // This object blocks LOS
+          // This object blocks FoV
           if (fx1 != x1 || fy1 != y1) {
             return false;
           }
         }
       } else {
-        // Void blocks LOS
+        // Void blocks FoV
         return false;
       }
       e2 = 2 * err;
@@ -449,20 +445,49 @@ final class LayeredTower implements Cloneable {
         fy1 = fy1 + sy;
       }
     } while (true);
-    // No objects block LOS
+    // No objects block FoV
     return true;
+  }
+
+  private boolean isSquareVisibleFixedRadius(final int x1, final int y1,
+      final int x2, final int y2) {
+    int fx1, fy1, fx2, fy2;
+    if (this.isHorizontalWraparoundEnabled()) {
+      fx1 = this.normalizeColumn(x1);
+      fx2 = this.normalizeColumn(x2);
+    } else {
+      fx1 = x1;
+      fx2 = x2;
+    }
+    if (this.isVerticalWraparoundEnabled()) {
+      fy1 = this.normalizeRow(y1);
+      fy2 = this.normalizeRow(y2);
+    } else {
+      fy1 = y1;
+      fy2 = y2;
+    }
+    final int zLoc = this.getPlayerFloor();
+    if (this.cellRangeCheck(fx1, fy1, zLoc)
+        && this.cellRangeCheck(fx2, fy2, zLoc)) {
+      return LayeredTower.radialScan(fx2, fy2, this.visionRadius, fx1, fy1);
+    } else {
+      return true;
+    }
   }
 
   public void setCell(final FantastleObjectModel mo, final int row,
       final int col, final int floor, final int extra) {
     int fR = row;
     int fC = col;
-    final int fF = floor;
+    int fF = floor;
     if (this.verticalWraparoundEnabled) {
       fC = this.normalizeColumn(fC);
     }
     if (this.horizontalWraparoundEnabled) {
       fR = this.normalizeRow(fR);
+    }
+    if (this.floorWraparoundEnabled) {
+      fF = this.normalizeFloor(fF);
     }
     this.data.setCell(mo, fC, fR, fF, extra);
   }
@@ -666,15 +691,16 @@ final class LayeredTower implements Cloneable {
 
   private int normalizeRow(final int row) {
     int fR = row;
+    int rows = this.getRows();
     if (fR < 0) {
-      fR += this.getRows();
+      fR += rows;
       while (fR < 0) {
-        fR += this.getRows();
+        fR += rows;
       }
-    } else if (fR > this.getRows() - 1) {
-      fR -= this.getRows();
-      while (fR > this.getRows() - 1) {
-        fR -= this.getRows();
+    } else if (fR > rows - 1) {
+      fR -= rows;
+      while (fR > rows - 1) {
+        fR -= rows;
       }
     }
     return fR;
@@ -682,26 +708,36 @@ final class LayeredTower implements Cloneable {
 
   private int normalizeColumn(final int column) {
     int fC = column;
+    int columns = this.getColumns();
     if (fC < 0) {
-      fC += this.getColumns();
+      fC += columns;
       while (fC < 0) {
-        fC += this.getColumns();
+        fC += columns;
       }
-    } else if (fC > this.getColumns() - 1) {
-      fC -= this.getColumns();
-      while (fC > this.getColumns() - 1) {
-        fC -= this.getColumns();
+    } else if (fC > columns - 1) {
+      fC -= columns;
+      while (fC > columns - 1) {
+        fC -= columns;
       }
     }
     return fC;
   }
 
-  public boolean isHorizontalWraparoundEnabled() {
-    return this.horizontalWraparoundEnabled;
-  }
-
-  public boolean isVerticalWraparoundEnabled() {
-    return this.verticalWraparoundEnabled;
+  private int normalizeFloor(final int floor) {
+    int fF = floor;
+    int floors = this.getFloors();
+    if (fF < 0) {
+      fF += floors;
+      while (fF < 0) {
+        fF += floors;
+      }
+    } else if (fF > floors - 1) {
+      fF -= floors;
+      while (fF > floors - 1) {
+        fF -= floors;
+      }
+    }
+    return fF;
   }
 
   public void tickTimers(final int floor) {
@@ -737,6 +773,114 @@ final class LayeredTower implements Cloneable {
     }
   }
 
+  // Settings
+  public boolean isHorizontalWraparoundEnabled() {
+    return this.horizontalWraparoundEnabled;
+  }
+
+  public boolean isVerticalWraparoundEnabled() {
+    return this.verticalWraparoundEnabled;
+  }
+
+  public boolean isFloorWraparoundEnabled() {
+    return this.floorWraparoundEnabled;
+  }
+
+  public void setHorizontalWraparoundEnabled(final boolean value) {
+    this.horizontalWraparoundEnabled = value;
+  }
+
+  public void setVerticalWraparoundEnabled(final boolean value) {
+    this.verticalWraparoundEnabled = value;
+  }
+
+  public void setFloorWraparoundEnabled(final boolean value) {
+    this.floorWraparoundEnabled = value;
+  }
+
+  public int getRoomSize() {
+    return this.roomSize;
+  }
+
+  public void setRoomSize(final int value) {
+    this.roomSize = value;
+  }
+
+  public int getVisionRadius() {
+    return this.visionRadius;
+  }
+
+  public void setVisionRadius(final int value) {
+    this.visionRadius = value;
+  }
+
+  public int getExploreExpansionRadius() {
+    return this.visionModeExploreRadius;
+  }
+
+  public void setExploreExpansionRadius(final int value) {
+    this.visionModeExploreRadius = value;
+  }
+
+  public boolean isVisionModeNone() {
+    return this.visionMode == VisionModes.NONE;
+  }
+
+  public boolean isVisionModeExplore() {
+    return (this.visionMode | VisionModes.EXPLORE) == this.visionMode;
+  }
+
+  public boolean isVisionModeFieldOfView() {
+    return (this.visionMode | VisionModes.FIELD_OF_VIEW) == this.visionMode;
+  }
+
+  public boolean isVisionModeFixedRadius() {
+    return (this.visionMode | VisionModes.FIXED_RADIUS) == this.visionMode;
+  }
+
+  public void resetVisionModeNone() {
+    this.visionMode = VisionModes.NONE;
+  }
+
+  public void addVisionModeExplore() {
+    this.removeVisionModeFixedRadius();
+    if (!this.isVisionModeExplore()) {
+      this.visionMode += VisionModes.EXPLORE;
+    }
+  }
+
+  public void addVisionModeFieldOfView() {
+    if (!this.isVisionModeFieldOfView()) {
+      this.visionMode += VisionModes.FIELD_OF_VIEW;
+    }
+  }
+
+  public void addVisionModeFixedRadius() {
+    this.removeVisionModeExplore();
+    if (!this.isVisionModeFixedRadius()) {
+      this.visionMode += VisionModes.FIXED_RADIUS;
+    }
+  }
+
+  public void removeVisionModeExplore() {
+    if (this.isVisionModeExplore()) {
+      this.visionMode -= VisionModes.EXPLORE;
+    }
+  }
+
+  public void removeVisionModeFieldOfView() {
+    if (this.isVisionModeFieldOfView()) {
+      this.visionMode -= VisionModes.FIELD_OF_VIEW;
+    }
+  }
+
+  public void removeVisionModeFixedRadius() {
+    if (this.isVisionModeFixedRadius()) {
+      this.visionMode -= VisionModes.FIXED_RADIUS;
+    }
+  }
+
+  // File I/O
   public void writeLayeredTower(final XDataWriter writer) throws IOException {
     int y, x, z, e;
     writer.writeInt(this.getColumns());
@@ -765,13 +909,11 @@ final class LayeredTower implements Cloneable {
     }
     writer.writeBoolean(this.horizontalWraparoundEnabled);
     writer.writeBoolean(this.verticalWraparoundEnabled);
-    writer.writeInt(this.visionMode);
-    writer.writeInt(this.visionModeExploreRadius);
+    writer.writeBoolean(this.floorWraparoundEnabled);
     writer.writeInt(this.visionMode);
     writer.writeInt(this.visionModeExploreRadius);
     writer.writeInt(this.visionRadius);
-    writer.writeInt(this.initialVisionRadius);
-    writer.writeInt(this.regionSize);
+    writer.writeInt(this.roomSize);
   }
 
   public static LayeredTower readLayeredTowerV1(final XDataReader reader)
@@ -809,13 +951,11 @@ final class LayeredTower implements Cloneable {
     }
     lt.horizontalWraparoundEnabled = reader.readBoolean();
     lt.verticalWraparoundEnabled = reader.readBoolean();
-    lt.visionMode = reader.readInt();
-    lt.visionModeExploreRadius = reader.readInt();
+    lt.floorWraparoundEnabled = reader.readBoolean();
     lt.visionMode = reader.readInt();
     lt.visionModeExploreRadius = reader.readInt();
     lt.visionRadius = reader.readInt();
-    lt.initialVisionRadius = reader.readInt();
-    lt.regionSize = reader.readInt();
+    lt.roomSize = reader.readInt();
     return lt;
   }
 
