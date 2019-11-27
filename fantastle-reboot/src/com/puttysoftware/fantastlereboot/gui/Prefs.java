@@ -77,7 +77,7 @@ public class Prefs {
   private static JSlider minRandomRoomSizeY;
   private static JSlider maxRandomRoomSizeY;
   private static EventHandler handler;
-  private static PreferencesFileManager fileMgr = new PreferencesFileManager();
+  private static PrefsFileManager fileMgr = new PrefsFileManager();
   private static ExportImportManager eiMgr = new ExportImportManager();
   private static int editorFill;
   private static boolean checkUpdatesStartupEnabled;
@@ -548,9 +548,9 @@ public class Prefs {
     Prefs.prefsImport.addActionListener(Prefs.handler);
   }
 
-  private static class PreferencesFileManager {
+  private static class PrefsFileManager {
     // Constructors
-    public PreferencesFileManager() {
+    public PrefsFileManager() {
       // Do nothing
     }
 

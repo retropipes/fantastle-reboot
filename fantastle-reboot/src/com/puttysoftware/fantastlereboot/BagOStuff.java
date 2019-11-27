@@ -70,7 +70,9 @@ public class BagOStuff {
   public static final int STATUS_BATTLE = 4;
   public static final int STATUS_ABOUT = 5;
   public static final int STATUS_HELP = 6;
-  public static final int STATUS_NULL = 7;
+  public static final int STATUS_MAZE_PREFS = 7;
+  public static final int STATUS_LEVEL_PREFS = 8;
+  public static final int STATUS_NULL = 9;
 
   // Constructors
   public BagOStuff() {
@@ -130,6 +132,16 @@ public class BagOStuff {
   public void setInHelp() {
     this.formerMode = this.currentMode;
     this.currentMode = BagOStuff.STATUS_HELP;
+  }
+
+  public void setInMazePrefs() {
+    this.formerMode = this.currentMode;
+    this.currentMode = BagOStuff.STATUS_MAZE_PREFS;
+  }
+
+  public void setInLevelPrefs() {
+    this.formerMode = this.currentMode;
+    this.currentMode = BagOStuff.STATUS_LEVEL_PREFS;
   }
 
   public boolean inBattle() {
