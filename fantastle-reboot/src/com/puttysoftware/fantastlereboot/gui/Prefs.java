@@ -205,24 +205,32 @@ public class Prefs {
   }
 
   public static String getLastDirOpen() {
+    if (Prefs.lastDirOpen == null) {
+      Prefs.lastDirOpen = "";
+    }
     return Prefs.lastDirOpen;
   }
 
   public static void setLastDirOpen(final String value) {
-    Prefs.lastDirOpen = value;
     if (value == null) {
       Prefs.lastDirOpen = "";
+    } else {
+      Prefs.lastDirOpen = value;
     }
   }
 
   public static String getLastDirSave() {
+    if (Prefs.lastDirSave == null) {
+      Prefs.lastDirSave = "";
+    }
     return Prefs.lastDirSave;
   }
 
   public static void setLastDirSave(final String value) {
-    Prefs.lastDirSave = value;
     if (value == null) {
       Prefs.lastDirSave = "";
+    } else {
+      Prefs.lastDirSave = value;
     }
   }
 
@@ -340,8 +348,6 @@ public class Prefs {
 
   public static void resetPrefs() {
     Prefs.fileMgr.deletePreferencesFile();
-    Prefs.lastDirOpen = null;
-    Prefs.lastDirSave = null;
     Prefs.resetDefaultPrefs();
   }
 
@@ -437,6 +443,8 @@ public class Prefs {
     Prefs.editorWindowIndex = Prefs.DEFAULT_EDITOR_VIEW_SIZE_INDEX;
     Prefs.editorWindowChoices.setSelectedIndex(Prefs.editorWindowIndex);
     Prefs.updateCheckInterval.setSelectedIndex(0);
+    Prefs.lastDirOpen = "";
+    Prefs.lastDirSave = "";
     Prefs.lastFilterUsed = Prefs.FILTER_MAZE_V5;
     Prefs.minRandomRoomSizeXIndex = Prefs.DEFAULT_ROOM_SIZE;
     Prefs.maxRandomRoomSizeXIndex = Prefs.DEFAULT_ROOM_SIZE;
