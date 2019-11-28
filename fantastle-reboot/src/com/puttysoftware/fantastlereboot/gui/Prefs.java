@@ -29,7 +29,6 @@ import java.awt.event.ItemListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -49,6 +48,8 @@ import com.puttysoftware.fantastlereboot.Modes;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.files.CommonPaths;
+import com.puttysoftware.fantastlereboot.files.versions.PrefsVersionException;
+import com.puttysoftware.fantastlereboot.files.versions.PrefsVersions;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.randomrange.RandomRange;
@@ -639,19 +640,11 @@ public class Prefs {
       try (final XDataReader reader = new XDataReader(
           CommonPaths.getPrefsFile().getAbsolutePath(), Prefs.DOC_TAG)) {
         // Read the preferences from the file
-        // Read major version
-        final int majorVersion = reader.readInt();
-        // Read minor version
-        final int minorVersion = reader.readInt();
+        // Read version
+        final int version = reader.readInt();
         // Version check
-        if (majorVersion == BagOStuff.VERSION_MAJOR) {
-          if (minorVersion > BagOStuff.VERSION_MINOR) {
-            throw new PrefsException(
-                "Incompatible preferences minor version, using defaults.");
-          }
-        } else {
-          throw new PrefsException(
-              "Incompatible preferences major version, using defaults.");
+        if (!PrefsVersions.isCompatible(version)) {
+          throw new PrefsVersionException(version);
         }
         Prefs.editorFill = reader.readInt();
         Prefs.checkUpdatesStartupEnabled = reader.readBoolean();
@@ -676,8 +669,9 @@ public class Prefs {
         Prefs.maxRandomRoomSizeYIndex = reader.readInt();
         Prefs.loadPrefs();
         return true;
-      } catch (final PrefsException pe) {
-        CommonDialogs.showDialog(pe.getMessage());
+      } catch (final PrefsVersionException pe) {
+        FantastleReboot.logWarningWithMessage(pe,
+            "Incompatible preferences version found; using defaults.");
         return false;
       } catch (final Exception e) {
         FantastleReboot.logWarningWithMessage(e,
@@ -696,8 +690,7 @@ public class Prefs {
       try (final XDataWriter writer = new XDataWriter(
           prefsFile.getAbsolutePath(), Prefs.DOC_TAG)) {
         // Write the preferences to the file
-        writer.writeInt(BagOStuff.VERSION_MAJOR);
-        writer.writeInt(BagOStuff.VERSION_MINOR);
+        writer.writeInt(PrefsVersions.LATEST);
         writer.writeInt(Prefs.editorFill);
         writer.writeBoolean(Prefs.checkUpdatesStartupEnabled);
         writer.writeBoolean(Prefs.moveOneAtATimeEnabled);
@@ -737,10 +730,12 @@ public class Prefs {
       try (final XDataReader reader = new XDataReader(
           importFile.getAbsolutePath(), Prefs.DOC_TAG)) {
         // Read the preferences from the file
-        // Read and discard major version
-        reader.readInt();
-        // Read and discard minor version
-        reader.readInt();
+        // Read version
+        final int version = reader.readInt();
+        // Version check
+        if (!PrefsVersions.isCompatible(version)) {
+          throw new PrefsVersionException(version);
+        }
         Prefs.editorFill = reader.readInt();
         Prefs.checkUpdatesStartupEnabled = reader.readBoolean();
         Prefs.moveOneAtATimeEnabled = reader.readBoolean();
@@ -764,8 +759,12 @@ public class Prefs {
         Prefs.maxRandomRoomSizeYIndex = reader.readInt();
         Prefs.loadPrefs();
         return true;
-      } catch (final IOException ie) {
-        FantastleReboot.logWarning(ie);
+      } catch (final PrefsVersionException pe) {
+        FantastleReboot.logWarningWithMessage(pe,
+            "Incompatible preferences version found; aborting import.");
+        return false;
+      } catch (final Throwable e) {
+        FantastleReboot.logWarning(e);
         return false;
       }
     }
@@ -774,8 +773,7 @@ public class Prefs {
       try (final XDataWriter writer = new XDataWriter(
           exportFile.getAbsolutePath(), Prefs.DOC_TAG)) {
         // Write the preferences to the file
-        writer.writeInt(BagOStuff.VERSION_MAJOR);
-        writer.writeInt(BagOStuff.VERSION_MINOR);
+        writer.writeInt(PrefsVersions.LATEST);
         writer.writeInt(Prefs.editorFill);
         writer.writeBoolean(Prefs.checkUpdatesStartupEnabled);
         writer.writeBoolean(Prefs.moveOneAtATimeEnabled);
@@ -798,8 +796,9 @@ public class Prefs {
         writer.writeInt(Prefs.minRandomRoomSizeYIndex);
         writer.writeInt(Prefs.maxRandomRoomSizeYIndex);
         return true;
-      } catch (final IOException ie) {
-        FantastleReboot.logWarning(ie);
+      } catch (final Throwable t) {
+        FantastleReboot.logWarningWithMessage(t,
+            "An error occurred while exporting settings. Export aborted. Details have been recorded.");
         return false;
       }
     }

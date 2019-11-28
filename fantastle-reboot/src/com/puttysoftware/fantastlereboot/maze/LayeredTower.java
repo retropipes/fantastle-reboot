@@ -11,7 +11,7 @@ import java.util.Arrays;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Modes;
-import com.puttysoftware.fantastlereboot.files.MazeVersions;
+import com.puttysoftware.fantastlereboot.files.versions.MazeVersions;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.GameObjects;
@@ -967,8 +967,7 @@ final class LayeredTower implements Cloneable {
       for (y = 0; y < lt.getRows(); y++) {
         for (z = 0; z < lt.getFloors(); z++) {
           for (e = 0; e < Layers.COUNT; e++) {
-            lt.setCell(
-                GameObjects.readObject(reader, MazeVersions.FORMAT_LATEST), y,
+            lt.setCell(GameObjects.readObject(reader, MazeVersions.LATEST), y,
                 x, z, e);
             if (lt.getCell(y, x, z, e) == null) {
               return null;

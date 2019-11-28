@@ -11,11 +11,11 @@ import java.io.IOException;
 import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.files.FileExtensions;
-import com.puttysoftware.fantastlereboot.files.MazeVersions;
 import com.puttysoftware.fantastlereboot.files.PrefixIO;
 import com.puttysoftware.fantastlereboot.files.SuffixIO;
+import com.puttysoftware.fantastlereboot.files.versions.MazeVersionException;
+import com.puttysoftware.fantastlereboot.files.versions.MazeVersions;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
-import com.puttysoftware.fantastlereboot.gui.VersionException;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Tile;
@@ -642,7 +642,7 @@ public class Maze {
   }
 
   private int readMazeMetafile(final XDataReader reader) throws IOException {
-    int ver = MazeVersions.FORMAT_LATEST;
+    int ver = MazeVersions.LATEST;
     if (this.prefixHandler != null) {
       ver = this.prefixHandler.readPrefix(reader);
     }
@@ -664,17 +664,16 @@ public class Maze {
   }
 
   private void readMazeLevel(final XDataReader reader) throws IOException {
-    this.readMazeLevel(reader, MazeVersions.FORMAT_LATEST);
+    this.readMazeLevel(reader, MazeVersions.LATEST);
   }
 
   private void readMazeLevel(final XDataReader reader, final int formatVersion)
       throws IOException {
-    if (formatVersion == MazeVersions.FORMAT_LATEST) {
+    if (formatVersion == MazeVersions.LATEST) {
       this.mazeData = LayeredTower.readLayeredTowerV1(reader);
       this.mazeData.readSavedTowerState(reader, formatVersion);
     } else {
-      throw new VersionException(
-          "Unknown maze format version: " + formatVersion + "!");
+      throw new MazeVersionException(formatVersion);
     }
   }
 

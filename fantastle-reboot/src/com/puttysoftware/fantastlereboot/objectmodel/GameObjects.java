@@ -10,7 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.files.MazeVersions;
+import com.puttysoftware.fantastlereboot.files.versions.MazeVersions;
 import com.puttysoftware.fantastlereboot.loaders.DataLoader;
 import com.puttysoftware.fantastlereboot.objects.ArmorShop;
 import com.puttysoftware.fantastlereboot.objects.BankShop;
@@ -336,14 +336,14 @@ public final class GameObjects {
     final FantastleObjectModel[] objects = GameObjects.getAllObjects();
     FantastleObjectModel o = null;
     int UID = -1;
-    if (formatVersion == MazeVersions.FORMAT_LATEST) {
+    if (formatVersion == MazeVersions.LATEST) {
       UID = reader.readInt();
     }
     for (final FantastleObjectModel object : objects) {
       try {
         FantastleObjectModel instance;
         instance = object.getClass().getConstructor().newInstance();
-        if (formatVersion == MazeVersions.FORMAT_LATEST) {
+        if (formatVersion == MazeVersions.LATEST) {
           o = instance.readObject(reader, UID);
           if (o != null) {
             return o;
@@ -366,7 +366,7 @@ public final class GameObjects {
       try {
         FantastleObjectModel instance;
         instance = object.getClass().getConstructor().newInstance();
-        if (formatVersion == MazeVersions.FORMAT_LATEST) {
+        if (formatVersion == MazeVersions.LATEST) {
           o = instance.readObject(reader, UID);
           if (o != null) {
             return o;

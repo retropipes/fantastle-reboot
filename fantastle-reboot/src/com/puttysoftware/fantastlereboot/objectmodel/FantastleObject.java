@@ -11,7 +11,7 @@ import com.puttysoftware.diane.loaders.ColorShader;
 import com.puttysoftware.diane.objectmodel.GameObject;
 import com.puttysoftware.fantastlereboot.assets.AttributeImageIndex;
 import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
-import com.puttysoftware.fantastlereboot.files.MazeVersions;
+import com.puttysoftware.fantastlereboot.files.versions.MazeVersions;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.randomrange.RandomRange;
 import com.puttysoftware.xio.XDataReader;
@@ -322,7 +322,7 @@ public abstract class FantastleObject extends GameObject
       final int savedIdent = reader.readInt();
       if (savedIdent != -1) {
         this.savedObject = GameObjects.readSavedObject(reader, savedIdent,
-            MazeVersions.FORMAT_LATEST);
+            MazeVersions.LATEST);
       }
       final int cc = this.customCountersLength();
       for (int x = 0; x < cc; x++) {

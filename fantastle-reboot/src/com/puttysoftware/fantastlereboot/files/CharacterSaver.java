@@ -11,6 +11,7 @@ import java.io.IOException;
 import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
+import com.puttysoftware.fantastlereboot.files.versions.CharacterVersions;
 import com.puttysoftware.xio.XDataWriter;
 
 public class CharacterSaver {
@@ -28,7 +29,7 @@ public class CharacterSaver {
 
   public static void writeCharacter(final XDataWriter writer,
       final PartyMember character) throws IOException {
-    writer.writeByte(CharacterVersions.FORMAT_LATEST);
+    writer.writeInt(CharacterVersions.LATEST);
     writer.writeInt(character.getKills());
     writer.writeInt(character.getPermanentAttackPoints());
     writer.writeInt(character.getPermanentDefensePoints());

@@ -11,7 +11,9 @@ import java.io.IOException;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
-import com.puttysoftware.fantastlereboot.gui.VersionException;
+import com.puttysoftware.fantastlereboot.files.versions.CharacterVersionException;
+import com.puttysoftware.fantastlereboot.files.versions.CharacterVersions;
+import com.puttysoftware.fantastlereboot.files.versions.VersionException;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.xio.XDataReader;
 
@@ -33,13 +35,13 @@ public class CharacterLoader {
 
   public static PartyMember readCharacter(final XDataReader reader)
       throws IOException {
-    final int version = reader.readByte();
+    final int version = reader.readInt();
     // if (version < CharacterVersions.FORMAT_1) {
     // throw new VersionException("Invalid character version found: " +
     // version);
     // }
-    if (version != CharacterVersions.FORMAT_1) {
-      throw new VersionException("Invalid character version found: " + version);
+    if (!CharacterVersions.isCompatible(version)) {
+      throw new CharacterVersionException(version);
     }
     final int k = reader.readInt();
     final int pAtk = reader.readInt();
