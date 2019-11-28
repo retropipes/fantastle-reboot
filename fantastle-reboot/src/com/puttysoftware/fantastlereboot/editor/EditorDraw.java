@@ -16,17 +16,15 @@ import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.Nothing;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Player;
-import com.puttysoftware.fantastlereboot.objects.temporary.Darkness;
 import com.puttysoftware.fantastlereboot.objects.temporary.NoteObject;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class EditorDraw extends Thread {
   private final DrawGrid drawGrid;
   private final JPanel drawDestination;
-  private static int MAX_LAYER;
+  private static int MAX_LAYER = Layers.GROUND;
   private static final Nothing NOTHING = new Nothing();
   private static final OpenSpace OPEN = new OpenSpace();
-  private static final Darkness DARK = new Darkness();
   private static final NoteObject NOTE = new NoteObject();
   private static final Player PLAYER = new Player();
 
@@ -41,6 +39,7 @@ class EditorDraw extends Thread {
   @Override
   public void run() {
     try {
+      this.draw();
       while (true) {
         this.waitForWork();
         this.draw();
@@ -68,7 +67,6 @@ class EditorDraw extends Thread {
     final Maze m = MazeManager.getMaze();
     int x, y, u, v;
     int xFix, yFix;
-    boolean visible;
     boolean inBounds;
     u = m.getPlayerLocationX();
     v = m.getPlayerLocationY();
@@ -81,45 +79,39 @@ class EditorDraw extends Thread {
       for (y = viewY; y <= viewLRY; y++) {
         xFix = x - viewX;
         yFix = y - viewY;
-        visible = m.isSquareVisible(u, v, y, x);
         inBounds = x >= 0 && x < m.getRows() && y >= 0 && y < m.getColumns();
         if (inBounds) {
-          if (visible) {
-            final FantastleObjectModel obj1 = m.getCell(y, x,
-                m.getPlayerLocationZ(), Layers.GROUND);
-            final BufferedImageIcon img1 = obj1.getEditorImage();
-            FantastleObjectModel obj3 = EditorDraw.OPEN;
-            BufferedImageIcon img3 = obj3.getEditorImage();
-            FantastleObjectModel obj4 = EditorDraw.OPEN;
-            BufferedImageIcon img4 = obj4.getEditorImage();
-            final boolean playerSquare = u == y && v == x;
-            final boolean noteSquare = m.hasNote(x, y, z);
-            if (playerSquare) {
-              obj3 = EditorDraw.PLAYER;
-              img3 = obj3.getEditorImage();
-            }
-            if (noteSquare) {
-              obj4 = EditorDraw.NOTE;
-              img4 = obj4.getEditorImage();
-            }
-            if (EditorDraw.MAX_LAYER >= Layers.OBJECT) {
-              final FantastleObjectModel obj2 = m.getCell(y, x,
-                  m.getPlayerLocationZ(), Layers.OBJECT);
-              final BufferedImageIcon img2 = obj2.getEditorImage();
-              final String cacheName = EditorDraw.generateCacheName(obj1, obj2,
-                  obj3, obj4);
-              this.drawGrid.setImageCell(
-                  ImageCompositor.composite(cacheName, img1, img2, img3, img4),
-                  xFix, yFix);
-            } else {
-              final String cacheName = EditorDraw.generateCacheName(obj1, obj3,
-                  obj4);
-              this.drawGrid.setImageCell(
-                  ImageCompositor.composite(cacheName, img1, img3, img4), xFix,
-                  yFix);
-            }
+          final FantastleObjectModel obj1 = m.getCell(y, x,
+              m.getPlayerLocationZ(), Layers.GROUND);
+          final BufferedImageIcon img1 = obj1.getEditorImage();
+          FantastleObjectModel obj3 = EditorDraw.OPEN;
+          BufferedImageIcon img3 = obj3.getEditorImage();
+          FantastleObjectModel obj4 = EditorDraw.OPEN;
+          BufferedImageIcon img4 = obj4.getEditorImage();
+          final boolean playerSquare = u == y && v == x;
+          final boolean noteSquare = m.hasNote(x, y, z);
+          if (playerSquare) {
+            obj3 = EditorDraw.PLAYER;
+            img3 = obj3.getEditorImage();
+          }
+          if (noteSquare) {
+            obj4 = EditorDraw.NOTE;
+            img4 = obj4.getEditorImage();
+          }
+          if (EditorDraw.MAX_LAYER >= Layers.OBJECT) {
+            final FantastleObjectModel obj2 = m.getCell(y, x,
+                m.getPlayerLocationZ(), Layers.OBJECT);
+            final BufferedImageIcon img2 = obj2.getEditorImage();
+            final String cacheName = EditorDraw.generateCacheName(obj1, obj2,
+                obj3, obj4);
+            this.drawGrid.setImageCell(
+                ImageCompositor.composite(cacheName, img1, img2, img3, img4),
+                xFix, yFix);
           } else {
-            this.drawGrid.setImageCell(EditorDraw.DARK.getEditorImage(), xFix,
+            final String cacheName = EditorDraw.generateCacheName(obj1, obj3,
+                obj4);
+            this.drawGrid.setImageCell(
+                ImageCompositor.composite(cacheName, img1, img3, img4), xFix,
                 yFix);
           }
         } else {
