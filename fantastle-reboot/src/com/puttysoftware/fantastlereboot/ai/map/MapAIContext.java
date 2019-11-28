@@ -20,20 +20,20 @@ public class MapAIContext extends AIContext {
   private final int yBound;
 
   // Constructor
-  public MapAIContext(final BattleCharacter creature, final World arena) {
+  public MapAIContext(final BattleCharacter creature, final World world) {
     super(creature);
-    this.xBound = arena.getRows();
-    this.yBound = arena.getColumns();
+    this.xBound = world.getRows();
+    this.yBound = world.getColumns();
     this.apCosts = new int[this.xBound][this.yBound];
     this.creatureLocations = new int[this.xBound][this.yBound];
   }
 
   // Methods
   @Override
-  public void updateContext(final World arena) {
+  public void updateContext(final World world) {
     for (int x = 0; x < this.apCosts.length; x++) {
       for (int y = 0; y < this.apCosts[x].length; y++) {
-        final FantastleObjectModel obj = arena.getCell(x, y, 0, Layers.OBJECT);
+        final FantastleObjectModel obj = world.getCell(x, y, 0, Layers.OBJECT);
         if (obj.isSolid()) {
           this.apCosts[x][y] = AIContext.CANNOT_MOVE_THERE;
         } else {
@@ -43,7 +43,7 @@ public class MapAIContext extends AIContext {
     }
     for (int x = 0; x < this.creatureLocations.length; x++) {
       for (int y = 0; y < this.creatureLocations[x].length; y++) {
-        final FantastleObjectModel obj = arena.getCell(x, y, 0, Layers.OBJECT);
+        final FantastleObjectModel obj = world.getCell(x, y, 0, Layers.OBJECT);
         if (obj instanceof BattleCharacter) {
           final BattleCharacter bc = (BattleCharacter) obj;
           this.creatureLocations[x][y] = bc.getTeamID();

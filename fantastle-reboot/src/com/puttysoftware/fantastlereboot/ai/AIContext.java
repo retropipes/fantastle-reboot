@@ -31,7 +31,7 @@ public abstract class AIContext {
   }
 
   // Methods
-  public abstract void updateContext(final World arena);
+  public abstract void updateContext(final World world);
 
   public final BattleCharacter getCharacter() {
     return this.aiCreature;
