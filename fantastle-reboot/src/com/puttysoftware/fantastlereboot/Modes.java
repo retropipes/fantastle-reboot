@@ -17,10 +17,9 @@ public class Modes {
   private static final int PREFS = 3;
   private static final int BATTLE = 4;
   private static final int ABOUT = 5;
-  private static final int HELP = 6;
-  private static final int WORLD_PREFS = 7;
-  private static final int LEVEL_PREFS = 8;
-  private static final int GUI = 9;
+  private static final int WORLD_PREFS = 6;
+  private static final int LEVEL_PREFS = 7;
+  private static final int GUI = 8;
   private static int current;
   private static int former;
 
@@ -49,11 +48,6 @@ public class Modes {
   public static void setInAbout() {
     Modes.save();
     Modes.current = Modes.ABOUT;
-  }
-
-  public static void setInHelp() {
-    Modes.save();
-    Modes.current = Modes.HELP;
   }
 
   public static void setInWorldPrefs() {
@@ -88,10 +82,6 @@ public class Modes {
 
   public static boolean inAbout() {
     return Modes.current == Modes.ABOUT;
-  }
-
-  public static boolean inHelp() {
-    return Modes.current == Modes.HELP;
   }
 
   public static boolean inWorldPrefs() {
@@ -132,9 +122,6 @@ public class Modes {
       break;
     case ABOUT:
       bag.getAboutDialog().showAboutDialog();
-      break;
-    case HELP:
-      bag.getGeneralHelpManager().showHelp();
       break;
     case WORLD_PREFS:
       WorldPrefs.showPrefs();

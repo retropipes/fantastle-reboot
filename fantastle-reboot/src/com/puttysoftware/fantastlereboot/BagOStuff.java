@@ -26,7 +26,6 @@ import com.puttysoftware.fantastlereboot.battle.map.MapBattleLogic;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.AboutDialog;
 import com.puttysoftware.fantastlereboot.gui.GUIManager;
-import com.puttysoftware.fantastlereboot.gui.GeneralHelpManager;
 import com.puttysoftware.fantastlereboot.gui.MenuManager;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.items.Shop;
@@ -38,7 +37,6 @@ import com.puttysoftware.updater.ProductData;
 public class BagOStuff {
   // Fields
   private AboutDialog about;
-  private GeneralHelpManager gHelpMgr;
   private GUIManager guiMgr;
   private final CombatItemList combatItems;
   private Shop weapons, armor, healer, bank, regenerator, spells, items, socks,
@@ -70,7 +68,6 @@ public class BagOStuff {
   void postConstruct() {
     this.about = new AboutDialog(BagOStuff.getVersionString());
     this.guiMgr = new GUIManager();
-    this.gHelpMgr = new GeneralHelpManager();
     this.mapTurnBattle = new MapBattleLogic();
     this.weapons = new Shop(ShopTypes.WEAPONS);
     this.armor = new Shop(ShopTypes.ARMOR);
@@ -94,10 +91,6 @@ public class BagOStuff {
 
   public void resetPreferences() {
     Prefs.resetPrefs();
-  }
-
-  public GeneralHelpManager getGeneralHelpManager() {
-    return this.gHelpMgr;
   }
 
   public AboutDialog getAboutDialog() {

@@ -97,7 +97,6 @@ class Loader extends Thread {
       final BagOStuff bag = FantastleReboot.getBagOStuff();
       GameObjects.initializeObjects();
       bag.postConstruct();
-      bag.getGeneralHelpManager().updateHelpSize();
       FantastleReboot.doLateOSIntegration();
       this.updateWaitProgress(100);
       // Exit Wait Mode

@@ -66,7 +66,7 @@ public class MenuManager {
       gameShowScore, gameShowTable, gameEditNote, gameViewStats,
       gameChangeLeader;
   private JMenuItem debugResetPreferences;
-  private JMenuItem helpAbout, helpGeneralHelp, helpObjectHelp;
+  private JMenuItem helpAbout;
   private KeyStroke fileNewAccel, fileOpenAccel, fileCloseAccel, fileSaveAccel,
       fileSaveAsAccel;
   private KeyStroke editPreferencesAccel, editUndoAccel, editRedoAccel,
@@ -206,7 +206,6 @@ public class MenuManager {
     this.playRemoveCharacter.setEnabled(true);
     this.debugResetPreferences.setEnabled(true);
     this.helpAbout.setEnabled(true);
-    this.helpObjectHelp.setEnabled(true);
     this.fileNew.setEnabled(true);
     this.fileOpen.setEnabled(true);
     this.fileExit.setEnabled(true);
@@ -510,9 +509,7 @@ public class MenuManager {
     this.gameViewStats = new JMenuItem("View Statistics...");
     this.gameChangeLeader = new JMenuItem("Change Party Leader...");
     this.debugResetPreferences = new JMenuItem("Reset Preferences");
-    this.helpAbout = new JMenuItem("About Fantastle...");
-    this.helpGeneralHelp = new JMenuItem("Fantastle Help");
-    this.helpObjectHelp = new JMenuItem("Fantastle Object Help");
+    this.helpAbout = new JMenuItem("About...");
     this.fileNew.addActionListener(this.handler);
     this.fileOpen.addActionListener(this.handler);
     this.fileClose.addActionListener(this.handler);
@@ -557,8 +554,6 @@ public class MenuManager {
     this.gameViewStats.addActionListener(this.handler);
     this.debugResetPreferences.addActionListener(this.handler);
     this.helpAbout.addActionListener(this.handler);
-    this.helpGeneralHelp.addActionListener(this.handler);
-    this.helpObjectHelp.addActionListener(this.handler);
     this.fileMenu.add(this.fileNew);
     this.fileMenu.add(this.fileOpen);
     this.fileMenu.add(this.fileClose);
@@ -607,17 +602,15 @@ public class MenuManager {
     this.gameMenu.add(this.gameViewStats);
     this.gameMenu.add(this.gameChangeLeader);
     this.debugMenu.add(this.debugResetPreferences);
-    if (!System.getProperty("os.name").equalsIgnoreCase("Mac OS X")) {
-      this.helpMenu.add(this.helpAbout);
-    }
-    this.helpMenu.add(this.helpGeneralHelp);
-    this.helpMenu.add(this.helpObjectHelp);
     this.mainMenuBar.add(this.fileMenu);
     this.mainMenuBar.add(this.editMenu);
     this.mainMenuBar.add(this.playMenu);
     this.mainMenuBar.add(this.gameMenu);
     this.mainMenuBar.add(this.debugMenu);
-    this.mainMenuBar.add(this.helpMenu);
+    if (!System.getProperty("os.name").equalsIgnoreCase("Mac OS X")) {
+      this.mainMenuBar.add(this.helpMenu);
+      this.helpMenu.add(this.helpAbout);
+    }
   }
 
   private void setInitialMenuState() {
@@ -665,7 +658,6 @@ public class MenuManager {
     this.gameChangeLeader.setEnabled(false);
     this.debugResetPreferences.setEnabled(false);
     this.helpAbout.setEnabled(false);
-    this.helpObjectHelp.setEnabled(false);
   }
 
   private class EventHandler implements ActionListener {
@@ -829,8 +821,6 @@ public class MenuManager {
           CommonDialogs.showDialog("Preferences reset to defaults.");
         } else if (cmd.equals("About Fantastle...")) {
           app.getAboutDialog().showAboutDialog();
-        } else if (cmd.equals("Fantastle Help")) {
-          app.getGeneralHelpManager().showHelp();
         }
         MenuManager.this.checkFlags();
       } catch (final Exception ex) {
