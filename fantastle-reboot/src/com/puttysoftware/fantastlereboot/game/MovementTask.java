@@ -98,18 +98,16 @@ final class MovementTask extends Thread {
     MovementTask.proceed = false;
   }
 
-  static void fireStepActions() {
+  private static void fireStepActions(final int px, final int py,
+      final int pz) {
     final World m = WorldManager.getWorld();
-    final int px = m.getPlayerLocationX();
-    final int py = m.getPlayerLocationY();
-    final int pz = m.getPlayerLocationZ();
     m.updateExploredSquares(px, py, pz);
     m.tickTimers(pz);
     PartyManager.getParty().fireStepActions();
     GameGUI.updateStats();
     MovementTask.checkGameOver();
-    MovementTask.checkFloorChange();
-    MovementTask.checkLevelChange();
+    MovementTask.checkFloorChange(px, py, pz);
+    MovementTask.checkLevelChange(px, py, pz);
     m.checkForBattle(px, py, pz);
   }
 
@@ -180,7 +178,6 @@ final class MovementTask extends Thread {
             GameView.offsetViewingWindowLocationX(fY);
             GameView.offsetViewingWindowLocationY(fX);
             FileStateManager.setDirty(true);
-            MovementTask.fireStepActions();
             MovementTask.decayEffects();
             if (MovementTask.proceed) {
               MovementTask.saved = m.getCell(px, py, pz, Layers.OBJECT);
@@ -191,13 +188,13 @@ final class MovementTask extends Thread {
         } else {
           MovementTask.moveFailed();
         }
-        MovementTask.fireStepActions();
       } else {
         MovementTask.moveFailed();
       }
       px = m.getPlayerLocationX();
       py = m.getPlayerLocationY();
       pz = m.getPlayerLocationZ();
+      MovementTask.fireStepActions(px, py, pz);
       loopCheck = MovementTask.checkLoopCondition(below, nextBelow, nextAbove);
       if (loopCheck && !nextBelow.hasFriction()) {
         // Sliding on ice
@@ -272,65 +269,49 @@ final class MovementTask extends Thread {
     GameView.restoreViewingWindow();
     SoundPlayer.playSound(SoundIndex.WALK_FAILED, SoundGroup.GAME);
     Game.setStatusMessage("Can't go that way");
-    MovementTask.fireStepActions();
     MovementTask.decayEffects();
     MovementTask.proceed = false;
   }
 
-  private static void checkFloorChange() {
-    final World m = WorldManager.getWorld();
-    final int px = m.getPlayerLocationX();
-    final int py = m.getPlayerLocationY();
-    final int pz = m.getPlayerLocationZ();
-    final FantastleObjectModel below = m.getCell(px, py, pz, Layers.GROUND);
+  private static void checkFloorChange(final int px, final int py,
+      final int pz) {
+    final FantastleObjectModel below = MovementTask.saved;
     if (GameObjects.sendsDown(below)) {
       if (Game.isFloorBelow()) {
         // Going down...
         SoundPlayer.playSound(SoundIndex.FALLING, SoundGroup.GAME);
         MovementTask.updatePositionAbsolute(px, py, pz + 1);
-      } else {
-        MovementTask.moveFailed();
       }
     } else if (GameObjects.sendsUp(below)) {
       if (Game.isFloorAbove()) {
         // Going up...
         SoundPlayer.playSound(SoundIndex.SPRING, SoundGroup.GAME);
         MovementTask.updatePositionAbsolute(px, py, pz - 1);
-      } else {
-        MovementTask.moveFailed();
       }
     } else if (GameObjects.sendsDown2(below)) {
       if (Game.areTwoFloorsBelow()) {
         // Going down 2...
         SoundPlayer.playSound(SoundIndex.FALLING, SoundGroup.GAME);
         MovementTask.updatePositionAbsolute(px, py, pz - 2);
-      } else {
-        MovementTask.moveFailed();
       }
     } else if (GameObjects.sendsUp2(below)) {
       if (Game.areTwoFloorsAbove()) {
         // Going up 2...
         SoundPlayer.playSound(SoundIndex.SPRING, SoundGroup.GAME);
         MovementTask.updatePositionAbsolute(px, py, pz - 2);
-      } else {
-        MovementTask.moveFailed();
       }
     }
   }
 
-  private static void checkLevelChange() {
+  private static void checkLevelChange(final int px, final int py,
+      final int pz) {
     final World m = WorldManager.getWorld();
-    final int px = m.getPlayerLocationX();
-    final int py = m.getPlayerLocationY();
-    final int pz = m.getPlayerLocationZ();
-    final FantastleObjectModel below = m.getCell(px, py, pz, Layers.GROUND);
+    final FantastleObjectModel below = MovementTask.saved;
     if (GameObjects.sendsNext(below)) {
       // Going deeper...
       if (!Game.isLevelBelow()) {
         if (m.canAddLevel()) {
           new GenerateTask(false).start();
-        } else {
-          MovementTask.moveFailed();
         }
       } else {
         SoundPlayer.playSound(SoundIndex.DOWN, SoundGroup.GAME);
@@ -341,8 +322,6 @@ final class MovementTask extends Thread {
         // Going shallower...
         SoundPlayer.playSound(SoundIndex.UP, SoundGroup.GAME);
         Game.goToLevelOffset(-1);
-      } else {
-        MovementTask.moveFailed();
       }
     }
   }

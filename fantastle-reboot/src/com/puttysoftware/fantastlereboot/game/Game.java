@@ -61,7 +61,6 @@ public final class Game {
   }
 
   public static void enableEvents() {
-    MovementTask.fireStepActions();
     GameGUI.enableEvents();
   }
 
