@@ -31,6 +31,7 @@ import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -356,6 +357,15 @@ public class Prefs {
     Prefs.moveOneAtATime.setSelected(Prefs.moveOneAtATimeEnabled);
     Prefs.viewingWindowChoices.setSelectedIndex(Prefs.viewingWindowIndex);
     Prefs.editorWindowChoices.setSelectedIndex(Prefs.editorWindowIndex);
+    if (Prefs.mazeGenerator == Prefs.GENERATOR_PURE_RANDOM) {
+      Prefs.generatorPureRandom.setSelected(true);
+    } else if (Prefs.mazeGenerator == Prefs.GENERATOR_CONSTRAINED_RANDOM) {
+      Prefs.generatorConstrainedRandom.setSelected(true);
+    } else if (Prefs.mazeGenerator == Prefs.GENERATOR_TWISTER) {
+      Prefs.generatorTwister.setSelected(true);
+    } else {
+      Prefs.generatorConstrainedRandom.setSelected(true);
+    }
     Prefs.minRandomRoomSizeX.setValue(Prefs.minRandomRoomSizeXIndex);
     Prefs.maxRandomRoomSizeX.setValue(Prefs.maxRandomRoomSizeXIndex);
     Prefs.minRandomRoomSizeY.setValue(Prefs.minRandomRoomSizeYIndex);
@@ -381,6 +391,15 @@ public class Prefs {
     Prefs.moveOneAtATimeEnabled = Prefs.moveOneAtATime.isSelected();
     Prefs.viewingWindowIndex = Prefs.viewingWindowChoices.getSelectedIndex();
     Prefs.editorWindowIndex = Prefs.editorWindowChoices.getSelectedIndex();
+    if (Prefs.generatorPureRandom.isSelected()) {
+      Prefs.mazeGenerator = Prefs.GENERATOR_PURE_RANDOM;
+    } else if (Prefs.generatorConstrainedRandom.isSelected()) {
+      Prefs.mazeGenerator = Prefs.GENERATOR_CONSTRAINED_RANDOM;
+    } else if (Prefs.generatorTwister.isSelected()) {
+      Prefs.mazeGenerator = Prefs.GENERATOR_TWISTER;
+    } else {
+      Prefs.mazeGenerator = Prefs.GENERATOR_CONSTRAINED_RANDOM;
+    }
     Prefs.minRandomRoomSizeXIndex = Prefs.minRandomRoomSizeX.getValue();
     Prefs.maxRandomRoomSizeXIndex = Prefs.maxRandomRoomSizeX.getValue();
     Prefs.minRandomRoomSizeYIndex = Prefs.minRandomRoomSizeY.getValue();
@@ -491,6 +510,10 @@ public class Prefs {
         "Randomness with limits", true);
     Prefs.generatorTwister = new JRadioButton("Twisted Hallways With Rooms",
         false);
+    ButtonGroup generatorGroup = new ButtonGroup();
+    generatorGroup.add(Prefs.generatorPureRandom);
+    generatorGroup.add(Prefs.generatorConstrainedRandom);
+    generatorGroup.add(Prefs.generatorTwister);
     Prefs.minRandomRoomSizeX = new JSlider(Prefs.MIN_ROOM_SIZE,
         Prefs.MAX_ROOM_SIZE);
     Prefs.minRandomRoomSizeX
@@ -630,6 +653,7 @@ public class Prefs {
           Prefs.musicEnabled[x] = reader.readBoolean();
         }
         Prefs.editorWindowIndex = reader.readInt();
+        Prefs.mazeGenerator = reader.readInt();
         Prefs.minRandomRoomSizeXIndex = reader.readInt();
         Prefs.maxRandomRoomSizeXIndex = reader.readInt();
         Prefs.minRandomRoomSizeYIndex = reader.readInt();
@@ -674,12 +698,14 @@ public class Prefs {
           writer.writeBoolean(Prefs.musicEnabled[x]);
         }
         writer.writeInt(Prefs.editorWindowIndex);
+        writer.writeInt(Prefs.mazeGenerator);
         writer.writeInt(Prefs.minRandomRoomSizeXIndex);
         writer.writeInt(Prefs.maxRandomRoomSizeXIndex);
         writer.writeInt(Prefs.minRandomRoomSizeYIndex);
         writer.writeInt(Prefs.maxRandomRoomSizeYIndex);
-      } catch (final IOException ie) {
-        FantastleReboot.logWarning(ie);
+      } catch (final Throwable t) {
+        FantastleReboot.logWarningWithMessage(t,
+            "An error occurred while saving settings. Changes may have been lost. Details have been recorded.");
       }
     }
   }
@@ -715,6 +741,7 @@ public class Prefs {
           Prefs.musicEnabled[x] = reader.readBoolean();
         }
         Prefs.editorWindowIndex = reader.readInt();
+        Prefs.mazeGenerator = reader.readInt();
         Prefs.minRandomRoomSizeXIndex = reader.readInt();
         Prefs.maxRandomRoomSizeXIndex = reader.readInt();
         Prefs.minRandomRoomSizeYIndex = reader.readInt();
@@ -749,6 +776,7 @@ public class Prefs {
           writer.writeBoolean(Prefs.musicEnabled[x]);
         }
         writer.writeInt(Prefs.editorWindowIndex);
+        writer.writeInt(Prefs.mazeGenerator);
         writer.writeInt(Prefs.minRandomRoomSizeXIndex);
         writer.writeInt(Prefs.maxRandomRoomSizeXIndex);
         writer.writeInt(Prefs.minRandomRoomSizeYIndex);
