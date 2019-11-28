@@ -145,7 +145,7 @@ public class Prefs {
   private static final int MUSIC_LENGTH = 5;
   private static final int SOUNDS_LENGTH = 5;
   private static final int GRID_LENGTH = 8;
-  private static final int TAB_TWEAKS = 2;
+  // private static final int TAB_TWEAKS = 2;
   private static final String DOC_TAG = "settings";
 
   // Constructors
@@ -577,7 +577,7 @@ public class Prefs {
     Prefs.pureRandomPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     Prefs.pureRandomPane.add(new JLabel("Nothing to configure."));
     Prefs.constrainedRandomPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
-    Prefs.pureRandomPane.add(new JLabel("Nothing to configure."));
+    Prefs.constrainedRandomPane.add(new JLabel("Nothing to configure."));
     Prefs.twisterPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     Prefs.twisterPane.add(new JLabel("Smallest Room Size (Wide)"));
     Prefs.twisterPane.add(Prefs.minRandomRoomSizeX);
@@ -592,14 +592,14 @@ public class Prefs {
     buttonPane.add(Prefs.prefsCancel);
     buttonPane.add(Prefs.prefsExport);
     buttonPane.add(Prefs.prefsImport);
-    Prefs.prefTabPane.addTab("Editor", null, editorPane, "Editor");
-    Prefs.prefTabPane.addTab("Generator", null, generatorPane, "Generator");
-    Prefs.prefTabPane.addTab("Generator Tweaks", null,
-        Prefs.constrainedRandomPane, "Generator Tweaks");
-    Prefs.prefTabPane.addTab("Sounds", null, soundPane, "Sounds");
-    Prefs.prefTabPane.addTab("Music", null, musicPane, "Music");
-    Prefs.prefTabPane.addTab("Misc.", null, miscPane, "Misc.");
-    Prefs.prefTabPane.addTab("View", null, viewPane, "View");
+    Prefs.prefTabPane.addTab("Editor", null, editorPane);
+    Prefs.prefTabPane.addTab("Generator", null, generatorPane);
+    // Prefs.prefTabPane.addTab("Generator Tweaks", null,
+    // Prefs.constrainedRandomPane);
+    Prefs.prefTabPane.addTab("Sounds", null, soundPane);
+    Prefs.prefTabPane.addTab("Music", null, musicPane);
+    Prefs.prefTabPane.addTab("Misc.", null, miscPane);
+    Prefs.prefTabPane.addTab("View", null, viewPane);
     Prefs.mainPrefPane.add(Prefs.prefTabPane, BorderLayout.CENTER);
     Prefs.mainPrefPane.add(buttonPane, BorderLayout.SOUTH);
     Prefs.sounds[Prefs.SOUNDS_ALL].addItemListener(Prefs.handler);
@@ -874,8 +874,8 @@ public class Prefs {
               CommonDialogs.showTitledDialog(
                   "Pure randomness can produce unsolvable levels! You have been warned!",
                   "WARNING!");
-              Prefs.prefTabPane.setTabComponentAt(Prefs.TAB_TWEAKS,
-                  Prefs.pureRandomPane);
+              // Prefs.prefTabPane.setComponentAt(Prefs.TAB_TWEAKS,
+              // Prefs.pureRandomPane);
             }
           }
         } else if (o.getClass()
@@ -883,16 +883,16 @@ public class Prefs {
           final JRadioButton radio = (JRadioButton) o;
           if (radio.equals(Prefs.generatorConstrainedRandom)) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-              Prefs.prefTabPane.setTabComponentAt(Prefs.TAB_TWEAKS,
-                  Prefs.constrainedRandomPane);
+              // Prefs.prefTabPane.setComponentAt(Prefs.TAB_TWEAKS,
+              // Prefs.constrainedRandomPane);
             }
           }
         } else if (o.getClass().equals(Prefs.generatorTwister.getClass())) {
           final JRadioButton radio = (JRadioButton) o;
           if (radio.equals(Prefs.generatorTwister)) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-              Prefs.prefTabPane.setTabComponentAt(Prefs.TAB_TWEAKS,
-                  Prefs.twisterPane);
+              // Prefs.prefTabPane.setComponentAt(Prefs.TAB_TWEAKS,
+              // Prefs.twisterPane);
             }
           }
         }
