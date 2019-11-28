@@ -52,7 +52,7 @@ public final class MazeFileManager {
     if (saved) {
       final String gameDir = MazeFileManager.getGameDirectory();
       final String[] rawChoices = new File(gameDir).list(gf);
-      if (rawChoices != null) {
+      if (rawChoices != null && rawChoices.length > 0) {
         final String[] choices = new String[rawChoices.length];
         // Strip extension
         for (int x = 0; x < choices.length; x++) {
@@ -176,7 +176,7 @@ public final class MazeFileManager {
     if (saved) {
       final String gameDir = MazeFileManager.getMazeDirectory();
       final String[] rawChoices = new File(gameDir).list(gf);
-      if (rawChoices != null) {
+      if (rawChoices != null && rawChoices.length > 0) {
         final String[] choices = new String[rawChoices.length];
         // Strip extension
         for (int x = 0; x < choices.length; x++) {
