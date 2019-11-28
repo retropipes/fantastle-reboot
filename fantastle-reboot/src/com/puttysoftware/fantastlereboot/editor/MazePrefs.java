@@ -282,10 +282,6 @@ public class MazePrefs {
               MazePrefs.globalVisionModeFieldOfView.setEnabled(true);
               MazePrefs.globalVisionModeFixedRadius.setEnabled(true);
             } else if (e.getStateChange() == ItemEvent.DESELECTED) {
-              MazePrefs.globalVisionModeNone.setSelected(false);
-              MazePrefs.globalVisionModeExplore.setSelected(false);
-              MazePrefs.globalVisionModeFieldOfView.setSelected(false);
-              MazePrefs.globalVisionModeFixedRadius.setSelected(false);
               MazePrefs.globalVisionModeNone.setEnabled(false);
               MazePrefs.globalVisionModeExplore.setEnabled(false);
               MazePrefs.globalVisionModeFieldOfView.setEnabled(false);
@@ -297,9 +293,6 @@ public class MazePrefs {
           final JCheckBox check = (JCheckBox) o;
           if (check.equals(MazePrefs.globalVisionModeNone)) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-              MazePrefs.globalVisionModeExplore.setSelected(false);
-              MazePrefs.globalVisionModeFieldOfView.setSelected(false);
-              MazePrefs.globalVisionModeFixedRadius.setSelected(false);
               MazePrefs.globalVisionModeExplore.setEnabled(false);
               MazePrefs.globalVisionModeFieldOfView.setEnabled(false);
               MazePrefs.globalVisionModeFixedRadius.setEnabled(false);
@@ -314,7 +307,6 @@ public class MazePrefs {
           final JCheckBox check = (JCheckBox) o;
           if (check.equals(MazePrefs.globalVisionModeExplore)) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-              MazePrefs.globalVisionModeFixedRadius.setSelected(false);
               MazePrefs.globalVisionModeFixedRadius.setEnabled(false);
             } else if (e.getStateChange() == ItemEvent.DESELECTED) {
               MazePrefs.globalVisionModeFixedRadius.setEnabled(true);
@@ -325,7 +317,6 @@ public class MazePrefs {
           final JCheckBox check = (JCheckBox) o;
           if (check.equals(MazePrefs.globalVisionModeFixedRadius)) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-              MazePrefs.globalVisionModeExplore.setSelected(false);
               MazePrefs.globalVisionModeExplore.setEnabled(false);
             } else if (e.getStateChange() == ItemEvent.DESELECTED) {
               MazePrefs.globalVisionModeExplore.setEnabled(true);

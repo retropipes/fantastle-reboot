@@ -231,9 +231,6 @@ public class LevelPrefs {
           final JCheckBox check = (JCheckBox) o;
           if (check.equals(LevelPrefs.visionModeNone)) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-              LevelPrefs.visionModeExplore.setSelected(false);
-              LevelPrefs.visionModeFieldOfView.setSelected(false);
-              LevelPrefs.visionModeFixedRadius.setSelected(false);
               LevelPrefs.visionModeExplore.setEnabled(false);
               LevelPrefs.visionModeFieldOfView.setEnabled(false);
               LevelPrefs.visionModeFixedRadius.setEnabled(false);
@@ -248,7 +245,6 @@ public class LevelPrefs {
           final JCheckBox check = (JCheckBox) o;
           if (check.equals(LevelPrefs.visionModeExplore)) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-              LevelPrefs.visionModeFixedRadius.setSelected(false);
               LevelPrefs.visionModeFixedRadius.setEnabled(false);
             } else if (e.getStateChange() == ItemEvent.DESELECTED) {
               LevelPrefs.visionModeFixedRadius.setEnabled(true);
@@ -259,7 +255,6 @@ public class LevelPrefs {
           final JCheckBox check = (JCheckBox) o;
           if (check.equals(LevelPrefs.visionModeFixedRadius)) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-              LevelPrefs.visionModeExplore.setSelected(false);
               LevelPrefs.visionModeExplore.setEnabled(false);
             } else if (e.getStateChange() == ItemEvent.DESELECTED) {
               LevelPrefs.visionModeExplore.setEnabled(true);
