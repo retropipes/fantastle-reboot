@@ -489,7 +489,7 @@ public class Prefs {
     Prefs.generatorPureRandom = new JRadioButton("Pure randomness", false);
     Prefs.generatorConstrainedRandom = new JRadioButton(
         "Randomness with limits", true);
-    Prefs.generatorTwister = new JRadioButton("Rooms and twisted hallways",
+    Prefs.generatorTwister = new JRadioButton("Twisted Hallways With Rooms",
         false);
     Prefs.minRandomRoomSizeX = new JSlider(Prefs.MIN_ROOM_SIZE,
         Prefs.MAX_ROOM_SIZE);
@@ -544,7 +544,7 @@ public class Prefs {
     generatorPane.add(new JLabel("Maze Generation Method"));
     generatorPane.add(Prefs.generatorPureRandom);
     generatorPane.add(Prefs.generatorConstrainedRandom);
-    generatorPane.add(Prefs.generatorTwister);
+    // generatorPane.add(Prefs.generatorTwister);
     Prefs.pureRandomPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     Prefs.pureRandomPane.add(new JLabel("Nothing to configure."));
     Prefs.constrainedRandomPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
