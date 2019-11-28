@@ -473,28 +473,28 @@ public class Maze {
   }
 
   // Settings
-  public boolean isHorizontalWraparoundEnabled() {
-    return this.mazeData.isHorizontalWraparoundEnabled();
+  public boolean isHorizontalWrapEnabled() {
+    return this.mazeData.isHorizontalWrapEnabled();
   }
 
-  public boolean isVerticalWraparoundEnabled() {
-    return this.mazeData.isVerticalWraparoundEnabled();
+  public boolean isVerticalWrapEnabled() {
+    return this.mazeData.isVerticalWrapEnabled();
   }
 
-  public boolean isFloorWraparoundEnabled() {
-    return this.mazeData.isFloorWraparoundEnabled();
+  public boolean isFloorWrapEnabled() {
+    return this.mazeData.isFloorWrapEnabled();
   }
 
-  public void setHorizontalWraparoundEnabled(final boolean value) {
-    this.mazeData.setHorizontalWraparoundEnabled(value);
+  public void setHorizontalWrapEnabled(final boolean value) {
+    this.mazeData.setHorizontalWrapEnabled(value);
   }
 
-  public void setVerticalWraparoundEnabled(final boolean value) {
-    this.mazeData.setVerticalWraparoundEnabled(value);
+  public void setVerticalWrapEnabled(final boolean value) {
+    this.mazeData.setVerticalWrapEnabled(value);
   }
 
-  public void setFloorWraparoundEnabled(final boolean value) {
-    this.mazeData.setFloorWraparoundEnabled(value);
+  public void setFloorWrapEnabled(final boolean value) {
+    this.mazeData.setFloorWrapEnabled(value);
   }
 
   public int getVisionRadius() {

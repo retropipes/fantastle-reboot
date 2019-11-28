@@ -36,9 +36,9 @@ final class LayeredTower implements Cloneable {
   private final int[] playerLocationData;
   private final int[] savedPlayerLocationData;
   private final int[] findResult;
-  private boolean horizontalWraparoundEnabled;
-  private boolean verticalWraparoundEnabled;
-  private boolean floorWraparoundEnabled;
+  private boolean horizontalWrapEnabled;
+  private boolean verticalWrapEnabled;
+  private boolean floorWrapEnabled;
   private int visionMode;
   private int visionModeExploreRadius;
   private int visionRadius;
@@ -62,9 +62,9 @@ final class LayeredTower implements Cloneable {
     Arrays.fill(this.savedPlayerLocationData, -1);
     this.findResult = new int[3];
     Arrays.fill(this.findResult, -1);
-    this.horizontalWraparoundEnabled = false;
-    this.verticalWraparoundEnabled = false;
-    this.floorWraparoundEnabled = false;
+    this.horizontalWrapEnabled = false;
+    this.verticalWrapEnabled = false;
+    this.floorWrapEnabled = false;
     this.visionMode = VisionModes.EXPLORE | VisionModes.FIELD_OF_VIEW;
     this.visionModeExploreRadius = 2;
     this.visionRadius = Maze.MAX_VISION_RADIUS;
@@ -203,10 +203,10 @@ final class LayeredTower implements Cloneable {
     int fR = row;
     int fC = col;
     final int fF = floor;
-    if (this.verticalWraparoundEnabled) {
+    if (this.verticalWrapEnabled) {
       fC = this.normalizeColumn(fC);
     }
-    if (this.horizontalWraparoundEnabled) {
+    if (this.horizontalWrapEnabled) {
       fR = this.normalizeRow(fR);
     }
     return fR >= 0 && fR < this.getRows() && fC >= 0 && fC < this.getColumns()
@@ -218,10 +218,10 @@ final class LayeredTower implements Cloneable {
     int fR = row;
     int fC = col;
     final int fF = floor;
-    if (this.verticalWraparoundEnabled) {
+    if (this.verticalWrapEnabled) {
       fC = this.normalizeColumn(fC);
     }
-    if (this.horizontalWraparoundEnabled) {
+    if (this.horizontalWrapEnabled) {
       fR = this.normalizeRow(fR);
     }
     return fR >= 0 && fR < this.getRows() && fC >= 0 && fC < this.getColumns()
@@ -234,13 +234,13 @@ final class LayeredTower implements Cloneable {
     int fR = row;
     int fC = col;
     int fF = floor;
-    if (this.verticalWraparoundEnabled) {
+    if (this.verticalWrapEnabled) {
       fC = this.normalizeColumn(fC);
     }
-    if (this.horizontalWraparoundEnabled) {
+    if (this.horizontalWrapEnabled) {
       fR = this.normalizeRow(fR);
     }
-    if (this.floorWraparoundEnabled) {
+    if (this.floorWrapEnabled) {
       fF = this.normalizeFloor(fF);
     }
     return this.data.getCell(fC, fR, fF, extra);
@@ -295,12 +295,12 @@ final class LayeredTower implements Cloneable {
         for (int y = yp - this.visionModeExploreRadius; y <= yp
             + this.visionModeExploreRadius; y++) {
           int fx, fy;
-          if (this.isHorizontalWraparoundEnabled()) {
+          if (this.isHorizontalWrapEnabled()) {
             fx = this.normalizeColumn(x);
           } else {
             fx = x;
           }
-          if (this.isVerticalWraparoundEnabled()) {
+          if (this.isVerticalWrapEnabled()) {
             fy = this.normalizeRow(y);
           } else {
             fy = y;
@@ -353,14 +353,14 @@ final class LayeredTower implements Cloneable {
   private boolean areCoordsInBounds(final int x1, final int y1, final int x2,
       final int y2) {
     int fx1, fx2, fy1, fy2;
-    if (this.isHorizontalWraparoundEnabled()) {
+    if (this.isHorizontalWrapEnabled()) {
       fx1 = this.normalizeColumn(x1);
       fx2 = this.normalizeColumn(x2);
     } else {
       fx1 = x1;
       fx2 = x2;
     }
-    if (this.isVerticalWraparoundEnabled()) {
+    if (this.isVerticalWrapEnabled()) {
       fy1 = this.normalizeRow(y1);
       fy2 = this.normalizeRow(y2);
     } else {
@@ -375,12 +375,12 @@ final class LayeredTower implements Cloneable {
   private boolean isSquareVisibleExplore(final int x2, final int y2) {
     final int zLoc = this.getPlayerFloor();
     int fx2, fy2;
-    if (this.isHorizontalWraparoundEnabled()) {
+    if (this.isHorizontalWrapEnabled()) {
       fx2 = this.normalizeColumn(x2);
     } else {
       fx2 = x2;
     }
-    if (this.isVerticalWraparoundEnabled()) {
+    if (this.isVerticalWrapEnabled()) {
       fy2 = this.normalizeRow(y2);
     } else {
       fy2 = y2;
@@ -450,14 +450,14 @@ final class LayeredTower implements Cloneable {
   private boolean isSquareVisibleFixedRadius(final int x1, final int y1,
       final int x2, final int y2) {
     int fx1, fy1, fx2, fy2;
-    if (this.isHorizontalWraparoundEnabled()) {
+    if (this.isHorizontalWrapEnabled()) {
       fx1 = this.normalizeColumn(x1);
       fx2 = this.normalizeColumn(x2);
     } else {
       fx1 = x1;
       fx2 = x2;
     }
-    if (this.isVerticalWraparoundEnabled()) {
+    if (this.isVerticalWrapEnabled()) {
       fy1 = this.normalizeRow(y1);
       fy2 = this.normalizeRow(y2);
     } else {
@@ -478,13 +478,13 @@ final class LayeredTower implements Cloneable {
     int fR = row;
     int fC = col;
     int fF = floor;
-    if (this.verticalWraparoundEnabled) {
+    if (this.verticalWrapEnabled) {
       fC = this.normalizeColumn(fC);
     }
-    if (this.horizontalWraparoundEnabled) {
+    if (this.horizontalWrapEnabled) {
       fR = this.normalizeRow(fR);
     }
-    if (this.floorWraparoundEnabled) {
+    if (this.floorWrapEnabled) {
       fF = this.normalizeFloor(fF);
     }
     this.data.setCell(mo, fC, fR, fF, extra);
@@ -772,28 +772,28 @@ final class LayeredTower implements Cloneable {
   }
 
   // Settings
-  public boolean isHorizontalWraparoundEnabled() {
-    return this.horizontalWraparoundEnabled;
+  public boolean isHorizontalWrapEnabled() {
+    return this.horizontalWrapEnabled;
   }
 
-  public boolean isVerticalWraparoundEnabled() {
-    return this.verticalWraparoundEnabled;
+  public boolean isVerticalWrapEnabled() {
+    return this.verticalWrapEnabled;
   }
 
-  public boolean isFloorWraparoundEnabled() {
-    return this.floorWraparoundEnabled;
+  public boolean isFloorWrapEnabled() {
+    return this.floorWrapEnabled;
   }
 
-  public void setHorizontalWraparoundEnabled(final boolean value) {
-    this.horizontalWraparoundEnabled = value;
+  public void setHorizontalWrapEnabled(final boolean value) {
+    this.horizontalWrapEnabled = value;
   }
 
-  public void setVerticalWraparoundEnabled(final boolean value) {
-    this.verticalWraparoundEnabled = value;
+  public void setVerticalWrapEnabled(final boolean value) {
+    this.verticalWrapEnabled = value;
   }
 
-  public void setFloorWraparoundEnabled(final boolean value) {
-    this.floorWraparoundEnabled = value;
+  public void setFloorWrapEnabled(final boolean value) {
+    this.floorWrapEnabled = value;
   }
 
   public int getVisionRadius() {
@@ -897,9 +897,9 @@ final class LayeredTower implements Cloneable {
       writer.writeInt(this.savedPlayerLocationData[y]);
       writer.writeInt(this.findResult[y]);
     }
-    writer.writeBoolean(this.horizontalWraparoundEnabled);
-    writer.writeBoolean(this.verticalWraparoundEnabled);
-    writer.writeBoolean(this.floorWraparoundEnabled);
+    writer.writeBoolean(this.horizontalWrapEnabled);
+    writer.writeBoolean(this.verticalWrapEnabled);
+    writer.writeBoolean(this.floorWrapEnabled);
     writer.writeInt(this.visionMode);
     writer.writeInt(this.visionModeExploreRadius);
     writer.writeInt(this.visionRadius);
@@ -938,9 +938,9 @@ final class LayeredTower implements Cloneable {
       lt.savedPlayerLocationData[y] = reader.readInt();
       lt.findResult[y] = reader.readInt();
     }
-    lt.horizontalWraparoundEnabled = reader.readBoolean();
-    lt.verticalWraparoundEnabled = reader.readBoolean();
-    lt.floorWraparoundEnabled = reader.readBoolean();
+    lt.horizontalWrapEnabled = reader.readBoolean();
+    lt.verticalWrapEnabled = reader.readBoolean();
+    lt.floorWrapEnabled = reader.readBoolean();
     lt.visionMode = reader.readInt();
     lt.visionModeExploreRadius = reader.readInt();
     lt.visionRadius = reader.readInt();

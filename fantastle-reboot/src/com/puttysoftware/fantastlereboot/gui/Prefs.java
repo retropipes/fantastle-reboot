@@ -77,8 +77,8 @@ public class Prefs {
   private static JSlider minRandomRoomSizeY;
   private static JSlider maxRandomRoomSizeY;
   private static EventHandler handler;
-  private static PrefsFileManager fileMgr = new PrefsFileManager();
-  private static ExportImportManager eiMgr = new ExportImportManager();
+  private static final PrefsFileManager fileMgr = new PrefsFileManager();
+  private static final ExportImportManager eiMgr = new ExportImportManager();
   private static int editorFill;
   private static boolean checkUpdatesStartupEnabled;
   private static boolean moveOneAtATimeEnabled;
@@ -137,8 +137,6 @@ public class Prefs {
   private static final int MUSIC_LENGTH = 5;
   private static final int SOUNDS_LENGTH = 5;
   private static final int GRID_LENGTH = 8;
-  private static final int PREFS_VERSION_MAJOR = 0;
-  private static final int PREFS_VERSION_MINOR = 0;
   private static final String DOC_TAG = "settings";
 
   // Constructors
@@ -569,8 +567,8 @@ public class Prefs {
         // Read minor version
         final int minorVersion = reader.readInt();
         // Version check
-        if (majorVersion == Prefs.PREFS_VERSION_MAJOR) {
-          if (minorVersion > Prefs.PREFS_VERSION_MINOR) {
+        if (majorVersion == BagOStuff.VERSION_MAJOR) {
+          if (minorVersion > BagOStuff.VERSION_MINOR) {
             throw new PrefsException(
                 "Incompatible preferences minor version, using defaults.");
           }
@@ -620,8 +618,8 @@ public class Prefs {
       try (final XDataWriter writer = new XDataWriter(
           prefsFile.getAbsolutePath(), Prefs.DOC_TAG)) {
         // Write the preferences to the file
-        writer.writeInt(Prefs.PREFS_VERSION_MAJOR);
-        writer.writeInt(Prefs.PREFS_VERSION_MINOR);
+        writer.writeInt(BagOStuff.VERSION_MAJOR);
+        writer.writeInt(BagOStuff.VERSION_MINOR);
         writer.writeInt(Prefs.editorFill);
         writer.writeBoolean(Prefs.checkUpdatesStartupEnabled);
         writer.writeBoolean(Prefs.moveOneAtATimeEnabled);
@@ -695,8 +693,8 @@ public class Prefs {
       try (final XDataWriter writer = new XDataWriter(
           exportFile.getAbsolutePath(), Prefs.DOC_TAG)) {
         // Write the preferences to the file
-        writer.writeInt(Prefs.PREFS_VERSION_MAJOR);
-        writer.writeInt(Prefs.PREFS_VERSION_MINOR);
+        writer.writeInt(BagOStuff.VERSION_MAJOR);
+        writer.writeInt(BagOStuff.VERSION_MINOR);
         writer.writeInt(Prefs.editorFill);
         writer.writeBoolean(Prefs.checkUpdatesStartupEnabled);
         writer.writeBoolean(Prefs.moveOneAtATimeEnabled);

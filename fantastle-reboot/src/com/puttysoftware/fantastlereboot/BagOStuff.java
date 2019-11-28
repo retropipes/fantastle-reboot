@@ -58,8 +58,8 @@ public class BagOStuff {
       BagOStuff.PRODUCT_NAME, BagOStuff.VERSION_MAJOR, BagOStuff.VERSION_MINOR,
       BagOStuff.VERSION_BUGFIX, BagOStuff.VERSION_CODE,
       BagOStuff.VERSION_PRERELEASE);
-  private static final int VERSION_MAJOR = 0;
-  private static final int VERSION_MINOR = 4;
+  public static final int VERSION_MAJOR = 0;
+  public static final int VERSION_MINOR = 4;
   private static final int VERSION_BUGFIX = 0;
   private static final int VERSION_CODE = ProductData.CODE_ALPHA;
   private static final int VERSION_PRERELEASE = 0;
