@@ -36,6 +36,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 
@@ -56,9 +57,8 @@ public class Prefs {
   // Fields
   private static MainWindow prefFrame;
   private static JTabbedPane prefTabPane;
-  private static JPanel mainPrefPane, buttonPane, miscPane, soundPane,
-      musicPane;
-  private static JPanel editorPane;
+  private static JPanel mainPrefPane, pureRandomPane, constrainedRandomPane,
+      twisterPane;
   private static JButton prefsOK, prefsCancel;
   private static JButton prefsExport, prefsImport;
   private static JCheckBox[] sounds = new JCheckBox[Prefs.SOUNDS_LENGTH];
@@ -72,6 +72,9 @@ public class Prefs {
   private static String[] updateCheckIntervalValues;
   private static JComboBox<String> viewingWindowChoices;
   private static JComboBox<String> editorWindowChoices;
+  private static JRadioButton generatorPureRandom;
+  private static JRadioButton generatorConstrainedRandom;
+  private static JRadioButton generatorTwister;
   private static JSlider minRandomRoomSizeX;
   private static JSlider maxRandomRoomSizeX;
   private static JSlider minRandomRoomSizeY;
@@ -90,6 +93,7 @@ public class Prefs {
   private static int maxRandomRoomSizeXIndex;
   private static int minRandomRoomSizeYIndex;
   private static int maxRandomRoomSizeYIndex;
+  private static int mazeGenerator;
   private static boolean[] soundsEnabled = new boolean[Prefs.SOUNDS_LENGTH];
   private static boolean[] musicEnabled = new boolean[Prefs.MUSIC_LENGTH];
   private static String lastDirOpen;
@@ -122,6 +126,9 @@ public class Prefs {
   private static final int MUSIC_GAME = 2;
   private static final int MUSIC_BATTLE = 3;
   private static final int MUSIC_SHOP = 4;
+  private static final int GENERATOR_PURE_RANDOM = 0;
+  private static final int GENERATOR_CONSTRAINED_RANDOM = 1;
+  private static final int GENERATOR_TWISTER = 2;
   public static final int FILTER_MAZE_V2 = 1;
   public static final int FILTER_MAZE_V3 = 2;
   public static final int FILTER_MAZE_V4 = 3;
@@ -137,6 +144,7 @@ public class Prefs {
   private static final int MUSIC_LENGTH = 5;
   private static final int SOUNDS_LENGTH = 5;
   private static final int GRID_LENGTH = 8;
+  private static final int TAB_TWEAKS = 2;
   private static final String DOC_TAG = "settings";
 
   // Constructors
@@ -156,6 +164,18 @@ public class Prefs {
       max = 1;
     }
     return RandomRange.generate(min, max);
+  }
+
+  public static boolean isMazeGeneratorPureRandom() {
+    return Prefs.mazeGenerator == Prefs.GENERATOR_PURE_RANDOM;
+  }
+
+  public static boolean isMazeGeneratorConstrainedRandom() {
+    return Prefs.mazeGenerator == Prefs.GENERATOR_CONSTRAINED_RANDOM;
+  }
+
+  public static boolean isMazeGeneratorTwister() {
+    return Prefs.mazeGenerator == Prefs.GENERATOR_TWISTER;
   }
 
   public static int getMinimumRandomRoomSizeWide() {
@@ -423,12 +443,16 @@ public class Prefs {
     Prefs.handler = new EventHandler();
     Prefs.prefTabPane = new JTabbedPane();
     Prefs.mainPrefPane = new JPanel();
-    Prefs.editorPane = new JPanel();
-    Prefs.soundPane = new JPanel();
-    Prefs.musicPane = new JPanel();
-    Prefs.miscPane = new JPanel();
+    final JPanel editorPane = new JPanel();
+    final JPanel generatorPane = new JPanel();
+    Prefs.pureRandomPane = new JPanel();
+    Prefs.constrainedRandomPane = new JPanel();
+    Prefs.twisterPane = new JPanel();
+    final JPanel soundPane = new JPanel();
+    final JPanel musicPane = new JPanel();
+    final JPanel miscPane = new JPanel();
+    final JPanel buttonPane = new JPanel();
     Prefs.prefTabPane.setOpaque(true);
-    Prefs.buttonPane = new JPanel();
     Prefs.prefsOK = new JButton("OK");
     Prefs.prefsOK.setDefaultCapable(true);
     Prefs.prefsCancel = new JButton("Cancel");
@@ -462,6 +486,11 @@ public class Prefs {
     Prefs.updateCheckInterval = new JComboBox<>(
         Prefs.updateCheckIntervalValues);
     Prefs.difficultyChoices = new JComboBox<>(Prefs.DIFFICULTY_CHOICE_NAMES);
+    Prefs.generatorPureRandom = new JRadioButton("Pure randomness", false);
+    Prefs.generatorConstrainedRandom = new JRadioButton(
+        "Randomness with limits", true);
+    Prefs.generatorTwister = new JRadioButton("Rooms and twisted hallways",
+        false);
     Prefs.minRandomRoomSizeX = new JSlider(Prefs.MIN_ROOM_SIZE,
         Prefs.MAX_ROOM_SIZE);
     Prefs.minRandomRoomSizeX
@@ -483,63 +512,72 @@ public class Prefs {
         .setLabelTable(Prefs.maxRandomRoomSizeY.createStandardLabels(1));
     Prefs.maxRandomRoomSizeY.setPaintLabels(true);
     Prefs.mainPrefPane.setLayout(new BorderLayout());
-    Prefs.editorPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
-    Prefs.editorPane.add(new JLabel("Default fill for new mazes:"));
-    Prefs.editorPane.add(Prefs.editorFillChoices);
-    Prefs.editorPane.add(new JLabel("Editor Window Size"));
+    editorPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
+    editorPane.add(new JLabel("Default fill for new mazes:"));
+    editorPane.add(Prefs.editorFillChoices);
+    editorPane.add(new JLabel("Editor Window Size"));
     Prefs.editorWindowChoices = new JComboBox<>(
         Prefs.VIEWING_WINDOW_SIZE_NAMES);
-    Prefs.editorPane.add(Prefs.editorWindowChoices);
-    Prefs.soundPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
+    editorPane.add(Prefs.editorWindowChoices);
+    soundPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     for (int x = 0; x < Prefs.SOUNDS_LENGTH; x++) {
-      Prefs.soundPane.add(Prefs.sounds[x]);
+      soundPane.add(Prefs.sounds[x]);
     }
-    Prefs.musicPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
+    musicPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
-      Prefs.musicPane.add(Prefs.music[x]);
+      musicPane.add(Prefs.music[x]);
     }
-    Prefs.miscPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
-    Prefs.miscPane.add(Prefs.checkUpdatesStartup);
-    Prefs.miscPane.add(Prefs.moveOneAtATime);
-    Prefs.miscPane.add(new JLabel("Check How Often For Updates"));
-    Prefs.miscPane.add(Prefs.updateCheckInterval);
-    Prefs.miscPane.add(new JLabel("Game Difficulty"));
-    Prefs.miscPane.add(Prefs.difficultyChoices);
+    miscPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
+    miscPane.add(Prefs.checkUpdatesStartup);
+    miscPane.add(Prefs.moveOneAtATime);
+    miscPane.add(new JLabel("Check How Often For Updates"));
+    miscPane.add(Prefs.updateCheckInterval);
+    miscPane.add(new JLabel("Game Difficulty"));
+    miscPane.add(Prefs.difficultyChoices);
     final JPanel viewPane = new JPanel();
     viewPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     viewPane.add(new JLabel("Viewing Window Size"));
     Prefs.viewingWindowChoices = new JComboBox<>(
         Prefs.VIEWING_WINDOW_SIZE_NAMES);
     viewPane.add(Prefs.viewingWindowChoices);
-    final JPanel generatorPane = new JPanel();
     generatorPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
-    generatorPane
-        .add(new JLabel("Minimum Room Size for Maze Generator (Wide)"));
-    generatorPane.add(Prefs.minRandomRoomSizeX);
-    generatorPane
-        .add(new JLabel("Maximum Room Size for Maze Generator (Wide)"));
-    generatorPane.add(Prefs.maxRandomRoomSizeX);
-    generatorPane
-        .add(new JLabel("Minimum Room Size for Maze Generator (Tall)"));
-    generatorPane.add(Prefs.minRandomRoomSizeY);
-    generatorPane
-        .add(new JLabel("Maximum Room Size for Maze Generator (Tall)"));
-    generatorPane.add(Prefs.maxRandomRoomSizeY);
-    Prefs.buttonPane.setLayout(new FlowLayout());
-    Prefs.buttonPane.add(Prefs.prefsOK);
-    Prefs.buttonPane.add(Prefs.prefsCancel);
-    Prefs.buttonPane.add(Prefs.prefsExport);
-    Prefs.buttonPane.add(Prefs.prefsImport);
-    Prefs.prefTabPane.addTab("Editor", null, Prefs.editorPane, "Editor");
+    generatorPane.add(new JLabel("Maze Generation Method"));
+    generatorPane.add(Prefs.generatorPureRandom);
+    generatorPane.add(Prefs.generatorConstrainedRandom);
+    generatorPane.add(Prefs.generatorTwister);
+    Prefs.pureRandomPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
+    Prefs.pureRandomPane.add(new JLabel("Nothing to configure."));
+    Prefs.constrainedRandomPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
+    Prefs.pureRandomPane.add(new JLabel("Nothing to configure."));
+    Prefs.twisterPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
+    Prefs.twisterPane.add(new JLabel("Smallest Room Size (Wide)"));
+    Prefs.twisterPane.add(Prefs.minRandomRoomSizeX);
+    Prefs.twisterPane.add(new JLabel("Largest Room Size (Wide)"));
+    Prefs.twisterPane.add(Prefs.maxRandomRoomSizeX);
+    Prefs.twisterPane.add(new JLabel("Smallest Room Size (Tall)"));
+    Prefs.twisterPane.add(Prefs.minRandomRoomSizeY);
+    Prefs.twisterPane.add(new JLabel("Largest Room Size (Tall)"));
+    Prefs.twisterPane.add(Prefs.maxRandomRoomSizeY);
+    buttonPane.setLayout(new FlowLayout());
+    buttonPane.add(Prefs.prefsOK);
+    buttonPane.add(Prefs.prefsCancel);
+    buttonPane.add(Prefs.prefsExport);
+    buttonPane.add(Prefs.prefsImport);
+    Prefs.prefTabPane.addTab("Editor", null, editorPane, "Editor");
     Prefs.prefTabPane.addTab("Generator", null, generatorPane, "Generator");
-    Prefs.prefTabPane.addTab("Sounds", null, Prefs.soundPane, "Sounds");
-    Prefs.prefTabPane.addTab("Music", null, Prefs.musicPane, "Music");
-    Prefs.prefTabPane.addTab("Misc.", null, Prefs.miscPane, "Misc.");
+    Prefs.prefTabPane.addTab("Generator Tweaks", null,
+        Prefs.constrainedRandomPane, "Generator Tweaks");
+    Prefs.prefTabPane.addTab("Sounds", null, soundPane, "Sounds");
+    Prefs.prefTabPane.addTab("Music", null, musicPane, "Music");
+    Prefs.prefTabPane.addTab("Misc.", null, miscPane, "Misc.");
     Prefs.prefTabPane.addTab("View", null, viewPane, "View");
     Prefs.mainPrefPane.add(Prefs.prefTabPane, BorderLayout.CENTER);
-    Prefs.mainPrefPane.add(Prefs.buttonPane, BorderLayout.SOUTH);
+    Prefs.mainPrefPane.add(buttonPane, BorderLayout.SOUTH);
     Prefs.sounds[Prefs.SOUNDS_ALL].addItemListener(Prefs.handler);
     Prefs.music[Prefs.MUSIC_ALL].addItemListener(Prefs.handler);
+    Prefs.generatorPureRandom.addItemListener(Prefs.handler);
+    Prefs.generatorConstrainedRandom.addItemListener(Prefs.handler);
+    Prefs.generatorTwister.addItemListener(Prefs.handler);
     Prefs.prefsOK.addActionListener(Prefs.handler);
     Prefs.prefsCancel.addActionListener(Prefs.handler);
     Prefs.prefsExport.addActionListener(Prefs.handler);
@@ -793,6 +831,31 @@ public class Prefs {
               for (int x = 1; x < Prefs.MUSIC_LENGTH; x++) {
                 Prefs.music[x].setEnabled(false);
               }
+            }
+          }
+        } else if (o.getClass().equals(Prefs.generatorPureRandom.getClass())) {
+          final JRadioButton radio = (JRadioButton) o;
+          if (radio.equals(Prefs.generatorPureRandom)) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+              Prefs.prefTabPane.setTabComponentAt(Prefs.TAB_TWEAKS,
+                  Prefs.pureRandomPane);
+            }
+          }
+        } else if (o.getClass()
+            .equals(Prefs.generatorConstrainedRandom.getClass())) {
+          final JRadioButton radio = (JRadioButton) o;
+          if (radio.equals(Prefs.generatorConstrainedRandom)) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+              Prefs.prefTabPane.setTabComponentAt(Prefs.TAB_TWEAKS,
+                  Prefs.constrainedRandomPane);
+            }
+          }
+        } else if (o.getClass().equals(Prefs.generatorTwister.getClass())) {
+          final JRadioButton radio = (JRadioButton) o;
+          if (radio.equals(Prefs.generatorTwister)) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+              Prefs.prefTabPane.setTabComponentAt(Prefs.TAB_TWEAKS,
+                  Prefs.twisterPane);
             }
           }
         }
