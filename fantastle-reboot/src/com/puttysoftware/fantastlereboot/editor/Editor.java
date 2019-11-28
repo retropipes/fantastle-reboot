@@ -59,7 +59,8 @@ import com.puttysoftware.images.BufferedImageIcon;
 public class Editor {
   // Declarations
   private static MainWindow outputFrame;
-  private static JPanel outputPane, secondaryPane, borderPane;
+  private static JPanel outputPane, borderPane;
+  private static EditorCanvas secondaryPane;
   private static GridBagLayout gridbag;
   private static GridBagConstraints c;
   private static JScrollBar vertScroll, horzScroll;
@@ -71,7 +72,6 @@ public class Editor {
   private static BufferedImageIcon[] objectEditorAppearances;
   private static int currentObjectIndex;
   private static UndoRedoEngine engine;
-  private static EditorDraw drawingThread;
   private static boolean mazeChanged;
   private static FantastleObjectModel savedObject;
   public static final int STAIRS_UP = 0;
@@ -183,7 +183,8 @@ public class Editor {
   private static void redrawGround() {
     final int z = EditorLoc.getLocZ();
     final int w = EditorLoc.getLocW();
-    Editor.drawingThread.requestDrawGround();
+    Editor.secondaryPane.requestDrawGround();
+    Editor.secondaryPane.repaint();
     Editor.outputFrame.pack();
     Editor.outputFrame.setTitle(
         "Editor (Ground Layer) - Floor " + (z + 1) + " Level " + (w + 1));
@@ -193,7 +194,8 @@ public class Editor {
   private static void redrawGroundAndObjects() {
     final int z = EditorLoc.getLocZ();
     final int w = EditorLoc.getLocW();
-    Editor.drawingThread.requestDrawObjects();
+    Editor.secondaryPane.requestDrawObjects();
+    Editor.secondaryPane.repaint();
     Editor.outputFrame.pack();
     Editor.outputFrame.setTitle(
         "Editor (Object Layer) - Floor " + (z + 1) + " Level " + (w + 1));
@@ -560,7 +562,7 @@ public class Editor {
 
   private static void setUpGUI() {
     Editor.outputPane = new JPanel();
-    Editor.secondaryPane = new JPanel();
+    Editor.secondaryPane = new EditorCanvas();
     Editor.borderPane = new JPanel();
     Editor.borderPane.setLayout(new BorderLayout());
     Editor.borderPane.add(Editor.outputPane, BorderLayout.CENTER);
@@ -600,8 +602,6 @@ public class Editor {
     final int gSize = ImageConstants.SIZE;
     Editor.secondaryPane
         .setPreferredSize(new Dimension(vSize * gSize, vSize * gSize));
-    Editor.drawingThread = new EditorDraw(Editor.secondaryPane);
-    Editor.drawingThread.start();
   }
 
   public static void undo() {

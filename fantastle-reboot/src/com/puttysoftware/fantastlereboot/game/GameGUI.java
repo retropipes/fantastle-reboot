@@ -30,8 +30,7 @@ class GameGUI {
   private static MainWindow outputFrame;
   private static JPanel borderPane;
   private static JLabel messageLabel;
-  private static JPanel outputPane;
-  private static GameDraw drawingThread;
+  private static GameCanvas outputPane;
   private static final EventHandler handler = new EventHandler();
   private static boolean knm;
   private static boolean deferredRedraw = false;
@@ -96,7 +95,7 @@ class GameGUI {
 
   public static void redrawMaze() {
     // Draw the maze
-    GameGUI.drawingThread.requestDraw();
+    GameGUI.outputPane.repaint();
     if (GameGUI.knm) {
       GameGUI.knm = false;
     } else {
@@ -108,7 +107,7 @@ class GameGUI {
   public static void redrawOneSquare(final int inX, final int inY,
       final FantastleObjectModel obj5) {
     // Draw the maze
-    GameGUI.drawingThread.requestDrawOne(inX, inY, obj5);
+    GameGUI.outputPane.repaint();
     if (GameGUI.knm) {
       GameGUI.knm = false;
     } else {
@@ -132,13 +131,11 @@ class GameGUI {
     GameGUI.borderPane.setLayout(new BorderLayout());
     GameGUI.messageLabel = new JLabel(" ");
     GameGUI.messageLabel.setOpaque(true);
-    GameGUI.outputPane = new JPanel();
+    GameGUI.outputPane = new GameCanvas();
     final int vSize = Prefs.getViewingWindowSize();
     final int gSize = ImageConstants.SIZE;
     GameGUI.outputPane
         .setPreferredSize(new Dimension(vSize * gSize, vSize * gSize));
-    GameGUI.drawingThread = new GameDraw(GameGUI.outputPane);
-    GameGUI.drawingThread.start();
   }
 
   private static class EventHandler implements KeyListener, WindowListener {
