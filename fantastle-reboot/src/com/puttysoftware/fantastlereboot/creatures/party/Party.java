@@ -15,9 +15,9 @@ import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.files.CharacterLoader;
 import com.puttysoftware.fantastlereboot.files.CharacterSaver;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objects.Player;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
+import com.puttysoftware.fantastlereboot.world.World;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
@@ -90,7 +90,7 @@ public class Party {
   }
 
   public void offsetMonsterLevel(final int offset) {
-    if (this.monsterLevel + offset > Maze.getMaxLevels()
+    if (this.monsterLevel + offset > World.getMaxLevels()
         || this.monsterLevel + offset < 0) {
       return;
     }

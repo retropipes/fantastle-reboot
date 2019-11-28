@@ -3,7 +3,7 @@ Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.maze;
+package com.puttysoftware.fantastlereboot.world;
 
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -44,34 +44,34 @@ public class GenerateTask extends Thread {
       this.generateFrame.attachContent(this.content);
       this.generateFrame.pack();
       final BagOStuff app = FantastleReboot.getBagOStuff();
-      Maze gameMaze = MazeManager.getMaze();
+      World gameWorld = WorldManager.getWorld();
       if (!this.scratch) {
         Game.disableEvents();
       } else {
-        gameMaze = new Maze();
-        MazeManager.setMaze(gameMaze);
+        gameWorld = new World();
+        WorldManager.setWorld(gameWorld);
       }
-      gameMaze.addLevel(Maze.getMaxRows(), Maze.getMaxColumns(),
-          Maze.getMaxFloors());
-      gameMaze.fillLevelRandomly();
-      final RandomRange rR = new RandomRange(0, Maze.getMaxRows() - 1);
-      final RandomRange rC = new RandomRange(0, Maze.getMaxColumns() - 1);
-      final RandomRange rF = new RandomRange(0, Maze.getMaxFloors() - 1);
+      gameWorld.addLevel(World.getMaxRows(), World.getMaxColumns(),
+          World.getMaxFloors());
+      gameWorld.fillLevelRandomly();
+      final RandomRange rR = new RandomRange(0, World.getMaxRows() - 1);
+      final RandomRange rC = new RandomRange(0, World.getMaxColumns() - 1);
+      final RandomRange rF = new RandomRange(0, World.getMaxFloors() - 1);
       if (this.scratch) {
         int startR, startC, startF;
         do {
           startR = rR.generate();
           startC = rC.generate();
           startF = rF.generate();
-        } while (gameMaze.getCell(startR, startC, startF, Layers.OBJECT)
+        } while (gameWorld.getCell(startR, startC, startF, Layers.OBJECT)
             .isSolid());
-        gameMaze.setStartRow(startR);
-        gameMaze.setStartColumn(startC);
-        gameMaze.setStartFloor(startF);
+        gameWorld.setStartRow(startR);
+        gameWorld.setStartColumn(startC);
+        gameWorld.setStartFloor(startF);
         FileStateManager.setLoaded(true);
-        final boolean playerExists = gameMaze.doesPlayerExist();
+        final boolean playerExists = gameWorld.doesPlayerExist();
         if (playerExists) {
-          gameMaze.setPlayerToStart();
+          gameWorld.setPlayerToStart();
           Game.resetViewingWindow();
         }
       } else {
@@ -80,14 +80,14 @@ public class GenerateTask extends Thread {
           startR = rR.generate();
           startC = rC.generate();
           startF = rF.generate();
-        } while (gameMaze.getCell(startR, startC, startF, Layers.OBJECT)
+        } while (gameWorld.getCell(startR, startC, startF, Layers.OBJECT)
             .isSolid());
-        gameMaze.setPlayerLocationX(startR);
-        gameMaze.setPlayerLocationY(startC);
-        gameMaze.setPlayerLocationZ(startF);
+        gameWorld.setPlayerLocationX(startR);
+        gameWorld.setPlayerLocationY(startC);
+        gameWorld.setPlayerLocationZ(startF);
         PartyManager.getParty().offsetMonsterLevel(1);
       }
-      gameMaze.save();
+      gameWorld.save();
       // Final cleanup
       if (this.scratch) {
         Game.stateChanged();
@@ -100,7 +100,7 @@ public class GenerateTask extends Thread {
         Game.resetViewingWindow();
         Game.enableEvents();
         Game.showOutput();
-        Game.redrawMaze();
+        Game.redrawWorld();
       }
     } catch (final Throwable t) {
       FantastleReboot.exception(t);

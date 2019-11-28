@@ -1,16 +1,16 @@
 package com.puttysoftware.fantastlereboot.objectmodel;
 
-import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.world.World;
 
 public interface RandomGenerationRule {
   int NO_LIMIT = 0;
 
-  boolean shouldGenerateObject(Maze maze, int row, int col, int floor,
+  boolean shouldGenerateObject(World world, int row, int col, int floor,
       int level, int layer);
 
-  int getMinimumRequiredQuantity(Maze maze);
+  int getMinimumRequiredQuantity(World world);
 
-  int getMaximumRequiredQuantity(Maze maze);
+  int getMaximumRequiredQuantity(World world);
 
   boolean isRequired();
 }

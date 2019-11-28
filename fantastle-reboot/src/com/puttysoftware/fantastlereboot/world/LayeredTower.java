@@ -3,7 +3,7 @@ Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.maze;
+package com.puttysoftware.fantastlereboot.world;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Modes;
-import com.puttysoftware.fantastlereboot.files.versions.MazeVersions;
+import com.puttysoftware.fantastlereboot.files.versions.WorldVersions;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
@@ -28,8 +28,8 @@ import com.puttysoftware.xio.XDataWriter;
 
 final class LayeredTower implements Cloneable {
   // Properties
-  private final LowLevelMazeDataStore data;
-  private LowLevelMazeDataStore savedTowerState;
+  private final LowLevelWorldDataStore data;
+  private LowLevelWorldDataStore savedTowerState;
   private final FlagStorage visionData;
   private final FlagStorage monsterData;
   private final LowLevelNoteDataStore noteData;
@@ -49,9 +49,9 @@ final class LayeredTower implements Cloneable {
 
   // Constructors
   public LayeredTower(final int rows, final int cols, final int floors) {
-    this.data = new LowLevelMazeDataStore(cols, rows, floors, Layers.COUNT);
+    this.data = new LowLevelWorldDataStore(cols, rows, floors, Layers.COUNT);
     this.monsterData = new FlagStorage(cols, rows, floors);
-    this.savedTowerState = new LowLevelMazeDataStore(cols, rows, floors,
+    this.savedTowerState = new LowLevelWorldDataStore(cols, rows, floors,
         Layers.COUNT);
     this.visionData = new FlagStorage(cols, rows, floors);
     this.noteData = new LowLevelNoteDataStore(cols, rows, floors);
@@ -68,7 +68,7 @@ final class LayeredTower implements Cloneable {
     this.floorWrapEnabled = false;
     this.visionMode = VisionModes.EXPLORE | VisionModes.FIELD_OF_VIEW;
     this.visionModeExploreRadius = 2;
-    this.visionRadius = Maze.MAX_VISION_RADIUS;
+    this.visionRadius = World.MAX_VISION_RADIUS;
     this.fill();
   }
 
@@ -134,11 +134,11 @@ final class LayeredTower implements Cloneable {
     return false;
   }
 
-  public void moveAllMonsters(final Maze maze) {
+  public void moveAllMonsters(final World world) {
     int locX, locY;
     final int rows = this.monsterData.getShape()[1] - 1;
     final int cols = this.monsterData.getShape()[0] - 1;
-    final int pz = maze.getPlayerLocationZ();
+    final int pz = world.getPlayerLocationZ();
     // Tick all object timers
     for (locX = 0; locX < cols; locX++) {
       for (locY = 0; locY < rows; locY++) {
@@ -147,7 +147,7 @@ final class LayeredTower implements Cloneable {
         if (this.hasMonster(locX, locY, pz)) {
           if (locX + moveX >= 0 && locX + moveX < cols && locY + moveY >= 0
               && locY + moveY < rows) {
-            final FantastleObjectModel there = maze.getCell(locX + moveX,
+            final FantastleObjectModel there = world.getCell(locX + moveX,
                 locY + moveY, pz, Layers.OBJECT);
             final boolean checkMove = this.checkMoveMonster(locX, locY, pz,
                 moveX, moveY);
@@ -161,9 +161,9 @@ final class LayeredTower implements Cloneable {
     }
   }
 
-  public void postBattle(final Maze maze, final int locX, final int locY) {
+  public void postBattle(final World world, final int locX, final int locY) {
     // Clear the monster just defeated
-    final int pz = maze.getPlayerLocationZ();
+    final int pz = world.getPlayerLocationZ();
     this.removeMonster(locX, locY, pz);
     // Generate a new monster
     final int rows = this.monsterData.getShape()[1] - 1;
@@ -172,14 +172,14 @@ final class LayeredTower implements Cloneable {
     final RandomRange column = new RandomRange(0, cols);
     int genX = row.generate();
     int genY = column.generate();
-    FantastleObjectModel currObj = maze.getCell(genX, genY, pz, Layers.OBJECT);
+    FantastleObjectModel currObj = world.getCell(genX, genY, pz, Layers.OBJECT);
     if (!currObj.isSolid() && !this.hasMonster(genX, genY, pz)) {
       this.addMonster(genX, genY, pz);
     } else {
       while (currObj.isSolid() || this.hasMonster(genX, genY, pz)) {
         genX = row.generate();
         genY = column.generate();
-        currObj = maze.getCell(genX, genY, pz, Layers.OBJECT);
+        currObj = world.getCell(genX, genY, pz, Layers.OBJECT);
       }
       this.addMonster(genX, genY, pz);
     }
@@ -190,10 +190,10 @@ final class LayeredTower implements Cloneable {
   }
 
   public void createNote(final int x, final int y, final int z) {
-    this.noteData.setNote(new MazeNote(), y, x, z);
+    this.noteData.setNote(new WorldNote(), y, x, z);
   }
 
-  public MazeNote getNote(final int x, final int y, final int z) {
+  public WorldNote getNote(final int x, final int y, final int z) {
     return this.noteData.getNote(y, x, z);
   }
 
@@ -570,17 +570,17 @@ final class LayeredTower implements Cloneable {
     }
   }
 
-  void fillRandomlyPure(final Maze maze, final int w) {
+  void fillRandomlyPure(final World world, final int w) {
     for (int z = 0; z < this.getFloors(); z++) {
-      this.fillFloorRandomlyPure(maze, z, w);
+      this.fillFloorRandomlyPure(world, z, w);
     }
   }
 
-  private void fillFloorRandomlyPure(final Maze maze, final int z,
+  private void fillFloorRandomlyPure(final World world, final int z,
       final int w) {
     RandomRange r = null;
     int x, y, e;
-    // Fill the maze with the "pure" algorithm
+    // Fill the world with the "pure" algorithm
     final int columns = this.getColumns();
     final int rows = this.getRows();
     for (e = 0; e < Layers.COUNT; e++) {
@@ -601,15 +601,15 @@ final class LayeredTower implements Cloneable {
     this.addMonstersRandomly(z);
   }
 
-  void fillRandomlyConstrained(final Maze maze, final int w) {
+  void fillRandomlyConstrained(final World world, final int w) {
     for (int z = 0; z < this.getFloors(); z++) {
-      this.fillFloorRandomlyConstrained(maze, z, w);
+      this.fillFloorRandomlyConstrained(world, z, w);
     }
   }
 
-  private void fillFloorRandomlyConstrained(final Maze maze, final int z,
+  private void fillFloorRandomlyConstrained(final World world, final int z,
       final int w) {
-    // Fill the maze with the "constrained" algorithm
+    // Fill the world with the "constrained" algorithm
     final RandomRange row = new RandomRange(0, this.getRows() - 1);
     final RandomRange column = new RandomRange(0, this.getColumns() - 1);
     RandomRange r = null;
@@ -626,7 +626,7 @@ final class LayeredTower implements Cloneable {
           for (y = 0; y < rows; y++) {
             final FantastleObjectModel placeObj = objectsWithoutPrerequisites[r
                 .generate()];
-            final boolean okay = placeObj.shouldGenerateObject(maze, x, y, z, w,
+            final boolean okay = placeObj.shouldGenerateObject(world, x, y, z, w,
                 e);
             if (okay) {
               this.setCell(
@@ -645,10 +645,10 @@ final class LayeredTower implements Cloneable {
         int randomColumn, randomRow;
         for (x = 0; x < requiredObjects.length; x++) {
           final FantastleObjectModel currObj = requiredObjects[x];
-          final int min = currObj.getMinimumRequiredQuantity(maze);
-          int max = currObj.getMaximumRequiredQuantity(maze);
+          final int min = currObj.getMinimumRequiredQuantity(world);
+          int max = currObj.getMaximumRequiredQuantity(world);
           if (max == RandomGenerationRule.NO_LIMIT) {
-            // Maximum undefined, so define it relative to this maze
+            // Maximum undefined, so define it relative to this world
             max = this.getRows() * this.getColumns() / 10;
             // Make sure max is valid
             if (max < min) {
@@ -660,13 +660,13 @@ final class LayeredTower implements Cloneable {
           for (y = 0; y < generateHowMany; y++) {
             randomRow = row.generate();
             randomColumn = column.generate();
-            if (currObj.shouldGenerateObject(maze, randomRow, randomColumn, z,
+            if (currObj.shouldGenerateObject(world, randomRow, randomColumn, z,
                 w, layer)) {
               this.setCell(
                   GameObjects.getNewInstanceByUniqueID(currObj.getUniqueID()),
                   randomColumn, randomRow, z, layer);
             } else {
-              while (!currObj.shouldGenerateObject(maze, randomColumn,
+              while (!currObj.shouldGenerateObject(world, randomColumn,
                   randomRow, z, w, layer)) {
                 randomRow = row.generate();
                 randomColumn = column.generate();
@@ -683,16 +683,16 @@ final class LayeredTower implements Cloneable {
     this.addMonstersRandomly(z);
   }
 
-  void fillRandomlyTwister(final Maze maze, final int w) {
+  void fillRandomlyTwister(final World world, final int w) {
     for (int z = 0; z < this.getFloors(); z++) {
-      this.fillFloorRandomlyTwister(maze, z, w);
+      this.fillFloorRandomlyTwister(world, z, w);
     }
   }
 
-  private void fillFloorRandomlyTwister(final Maze maze, final int z,
+  private void fillFloorRandomlyTwister(final World world, final int z,
       final int w) {
-    // Fill the maze with the "twister" algorithm
-    // TODO: Implement the "twister" maze generator
+    // Fill the world with the "twister" algorithm
+    // TODO: Implement the "twister" world generator
   }
 
   private void addMonstersRandomly(final int z) {
@@ -966,16 +966,16 @@ final class LayeredTower implements Cloneable {
 
   public static LayeredTower readLayeredTowerV1(final XDataReader reader)
       throws IOException {
-    int y, x, z, e, mazeSizeX, mazeSizeY, mazeSizeZ;
-    mazeSizeX = reader.readInt();
-    mazeSizeY = reader.readInt();
-    mazeSizeZ = reader.readInt();
-    final LayeredTower lt = new LayeredTower(mazeSizeX, mazeSizeY, mazeSizeZ);
+    int y, x, z, e, worldSizeX, worldSizeY, worldSizeZ;
+    worldSizeX = reader.readInt();
+    worldSizeY = reader.readInt();
+    worldSizeZ = reader.readInt();
+    final LayeredTower lt = new LayeredTower(worldSizeX, worldSizeY, worldSizeZ);
     for (x = 0; x < lt.getColumns(); x++) {
       for (y = 0; y < lt.getRows(); y++) {
         for (z = 0; z < lt.getFloors(); z++) {
           for (e = 0; e < Layers.COUNT; e++) {
-            lt.setCell(GameObjects.readObject(reader, MazeVersions.LATEST), y,
+            lt.setCell(GameObjects.readObject(reader, WorldVersions.LATEST), y,
                 x, z, e);
             if (lt.getCell(y, x, z, e) == null) {
               return null;
@@ -984,7 +984,7 @@ final class LayeredTower implements Cloneable {
           lt.visionData.setCell(reader.readBoolean(), y, x, z);
           final boolean hasNote = reader.readBoolean();
           if (hasNote) {
-            final MazeNote mn = MazeNote.readNote(reader);
+            final WorldNote mn = WorldNote.readNote(reader);
             lt.noteData.setNote(mn, y, x, z);
           }
         }
@@ -1028,7 +1028,7 @@ final class LayeredTower implements Cloneable {
     sizeX = reader.readInt();
     sizeY = reader.readInt();
     sizeZ = reader.readInt();
-    this.savedTowerState = new LowLevelMazeDataStore(sizeY, sizeX, sizeZ,
+    this.savedTowerState = new LowLevelWorldDataStore(sizeY, sizeX, sizeZ,
         Layers.COUNT);
     for (x = 0; x < sizeY; x++) {
       for (y = 0; y < sizeX; y++) {

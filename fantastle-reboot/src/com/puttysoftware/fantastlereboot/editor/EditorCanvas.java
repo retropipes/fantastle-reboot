@@ -8,14 +8,14 @@ import com.puttysoftware.diane.gui.DrawGrid;
 import com.puttysoftware.diane.loaders.ImageCompositor;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.loaders.ImageConstants;
-import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.Nothing;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Player;
 import com.puttysoftware.fantastlereboot.objects.temporary.NoteObject;
+import com.puttysoftware.fantastlereboot.world.World;
+import com.puttysoftware.fantastlereboot.world.WorldManager;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class EditorCanvas extends JPanel {
@@ -44,7 +44,7 @@ class EditorCanvas extends JPanel {
   @Override
   public void paint(Graphics g) {
     super.paint(g);
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     int x, y, u, v;
     int xFix, yFix;
     boolean inBounds;

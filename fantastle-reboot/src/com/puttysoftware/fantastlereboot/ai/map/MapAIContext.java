@@ -8,10 +8,10 @@ package com.puttysoftware.fantastlereboot.ai.map;
 import java.awt.Point;
 
 import com.puttysoftware.fantastlereboot.ai.AIContext;
-import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
+import com.puttysoftware.fantastlereboot.world.World;
 
 public class MapAIContext extends AIContext {
   private final int[][] apCosts;
@@ -20,7 +20,7 @@ public class MapAIContext extends AIContext {
   private final int yBound;
 
   // Constructor
-  public MapAIContext(final BattleCharacter creature, final Maze arena) {
+  public MapAIContext(final BattleCharacter creature, final World arena) {
     super(creature);
     this.xBound = arena.getRows();
     this.yBound = arena.getColumns();
@@ -30,7 +30,7 @@ public class MapAIContext extends AIContext {
 
   // Methods
   @Override
-  public void updateContext(final Maze arena) {
+  public void updateContext(final World arena) {
     for (int x = 0; x < this.apCosts.length; x++) {
       for (int y = 0; y < this.apCosts[x].length; y++) {
         final FantastleObjectModel obj = arena.getCell(x, y, 0, Layers.OBJECT);

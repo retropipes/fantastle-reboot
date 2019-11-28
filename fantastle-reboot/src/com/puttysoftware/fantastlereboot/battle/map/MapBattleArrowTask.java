@@ -1,7 +1,7 @@
-/*  FantastleReboot: A Maze-Solving Game
+/*  FantastleReboot: A World-Solving Game
 Copyright (C) 2008-2010 Eric Ahnell
 
-Any questions should be directed to the author via email at: mazer5d@worldwizard.net
+Any questions should be directed to the author via email at: worldr5d@worldwizard.net
  */
 package com.puttysoftware.fantastlereboot.battle.map;
 
@@ -14,7 +14,6 @@ import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
@@ -22,19 +21,20 @@ import com.puttysoftware.fantastlereboot.objects.Wall;
 import com.puttysoftware.fantastlereboot.objects.temporary.ArrowFactory;
 import com.puttysoftware.fantastlereboot.objects.temporary.ArrowType;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
+import com.puttysoftware.fantastlereboot.world.World;
 
 public class MapBattleArrowTask extends Thread {
   // Fields
   private final int x, y;
-  private final Maze battleMaze;
+  private final World battleWorld;
   private final BattleCharacter active;
 
   // Constructors
-  public MapBattleArrowTask(final int newX, final int newY, final Maze maze,
+  public MapBattleArrowTask(final int newX, final int newY, final World world,
       final BattleCharacter ac) {
     this.x = newX;
     this.y = newY;
-    this.battleMaze = maze;
+    this.battleWorld = world;
     this.active = ac;
     this.setName("Arrow Handler");
   }
@@ -44,7 +44,7 @@ public class MapBattleArrowTask extends Thread {
     try {
       boolean res = true;
       final BagOStuff app = FantastleReboot.getBagOStuff();
-      final Maze m = this.battleMaze;
+      final World m = this.battleWorld;
       final int px = this.active.getX();
       final int py = this.active.getY();
       int cumX = this.x;

@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
 import com.puttysoftware.fantastlereboot.files.GameFileManager;
-import com.puttysoftware.fantastlereboot.files.MazeFileManager;
+import com.puttysoftware.fantastlereboot.files.WorldFileManager;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 
 final class QuitRequestManager implements QuitHandler {
@@ -34,7 +34,7 @@ final class QuitRequestManager implements QuitHandler {
         if (Modes.inGame()) {
           saved = GameFileManager.suspendGame();
         } else {
-          saved = MazeFileManager.saveMaze();
+          saved = WorldFileManager.saveWorld();
         }
       } else if (status == JOptionPane.CANCEL_OPTION) {
         saved = false;

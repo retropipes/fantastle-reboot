@@ -3,7 +3,7 @@ Copyright (C) 2011-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.maze;
+package com.puttysoftware.fantastlereboot.world;
 
 import java.io.IOException;
 
@@ -11,12 +11,12 @@ import com.puttysoftware.storage.CloneableObject;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
-class MazeNote extends CloneableObject {
+class WorldNote extends CloneableObject {
   // Fields
   private String contents;
 
   // Constructor
-  public MazeNote() {
+  public WorldNote() {
     this.contents = "Empty Note";
   }
 
@@ -29,8 +29,8 @@ class MazeNote extends CloneableObject {
     this.contents = newContents;
   }
 
-  static MazeNote readNote(final XDataReader reader) throws IOException {
-    final MazeNote mn = new MazeNote();
+  static WorldNote readNote(final XDataReader reader) throws IOException {
+    final WorldNote mn = new WorldNote();
     mn.contents = reader.readString();
     return mn;
   }

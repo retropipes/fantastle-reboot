@@ -41,14 +41,14 @@ import com.puttysoftware.fantastlereboot.items.combat.CombatItem;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 import com.puttysoftware.fantastlereboot.spells.Spell;
 import com.puttysoftware.fantastlereboot.spells.SpellCaster;
+import com.puttysoftware.fantastlereboot.world.World;
+import com.puttysoftware.fantastlereboot.world.WorldManager;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class MapBattleLogic extends Battle {
@@ -97,10 +97,10 @@ public class MapBattleLogic extends Battle {
       Modes.setInBattle();
       this.alliesTookDamage = false;
       this.enemiesTookDamage = false;
-      final Maze bMaze = Maze.getTemporaryBattleCopy();
+      final World bWorld = World.getTemporaryBattleCopy();
       final MapBattle b = new MapBattle();
       this.mbd = new MapBattleDefinitions(this);
-      this.mbd.setBattleMaze(bMaze);
+      this.mbd.setBattleWorld(bWorld);
       this.pde = AbstractDamageEngine.getPlayerInstance();
       this.ede = AbstractDamageEngine.getEnemyInstance();
       this.resultDoneAlready = false;
@@ -154,7 +154,7 @@ public class MapBattleLogic extends Battle {
       Game.keepNextMessage();
       bag.showMessage("You reached level " + playerCharacter.getLevel() + ".");
     }
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     m.postBattle(this.bx, this.by);
   }
 
@@ -165,11 +165,11 @@ public class MapBattleLogic extends Battle {
         // Leave Battle
         this.hideBattle();
         // Post-battle stuff
-        final Maze m = MazeManager.getMaze();
+        final World m = WorldManager.getWorld();
         m.postBattle(this.bx, this.by);
         // Return to whence we came
         Modes.restore();
-        Game.redrawMaze();
+        Game.redrawWorld();
       }
     };
     this.dispatch.submit(task);
@@ -545,7 +545,7 @@ public class MapBattleLogic extends Battle {
       this.updateStatsAndEffects();
       this.battleGUI.turnEventHandlersOff();
       final MapBattleArrowTask at = new MapBattleArrowTask(x, y,
-          this.mbd.getBattleMaze(), this.mbd.getActiveCharacter());
+          this.mbd.getBattleWorld(), this.mbd.getActiveCharacter());
       at.start();
     } else {
       // Deny arrow - out of actions
@@ -569,7 +569,7 @@ public class MapBattleLogic extends Battle {
       // Set dead character to inactive
       hit.deactivate();
       // Remove character from battle
-      this.mbd.getBattleMaze().setCell(new OpenSpace(), hit.getX(), hit.getY(),
+      this.mbd.getBattleWorld().setCell(new OpenSpace(), hit.getX(), hit.getY(),
           0, Layers.OBJECT);
     }
     // Check result
@@ -590,17 +590,17 @@ public class MapBattleLogic extends Battle {
     this.updateAllAIContexts();
     int px = active.getX();
     int py = active.getY();
-    final Maze m = this.mbd.getBattleMaze();
+    final World m = this.mbd.getBattleWorld();
     FantastleObjectModel next = null;
     FantastleObjectModel nextGround = null;
     FantastleObjectModel currGround = null;
     active.saveLocation();
     this.battleGUI.getViewManager().saveViewingWindow();
-    if (this.mbd.getBattleMaze().cellRangeCheck(px + x, py + y, 0)) {
+    if (this.mbd.getBattleWorld().cellRangeCheck(px + x, py + y, 0)) {
       next = m.getCell(px + x, py + y, 0, Layers.OBJECT);
       nextGround = m.getCell(px + x, py + y, 0, Layers.GROUND);
     }
-    if (this.mbd.getBattleMaze().cellRangeCheck(px, py, 0)) {
+    if (this.mbd.getBattleWorld().cellRangeCheck(px, py, 0)) {
       currGround = m.getCell(px, py, 0, Layers.GROUND);
     }
     if (next != null && nextGround != null && currGround != null) {
@@ -617,28 +617,28 @@ public class MapBattleLogic extends Battle {
           FantastleObjectModel obj7 = null;
           FantastleObjectModel obj8 = null;
           FantastleObjectModel obj9 = null;
-          if (this.mbd.getBattleMaze().cellRangeCheck(px - 1, py - 1, 0)) {
+          if (this.mbd.getBattleWorld().cellRangeCheck(px - 1, py - 1, 0)) {
             obj1 = m.getCell(px - 1, py - 1, 0, Layers.OBJECT);
           }
-          if (this.mbd.getBattleMaze().cellRangeCheck(px, py - 1, 0)) {
+          if (this.mbd.getBattleWorld().cellRangeCheck(px, py - 1, 0)) {
             obj2 = m.getCell(px, py - 1, 0, Layers.OBJECT);
           }
-          if (this.mbd.getBattleMaze().cellRangeCheck(px + 1, py - 1, 0)) {
+          if (this.mbd.getBattleWorld().cellRangeCheck(px + 1, py - 1, 0)) {
             obj3 = m.getCell(px + 1, py - 1, 0, Layers.OBJECT);
           }
-          if (this.mbd.getBattleMaze().cellRangeCheck(px - 1, py, 0)) {
+          if (this.mbd.getBattleWorld().cellRangeCheck(px - 1, py, 0)) {
             obj4 = m.getCell(px - 1, py, 0, Layers.OBJECT);
           }
-          if (this.mbd.getBattleMaze().cellRangeCheck(px + 1, py - 1, 0)) {
+          if (this.mbd.getBattleWorld().cellRangeCheck(px + 1, py - 1, 0)) {
             obj6 = m.getCell(px + 1, py - 1, 0, Layers.OBJECT);
           }
-          if (this.mbd.getBattleMaze().cellRangeCheck(px - 1, py + 1, 0)) {
+          if (this.mbd.getBattleWorld().cellRangeCheck(px - 1, py + 1, 0)) {
             obj7 = m.getCell(px - 1, py + 1, 0, Layers.OBJECT);
           }
-          if (this.mbd.getBattleMaze().cellRangeCheck(px, py + 1, 0)) {
+          if (this.mbd.getBattleWorld().cellRangeCheck(px, py + 1, 0)) {
             obj8 = m.getCell(px, py + 1, 0, Layers.OBJECT);
           }
-          if (this.mbd.getBattleMaze().cellRangeCheck(px + 1, py + 1, 0)) {
+          if (this.mbd.getBattleWorld().cellRangeCheck(px + 1, py + 1, 0)) {
             obj9 = m.getCell(px + 1, py + 1, 0, Layers.OBJECT);
           }
           // Auto-attack check
@@ -785,7 +785,7 @@ public class MapBattleLogic extends Battle {
               // Set dead character to inactive
               bc.deactivate();
               // Remove dead character from battle
-              this.mbd.getBattleMaze().setCell(new OpenSpace(), bc.getX(),
+              this.mbd.getBattleWorld().setCell(new OpenSpace(), bc.getX(),
                   bc.getY(), 0, Layers.OBJECT);
             }
             // Handle self death
@@ -795,7 +795,7 @@ public class MapBattleLogic extends Battle {
               // Set dead character to inactive
               active.deactivate();
               // Remove dead character from battle
-              this.mbd.getBattleMaze().setCell(new OpenSpace(), active.getX(),
+              this.mbd.getBattleWorld().setCell(new OpenSpace(), active.getX(),
                   active.getY(), 0, Layers.OBJECT);
               // We're dead - end our turn
               this.endTurn();
@@ -1314,7 +1314,7 @@ public class MapBattleLogic extends Battle {
           // Remove effects from dead character
           active.stripAllEffects();
           // Remove character from battle
-          this.mbd.getBattleMaze().setCell(new OpenSpace(), battler.getX(),
+          this.mbd.getBattleWorld().setCell(new OpenSpace(), battler.getX(),
               battler.getY(), 0, Layers.OBJECT);
           if (this.mbd.getActiveCharacter().equals(battler)) {
             // Active character died, end turn
@@ -1473,7 +1473,7 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public boolean arrowHitCheck(final int inX, final int inY) {
-    return !this.mbd.getBattleMaze().getCell(inX, inY, 0, Layers.OBJECT)
+    return !this.mbd.getBattleWorld().getCell(inX, inY, 0, Layers.OBJECT)
         .isSolid();
   }
 }

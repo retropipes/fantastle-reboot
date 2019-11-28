@@ -19,13 +19,13 @@ import com.puttysoftware.fantastlereboot.files.FileStateManager;
 import com.puttysoftware.fantastlereboot.loaders.ImageConstants;
 import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.maze.GenerateTask;
-import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.Player;
 import com.puttysoftware.fantastlereboot.objects.temporary.ArrowType;
+import com.puttysoftware.fantastlereboot.world.GenerateTask;
+import com.puttysoftware.fantastlereboot.world.World;
+import com.puttysoftware.fantastlereboot.world.WorldManager;
 
 public final class Game {
   // Fields
@@ -125,8 +125,8 @@ public final class Game {
     Game.mt.moveAbsolute(x, y, z);
   }
 
-  public static void redrawMaze() {
-    GameGUI.redrawMaze();
+  public static void redrawWorld() {
+    GameGUI.redrawWorld();
   }
 
   public static void redrawOneSquare(final int inX, final int inY,
@@ -140,7 +140,7 @@ public final class Game {
   }
 
   public static void resetViewingWindow() {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     if (m != null) {
       GameView.setViewingWindowLocationX(
           m.getPlayerLocationY() - GameView.getOffsetFactorX());
@@ -150,7 +150,7 @@ public final class Game {
   }
 
   public static void resetPlayerLocation() {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     if (m != null) {
       m.setPlayerToStart();
     }
@@ -189,42 +189,42 @@ public final class Game {
   }
 
   public static boolean isFloorBelow() {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     return m.floorRangeCheck(m.getPlayerLocationZ() - 1);
   }
 
   public static boolean isFloorAbove() {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     return m.floorRangeCheck(m.getPlayerLocationZ() + 1);
   }
 
   public static boolean areTwoFloorsBelow() {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     return m.floorRangeCheck(m.getPlayerLocationZ() - 2);
   }
 
   public static boolean areTwoFloorsAbove() {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     return m.floorRangeCheck(m.getPlayerLocationZ() + 2);
   }
 
   public static boolean isLevelBelow() {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     return m.levelRangeCheck(m.getPlayerLocationW() - 1);
   }
 
   public static boolean isLevelAbove() {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     return m.levelRangeCheck(m.getPlayerLocationW() + 1);
   }
 
   public static boolean doesFloorExist(final int floor) {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     return m.floorRangeCheck(floor);
   }
 
   public static boolean doesLevelExist(final int level) {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     return m.levelRangeCheck(level);
   }
 
@@ -234,7 +234,7 @@ public final class Game {
   }
 
   public static void goToLevelOffset(final int level) {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     final boolean levelExists = m.doesLevelExistOffset(level);
     Game.stopMovement();
     if (levelExists) {
@@ -247,8 +247,8 @@ public final class Game {
   public static void exitGame() {
     Game.stateChanged = true;
     final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = MazeManager.getMaze();
-    // Restore the maze
+    final World m = WorldManager.getWorld();
+    // Restore the world
     m.restore();
     m.resetVisibleSquares();
     final boolean playerExists = m.doesPlayerExist();
@@ -282,7 +282,7 @@ public final class Game {
   }
 
   public static void morph(final FantastleObjectModel morphInto) {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     m.setCell(morphInto, m.getPlayerLocationX(), m.getPlayerLocationY(),
         m.getPlayerLocationZ(), morphInto.getLayer());
   }
@@ -291,14 +291,14 @@ public final class Game {
     GameGUI.keepNextMessage();
   }
 
-  public static void playMaze() {
+  public static void playWorld() {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     if (FileStateManager.getLoaded()) {
       if (Game.stateChanged) {
-        // Initialize only if the maze state has changed
-        MazeManager.getMaze()
-            .switchLevel(MazeManager.getMaze().getStartLevel());
+        // Initialize only if the world state has changed
+        WorldManager.getWorld()
+            .switchLevel(WorldManager.getWorld().getStartLevel());
         Game.stateChanged = false;
       }
       // Make sure message area is attached to the border pane
@@ -311,9 +311,9 @@ public final class Game {
       m.updateExploredSquares(px, py, pz);
       Modes.setInGame();
       Game.playDungeonMusic();
-      Game.redrawMaze();
+      Game.redrawWorld();
     } else {
-      CommonDialogs.showDialog("No Maze Opened");
+      CommonDialogs.showDialog("No World Opened");
     }
   }
 
@@ -332,7 +332,7 @@ public final class Game {
 
   public static void resetGameState() {
     Game.deactivateAllEffects();
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     FileStateManager.setDirty(false);
     m.restore();
     Game.setSavedGameFlag(false);
@@ -347,7 +347,7 @@ public final class Game {
   public static void resetLevel() {
     PartyManager.getParty().getLeader().healAndRegenerateFully();
     Game.deactivateAllEffects();
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     FileStateManager.setDirty(true);
     m.restore();
     final boolean playerExists = m.doesPlayerExist();
@@ -355,21 +355,21 @@ public final class Game {
       ScoreTracker.resetScore();
       Game.resetPlayerLocation();
       Game.resetViewingWindow();
-      Game.redrawMaze();
+      Game.redrawWorld();
     }
   }
 
   public static void solvedLevel() {
     Game.deactivateAllEffects();
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     final boolean playerExists = m.doesPlayerExist();
     if (playerExists) {
       m.restore();
       Game.resetPlayerLocation();
       Game.resetViewingWindow();
-      Game.redrawMaze();
+      Game.redrawWorld();
     } else {
-      Game.solvedMaze();
+      Game.solvedWorld();
     }
   }
 
@@ -380,19 +380,19 @@ public final class Game {
     } else {
       CommonDialogs.showDialog(Game.gameOverMessage);
     }
-    Game.solvedMaze();
+    Game.solvedWorld();
   }
 
   public static void gameOverWithMessage(final String msg) {
     Game.gameOverMessage = msg;
   }
 
-  public static void solvedMaze() {
+  public static void solvedWorld() {
     PartyManager.getParty().getLeader().healAndRegenerateFully();
     Game.deactivateAllEffects();
     final BagOStuff app = FantastleReboot.getBagOStuff();
-    final Maze m = MazeManager.getMaze();
-    // Restore the maze
+    final World m = WorldManager.getWorld();
+    // Restore the world
     m.restore();
     final boolean playerExists = m.doesPlayerExist();
     if (playerExists) {
@@ -423,7 +423,7 @@ public final class Game {
   }
 
   public static void useItemHandler(final int x, final int y) {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     final int xOffset = GameView.getViewingWindowLocationX()
         - GameView.getOffsetFactorX();
     final int yOffset = GameView.getViewingWindowLocationY()
@@ -443,11 +443,11 @@ public final class Game {
         }
       } else {
         Game.setUsingAnItem(false);
-        Game.setStatusMessage("Aim within the maze");
+        Game.setStatusMessage("Aim within the world");
       }
       if (Game.usingAnItem()) {
         Game.objectInv.use(Game.objectBeingUsed);
-        Game.redrawMaze();
+        Game.redrawWorld();
       }
     }
   }
@@ -458,7 +458,7 @@ public final class Game {
   }
 
   static void controllableTeleportHandler(final int x, final int y) {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     if (Game.isTeleporting) {
       final int xOffset = GameView.getViewingWindowLocationX()
           - GameView.getOffsetFactorX();

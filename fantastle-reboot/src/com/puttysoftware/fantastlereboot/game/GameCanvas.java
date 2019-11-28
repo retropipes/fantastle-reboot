@@ -8,8 +8,6 @@ import com.puttysoftware.diane.gui.DrawGrid;
 import com.puttysoftware.diane.loaders.ImageCompositor;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.loaders.ImageConstants;
-import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.Nothing;
@@ -17,6 +15,8 @@ import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Player;
 import com.puttysoftware.fantastlereboot.objects.temporary.Darkness;
 import com.puttysoftware.fantastlereboot.objects.temporary.NoteObject;
+import com.puttysoftware.fantastlereboot.world.World;
+import com.puttysoftware.fantastlereboot.world.WorldManager;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class GameCanvas extends JPanel {
@@ -35,7 +35,7 @@ class GameCanvas extends JPanel {
 
   @Override
   public void paint(final Graphics g) {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     m.moveAllMonsters();
     int x, y, u, v;
     int xFix, yFix;
@@ -53,8 +53,8 @@ class GameCanvas extends JPanel {
         xFix = x - viewX;
         yFix = y - viewY;
         visible = m.isSquareVisible(u, v, y, x);
-        inBounds = x >= 0 && x < Maze.getMaxRows() && y >= 0
-            && y < Maze.getMaxColumns();
+        inBounds = x >= 0 && x < World.getMaxRows() && y >= 0
+            && y < World.getMaxColumns();
         if (inBounds) {
           if (visible) {
             final FantastleObjectModel obj1 = m.getCell(y, x,

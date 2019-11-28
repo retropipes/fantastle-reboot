@@ -7,9 +7,9 @@ package com.puttysoftware.fantastlereboot.files;
 
 public class FileExtensions {
   // Constants
-  private static final String MAZE_EXTENSION = "maze.zip";
+  private static final String WORLD_EXTENSION = "world.zip";
   private static final String GAME_EXTENSION = "game.zip";
-  private static final String MAZE_TEMP_EXTENSION = "maze";
+  private static final String WORLD_TEMP_EXTENSION = "world";
   private static final String CHARACTER_EXTENSION = "partymember.xml";
   private static final String REGISTRY_EXTENSION = "registry.xml";
   private static final String PREFS_EXTENSION = "prefs.xml";
@@ -17,16 +17,16 @@ public class FileExtensions {
   private static final String INTERNAL_DATA_EXTENSION = "txt";
 
   // Methods
-  public static String getMazeExtension() {
-    return FileExtensions.MAZE_EXTENSION;
+  public static String getWorldExtension() {
+    return FileExtensions.WORLD_EXTENSION;
   }
 
-  public static String getMazeExtensionWithPeriod() {
-    return "." + FileExtensions.MAZE_EXTENSION;
+  public static String getWorldExtensionWithPeriod() {
+    return "." + FileExtensions.WORLD_EXTENSION;
   }
 
-  public static String getMazeTempExtensionWithPeriod() {
-    return "." + FileExtensions.MAZE_TEMP_EXTENSION;
+  public static String getWorldTempExtensionWithPeriod() {
+    return "." + FileExtensions.WORLD_TEMP_EXTENSION;
   }
 
   public static String getGameExtension() {

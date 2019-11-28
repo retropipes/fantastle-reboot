@@ -1,10 +1,10 @@
 package com.puttysoftware.fantastlereboot.files.versions;
 
-public class MazeVersions {
+public class WorldVersions {
   private static final int MINIMUM = 1;
   public static final int LATEST = 1;
 
-  private MazeVersions() {
+  private WorldVersions() {
     // Do nothing
   }
 

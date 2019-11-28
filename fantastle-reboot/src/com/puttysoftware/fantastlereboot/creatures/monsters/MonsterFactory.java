@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
-import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
+import com.puttysoftware.fantastlereboot.world.World;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class MonsterFactory {
@@ -28,7 +28,7 @@ public class MonsterFactory {
     final int maxTeamID = Creature.TEAM_ENEMY_LAST
         - (monsterCount - MonsterFactory.MAX_MONSTERS) / 5;
     final ArrayList<BattleCharacter> monsters = new ArrayList<>();
-    if (PartyManager.getParty().getMonsterLevel() == Maze.getMaxLevels() - 1) {
+    if (PartyManager.getParty().getMonsterLevel() == World.getMaxLevels() - 1) {
       monsters.add(new BattleCharacter(new BossMonster()));
     } else {
       for (int m = 0; m < monsterCount; m++) {
@@ -40,7 +40,7 @@ public class MonsterFactory {
   }
 
   public static Creature generateMonster() {
-    if (PartyManager.getParty().getMonsterLevel() == Maze.getMaxLevels() - 1) {
+    if (PartyManager.getParty().getMonsterLevel() == World.getMaxLevels() - 1) {
       return new BossMonster();
     } else {
       return new Monster(Creature.TEAM_ENEMY_FIRST);

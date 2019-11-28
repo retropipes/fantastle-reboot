@@ -1,4 +1,4 @@
-/*  Fantastle: A Maze-Solving Game
+/*  Fantastle: A World-Solving Game
 Copyright (C) 2008-2010 Eric Ahnell
 
 This program is free software: you can redistribute it and/or modify
@@ -38,8 +38,8 @@ import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Modes;
-import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
+import com.puttysoftware.fantastlereboot.world.World;
+import com.puttysoftware.fantastlereboot.world.WorldManager;
 
 public class LevelPrefs {
   // Fields
@@ -100,7 +100,7 @@ public class LevelPrefs {
       LevelPrefs.setUpGUI();
       LevelPrefs.guiSetUp = true;
     }
-    Maze m = MazeManager.getMaze();
+    World m = WorldManager.getWorld();
     LevelPrefs.visionRadius.setValue(m.getVisionRadiusValue());
     LevelPrefs.exploreExpansionRadius
         .setValue(m.getExploreExpansionRadiusValue());
@@ -120,7 +120,7 @@ public class LevelPrefs {
       LevelPrefs.setUpGUI();
       LevelPrefs.guiSetUp = true;
     }
-    Maze m = MazeManager.getMaze();
+    World m = WorldManager.getWorld();
     m.setVisionRadius(LevelPrefs.visionRadius.getValue());
     m.setExploreExpansionRadius(LevelPrefs.exploreExpansionRadius.getValue());
     if (LevelPrefs.visionModeNone.isSelected()) {
@@ -166,14 +166,14 @@ public class LevelPrefs {
     LevelPrefs.exploreExpansionRadius.setLabelTable(
         LevelPrefs.exploreExpansionRadius.createStandardLabels(1));
     LevelPrefs.exploreExpansionRadius.setPaintLabels(true);
-    LevelPrefs.visionModeNone = new JCheckBox("Maze-Wide Vision Mode: OFF",
+    LevelPrefs.visionModeNone = new JCheckBox("World-Wide Vision Mode: OFF",
         false);
     LevelPrefs.visionModeExplore = new JCheckBox(
-        "Maze-Wide Vision Mode: Exploring", true);
+        "World-Wide Vision Mode: Exploring", true);
     LevelPrefs.visionModeFieldOfView = new JCheckBox(
-        "Maze-Wide Vision Mode: Field of View", true);
+        "World-Wide Vision Mode: Field of View", true);
     LevelPrefs.visionModeFixedRadius = new JCheckBox(
-        "Maze-Wide Vision Mode: Fixed Radius", false);
+        "World-Wide Vision Mode: Fixed Radius", false);
     LevelPrefs.mainPrefPane.setLayout(new BorderLayout());
     LevelPrefs.editorPane.setLayout(new GridLayout(LevelPrefs.GRID_LENGTH, 1));
     LevelPrefs.editorPane.add(new JLabel("Level-Wide Vision Radius"));

@@ -9,15 +9,15 @@ import java.io.File;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
+import com.puttysoftware.fantastlereboot.world.WorldManager;
 import com.puttysoftware.fileutils.ZipUtilities;
 
-public class MazeSaver extends Thread {
+public class WorldSaver extends Thread {
   // Fields
   private String filename;
 
   // Constructors
-  public MazeSaver(final String file) {
+  public WorldSaver(final String file) {
     this.filename = file;
     this.setName("Game Writer");
   }
@@ -29,24 +29,24 @@ public class MazeSaver extends Thread {
     try {
       final BagOStuff bag = FantastleReboot.getBagOStuff();
       // filename check
-      final boolean hasExtension = MazeSaver.hasExtension(this.filename);
+      final boolean hasExtension = WorldSaver.hasExtension(this.filename);
       if (!hasExtension) {
-        this.filename += FileExtensions.getMazeExtensionWithPeriod();
+        this.filename += FileExtensions.getWorldExtensionWithPeriod();
       }
-      final File mazeFile = new File(this.filename);
+      final File worldFile = new File(this.filename);
       // Set prefix handler
-      MazeManager.getMaze().setPrefixHandler(new PrefixHandler());
+      WorldManager.getWorld().setPrefixHandler(new PrefixHandler());
       // Set suffix handler
-      MazeManager.getMaze().setSuffixHandler(new SuffixHandler());
-      MazeManager.getMaze().writeMaze();
+      WorldManager.getWorld().setSuffixHandler(new SuffixHandler());
+      WorldManager.getWorld().writeWorld();
       // Zip the file
-      ZipUtilities.zipDirectory(new File(MazeManager.getMaze().getBasePath()),
-          mazeFile);
+      ZipUtilities.zipDirectory(new File(WorldManager.getWorld().getBasePath()),
+          worldFile);
       bag.showMessage(sg + " saved.");
     } catch (final Exception ex) {
       FantastleReboot.exception(ex);
     }
-    MazeFileManager.handleDeferredSuccess(success, false, null);
+    WorldFileManager.handleDeferredSuccess(success, false, null);
   }
 
   private static boolean hasExtension(final String s) {

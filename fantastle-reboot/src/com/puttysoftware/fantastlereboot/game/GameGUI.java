@@ -70,7 +70,7 @@ class GameGUI {
     GameGUI.outputFrame.addWindowListener(GameGUI.handler);
     if (GameGUI.deferredRedraw) {
       GameGUI.deferredRedraw = false;
-      GameGUI.redrawMaze();
+      GameGUI.redrawWorld();
     }
     GameGUI.updateStats();
   }
@@ -93,8 +93,8 @@ class GameGUI {
         BorderLayout.SOUTH);
   }
 
-  public static void redrawMaze() {
-    // Draw the maze
+  public static void redrawWorld() {
+    // Draw the world
     GameGUI.outputPane.repaint();
     if (GameGUI.knm) {
       GameGUI.knm = false;
@@ -106,7 +106,7 @@ class GameGUI {
 
   public static void redrawOneSquare(final int inX, final int inY,
       final FantastleObjectModel obj5) {
-    // Draw the maze
+    // Draw the world
     GameGUI.outputPane.repaint();
     if (GameGUI.knm) {
       GameGUI.knm = false;

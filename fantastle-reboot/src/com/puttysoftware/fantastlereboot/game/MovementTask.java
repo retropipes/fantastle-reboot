@@ -15,14 +15,14 @@ import com.puttysoftware.fantastlereboot.effects.EffectConstants;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.maze.GenerateTask;
-import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.GameObjects;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Wall;
+import com.puttysoftware.fantastlereboot.world.GenerateTask;
+import com.puttysoftware.fantastlereboot.world.World;
+import com.puttysoftware.fantastlereboot.world.WorldManager;
 
 final class MovementTask extends Thread {
   // Fields
@@ -82,7 +82,7 @@ final class MovementTask extends Thread {
   }
 
   public static boolean tryAbsolute(final int x, final int y, final int z) {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     if (m.cellRangeCheck(x, y, z)) {
       final FantastleObjectModel below = m.getCell(m.getPlayerLocationX(),
           m.getPlayerLocationY(), m.getPlayerLocationZ(), Layers.GROUND);
@@ -99,7 +99,7 @@ final class MovementTask extends Thread {
   }
 
   static void fireStepActions() {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     final int px = m.getPlayerLocationX();
     final int py = m.getPlayerLocationY();
     final int pz = m.getPlayerLocationZ();
@@ -138,7 +138,7 @@ final class MovementTask extends Thread {
   private static void updatePositionRelative(final int dirX, final int dirY,
       final int dirZ) {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     int px = m.getPlayerLocationX();
     int py = m.getPlayerLocationY();
     int pz = m.getPlayerLocationZ();
@@ -211,7 +211,7 @@ final class MovementTask extends Thread {
         bag.getShop(GameObjects.sendsToWhichShop(nextAbove)).showShop();
       }
     } while (loopCheck);
-    GameGUI.redrawMaze();
+    GameGUI.redrawWorld();
   }
 
   private static boolean checkLoopCondition(final FantastleObjectModel below,
@@ -239,7 +239,7 @@ final class MovementTask extends Thread {
 
   private static void updatePositionAbsolute(final int x, final int y,
       final int z) {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     m.savePlayerLocation();
     GameView.saveViewingWindow();
     if (m.cellRangeCheck(x, y, z)) {
@@ -258,7 +258,7 @@ final class MovementTask extends Thread {
         final int py = m.getPlayerLocationY();
         final int pz = m.getPlayerLocationZ();
         m.updateExploredSquares(px, py, pz);
-        GameGUI.redrawMaze();
+        GameGUI.redrawWorld();
       }
     } else {
       MovementTask.moveFailed();
@@ -267,7 +267,7 @@ final class MovementTask extends Thread {
 
   private static void moveFailed() {
     // Move failed
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     m.restorePlayerLocation();
     GameView.restoreViewingWindow();
     SoundPlayer.playSound(SoundIndex.WALK_FAILED, SoundGroup.GAME);
@@ -278,7 +278,7 @@ final class MovementTask extends Thread {
   }
 
   private static void checkFloorChange() {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     final int px = m.getPlayerLocationX();
     final int py = m.getPlayerLocationY();
     final int pz = m.getPlayerLocationZ();
@@ -319,7 +319,7 @@ final class MovementTask extends Thread {
   }
 
   private static void checkLevelChange() {
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     final int px = m.getPlayerLocationX();
     final int py = m.getPlayerLocationY();
     final int pz = m.getPlayerLocationZ();

@@ -1,4 +1,4 @@
-/*  Fantastle: A Maze-Solving Game
+/*  Fantastle: A World-Solving Game
 Copyright (C) 2008-2010 Eric Ahnell
 
 This program is free software: you can redistribute it and/or modify
@@ -18,8 +18,8 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.editor;
 
-import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
+import com.puttysoftware.fantastlereboot.world.World;
 
 class EditorLoc {
   // Fields
@@ -205,13 +205,13 @@ class EditorLoc {
     EditorLoc.cameFromW += val;
   }
 
-  public static void setLimitsFromMaze(final Maze m) {
+  public static void setLimitsFromWorld(final World m) {
     EditorLoc.minX = 0;
     EditorLoc.minY = 0;
     EditorLoc.minZ = 0;
     EditorLoc.minW = 0;
     EditorLoc.minE = 0;
-    EditorLoc.maxW = Maze.getMaxLevels();
+    EditorLoc.maxW = World.getMaxLevels();
     EditorLoc.maxE = Layers.COUNT - 1;
     EditorLoc.maxX = m.getRows();
     EditorLoc.maxY = m.getColumns();

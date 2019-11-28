@@ -1,15 +1,15 @@
-package com.puttysoftware.fantastlereboot.maze;
+package com.puttysoftware.fantastlereboot.world;
 
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 
-class LowLevelMazeDataStore implements Cloneable {
+class LowLevelWorldDataStore implements Cloneable {
   // Fields
   private final FantastleObjectModel[] dataStore;
   private final int[] dataShape;
   private final int[] interProd;
 
   // Constructor
-  public LowLevelMazeDataStore(final int... shape) {
+  public LowLevelWorldDataStore(final int... shape) {
     this.dataShape = shape;
     this.interProd = new int[shape.length];
     int product = 1;

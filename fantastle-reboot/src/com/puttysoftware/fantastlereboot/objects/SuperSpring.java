@@ -1,8 +1,8 @@
 package com.puttysoftware.fantastlereboot.objects;
 
 import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
-import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
+import com.puttysoftware.fantastlereboot.world.World;
 
 public final class SuperSpring extends FantastleObject {
   public SuperSpring() {
@@ -10,13 +10,13 @@ public final class SuperSpring extends FantastleObject {
   }
 
   @Override
-  public boolean shouldGenerateObject(final Maze inMaze, final int inRow,
+  public boolean shouldGenerateObject(final World inWorld, final int inRow,
       final int inCol, final int inFloor, final int inLevel,
       final int inLayer) {
-    if (inFloor >= inMaze.getFloors() - 2) {
+    if (inFloor >= inWorld.getFloors() - 2) {
       return false;
     }
-    return super.shouldGenerateObject(inMaze, inRow, inCol, inFloor, inLevel,
+    return super.shouldGenerateObject(inWorld, inRow, inCol, inFloor, inLevel,
         inLayer);
   }
 }

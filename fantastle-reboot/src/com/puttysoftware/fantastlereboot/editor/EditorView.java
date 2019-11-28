@@ -6,7 +6,7 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.editor;
 
 import com.puttysoftware.fantastlereboot.gui.Prefs;
-import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.world.World;
 
 final class EditorView {
   // Fields
@@ -122,7 +122,7 @@ final class EditorView {
     EditorView.checkViewingWindow();
   }
 
-  public static void halfOffsetMaxFromMaze(final Maze m) {
+  public static void halfOffsetMaxFromWorld(final World m) {
     EditorView.setMaxX(m.getRows() + EditorView.getOffsetFactorX());
     EditorView.setMaxY(m.getColumns() + EditorView.getOffsetFactorY());
   }

@@ -1,5 +1,5 @@
 /*  Fantastle Reboot
- * A maze-solving RPG
+ * A world-solving RPG
  * This code is licensed under the terms of the
  * GPLv3, or at your option, any later version.
  */

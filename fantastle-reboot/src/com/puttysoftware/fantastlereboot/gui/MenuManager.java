@@ -1,4 +1,4 @@
-/*  Fantastle: A Maze-Solving Game
+/*  Fantastle: A World-Solving Game
 Copyright (C) 2008-2010 Eric Ahnell
 
 This program is free software: you can redistribute it and/or modify
@@ -36,17 +36,17 @@ import com.puttysoftware.fantastlereboot.Modes;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.editor.Editor;
 import com.puttysoftware.fantastlereboot.editor.LevelPrefs;
-import com.puttysoftware.fantastlereboot.editor.MazePrefs;
+import com.puttysoftware.fantastlereboot.editor.WorldPrefs;
 import com.puttysoftware.fantastlereboot.files.CharacterRegistration;
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
 import com.puttysoftware.fantastlereboot.files.GameFileManager;
-import com.puttysoftware.fantastlereboot.files.MazeFileManager;
+import com.puttysoftware.fantastlereboot.files.WorldFileManager;
 import com.puttysoftware.fantastlereboot.game.Game;
-//import com.puttysoftware.fantastlereboot.editor.MazeEditor;
+//import com.puttysoftware.fantastlereboot.editor.WorldEditor;
 import com.puttysoftware.fantastlereboot.game.InventoryViewer;
 import com.puttysoftware.fantastlereboot.game.StatisticsViewer;
-import com.puttysoftware.fantastlereboot.maze.GenerateTask;
-import com.puttysoftware.fantastlereboot.maze.NoteManager;
+import com.puttysoftware.fantastlereboot.world.GenerateTask;
+import com.puttysoftware.fantastlereboot.world.NoteManager;
 
 public class MenuManager {
   // Fields
@@ -58,7 +58,7 @@ public class MenuManager {
       editCopyLevel, editPasteLevel, editInsertLevelFromClipboard,
       editClearHistory, editGoTo, editUpOneFloor, editDownOneFloor,
       editUpOneLevel, editDownOneLevel, editAddLevel, editRemoveLevel,
-      editResizeLevel, editToggleLayer, editMazePreferences,
+      editResizeLevel, editToggleLayer, editWorldPreferences,
       editLevelPreferences;
   private JMenuItem playNewGame, playPlay, playEdit, playSuspend, playResume,
       playRegisterCharacter, playUnregisterCharacter, playRemoveCharacter;
@@ -74,7 +74,7 @@ public class MenuManager {
       editInsertLevelFromClipboardAccel, editClearHistoryAccel, editGoToAccel,
       editUpOneFloorAccel, editDownOneFloorAccel, editUpOneLevelAccel,
       editDownOneLevelAccel, editToggleLayerAccel;
-  private KeyStroke playPlayMazeAccel, playEditMazeAccel;
+  private KeyStroke playPlayWorldAccel, playEditWorldAccel;
   private KeyStroke gameNewGameAccel, gameInventoryAccel, gameUseAccel,
       gameResetAccel, gameShowScoreAccel, gameShowTableAccel;
   private final EventHandler handler;
@@ -114,7 +114,7 @@ public class MenuManager {
     this.editRemoveLevel.setEnabled(false);
     this.editResizeLevel.setEnabled(false);
     this.editToggleLayer.setEnabled(false);
-    this.editMazePreferences.setEnabled(false);
+    this.editWorldPreferences.setEnabled(false);
     this.editLevelPreferences.setEnabled(false);
     this.playResume.setEnabled(true);
     this.gameEquipment.setEnabled(true);
@@ -141,7 +141,7 @@ public class MenuManager {
     this.editGoTo.setEnabled(true);
     this.editResizeLevel.setEnabled(true);
     this.editToggleLayer.setEnabled(true);
-    this.editMazePreferences.setEnabled(true);
+    this.editWorldPreferences.setEnabled(true);
     this.editLevelPreferences.setEnabled(true);
     this.playResume.setEnabled(false);
     this.gameEquipment.setEnabled(false);
@@ -180,7 +180,7 @@ public class MenuManager {
     this.editRemoveLevel.setEnabled(false);
     this.editResizeLevel.setEnabled(false);
     this.editToggleLayer.setEnabled(false);
-    this.editMazePreferences.setEnabled(false);
+    this.editWorldPreferences.setEnabled(false);
     this.editLevelPreferences.setEnabled(false);
     this.playResume.setEnabled(false);
     this.gameEquipment.setEnabled(false);
@@ -227,7 +227,7 @@ public class MenuManager {
     this.editRemoveLevel.setEnabled(false);
     this.editResizeLevel.setEnabled(false);
     this.editToggleLayer.setEnabled(false);
-    this.editMazePreferences.setEnabled(false);
+    this.editWorldPreferences.setEnabled(false);
     this.editLevelPreferences.setEnabled(false);
     this.playResume.setEnabled(true);
     this.gameEquipment.setEnabled(false);
@@ -412,8 +412,8 @@ public class MenuManager {
     this.editClearHistoryAccel = KeyStroke.getKeyStroke(KeyEvent.VK_Y, modKey);
     this.editGoToAccel = KeyStroke.getKeyStroke(KeyEvent.VK_G,
         modKey | InputEvent.SHIFT_DOWN_MASK);
-    this.playPlayMazeAccel = KeyStroke.getKeyStroke(KeyEvent.VK_P, modKey);
-    this.playEditMazeAccel = KeyStroke.getKeyStroke(KeyEvent.VK_E, modKey);
+    this.playPlayWorldAccel = KeyStroke.getKeyStroke(KeyEvent.VK_P, modKey);
+    this.playEditWorldAccel = KeyStroke.getKeyStroke(KeyEvent.VK_E, modKey);
     this.gameNewGameAccel = KeyStroke.getKeyStroke(KeyEvent.VK_N,
         modKey | InputEvent.SHIFT_DOWN_MASK);
     this.gameInventoryAccel = KeyStroke.getKeyStroke(KeyEvent.VK_I, modKey);
@@ -482,14 +482,14 @@ public class MenuManager {
     this.editResizeLevel = new JMenuItem("Resize Current Level...");
     this.editToggleLayer = new JMenuItem("Toggle Layer");
     this.editToggleLayer.setAccelerator(this.editToggleLayerAccel);
-    this.editMazePreferences = new JMenuItem("Maze Preferences...");
+    this.editWorldPreferences = new JMenuItem("World Preferences...");
     this.editLevelPreferences = new JMenuItem("Level Preferences...");
     this.playNewGame = new JMenuItem("New Game");
     this.playNewGame.setAccelerator(this.gameNewGameAccel);
     this.playPlay = new JMenuItem("Play");
-    this.playPlay.setAccelerator(this.playPlayMazeAccel);
+    this.playPlay.setAccelerator(this.playPlayWorldAccel);
     this.playEdit = new JMenuItem("Edit");
-    this.playEdit.setAccelerator(this.playEditMazeAccel);
+    this.playEdit.setAccelerator(this.playEditWorldAccel);
     this.playSuspend = new JMenuItem("Suspend");
     this.playResume = new JMenuItem("Resume...");
     this.playRegisterCharacter = new JMenuItem("Register Character...");
@@ -536,7 +536,7 @@ public class MenuManager {
     this.editRemoveLevel.addActionListener(this.handler);
     this.editResizeLevel.addActionListener(this.handler);
     this.editToggleLayer.addActionListener(this.handler);
-    this.editMazePreferences.addActionListener(this.handler);
+    this.editWorldPreferences.addActionListener(this.handler);
     this.editLevelPreferences.addActionListener(this.handler);
     this.playPlay.addActionListener(this.handler);
     this.playEdit.addActionListener(this.handler);
@@ -587,7 +587,7 @@ public class MenuManager {
     this.editMenu.add(this.editRemoveLevel);
     this.editMenu.add(this.editResizeLevel);
     this.editMenu.add(this.editToggleLayer);
-    this.editMenu.add(this.editMazePreferences);
+    this.editMenu.add(this.editWorldPreferences);
     this.editMenu.add(this.editLevelPreferences);
     this.playMenu.add(this.playNewGame);
     this.playMenu.add(this.playPlay);
@@ -644,7 +644,7 @@ public class MenuManager {
     this.editRemoveLevel.setEnabled(false);
     this.editResizeLevel.setEnabled(false);
     this.editToggleLayer.setEnabled(false);
-    this.editMazePreferences.setEnabled(false);
+    this.editWorldPreferences.setEnabled(false);
     this.editLevelPreferences.setEnabled(false);
     this.playNewGame.setEnabled(false);
     this.playPlay.setEnabled(false);
@@ -681,10 +681,10 @@ public class MenuManager {
         boolean loaded = false;
         final String cmd = e.getActionCommand();
         if (cmd.equals("New...")) {
-          loaded = Editor.newMaze();
+          loaded = Editor.newWorld();
           FileStateManager.setLoaded(loaded);
         } else if (cmd.equals("Open...")) {
-          loaded = MazeFileManager.loadMaze();
+          loaded = WorldFileManager.loadWorld();
           FileStateManager.setLoaded(loaded);
         } else if (cmd.equals("Close")) {
           // Close the window
@@ -710,9 +710,9 @@ public class MenuManager {
           }
         } else if (cmd.equals("Save")) {
           if (FileStateManager.getLoaded()) {
-            MazeFileManager.saveMaze();
+            WorldFileManager.saveWorld();
           } else {
-            CommonDialogs.showDialog("No Maze Opened");
+            CommonDialogs.showDialog("No World Opened");
           }
         } else if (cmd.equals("Exit")) {
           // Exit program
@@ -754,9 +754,9 @@ public class MenuManager {
         } else if (cmd.equals("Toggle Layer")) {
           // Toggle current layer
           Editor.toggleLayer();
-        } else if (cmd.equals("Maze Preferences...")) {
-          // Set maze preferences
-          MazePrefs.showPrefs();
+        } else if (cmd.equals("World Preferences...")) {
+          // Set world preferences
+          WorldPrefs.showPrefs();
         } else if (cmd.equals("Level Preferences...")) {
           // Set level preferences
           LevelPrefs.showPrefs();
@@ -765,14 +765,14 @@ public class MenuManager {
           final boolean proceed = Game.newGame();
           if (proceed) {
             new GenerateTask(true).start();
-            Editor.mazeChanged();
+            Editor.worldChanged();
           }
         } else if (cmd.equals("Play")) {
-          // Play the current maze
-          Game.playMaze();
+          // Play the current world
+          Game.playWorld();
         } else if (cmd.equals("Edit")) {
-          // Edit the current maze
-          Editor.editMaze();
+          // Edit the current world
+          Editor.editWorld();
         } else if (cmd.equals("Resume...")) {
           loaded = GameFileManager.resumeGame();
           FileStateManager.setLoaded(loaded);

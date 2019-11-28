@@ -100,10 +100,10 @@ class MapBattleGUI {
       for (y = yView; y <= ylView; y++) {
         xFix = x - xView;
         yFix = y - yView;
-        if (mbd.getBattleMaze().cellRangeCheck(y, x, 0)) {
-          final FantastleObjectModel obj1 = mbd.getBattleMaze().getCell(y, x, 0,
+        if (mbd.getBattleWorld().cellRangeCheck(y, x, 0)) {
+          final FantastleObjectModel obj1 = mbd.getBattleWorld().getCell(y, x, 0,
               Layers.GROUND);
-          final FantastleObjectModel obj2 = mbd.getBattleMaze().getCell(y, x, 0,
+          final FantastleObjectModel obj2 = mbd.getBattleWorld().getCell(y, x, 0,
               Layers.OBJECT);
           final String cacheName = MapBattleGUI.generateCacheName(obj1,
               obj2);
@@ -124,15 +124,15 @@ class MapBattleGUI {
   void redrawOneBattleSquare(final MapBattleDefinitions mbd, final int x,
       final int y, final FantastleObjectModel obj3) {
     // Draw the battle
-    if (mbd.getBattleMaze().cellRangeCheck(y, x, 0)) {
+    if (mbd.getBattleWorld().cellRangeCheck(y, x, 0)) {
       int xFix, yFix;
       final int xView = this.vwMgr.getViewingWindowLocationX();
       final int yView = this.vwMgr.getViewingWindowLocationY();
       xFix = y - xView;
       yFix = x - yView;
-      final FantastleObjectModel obj1 = mbd.getBattleMaze().getCell(y, x, 0,
+      final FantastleObjectModel obj1 = mbd.getBattleWorld().getCell(y, x, 0,
           Layers.GROUND);
-      final FantastleObjectModel obj2 = mbd.getBattleMaze().getCell(y, x, 0,
+      final FantastleObjectModel obj2 = mbd.getBattleWorld().getCell(y, x, 0,
           Layers.OBJECT);
       final String cacheName = MapBattleGUI.generateCacheName(obj1, obj2,
           obj3);

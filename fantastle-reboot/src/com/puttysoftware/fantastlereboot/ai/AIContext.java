@@ -7,8 +7,8 @@ package com.puttysoftware.fantastlereboot.ai;
 
 import java.awt.Point;
 
-import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
+import com.puttysoftware.fantastlereboot.world.World;
 
 public abstract class AIContext {
   protected final BattleCharacter aiCreature;
@@ -31,7 +31,7 @@ public abstract class AIContext {
   }
 
   // Methods
-  public abstract void updateContext(final Maze arena);
+  public abstract void updateContext(final World arena);
 
   public final BattleCharacter getCharacter() {
     return this.aiCreature;

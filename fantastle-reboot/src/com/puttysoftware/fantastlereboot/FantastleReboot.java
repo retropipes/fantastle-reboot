@@ -1,4 +1,4 @@
-/*  Fantastle: A Maze-Solving Game
+/*  Fantastle: A World-Solving Game
 Copyright (C) 2008-2010 Eric Ahnell
 
 This program is free software: you can redistribute it and/or modify
@@ -38,7 +38,7 @@ public class FantastleReboot {
   private static final String PROGRAM_NAME = "Fantastle Reboot";
   private static final GameErrorHandler debug = new GameErrorHandler();
   private static final NativeIntegration NATIVITY = new NativeIntegration();
-  private static final int BATTLE_MAZE_SIZE = 16;
+  private static final int BATTLE_WORLD_SIZE = 16;
   private static MenuManager menus;
   private static final JMenuBar mainMenuBar = new JMenuBar();
 
@@ -56,8 +56,8 @@ public class FantastleReboot {
     FantastleReboot.debug.handleWithMessage(t, message);
   }
 
-  public static int getBattleMazeSize() {
-    return FantastleReboot.BATTLE_MAZE_SIZE;
+  public static int getBattleWorldSize() {
+    return FantastleReboot.BATTLE_WORLD_SIZE;
   }
 
   static MenuManager getMenuManager() {
@@ -84,8 +84,8 @@ public class FantastleReboot {
       FantastleReboot.menus = new MenuManager(FantastleReboot.mainMenuBar);
       FantastleReboot.NATIVITY.setDefaultMenuBar(FantastleReboot.mainMenuBar);
       // Compute action cap
-      Creature.computeActionCap(FantastleReboot.BATTLE_MAZE_SIZE,
-          FantastleReboot.BATTLE_MAZE_SIZE);
+      Creature.computeActionCap(FantastleReboot.BATTLE_WORLD_SIZE,
+          FantastleReboot.BATTLE_WORLD_SIZE);
       // Set default preferences
       Prefs.setDefaultPrefs();
       // Create the Bag O'Stuff

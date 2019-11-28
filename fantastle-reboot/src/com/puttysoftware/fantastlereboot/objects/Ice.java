@@ -1,9 +1,9 @@
 package com.puttysoftware.fantastlereboot.objects;
 
 import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
-import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
+import com.puttysoftware.fantastlereboot.world.World;
 import com.puttysoftware.randomrange.RandomRange;
 
 public final class Ice extends FantastleObject {
@@ -18,7 +18,7 @@ public final class Ice extends FantastleObject {
   }
 
   @Override
-  public boolean shouldGenerateObject(final Maze inMaze, final int inRow,
+  public boolean shouldGenerateObject(final World inWorld, final int inRow,
       final int inCol, final int inFloor, final int inLevel,
       final int inLayer) {
     // Generate Ice 20% of the time
@@ -26,7 +26,7 @@ public final class Ice extends FantastleObject {
     if (dieRoll != 0) {
       return false;
     }
-    return super.shouldGenerateObject(inMaze, inRow, inCol, inFloor, inLevel,
+    return super.shouldGenerateObject(inWorld, inRow, inCol, inFloor, inLevel,
         inLayer);
   }
 }

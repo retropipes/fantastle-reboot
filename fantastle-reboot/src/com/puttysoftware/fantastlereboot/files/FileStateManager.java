@@ -28,7 +28,7 @@ public final class FileStateManager {
       action = "Do you want to suspend your game?";
       source = "Fantastle Reboot";
     } else if (Modes.inEditor()) {
-      action = "Do you want to save your maze?";
+      action = "Do you want to save your world?";
       source = "Editor";
     } else {
       // Not in the game or editor, so abort

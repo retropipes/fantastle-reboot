@@ -1,4 +1,4 @@
-package com.puttysoftware.fantastlereboot.maze;
+package com.puttysoftware.fantastlereboot.world;
 
 class VisionModes {
   public static final int NONE = 0;

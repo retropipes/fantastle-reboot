@@ -1,4 +1,4 @@
-/*  Fantastle: A Maze-Solving Game
+/*  Fantastle: A World-Solving Game
 Copyright (C) 2008-2010 Eric Ahnell
 
 This program is free software: you can redistribute it and/or modify
@@ -89,7 +89,7 @@ public class AboutDialog implements AboutHandler {
     this.textPane.setLayout(new GridLayout(8, 1));
     this.textPane.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
     this.textPane.add(new JLabel("Fantastle Reboot"));
-    this.textPane.add(new JLabel("A maze solving + role playing hybrid game"));
+    this.textPane.add(new JLabel("A world solving + role playing hybrid game"));
     this.textPane.add(new JLabel("Version: " + ver));
     this.textPane.add(new JLabel("Author: Putty Software"));
     this.textPane.add(new JLabel(

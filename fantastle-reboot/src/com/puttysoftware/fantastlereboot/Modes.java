@@ -2,7 +2,7 @@ package com.puttysoftware.fantastlereboot;
 
 import com.puttysoftware.fantastlereboot.editor.Editor;
 import com.puttysoftware.fantastlereboot.editor.LevelPrefs;
-import com.puttysoftware.fantastlereboot.editor.MazePrefs;
+import com.puttysoftware.fantastlereboot.editor.WorldPrefs;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 
@@ -18,7 +18,7 @@ public class Modes {
   private static final int BATTLE = 4;
   private static final int ABOUT = 5;
   private static final int HELP = 6;
-  private static final int MAZE_PREFS = 7;
+  private static final int WORLD_PREFS = 7;
   private static final int LEVEL_PREFS = 8;
   private static final int GUI = 9;
   private static int current;
@@ -56,9 +56,9 @@ public class Modes {
     Modes.current = Modes.HELP;
   }
 
-  public static void setInMazePrefs() {
+  public static void setInWorldPrefs() {
     Modes.save();
-    Modes.current = Modes.MAZE_PREFS;
+    Modes.current = Modes.WORLD_PREFS;
   }
 
   public static void setInLevelPrefs() {
@@ -94,8 +94,8 @@ public class Modes {
     return Modes.current == Modes.HELP;
   }
 
-  public static boolean inMazePrefs() {
-    return Modes.current == Modes.MAZE_PREFS;
+  public static boolean inWorldPrefs() {
+    return Modes.current == Modes.WORLD_PREFS;
   }
 
   public static boolean inLevelPrefs() {
@@ -136,8 +136,8 @@ public class Modes {
     case HELP:
       bag.getGeneralHelpManager().showHelp();
       break;
-    case MAZE_PREFS:
-      MazePrefs.showPrefs();
+    case WORLD_PREFS:
+      WorldPrefs.showPrefs();
       break;
     case LEVEL_PREFS:
       LevelPrefs.showPrefs();

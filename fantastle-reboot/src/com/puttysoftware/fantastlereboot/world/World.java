@@ -3,7 +3,7 @@ Copyright (C) 2008-2012 Eric Ahnell
 
 Any questions should be directed to the author via email at: products@puttysoftware.com
  */
-package com.puttysoftware.fantastlereboot.maze;
+package com.puttysoftware.fantastlereboot.world;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,17 +13,17 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.files.FileExtensions;
 import com.puttysoftware.fantastlereboot.files.PrefixIO;
 import com.puttysoftware.fantastlereboot.files.SuffixIO;
-import com.puttysoftware.fantastlereboot.files.versions.MazeVersionException;
-import com.puttysoftware.fantastlereboot.files.versions.MazeVersions;
+import com.puttysoftware.fantastlereboot.files.versions.WorldVersionException;
+import com.puttysoftware.fantastlereboot.files.versions.WorldVersions;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.randomrange.RandomLongRange;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
-public class Maze {
+public class World {
   // Properties
-  private LayeredTower mazeData;
+  private LayeredTower worldData;
   private int startW;
   private int locW;
   private int saveW;
@@ -42,42 +42,42 @@ public class Maze {
   static final int MAX_VISION_RADIUS = 16;
 
   // Constructors
-  public Maze() {
-    this.mazeData = null;
+  public World() {
+    this.worldData = null;
     this.levelCount = 0;
     this.startW = 0;
     this.locW = 0;
     this.saveW = 0;
     this.activeLevel = 0;
-    this.globalVisionMode = Maze.UNSET;
-    this.globalVisionModeExploreRadius = Maze.UNSET;
-    this.globalVisionRadius = Maze.UNSET;
+    this.globalVisionMode = World.UNSET;
+    this.globalVisionModeExploreRadius = World.UNSET;
+    this.globalVisionRadius = World.UNSET;
     this.savedStart = new int[4];
     final long random = new RandomLongRange(0, Long.MAX_VALUE).generate();
     final String randomID = Long.toHexString(random);
     this.basePath = System.getProperty("java.io.tmpdir") + File.separator
         + "FantastleReboot" + File.separator + randomID
-        + FileExtensions.getMazeTempExtensionWithPeriod();
+        + FileExtensions.getWorldTempExtensionWithPeriod();
     final File base = new File(this.basePath);
     final boolean success = base.mkdirs();
     if (!success) {
-      CommonDialogs.showErrorDialog("Maze temporary folder creation failed!",
+      CommonDialogs.showErrorDialog("World temporary folder creation failed!",
           "FantastleReboot");
     }
   }
 
   // Static methods
-  public static String getMazeTempFolder() {
+  public static String getWorldTempFolder() {
     return System.getProperty("java.io.tmpdir") + File.separator
         + "FantastleReboot";
   }
 
   public static int getMinLevels() {
-    return Maze.MIN_LEVELS;
+    return World.MIN_LEVELS;
   }
 
   public static int getMaxLevels() {
-    return Maze.MAX_LEVELS;
+    return World.MAX_LEVELS;
   }
 
   public static int getMaxFloors() {
@@ -93,35 +93,35 @@ public class Maze {
   }
 
   // Methods
-  public static Maze getTemporaryBattleCopy() {
-    final Maze temp = new Maze();
-    temp.addLevel(FantastleReboot.getBattleMazeSize(),
-        FantastleReboot.getBattleMazeSize(), 1);
+  public static World getTemporaryBattleCopy() {
+    final World temp = new World();
+    temp.addLevel(FantastleReboot.getBattleWorldSize(),
+        FantastleReboot.getBattleWorldSize(), 1);
     return temp;
   }
 
   public boolean hasMonster(final int x, final int y, final int z) {
-    return this.mazeData.hasMonster(x, y, z);
+    return this.worldData.hasMonster(x, y, z);
   }
 
   public void addMonster(final int x, final int y, final int z) {
-    this.mazeData.addMonster(x, y, z);
+    this.worldData.addMonster(x, y, z);
   }
 
   public void removeMonster(final int x, final int y, final int z) {
-    this.mazeData.removeMonster(x, y, z);
+    this.worldData.removeMonster(x, y, z);
   }
 
   public boolean checkForBattle(final int px, final int py, final int pz) {
-    return this.mazeData.checkForBattle(px, py, pz);
+    return this.worldData.checkForBattle(px, py, pz);
   }
 
   public void moveAllMonsters() {
-    this.mazeData.moveAllMonsters(this);
+    this.worldData.moveAllMonsters(this);
   }
 
   public void postBattle(final int locX, final int locY) {
-    this.mazeData.postBattle(this, locX, locY);
+    this.worldData.postBattle(this, locX, locY);
   }
 
   public String getBasePath() {
@@ -137,15 +137,15 @@ public class Maze {
   }
 
   public void tickTimers(final int floor) {
-    this.mazeData.tickTimers(floor);
+    this.worldData.tickTimers(floor);
   }
 
   public void resetVisibleSquares() {
-    this.mazeData.resetVisibleSquares();
+    this.worldData.resetVisibleSquares();
   }
 
   public void updateExploredSquares(final int xp, final int yp, final int zp) {
-    this.mazeData.updateExploredSquares(xp, yp, zp);
+    this.worldData.updateExploredSquares(xp, yp, zp);
   }
 
   public void switchLevel(final int level) {
@@ -158,10 +158,10 @@ public class Maze {
 
   private void switchLevelInternal(final int level) {
     if (this.activeLevel != level) {
-      if (this.mazeData != null) {
+      if (this.worldData != null) {
         try (XDataWriter writer = this.getLevelWriter()) {
           // Save old level
-          this.writeMazeLevel(writer);
+          this.writeWorldLevel(writer);
         } catch (final IOException io) {
           // Ignore
         }
@@ -169,7 +169,7 @@ public class Maze {
       this.activeLevel = level;
       try (XDataReader reader = this.getLevelReader()) {
         // Load new level
-        this.readMazeLevel(reader);
+        this.readWorldLevel(reader);
       } catch (final IOException io) {
         // Ignore
       }
@@ -182,20 +182,20 @@ public class Maze {
   }
 
   public boolean canAddLevel() {
-    return this.activeLevel + 1 < Maze.MAX_LEVELS;
+    return this.activeLevel + 1 < World.MAX_LEVELS;
   }
 
   public boolean addLevel(final int rows, final int cols, final int floors) {
-    if (this.levelCount < Maze.getMaxLevels()) {
-      if (this.mazeData != null) {
+    if (this.levelCount < World.getMaxLevels()) {
+      if (this.worldData != null) {
         try (XDataWriter writer = this.getLevelWriter()) {
           // Save old level
-          this.writeMazeLevel(writer);
+          this.writeWorldLevel(writer);
         } catch (final IOException io) {
           // Ignore
         }
       }
-      this.mazeData = new LayeredTower(rows, cols, floors);
+      this.worldData = new LayeredTower(rows, cols, floors);
       this.levelCount++;
       this.activeLevel = this.levelCount - 1;
       return true;
@@ -205,50 +205,50 @@ public class Maze {
   }
 
   public boolean hasNote(final int x, final int y, final int z) {
-    return this.mazeData.hasNote(x, y, z);
+    return this.worldData.hasNote(x, y, z);
   }
 
   public void createNote(final int x, final int y, final int z) {
-    this.mazeData.createNote(x, y, z);
+    this.worldData.createNote(x, y, z);
   }
 
-  public MazeNote getNote(final int x, final int y, final int z) {
-    return this.mazeData.getNote(x, y, z);
+  public WorldNote getNote(final int x, final int y, final int z) {
+    return this.worldData.getNote(x, y, z);
   }
 
   public boolean cellRangeCheck(final int row, final int col, final int floor) {
-    return this.mazeData.cellRangeCheck(row, col, floor);
+    return this.worldData.cellRangeCheck(row, col, floor);
   }
 
   public boolean cellRangeCheck(final int row, final int col, final int floor,
       final int level, final int extra) {
-    return this.mazeData.cellRangeCheck(row, col, floor, extra)
-        && level >= Maze.MIN_LEVELS - 1 && level < Maze.MAX_LEVELS;
+    return this.worldData.cellRangeCheck(row, col, floor, extra)
+        && level >= World.MIN_LEVELS - 1 && level < World.MAX_LEVELS;
   }
 
   public boolean floorRangeCheck(final int floor) {
-    return this.mazeData.floorRangeCheck(floor);
+    return this.worldData.floorRangeCheck(floor);
   }
 
   public boolean levelRangeCheck(final int level) {
-    return level >= Maze.MIN_LEVELS - 1 && level < Maze.MAX_LEVELS;
+    return level >= World.MIN_LEVELS - 1 && level < World.MAX_LEVELS;
   }
 
   public FantastleObjectModel getCell(final int row, final int col,
       final int floor, final int extra) {
-    return this.mazeData.getCell(row, col, floor, extra);
+    return this.worldData.getCell(row, col, floor, extra);
   }
 
   public int getPlayerLocationX() {
-    return this.mazeData.getPlayerRow();
+    return this.worldData.getPlayerRow();
   }
 
   public int getPlayerLocationY() {
-    return this.mazeData.getPlayerColumn();
+    return this.worldData.getPlayerColumn();
   }
 
   public int getPlayerLocationZ() {
-    return this.mazeData.getPlayerFloor();
+    return this.worldData.getPlayerFloor();
   }
 
   public int getPlayerLocationW() {
@@ -260,15 +260,15 @@ public class Maze {
   }
 
   public int getRows() {
-    return this.mazeData.getRows();
+    return this.worldData.getRows();
   }
 
   public int getColumns() {
-    return this.mazeData.getColumns();
+    return this.worldData.getColumns();
   }
 
   public int getFloors() {
-    return this.mazeData.getFloors();
+    return this.worldData.getFloors();
   }
 
   public int getLevels() {
@@ -276,55 +276,55 @@ public class Maze {
   }
 
   public boolean doesPlayerExist() {
-    return this.mazeData.doesPlayerExist();
+    return this.worldData.doesPlayerExist();
   }
 
   public boolean isSquareVisible(final int x1, final int y1, final int x2,
       final int y2) {
-    return this.mazeData.isSquareVisible(x1, y1, x2, y2);
+    return this.worldData.isSquareVisible(x1, y1, x2, y2);
   }
 
   public void setCell(final FantastleObjectModel mo, final int row,
       final int col, final int floor, final int extra) {
-    this.mazeData.setCell(mo, row, col, floor, extra);
+    this.worldData.setCell(mo, row, col, floor, extra);
   }
 
   public void setStartRow(final int newStartRow) {
-    this.mazeData.setStartRow(newStartRow);
+    this.worldData.setStartRow(newStartRow);
   }
 
   public void setStartColumn(final int newStartColumn) {
-    this.mazeData.setStartColumn(newStartColumn);
+    this.worldData.setStartColumn(newStartColumn);
   }
 
   public void setStartFloor(final int newStartFloor) {
-    this.mazeData.setStartFloor(newStartFloor);
+    this.worldData.setStartFloor(newStartFloor);
   }
 
   public void savePlayerLocation() {
     this.saveW = this.locW;
-    this.mazeData.savePlayerLocation();
+    this.worldData.savePlayerLocation();
   }
 
   public void restorePlayerLocation() {
     this.locW = this.saveW;
-    this.mazeData.restorePlayerLocation();
+    this.worldData.restorePlayerLocation();
   }
 
   public void setPlayerToStart() {
-    this.mazeData.setPlayerToStart();
+    this.worldData.setPlayerToStart();
   }
 
   public void setPlayerLocationX(final int newPlayerRow) {
-    this.mazeData.setPlayerRow(newPlayerRow);
+    this.worldData.setPlayerRow(newPlayerRow);
   }
 
   public void setPlayerLocationY(final int newPlayerColumn) {
-    this.mazeData.setPlayerColumn(newPlayerColumn);
+    this.worldData.setPlayerColumn(newPlayerColumn);
   }
 
   public void setPlayerLocationZ(final int newPlayerFloor) {
-    this.mazeData.setPlayerFloor(newPlayerFloor);
+    this.worldData.setPlayerFloor(newPlayerFloor);
   }
 
   public void setPlayerLocationW(final int newPlayerLevel) {
@@ -332,15 +332,15 @@ public class Maze {
   }
 
   public void offsetPlayerLocationX(final int newPlayerRow) {
-    this.mazeData.offsetPlayerRow(newPlayerRow);
+    this.worldData.offsetPlayerRow(newPlayerRow);
   }
 
   public void offsetPlayerLocationY(final int newPlayerColumn) {
-    this.mazeData.offsetPlayerColumn(newPlayerColumn);
+    this.worldData.offsetPlayerColumn(newPlayerColumn);
   }
 
   public void offsetPlayerLocationZ(final int newPlayerFloor) {
-    this.mazeData.offsetPlayerFloor(newPlayerFloor);
+    this.worldData.offsetPlayerFloor(newPlayerFloor);
   }
 
   public void offsetPlayerLocationW(final int newPlayerLevel) {
@@ -348,27 +348,27 @@ public class Maze {
   }
 
   public void fillLevelRandomly() {
-    if (Prefs.isMazeGeneratorPureRandom()) {
-      this.mazeData.fillRandomlyPure(this, this.activeLevel);
-    } else if (Prefs.isMazeGeneratorConstrainedRandom()) {
-      this.mazeData.fillRandomlyConstrained(this, this.activeLevel);
-      // } else if (Prefs.isMazeGeneratorTwister()) {
-      // this.mazeData.fillRandomlyTwister(this, this.activeLevel);
+    if (Prefs.isWorldGeneratorPureRandom()) {
+      this.worldData.fillRandomlyPure(this, this.activeLevel);
+    } else if (Prefs.isWorldGeneratorConstrainedRandom()) {
+      this.worldData.fillRandomlyConstrained(this, this.activeLevel);
+      // } else if (Prefs.isWorldGeneratorTwister()) {
+      // this.worldData.fillRandomlyTwister(this, this.activeLevel);
     } else {
-      this.mazeData.fillRandomlyConstrained(this, this.activeLevel);
+      this.worldData.fillRandomlyConstrained(this, this.activeLevel);
     }
   }
 
   public void fullScanButton(final int l) {
-    this.mazeData.fullScanButton(l);
+    this.worldData.fullScanButton(l);
   }
 
   public void save() {
-    this.mazeData.save();
+    this.worldData.save();
   }
 
   public void restore() {
-    this.mazeData.restore();
+    this.worldData.restore();
   }
 
   // Global settings
@@ -381,11 +381,11 @@ public class Maze {
   }
 
   public boolean isGlobalVisionRadiusSet() {
-    return this.globalVisionRadius == Maze.UNSET;
+    return this.globalVisionRadius == World.UNSET;
   }
 
   public void unsetGlobalVisionRadius() {
-    this.globalVisionRadius = Maze.UNSET;
+    this.globalVisionRadius = World.UNSET;
   }
 
   public int getGlobalExploreExpansionRadius() {
@@ -397,11 +397,11 @@ public class Maze {
   }
 
   public boolean isGlobalExploreExpansionRadiusSet() {
-    return this.globalVisionModeExploreRadius == Maze.UNSET;
+    return this.globalVisionModeExploreRadius == World.UNSET;
   }
 
   public void unsetGlobalExploreExpansionRadius() {
-    this.globalVisionModeExploreRadius = Maze.UNSET;
+    this.globalVisionModeExploreRadius = World.UNSET;
   }
 
   public boolean isGlobalVisionModeNone() {
@@ -428,11 +428,11 @@ public class Maze {
   }
 
   public boolean isGlobalVisionModeSet() {
-    return this.globalVisionMode == Maze.UNSET;
+    return this.globalVisionMode == World.UNSET;
   }
 
   public void unsetGlobalVisionMode() {
-    this.globalVisionMode = Maze.UNSET;
+    this.globalVisionMode = World.UNSET;
   }
 
   public void addGlobalVisionModeExplore() {
@@ -475,134 +475,134 @@ public class Maze {
 
   // Settings
   public boolean isHorizontalWrapEnabled() {
-    return this.mazeData.isHorizontalWrapEnabled();
+    return this.worldData.isHorizontalWrapEnabled();
   }
 
   public boolean isVerticalWrapEnabled() {
-    return this.mazeData.isVerticalWrapEnabled();
+    return this.worldData.isVerticalWrapEnabled();
   }
 
   public boolean isFloorWrapEnabled() {
-    return this.mazeData.isFloorWrapEnabled();
+    return this.worldData.isFloorWrapEnabled();
   }
 
   public void setHorizontalWrapEnabled(final boolean value) {
-    this.mazeData.setHorizontalWrapEnabled(value);
+    this.worldData.setHorizontalWrapEnabled(value);
   }
 
   public void setVerticalWrapEnabled(final boolean value) {
-    this.mazeData.setVerticalWrapEnabled(value);
+    this.worldData.setVerticalWrapEnabled(value);
   }
 
   public void setFloorWrapEnabled(final boolean value) {
-    this.mazeData.setFloorWrapEnabled(value);
+    this.worldData.setFloorWrapEnabled(value);
   }
 
   public int getVisionRadius() {
     if (this.isGlobalVisionRadiusSet()) {
       return this.getGlobalVisionRadius();
     }
-    return this.mazeData.getVisionRadius();
+    return this.worldData.getVisionRadius();
   }
 
   public int getVisionRadiusValue() {
-    return this.mazeData.getVisionRadius();
+    return this.worldData.getVisionRadius();
   }
 
   public void setVisionRadius(final int value) {
-    this.mazeData.setVisionRadius(value);
+    this.worldData.setVisionRadius(value);
   }
 
   public int getExploreExpansionRadius() {
     if (this.isGlobalExploreExpansionRadiusSet()) {
       return this.getGlobalExploreExpansionRadius();
     }
-    return this.mazeData.getExploreExpansionRadius();
+    return this.worldData.getExploreExpansionRadius();
   }
 
   public int getExploreExpansionRadiusValue() {
-    return this.mazeData.getExploreExpansionRadius();
+    return this.worldData.getExploreExpansionRadius();
   }
 
   public void setExploreExpansionRadius(final int value) {
-    this.mazeData.setExploreExpansionRadius(value);
+    this.worldData.setExploreExpansionRadius(value);
   }
 
   public boolean isVisionModeNone() {
     if (this.isGlobalVisionModeSet()) {
       return this.isGlobalVisionModeNone();
     }
-    return this.mazeData.isVisionModeNone();
+    return this.worldData.isVisionModeNone();
   }
 
   public boolean isVisionModeExplore() {
     if (this.isGlobalVisionModeSet()) {
       return this.isGlobalVisionModeExplore();
     }
-    return this.mazeData.isVisionModeExplore();
+    return this.worldData.isVisionModeExplore();
   }
 
   public boolean isVisionModeFieldOfView() {
     if (this.isGlobalVisionModeSet()) {
       return this.isGlobalVisionModeFieldOfView();
     }
-    return this.mazeData.isVisionModeFieldOfView();
+    return this.worldData.isVisionModeFieldOfView();
   }
 
   public boolean isVisionModeFixedRadius() {
     if (this.isGlobalVisionModeSet()) {
       return this.isGlobalVisionModeFixedRadius();
     }
-    return this.mazeData.isVisionModeFixedRadius();
+    return this.worldData.isVisionModeFixedRadius();
   }
 
   public boolean isLocalVisionModeNone() {
-    return this.mazeData.isVisionModeNone();
+    return this.worldData.isVisionModeNone();
   }
 
   public boolean isLocalVisionModeExplore() {
-    return this.mazeData.isVisionModeExplore();
+    return this.worldData.isVisionModeExplore();
   }
 
   public boolean isLocalVisionModeFieldOfView() {
-    return this.mazeData.isVisionModeFieldOfView();
+    return this.worldData.isVisionModeFieldOfView();
   }
 
   public boolean isLocalVisionModeFixedRadius() {
-    return this.mazeData.isVisionModeFixedRadius();
+    return this.worldData.isVisionModeFixedRadius();
   }
 
   public void resetVisionModeNone() {
-    this.mazeData.resetVisionModeNone();
+    this.worldData.resetVisionModeNone();
   }
 
   public void addVisionModeExplore() {
-    this.mazeData.addVisionModeExplore();
+    this.worldData.addVisionModeExplore();
   }
 
   public void addVisionModeFieldOfView() {
-    this.mazeData.addVisionModeFieldOfView();
+    this.worldData.addVisionModeFieldOfView();
   }
 
   public void addVisionModeFixedRadius() {
-    this.mazeData.addVisionModeFixedRadius();
+    this.worldData.addVisionModeFixedRadius();
   }
 
   public void removeVisionModeExplore() {
-    this.mazeData.removeVisionModeExplore();
+    this.worldData.removeVisionModeExplore();
   }
 
   public void removeVisionModeFieldOfView() {
-    this.mazeData.removeVisionModeFieldOfView();
+    this.worldData.removeVisionModeFieldOfView();
   }
 
   public void removeVisionModeFixedRadius() {
-    this.mazeData.removeVisionModeFixedRadius();
+    this.worldData.removeVisionModeFixedRadius();
   }
 
   // File I/O
-  public Maze readMaze() throws IOException {
-    final Maze m = new Maze();
+  public World readWorld() throws IOException {
+    final World m = new World();
     // Attach handlers
     m.setPrefixHandler(this.prefixHandler);
     m.setSuffixHandler(this.suffixHandler);
@@ -611,16 +611,16 @@ public class Maze {
     int version = 0;
     // Create metafile reader
     try (XDataReader metaReader = new XDataReader(
-        m.basePath + File.separator + "metafile.xml", "maze")) {
+        m.basePath + File.separator + "metafile.xml", "world")) {
       // Read metafile
-      version = m.readMazeMetafile(metaReader);
+      version = m.readWorldMetafile(metaReader);
     } catch (final IOException ioe) {
       throw ioe;
     }
     // Create data reader
     try (XDataReader dataReader = m.getLevelReader()) {
       // Read data
-      m.readMazeLevel(dataReader, version);
+      m.readWorldLevel(dataReader, version);
       return m;
     } catch (final IOException ioe) {
       throw ioe;
@@ -633,8 +633,8 @@ public class Maze {
         "level");
   }
 
-  private int readMazeMetafile(final XDataReader reader) throws IOException {
-    int ver = MazeVersions.LATEST;
+  private int readWorldMetafile(final XDataReader reader) throws IOException {
+    int ver = WorldVersions.LATEST;
     if (this.prefixHandler != null) {
       ver = this.prefixHandler.readPrefix(reader);
     }
@@ -655,32 +655,32 @@ public class Maze {
     return ver;
   }
 
-  private void readMazeLevel(final XDataReader reader) throws IOException {
-    this.readMazeLevel(reader, MazeVersions.LATEST);
+  private void readWorldLevel(final XDataReader reader) throws IOException {
+    this.readWorldLevel(reader, WorldVersions.LATEST);
   }
 
-  private void readMazeLevel(final XDataReader reader, final int formatVersion)
+  private void readWorldLevel(final XDataReader reader, final int formatVersion)
       throws IOException {
-    if (formatVersion == MazeVersions.LATEST) {
-      this.mazeData = LayeredTower.readLayeredTowerV1(reader);
-      this.mazeData.readSavedTowerState(reader, formatVersion);
+    if (formatVersion == WorldVersions.LATEST) {
+      this.worldData = LayeredTower.readLayeredTowerV1(reader);
+      this.worldData.readSavedTowerState(reader, formatVersion);
     } else {
-      throw new MazeVersionException(formatVersion);
+      throw new WorldVersionException(formatVersion);
     }
   }
 
-  public void writeMaze() throws IOException {
+  public void writeWorld() throws IOException {
     try {
       // Create metafile writer
       try (XDataWriter metaWriter = new XDataWriter(
-          this.basePath + File.separator + "metafile.xml", "maze")) {
+          this.basePath + File.separator + "metafile.xml", "world")) {
         // Write metafile
-        this.writeMazeMetafile(metaWriter);
+        this.writeWorldMetafile(metaWriter);
       }
       // Create data writer
       try (XDataWriter dataWriter = this.getLevelWriter()) {
         // Write data
-        this.writeMazeLevel(dataWriter);
+        this.writeWorldLevel(dataWriter);
       }
     } catch (final IOException ioe) {
       throw ioe;
@@ -693,7 +693,7 @@ public class Maze {
         "level");
   }
 
-  private void writeMazeMetafile(final XDataWriter writer) throws IOException {
+  private void writeWorldMetafile(final XDataWriter writer) throws IOException {
     if (this.prefixHandler != null) {
       this.prefixHandler.writePrefix(writer);
     }
@@ -713,9 +713,9 @@ public class Maze {
     }
   }
 
-  private void writeMazeLevel(final XDataWriter writer) throws IOException {
+  private void writeWorldLevel(final XDataWriter writer) throws IOException {
     // Write the level
-    this.mazeData.writeLayeredTower(writer);
-    this.mazeData.writeSavedTowerState(writer);
+    this.worldData.writeLayeredTower(writer);
+    this.worldData.writeSavedTowerState(writer);
   }
 }

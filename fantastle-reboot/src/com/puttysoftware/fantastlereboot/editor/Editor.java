@@ -1,4 +1,4 @@
-/*  Fantastle: A Maze-Solving Game
+/*  Fantastle: A World-Solving Game
 Copyright (C) 2008-2010 Eric Ahnell
 
 This program is free software: you can redistribute it and/or modify
@@ -41,12 +41,10 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.Modes;
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
-import com.puttysoftware.fantastlereboot.files.MazeFileManager;
+import com.puttysoftware.fantastlereboot.files.WorldFileManager;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.loaders.ImageConstants;
-import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.GameObjects;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
@@ -54,6 +52,8 @@ import com.puttysoftware.fantastlereboot.objects.Nothing;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.StairsDown;
 import com.puttysoftware.fantastlereboot.objects.StairsUp;
+import com.puttysoftware.fantastlereboot.world.World;
+import com.puttysoftware.fantastlereboot.world.WorldManager;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class Editor {
@@ -72,7 +72,7 @@ public class Editor {
   private static BufferedImageIcon[] objectEditorAppearances;
   private static int currentObjectIndex;
   private static UndoRedoEngine engine;
-  private static boolean mazeChanged;
+  private static boolean worldChanged;
   private static FantastleObjectModel savedObject;
   public static final int STAIRS_UP = 0;
   public static final int STAIRS_DOWN = 1;
@@ -92,11 +92,11 @@ public class Editor {
         .getAllGroundLayerEditorAppearances();
     Editor.objectEditorAppearances = GameObjects
         .getAllObjectLayerEditorAppearances();
-    Editor.mazeChanged = true;
+    Editor.worldChanged = true;
   }
 
-  public static void mazeChanged() {
-    Editor.mazeChanged = true;
+  public static void worldChanged() {
+    Editor.worldChanged = true;
   }
 
   public static void updateEditorPosition(final int x, final int y, final int z,
@@ -202,7 +202,7 @@ public class Editor {
   }
 
   public static void editObject(final int x, final int y) {
-    final Maze maze = MazeManager.getMaze();
+    final World world = WorldManager.getWorld();
     Editor.currentObjectIndex = Editor.picker.getPicked();
     final int xOffset = Editor.vertScroll.getValue()
         - Editor.vertScroll.getMinimum();
@@ -215,8 +215,8 @@ public class Editor {
     final int gridZ = EditorLoc.getLocZ();
     final int gridW = EditorLoc.getLocW();
     final int gridE = EditorLoc.getLocE();
-    if (maze.cellRangeCheck(gridX, gridY, gridZ)) {
-      Editor.savedObject = maze.getCell(gridX, gridY, gridZ, gridE);
+    if (world.cellRangeCheck(gridX, gridY, gridZ)) {
+      Editor.savedObject = world.getCell(gridX, gridY, gridZ, gridE);
     } else {
       return;
     }
@@ -229,16 +229,16 @@ public class Editor {
     final FantastleObjectModel mo = choices[Editor.currentObjectIndex];
     EditorLoc.setLocX(gridX);
     EditorLoc.setLocY(gridY);
-    if (maze.cellRangeCheck(gridX, gridY, gridZ)) {
+    if (world.cellRangeCheck(gridX, gridY, gridZ)) {
       Editor.updateUndoHistory(Editor.savedObject, gridX, gridY, gridZ,
           EditorLoc.getLocW(), gridE);
-      maze.setCell(mo, gridX, gridY, gridZ, gridE);
+      world.setCell(mo, gridX, gridY, gridZ, gridE);
       Editor.checkStairPair(gridZ, gridW);
       FileStateManager.setDirty(true);
       Editor.checkMenus();
       Editor.redrawEditor();
     } else {
-      maze.setCell(Editor.savedObject, gridX, gridY, gridZ, gridE);
+      world.setCell(Editor.savedObject, gridX, gridY, gridZ, gridE);
       Editor.redrawEditor();
     }
   }
@@ -248,11 +248,11 @@ public class Editor {
   }
 
   private static void checkStairPair(final int z, final int w) {
-    final FantastleObjectModel obj1 = MazeManager.getMaze()
+    final FantastleObjectModel obj1 = WorldManager.getWorld()
         .getCell(EditorLoc.getLocX(), EditorLoc.getLocY(), z, Layers.OBJECT);
-    final FantastleObjectModel obj2 = MazeManager.getMaze().getCell(
+    final FantastleObjectModel obj2 = WorldManager.getWorld().getCell(
         EditorLoc.getLocX(), EditorLoc.getLocY(), z + 1, Layers.OBJECT);
-    final FantastleObjectModel obj3 = MazeManager.getMaze().getCell(
+    final FantastleObjectModel obj3 = WorldManager.getWorld().getCell(
         EditorLoc.getLocX(), EditorLoc.getLocY(), z - 1, Layers.OBJECT);
     if (!(obj1 instanceof StairsUp)) {
       if (obj2 instanceof StairsDown) {
@@ -266,11 +266,11 @@ public class Editor {
   }
 
   private static void reverseCheckStairPair(final int z, final int w) {
-    final FantastleObjectModel obj1 = MazeManager.getMaze()
+    final FantastleObjectModel obj1 = WorldManager.getWorld()
         .getCell(EditorLoc.getLocX(), EditorLoc.getLocY(), z, Layers.OBJECT);
-    final FantastleObjectModel obj2 = MazeManager.getMaze().getCell(
+    final FantastleObjectModel obj2 = WorldManager.getWorld().getCell(
         EditorLoc.getLocX(), EditorLoc.getLocY(), z + 1, Layers.OBJECT);
-    final FantastleObjectModel obj3 = MazeManager.getMaze().getCell(
+    final FantastleObjectModel obj3 = WorldManager.getWorld().getCell(
         EditorLoc.getLocX(), EditorLoc.getLocY(), z - 1, Layers.OBJECT);
     if (obj1 instanceof StairsUp) {
       if (!(obj2 instanceof StairsDown)) {
@@ -284,20 +284,20 @@ public class Editor {
   }
 
   public static void pairStairs(final int type) {
-    final Maze maze = MazeManager.getMaze();
+    final World world = WorldManager.getWorld();
     final int locX = EditorLoc.getLocX();
     final int locY = EditorLoc.getLocY();
     final int locZ = EditorLoc.getLocZ();
     switch (type) {
     case STAIRS_UP:
-      if (maze.cellRangeCheck(locX, locY, locZ + 1)) {
-        MazeManager.getMaze().setCell(new StairsDown(), locX, locY, locZ + 1,
+      if (world.cellRangeCheck(locX, locY, locZ + 1)) {
+        WorldManager.getWorld().setCell(new StairsDown(), locX, locY, locZ + 1,
             Layers.OBJECT);
       }
       break;
     case STAIRS_DOWN:
-      if (maze.cellRangeCheck(locX, locY, locZ - 1)) {
-        MazeManager.getMaze().setCell(new StairsUp(), locX, locY, locZ - 1,
+      if (world.cellRangeCheck(locX, locY, locZ - 1)) {
+        WorldManager.getWorld().setCell(new StairsUp(), locX, locY, locZ - 1,
             Layers.OBJECT);
       }
       break;
@@ -307,18 +307,18 @@ public class Editor {
   }
 
   private static void pairStairs(final int type, final int z, final int w) {
-    final Maze maze = MazeManager.getMaze();
+    final World world = WorldManager.getWorld();
     final int locX = EditorLoc.getLocX();
     final int locY = EditorLoc.getLocY();
     switch (type) {
     case STAIRS_UP:
-      if (maze.cellRangeCheck(locX, locY, z + 1)) {
-        maze.setCell(new StairsDown(), locX, locY, z + 1, Layers.OBJECT);
+      if (world.cellRangeCheck(locX, locY, z + 1)) {
+        world.setCell(new StairsDown(), locX, locY, z + 1, Layers.OBJECT);
       }
       break;
     case STAIRS_DOWN:
-      if (maze.cellRangeCheck(locX, locY, z - 1)) {
-        maze.setCell(new StairsUp(), locX, locY, z - 1, Layers.OBJECT);
+      if (world.cellRangeCheck(locX, locY, z - 1)) {
+        world.setCell(new StairsUp(), locX, locY, z - 1, Layers.OBJECT);
       }
       break;
     default:
@@ -327,18 +327,18 @@ public class Editor {
   }
 
   private static void unpairStairs(final int type, final int z, final int w) {
-    final Maze maze = MazeManager.getMaze();
+    final World world = WorldManager.getWorld();
     final int locX = EditorLoc.getLocX();
     final int locY = EditorLoc.getLocY();
     switch (type) {
     case STAIRS_UP:
-      if (maze.cellRangeCheck(locX, locY, z + 1)) {
-        maze.setCell(new OpenSpace(), locX, locY, z + 1, Layers.OBJECT);
+      if (world.cellRangeCheck(locX, locY, z + 1)) {
+        world.setCell(new OpenSpace(), locX, locY, z + 1, Layers.OBJECT);
       }
       break;
     case STAIRS_DOWN:
-      if (maze.cellRangeCheck(locX, locY, z - 1)) {
-        maze.setCell(new OpenSpace(), locX, locY, z - 1, Layers.OBJECT);
+      if (world.cellRangeCheck(locX, locY, z - 1)) {
+        world.setCell(new OpenSpace(), locX, locY, z - 1, Layers.OBJECT);
       }
       break;
     default:
@@ -347,29 +347,29 @@ public class Editor {
   }
 
   public static void setPlayerLocation() {
-    MazeManager.getMaze().setStartRow(EditorLoc.getLocY());
-    MazeManager.getMaze().setStartColumn(EditorLoc.getLocX());
-    MazeManager.getMaze().setStartFloor(EditorLoc.getLocZ());
+    WorldManager.getWorld().setStartRow(EditorLoc.getLocY());
+    WorldManager.getWorld().setStartColumn(EditorLoc.getLocX());
+    WorldManager.getWorld().setStartFloor(EditorLoc.getLocZ());
   }
 
-  public static void editMaze() {
+  public static void editWorld() {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     if (FileStateManager.getLoaded()) {
       Modes.setInEditor();
       // Reset game state
       Game.resetGameState();
       // Create the managers
-      if (Editor.mazeChanged) {
-        final int mazeSizeX = MazeManager.getMaze().getRows();
-        final int mazeSizeY = MazeManager.getMaze().getColumns();
-        EditorView.halfOffsetMax(mazeSizeX, mazeSizeY);
-        Editor.mazeChanged = false;
+      if (Editor.worldChanged) {
+        final int worldSizeX = WorldManager.getWorld().getRows();
+        final int worldSizeY = WorldManager.getWorld().getColumns();
+        EditorView.halfOffsetMax(worldSizeX, worldSizeY);
+        Editor.worldChanged = false;
       }
       // Reset the level
       EditorLoc.setLocZ(0);
       EditorLoc.setLocW(0);
-      EditorLoc.setLimitsFromMaze(MazeManager.getMaze());
-      EditorView.halfOffsetMaxFromMaze(MazeManager.getMaze());
+      EditorLoc.setLimitsFromWorld(WorldManager.getWorld());
+      EditorView.halfOffsetMaxFromWorld(WorldManager.getWorld());
       Editor.setUpGUI();
       Editor.clearHistory();
       Editor.checkMenus();
@@ -380,18 +380,18 @@ public class Editor {
       Editor.showOutput();
       Editor.redrawEditor();
     } else {
-      CommonDialogs.showDialog("No Maze Opened");
+      CommonDialogs.showDialog("No World Opened");
     }
   }
 
-  public static boolean newMaze() {
+  public static boolean newWorld() {
     boolean success = true;
     boolean saved = true;
     int status = 0;
     if (FileStateManager.getDirty()) {
       status = FileStateManager.showSaveDialog();
       if (status == JOptionPane.YES_OPTION) {
-        saved = MazeFileManager.saveMaze();
+        saved = WorldFileManager.saveWorld();
       } else if (status == JOptionPane.CANCEL_OPTION) {
         saved = false;
       } else {
@@ -400,7 +400,7 @@ public class Editor {
     }
     if (saved) {
       Game.resetPlayerLocation();
-      MazeManager.setMaze(new Maze());
+      WorldManager.setWorld(new World());
       success = Editor.addLevelInternal(true);
       if (success) {
         Editor.clearHistory();
@@ -410,16 +410,16 @@ public class Editor {
       success = false;
     }
     if (success) {
-      Editor.mazeChanged = true;
+      Editor.worldChanged = true;
     }
     return success;
   }
 
   public static void fixLimits() {
     // Fix limits
-    if (MazeManager.getMaze() != null) {
-      EditorLoc.setLimitsFromMaze(MazeManager.getMaze());
-      EditorView.halfOffsetMaxFromMaze(MazeManager.getMaze());
+    if (WorldManager.getWorld() != null) {
+      EditorLoc.setLimitsFromWorld(WorldManager.getWorld());
+      EditorView.halfOffsetMaxFromWorld(WorldManager.getWorld());
     }
   }
 
@@ -433,7 +433,7 @@ public class Editor {
     final int absoluteFLimit = 16;
     String msg = null;
     if (flag) {
-      msg = "New Maze";
+      msg = "New World";
     } else {
       msg = "New Level";
     }
@@ -472,7 +472,7 @@ public class Editor {
                   "Floors must be less than or equal to " + absoluteFLimit
                       + ".");
             }
-            success = MazeManager.getMaze().addLevel(levelSizeX, levelSizeY,
+            success = WorldManager.getWorld().addLevel(levelSizeX, levelSizeY,
                 levelSizeZ);
             if (success) {
               Editor.fixLimits();
@@ -553,7 +553,7 @@ public class Editor {
     // Hide the editor
     Editor.hideOutput();
     // Save the entire level
-    MazeManager.getMaze().save();
+    WorldManager.getWorld().save();
     // Reset the viewing window
     Game.resetViewingWindowAndPlayerLocation();
     FantastleReboot.getBagOStuff().getGUIManager().showGUI();
@@ -604,7 +604,7 @@ public class Editor {
   }
 
   public static void undo() {
-    final Maze maze = MazeManager.getMaze();
+    final World world = WorldManager.getWorld();
     Editor.engine.undo();
     final FantastleObjectModel obj = Editor.engine.getObject();
     final int x = Editor.engine.getX();
@@ -616,9 +616,9 @@ public class Editor {
     EditorLoc.setLocY(y);
     EditorLoc.setCameFromZ(z);
     EditorLoc.setCameFromW(w);
-    if (Editor.engine.isDataValid() && maze.cellRangeCheck(x, y, z, w, e)) {
-      final FantastleObjectModel oldObj = maze.getCell(x, y, z, e);
-      maze.setCell(obj, x, y, z, e);
+    if (Editor.engine.isDataValid() && world.cellRangeCheck(x, y, z, w, e)) {
+      final FantastleObjectModel oldObj = world.getCell(x, y, z, e);
+      world.setCell(obj, x, y, z, e);
       if (!(obj instanceof StairsUp) && !(obj instanceof StairsDown)) {
         Editor.checkStairPair(z, w);
       } else {
@@ -633,7 +633,7 @@ public class Editor {
   }
 
   public static void redo() {
-    final Maze maze = MazeManager.getMaze();
+    final World world = WorldManager.getWorld();
     Editor.engine.redo();
     final FantastleObjectModel obj = Editor.engine.getObject();
     final int x = Editor.engine.getX();
@@ -645,9 +645,9 @@ public class Editor {
     EditorLoc.setLocY(y);
     EditorLoc.setCameFromZ(z);
     EditorLoc.setCameFromW(w);
-    if (Editor.engine.isDataValid() && maze.cellRangeCheck(x, y, z, w, e)) {
-      final FantastleObjectModel oldObj = maze.getCell(x, y, z, e);
-      maze.setCell(obj, x, y, z, e);
+    if (Editor.engine.isDataValid() && world.cellRangeCheck(x, y, z, w, e)) {
+      final FantastleObjectModel oldObj = world.getCell(x, y, z, e);
+      world.setCell(obj, x, y, z, e);
       if (!(obj instanceof StairsUp) && !(obj instanceof StairsDown)) {
         Editor.checkStairPair(z, w);
       } else {
@@ -700,7 +700,7 @@ public class Editor {
       if (FileStateManager.getDirty()) {
         status = FileStateManager.showSaveDialog();
         if (status == JOptionPane.YES_OPTION) {
-          success = MazeFileManager.saveMaze();
+          success = WorldFileManager.saveWorld();
           if (success) {
             Editor.exitEditor();
           }

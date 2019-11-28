@@ -1,4 +1,4 @@
-/*  Fantastle: A Maze-Solving Game
+/*  Fantastle: A World-Solving Game
 Copyright (C) 2008-2010 Eric Ahnell
 
 This program is free software: you can redistribute it and/or modify
@@ -22,14 +22,14 @@ import com.puttysoftware.diane.utilties.DirectionResolver;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
-import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Wall;
 import com.puttysoftware.fantastlereboot.objects.temporary.ArrowFactory;
 import com.puttysoftware.fantastlereboot.objects.temporary.ArrowType;
+import com.puttysoftware.fantastlereboot.world.World;
+import com.puttysoftware.fantastlereboot.world.WorldManager;
 
 public class ArrowTask extends Thread {
   // Fields
@@ -46,7 +46,7 @@ public class ArrowTask extends Thread {
   @Override
   public void run() {
     boolean res = true;
-    final Maze m = MazeManager.getMaze();
+    final World m = WorldManager.getWorld();
     final int px = m.getPlayerLocationX();
     final int py = m.getPlayerLocationY();
     final int pz = m.getPlayerLocationZ();
@@ -90,8 +90,8 @@ public class ArrowTask extends Thread {
 
   private static boolean arrowHitCheck(final int inX, final int inY,
       final int pz) {
-    final Maze maze = MazeManager.getMaze();
-    return maze.cellRangeCheck(inX, inY, pz)
-        && !maze.getCell(inX, inY, pz, Layers.OBJECT).isSolid();
+    final World world = WorldManager.getWorld();
+    return world.cellRangeCheck(inX, inY, pz)
+        && !world.getCell(inX, inY, pz, Layers.OBJECT).isSolid();
   }
 }

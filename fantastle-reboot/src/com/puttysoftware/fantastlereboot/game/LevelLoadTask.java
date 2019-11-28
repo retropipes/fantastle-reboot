@@ -11,8 +11,8 @@ import javax.swing.JProgressBar;
 import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
-import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
+import com.puttysoftware.fantastlereboot.world.World;
+import com.puttysoftware.fantastlereboot.world.WorldManager;
 
 public class LevelLoadTask extends Thread {
   // Fields
@@ -37,15 +37,15 @@ public class LevelLoadTask extends Thread {
       this.loadFrame.setTitle("Loading...");
       this.loadFrame.attachContent(this.content);
       this.loadFrame.pack();
-      final Maze gameMaze = MazeManager.getMaze();
+      final World gameWorld = WorldManager.getWorld();
       Game.disableEvents();
-      gameMaze.switchLevelOffset(this.level);
-      gameMaze.offsetPlayerLocationW(this.level);
+      gameWorld.switchLevelOffset(this.level);
+      gameWorld.offsetPlayerLocationW(this.level);
       PartyManager.getParty().offsetMonsterLevel(this.level);
       Game.resetViewingWindow();
       Game.enableEvents();
       Game.showOutput();
-      Game.redrawMaze();
+      Game.redrawWorld();
     } catch (final Exception ex) {
       FantastleReboot.exception(ex);
     }

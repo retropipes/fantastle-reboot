@@ -1,5 +1,5 @@
 /*  Fantastle Reboot
- * A maze-solving RPG
+ * A world-solving RPG
  * This code is licensed under the terms of the
  * GPLv3, or at your option, any later version.
  */
@@ -11,8 +11,8 @@ import com.puttysoftware.diane.loaders.ColorShader;
 import com.puttysoftware.diane.objectmodel.GameObject;
 import com.puttysoftware.fantastlereboot.assets.AttributeImageIndex;
 import com.puttysoftware.fantastlereboot.assets.ObjectImageIndex;
-import com.puttysoftware.fantastlereboot.files.versions.MazeVersions;
-import com.puttysoftware.fantastlereboot.maze.Maze;
+import com.puttysoftware.fantastlereboot.files.versions.WorldVersions;
+import com.puttysoftware.fantastlereboot.world.World;
 import com.puttysoftware.randomrange.RandomRange;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
@@ -264,7 +264,7 @@ public abstract class FantastleObject extends GameObject
   }
 
   @Override
-  public boolean shouldGenerateObject(final Maze maze, final int row,
+  public boolean shouldGenerateObject(final World world, final int row,
       final int col, final int floor, final int level, final int layer) {
     if (layer == Layers.OBJECT) {
       // Handle object layer
@@ -286,12 +286,12 @@ public abstract class FantastleObject extends GameObject
   }
 
   @Override
-  public int getMinimumRequiredQuantity(final Maze maze) {
+  public int getMinimumRequiredQuantity(final World world) {
     return RandomGenerationRule.NO_LIMIT;
   }
 
   @Override
-  public int getMaximumRequiredQuantity(final Maze maze) {
+  public int getMaximumRequiredQuantity(final World world) {
     return RandomGenerationRule.NO_LIMIT;
   }
 
@@ -322,7 +322,7 @@ public abstract class FantastleObject extends GameObject
       final int savedIdent = reader.readInt();
       if (savedIdent != -1) {
         this.savedObject = GameObjects.readSavedObject(reader, savedIdent,
-            MazeVersions.LATEST);
+            WorldVersions.LATEST);
       }
       final int cc = this.customCountersLength();
       for (int x = 0; x < cc; x++) {

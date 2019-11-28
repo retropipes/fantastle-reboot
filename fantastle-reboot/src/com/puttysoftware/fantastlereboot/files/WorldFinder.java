@@ -8,12 +8,12 @@ package com.puttysoftware.fantastlereboot.files;
 import java.io.File;
 import java.io.FilenameFilter;
 
-public class MazeFinder implements FilenameFilter {
+public class WorldFinder implements FilenameFilter {
   @Override
   public boolean accept(final File f, final String s) {
-    final String extension = MazeFinder.getExtension(s);
+    final String extension = WorldFinder.getExtension(s);
     if (extension != null) {
-      if (extension.equals(FileExtensions.getMazeExtension())) {
+      if (extension.equals(FileExtensions.getWorldExtension())) {
         return true;
       } else {
         return false;

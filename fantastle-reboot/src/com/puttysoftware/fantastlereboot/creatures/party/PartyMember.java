@@ -16,8 +16,8 @@ import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.loaders.AvatarImageLoader;
-import com.puttysoftware.fantastlereboot.maze.GenerateTask;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
+import com.puttysoftware.fantastlereboot.world.GenerateTask;
 import com.puttysoftware.images.BufferedImageIcon;
 import com.puttysoftware.page.Page;
 

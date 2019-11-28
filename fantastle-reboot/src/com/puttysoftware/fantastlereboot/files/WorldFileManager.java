@@ -16,9 +16,9 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fileutils.FilenameChecker;
 
-public final class MazeFileManager {
+public final class WorldFileManager {
   // Constructors
-  private MazeFileManager() {
+  private WorldFileManager() {
   }
 
   public static void handleDeferredSuccess(final boolean value,
@@ -34,15 +34,15 @@ public final class MazeFileManager {
     FantastleReboot.getBagOStuff().getMenuManager().checkFlags();
   }
 
-  public static boolean loadMaze() {
+  public static boolean loadWorld() {
     int status = 0;
     boolean saved = true;
     String filename;
-    final MazeFinder gf = new MazeFinder();
+    final WorldFinder gf = new WorldFinder();
     if (FileStateManager.getDirty()) {
       status = FileStateManager.showSaveDialog();
       if (status == JOptionPane.YES_OPTION) {
-        saved = MazeFileManager.saveMaze();
+        saved = WorldFileManager.saveWorld();
       } else if (status == JOptionPane.CANCEL_OPTION) {
         saved = false;
       } else {
@@ -50,16 +50,16 @@ public final class MazeFileManager {
       }
     }
     if (saved) {
-      final String gameDir = MazeFileManager.getMazeDirectory();
+      final String gameDir = WorldFileManager.getWorldDirectory();
       final String[] rawChoices = new File(gameDir).list(gf);
       if (rawChoices != null && rawChoices.length > 0) {
         final String[] choices = new String[rawChoices.length];
         // Strip extension
         for (int x = 0; x < choices.length; x++) {
-          choices[x] = MazeFileManager.getNameWithoutExtension(rawChoices[x]);
+          choices[x] = WorldFileManager.getNameWithoutExtension(rawChoices[x]);
         }
-        final String returnVal = CommonDialogs.showInputDialog("Select a Maze",
-            "Load Maze", choices, choices[0]);
+        final String returnVal = CommonDialogs.showInputDialog("Select a World",
+            "Load World", choices, choices[0]);
         if (returnVal != null) {
           int index = -1;
           for (int x = 0; x < choices.length; x++) {
@@ -72,7 +72,7 @@ public final class MazeFileManager {
             final File file = new File(
                 gameDir + File.separator + rawChoices[index]);
             filename = file.getAbsolutePath();
-            MazeFileManager.loadMazeFile(filename);
+            WorldFileManager.loadWorldFile(filename);
           } else {
             // Result not found
             if (FileStateManager.getLoaded()) {
@@ -86,7 +86,7 @@ public final class MazeFileManager {
           }
         }
       } else {
-        CommonDialogs.showErrorDialog("No Mazes Found!", "Load Maze");
+        CommonDialogs.showErrorDialog("No Worlds Found!", "Load World");
         if (FileStateManager.getLoaded()) {
           return true;
         }
@@ -95,9 +95,9 @@ public final class MazeFileManager {
     return false;
   }
 
-  private static void loadMazeFile(final String filename) {
-    if (!FilenameChecker.isFilenameOK(MazeFileManager
-        .getNameWithoutExtension(MazeFileManager.getFileNameOnly(filename)))) {
+  private static void loadWorldFile(final String filename) {
+    if (!FilenameChecker.isFilenameOK(WorldFileManager
+        .getNameWithoutExtension(WorldFileManager.getFileNameOnly(filename)))) {
       CommonDialogs.showErrorDialog(
           "The file you selected contains illegal characters in its\n"
               + "name. These characters are not allowed: /?<>\\:|\"\n"
@@ -105,21 +105,21 @@ public final class MazeFileManager {
               + "named com1 through com9 and lpt1 through lpt9.",
           "Load");
     } else {
-      final MazeLoader llt = new MazeLoader(filename);
+      final WorldLoader llt = new WorldLoader(filename);
       llt.start();
     }
   }
 
-  public static boolean saveMaze() {
+  public static boolean saveWorld() {
     String filename = "";
     String extension;
     String returnVal = "\\";
     while (!FilenameChecker.isFilenameOK(returnVal)) {
-      returnVal = CommonDialogs.showTextInputDialog("Name?", "Save Maze");
+      returnVal = CommonDialogs.showTextInputDialog("Name?", "Save World");
       if (returnVal != null) {
-        extension = FileExtensions.getMazeExtensionWithPeriod();
+        extension = FileExtensions.getWorldExtensionWithPeriod();
         final File file = new File(
-            MazeFileManager.getMazeDirectory() + returnVal + extension);
+            WorldFileManager.getWorldDirectory() + returnVal + extension);
         filename = file.getAbsolutePath();
         if (!FilenameChecker.isFilenameOK(returnVal)) {
           CommonDialogs.showErrorDialog(
@@ -127,7 +127,7 @@ public final class MazeFileManager {
                   + "These characters are not allowed: /?<>\\:|\"\n"
                   + "Files named con, nul, or prn are illegal, as are files\n"
                   + "named com1 through com9 and lpt1 through lpt9.",
-              "Save Maze");
+              "Save World");
         } else {
           // Make sure folder exists
           if (!file.getParentFile().exists()) {
@@ -137,7 +137,7 @@ public final class MazeFileManager {
                   .exception(new IOException("Cannot create game folder!"));
             }
           }
-          MazeFileManager.saveMazeFile(filename);
+          WorldFileManager.saveWorldFile(filename);
         }
       } else {
         break;
@@ -146,16 +146,16 @@ public final class MazeFileManager {
     return false;
   }
 
-  private static void saveMazeFile(final String filename) {
+  private static void saveWorldFile(final String filename) {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final String sg = "Saved Maze";
+    final String sg = "Saved World";
     bag.showMessage("Saving " + sg + " file...");
-    final MazeSaver lst = new MazeSaver(filename);
+    final WorldSaver lst = new WorldSaver(filename);
     lst.start();
   }
 
-  private static String getMazeDirectory() {
-    return CommonPaths.getAppDirectoryFor("Mazes");
+  private static String getWorldDirectory() {
+    return CommonPaths.getAppDirectoryFor("Worlds");
   }
 
   private static String getNameWithoutExtension(final String s) {

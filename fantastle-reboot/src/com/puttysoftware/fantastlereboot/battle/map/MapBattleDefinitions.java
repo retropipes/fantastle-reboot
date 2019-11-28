@@ -12,10 +12,10 @@ import java.util.List;
 import com.puttysoftware.fantastlereboot.ai.map.MapAIContext;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
-import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
+import com.puttysoftware.fantastlereboot.world.World;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class MapBattleDefinitions {
@@ -23,7 +23,7 @@ public class MapBattleDefinitions {
   private final List<BattleCharacter> battlers;
   private final List<MapAIContext> aiContexts;
   private final List<MapAITask> aiTasks;
-  private Maze battleMaze;
+  private World battleWorld;
   private final Battle battle;
   private int battlerCount;
   private int activeID;
@@ -133,21 +133,21 @@ public class MapBattleDefinitions {
   }
 
   public void setLocations() {
-    final RandomRange randX = new RandomRange(0, this.battleMaze.getRows() - 1);
+    final RandomRange randX = new RandomRange(0, this.battleWorld.getRows() - 1);
     final RandomRange randY = new RandomRange(0,
-        this.battleMaze.getColumns() - 1);
+        this.battleWorld.getColumns() - 1);
     int rx, ry;
     for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
         if (battler.getCreature().isAlive() && !battler.isLocationSet()) {
           rx = randX.generate();
           ry = randY.generate();
-          FantastleObjectModel obj = this.battleMaze.getCell(rx, ry, 0,
+          FantastleObjectModel obj = this.battleWorld.getCell(rx, ry, 0,
               Layers.OBJECT);
           while (obj.isSolid()) {
             rx = randX.generate();
             ry = randY.generate();
-            obj = this.battleMaze.getCell(rx, ry, 0, Layers.OBJECT);
+            obj = this.battleWorld.getCell(rx, ry, 0, Layers.OBJECT);
           }
           battler.setX(rx);
           battler.setY(ry);
@@ -160,7 +160,7 @@ public class MapBattleDefinitions {
     for (final MapAIContext maic : this.aiContexts) {
       if (maic != null) {
         if (maic.getCharacter().getCreature().isAlive()) {
-          maic.updateContext(this.battleMaze);
+          maic.updateContext(this.battleWorld);
         }
       }
     }
@@ -226,7 +226,7 @@ public class MapBattleDefinitions {
       this.battlers.add(battler);
       this.battlerCount++;
       if (battler.getCreature().hasMapAI()) {
-        this.aiContexts.add(new MapAIContext(battler, this.battleMaze));
+        this.aiContexts.add(new MapAIContext(battler, this.battleWorld));
         MapAITask task = new MapAITask(this.battle);
         this.aiTasks.add(task);
         task.start();
@@ -269,12 +269,12 @@ public class MapBattleDefinitions {
     this.activeID = index;
   }
 
-  public Maze getBattleMaze() {
-    return this.battleMaze;
+  public World getBattleWorld() {
+    return this.battleWorld;
   }
 
-  public void setBattleMaze(final Maze bMaze) {
-    this.battleMaze = bMaze;
+  public void setBattleWorld(final World bWorld) {
+    this.battleWorld = bWorld;
   }
 
   public BattleCharacter getBattler(final String name) {

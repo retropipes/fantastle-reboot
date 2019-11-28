@@ -16,17 +16,17 @@ import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.files.versions.VersionException;
 import com.puttysoftware.fantastlereboot.game.Game;
-import com.puttysoftware.fantastlereboot.maze.Maze;
-import com.puttysoftware.fantastlereboot.maze.MazeManager;
+import com.puttysoftware.fantastlereboot.world.World;
+import com.puttysoftware.fantastlereboot.world.WorldManager;
 import com.puttysoftware.fileutils.ZipUtilities;
 
-public class MazeLoader extends Thread {
+public class WorldLoader extends Thread {
   // Fields
   private final String filename;
   private MainWindow loadFrame;
 
   // Constructors
-  public MazeLoader(final String file) {
+  public WorldLoader(final String file) {
     this.filename = file;
     this.setName("Game Loader");
   }
@@ -35,7 +35,7 @@ public class MazeLoader extends Thread {
   @Override
   public void run() {
     final String sg = "Game";
-    final File mazeFile = new File(this.filename);
+    final File worldFile = new File(this.filename);
     try {
       this.loadFrame = MainWindow.getOutputFrame();
       this.loadFrame.setTitle("Loading");
@@ -47,36 +47,36 @@ public class MazeLoader extends Thread {
       this.loadFrame.pack();
       int startW;
       Game.setSavedGameFlag(false);
-      Maze gameMaze = new Maze();
+      World gameWorld = new World();
       // Unzip the file
-      ZipUtilities.unzipDirectory(mazeFile, new File(gameMaze.getBasePath()));
+      ZipUtilities.unzipDirectory(worldFile, new File(gameWorld.getBasePath()));
       // Set prefix handler
-      gameMaze.setPrefixHandler(new PrefixHandler());
+      gameWorld.setPrefixHandler(new PrefixHandler());
       // Set suffix handler
-      gameMaze.setSuffixHandler(new SuffixHandler());
-      gameMaze = gameMaze.readMaze();
-      if (gameMaze == null) {
+      gameWorld.setSuffixHandler(new SuffixHandler());
+      gameWorld = gameWorld.readWorld();
+      if (gameWorld == null) {
         throw new IOException("Unknown object encountered.");
       }
-      MazeManager.setMaze(gameMaze);
-      startW = gameMaze.getStartLevel();
-      gameMaze.switchLevel(startW);
-      final boolean playerExists = gameMaze.doesPlayerExist();
+      WorldManager.setWorld(gameWorld);
+      startW = gameWorld.getStartLevel();
+      gameWorld.switchLevel(startW);
+      final boolean playerExists = gameWorld.doesPlayerExist();
       if (playerExists) {
-        MazeManager.getMaze().setPlayerToStart();
+        WorldManager.getWorld().setPlayerToStart();
         Game.resetViewingWindow();
       }
-      gameMaze.save();
+      gameWorld.save();
       // Final cleanup
       Game.stateChanged();
       FileStateManager.setLoaded(true);
       CommonDialogs.showDialog(sg + " loaded.");
-      Game.playMaze();
-      MazeFileManager.handleDeferredSuccess(true, false, null);
+      Game.playWorld();
+      WorldFileManager.handleDeferredSuccess(true, false, null);
     } catch (final VersionException ve) {
       CommonDialogs.showDialog("Loading the " + sg.toLowerCase()
           + " failed, due to the format version being unsupported.");
-      MazeFileManager.handleDeferredSuccess(false, true, mazeFile);
+      WorldFileManager.handleDeferredSuccess(false, true, worldFile);
     } catch (final Exception ex) {
       FantastleReboot.exception(ex);
     }

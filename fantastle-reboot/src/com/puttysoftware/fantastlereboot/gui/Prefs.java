@@ -1,4 +1,4 @@
-/*  Fantastle: A Maze-Solving Game
+/*  Fantastle: A World-Solving Game
 Copyright (C) 2008-2010 Eric Ahnell
 
 This program is free software: you can redistribute it and/or modify
@@ -96,7 +96,7 @@ public class Prefs {
   private static int maxRandomRoomSizeXIndex;
   private static int minRandomRoomSizeYIndex;
   private static int maxRandomRoomSizeYIndex;
-  private static int mazeGenerator;
+  private static int worldGenerator;
   private static boolean[] soundsEnabled = new boolean[Prefs.SOUNDS_LENGTH];
   private static boolean[] musicEnabled = new boolean[Prefs.MUSIC_LENGTH];
   private static String lastDirOpen = "";
@@ -132,11 +132,11 @@ public class Prefs {
   private static final int GENERATOR_PURE_RANDOM = 0;
   private static final int GENERATOR_CONSTRAINED_RANDOM = 1;
   private static final int GENERATOR_TWISTER = 2;
-  public static final int FILTER_MAZE_V2 = 1;
-  public static final int FILTER_MAZE_V3 = 2;
-  public static final int FILTER_MAZE_V4 = 3;
+  public static final int FILTER_WORLD_V2 = 1;
+  public static final int FILTER_WORLD_V3 = 2;
+  public static final int FILTER_WORLD_V4 = 3;
   public static final int FILTER_GAME = 4;
-  public static final int FILTER_MAZE_V5 = 5;
+  public static final int FILTER_WORLD_V5 = 5;
   public static final int DIFFICULTY_VERY_EASY = 0;
   public static final int DIFFICULTY_EASY = 1;
   public static final int DIFFICULTY_NORMAL = 2;
@@ -169,16 +169,16 @@ public class Prefs {
     return RandomRange.generate(min, max);
   }
 
-  public static boolean isMazeGeneratorPureRandom() {
-    return Prefs.mazeGenerator == Prefs.GENERATOR_PURE_RANDOM;
+  public static boolean isWorldGeneratorPureRandom() {
+    return Prefs.worldGenerator == Prefs.GENERATOR_PURE_RANDOM;
   }
 
-  public static boolean isMazeGeneratorConstrainedRandom() {
-    return Prefs.mazeGenerator == Prefs.GENERATOR_CONSTRAINED_RANDOM;
+  public static boolean isWorldGeneratorConstrainedRandom() {
+    return Prefs.worldGenerator == Prefs.GENERATOR_CONSTRAINED_RANDOM;
   }
 
-  public static boolean isMazeGeneratorTwister() {
-    return Prefs.mazeGenerator == Prefs.GENERATOR_TWISTER;
+  public static boolean isWorldGeneratorTwister() {
+    return Prefs.worldGenerator == Prefs.GENERATOR_TWISTER;
   }
 
   public static int getMinimumRandomRoomSizeWide() {
@@ -370,11 +370,11 @@ public class Prefs {
     Prefs.moveOneAtATime.setSelected(Prefs.moveOneAtATimeEnabled);
     Prefs.viewingWindowChoices.setSelectedIndex(Prefs.viewingWindowIndex);
     Prefs.editorWindowChoices.setSelectedIndex(Prefs.editorWindowIndex);
-    if (Prefs.mazeGenerator == Prefs.GENERATOR_PURE_RANDOM) {
+    if (Prefs.worldGenerator == Prefs.GENERATOR_PURE_RANDOM) {
       Prefs.generatorPureRandom.setSelected(true);
-    } else if (Prefs.mazeGenerator == Prefs.GENERATOR_CONSTRAINED_RANDOM) {
+    } else if (Prefs.worldGenerator == Prefs.GENERATOR_CONSTRAINED_RANDOM) {
       Prefs.generatorConstrainedRandom.setSelected(true);
-    } else if (Prefs.mazeGenerator == Prefs.GENERATOR_TWISTER) {
+    } else if (Prefs.worldGenerator == Prefs.GENERATOR_TWISTER) {
       Prefs.generatorTwister.setSelected(true);
     } else {
       Prefs.generatorConstrainedRandom.setSelected(true);
@@ -405,13 +405,13 @@ public class Prefs {
     Prefs.viewingWindowIndex = Prefs.viewingWindowChoices.getSelectedIndex();
     Prefs.editorWindowIndex = Prefs.editorWindowChoices.getSelectedIndex();
     if (Prefs.generatorPureRandom.isSelected()) {
-      Prefs.mazeGenerator = Prefs.GENERATOR_PURE_RANDOM;
+      Prefs.worldGenerator = Prefs.GENERATOR_PURE_RANDOM;
     } else if (Prefs.generatorConstrainedRandom.isSelected()) {
-      Prefs.mazeGenerator = Prefs.GENERATOR_CONSTRAINED_RANDOM;
+      Prefs.worldGenerator = Prefs.GENERATOR_CONSTRAINED_RANDOM;
     } else if (Prefs.generatorTwister.isSelected()) {
-      Prefs.mazeGenerator = Prefs.GENERATOR_TWISTER;
+      Prefs.worldGenerator = Prefs.GENERATOR_TWISTER;
     } else {
-      Prefs.mazeGenerator = Prefs.GENERATOR_CONSTRAINED_RANDOM;
+      Prefs.worldGenerator = Prefs.GENERATOR_CONSTRAINED_RANDOM;
     }
     Prefs.minRandomRoomSizeXIndex = Prefs.minRandomRoomSizeX.getValue();
     Prefs.maxRandomRoomSizeXIndex = Prefs.maxRandomRoomSizeX.getValue();
@@ -446,8 +446,8 @@ public class Prefs {
     Prefs.updateCheckInterval.setSelectedIndex(0);
     Prefs.lastDirOpen = "";
     Prefs.lastDirSave = "";
-    Prefs.lastFilterUsed = Prefs.FILTER_MAZE_V5;
-    Prefs.mazeGenerator = Prefs.GENERATOR_CONSTRAINED_RANDOM;
+    Prefs.lastFilterUsed = Prefs.FILTER_WORLD_V5;
+    Prefs.worldGenerator = Prefs.GENERATOR_CONSTRAINED_RANDOM;
     Prefs.minRandomRoomSizeXIndex = Prefs.DEFAULT_ROOM_SIZE;
     Prefs.maxRandomRoomSizeXIndex = Prefs.DEFAULT_ROOM_SIZE;
     Prefs.minRandomRoomSizeYIndex = Prefs.DEFAULT_ROOM_SIZE;
@@ -553,7 +553,7 @@ public class Prefs {
     Prefs.maxRandomRoomSizeY.setPaintLabels(true);
     Prefs.mainPrefPane.setLayout(new BorderLayout());
     editorPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
-    editorPane.add(new JLabel("Default fill for new mazes:"));
+    editorPane.add(new JLabel("Default fill for new worlds:"));
     editorPane.add(Prefs.editorFillChoices);
     editorPane.add(new JLabel("Editor Window Size"));
     Prefs.editorWindowChoices = new JComboBox<>(
@@ -581,7 +581,7 @@ public class Prefs {
         Prefs.VIEWING_WINDOW_SIZE_NAMES);
     viewPane.add(Prefs.viewingWindowChoices);
     generatorPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
-    generatorPane.add(new JLabel("Maze Generation Method"));
+    generatorPane.add(new JLabel("World Generation Method"));
     generatorPane.add(Prefs.generatorPureRandom);
     generatorPane.add(Prefs.generatorConstrainedRandom);
     // generatorPane.add(Prefs.generatorTwister);
@@ -666,7 +666,7 @@ public class Prefs {
           Prefs.musicEnabled[x] = reader.readBoolean();
         }
         Prefs.editorWindowIndex = reader.readInt();
-        Prefs.mazeGenerator = reader.readInt();
+        Prefs.worldGenerator = reader.readInt();
         Prefs.minRandomRoomSizeXIndex = reader.readInt();
         Prefs.maxRandomRoomSizeXIndex = reader.readInt();
         Prefs.minRandomRoomSizeYIndex = reader.readInt();
@@ -711,7 +711,7 @@ public class Prefs {
           writer.writeBoolean(Prefs.musicEnabled[x]);
         }
         writer.writeInt(Prefs.editorWindowIndex);
-        writer.writeInt(Prefs.mazeGenerator);
+        writer.writeInt(Prefs.worldGenerator);
         writer.writeInt(Prefs.minRandomRoomSizeXIndex);
         writer.writeInt(Prefs.maxRandomRoomSizeXIndex);
         writer.writeInt(Prefs.minRandomRoomSizeYIndex);
@@ -756,7 +756,7 @@ public class Prefs {
           Prefs.musicEnabled[x] = reader.readBoolean();
         }
         Prefs.editorWindowIndex = reader.readInt();
-        Prefs.mazeGenerator = reader.readInt();
+        Prefs.worldGenerator = reader.readInt();
         Prefs.minRandomRoomSizeXIndex = reader.readInt();
         Prefs.maxRandomRoomSizeXIndex = reader.readInt();
         Prefs.minRandomRoomSizeYIndex = reader.readInt();
@@ -794,7 +794,7 @@ public class Prefs {
           writer.writeBoolean(Prefs.musicEnabled[x]);
         }
         writer.writeInt(Prefs.editorWindowIndex);
-        writer.writeInt(Prefs.mazeGenerator);
+        writer.writeInt(Prefs.worldGenerator);
         writer.writeInt(Prefs.minRandomRoomSizeXIndex);
         writer.writeInt(Prefs.maxRandomRoomSizeXIndex);
         writer.writeInt(Prefs.minRandomRoomSizeYIndex);
