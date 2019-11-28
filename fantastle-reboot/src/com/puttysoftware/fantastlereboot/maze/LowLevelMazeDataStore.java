@@ -47,6 +47,9 @@ class LowLevelMazeDataStore implements Cloneable {
   }
 
   public void setCell(final FantastleObjectModel obj, final int... loc) {
+    if (obj == null) {
+      throw new IllegalArgumentException("obj == NULL!");
+    }
     final int aloc = this.ravelLocation(loc);
     this.dataStore[aloc] = obj;
   }

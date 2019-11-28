@@ -17,8 +17,6 @@ import com.puttysoftware.fantastlereboot.files.versions.MazeVersionException;
 import com.puttysoftware.fantastlereboot.files.versions.MazeVersions;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
-import com.puttysoftware.fantastlereboot.objects.OpenSpace;
-import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.randomrange.RandomLongRange;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
@@ -99,7 +97,6 @@ public class Maze {
     final Maze temp = new Maze();
     temp.addLevel(FantastleReboot.getBattleMazeSize(),
         FantastleReboot.getBattleMazeSize(), 1);
-    temp.fill(new Tile(), new OpenSpace());
     return temp;
   }
 
@@ -372,11 +369,6 @@ public class Maze {
 
   public void restore() {
     this.mazeData.restore();
-  }
-
-  public void fill(final FantastleObjectModel bottom,
-      final FantastleObjectModel top) {
-    this.mazeData.fillFloor(bottom, top, 0);
   }
 
   // Global settings

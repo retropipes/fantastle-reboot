@@ -481,8 +481,6 @@ public class Editor {
                 EditorView.setLocX(0 - (EditorView.getSizeX() - 1) / 2);
                 EditorView.setLocY(0 - (EditorView.getSizeY() - 1) / 2);
               }
-              MazeManager.getMaze().fill(Prefs.getEditorDefaultFill(),
-                  new OpenSpace());
               Editor.checkMenus();
             }
           } catch (final NumberFormatException nf) {

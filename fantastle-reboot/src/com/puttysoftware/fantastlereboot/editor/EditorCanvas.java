@@ -54,15 +54,16 @@ class EditorCanvas extends JPanel {
     final int viewY = EditorView.getLocY();
     final int viewLRX = EditorView.getLowerRightLocX();
     final int viewLRY = EditorView.getLowerRightLocY();
-    final int z = m.getPlayerLocationZ();
+    final int z = EditorLoc.getLocZ();
+    final boolean playerInBounds = m.cellRangeCheck(u, v,
+        m.getPlayerLocationZ());
     for (x = viewX; x <= viewLRX; x++) {
       for (y = viewY; y <= viewLRY; y++) {
         xFix = x - viewX;
         yFix = y - viewY;
         inBounds = m.cellRangeCheck(y, x, z);
         if (inBounds) {
-          final FantastleObjectModel obj1 = m.getCell(y, x,
-              m.getPlayerLocationZ(), Layers.GROUND);
+          final FantastleObjectModel obj1 = m.getCell(y, x, z, Layers.GROUND);
           final BufferedImageIcon img1 = obj1.getEditorImage();
           FantastleObjectModel obj3 = EditorCanvas.OPEN;
           BufferedImageIcon img3 = obj3.getEditorImage();
@@ -70,7 +71,7 @@ class EditorCanvas extends JPanel {
           BufferedImageIcon img4 = obj4.getEditorImage();
           final boolean playerSquare = u == y && v == x;
           final boolean noteSquare = m.hasNote(x, y, z);
-          if (playerSquare) {
+          if (playerInBounds && playerSquare) {
             obj3 = EditorCanvas.PLAYER;
             img3 = obj3.getEditorImage();
           }
@@ -79,8 +80,7 @@ class EditorCanvas extends JPanel {
             img4 = obj4.getEditorImage();
           }
           if (EditorCanvas.MAX_LAYER >= Layers.OBJECT) {
-            final FantastleObjectModel obj2 = m.getCell(y, x,
-                m.getPlayerLocationZ(), Layers.OBJECT);
+            final FantastleObjectModel obj2 = m.getCell(y, x, z, Layers.OBJECT);
             final BufferedImageIcon img2 = obj2.getEditorImage();
             final String cacheName = EditorCanvas.generateCacheName(obj1, obj2,
                 obj3, obj4);
