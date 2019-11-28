@@ -58,7 +58,8 @@ public class MazePrefs {
   private static EventHandler handler;
   private static boolean guiSetUp = false;
   private static final int MIN_VISION_RADIUS = 1;
-  private static final int MAX_VISION_RADIUS = 15;
+  private static final int DEFAULT_VISION_RADIUS = 2;
+  private static final int MAX_VISION_RADIUS = 16;
   private static final int GRID_LENGTH = 12;
 
   // Constructors
@@ -175,12 +176,13 @@ public class MazePrefs {
     MazePrefs.useGlobalVisionModeOverride = new JCheckBox(
         "Enable Maze-Wide Vision Mode Override", false);
     MazePrefs.globalVisionRadius = new JSlider(MazePrefs.MIN_VISION_RADIUS,
-        MazePrefs.MAX_VISION_RADIUS);
+        MazePrefs.MAX_VISION_RADIUS, MazePrefs.DEFAULT_VISION_RADIUS);
     MazePrefs.globalVisionRadius
         .setLabelTable(MazePrefs.globalVisionRadius.createStandardLabels(1));
     MazePrefs.globalVisionRadius.setPaintLabels(true);
     MazePrefs.globalExploreExpansionRadius = new JSlider(
-        MazePrefs.MIN_VISION_RADIUS, MazePrefs.MAX_VISION_RADIUS);
+        MazePrefs.MIN_VISION_RADIUS, MazePrefs.MAX_VISION_RADIUS,
+        MazePrefs.DEFAULT_VISION_RADIUS);
     MazePrefs.globalExploreExpansionRadius.setLabelTable(
         MazePrefs.globalExploreExpansionRadius.createStandardLabels(1));
     MazePrefs.globalExploreExpansionRadius.setPaintLabels(true);

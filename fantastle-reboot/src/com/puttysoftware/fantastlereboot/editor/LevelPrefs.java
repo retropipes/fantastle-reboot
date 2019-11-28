@@ -58,7 +58,8 @@ public class LevelPrefs {
   private static EventHandler handler;
   private static boolean guiSetUp = false;
   private static final int MIN_VISION_RADIUS = 1;
-  private static final int MAX_VISION_RADIUS = 15;
+  private static final int DEFAULT_VISION_RADIUS = 2;
+  private static final int MAX_VISION_RADIUS = 16;
   private static final int GRID_LENGTH = 11;
 
   // Constructors
@@ -155,12 +156,13 @@ public class LevelPrefs {
     LevelPrefs.prefsCancel = new JButton("Cancel");
     LevelPrefs.prefsCancel.setDefaultCapable(false);
     LevelPrefs.visionRadius = new JSlider(LevelPrefs.MIN_VISION_RADIUS,
-        LevelPrefs.MAX_VISION_RADIUS);
+        LevelPrefs.MAX_VISION_RADIUS, LevelPrefs.DEFAULT_VISION_RADIUS);
     LevelPrefs.visionRadius
         .setLabelTable(LevelPrefs.visionRadius.createStandardLabels(1));
     LevelPrefs.visionRadius.setPaintLabels(true);
     LevelPrefs.exploreExpansionRadius = new JSlider(
-        LevelPrefs.MIN_VISION_RADIUS, LevelPrefs.MAX_VISION_RADIUS);
+        LevelPrefs.MIN_VISION_RADIUS, LevelPrefs.MAX_VISION_RADIUS,
+        LevelPrefs.DEFAULT_VISION_RADIUS);
     LevelPrefs.exploreExpansionRadius.setLabelTable(
         LevelPrefs.exploreExpansionRadius.createStandardLabels(1));
     LevelPrefs.exploreExpansionRadius.setPaintLabels(true);
