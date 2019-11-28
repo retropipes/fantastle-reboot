@@ -24,7 +24,6 @@ import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
-import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Player;
 import com.puttysoftware.fantastlereboot.objects.temporary.ArrowType;
 
@@ -48,12 +47,8 @@ public final class Game {
 
   // Methods
   public static boolean newGame() {
-    if (!Game.mt.isAlive()) {
-      Game.mt.start();
-    }
-    EffectManager.initialize();
+    Game.initialize();
     EffectManager.deactivateAllEffects();
-    GameGUI.viewingWindowSizeChanged();
     if (Game.savedGameFlag) {
       if (PartyManager.getParty() != null) {
         return true;
@@ -82,9 +77,13 @@ public final class Game {
     EffectManager.deactivateAllEffects();
   }
 
-  public static void viewingWindowSizeChanged() {
-    GameGUI.viewingWindowSizeChanged();
-    Game.resetViewingWindow();
+  public static void initialize() {
+    if (!Game.mt.isAlive()) {
+      Game.mt.start();
+      EffectManager.initialize();
+      GameGUI.viewingWindowSizeChanged();
+      Game.resetViewingWindow();
+    }
   }
 
   public static void stateChanged() {
@@ -282,12 +281,6 @@ public final class Game {
     ScoreTracker.validateScore();
   }
 
-  public static void decay() {
-    final Maze m = MazeManager.getMaze();
-    m.setCell(new OpenSpace(), m.getPlayerLocationX(), m.getPlayerLocationY(),
-        m.getPlayerLocationZ(), Layers.OBJECT);
-  }
-
   public static void morph(final FantastleObjectModel morphInto) {
     final Maze m = MazeManager.getMaze();
     m.setCell(morphInto, m.getPlayerLocationX(), m.getPlayerLocationY(),
@@ -344,7 +337,6 @@ public final class Game {
     m.restore();
     Game.setSavedGameFlag(false);
     ScoreTracker.resetScore();
-    Game.decay();
     Game.objectInv = new ObjectInventory();
     final boolean playerExists = m.doesPlayerExist();
     if (playerExists) {
@@ -363,7 +355,6 @@ public final class Game {
       ScoreTracker.resetScore();
       Game.resetPlayerLocation();
       Game.resetViewingWindow();
-      Game.decay();
       Game.redrawMaze();
     }
   }
@@ -376,7 +367,6 @@ public final class Game {
       m.restore();
       Game.resetPlayerLocation();
       Game.resetViewingWindow();
-      Game.decay();
       Game.redrawMaze();
     } else {
       Game.solvedMaze();

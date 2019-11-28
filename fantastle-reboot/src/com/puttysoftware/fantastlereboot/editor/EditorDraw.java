@@ -66,7 +66,6 @@ class EditorDraw extends Thread {
 
   private void draw() {
     final Maze m = MazeManager.getMaze();
-    m.moveAllMonsters();
     int x, y, u, v;
     int xFix, yFix;
     boolean visible;

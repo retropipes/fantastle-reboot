@@ -82,6 +82,7 @@ public class Editor {
   }
 
   static {
+    Game.initialize();
     Editor.mhandler = new EventHandler();
     Editor.engine = new UndoRedoEngine();
     Editor.groundObjects = GameObjects.getAllGroundLayerObjects();
