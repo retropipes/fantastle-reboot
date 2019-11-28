@@ -637,6 +637,10 @@ public class Prefs {
     }
 
     public boolean readPreferencesFile() {
+      if (!CommonPaths.getPrefsFile().exists()) {
+        // Abort early if the file does not exist
+        return false;
+      }
       try (final XDataReader reader = new XDataReader(
           CommonPaths.getPrefsFile().getAbsolutePath(), Prefs.DOC_TAG)) {
         // Read the preferences from the file

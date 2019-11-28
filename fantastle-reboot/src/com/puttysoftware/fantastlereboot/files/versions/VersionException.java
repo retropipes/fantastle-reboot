@@ -6,7 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 @SuppressWarnings("serial")
-public abstract class VersionException extends IOException {
+public abstract class VersionException extends RuntimeException {
   VersionException(final String message) {
     super(message);
   }
