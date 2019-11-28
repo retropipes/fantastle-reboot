@@ -427,7 +427,7 @@ public class Editor {
   private static boolean addLevelInternal(final boolean flag) {
     int levelSizeX, levelSizeY, levelSizeZ;
     final int absoluteRCLimit = 64;
-    final int absoluteFLimit = 8;
+    final int absoluteFLimit = 16;
     String msg = null;
     if (flag) {
       msg = "New Maze";
@@ -436,11 +436,17 @@ public class Editor {
     }
     boolean success = true;
     String input1, input2, input3;
-    input1 = CommonDialogs.showTextInputDialog("Number of rows?", msg);
+    input1 = CommonDialogs.showTextInputDialogWithDefault(
+        "Number of rows? (minimum 2, maximum " + absoluteRCLimit + ")", msg,
+        Integer.toString(absoluteRCLimit));
     if (input1 != null) {
-      input2 = CommonDialogs.showTextInputDialog("Number of columns?", msg);
+      input2 = CommonDialogs.showTextInputDialogWithDefault(
+          "Number of columns? (minimum 2, maximum " + absoluteRCLimit + ")",
+          msg, Integer.toString(absoluteRCLimit));
       if (input2 != null) {
-        input3 = CommonDialogs.showTextInputDialog("Number of floors?", msg);
+        input3 = CommonDialogs.showTextInputDialogWithDefault(
+            "Number of floors? (minimum 1, maximum " + absoluteFLimit + ")",
+            msg, Integer.toString(absoluteFLimit));
         if (input3 != null) {
           try {
             levelSizeX = Integer.parseInt(input1);
