@@ -20,6 +20,7 @@ package com.puttysoftware.fantastlereboot.editor;
 
 import java.awt.Adjustable;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -595,6 +596,10 @@ public class Editor {
     Editor.secondaryPane.addMouseListener(Editor.mhandler);
     Editor.updatePicker();
     Editor.borderPane.add(Editor.picker.getPicker(), BorderLayout.EAST);
+    final int vSize = Prefs.getEditorWindowSize();
+    final int gSize = ImageConstants.SIZE;
+    Editor.secondaryPane
+        .setPreferredSize(new Dimension(vSize * gSize, vSize * gSize));
     Editor.drawingThread = new EditorDraw(Editor.secondaryPane);
     Editor.drawingThread.start();
   }
@@ -684,6 +689,9 @@ public class Editor {
     } else {
       Editor.picker = new EditorPicturePicker(newImages);
     }
+    final int vSize = Prefs.getEditorWindowSize();
+    final int gSize = ImageConstants.SIZE;
+    Editor.picker.updatePickerLayout(vSize * gSize);
   }
 
   public static void handleCloseWindow() {

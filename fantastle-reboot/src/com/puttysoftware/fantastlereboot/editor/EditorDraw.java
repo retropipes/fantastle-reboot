@@ -79,7 +79,7 @@ class EditorDraw extends Thread {
       for (y = viewY; y <= viewLRY; y++) {
         xFix = x - viewX;
         yFix = y - viewY;
-        inBounds = x >= 0 && x < m.getRows() && y >= 0 && y < m.getColumns();
+        inBounds = m.cellRangeCheck(y, x, z);
         if (inBounds) {
           final FantastleObjectModel obj1 = m.getCell(y, x,
               m.getPlayerLocationZ(), Layers.GROUND);
