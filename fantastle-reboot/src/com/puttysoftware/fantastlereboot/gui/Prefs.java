@@ -97,8 +97,8 @@ public class Prefs {
   private static int mazeGenerator;
   private static boolean[] soundsEnabled = new boolean[Prefs.SOUNDS_LENGTH];
   private static boolean[] musicEnabled = new boolean[Prefs.MUSIC_LENGTH];
-  private static String lastDirOpen;
-  private static String lastDirSave;
+  private static String lastDirOpen = "";
+  private static String lastDirSave = "";
   private static int lastFilterUsed;
   private static boolean guiSetUp = false;
   private static final int[] VIEWING_WINDOW_SIZES = new int[] { 7, 9, 11, 13,
@@ -209,6 +209,9 @@ public class Prefs {
 
   public static void setLastDirOpen(final String value) {
     Prefs.lastDirOpen = value;
+    if (value == null) {
+      Prefs.lastDirOpen = "";
+    }
   }
 
   public static String getLastDirSave() {
@@ -217,6 +220,9 @@ public class Prefs {
 
   public static void setLastDirSave(final String value) {
     Prefs.lastDirSave = value;
+    if (value == null) {
+      Prefs.lastDirSave = "";
+    }
   }
 
   public static int getLastFilterUsedIndex() {
