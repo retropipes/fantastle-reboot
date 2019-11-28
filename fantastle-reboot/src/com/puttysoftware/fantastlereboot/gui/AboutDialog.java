@@ -36,6 +36,7 @@ import javax.swing.SwingConstants;
 
 import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.Modes;
 import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 
@@ -58,7 +59,7 @@ public class AboutDialog implements AboutHandler {
   }
 
   public void showAboutDialog() {
-    FantastleReboot.getBagOStuff().setInAbout();
+    Modes.setInAbout();
     this.aboutFrame = MainWindow.getOutputFrame();
     this.aboutFrame.setTitle("About Fantastle");
     this.aboutFrame.setDefaultButton(this.aboutOK);
@@ -69,7 +70,7 @@ public class AboutDialog implements AboutHandler {
 
   void hideAboutDialog() {
     this.aboutFrame.removeWindowListener(this.handler);
-    FantastleReboot.getBagOStuff().restoreFormerMode();
+    Modes.restore();
   }
 
   private void setUpGUI(final String ver) {
@@ -132,7 +133,7 @@ public class AboutDialog implements AboutHandler {
     public void windowClosing(final WindowEvent inE) {
       AboutDialog.this.aboutFrame.setDefaultButton(null);
       AboutDialog.this.aboutFrame.removeWindowListener(this);
-      FantastleReboot.getBagOStuff().restoreFormerMode();
+      Modes.restore();
     }
 
     @Override

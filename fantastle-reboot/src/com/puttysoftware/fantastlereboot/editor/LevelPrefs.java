@@ -37,6 +37,7 @@ import javax.swing.JSlider;
 import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.Modes;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 
@@ -78,7 +79,7 @@ public class LevelPrefs {
     LevelPrefs.prefFrame.addWindowListener(LevelPrefs.handler);
     LevelPrefs.prefFrame.pack();
     final BagOStuff app = FantastleReboot.getBagOStuff();
-    app.setInLevelPrefs();
+    Modes.setInLevelPrefs();
     app.getMenuManager().setPrefMenus();
   }
 
@@ -90,7 +91,7 @@ public class LevelPrefs {
     LevelPrefs.prefFrame.setDefaultButton(null);
     LevelPrefs.prefFrame.removeWindowListener(LevelPrefs.handler);
     LevelPrefs.savePrefs();
-    FantastleReboot.getBagOStuff().restoreFormerMode();
+    Modes.restore();
   }
 
   private static void loadPrefs() {

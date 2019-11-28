@@ -28,6 +28,7 @@ import javax.swing.border.EmptyBorder;
 import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.Modes;
 import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -57,7 +58,7 @@ public class GUIManager {
     this.guiFrame.attachContent(this.guiPane);
     this.guiFrame.pack();
     final BagOStuff app = FantastleReboot.getBagOStuff();
-    app.setInGUI();
+    Modes.setInGUI();
     app.getMenuManager().setMainMenus();
     app.getMenuManager().checkFlags();
   }

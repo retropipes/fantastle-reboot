@@ -8,6 +8,7 @@ package com.puttysoftware.fantastlereboot.game;
 import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.Modes;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
@@ -315,7 +316,7 @@ public final class Game {
       final int py = m.getPlayerLocationY();
       final int pz = m.getPlayerLocationZ();
       m.updateExploredSquares(px, py, pz);
-      bag.setInGame();
+      Modes.setInGame();
       Game.playDungeonMusic();
       Game.redrawMaze();
     } else {
@@ -432,7 +433,6 @@ public final class Game {
   }
 
   public static void useItemHandler(final int x, final int y) {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
     final Maze m = MazeManager.getMaze();
     final int xOffset = GameView.getViewingWindowLocationX()
         - GameView.getOffsetFactorX();
@@ -443,7 +443,7 @@ public final class Game {
     final int destY = y / ImageConstants.SIZE
         + GameView.getViewingWindowLocationY() + xOffset - yOffset;
     final int destZ = m.getPlayerLocationZ();
-    if (Game.usingAnItem() && app.getMode() == BagOStuff.STATUS_GAME) {
+    if (Game.usingAnItem() && Modes.inGame()) {
       if (m.cellRangeCheck(destX, destY, destZ)) {
         final FantastleObjectModel target = m.getCell(destX, destY, destZ,
             Layers.OBJECT);

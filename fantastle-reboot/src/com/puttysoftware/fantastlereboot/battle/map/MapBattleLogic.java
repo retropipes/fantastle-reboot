@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.Modes;
 import com.puttysoftware.fantastlereboot.ai.AIContext;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
 import com.puttysoftware.fantastlereboot.ai.map.AutoMapAI;
@@ -92,9 +93,8 @@ public class MapBattleLogic extends Battle {
     this.by = y;
     Runnable task = () -> {
       // Initialize Battle
-      final BagOStuff bag = FantastleReboot.getBagOStuff();
       Game.hideOutput();
-      bag.setInBattle();
+      Modes.setInBattle();
       this.alliesTookDamage = false;
       this.enemiesTookDamage = false;
       final Maze bMaze = Maze.getTemporaryBattleCopy();
@@ -161,15 +161,14 @@ public class MapBattleLogic extends Battle {
   @Override
   public void battleDone() {
     Runnable task = () -> {
-      if (FantastleReboot.getBagOStuff().inBattle()) {
-        final BagOStuff bag = FantastleReboot.getBagOStuff();
+      if (Modes.inBattle()) {
         // Leave Battle
         this.hideBattle();
         // Post-battle stuff
         final Maze m = MazeManager.getMaze();
         m.postBattle(this.bx, this.by);
         // Return to whence we came
-        bag.restoreFormerMode();
+        Modes.restore();
         Game.redrawMaze();
       }
     };
@@ -212,7 +211,7 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public void executeNextAIAction() {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return;
     }
@@ -274,7 +273,7 @@ public class MapBattleLogic extends Battle {
   }
 
   private void executeAutoAI(final BattleCharacter acting) {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return;
     }
@@ -297,7 +296,7 @@ public class MapBattleLogic extends Battle {
 
   private void displayRoundResults(final Creature theEnemy,
       final Creature active, final AbstractDamageEngine activeDE) {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return;
     }
@@ -451,7 +450,7 @@ public class MapBattleLogic extends Battle {
   }
 
   private boolean setNextActive(final boolean isNewRound) {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return false;
     }
@@ -519,7 +518,7 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public void updatePosition(final int x, final int y) {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return;
     }
@@ -536,7 +535,7 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public void fireArrow(final int x, final int y) {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return;
     }
@@ -905,7 +904,7 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public void showBattle() {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return;
     }
@@ -914,7 +913,7 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public void hideBattle() {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return;
     }
@@ -923,7 +922,7 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public boolean castSpell() {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return false;
     }
@@ -981,7 +980,7 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public boolean useItem() {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return false;
     }
@@ -1039,7 +1038,7 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public boolean steal() {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return false;
     }
@@ -1109,7 +1108,7 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public boolean drain() {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return false;
     }
@@ -1205,7 +1204,7 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public void endTurn() {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return;
     }
@@ -1232,7 +1231,7 @@ public class MapBattleLogic extends Battle {
   }
 
   private void redrawBattle() {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return;
     }
@@ -1242,7 +1241,7 @@ public class MapBattleLogic extends Battle {
   @Override
   public void redrawOneBattleSquare(final int x, final int y,
       final FantastleObjectModel obj3) {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return;
     }
@@ -1271,7 +1270,7 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public void maintainEffects(final boolean player) {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return;
     }
@@ -1336,7 +1335,7 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public void resetGUI() {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return;
     }
@@ -1346,7 +1345,7 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public boolean isWaitingForAI() {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return false;
     }
@@ -1354,7 +1353,7 @@ public class MapBattleLogic extends Battle {
   }
 
   private void waitForAI() {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return;
     }
@@ -1362,7 +1361,7 @@ public class MapBattleLogic extends Battle {
   }
 
   private void stopWaitingForAI() {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return;
     }
@@ -1381,7 +1380,7 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public boolean doPlayerActions(final int action) {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return false;
     }
@@ -1407,7 +1406,7 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public void doResult(BattleResults result) {
-    if (!FantastleReboot.getBagOStuff().inBattle()) {
+    if (!Modes.inBattle()) {
       // Abort
       return;
     }

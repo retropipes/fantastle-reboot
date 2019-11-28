@@ -8,8 +8,8 @@ package com.puttysoftware.fantastlereboot.files;
 import javax.swing.JOptionPane;
 
 import com.puttysoftware.diane.gui.CommonDialogs;
-import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.Modes;
 
 public final class FileStateManager {
   // Fields
@@ -24,9 +24,7 @@ public final class FileStateManager {
   // Methods
   public static int showSaveDialog() {
     String type, source;
-    final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final int mode = bag.getMode();
-    if (mode == BagOStuff.STATUS_GAME) {
+    if (Modes.inGame()) {
       type = "game";
       source = "FantastleReboot";
     } else {

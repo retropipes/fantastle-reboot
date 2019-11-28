@@ -38,6 +38,7 @@ import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.Modes;
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
 import com.puttysoftware.fantastlereboot.files.MazeFileManager;
 import com.puttysoftware.fantastlereboot.game.Game;
@@ -351,7 +352,7 @@ public class Editor {
   public static void editMaze() {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
     if (FileStateManager.getLoaded()) {
-      bag.setInEditor();
+      Modes.setInEditor();
       // Reset game state
       Game.resetGameState();
       // Create the managers

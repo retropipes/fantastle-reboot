@@ -23,7 +23,6 @@ import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.battle.map.MapBattleLogic;
-import com.puttysoftware.fantastlereboot.editor.Editor;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.AboutDialog;
 import com.puttysoftware.fantastlereboot.gui.GUIManager;
@@ -45,8 +44,6 @@ public class BagOStuff {
   private Shop weapons, armor, healer, bank, regenerator, spells, items, socks,
       enhancements, faiths;
   private MapBattleLogic mapTurnBattle;
-  private int currentMode;
-  private int formerMode;
   private static final String UPDATE_SITE = "https://puttysoftware.com/updater/fantastle-reboot/";
   private static final String NEW_VERSION_SITE = "https://puttysoftware.github.com/fantastle-reboot/";
   private static final String PRODUCT_NAME = "FantastleReboot";
@@ -63,22 +60,10 @@ public class BagOStuff {
   private static final int VERSION_BUGFIX = 0;
   private static final int VERSION_CODE = ProductData.CODE_ALPHA;
   private static final int VERSION_PRERELEASE = 0;
-  public static final int STATUS_GUI = 0;
-  public static final int STATUS_GAME = 1;
-  public static final int STATUS_EDITOR = 2;
-  public static final int STATUS_PREFS = 3;
-  public static final int STATUS_BATTLE = 4;
-  public static final int STATUS_ABOUT = 5;
-  public static final int STATUS_HELP = 6;
-  public static final int STATUS_MAZE_PREFS = 7;
-  public static final int STATUS_LEVEL_PREFS = 8;
-  public static final int STATUS_NULL = 9;
 
   // Constructors
   public BagOStuff() {
     this.combatItems = new CombatItemList();
-    this.currentMode = BagOStuff.STATUS_NULL;
-    this.formerMode = BagOStuff.STATUS_NULL;
   }
 
   // Methods
@@ -97,63 +82,6 @@ public class BagOStuff {
     this.socks = new Shop(ShopTypes.SOCKS);
     this.enhancements = new Shop(ShopTypes.ENHANCEMENTS);
     this.faiths = new Shop(ShopTypes.FAITH_POWERS);
-  }
-
-  public void setInGUI() {
-    this.formerMode = this.currentMode;
-    this.currentMode = BagOStuff.STATUS_GUI;
-  }
-
-  public void setInPrefs() {
-    this.formerMode = this.currentMode;
-    this.currentMode = BagOStuff.STATUS_PREFS;
-  }
-
-  public void setInGame() {
-    this.formerMode = this.currentMode;
-    this.currentMode = BagOStuff.STATUS_GAME;
-  }
-
-  public void setInEditor() {
-    this.formerMode = this.currentMode;
-    this.currentMode = BagOStuff.STATUS_EDITOR;
-  }
-
-  public void setInBattle() {
-    this.formerMode = this.currentMode;
-    this.currentMode = BagOStuff.STATUS_BATTLE;
-  }
-
-  public void setInAbout() {
-    this.formerMode = this.currentMode;
-    this.currentMode = BagOStuff.STATUS_ABOUT;
-  }
-
-  public void setInHelp() {
-    this.formerMode = this.currentMode;
-    this.currentMode = BagOStuff.STATUS_HELP;
-  }
-
-  public void setInMazePrefs() {
-    this.formerMode = this.currentMode;
-    this.currentMode = BagOStuff.STATUS_MAZE_PREFS;
-  }
-
-  public void setInLevelPrefs() {
-    this.formerMode = this.currentMode;
-    this.currentMode = BagOStuff.STATUS_LEVEL_PREFS;
-  }
-
-  public boolean inBattle() {
-    return this.currentMode == BagOStuff.STATUS_BATTLE;
-  }
-
-  public int getMode() {
-    return this.currentMode;
-  }
-
-  public int getFormerMode() {
-    return this.formerMode;
   }
 
   public MenuManager getMenuManager() {
@@ -256,39 +184,10 @@ public class BagOStuff {
     return BagOStuff.pd.getVersionString();
   }
 
-  public void restoreFormerMode() {
-    this.currentMode = this.formerMode;
-    switch (this.currentMode) {
-    case STATUS_GUI:
-      this.guiMgr.showGUI();
-      break;
-    case STATUS_GAME:
-      Game.playDungeonMusic();
-      break;
-    case STATUS_EDITOR:
-      Editor.showOutput();
-      break;
-    case STATUS_PREFS:
-      Prefs.showPrefs();
-      break;
-    case STATUS_BATTLE:
-      this.getBattle().showBattle();
-      break;
-    case STATUS_ABOUT:
-      this.about.showAboutDialog();
-      break;
-    case STATUS_HELP:
-      this.gHelpMgr.showHelp();
-      break;
-    default:
-      break;
-    }
-  }
-
   public void showMessage(final String msg) {
-    if (this.currentMode == BagOStuff.STATUS_GAME) {
+    if (Modes.inGame()) {
       Game.setStatusMessage(msg);
-    } else if (this.currentMode == BagOStuff.STATUS_BATTLE) {
+    } else if (Modes.inBattle()) {
       this.getBattle().setStatusMessage(msg);
     } else {
       CommonDialogs.showDialog(msg);

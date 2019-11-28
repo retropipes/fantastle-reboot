@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.Modes;
 import com.puttysoftware.fantastlereboot.files.MazeVersions;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
@@ -122,7 +123,7 @@ final class LayeredTower implements Cloneable {
     if (this.hasMonster(px, py, pz)) {
       // ... and we aren't already in battle...
       final BagOStuff bag = FantastleReboot.getBagOStuff();
-      if (!bag.inBattle()) {
+      if (!Modes.inBattle()) {
         // ... start a battle with that monster!
         Game.stopMovement();
         bag.getBattle().doBattle(px, py);

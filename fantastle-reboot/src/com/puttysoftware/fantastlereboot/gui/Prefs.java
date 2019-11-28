@@ -45,6 +45,7 @@ import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.Modes;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.files.CommonPaths;
@@ -319,7 +320,7 @@ public class Prefs {
     Prefs.prefFrame.addWindowListener(Prefs.handler);
     Prefs.prefFrame.pack();
     final BagOStuff app = FantastleReboot.getBagOStuff();
-    app.setInPrefs();
+    Modes.setInPrefs();
     app.getMenuManager().setPrefMenus();
   }
 
@@ -330,8 +331,7 @@ public class Prefs {
     }
     Prefs.prefFrame.setDefaultButton(null);
     Prefs.prefFrame.removeWindowListener(Prefs.handler);
-    Prefs.fileMgr.writePreferencesFile();
-    FantastleReboot.getBagOStuff().restoreFormerMode();
+    Modes.restore();
   }
 
   public static void writePrefs() {
@@ -871,9 +871,12 @@ public class Prefs {
           final JRadioButton radio = (JRadioButton) o;
           if (radio.equals(Prefs.generatorPureRandom)) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-              CommonDialogs.showTitledDialog(
-                  "Pure randomness can produce unsolvable levels! You have been warned!",
-                  "WARNING!");
+              BagOStuff bag = FantastleReboot.getBagOStuff();
+              if (bag != null && Modes.inPrefs()) {
+                CommonDialogs.showTitledDialog(
+                    "Pure randomness can produce unsolvable levels! You have been warned!",
+                    "WARNING!");
+              }
               // Prefs.prefTabPane.setComponentAt(Prefs.TAB_TWEAKS,
               // Prefs.pureRandomPane);
             }

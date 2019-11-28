@@ -37,6 +37,7 @@ import javax.swing.JSlider;
 import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.Modes;
 import com.puttysoftware.fantastlereboot.maze.Maze;
 import com.puttysoftware.fantastlereboot.maze.MazeManager;
 
@@ -78,7 +79,7 @@ public class MazePrefs {
     MazePrefs.prefFrame.addWindowListener(MazePrefs.handler);
     MazePrefs.prefFrame.pack();
     final BagOStuff app = FantastleReboot.getBagOStuff();
-    app.setInMazePrefs();
+    Modes.setInMazePrefs();
     app.getMenuManager().setPrefMenus();
   }
 
@@ -90,7 +91,7 @@ public class MazePrefs {
     MazePrefs.prefFrame.setDefaultButton(null);
     MazePrefs.prefFrame.removeWindowListener(MazePrefs.handler);
     MazePrefs.savePrefs();
-    FantastleReboot.getBagOStuff().restoreFormerMode();
+    Modes.restore();
   }
 
   private static void loadPrefs() {

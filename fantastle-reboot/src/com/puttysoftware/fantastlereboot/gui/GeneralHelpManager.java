@@ -25,7 +25,7 @@ import java.awt.event.WindowListener;
 import javax.swing.JPanel;
 
 import com.puttysoftware.diane.gui.MainWindow;
-import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.Modes;
 import com.puttysoftware.fantastlereboot.loaders.HelpLoader;
 import com.puttysoftware.help.HTMLHelpViewer;
 
@@ -49,7 +49,7 @@ public class GeneralHelpManager {
 
   // Methods
   public void showHelp() {
-    FantastleReboot.getBagOStuff().setInHelp();
+    Modes.setInHelp();
     this.helpFrame = MainWindow.getOutputFrame();
     this.helpFrame.setTitle("Fantastle Help");
     this.helpFrame.attachContent(this.helpContent);
@@ -59,7 +59,7 @@ public class GeneralHelpManager {
 
   public void hideHelp() {
     this.helpFrame.removeWindowListener(this.handler);
-    FantastleReboot.getBagOStuff().restoreFormerMode();
+    Modes.restore();
   }
 
   public void updateHelpSize() {

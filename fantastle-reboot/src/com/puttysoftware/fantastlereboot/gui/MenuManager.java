@@ -32,6 +32,7 @@ import javax.swing.KeyStroke;
 import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.Modes;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.editor.Editor;
 import com.puttysoftware.fantastlereboot.editor.LevelPrefs;
@@ -354,8 +355,7 @@ public class MenuManager {
   }
 
   private void setMenusLoadedOn() {
-    final BagOStuff app = FantastleReboot.getBagOStuff();
-    if (app.getMode() == BagOStuff.STATUS_GUI) {
+    if (Modes.inGUI()) {
       this.fileClose.setEnabled(false);
       this.fileSaveAs.setEnabled(false);
       this.playPlay.setEnabled(true);
@@ -669,9 +669,9 @@ public class MenuManager {
           FileStateManager.setLoaded(loaded);
         } else if (cmd.equals("Close")) {
           // Close the window
-          if (app.getMode() == BagOStuff.STATUS_EDITOR) {
+          if (Modes.inEditor()) {
             Editor.handleCloseWindow();
-          } else if (app.getMode() == BagOStuff.STATUS_GAME) {
+          } else if (Modes.inGame()) {
             boolean saved = true;
             int status = 0;
             if (FileStateManager.getDirty()) {
