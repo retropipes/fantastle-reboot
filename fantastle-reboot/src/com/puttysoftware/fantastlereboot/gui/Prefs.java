@@ -446,6 +446,7 @@ public class Prefs {
     Prefs.lastDirOpen = "";
     Prefs.lastDirSave = "";
     Prefs.lastFilterUsed = Prefs.FILTER_MAZE_V5;
+    Prefs.mazeGenerator = Prefs.GENERATOR_CONSTRAINED_RANDOM;
     Prefs.minRandomRoomSizeXIndex = Prefs.DEFAULT_ROOM_SIZE;
     Prefs.maxRandomRoomSizeXIndex = Prefs.DEFAULT_ROOM_SIZE;
     Prefs.minRandomRoomSizeYIndex = Prefs.DEFAULT_ROOM_SIZE;
@@ -454,6 +455,7 @@ public class Prefs {
     Prefs.maxRandomRoomSizeX.setValue(Prefs.DEFAULT_ROOM_SIZE);
     Prefs.minRandomRoomSizeY.setValue(Prefs.DEFAULT_ROOM_SIZE);
     Prefs.maxRandomRoomSizeY.setValue(Prefs.DEFAULT_ROOM_SIZE);
+    Prefs.loadPrefs();
   }
 
   static void handleExport() {
