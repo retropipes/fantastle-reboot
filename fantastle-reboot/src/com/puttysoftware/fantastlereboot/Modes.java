@@ -121,6 +121,7 @@ public class Modes {
       Game.playDungeonMusic();
       break;
     case EDITOR:
+      bag.getMenuManager().setEditorMenus();
       Editor.showOutput();
       break;
     case PREFS:

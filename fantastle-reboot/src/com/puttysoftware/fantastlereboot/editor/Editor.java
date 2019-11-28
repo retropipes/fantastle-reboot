@@ -178,6 +178,7 @@ public class Editor {
     } else {
       Editor.redrawGroundAndObjects();
     }
+    Editor.outputFrame.pack();
   }
 
   private static void redrawGround() {
@@ -188,7 +189,6 @@ public class Editor {
     Editor.outputFrame.pack();
     Editor.outputFrame.setTitle(
         "Editor (Ground Layer) - Floor " + (z + 1) + " Level " + (w + 1));
-    Editor.showOutput();
   }
 
   private static void redrawGroundAndObjects() {
@@ -199,7 +199,6 @@ public class Editor {
     Editor.outputFrame.pack();
     Editor.outputFrame.setTitle(
         "Editor (Object Layer) - Floor " + (z + 1) + " Level " + (w + 1));
-    Editor.showOutput();
   }
 
   public static void editObject(final int x, final int y) {
@@ -533,6 +532,8 @@ public class Editor {
     Editor.outputFrame = MainWindow.getOutputFrame();
     Editor.outputFrame.attachContent(Editor.borderPane);
     Editor.outputFrame.addWindowListener(Editor.mhandler);
+    Editor.checkMenus();
+    Editor.redrawEditor();
   }
 
   public static void hideOutput() {
