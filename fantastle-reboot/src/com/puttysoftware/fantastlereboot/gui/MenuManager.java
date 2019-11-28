@@ -34,6 +34,8 @@ import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.editor.Editor;
+import com.puttysoftware.fantastlereboot.editor.LevelPrefs;
+import com.puttysoftware.fantastlereboot.editor.MazePrefs;
 import com.puttysoftware.fantastlereboot.files.CharacterRegistration;
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
 import com.puttysoftware.fantastlereboot.files.MazeFileManager;
@@ -54,7 +56,8 @@ public class MenuManager {
       editCopyLevel, editPasteLevel, editInsertLevelFromClipboard,
       editClearHistory, editGoTo, editUpOneFloor, editDownOneFloor,
       editUpOneLevel, editDownOneLevel, editAddLevel, editRemoveLevel,
-      editResizeLevel, editToggleLayer, editMazePreferences;
+      editResizeLevel, editToggleLayer, editMazePreferences,
+      editLevelPreferences;
   private JMenuItem playNewGame, playPlay, playEdit, playRegisterCharacter,
       playUnregisterCharacter, playRemoveCharacter;
   private JMenuItem gameEquipment, gameInventory, gameUse, gameReset,
@@ -110,6 +113,7 @@ public class MenuManager {
     this.editResizeLevel.setEnabled(false);
     this.editToggleLayer.setEnabled(false);
     this.editMazePreferences.setEnabled(false);
+    this.editLevelPreferences.setEnabled(false);
     this.gameEquipment.setEnabled(true);
     this.gameInventory.setEnabled(true);
     this.gameUse.setEnabled(true);
@@ -135,6 +139,7 @@ public class MenuManager {
     this.editResizeLevel.setEnabled(true);
     this.editToggleLayer.setEnabled(true);
     this.editMazePreferences.setEnabled(true);
+    this.editLevelPreferences.setEnabled(true);
     this.gameEquipment.setEnabled(false);
     this.gameInventory.setEnabled(false);
     this.gameUse.setEnabled(false);
@@ -172,6 +177,7 @@ public class MenuManager {
     this.editResizeLevel.setEnabled(false);
     this.editToggleLayer.setEnabled(false);
     this.editMazePreferences.setEnabled(false);
+    this.editLevelPreferences.setEnabled(false);
     this.gameEquipment.setEnabled(false);
     this.gameInventory.setEnabled(false);
     this.gameUse.setEnabled(false);
@@ -217,6 +223,7 @@ public class MenuManager {
     this.editResizeLevel.setEnabled(false);
     this.editToggleLayer.setEnabled(false);
     this.editMazePreferences.setEnabled(false);
+    this.editLevelPreferences.setEnabled(false);
     this.gameEquipment.setEnabled(false);
     this.gameInventory.setEnabled(false);
     this.gameUse.setEnabled(false);
@@ -465,6 +472,7 @@ public class MenuManager {
     this.editToggleLayer = new JMenuItem("Toggle Layer");
     this.editToggleLayer.setAccelerator(this.editToggleLayerAccel);
     this.editMazePreferences = new JMenuItem("Maze Preferences...");
+    this.editLevelPreferences = new JMenuItem("Level Preferences...");
     this.playNewGame = new JMenuItem("New Game");
     this.playNewGame.setAccelerator(this.gameNewGameAccel);
     this.playPlay = new JMenuItem("Play");
@@ -516,6 +524,7 @@ public class MenuManager {
     this.editResizeLevel.addActionListener(this.handler);
     this.editToggleLayer.addActionListener(this.handler);
     this.editMazePreferences.addActionListener(this.handler);
+    this.editLevelPreferences.addActionListener(this.handler);
     this.playPlay.addActionListener(this.handler);
     this.playEdit.addActionListener(this.handler);
     this.gameEquipment.addActionListener(this.handler);
@@ -564,6 +573,7 @@ public class MenuManager {
     this.editMenu.add(this.editResizeLevel);
     this.editMenu.add(this.editToggleLayer);
     this.editMenu.add(this.editMazePreferences);
+    this.editMenu.add(this.editLevelPreferences);
     this.playMenu.add(this.playNewGame);
     this.playMenu.add(this.playPlay);
     this.playMenu.add(this.playEdit);
@@ -618,6 +628,7 @@ public class MenuManager {
     this.editResizeLevel.setEnabled(false);
     this.editToggleLayer.setEnabled(false);
     this.editMazePreferences.setEnabled(false);
+    this.editLevelPreferences.setEnabled(false);
     this.playNewGame.setEnabled(false);
     this.playPlay.setEnabled(false);
     this.playEdit.setEnabled(false);
@@ -724,6 +735,12 @@ public class MenuManager {
         } else if (cmd.equals("Toggle Layer")) {
           // Toggle current layer
           Editor.toggleLayer();
+        } else if (cmd.equals("Maze Preferences...")) {
+          // Set maze preferences
+          MazePrefs.showPrefs();
+        } else if (cmd.equals("Level Preferences...")) {
+          // Set level preferences
+          LevelPrefs.showPrefs();
         } else if (cmd.equals("New Game")) {
           // Start a new game
           final boolean proceed = Game.newGame();
