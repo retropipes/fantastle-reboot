@@ -334,7 +334,7 @@ final class LayeredTower implements Cloneable {
     if (this.visionMode == VisionModes.NONE) {
       return true;
     } else {
-      boolean result = false;
+      boolean result = this.isSquareVisibleFixedRadius(x1, y1, x2, y2);
       if (this.areCoordsInBounds(x1, y1, x2, y2)) {
         if (result && (this.visionMode
             | VisionModes.FIELD_OF_VIEW) == this.visionMode) {
@@ -342,9 +342,6 @@ final class LayeredTower implements Cloneable {
         }
         if ((this.visionMode | VisionModes.EXPLORE) == this.visionMode) {
           result = result && this.isSquareVisibleExplore(x2, y2);
-        } else if ((this.visionMode
-            | VisionModes.FIXED_RADIUS) == this.visionMode) {
-          result = result && this.isSquareVisibleFixedRadius(x1, y1, x2, y2);
         }
       }
       return result;
