@@ -57,7 +57,7 @@ class GameDraw extends Thread {
         }
       }
     } catch (final Throwable t) {
-      FantastleReboot.logError(t);
+      FantastleReboot.exception(t);
     }
   }
 

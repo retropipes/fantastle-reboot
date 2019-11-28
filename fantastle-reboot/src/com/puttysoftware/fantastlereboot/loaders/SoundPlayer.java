@@ -27,7 +27,7 @@ public class SoundPlayer {
         SoundPlayer.fileExtensions.load(SoundPlayer.class.getResourceAsStream(
             "/assets/data/extensions/extensions.properties"));
       } catch (final IOException e) {
-        FantastleReboot.logError(e);
+        FantastleReboot.exception(e);
       }
     }
     final String soundExt = SoundPlayer.fileExtensions.getProperty("sounds");
@@ -46,9 +46,8 @@ public class SoundPlayer {
     if (Prefs.isSoundGroupEnabled(group)) {
       if (sound != null && sound != SoundIndex._NONE) {
         final String filename = SoundPlayer.getSoundFilename(sound);
-        SoundLoader.play(
-            SoundPlayer.class.getResource("/assets/sounds/" + filename),
-            FantastleReboot.getErrorHandler());
+        SoundLoader
+            .play(SoundPlayer.class.getResource("/assets/sounds/" + filename));
       }
     }
   }

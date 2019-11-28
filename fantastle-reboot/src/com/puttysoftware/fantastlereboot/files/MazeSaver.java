@@ -44,7 +44,7 @@ public class MazeSaver extends Thread {
           mazeFile);
       bag.showMessage(sg + " saved.");
     } catch (final Exception ex) {
-      FantastleReboot.logError(ex);
+      FantastleReboot.exception(ex);
     }
     MazeFileManager.handleDeferredSuccess(success, false, null);
   }

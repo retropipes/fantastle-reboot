@@ -806,7 +806,7 @@ public class MenuManager {
         }
         MenuManager.this.checkFlags();
       } catch (final Exception ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
   }

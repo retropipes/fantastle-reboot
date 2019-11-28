@@ -103,7 +103,7 @@ public class MapBattleArrowTask extends Thread {
       SoundPlayer.playSound(SoundIndex.ARROW_DIE, SoundGroup.BATTLE);
       app.getBattle().arrowDone(hit);
     } catch (final Throwable t) {
-      FantastleReboot.logError(t);
+      FantastleReboot.exception(t);
     }
   }
 }

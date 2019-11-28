@@ -698,7 +698,7 @@ public class Editor {
         Editor.exitEditor();
       }
     } catch (final Exception ex) {
-      FantastleReboot.logError(ex);
+      FantastleReboot.exception(ex);
     }
   }
 
@@ -729,7 +729,7 @@ public class Editor {
           break;
         }
       } catch (final Exception ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
 
@@ -755,7 +755,7 @@ public class Editor {
           Editor.editObject(x, y);
         }
       } catch (final Exception ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
 

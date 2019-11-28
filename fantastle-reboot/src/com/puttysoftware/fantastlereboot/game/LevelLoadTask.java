@@ -47,7 +47,7 @@ public class LevelLoadTask extends Thread {
       Game.showOutput();
       Game.redrawMaze();
     } catch (final Exception ex) {
-      FantastleReboot.logError(ex);
+      FantastleReboot.exception(ex);
     }
   }
 }

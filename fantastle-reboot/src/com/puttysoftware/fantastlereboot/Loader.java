@@ -104,7 +104,7 @@ class Loader extends Thread {
       bag.playLogoSound();
       bag.getGUIManager().showGUI();
     } catch (final Throwable t) {
-      FantastleReboot.logError(t);
+      FantastleReboot.exception(t);
     }
   }
 

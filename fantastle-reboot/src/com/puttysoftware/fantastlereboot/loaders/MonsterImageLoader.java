@@ -56,7 +56,7 @@ public class MonsterImageLoader {
       }
       return result;
     } catch (final IOException ie) {
-      FantastleReboot.logError(ie);
+      FantastleReboot.exception(ie);
       return null;
     }
   }
@@ -70,7 +70,7 @@ public class MonsterImageLoader {
             .load(MonsterImageLoader.class.getResourceAsStream(
                 "/assets/data/extensions/extensions.properties"));
       } catch (final IOException e) {
-        FantastleReboot.logError(e);
+        FantastleReboot.exception(e);
       }
     }
     final String imageExt = MonsterImageLoader.fileExtensions

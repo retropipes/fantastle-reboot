@@ -22,16 +22,13 @@ import java.awt.desktop.QuitStrategy;
 
 import javax.swing.JMenuBar;
 
+import com.puttysoftware.diane.Diane;
 import com.puttysoftware.diane.gui.CommonDialogs;
-import com.puttysoftware.errorlogger.ErrorLogger;
-import com.puttysoftware.fantastlereboot.assets.SoundGroup;
-import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.gui.MenuManager;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.gui.PrefsLauncher;
-import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
 import com.puttysoftware.integration.NativeIntegration;
 
@@ -39,15 +36,7 @@ public class FantastleReboot {
   // Constants
   private static BagOStuff bag;
   private static final String PROGRAM_NAME = "Fantastle Reboot";
-  private static final String PROGRAM_LOG_NAME = "FantastleReboot";
-  private static final String ERROR_MESSAGE = "An unrecoverable error has occurred.\n"
-      + "The details have been recorded.\n" + "The program will now exit.";
-  private static final String ERROR_TITLE = "FATAL ERROR";
-  private static final String WARNING_MESSAGE = "Something has gone wrong.\n"
-      + "The details have been recorded.";
-  private static final String WARNING_TITLE = "Warning";
-  private static final ErrorLogger debug = new ErrorLogger(
-      FantastleReboot.PROGRAM_LOG_NAME);
+  private static final GameErrorHandler debug = new GameErrorHandler();
   private static final NativeIntegration NATIVITY = new NativeIntegration();
   private static final int BATTLE_MAZE_SIZE = 16;
   private static MenuManager menus;
@@ -58,29 +47,13 @@ public class FantastleReboot {
     return FantastleReboot.bag;
   }
 
-  public static ErrorLogger getErrorHandler() {
-    return FantastleReboot.debug;
+  public static void exception(final Throwable t) {
+    FantastleReboot.debug.handle(t);
   }
 
-  public static void logError(final Throwable t) {
-    SoundPlayer.playSound(SoundIndex.FATAL, SoundGroup.USER_INTERFACE);
-    CommonDialogs.showErrorDialog(FantastleReboot.ERROR_MESSAGE,
-        FantastleReboot.ERROR_TITLE);
-    FantastleReboot.debug.logError(t);
-  }
-
-  public static void logWarning(final Throwable t) {
-    SoundPlayer.playSound(SoundIndex.ALERT, SoundGroup.USER_INTERFACE);
-    CommonDialogs.showErrorDialog(FantastleReboot.WARNING_MESSAGE,
-        FantastleReboot.WARNING_TITLE);
-    FantastleReboot.debug.logNonFatalError(t);
-  }
-
-  public static void logWarningWithMessage(final Throwable t,
+  public static void exceptionWithMessage(final Throwable t,
       final String message) {
-    SoundPlayer.playSound(SoundIndex.ALERT, SoundGroup.USER_INTERFACE);
-    CommonDialogs.showErrorDialog(message, FantastleReboot.WARNING_TITLE);
-    FantastleReboot.debug.logNonFatalError(t);
+    FantastleReboot.debug.handleWithMessage(t, message);
   }
 
   public static int getBattleMazeSize() {
@@ -103,6 +76,8 @@ public class FantastleReboot {
   }
 
   public static void main(final String[] args) {
+    // Install error handler
+    Diane.installErrorHandler(FantastleReboot.debug);
     try {
       // Early OS Integration
       FantastleReboot.NATIVITY.configureLookAndFeel();
@@ -118,7 +93,7 @@ public class FantastleReboot {
       // Load stuff
       new Loader().start();
     } catch (final Throwable t) {
-      FantastleReboot.logError(t);
+      FantastleReboot.exception(t);
     }
   }
 }

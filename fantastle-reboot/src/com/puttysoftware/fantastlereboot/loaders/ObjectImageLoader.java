@@ -37,8 +37,7 @@ public class ObjectImageLoader {
           .getProperty("images");
       final String name = "/assets/images/objects/"
           + ObjectImageLoader.allFilenames[image.ordinal()] + imageExt;
-      return ImageLoader.load(name, ObjectImageLoader.class.getResource(name),
-          FantastleReboot.getErrorHandler());
+      return ImageLoader.load(name, ObjectImageLoader.class.getResource(name));
     }
     return null;
   }
@@ -51,15 +50,14 @@ public class ObjectImageLoader {
           .load(ObjectImageLoader.class.getResourceAsStream(
               "/assets/data/extensions/extensions.properties"));
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
     }
     final String imageExt = ObjectImageLoader.fileExtensions
         .getProperty("images");
     for (int i = 0; i <= ObjectImageLoader.MAX_INDEX; i++) {
       final String name = "/assets/images/objects/"
           + ObjectImageLoader.allFilenames[i] + imageExt;
-      ImageLoader.load(name, ObjectImageLoader.class.getResource(name),
-          FantastleReboot.getErrorHandler());
+      ImageLoader.load(name, ObjectImageLoader.class.getResource(name));
     }
   }
 }

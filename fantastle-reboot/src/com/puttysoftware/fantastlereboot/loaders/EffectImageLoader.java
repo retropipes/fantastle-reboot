@@ -37,8 +37,7 @@ public class EffectImageLoader {
           .getProperty("images");
       final String name = "/assets/images/effects/"
           + EffectImageLoader.allFilenames[image.ordinal()] + imageExt;
-      return ImageLoader.load(name, EffectImageLoader.class.getResource(name),
-          FantastleReboot.getErrorHandler());
+      return ImageLoader.load(name, EffectImageLoader.class.getResource(name));
     }
     return null;
   }
@@ -51,15 +50,14 @@ public class EffectImageLoader {
           .load(EffectImageLoader.class.getResourceAsStream(
               "/assets/data/extensions/extensions.properties"));
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
     }
     final String imageExt = EffectImageLoader.fileExtensions
         .getProperty("images");
     for (int i = 0; i <= EffectImageLoader.MAX_INDEX; i++) {
       final String name = "/assets/images/effects/"
           + EffectImageLoader.allFilenames[i] + imageExt;
-      ImageLoader.load(name, EffectImageLoader.class.getResource(name),
-          FantastleReboot.getErrorHandler());
+      ImageLoader.load(name, EffectImageLoader.class.getResource(name));
     }
   }
 }

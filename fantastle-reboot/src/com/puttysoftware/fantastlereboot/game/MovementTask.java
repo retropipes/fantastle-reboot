@@ -53,7 +53,7 @@ final class MovementTask extends Thread {
         }
       }
     } catch (final Throwable t) {
-      FantastleReboot.logError(t);
+      FantastleReboot.exception(t);
     }
   }
 

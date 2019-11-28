@@ -28,7 +28,7 @@ public class CharacterLoader {
       CharacterRegistration.autoremoveCharacter(name);
       return null;
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }

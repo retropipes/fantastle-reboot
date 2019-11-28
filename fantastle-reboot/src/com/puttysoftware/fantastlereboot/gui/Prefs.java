@@ -670,11 +670,11 @@ public class Prefs {
         Prefs.loadPrefs();
         return true;
       } catch (final PrefsVersionException pe) {
-        FantastleReboot.logWarningWithMessage(pe,
+        FantastleReboot.exceptionWithMessage(pe,
             "Incompatible preferences version found; using defaults.");
         return false;
       } catch (final Exception e) {
-        FantastleReboot.logWarningWithMessage(e,
+        FantastleReboot.exceptionWithMessage(e,
             "An error occurred while attempting to read the preferences file. Using defaults.");
         return false;
       }
@@ -713,7 +713,7 @@ public class Prefs {
         writer.writeInt(Prefs.minRandomRoomSizeYIndex);
         writer.writeInt(Prefs.maxRandomRoomSizeYIndex);
       } catch (final Throwable t) {
-        FantastleReboot.logWarningWithMessage(t,
+        FantastleReboot.exceptionWithMessage(t,
             "An error occurred while saving settings. Changes may have been lost. Details have been recorded.");
       }
     }
@@ -760,11 +760,11 @@ public class Prefs {
         Prefs.loadPrefs();
         return true;
       } catch (final PrefsVersionException pe) {
-        FantastleReboot.logWarningWithMessage(pe,
+        FantastleReboot.exceptionWithMessage(pe,
             "Incompatible preferences version found; aborting import.");
         return false;
       } catch (final Throwable e) {
-        FantastleReboot.logWarning(e);
+        FantastleReboot.exception(e);
         return false;
       }
     }
@@ -797,7 +797,7 @@ public class Prefs {
         writer.writeInt(Prefs.maxRandomRoomSizeYIndex);
         return true;
       } catch (final Throwable t) {
-        FantastleReboot.logWarningWithMessage(t,
+        FantastleReboot.exceptionWithMessage(t,
             "An error occurred while exporting settings. Export aborted. Details have been recorded.");
         return false;
       }
@@ -841,7 +841,7 @@ public class Prefs {
           Prefs.handleImport();
         }
       } catch (final Exception ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
 
@@ -909,7 +909,7 @@ public class Prefs {
           }
         }
       } catch (final Exception ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
 
@@ -923,7 +923,7 @@ public class Prefs {
       try {
         Prefs.hidePrefs();
       } catch (final Exception ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
 

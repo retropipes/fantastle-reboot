@@ -242,7 +242,7 @@ public class MazePrefs {
           MazePrefs.hidePrefs();
         }
       } catch (final Exception ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
 
@@ -331,7 +331,7 @@ public class MazePrefs {
           }
         }
       } catch (final Exception ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
 
@@ -345,7 +345,7 @@ public class MazePrefs {
       try {
         MazePrefs.hidePrefs();
       } catch (final Exception ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
 

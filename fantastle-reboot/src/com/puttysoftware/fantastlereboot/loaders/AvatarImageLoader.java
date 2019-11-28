@@ -40,15 +40,14 @@ public class AvatarImageLoader {
             .load(AvatarImageLoader.class.getResourceAsStream(
                 "/assets/data/extensions/extensions.properties"));
       } catch (final IOException e) {
-        FantastleReboot.logError(e);
+        FantastleReboot.exception(e);
       }
     }
     final String imageExt = AvatarImageLoader.fileExtensions
         .getProperty("images");
     final String name = "/assets/images/avatars/" + Integer.toString(familyID)
         + Integer.toString(skinID) + Integer.toString(hairID) + imageExt;
-    return ImageLoader.load(name, AvatarImageLoader.class.getResource(name),
-        FantastleReboot.getErrorHandler());
+    return ImageLoader.load(name, AvatarImageLoader.class.getResource(name));
   }
 
   public static void cacheAll() {
@@ -58,7 +57,7 @@ public class AvatarImageLoader {
           .load(AvatarImageLoader.class.getResourceAsStream(
               "/assets/data/extensions/extensions.properties"));
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
     }
     final String imageExt = AvatarImageLoader.fileExtensions
         .getProperty("images");
@@ -68,8 +67,7 @@ public class AvatarImageLoader {
           final String name = "/assets/images/avatars/"
               + Integer.toString(familyID) + Integer.toString(skinID)
               + Integer.toString(hairID) + imageExt;
-          ImageLoader.load(name, AvatarImageLoader.class.getResource(name),
-              FantastleReboot.getErrorHandler());
+          ImageLoader.load(name, AvatarImageLoader.class.getResource(name));
         }
       }
     }

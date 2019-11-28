@@ -325,7 +325,7 @@ public final class GameObjects {
       } catch (final NoSuchMethodException | InstantiationException
           | IllegalAccessException | IllegalArgumentException
           | InvocationTargetException | SecurityException ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
         return null;
       }
     }
@@ -352,7 +352,7 @@ public final class GameObjects {
       } catch (InstantiationException | IllegalAccessException
           | IllegalArgumentException | InvocationTargetException
           | NoSuchMethodException | SecurityException ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
     return null;
@@ -375,7 +375,7 @@ public final class GameObjects {
       } catch (InstantiationException | IllegalAccessException
           | IllegalArgumentException | InvocationTargetException
           | NoSuchMethodException | SecurityException ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
     return null;

@@ -103,7 +103,7 @@ public class GenerateTask extends Thread {
         Game.redrawMaze();
       }
     } catch (final Throwable t) {
-      FantastleReboot.logError(t);
+      FantastleReboot.exception(t);
     }
   }
 }

@@ -120,7 +120,7 @@ public class AboutDialog implements AboutHandler {
           ad.hideAboutDialog();
         }
       } catch (final Exception ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
 

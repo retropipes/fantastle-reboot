@@ -36,8 +36,7 @@ public class BossImageLoader {
     final BossImageIndex image = BossImageIndex.BOSS;
     final String name = "/assets/images/boss/"
         + BossImageLoader.allFilenames[image.ordinal()] + imageExt;
-    return ImageLoader.load(name, BossImageLoader.class.getResource(name),
-        FantastleReboot.getErrorHandler());
+    return ImageLoader.load(name, BossImageLoader.class.getResource(name));
   }
 
   public static void cacheAll() {
@@ -48,14 +47,13 @@ public class BossImageLoader {
           .load(BossImageLoader.class.getResourceAsStream(
               "/assets/data/extensions/extensions.properties"));
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
     }
     final String imageExt = BossImageLoader.fileExtensions
         .getProperty("images");
     final BossImageIndex image = BossImageIndex.BOSS;
     final String name = "/assets/images/boss/"
         + BossImageLoader.allFilenames[image.ordinal()] + imageExt;
-    ImageLoader.load(name, BossImageLoader.class.getResource(name),
-        FantastleReboot.getErrorHandler());
+    ImageLoader.load(name, BossImageLoader.class.getResource(name));
   }
 }

@@ -28,7 +28,7 @@ public class MusicPlayer {
         MusicPlayer.fileExtensions.load(MusicPlayer.class.getResourceAsStream(
             "/assets/data/extensions/extensions.properties"));
       } catch (final IOException e) {
-        FantastleReboot.logError(e);
+        FantastleReboot.exception(e);
       }
     }
     final String musicExt = MusicPlayer.fileExtensions.getProperty("music");
@@ -53,7 +53,7 @@ public class MusicPlayer {
         try {
           MusicPlayer.MUSIC.load("/assets/music/" + filename).play();
         } catch (final IOException e) {
-          FantastleReboot.logWarning(e);
+          FantastleReboot.exception(e);
         }
       }
     }

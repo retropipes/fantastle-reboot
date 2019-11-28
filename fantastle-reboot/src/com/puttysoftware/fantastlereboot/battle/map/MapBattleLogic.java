@@ -973,7 +973,7 @@ public class MapBattleLogic extends Battle {
     try {
       return this.dispatch.submit(task).get();
     } catch (InterruptedException | ExecutionException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return false;
     }
   }
@@ -1031,7 +1031,7 @@ public class MapBattleLogic extends Battle {
     try {
       return this.dispatch.submit(task).get();
     } catch (InterruptedException | ExecutionException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return false;
     }
   }
@@ -1101,7 +1101,7 @@ public class MapBattleLogic extends Battle {
     try {
       return this.dispatch.submit(task).get();
     } catch (InterruptedException | ExecutionException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return false;
     }
   }
@@ -1197,7 +1197,7 @@ public class MapBattleLogic extends Battle {
     try {
       return this.dispatch.submit(task).get();
     } catch (InterruptedException | ExecutionException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return false;
     }
   }

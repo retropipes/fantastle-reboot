@@ -217,7 +217,7 @@ public class LevelPrefs {
           LevelPrefs.hidePrefs();
         }
       } catch (final Exception ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
 
@@ -265,7 +265,7 @@ public class LevelPrefs {
           }
         }
       } catch (final Exception ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
 
@@ -279,7 +279,7 @@ public class LevelPrefs {
       try {
         LevelPrefs.hidePrefs();
       } catch (final Exception ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
 

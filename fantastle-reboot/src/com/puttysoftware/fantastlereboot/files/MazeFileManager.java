@@ -134,7 +134,7 @@ public final class MazeFileManager {
             final boolean okay = file.getParentFile().mkdirs();
             if (!okay) {
               FantastleReboot
-                  .logError(new IOException("Cannot create game folder!"));
+                  .exception(new IOException("Cannot create game folder!"));
             }
           }
           MazeFileManager.saveGameFile(filename);
@@ -258,7 +258,7 @@ public final class MazeFileManager {
             final boolean okay = file.getParentFile().mkdirs();
             if (!okay) {
               FantastleReboot
-                  .logError(new IOException("Cannot create game folder!"));
+                  .exception(new IOException("Cannot create game folder!"));
             }
           }
           MazeFileManager.saveMazeFile(filename);

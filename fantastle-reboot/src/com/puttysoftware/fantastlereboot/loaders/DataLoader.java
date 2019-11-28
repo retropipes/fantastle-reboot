@@ -32,7 +32,7 @@ public class DataLoader {
       }
       return rawData;
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }
@@ -48,7 +48,7 @@ public class DataLoader {
       }
       return data;
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }
@@ -65,7 +65,7 @@ public class DataLoader {
       }
       return data;
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }
@@ -82,7 +82,7 @@ public class DataLoader {
       }
       return data;
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }
@@ -99,7 +99,7 @@ public class DataLoader {
       }
       return data;
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }
@@ -117,7 +117,7 @@ public class DataLoader {
       }
       return data.toArray(new String[data.size()]);
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }
@@ -135,7 +135,7 @@ public class DataLoader {
       }
       return data.toArray(new String[data.size()]);
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }
@@ -153,7 +153,7 @@ public class DataLoader {
       }
       return data.toArray(new String[data.size()]);
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }
@@ -174,7 +174,7 @@ public class DataLoader {
       }
       return rawData;
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }
@@ -194,7 +194,7 @@ public class DataLoader {
       }
       return data.toArray(new String[data.size()]);
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }
@@ -214,7 +214,7 @@ public class DataLoader {
       }
       return data.toArray(new String[data.size()]);
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }
@@ -234,7 +234,7 @@ public class DataLoader {
       }
       return data.toArray(new FantastleObjectActions[data.size()]);
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }
@@ -261,7 +261,7 @@ public class DataLoader {
       }
       return data;
     } catch (final IOException e) {
-      FantastleReboot.logWarningWithMessage(e,
+      FantastleReboot.exceptionWithMessage(e,
           "Action ID " + actionID + " has no addon data file.");
       return null;
     }
@@ -282,7 +282,7 @@ public class DataLoader {
       }
       return data.toArray(new String[data.size()]);
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }
@@ -302,7 +302,7 @@ public class DataLoader {
       }
       return data.toArray(new String[data.size()]);
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }
@@ -322,7 +322,7 @@ public class DataLoader {
       }
       return data.toArray(new String[data.size()]);
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }
@@ -342,7 +342,7 @@ public class DataLoader {
       }
       return data.toArray(new String[data.size()]);
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }
@@ -362,7 +362,7 @@ public class DataLoader {
       }
       return data.toArray(new String[data.size()]);
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }
@@ -382,7 +382,7 @@ public class DataLoader {
       }
       return data.toArray(new String[data.size()]);
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
       return null;
     }
   }

@@ -46,7 +46,7 @@ class EditorDraw extends Thread {
         this.draw();
       }
     } catch (final Throwable t) {
-      FantastleReboot.logError(t);
+      FantastleReboot.exception(t);
     }
   }
 

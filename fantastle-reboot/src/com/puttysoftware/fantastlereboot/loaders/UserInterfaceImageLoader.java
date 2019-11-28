@@ -40,7 +40,7 @@ public class UserInterfaceImageLoader {
           .load(UserInterfaceImageLoader.class.getResourceAsStream(
               "/assets/data/extensions/extensions.properties"));
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
     }
   }
 
@@ -50,8 +50,7 @@ public class UserInterfaceImageLoader {
     final String name = "/assets/images/ui/"
         + UserInterfaceImageLoader.allFilenames[image.ordinal()] + imageExt;
     return ImageLoader.load(name,
-        UserInterfaceImageLoader.class.getResource(name),
-        FantastleReboot.getErrorHandler());
+        UserInterfaceImageLoader.class.getResource(name));
   }
 
   public static void cacheAll() {
@@ -60,8 +59,7 @@ public class UserInterfaceImageLoader {
     for (int i = 1; i <= UserInterfaceImageLoader.MAX_INDEX; i++) {
       final String name = "/assets/images/ui/"
           + UserInterfaceImageLoader.allFilenames[i] + imageExt;
-      ImageLoader.load(name, UserInterfaceImageLoader.class.getResource(name),
-          FantastleReboot.getErrorHandler());
+      ImageLoader.load(name, UserInterfaceImageLoader.class.getResource(name));
     }
   }
 }

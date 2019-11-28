@@ -78,7 +78,7 @@ public class GameLoader extends Thread {
           + " failed, due to the format version being unsupported.");
       MazeFileManager.handleDeferredSuccess(false, true, mazeFile);
     } catch (final Exception ex) {
-      FantastleReboot.logError(ex);
+      FantastleReboot.exception(ex);
     }
   }
 }

@@ -282,7 +282,7 @@ class MapBattleGUI {
           b.endTurn();
         }
       } catch (final Throwable t) {
-        FantastleReboot.logError(t);
+        FantastleReboot.exception(t);
       }
     }
 
@@ -379,7 +379,7 @@ class MapBattleGUI {
           }
         }
       } catch (final Exception ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
 
@@ -449,7 +449,7 @@ class MapBattleGUI {
           }
         }
       } catch (final Exception ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
   }

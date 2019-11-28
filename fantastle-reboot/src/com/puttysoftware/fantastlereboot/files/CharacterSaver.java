@@ -23,7 +23,7 @@ public class CharacterSaver {
     try (XDataWriter writer = new XDataWriter(characterFile, "character")) {
       CharacterSaver.writeCharacter(writer, character);
     } catch (final IOException e) {
-      FantastleReboot.logError(e);
+      FantastleReboot.exception(e);
     }
   }
 

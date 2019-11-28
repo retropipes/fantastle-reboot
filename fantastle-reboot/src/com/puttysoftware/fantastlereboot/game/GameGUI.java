@@ -246,7 +246,7 @@ class GameGUI {
           break;
         }
       } catch (final Exception ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
 
@@ -280,7 +280,7 @@ class GameGUI {
           Game.exitGame();
         }
       } catch (final Exception ex) {
-        FantastleReboot.logError(ex);
+        FantastleReboot.exception(ex);
       }
     }
 
