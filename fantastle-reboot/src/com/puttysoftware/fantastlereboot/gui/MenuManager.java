@@ -59,8 +59,8 @@ public class MenuManager {
       editUpOneLevel, editDownOneLevel, editAddLevel, editRemoveLevel,
       editResizeLevel, editToggleLayer, editMazePreferences,
       editLevelPreferences;
-  private JMenuItem playNewGame, playPlay, playEdit, playRegisterCharacter,
-      playUnregisterCharacter, playRemoveCharacter;
+  private JMenuItem playNewGame, playPlay, playEdit, playSuspend, playResume,
+      playRegisterCharacter, playUnregisterCharacter, playRemoveCharacter;
   private JMenuItem gameEquipment, gameInventory, gameUse, gameReset,
       gameShowScore, gameShowTable, gameEditNote, gameViewStats,
       gameChangeLeader;
@@ -115,6 +115,7 @@ public class MenuManager {
     this.editToggleLayer.setEnabled(false);
     this.editMazePreferences.setEnabled(false);
     this.editLevelPreferences.setEnabled(false);
+    this.playResume.setEnabled(true);
     this.gameEquipment.setEnabled(true);
     this.gameInventory.setEnabled(true);
     this.gameUse.setEnabled(true);
@@ -141,6 +142,7 @@ public class MenuManager {
     this.editToggleLayer.setEnabled(true);
     this.editMazePreferences.setEnabled(true);
     this.editLevelPreferences.setEnabled(true);
+    this.playResume.setEnabled(false);
     this.gameEquipment.setEnabled(false);
     this.gameInventory.setEnabled(false);
     this.gameUse.setEnabled(false);
@@ -179,6 +181,7 @@ public class MenuManager {
     this.editToggleLayer.setEnabled(false);
     this.editMazePreferences.setEnabled(false);
     this.editLevelPreferences.setEnabled(false);
+    this.playResume.setEnabled(false);
     this.gameEquipment.setEnabled(false);
     this.gameInventory.setEnabled(false);
     this.gameUse.setEnabled(false);
@@ -225,6 +228,7 @@ public class MenuManager {
     this.editToggleLayer.setEnabled(false);
     this.editMazePreferences.setEnabled(false);
     this.editLevelPreferences.setEnabled(false);
+    this.playResume.setEnabled(true);
     this.gameEquipment.setEnabled(false);
     this.gameInventory.setEnabled(false);
     this.gameUse.setEnabled(false);
@@ -348,10 +352,16 @@ public class MenuManager {
 
   private void setMenusDirtyOn() {
     this.fileSave.setEnabled(true);
+    if (Modes.inGame()) {
+      this.playSuspend.setEnabled(true);
+    } else {
+      this.playSuspend.setEnabled(false);
+    }
   }
 
   private void setMenusDirtyOff() {
     this.fileSave.setEnabled(false);
+    this.playSuspend.setEnabled(false);
   }
 
   private void setMenusLoadedOn() {
@@ -479,6 +489,8 @@ public class MenuManager {
     this.playPlay.setAccelerator(this.playPlayMazeAccel);
     this.playEdit = new JMenuItem("Edit");
     this.playEdit.setAccelerator(this.playEditMazeAccel);
+    this.playSuspend = new JMenuItem("Suspend");
+    this.playResume = new JMenuItem("Resume...");
     this.playRegisterCharacter = new JMenuItem("Register Character...");
     this.playUnregisterCharacter = new JMenuItem("Unregister Character...");
     this.playRemoveCharacter = new JMenuItem("Remove Character...");
@@ -527,6 +539,8 @@ public class MenuManager {
     this.editLevelPreferences.addActionListener(this.handler);
     this.playPlay.addActionListener(this.handler);
     this.playEdit.addActionListener(this.handler);
+    this.playSuspend.addActionListener(this.handler);
+    this.playResume.addActionListener(this.handler);
     this.gameEquipment.addActionListener(this.handler);
     this.gameInventory.addActionListener(this.handler);
     this.gameUse.addActionListener(this.handler);
@@ -580,6 +594,8 @@ public class MenuManager {
     this.playMenu.add(this.playRegisterCharacter);
     this.playMenu.add(this.playUnregisterCharacter);
     this.playMenu.add(this.playRemoveCharacter);
+    this.playMenu.add(this.playSuspend);
+    this.playMenu.add(this.playResume);
     this.gameMenu.add(this.gameEquipment);
     this.gameMenu.add(this.gameInventory);
     this.gameMenu.add(this.gameUse);
@@ -632,6 +648,8 @@ public class MenuManager {
     this.playNewGame.setEnabled(false);
     this.playPlay.setEnabled(false);
     this.playEdit.setEnabled(false);
+    this.playSuspend.setEnabled(false);
+    this.playResume.setEnabled(false);
     this.playRegisterCharacter.setEnabled(false);
     this.playUnregisterCharacter.setEnabled(false);
     this.playRemoveCharacter.setEnabled(false);
@@ -665,7 +683,7 @@ public class MenuManager {
           loaded = Editor.newMaze();
           FileStateManager.setLoaded(loaded);
         } else if (cmd.equals("Open...")) {
-          loaded = MazeFileManager.loadGame();
+          loaded = MazeFileManager.loadMaze();
           FileStateManager.setLoaded(loaded);
         } else if (cmd.equals("Close")) {
           // Close the window
@@ -691,7 +709,7 @@ public class MenuManager {
           }
         } else if (cmd.equals("Save")) {
           if (FileStateManager.getLoaded()) {
-            MazeFileManager.saveGame();
+            MazeFileManager.saveMaze();
           } else {
             CommonDialogs.showDialog("No Maze Opened");
           }
@@ -754,6 +772,15 @@ public class MenuManager {
         } else if (cmd.equals("Edit")) {
           // Edit the current maze
           Editor.editMaze();
+        } else if (cmd.equals("Resume...")) {
+          loaded = MazeFileManager.loadGame();
+          FileStateManager.setLoaded(loaded);
+        } else if (cmd.equals("Suspend")) {
+          if (FileStateManager.getLoaded() && Modes.inGame()) {
+            MazeFileManager.saveGame();
+          } else {
+            CommonDialogs.showDialog("No Game In Progress");
+          }
         } else if (cmd.equals("Show Equipment...")) {
           if (!Game.usingAnItem()) {
             InventoryViewer.showEquipmentDialog();
