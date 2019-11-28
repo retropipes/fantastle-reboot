@@ -16,9 +16,9 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fileutils.FilenameChecker;
 
-public final class MazeFileManager {
+public final class GameFileManager {
   // Constructors
-  private MazeFileManager() {
+  private GameFileManager() {
   }
 
   public static void handleDeferredSuccess(final boolean value,
@@ -34,15 +34,15 @@ public final class MazeFileManager {
     FantastleReboot.getBagOStuff().getMenuManager().checkFlags();
   }
 
-  public static boolean loadMaze() {
+  public static boolean resumeGame() {
     int status = 0;
     boolean saved = true;
     String filename;
-    final MazeFinder gf = new MazeFinder();
+    final GameFinder gf = new GameFinder();
     if (FileStateManager.getDirty()) {
       status = FileStateManager.showSaveDialog();
       if (status == JOptionPane.YES_OPTION) {
-        saved = MazeFileManager.saveMaze();
+        saved = GameFileManager.suspendGame();
       } else if (status == JOptionPane.CANCEL_OPTION) {
         saved = false;
       } else {
@@ -50,16 +50,16 @@ public final class MazeFileManager {
       }
     }
     if (saved) {
-      final String gameDir = MazeFileManager.getMazeDirectory();
+      final String gameDir = GameFileManager.getGameDirectory();
       final String[] rawChoices = new File(gameDir).list(gf);
       if (rawChoices != null && rawChoices.length > 0) {
         final String[] choices = new String[rawChoices.length];
         // Strip extension
         for (int x = 0; x < choices.length; x++) {
-          choices[x] = MazeFileManager.getNameWithoutExtension(rawChoices[x]);
+          choices[x] = GameFileManager.getNameWithoutExtension(rawChoices[x]);
         }
-        final String returnVal = CommonDialogs.showInputDialog("Select a Maze",
-            "Load Maze", choices, choices[0]);
+        final String returnVal = CommonDialogs.showInputDialog("Select a Game",
+            "Load Game", choices, choices[0]);
         if (returnVal != null) {
           int index = -1;
           for (int x = 0; x < choices.length; x++) {
@@ -72,7 +72,7 @@ public final class MazeFileManager {
             final File file = new File(
                 gameDir + File.separator + rawChoices[index]);
             filename = file.getAbsolutePath();
-            MazeFileManager.loadMazeFile(filename);
+            GameFileManager.loadGameFile(filename);
           } else {
             // Result not found
             if (FileStateManager.getLoaded()) {
@@ -86,7 +86,7 @@ public final class MazeFileManager {
           }
         }
       } else {
-        CommonDialogs.showErrorDialog("No Mazes Found!", "Load Maze");
+        CommonDialogs.showErrorDialog("No Games Found!", "Resume Game");
         if (FileStateManager.getLoaded()) {
           return true;
         }
@@ -95,9 +95,9 @@ public final class MazeFileManager {
     return false;
   }
 
-  private static void loadMazeFile(final String filename) {
-    if (!FilenameChecker.isFilenameOK(MazeFileManager
-        .getNameWithoutExtension(MazeFileManager.getFileNameOnly(filename)))) {
+  private static void loadGameFile(final String filename) {
+    if (!FilenameChecker.isFilenameOK(GameFileManager
+        .getNameWithoutExtension(GameFileManager.getFileNameOnly(filename)))) {
       CommonDialogs.showErrorDialog(
           "The file you selected contains illegal characters in its\n"
               + "name. These characters are not allowed: /?<>\\:|\"\n"
@@ -105,21 +105,21 @@ public final class MazeFileManager {
               + "named com1 through com9 and lpt1 through lpt9.",
           "Load");
     } else {
-      final MazeLoader llt = new MazeLoader(filename);
+      final GameLoader llt = new GameLoader(filename);
       llt.start();
     }
   }
 
-  public static boolean saveMaze() {
+  public static boolean suspendGame() {
     String filename = "";
     String extension;
     String returnVal = "\\";
     while (!FilenameChecker.isFilenameOK(returnVal)) {
-      returnVal = CommonDialogs.showTextInputDialog("Name?", "Save Maze");
+      returnVal = CommonDialogs.showTextInputDialog("Name?", "Suspend Game");
       if (returnVal != null) {
-        extension = FileExtensions.getMazeExtensionWithPeriod();
+        extension = FileExtensions.getGameExtensionWithPeriod();
         final File file = new File(
-            MazeFileManager.getMazeDirectory() + returnVal + extension);
+            GameFileManager.getGameDirectory() + returnVal + extension);
         filename = file.getAbsolutePath();
         if (!FilenameChecker.isFilenameOK(returnVal)) {
           CommonDialogs.showErrorDialog(
@@ -127,7 +127,7 @@ public final class MazeFileManager {
                   + "These characters are not allowed: /?<>\\:|\"\n"
                   + "Files named con, nul, or prn are illegal, as are files\n"
                   + "named com1 through com9 and lpt1 through lpt9.",
-              "Save Maze");
+              "Save Game");
         } else {
           // Make sure folder exists
           if (!file.getParentFile().exists()) {
@@ -137,7 +137,7 @@ public final class MazeFileManager {
                   .exception(new IOException("Cannot create game folder!"));
             }
           }
-          MazeFileManager.saveMazeFile(filename);
+          GameFileManager.saveGameFile(filename);
         }
       } else {
         break;
@@ -146,16 +146,16 @@ public final class MazeFileManager {
     return false;
   }
 
-  private static void saveMazeFile(final String filename) {
+  private static void saveGameFile(final String filename) {
     final BagOStuff bag = FantastleReboot.getBagOStuff();
-    final String sg = "Saved Maze";
+    final String sg = "Saved Game";
     bag.showMessage("Saving " + sg + " file...");
-    final MazeSaver lst = new MazeSaver(filename);
+    final GameSaver lst = new GameSaver(filename);
     lst.start();
   }
 
-  private static String getMazeDirectory() {
-    return CommonPaths.getAppDirectoryFor("Mazes");
+  private static String getGameDirectory() {
+    return CommonPaths.getAppDirectoryFor("Games");
   }
 
   private static String getNameWithoutExtension(final String s) {

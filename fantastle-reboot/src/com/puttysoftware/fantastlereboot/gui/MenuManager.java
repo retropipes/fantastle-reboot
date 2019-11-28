@@ -39,6 +39,7 @@ import com.puttysoftware.fantastlereboot.editor.LevelPrefs;
 import com.puttysoftware.fantastlereboot.editor.MazePrefs;
 import com.puttysoftware.fantastlereboot.files.CharacterRegistration;
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
+import com.puttysoftware.fantastlereboot.files.GameFileManager;
 import com.puttysoftware.fantastlereboot.files.MazeFileManager;
 import com.puttysoftware.fantastlereboot.game.Game;
 //import com.puttysoftware.fantastlereboot.editor.MazeEditor;
@@ -695,7 +696,7 @@ public class MenuManager {
             if (FileStateManager.getDirty()) {
               status = FileStateManager.showSaveDialog();
               if (status == JOptionPane.YES_OPTION) {
-                saved = MazeFileManager.saveGame();
+                saved = GameFileManager.suspendGame();
               } else if (status == JOptionPane.CANCEL_OPTION) {
                 saved = false;
               } else {
@@ -773,11 +774,11 @@ public class MenuManager {
           // Edit the current maze
           Editor.editMaze();
         } else if (cmd.equals("Resume...")) {
-          loaded = MazeFileManager.loadGame();
+          loaded = GameFileManager.resumeGame();
           FileStateManager.setLoaded(loaded);
         } else if (cmd.equals("Suspend")) {
           if (FileStateManager.getLoaded() && Modes.inGame()) {
-            MazeFileManager.saveGame();
+            GameFileManager.suspendGame();
           } else {
             CommonDialogs.showDialog("No Game In Progress");
           }

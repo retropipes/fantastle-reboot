@@ -20,7 +20,7 @@ import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.effects.EffectManager;
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
-import com.puttysoftware.fantastlereboot.files.MazeFileManager;
+import com.puttysoftware.fantastlereboot.files.GameFileManager;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.loaders.ImageConstants;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
@@ -266,7 +266,7 @@ class GameGUI {
         if (FileStateManager.getDirty()) {
           status = FileStateManager.showSaveDialog();
           if (status == JOptionPane.YES_OPTION) {
-            success = MazeFileManager.saveGame();
+            success = GameFileManager.suspendGame();
             if (success) {
               Game.exitGame();
             }

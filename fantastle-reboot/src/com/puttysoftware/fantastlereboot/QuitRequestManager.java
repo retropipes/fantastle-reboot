@@ -12,6 +12,7 @@ import java.awt.desktop.QuitResponse;
 import javax.swing.JOptionPane;
 
 import com.puttysoftware.fantastlereboot.files.FileStateManager;
+import com.puttysoftware.fantastlereboot.files.GameFileManager;
 import com.puttysoftware.fantastlereboot.files.MazeFileManager;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 
@@ -30,7 +31,11 @@ final class QuitRequestManager implements QuitHandler {
     if (FileStateManager.getDirty()) {
       status = FileStateManager.showSaveDialog();
       if (status == JOptionPane.YES_OPTION) {
-        saved = MazeFileManager.saveGame();
+        if (Modes.inGame()) {
+          saved = GameFileManager.suspendGame();
+        } else {
+          saved = MazeFileManager.saveMaze();
+        }
       } else if (status == JOptionPane.CANCEL_OPTION) {
         saved = false;
       } else {

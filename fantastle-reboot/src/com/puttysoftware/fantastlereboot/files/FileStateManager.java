@@ -23,16 +23,18 @@ public final class FileStateManager {
 
   // Methods
   public static int showSaveDialog() {
-    String type, source;
+    String source, action;
     if (Modes.inGame()) {
-      type = "game";
-      source = "FantastleReboot";
+      action = "Do you want to suspend your game?";
+      source = "Fantastle Reboot";
+    } else if (Modes.inEditor()) {
+      action = "Do you want to save your maze?";
+      source = "Editor";
     } else {
       // Not in the game or editor, so abort
       return JOptionPane.NO_OPTION;
     }
-    return CommonDialogs
-        .showYNCConfirmDialog("Do you want to save your " + type + "?", source);
+    return CommonDialogs.showYNCConfirmDialog(action, source);
   }
 
   public static boolean getLoaded() {
