@@ -837,8 +837,13 @@ public class Prefs {
           final JRadioButton radio = (JRadioButton) o;
           if (radio.equals(Prefs.generatorPureRandom)) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-              Prefs.prefTabPane.setTabComponentAt(Prefs.TAB_TWEAKS,
-                  Prefs.pureRandomPane);
+              int confirm = CommonDialogs.showConfirmDialog(
+                  "Pure randomness can produce unsolvable levels! Proceed?",
+                  "WARNING!");
+              if (confirm == CommonDialogs.YES_OPTION) {
+                Prefs.prefTabPane.setTabComponentAt(Prefs.TAB_TWEAKS,
+                    Prefs.pureRandomPane);
+              }
             }
           }
         } else if (o.getClass()
