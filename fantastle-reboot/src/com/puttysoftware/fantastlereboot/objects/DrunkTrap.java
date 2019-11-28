@@ -5,6 +5,6 @@ import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 public final class DrunkTrap extends FantastleObject {
   public DrunkTrap() {
-    super(62, "drunk_trap", ObjectImageIndex.DRUNK_TRAP);
+    super(63, "drunk_trap", ObjectImageIndex.DRUNK_TRAP);
   }
 }

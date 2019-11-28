@@ -6,7 +6,7 @@ import com.puttysoftware.fantastlereboot.world.World;
 
 public final class Pit extends FantastleObject {
   public Pit() {
-    super(75, "stairs_down", ObjectImageIndex.PIT);
+    super(73, "pit", ObjectImageIndex.PIT);
   }
 
   @Override

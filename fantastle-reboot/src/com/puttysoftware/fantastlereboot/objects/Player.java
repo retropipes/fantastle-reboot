@@ -11,7 +11,7 @@ public final class Player extends FantastleObject {
   private static int avatarHair = -1;
 
   public Player() {
-    super(71, "player", ObjectImageIndex.PLAYER);
+    super(72, "player", ObjectImageIndex.PLAYER);
     this.setSavedObject(new OpenSpace());
   }
 

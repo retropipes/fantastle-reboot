@@ -5,6 +5,6 @@ import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 public final class HurtTrap extends FantastleObject {
   public HurtTrap() {
-    super(64, "hurt_trap", ObjectImageIndex.HURT_TRAP);
+    super(65, "hurt_trap", ObjectImageIndex.HURT_TRAP);
   }
 }

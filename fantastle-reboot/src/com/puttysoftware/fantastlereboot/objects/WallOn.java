@@ -6,7 +6,7 @@ import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 public final class WallOn extends FantastleObject {
   public WallOn() {
-    super(57, "wall", ObjectImageIndex.WALL, ColorShaders.normal());
+    super(58, "wall", ObjectImageIndex.WALL, ColorShaders.normal());
     this.setSolid(true);
     this.setSightBlocking(true);
   }

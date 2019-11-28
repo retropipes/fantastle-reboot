@@ -5,6 +5,6 @@ import com.puttysoftware.fantastlereboot.objectmodel.FantastleObject;
 
 public final class WarpTrap extends FantastleObject {
   public WarpTrap() {
-    super(68, "warp_trap", ObjectImageIndex.WARP_TRAP);
+    super(69, "warp_trap", ObjectImageIndex.WARP_TRAP);
   }
 }

@@ -8,7 +8,7 @@ import com.puttysoftware.randomrange.RandomRange;
 
 public final class Ice extends FantastleObject {
   public Ice() {
-    super(72, "ice", ObjectImageIndex.ICE);
+    super(70, "ice", ObjectImageIndex.ICE);
     this.setFriction(false);
   }
 

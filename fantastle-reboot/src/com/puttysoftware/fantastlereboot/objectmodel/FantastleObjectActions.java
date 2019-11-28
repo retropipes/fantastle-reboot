@@ -16,8 +16,8 @@ public class FantastleObjectActions {
   public static final int CHANGE_FORM_TYPE_2 = 9;
   public static final int UP_1_FLOOR = 10;
   public static final int DOWN_1_FLOOR = 11;
-  public static final int NEXT_LEVEL = 12;
-  public static final int PREVIOUS_LEVEL = 13;
+  public static final int PREVIOUS_LEVEL = 12;
+  public static final int NEXT_LEVEL = 13;
   public static final int SHOP = 14;
   public static final int PUSH = 15;
   public static final int PULL = 16;

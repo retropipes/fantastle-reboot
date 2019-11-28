@@ -8,7 +8,7 @@ import com.puttysoftware.images.BufferedImageIcon;
 public final class MonsterObject extends FantastleObject
     implements MonsterObjectModel {
   public MonsterObject() {
-    super(55, "monster", ObjectImageIndex.SHADOW_MONSTER);
+    super(56, "monster", ObjectImageIndex.SHADOW_MONSTER);
     this.setDestroyable(false);
     this.setSavedObject(new OpenSpace());
   }

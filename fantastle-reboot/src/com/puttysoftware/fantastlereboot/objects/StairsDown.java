@@ -6,7 +6,7 @@ import com.puttysoftware.fantastlereboot.world.World;
 
 public final class StairsDown extends FantastleObject {
   public StairsDown() {
-    super(69, "stairs_down", ObjectImageIndex.DOWN);
+    super(75, "stairs_down", ObjectImageIndex.DOWN);
   }
 
   @Override

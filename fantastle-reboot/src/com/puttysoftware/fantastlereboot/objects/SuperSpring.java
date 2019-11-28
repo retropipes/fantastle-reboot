@@ -6,7 +6,7 @@ import com.puttysoftware.fantastlereboot.world.World;
 
 public final class SuperSpring extends FantastleObject {
   public SuperSpring() {
-    super(78, "stairs_up", ObjectImageIndex.SUPER_SPRING);
+    super(78, "super_spring", ObjectImageIndex.SUPER_SPRING);
   }
 
   @Override

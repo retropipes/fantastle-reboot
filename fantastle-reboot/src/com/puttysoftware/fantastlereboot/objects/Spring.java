@@ -6,7 +6,7 @@ import com.puttysoftware.fantastlereboot.world.World;
 
 public final class Spring extends FantastleObject {
   public Spring() {
-    super(76, "stairs_up", ObjectImageIndex.SPRING);
+    super(74, "spring", ObjectImageIndex.SPRING);
   }
 
   @Override
