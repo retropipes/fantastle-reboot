@@ -130,6 +130,28 @@ public final class GameObjects {
     return allEditorAppearances;
   }
 
+  public static FantastleObjectModel[] getAllObjectsOnLayer(final int layer) {
+    final FantastleObjectModel[] objects = GameObjects.getAllObjects();
+    final FantastleObjectModel[] tempAll = new FantastleObjectModel[objects.length];
+    int x;
+    int count = 0;
+    for (x = 0; x < objects.length; x++) {
+      if (objects[x].getLayer() == layer) {
+        tempAll[count] = objects[x];
+        count++;
+      }
+    }
+    if (count == 0) {
+      return new FantastleObjectModel[0];
+    } else {
+      final FantastleObjectModel[] all = new FantastleObjectModel[count];
+      for (x = 0; x < count; x++) {
+        all[x] = tempAll[x];
+      }
+      return all;
+    }
+  }
+
   public static FantastleObjectModel[] getAllGroundLayerObjects() {
     final FantastleObjectModel[] objects = GameObjects.getAllObjects();
     final FantastleObjectModel[] tempAll = new FantastleObjectModel[objects.length];

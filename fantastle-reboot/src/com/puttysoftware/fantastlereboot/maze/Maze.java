@@ -14,6 +14,7 @@ import com.puttysoftware.fantastlereboot.files.FileExtensions;
 import com.puttysoftware.fantastlereboot.files.MazeVersions;
 import com.puttysoftware.fantastlereboot.files.PrefixIO;
 import com.puttysoftware.fantastlereboot.files.SuffixIO;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.gui.VersionException;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
@@ -350,7 +351,15 @@ public class Maze {
   }
 
   public void fillLevelRandomly() {
-    this.mazeData.fillRandomly(this, this.activeLevel);
+    if (Prefs.isMazeGeneratorPureRandom()) {
+      this.mazeData.fillRandomlyPure(this, this.activeLevel);
+    } else if (Prefs.isMazeGeneratorConstrainedRandom()) {
+      this.mazeData.fillRandomlyConstrained(this, this.activeLevel);
+      // } else if (Prefs.isMazeGeneratorTwister()) {
+      // this.mazeData.fillRandomlyTwister(this, this.activeLevel);
+    } else {
+      this.mazeData.fillRandomlyConstrained(this, this.activeLevel);
+    }
   }
 
   public void fullScanButton(final int l) {

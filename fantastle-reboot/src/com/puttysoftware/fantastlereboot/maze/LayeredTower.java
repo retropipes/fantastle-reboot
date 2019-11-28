@@ -557,14 +557,46 @@ final class LayeredTower implements Cloneable {
     }
   }
 
-  public void fillRandomly(final Maze maze, final int w) {
+  void fillRandomlyPure(final Maze maze, final int w) {
     for (int z = 0; z < this.getFloors(); z++) {
-      this.fillFloorRandomly(maze, z, w);
+      this.fillFloorRandomlyPure(maze, z, w);
     }
   }
 
-  public void fillFloorRandomly(final Maze maze, final int z, final int w) {
-    // Pre-Pass
+  private void fillFloorRandomlyPure(final Maze maze, final int z,
+      final int w) {
+    RandomRange r = null;
+    int x, y, e;
+    // Fill the maze with the "pure" algorithm
+    final int columns = this.getColumns();
+    final int rows = this.getRows();
+    for (e = 0; e < Layers.COUNT; e++) {
+      final FantastleObjectModel[] objects = GameObjects
+          .getAllObjectsOnLayer(e);
+      if (objects != null) {
+        r = new RandomRange(0, objects.length - 1);
+        for (x = 0; x < columns; x++) {
+          for (y = 0; y < rows; y++) {
+            final FantastleObjectModel placeObj = objects[r.generate()];
+            this.setCell(
+                GameObjects.getNewInstanceByUniqueID(placeObj.getUniqueID()), y,
+                x, z, e);
+          }
+        }
+      }
+    }
+    this.addMonstersRandomly(z);
+  }
+
+  void fillRandomlyConstrained(final Maze maze, final int w) {
+    for (int z = 0; z < this.getFloors(); z++) {
+      this.fillFloorRandomlyConstrained(maze, z, w);
+    }
+  }
+
+  private void fillFloorRandomlyConstrained(final Maze maze, final int z,
+      final int w) {
+    // Fill the maze with the "constrained" algorithm
     final FantastleObjectModel pass1FillBottom = new Tile();
     final FantastleObjectModel pass1FillTop = new OpenSpace();
     final RandomRange row = new RandomRange(0, this.getRows() - 1);
@@ -639,12 +671,30 @@ final class LayeredTower implements Cloneable {
       }
     }
     // Pass 4: Add monsters
+    this.addMonstersRandomly(z);
+  }
+
+  void fillRandomlyTwister(final Maze maze, final int w) {
+    for (int z = 0; z < this.getFloors(); z++) {
+      this.fillFloorRandomlyTwister(maze, z, w);
+    }
+  }
+
+  private void fillFloorRandomlyTwister(final Maze maze, final int z,
+      final int w) {
+    // Fill the maze with the "twister" algorithm
+    // TODO: Implement the "twister" maze generator
+  }
+
+  private void addMonstersRandomly(final int z) {
+    final RandomRange row = new RandomRange(0, this.getRows() - 1);
+    final RandomRange column = new RandomRange(0, this.getColumns() - 1);
     final int space = this.getColumns() * this.getRows();
     final int monsterMin = space / 32;
     final int monsterMax = space / 16;
     final RandomRange howMany = new RandomRange(monsterMin, monsterMax);
     final int generateHowMany = howMany.generate();
-    for (y = 0; y < generateHowMany; y++) {
+    for (int y = 0; y < generateHowMany; y++) {
       int xLoc = row.generate();
       int yLoc = column.generate();
       FantastleObjectModel there = this.getCell(xLoc, yLoc, z, Layers.OBJECT);
