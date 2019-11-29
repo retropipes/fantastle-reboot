@@ -5,7 +5,6 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.battle.map;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -30,9 +29,7 @@ import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.monsters.MonsterFactory;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
-import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.game.Game;
-import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItem;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
@@ -54,12 +51,9 @@ public class MapBattleLogic extends Battle {
   private AbstractDamageEngine ede;
   private final AutoMapAI auto;
   private int damage;
-  private int activeIndex;
   private long battleExp;
+  private int battleGold;
   private boolean newRound;
-  private int[] speedArray;
-  private int lastSpeed;
-  private boolean[] speedMarkArray;
   private boolean resultDoneAlready;
   private boolean lastAIActionResult;
   private boolean alliesTookDamage;
@@ -106,8 +100,6 @@ public class MapBattleLogic extends Battle {
     }
     // Reset Inactive Indicators and Action Counters
     this.mbd.resetBattlers();
-    // Generate Speed Array
-    this.generateSpeedArray();
     // Set Character Locations
     this.setCharacterLocations();
     // Set First Active
@@ -256,7 +248,7 @@ public class MapBattleLogic extends Battle {
       return;
     }
     final int action = this.auto.getNextAction(acting.getCreature(),
-        this.mbd.getBattlerAI(acting));
+        acting.getAIContext());
     switch (action) {
     case AIRoutine.ACTION_MOVE:
       final int x = this.auto.getMoveX();
@@ -396,33 +388,6 @@ public class MapBattleLogic extends Battle {
     this.displayRoundResults(theEnemy, acting, activeDE);
   }
 
-  private void generateSpeedArray() {
-    this.speedArray = new int[this.mbd.getBattlerCount()];
-    this.speedMarkArray = new boolean[this.speedArray.length];
-    this.resetSpeedArray();
-  }
-
-  private void resetSpeedArray() {
-    final Iterator<BattleCharacter> iter = this.mbd.battlerIterator();
-    for (int x = 0; x < this.speedArray.length; x++) {
-      final BattleCharacter battler = iter.next();
-      if (battler != null && battler.getCreature().isAlive()
-          && battler.isActive()) {
-        this.speedArray[x] = (int) battler.getCreature()
-            .getEffectedStat(StatConstants.STAT_AGILITY);
-      } else {
-        this.speedArray[x] = Integer.MIN_VALUE;
-      }
-    }
-    for (int x = 0; x < this.speedMarkArray.length; x++) {
-      if (this.speedArray[x] != Integer.MIN_VALUE) {
-        this.speedMarkArray[x] = false;
-      } else {
-        this.speedMarkArray[x] = true;
-      }
-    }
-  }
-
   private void setCharacterLocations() {
     this.mbd.setLocations();
   }
@@ -432,16 +397,8 @@ public class MapBattleLogic extends Battle {
       // Abort
       return false;
     }
-    int res = 0;
-    if (isNewRound) {
-      res = this.findNextSmallestSpeed(Integer.MAX_VALUE);
-    } else {
-      res = this.findNextSmallestSpeed(this.lastSpeed);
-    }
-    if (res != -1) {
-      this.lastSpeed = this.speedArray[res];
-      this.activeIndex = res;
-      this.mbd.setActiveCharacterIndex(this.activeIndex);
+    boolean res = this.mbd.setNextActive();
+    if (res) {
       // AI Check
       if (this.mbd.getActiveCharacter().getCreature().hasMapAI()) {
         // Run AI
@@ -454,12 +411,10 @@ public class MapBattleLogic extends Battle {
       }
       return false;
     } else {
-      // Reset Speed Array
-      this.resetSpeedArray();
       // Reset Action Counters
       this.mbd.roundResetBattlers();
       // Maintain effects
-      this.maintainEffects(true);
+      this.maintainEffects();
       this.updateStatsAndEffects();
       // Perform new round actions
       this.performNewRoundActions();
@@ -468,27 +423,6 @@ public class MapBattleLogic extends Battle {
       // Nobody to act next, set new round flag
       return true;
     }
-  }
-
-  private int findNextSmallestSpeed(final int max) {
-    int res = -1;
-    int found = 0;
-    for (int x = 0; x < this.speedArray.length; x++) {
-      if (!this.speedMarkArray[x]) {
-        if (this.speedArray[x] <= max && this.speedArray[x] > found) {
-          res = x;
-          found = this.speedArray[x];
-        }
-      }
-    }
-    if (res != -1) {
-      this.speedMarkArray[res] = true;
-    }
-    return res;
-  }
-
-  private int getGold() {
-    return this.mbd.getTeamEnemyGold(Creature.TEAM_PARTY);
   }
 
   @Override
@@ -534,8 +468,10 @@ public class MapBattleLogic extends Battle {
     if (hit != null && !hit.getCreature().isAlive()) {
       if (hit.getTeamID() != Creature.TEAM_PARTY) {
         // Update victory spoils
-        this.battleExp = hit.getCreature().getExperience();
+        this.addSpoils(hit.getCreature());
       }
+      // Run death hook
+      hit.getCreature().onGotKilled();
       // Remove effects from dead character
       hit.getCreature().stripAllEffects();
       // Set dead character to inactive
@@ -750,8 +686,10 @@ public class MapBattleLogic extends Battle {
             if (!bc.getCreature().isAlive()) {
               if (bc.getTeamID() != Creature.TEAM_PARTY) {
                 // Update victory spoils
-                this.battleExp = bc.getCreature().getExperience();
+                this.addSpoils(bc.getCreature());
               }
+              // Run death hook
+              bc.getCreature().onGotKilled();
               // Remove effects from dead character
               bc.getCreature().stripAllEffects();
               // Set dead character to inactive
@@ -762,6 +700,8 @@ public class MapBattleLogic extends Battle {
             }
             // Handle self death
             if (!active.getCreature().isAlive()) {
+              // Run death hook
+              active.getCreature().onGotKilled();
               // Remove effects from dead character
               active.getCreature().stripAllEffects();
               // Set dead character to inactive
@@ -828,40 +768,11 @@ public class MapBattleLogic extends Battle {
     final String[] pickNames = this.buildTargetNameList();
     final String response = CommonDialogs.showInputDialog("Pick A Target",
         "Target", pickNames, pickNames[0]);
-    if (response != null) {
-      final Iterator<BattleCharacter> iter = this.mbd.battlerIterator();
-      while (iter.hasNext()) {
-        BattleCharacter battler = iter.next();
-        if (battler != null) {
-          if (battler.getName().equals(response)) {
-            return battler.getCreature();
-          }
-        }
-      }
-    }
-    return null;
+    return this.mbd.getCreatureWithName(response);
   }
 
   private String[] buildTargetNameList() {
-    final String[] tempNames = new String[MapBattleDefinitions.MAX_BATTLERS];
-    int nnc = 0;
-    final Iterator<BattleCharacter> iter = this.mbd.battlerIterator();
-    while (iter.hasNext()) {
-      BattleCharacter battler = iter.next();
-      if (battler != null) {
-        tempNames[nnc] = battler.getName();
-        nnc++;
-      }
-    }
-    final String[] names = new String[nnc];
-    nnc = 0;
-    for (final String tempName : tempNames) {
-      if (tempName != null) {
-        names[nnc] = tempName;
-        nnc++;
-      }
-    }
-    return names;
+    return this.mbd.buildTargetNameList();
   }
 
   @Override
@@ -1206,60 +1117,12 @@ public class MapBattleLogic extends Battle {
   }
 
   @Override
-  public void maintainEffects(final boolean player) {
+  public void maintainEffects() {
     if (!Modes.inBattle()) {
       // Abort
       return;
     }
-    final Iterator<BattleCharacter> iter = this.mbd.battlerIterator();
-    while (iter.hasNext()) {
-      final BattleCharacter battler = iter.next();
-      // Maintain Effects
-      if (battler != null && battler.isActive()) {
-        final Creature active = battler.getCreature();
-        // Use Effects
-        active.useEffects();
-        // Display all effect messages
-        final String effectMessages = battler.getCreature()
-            .getAllCurrentEffectMessages();
-        final String[] individualEffectMessages = effectMessages.split("\n");
-        for (final String message : individualEffectMessages) {
-          if (!message.equals(Effect.getNullMessage())) {
-            this.setStatusMessage(message);
-            try {
-              Thread.sleep(Prefs.getBattleSpeed());
-            } catch (final InterruptedException ie) {
-              // Ignore
-            }
-          }
-        }
-        // Handle low health for party members
-        if (active.isAlive() && active.getTeamID() == Creature.TEAM_PARTY
-            && active.getCurrentHP() <= active.getMaximumHP() * 3 / 10) {
-          SoundPlayer.playSound(SoundIndex.LOW_HEALTH, SoundGroup.BATTLE);
-        }
-        // Cull Inactive Effects
-        active.cullInactiveEffects();
-        // Handle death caused by effects
-        if (!active.isAlive()) {
-          if (battler.getTeamID() != Creature.TEAM_PARTY) {
-            // Update victory spoils
-            this.battleExp = battler.getCreature().getExperience();
-          }
-          // Set dead character to inactive
-          battler.deactivate();
-          // Remove effects from dead character
-          active.stripAllEffects();
-          // Remove character from battle
-          this.mbd.getBattleWorld().setCell(new OpenSpace(), battler.getX(),
-              battler.getY(), 0, Layers.OBJECT);
-          if (this.mbd.getActiveCharacter().equals(battler)) {
-            // Active character died, end turn
-            this.endTurn();
-          }
-        }
-      }
-    }
+    this.mbd.maintainEffects();
   }
 
   private void updateAllAIContexts() {
@@ -1268,6 +1131,12 @@ public class MapBattleLogic extends Battle {
 
   private void performNewRoundActions() {
     this.mbd.runNewRoundHooks();
+  }
+
+  @Override
+  public void addSpoils(final Creature creature) {
+    this.battleExp += creature.getExperience();
+    this.battleGold += creature.getGold();
   }
 
   @Override
@@ -1357,7 +1226,7 @@ public class MapBattleLogic extends Battle {
       if (result == BattleResults.WON) {
         SoundPlayer.playSound(SoundIndex.VICTORY, SoundGroup.BATTLE);
         CommonDialogs.showTitledDialog("The party is victorious!", "Victory!");
-        PartyManager.getParty().getLeader().offsetGold(this.getGold());
+        PartyManager.getParty().getLeader().offsetGold(this.battleGold);
         PartyManager.getParty().getLeader().offsetExperience(this.battleExp);
         if (bossFlag) {
           rewardsFlag = true;
@@ -1367,7 +1236,7 @@ public class MapBattleLogic extends Battle {
         CommonDialogs.showTitledDialog(
             "The party is victorious, and escaped unharmed!",
             "Perfect Victory!");
-        PartyManager.getParty().getLeader().offsetGold(this.getGold());
+        PartyManager.getParty().getLeader().offsetGold(this.battleGold);
         PartyManager.getParty().getLeader().offsetExperience(this.battleExp);
         if (bossFlag) {
           rewardsFlag = true;

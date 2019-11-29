@@ -6,14 +6,20 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.battle.map;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.puttysoftware.fantastlereboot.ai.map.MapAIContext;
+import com.puttysoftware.fantastlereboot.assets.SoundGroup;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
+import com.puttysoftware.fantastlereboot.creatures.StatConstants;
+import com.puttysoftware.fantastlereboot.effects.Effect;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
+import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 import com.puttysoftware.fantastlereboot.world.World;
 import com.puttysoftware.randomrange.RandomRange;
@@ -21,11 +27,10 @@ import com.puttysoftware.randomrange.RandomRange;
 public class MapBattleDefinitions {
   // Fields
   private final List<BattleCharacter> battlers;
-  private final List<MapAIContext> aiContexts;
   private World battleWorld;
   private final Battle battle;
   private int battlerCount;
-  private int activeID;
+  private BattleCharacter active;
   static final int MAX_BATTLERS = 100;
 
   // Constructors
@@ -33,7 +38,6 @@ public class MapBattleDefinitions {
     this.battle = b;
     this.battlerCount = 0;
     this.battlers = new ArrayList<>();
-    this.aiContexts = new ArrayList<>();
   }
 
   // Nested class
@@ -58,32 +62,30 @@ public class MapBattleDefinitions {
       int partyDeadOrGone = 0;
       int enemiesDeadOrGone = 0;
       MapBattleDefinitions mbd = MapBattleDefinitions.this;
-      Iterator<BattleCharacter> iter = mbd.battlerIterator();
-      while (iter.hasNext()) {
-        BattleCharacter battler = iter.next();
+      for (final BattleCharacter battler : mbd.battlers) {
         if (battler != null) {
           int teamID = battler.getTeamID();
           boolean alive = battler.getCreature().isAlive();
-          boolean active = battler.isActive();
+          boolean isActive = battler.isActive();
           if (teamID == Creature.TEAM_PARTY) {
-            if (alive && active) {
+            if (alive && isActive) {
               this.partyAlive = true;
             }
-            if (alive && !active) {
+            if (alive && !isActive) {
               partyHasGone++;
             }
-            if (!alive || !active) {
+            if (!alive || !isActive) {
               partyDeadOrGone++;
             }
             totalParty++;
           } else {
-            if (alive && active) {
+            if (alive && isActive) {
               this.enemiesAlive = true;
             }
-            if (alive && !active) {
+            if (alive && !isActive) {
               enemyHasGone++;
             }
-            if (!alive || !active) {
+            if (!alive || !isActive) {
               enemiesDeadOrGone++;
             }
             totalEnemies++;
@@ -122,10 +124,6 @@ public class MapBattleDefinitions {
   }
 
   // Methods
-  public Iterator<BattleCharacter> battlerIterator() {
-    return this.battlers.iterator();
-  }
-
   public BattleState getBattleState() {
     return new BattleState();
   }
@@ -155,11 +153,118 @@ public class MapBattleDefinitions {
     }
   }
 
+  String[] buildTargetNameList() {
+    final String[] tempNames = new String[MapBattleDefinitions.MAX_BATTLERS];
+    int nnc = 0;
+    for (final BattleCharacter battler : this.battlers) {
+      if (battler != null && battler.isActive()
+          && battler.getCreature().isAlive()) {
+        tempNames[nnc] = battler.getName();
+        nnc++;
+      }
+    }
+    final String[] names = new String[nnc];
+    nnc = 0;
+    for (final String tempName : tempNames) {
+      if (tempName != null) {
+        names[nnc] = tempName;
+        nnc++;
+      }
+    }
+    return names;
+  }
+
+  void maintainEffects() {
+    for (final BattleCharacter battler : this.battlers) {
+      if (battler != null && battler.isActive()
+          && battler.getCreature().isAlive()) {
+        final Creature creature = battler.getCreature();
+        // Use Effects
+        creature.useEffects();
+        // Display all effect messages
+        final String effectMessages = battler.getCreature()
+            .getAllCurrentEffectMessages();
+        final String[] individualEffectMessages = effectMessages.split("\n");
+        for (final String message : individualEffectMessages) {
+          if (!message.equals(Effect.getNullMessage())) {
+            this.battle.setStatusMessage(message);
+            try {
+              Thread.sleep(Prefs.getBattleSpeed());
+            } catch (final InterruptedException ie) {
+              // Ignore
+            }
+          }
+        }
+        // Handle low health for party members
+        if (creature.isAlive() && creature.getTeamID() == Creature.TEAM_PARTY
+            && creature.getCurrentHP() <= creature.getMaximumHP() * 3 / 10) {
+          SoundPlayer.playSound(SoundIndex.LOW_HEALTH, SoundGroup.BATTLE);
+        }
+        // Cull Inactive Effects
+        creature.cullInactiveEffects();
+        // Handle death caused by effects
+        if (!creature.isAlive()) {
+          if (battler.getTeamID() != Creature.TEAM_PARTY) {
+            // Update victory spoils
+            this.battle.addSpoils(creature);
+          }
+          // Run death hook
+          creature.onGotKilled();
+          // Set dead character to inactive
+          battler.deactivate();
+          // Remove effects from dead character
+          creature.stripAllEffects();
+          // Remove character from battle
+          this.getBattleWorld().setCell(new OpenSpace(), battler.getX(),
+              battler.getY(), 0, Layers.OBJECT);
+          if (this.getActiveCharacter().equals(battler)) {
+            // Active character died, end turn
+            this.battle.endTurn();
+          }
+        }
+      }
+    }
+  }
+
+  Creature getCreatureWithName(final String response) {
+    for (final BattleCharacter battler : this.battlers) {
+      if (battler != null && battler.isActive()
+          && battler.getCreature().isAlive()) {
+        if (battler.getName().equals(response)) {
+          return battler.getCreature();
+        }
+      }
+    }
+    return null;
+  }
+
+  boolean setNextActive() {
+    int highestSpeed = Integer.MIN_VALUE;
+    for (final BattleCharacter battler : this.battlers) {
+      if (battler != null && !battler.isMarked()) {
+        Creature creature = battler.getCreature();
+        if (battler.isActive() && creature.isAlive()) {
+          int creatureSpeed = (int) creature
+              .getEffectedStat(StatConstants.STAT_AGILITY);
+          if (creatureSpeed > highestSpeed) {
+            highestSpeed = creatureSpeed;
+            this.active = battler;
+            battler.mark();
+          }
+        }
+      }
+    }
+    return highestSpeed != Integer.MIN_VALUE;
+  }
+
   public void updateBattlerAIContexts() {
-    for (final MapAIContext maic : this.aiContexts) {
-      if (maic != null) {
-        if (maic.getCharacter().getCreature().isAlive()) {
-          maic.updateContext(this.battleWorld);
+    for (final BattleCharacter battler : this.battlers) {
+      if (battler != null && battler.isActive()) {
+        final MapAIContext maic = battler.getAIContext();
+        if (maic != null) {
+          if (maic.getCharacter().getCreature().isAlive()) {
+            maic.updateContext(this.battleWorld);
+          }
         }
       }
     }
@@ -176,36 +281,13 @@ public class MapBattleDefinitions {
     }
   }
 
-  public int getTeamGold(final int teamID) {
-    int teamGold = 0;
-    for (final BattleCharacter battler : this.battlers) {
-      if (battler != null) {
-        if (battler.getTeamID() == teamID) {
-          teamGold += battler.getCreature().getGold();
-        }
-      }
-    }
-    return teamGold;
-  }
-
-  public int getTeamEnemyGold(final int teamID) {
-    int teamEnemyGold = 0;
-    for (final BattleCharacter battler : this.battlers) {
-      if (battler != null) {
-        if (battler.getTeamID() != teamID) {
-          teamEnemyGold += battler.getCreature().getGold();
-        }
-      }
-    }
-    return teamEnemyGold;
-  }
-
   public void resetBattlers() {
     for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
         battler.activate();
         battler.resetActions();
         battler.resetLocation();
+        battler.unmark();
       }
     }
   }
@@ -215,6 +297,7 @@ public class MapBattleDefinitions {
       if (battler != null) {
         if (battler.getCreature().isAlive() && battler.isActive()) {
           battler.resetActions();
+          battler.unmark();
         }
       }
     }
@@ -226,9 +309,7 @@ public class MapBattleDefinitions {
       this.battlers.add(battler);
       this.battlerCount++;
       if (battler.getCreature().hasMapAI()) {
-        this.aiContexts.add(new MapAIContext(battler, this.battleWorld));
-      } else {
-        this.aiContexts.add(null);
+        battler.setAIContext(new MapAIContext(battler, this.battleWorld));
       }
       return true;
     } else {
@@ -241,28 +322,15 @@ public class MapBattleDefinitions {
   }
 
   public BattleCharacter getActiveCharacter() {
-    return this.battlers.get(this.activeID);
+    return this.active;
   }
 
   public MapAIContext getActiveAIContext() {
-    return this.aiContexts.get(this.activeID);
+    return this.active.getAIContext();
   }
 
   public MapAITask getActiveAITask() {
     return new MapAITask(this.battle);
-  }
-
-  public MapAIContext getBattlerAI(final BattleCharacter bc) {
-    for (final MapAIContext maic : this.aiContexts) {
-      if (maic != null && maic.getCharacter().equals(bc)) {
-        return maic;
-      }
-    }
-    return null;
-  }
-
-  public void setActiveCharacterIndex(final int index) {
-    this.activeID = index;
   }
 
   public World getBattleWorld() {

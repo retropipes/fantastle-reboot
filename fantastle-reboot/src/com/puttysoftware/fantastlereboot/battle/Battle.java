@@ -67,7 +67,9 @@ public abstract class Battle {
 
   public abstract void doResult(BattleResults resultCode);
 
-  public abstract void maintainEffects(boolean player);
+  public abstract void maintainEffects();
+
+  public abstract void addSpoils(Creature creature);
 
   public abstract void updatePosition(int x, int y);
 
