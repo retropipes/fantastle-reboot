@@ -7,10 +7,6 @@ package com.puttysoftware.fantastlereboot.battle.map;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.swing.JOptionPane;
 
@@ -56,7 +52,6 @@ public class MapBattleLogic extends Battle {
   private MapBattleDefinitions mbd;
   private AbstractDamageEngine pde;
   private AbstractDamageEngine ede;
-  private final ExecutorService dispatch;
   private final AutoMapAI auto;
   private int damage;
   private int activeIndex;
@@ -74,16 +69,11 @@ public class MapBattleLogic extends Battle {
   private MapBattleGUI battleGUI;
   private List<BattleCharacter> friends;
   private List<BattleCharacter> enemies;
-  private static final int ITEM_ACTION_POINTS = 6;
-  private static final int STEAL_ACTION_POINTS = 3;
-  private static final int DRAIN_ACTION_POINTS = 3;
-  private static final int SPELL_ACTION_POINTS = 1;
 
   // Constructors
   public MapBattleLogic() {
     this.battleGUI = new MapBattleGUI();
     this.auto = new AutoMapAI();
-    this.dispatch = Executors.newCachedThreadPool();
   }
 
   // Methods
@@ -91,52 +81,49 @@ public class MapBattleLogic extends Battle {
   public void doBattle(final int x, final int y) {
     this.bx = x;
     this.by = y;
-    Runnable task = () -> {
-      // Initialize Battle
-      Game.hideOutput();
-      Modes.setInBattle();
-      this.alliesTookDamage = false;
-      this.enemiesTookDamage = false;
-      final World bWorld = World.getTemporaryBattleCopy();
-      final MapBattle b = new MapBattle();
-      this.mbd = new MapBattleDefinitions(this);
-      this.mbd.setBattleWorld(bWorld);
-      this.pde = AbstractDamageEngine.getPlayerInstance();
-      this.ede = AbstractDamageEngine.getEnemyInstance();
-      this.resultDoneAlready = false;
-      // Generate Friends
-      this.friends = PartyManager.getParty().getBattleCharacters();
-      // Generate Enemies
-      this.enemies = b.getBattlers();
-      // Merge and Create AI Contexts
-      for (final BattleCharacter friend : this.friends) {
-        this.mbd.addBattler(friend);
-      }
-      for (final BattleCharacter enemy : this.enemies) {
-        this.mbd.addBattler(enemy);
-      }
-      // Reset Inactive Indicators and Action Counters
-      this.mbd.resetBattlers();
-      // Generate Speed Array
-      this.generateSpeedArray();
-      // Set Character Locations
-      this.setCharacterLocations();
-      // Set First Active
-      this.newRound = this.setNextActive(true);
-      // Clear status message
-      this.clearStatusMessage();
-      // Start Battle
-      this.battleGUI.getViewManager()
-          .setViewingWindowCenterX(this.mbd.getActiveCharacter().getY());
-      this.battleGUI.getViewManager()
-          .setViewingWindowCenterY(this.mbd.getActiveCharacter().getX());
-      SoundPlayer.playSound(SoundIndex.DRAW_SWORD, SoundGroup.BATTLE);
-      MusicPlayer.playMusic(MusicIndex.NORMAL_MAP_BATTLE, MusicGroup.BATTLE);
-      this.showBattle();
-      this.updateStatsAndEffects();
-      this.redrawBattle();
-    };
-    this.dispatch.submit(task);
+    // Initialize Battle
+    Game.hideOutput();
+    Modes.setInBattle();
+    this.alliesTookDamage = false;
+    this.enemiesTookDamage = false;
+    final World bWorld = World.getTemporaryBattleCopy();
+    final MapBattle b = new MapBattle();
+    this.mbd = new MapBattleDefinitions(this);
+    this.mbd.setBattleWorld(bWorld);
+    this.pde = AbstractDamageEngine.getPlayerInstance();
+    this.ede = AbstractDamageEngine.getEnemyInstance();
+    this.resultDoneAlready = false;
+    // Generate Friends
+    this.friends = PartyManager.getParty().getBattleCharacters();
+    // Generate Enemies
+    this.enemies = b.getBattlers();
+    // Merge and Create AI Contexts
+    for (final BattleCharacter friend : this.friends) {
+      this.mbd.addBattler(friend);
+    }
+    for (final BattleCharacter enemy : this.enemies) {
+      this.mbd.addBattler(enemy);
+    }
+    // Reset Inactive Indicators and Action Counters
+    this.mbd.resetBattlers();
+    // Generate Speed Array
+    this.generateSpeedArray();
+    // Set Character Locations
+    this.setCharacterLocations();
+    // Set First Active
+    this.newRound = this.setNextActive(true);
+    // Clear status message
+    this.clearStatusMessage();
+    // Start Battle
+    this.battleGUI.getViewManager()
+        .setViewingWindowCenterX(this.mbd.getActiveCharacter().getY());
+    this.battleGUI.getViewManager()
+        .setViewingWindowCenterY(this.mbd.getActiveCharacter().getX());
+    SoundPlayer.playSound(SoundIndex.DRAW_SWORD, SoundGroup.BATTLE);
+    MusicPlayer.playMusic(MusicIndex.NORMAL_MAP_BATTLE, MusicGroup.BATTLE);
+    this.showBattle();
+    this.updateStatsAndEffects();
+    this.redrawBattle();
   }
 
   @Override
@@ -160,19 +147,16 @@ public class MapBattleLogic extends Battle {
 
   @Override
   public void battleDone() {
-    Runnable task = () -> {
-      if (Modes.inBattle()) {
-        // Leave Battle
-        this.hideBattle();
-        // Post-battle stuff
-        final World m = WorldManager.getWorld();
-        m.postBattle(this.bx, this.by);
-        // Return to whence we came
-        Modes.restore();
-        Game.redrawWorld();
-      }
-    };
-    this.dispatch.submit(task);
+    if (Modes.inBattle()) {
+      // Leave Battle
+      this.hideBattle();
+      // Post-battle stuff
+      final World m = WorldManager.getWorld();
+      m.postBattle(this.bx, this.by);
+      // Return to whence we came
+      Modes.restore();
+      Game.redrawWorld();
+    }
   }
 
   private void clearStatusMessage() {
@@ -210,61 +194,59 @@ public class MapBattleLogic extends Battle {
   }
 
   @Override
-  public void executeNextAIAction() {
+  public boolean executeNextAIAction() {
     if (!Modes.inBattle()) {
       // Abort
-      return;
+      return false;
     }
-    Runnable task = () -> {
-      if (this.mbd != null && this.mbd.getActiveCharacter() != null
-          && this.mbd.getActiveCharacter().getCreature() != null
-          && this.mbd.getActiveCharacter().getCreature().getMapAI() != null) {
-        final BattleCharacter active = this.mbd.getActiveCharacter();
-        if (active.getCreature().isAlive()) {
-          final int action = active.getCreature().getMapAI().getNextAction(
-              this.mbd.getActiveCharacter().getCreature(),
-              this.mbd.getActiveAIContext());
-          switch (action) {
-          case AIRoutine.ACTION_MOVE:
-            final int x = active.getCreature().getMapAI().getMoveX();
-            final int y = active.getCreature().getMapAI().getMoveY();
-            final int activeTID = this.mbd.getActiveCharacter().getTeamID();
-            final AbstractDamageEngine activeDE = activeTID == Creature.TEAM_PARTY
-                ? this.ede
-                : this.pde;
-            this.lastAIActionResult = this.updatePositionInternal(x, y, true,
-                this.mbd.getActiveCharacter(), activeDE);
-            active.getCreature().getMapAI()
-                .setLastResult(this.lastAIActionResult);
-            break;
-          case AIRoutine.ACTION_CAST_SPELL:
-            this.lastAIActionResult = this.castSpell();
-            active.getCreature().getMapAI()
-                .setLastResult(this.lastAIActionResult);
-            break;
-          case AIRoutine.ACTION_DRAIN:
-            this.lastAIActionResult = this.drain();
-            active.getCreature().getMapAI()
-                .setLastResult(this.lastAIActionResult);
-            break;
-          case AIRoutine.ACTION_STEAL:
-            this.lastAIActionResult = this.steal();
-            active.getCreature().getMapAI()
-                .setLastResult(this.lastAIActionResult);
-            break;
-          default:
-            this.lastAIActionResult = true;
-            final MapAITask aiTask = this.mbd.getActiveAITask();
-            if (aiTask != null) {
-              aiTask.aiWait();
-            }
-            this.endTurn();
-            break;
+    if (this.mbd != null && this.mbd.getActiveCharacter() != null
+        && this.mbd.getActiveCharacter().getCreature() != null
+        && this.mbd.getActiveCharacter().getCreature().getMapAI() != null) {
+      final BattleCharacter active = this.mbd.getActiveCharacter();
+      if (active.getCreature().isAlive()) {
+        final int action = active.getCreature().getMapAI().getNextAction(
+            this.mbd.getActiveCharacter().getCreature(),
+            this.mbd.getActiveAIContext());
+        switch (action) {
+        case AIRoutine.ACTION_MOVE:
+          final int x = active.getCreature().getMapAI().getMoveX();
+          final int y = active.getCreature().getMapAI().getMoveY();
+          final int activeTID = this.mbd.getActiveCharacter().getTeamID();
+          final AbstractDamageEngine activeDE = activeTID == Creature.TEAM_PARTY
+              ? this.ede
+              : this.pde;
+          this.lastAIActionResult = this.updatePositionInternal(x, y, true,
+              this.mbd.getActiveCharacter(), activeDE);
+          active.getCreature().getMapAI()
+              .setLastResult(this.lastAIActionResult);
+          break;
+        case AIRoutine.ACTION_CAST_SPELL:
+          this.lastAIActionResult = this.castSpell();
+          active.getCreature().getMapAI()
+              .setLastResult(this.lastAIActionResult);
+          break;
+        case AIRoutine.ACTION_DRAIN:
+          this.lastAIActionResult = this.drain();
+          active.getCreature().getMapAI()
+              .setLastResult(this.lastAIActionResult);
+          break;
+        case AIRoutine.ACTION_STEAL:
+          this.lastAIActionResult = this.steal();
+          active.getCreature().getMapAI()
+              .setLastResult(this.lastAIActionResult);
+          break;
+        default:
+          this.lastAIActionResult = true;
+          final MapAITask aiTask = this.mbd.getActiveAITask();
+          if (aiTask != null) {
+            aiTask.aiWait();
           }
+          this.endTurn();
+          return false;
         }
       }
-    };
-    this.dispatch.submit(task);
+    }
+    return true;
   }
 
   @Override
@@ -522,15 +504,12 @@ public class MapBattleLogic extends Battle {
       // Abort
       return;
     }
-    Runnable task = () -> {
-      final int activeTID = this.mbd.getActiveCharacter().getTeamID();
-      final AbstractDamageEngine activeDE = activeTID == Creature.TEAM_PARTY
-          ? this.ede
-          : this.pde;
-      this.updatePositionInternal(x, y, true, this.mbd.getActiveCharacter(),
-          activeDE);
-    };
-    this.dispatch.submit(task);
+    final int activeTID = this.mbd.getActiveCharacter().getTeamID();
+    final AbstractDamageEngine activeDE = activeTID == Creature.TEAM_PARTY
+        ? this.ede
+        : this.pde;
+    this.updatePositionInternal(x, y, true, this.mbd.getActiveCharacter(),
+        activeDE);
   }
 
   @Override
@@ -926,54 +905,46 @@ public class MapBattleLogic extends Battle {
       // Abort
       return false;
     }
-    Callable<Boolean> task = () -> {
-      final BattleCharacter activeBC = this.mbd.getActiveCharacter();
-      Creature active = null;
-      if (activeBC != null) {
-        active = activeBC.getCreature();
-      }
-      if (activeBC == null || active == null) {
-        // Abort
+    final BattleCharacter activeBC = this.mbd.getActiveCharacter();
+    Creature active = null;
+    if (activeBC != null) {
+      active = activeBC.getCreature();
+    }
+    if (activeBC == null || active == null) {
+      // Abort
+      return false;
+    }
+    // Check Action Counter
+    if (activeBC.canAct(Battle.AP_CAST_SPELL)) {
+      BattleCharacter anyEnemy = this.mbd
+          .getFirstBattlerNotOnTeam(activeBC.getTeamID());
+      if (anyEnemy == null) {
+        // Failed - nobody to use on
+        this.setStatusMessage(activeBC.getName()
+            + " tries to cast a spell, but nobody is there to cast it on!");
         return false;
       }
-      // Check Action Counter
-      if (activeBC.canAct(MapBattleLogic.SPELL_ACTION_POINTS)) {
-        BattleCharacter anyEnemy = this.mbd
-            .getFirstBattlerNotOnTeam(activeBC.getTeamID());
-        if (anyEnemy == null) {
-          // Failed - nobody to use on
-          this.setStatusMessage(activeBC.getName()
-              + " tries to cast a spell, but nobody is there to cast it on!");
-          return false;
+      if (!active.hasMapAI()) {
+        // Active character has no AI, or AI is turned off
+        final boolean success = SpellCaster.selectAndCastSpell(active);
+        if (success) {
+          activeBC.act(Battle.AP_CAST_SPELL);
         }
-        if (!active.hasMapAI()) {
-          // Active character has no AI, or AI is turned off
-          final boolean success = SpellCaster.selectAndCastSpell(active);
-          if (success) {
-            activeBC.act(MapBattleLogic.SPELL_ACTION_POINTS);
-          }
-          return success;
-        } else {
-          // Active character has AI, and AI is turned on
-          final Spell spell = active.getMapAI().getSpellToCast();
-          final boolean success = SpellCaster.castSpell(spell, active);
-          if (success) {
-            activeBC.act(MapBattleLogic.SPELL_ACTION_POINTS);
-          }
-          return success;
-        }
+        return success;
       } else {
-        // Deny cast - out of actions
-        if (!active.hasMapAI()) {
-          this.setStatusMessage("Out of actions!");
+        // Active character has AI, and AI is turned on
+        final Spell spell = active.getMapAI().getSpellToCast();
+        final boolean success = SpellCaster.castSpell(spell, active);
+        if (success) {
+          activeBC.act(Battle.AP_CAST_SPELL);
         }
-        return false;
+        return success;
       }
-    };
-    try {
-      return this.dispatch.submit(task).get();
-    } catch (InterruptedException | ExecutionException e) {
-      FantastleReboot.exception(e);
+    } else {
+      // Deny cast - out of actions
+      if (!active.hasMapAI()) {
+        this.setStatusMessage("Out of actions!");
+      }
       return false;
     }
   }
@@ -984,54 +955,46 @@ public class MapBattleLogic extends Battle {
       // Abort
       return false;
     }
-    Callable<Boolean> task = () -> {
-      final BattleCharacter activeBC = this.mbd.getActiveCharacter();
-      Creature active = null;
-      if (activeBC != null) {
-        active = activeBC.getCreature();
-      }
-      if (activeBC == null || active == null) {
-        // Abort
+    final BattleCharacter activeBC = this.mbd.getActiveCharacter();
+    Creature active = null;
+    if (activeBC != null) {
+      active = activeBC.getCreature();
+    }
+    if (activeBC == null || active == null) {
+      // Abort
+      return false;
+    }
+    // Check Action Counter
+    if (activeBC.canAct(Battle.AP_USE_ITEM)) {
+      BattleCharacter anyEnemy = this.mbd
+          .getFirstBattlerNotOnTeam(activeBC.getTeamID());
+      if (anyEnemy == null) {
+        // Failed - nobody to use on
+        this.setStatusMessage(activeBC.getName()
+            + " tries to use an item, but nobody is there to use it on!");
         return false;
       }
-      // Check Action Counter
-      if (activeBC.canAct(MapBattleLogic.ITEM_ACTION_POINTS)) {
-        BattleCharacter anyEnemy = this.mbd
-            .getFirstBattlerNotOnTeam(activeBC.getTeamID());
-        if (anyEnemy == null) {
-          // Failed - nobody to use on
-          this.setStatusMessage(activeBC.getName()
-              + " tries to use an item, but nobody is there to use it on!");
-          return false;
+      if (!active.hasMapAI()) {
+        // Active character has no AI, or AI is turned off
+        final boolean success = CombatItemChucker.selectAndUseItem(active);
+        if (success) {
+          activeBC.act(Battle.AP_USE_ITEM);
         }
-        if (!active.hasMapAI()) {
-          // Active character has no AI, or AI is turned off
-          final boolean success = CombatItemChucker.selectAndUseItem(active);
-          if (success) {
-            activeBC.act(MapBattleLogic.ITEM_ACTION_POINTS);
-          }
-          return success;
-        } else {
-          // Active character has AI, and AI is turned on
-          final CombatItem cui = active.getMapAI().getItemToUse();
-          final boolean success = CombatItemChucker.useItem(cui, active);
-          if (success) {
-            activeBC.act(MapBattleLogic.ITEM_ACTION_POINTS);
-          }
-          return success;
-        }
+        return success;
       } else {
-        // Deny use - out of actions
-        if (!active.hasMapAI()) {
-          this.setStatusMessage("Out of actions!");
+        // Active character has AI, and AI is turned on
+        final CombatItem cui = active.getMapAI().getItemToUse();
+        final boolean success = CombatItemChucker.useItem(cui, active);
+        if (success) {
+          activeBC.act(Battle.AP_USE_ITEM);
         }
-        return false;
+        return success;
       }
-    };
-    try {
-      return this.dispatch.submit(task).get();
-    } catch (InterruptedException | ExecutionException e) {
-      FantastleReboot.exception(e);
+    } else {
+      // Deny use - out of actions
+      if (!active.hasMapAI()) {
+        this.setStatusMessage("Out of actions!");
+      }
       return false;
     }
   }
@@ -1042,66 +1005,58 @@ public class MapBattleLogic extends Battle {
       // Abort
       return false;
     }
-    Callable<Boolean> task = () -> {
-      final BattleCharacter activeBC = this.mbd.getActiveCharacter();
-      Creature active = null;
-      if (activeBC != null) {
-        active = activeBC.getCreature();
-      }
-      if (activeBC == null || active == null) {
-        // Abort
+    final BattleCharacter activeBC = this.mbd.getActiveCharacter();
+    Creature active = null;
+    if (activeBC != null) {
+      active = activeBC.getCreature();
+    }
+    if (activeBC == null || active == null) {
+      // Abort
+      return false;
+    }
+    // Check Action Counter
+    if (activeBC.canAct(Battle.AP_STEAL)) {
+      int stealAmount = 0;
+      final int stealChance = StatConstants.CHANCE_STEAL;
+      activeBC.act(Battle.AP_STEAL);
+      BattleCharacter anyEnemy = this.mbd
+          .getFirstBattlerNotOnTeam(activeBC.getTeamID());
+      if (anyEnemy == null) {
+        // Failed - nobody to steal from
+        this.setStatusMessage(activeBC.getName()
+            + " tries to steal, but nobody is there to steal from!");
         return false;
       }
-      // Check Action Counter
-      if (activeBC.canAct(MapBattleLogic.STEAL_ACTION_POINTS)) {
-        int stealAmount = 0;
-        final int stealChance = StatConstants.CHANCE_STEAL;
-        activeBC.act(MapBattleLogic.STEAL_ACTION_POINTS);
-        BattleCharacter anyEnemy = this.mbd
-            .getFirstBattlerNotOnTeam(activeBC.getTeamID());
-        if (anyEnemy == null) {
-          // Failed - nobody to steal from
+      Creature activeEnemy = anyEnemy.getCreature();
+      final RandomRange chance = new RandomRange(0, 100);
+      final int randomChance = chance.generate();
+      if (randomChance <= stealChance) {
+        // Succeeded
+        final RandomRange stole = new RandomRange(0, activeEnemy.getGold());
+        stealAmount = stole.generate();
+        if (stealAmount == 0) {
           this.setStatusMessage(activeBC.getName()
-              + " tries to steal, but nobody is there to steal from!");
+              + " tries to steal, but no Gold is left to steal!");
           return false;
-        }
-        Creature activeEnemy = anyEnemy.getCreature();
-        final RandomRange chance = new RandomRange(0, 100);
-        final int randomChance = chance.generate();
-        if (randomChance <= stealChance) {
-          // Succeeded
-          final RandomRange stole = new RandomRange(0, activeEnemy.getGold());
-          stealAmount = stole.generate();
-          if (stealAmount == 0) {
-            this.setStatusMessage(activeBC.getName()
-                + " tries to steal, but no Gold is left to steal!");
-            return false;
-          } else {
-            activeEnemy.offsetGold(-stealAmount);
-            active.offsetGold(stealAmount);
-            this.setStatusMessage(
-                activeBC.getName() + " tries to steal, and successfully stole "
-                    + stealAmount + " Gold!");
-            return true;
-          }
         } else {
-          // Failed
+          activeEnemy.offsetGold(-stealAmount);
+          active.offsetGold(stealAmount);
           this.setStatusMessage(
-              activeBC.getName() + " tries to steal, but fails!");
-          return false;
+              activeBC.getName() + " tries to steal, and successfully stole "
+                  + stealAmount + " Gold!");
+          return true;
         }
       } else {
-        // Deny steal - out of actions
-        if (!active.hasMapAI()) {
-          this.setStatusMessage("Out of actions!");
-        }
+        // Failed
+        this.setStatusMessage(
+            activeBC.getName() + " tries to steal, but fails!");
         return false;
       }
-    };
-    try {
-      return this.dispatch.submit(task).get();
-    } catch (InterruptedException | ExecutionException e) {
-      FantastleReboot.exception(e);
+    } else {
+      // Deny steal - out of actions
+      if (!active.hasMapAI()) {
+        this.setStatusMessage("Out of actions!");
+      }
       return false;
     }
   }
@@ -1112,38 +1067,57 @@ public class MapBattleLogic extends Battle {
       // Abort
       return false;
     }
-    Callable<Boolean> task = () -> {
-      final BattleCharacter activeBC = this.mbd.getActiveCharacter();
-      Creature active = null;
-      if (activeBC != null) {
-        active = activeBC.getCreature();
-      }
-      if (activeBC == null || active == null) {
-        // Abort
+    final BattleCharacter activeBC = this.mbd.getActiveCharacter();
+    Creature active = null;
+    if (activeBC != null) {
+      active = activeBC.getCreature();
+    }
+    if (activeBC == null || active == null) {
+      // Abort
+      return false;
+    }
+    // Check Action Counter
+    if (activeBC.canAct(Battle.AP_DRAIN)) {
+      int drainChance;
+      int drainAmount = 0;
+      drainChance = StatConstants.CHANCE_DRAIN;
+      activeBC.act(Battle.AP_DRAIN);
+      BattleCharacter anyEnemy = this.mbd
+          .getFirstBattlerNotOnTeam(activeBC.getTeamID());
+      if (anyEnemy == null) {
+        // Failed - nobody to drain from
+        this.setStatusMessage(activeBC.getName()
+            + " tries to drain, but nobody is there to drain from!");
         return false;
       }
-      // Check Action Counter
-      if (activeBC.canAct(MapBattleLogic.DRAIN_ACTION_POINTS)) {
-        int drainChance;
-        int drainAmount = 0;
-        drainChance = StatConstants.CHANCE_DRAIN;
-        activeBC.act(MapBattleLogic.DRAIN_ACTION_POINTS);
-        BattleCharacter anyEnemy = this.mbd
-            .getFirstBattlerNotOnTeam(activeBC.getTeamID());
-        if (anyEnemy == null) {
-          // Failed - nobody to drain from
+      Creature activeEnemy = anyEnemy.getCreature();
+      if (drainChance <= 0) {
+        // Failed
+        this.setStatusMessage(
+            activeBC.getName() + " tries to drain, but fails!");
+        return false;
+      } else if (drainChance >= 100) {
+        // Succeeded, unless target has 0 MP
+        final RandomRange drained = new RandomRange(0,
+            activeEnemy.getCurrentMP());
+        drainAmount = drained.generate();
+        if (drainAmount == 0) {
           this.setStatusMessage(activeBC.getName()
-              + " tries to drain, but nobody is there to drain from!");
+              + " tries to drain, but no MP is left to drain!");
           return false;
-        }
-        Creature activeEnemy = anyEnemy.getCreature();
-        if (drainChance <= 0) {
-          // Failed
+        } else {
+          activeEnemy.offsetCurrentMP(-drainAmount);
+          active.offsetCurrentMP(drainAmount);
           this.setStatusMessage(
-              activeBC.getName() + " tries to drain, but fails!");
-          return false;
-        } else if (drainChance >= 100) {
-          // Succeeded, unless target has 0 MP
+              activeBC.getName() + " tries to drain, and successfully drains "
+                  + drainAmount + " MP!");
+          return true;
+        }
+      } else {
+        final RandomRange chance = new RandomRange(0, 100);
+        final int randomChance = chance.generate();
+        if (randomChance <= drainChance) {
+          // Succeeded
           final RandomRange drained = new RandomRange(0,
               activeEnemy.getCurrentMP());
           drainAmount = drained.generate();
@@ -1160,44 +1134,17 @@ public class MapBattleLogic extends Battle {
             return true;
           }
         } else {
-          final RandomRange chance = new RandomRange(0, 100);
-          final int randomChance = chance.generate();
-          if (randomChance <= drainChance) {
-            // Succeeded
-            final RandomRange drained = new RandomRange(0,
-                activeEnemy.getCurrentMP());
-            drainAmount = drained.generate();
-            if (drainAmount == 0) {
-              this.setStatusMessage(activeBC.getName()
-                  + " tries to drain, but no MP is left to drain!");
-              return false;
-            } else {
-              activeEnemy.offsetCurrentMP(-drainAmount);
-              active.offsetCurrentMP(drainAmount);
-              this.setStatusMessage(activeBC.getName()
-                  + " tries to drain, and successfully drains " + drainAmount
-                  + " MP!");
-              return true;
-            }
-          } else {
-            // Failed
-            this.setStatusMessage(
-                activeBC.getName() + " tries to drain, but fails!");
-            return false;
-          }
+          // Failed
+          this.setStatusMessage(
+              activeBC.getName() + " tries to drain, but fails!");
+          return false;
         }
-      } else {
-        // Deny drain - out of actions
-        if (!active.hasMapAI()) {
-          this.setStatusMessage("Out of actions!");
-        }
-        return false;
       }
-    };
-    try {
-      return this.dispatch.submit(task).get();
-    } catch (InterruptedException | ExecutionException e) {
-      FantastleReboot.exception(e);
+    } else {
+      // Deny drain - out of actions
+      if (!active.hasMapAI()) {
+        this.setStatusMessage("Out of actions!");
+      }
       return false;
     }
   }
@@ -1208,26 +1155,23 @@ public class MapBattleLogic extends Battle {
       // Abort
       return;
     }
-    Runnable task = () -> {
+    this.newRound = this.setNextActive(this.newRound);
+    if (this.newRound) {
+      this.setStatusMessage("New Round");
       this.newRound = this.setNextActive(this.newRound);
-      if (this.newRound) {
-        this.setStatusMessage("New Round");
-        this.newRound = this.setNextActive(this.newRound);
-        // Check result
-        BattleResults currResult = this.getResult();
-        if (currResult != BattleResults.IN_PROGRESS) {
-          this.doResult(currResult);
-          return;
-        }
+      // Check result
+      BattleResults currResult = this.getResult();
+      if (currResult != BattleResults.IN_PROGRESS) {
+        this.doResult(currResult);
+        return;
       }
-      this.updateStatsAndEffects();
-      this.battleGUI.getViewManager()
-          .setViewingWindowCenterX(this.mbd.getActiveCharacter().getY());
-      this.battleGUI.getViewManager()
-          .setViewingWindowCenterY(this.mbd.getActiveCharacter().getX());
-      this.redrawBattle();
-    };
-    this.dispatch.submit(task);
+    }
+    this.updateStatsAndEffects();
+    this.battleGUI.getViewManager()
+        .setViewingWindowCenterX(this.mbd.getActiveCharacter().getY());
+    this.battleGUI.getViewManager()
+        .setViewingWindowCenterY(this.mbd.getActiveCharacter().getX());
+    this.redrawBattle();
   }
 
   private void redrawBattle() {
@@ -1410,65 +1354,61 @@ public class MapBattleLogic extends Battle {
       // Abort
       return;
     }
-    Runnable task = () -> {
-      this.stopWaitingForAI();
-      if (!this.resultDoneAlready) {
-        // Handle Results
-        this.resultDoneAlready = true;
-        boolean bossFlag = this.mbd
-            .getFirstBattlerOnTeam(Creature.TEAM_BOSS) != null;
-        boolean rewardsFlag = false;
-        if (result == BattleResults.WON) {
-          SoundPlayer.playSound(SoundIndex.VICTORY, SoundGroup.BATTLE);
-          CommonDialogs.showTitledDialog("The party is victorious!",
-              "Victory!");
-          PartyManager.getParty().getLeader().offsetGold(this.getGold());
-          PartyManager.getParty().getLeader().offsetExperience(this.battleExp);
-          if (bossFlag) {
-            rewardsFlag = true;
-          }
-        } else if (result == BattleResults.PERFECT) {
-          SoundPlayer.playSound(SoundIndex.VICTORY, SoundGroup.BATTLE);
-          CommonDialogs.showTitledDialog(
-              "The party is victorious, and escaped unharmed!",
-              "Perfect Victory!");
-          PartyManager.getParty().getLeader().offsetGold(this.getGold());
-          PartyManager.getParty().getLeader().offsetExperience(this.battleExp);
-          if (bossFlag) {
-            rewardsFlag = true;
-          }
-        } else if (result == BattleResults.LOST) {
-          CommonDialogs.showTitledDialog("The party has been defeated...",
-              "Defeat...");
-        } else if (result == BattleResults.ANNIHILATED) {
-          CommonDialogs.showTitledDialog("The party has been annihilated!",
-              "Annihilation!");
-        } else if (result == BattleResults.DRAW) {
-          CommonDialogs.showTitledDialog("The battle was a draw.", "Draw");
-        } else if (result == BattleResults.FLED) {
-          CommonDialogs.showTitledDialog("The party fled!", "Party Fled");
-        } else if (result == BattleResults.ENEMY_FLED) {
-          CommonDialogs.showTitledDialog("The enemies fled!", "Enemies Fled");
-        } else if (result == BattleResults.IN_PROGRESS) {
-          CommonDialogs.showTitledDialog(
-              "The battle isn't over, but somehow the game thinks it is.",
-              "Uh-Oh!");
-        } else {
-          CommonDialogs.showTitledDialog("The result of the battle is unknown!",
-              "Uh-Oh!");
+    this.stopWaitingForAI();
+    if (!this.resultDoneAlready) {
+      // Handle Results
+      this.resultDoneAlready = true;
+      boolean bossFlag = this.mbd
+          .getFirstBattlerOnTeam(Creature.TEAM_BOSS) != null;
+      boolean rewardsFlag = false;
+      if (result == BattleResults.WON) {
+        SoundPlayer.playSound(SoundIndex.VICTORY, SoundGroup.BATTLE);
+        CommonDialogs.showTitledDialog("The party is victorious!", "Victory!");
+        PartyManager.getParty().getLeader().offsetGold(this.getGold());
+        PartyManager.getParty().getLeader().offsetExperience(this.battleExp);
+        if (bossFlag) {
+          rewardsFlag = true;
         }
-        // Strip effects
-        PartyManager.getParty().getLeader().stripAllEffects();
-        // Level Up Check
-        PartyManager.getParty().checkPartyLevelUp();
-        // Battle Done
-        this.battleDone();
-        if (rewardsFlag) {
-          BossRewards.doRewards();
+      } else if (result == BattleResults.PERFECT) {
+        SoundPlayer.playSound(SoundIndex.VICTORY, SoundGroup.BATTLE);
+        CommonDialogs.showTitledDialog(
+            "The party is victorious, and escaped unharmed!",
+            "Perfect Victory!");
+        PartyManager.getParty().getLeader().offsetGold(this.getGold());
+        PartyManager.getParty().getLeader().offsetExperience(this.battleExp);
+        if (bossFlag) {
+          rewardsFlag = true;
         }
+      } else if (result == BattleResults.LOST) {
+        CommonDialogs.showTitledDialog("The party has been defeated...",
+            "Defeat...");
+      } else if (result == BattleResults.ANNIHILATED) {
+        CommonDialogs.showTitledDialog("The party has been annihilated!",
+            "Annihilation!");
+      } else if (result == BattleResults.DRAW) {
+        CommonDialogs.showTitledDialog("The battle was a draw.", "Draw");
+      } else if (result == BattleResults.FLED) {
+        CommonDialogs.showTitledDialog("The party fled!", "Party Fled");
+      } else if (result == BattleResults.ENEMY_FLED) {
+        CommonDialogs.showTitledDialog("The enemies fled!", "Enemies Fled");
+      } else if (result == BattleResults.IN_PROGRESS) {
+        CommonDialogs.showTitledDialog(
+            "The battle isn't over, but somehow the game thinks it is.",
+            "Uh-Oh!");
+      } else {
+        CommonDialogs.showTitledDialog("The result of the battle is unknown!",
+            "Uh-Oh!");
       }
-    };
-    this.dispatch.submit(task);
+      // Strip effects
+      PartyManager.getParty().getLeader().stripAllEffects();
+      // Level Up Check
+      PartyManager.getParty().checkPartyLevelUp();
+      // Battle Done
+      this.battleDone();
+      if (rewardsFlag) {
+        BossRewards.doRewards();
+      }
+    }
   }
 
   @Override

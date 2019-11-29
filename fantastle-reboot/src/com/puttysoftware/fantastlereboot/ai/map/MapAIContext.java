@@ -8,6 +8,7 @@ package com.puttysoftware.fantastlereboot.ai.map;
 import java.awt.Point;
 
 import com.puttysoftware.fantastlereboot.ai.AIContext;
+import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
@@ -37,7 +38,7 @@ public class MapAIContext extends AIContext {
         if (obj.isSolid()) {
           this.apCosts[x][y] = AIContext.CANNOT_MOVE_THERE;
         } else {
-          this.apCosts[x][y] = AIContext.DEFAULT_AP_COST;
+          this.apCosts[x][y] = Battle.AP_MOVE;
         }
       }
     }

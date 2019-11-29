@@ -9,6 +9,7 @@ import java.awt.Point;
 
 import com.puttysoftware.fantastlereboot.ai.AIContext;
 import com.puttysoftware.fantastlereboot.ai.AIRoutine;
+import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.randomrange.RandomRange;
 
@@ -43,16 +44,17 @@ class VeryHardMapAIRoutine extends AbstractMapAIRoutine {
     } else {
       Point there = ac.isEnemyNearby();
       if (there != null) {
-        if (CommonMapAIRoutines.check(ac, VeryHardMapAIRoutine.STEAL_CHANCE)) {
+        if (CommonMapAIRoutines.check(ac, VeryHardMapAIRoutine.STEAL_CHANCE,
+            Battle.AP_STEAL)) {
           // Steal
           return AIRoutine.ACTION_STEAL;
         } else if (CommonMapAIRoutines.check(ac,
-            VeryHardMapAIRoutine.DRAIN_CHANCE)) {
+            VeryHardMapAIRoutine.DRAIN_CHANCE, Battle.AP_DRAIN)) {
           // Drain MP
           return AIRoutine.ACTION_DRAIN;
         } else {
           // Something hostile is nearby, so attack it
-          if (ac.getCharacter().getCurrentActions() > 0) {
+          if (ac.getCharacter().canAct(Battle.AP_MOVE)) {
             this.moveX = there.x;
             this.moveY = there.y;
             return AIRoutine.ACTION_MOVE;
@@ -62,7 +64,8 @@ class VeryHardMapAIRoutine extends AbstractMapAIRoutine {
           }
         }
       } else {
-        if (CommonMapAIRoutines.check(ac, VeryHardMapAIRoutine.FLEE_CHANCE)) {
+        if (CommonMapAIRoutines.check(ac, VeryHardMapAIRoutine.FLEE_CHANCE,
+            Battle.AP_MOVE)) {
           // Flee
           final Point awayDir = ac.runAway();
           if (awayDir == null) {
@@ -113,7 +116,7 @@ class VeryHardMapAIRoutine extends AbstractMapAIRoutine {
             }
           }
         }
-        if (ac.getCharacter().getCurrentActions() > 0) {
+        if (ac.getCharacter().canAct(Battle.AP_MOVE)) {
           if (there == null) {
             // Wander randomly
             this.moveX = this.randMove.generate();
@@ -139,7 +142,7 @@ class VeryHardMapAIRoutine extends AbstractMapAIRoutine {
     if (chance <= VeryHardMapAIRoutine.CAST_SPELL_CHANCE) {
       final int maxIndex = CommonMapAIRoutines.getMaxCastIndex(ac);
       if (maxIndex > -1) {
-        if (ac.getCharacter().getCurrentActions() > 0) {
+        if (ac.getCharacter().canAct(Battle.AP_CAST_SPELL)) {
           // Select a random spell to cast
           final RandomRange randomSpell = new RandomRange(0, maxIndex);
           final int randomSpellID = randomSpell.generate();

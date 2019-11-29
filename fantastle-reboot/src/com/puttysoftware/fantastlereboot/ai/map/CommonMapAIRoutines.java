@@ -80,11 +80,12 @@ class CommonMapAIRoutines {
     return result;
   }
 
-  static boolean check(final AIContext ac, final int effChance) {
+  static boolean check(final AIContext ac, final int effChance,
+      final int apCost) {
     final RandomRange random = new RandomRange(1, 100);
     final int chance = random.generate();
     if (chance <= effChance) {
-      if (ac.getCharacter().getCurrentActions() > 0) {
+      if (ac.getCharacter().canAct(apCost)) {
         return true;
       } else {
         // Can't act any more times

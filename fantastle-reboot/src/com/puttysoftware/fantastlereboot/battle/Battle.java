@@ -10,6 +10,13 @@ import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 
 public abstract class Battle {
+  // Constants
+  public static final int AP_USE_ITEM = 2;
+  public static final int AP_STEAL = 3;
+  public static final int AP_DRAIN = 3;
+  public static final int AP_CAST_SPELL = 2;
+  public static final int AP_MOVE = 1;
+
   // Constructors
   protected Battle() {
     // Do nothing
@@ -28,7 +35,7 @@ public abstract class Battle {
 
   public abstract void setStatusMessage(final String msg);
 
-  public abstract void executeNextAIAction();
+  public abstract boolean executeNextAIAction();
 
   public abstract boolean getLastAIActionResult();
 

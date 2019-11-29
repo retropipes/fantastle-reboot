@@ -7,6 +7,7 @@ package com.puttysoftware.fantastlereboot.ai;
 
 import java.awt.Point;
 
+import com.puttysoftware.fantastlereboot.battle.Battle;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 import com.puttysoftware.fantastlereboot.world.World;
 
@@ -17,7 +18,6 @@ public abstract class AIContext {
   protected static final int MAXIMUM_RADIUS = 16;
   protected static final int NOTHING_THERE = -1;
   protected static final int CANNOT_MOVE_THERE = -1;
-  protected static final int DEFAULT_AP_COST = 1;
 
   // Constructor
   protected AIContext(final BattleCharacter creature) {
@@ -27,7 +27,7 @@ public abstract class AIContext {
 
   // Static method
   public static int getDefaultAPCost() {
-    return AIContext.DEFAULT_AP_COST;
+    return Battle.AP_MOVE;
   }
 
   // Methods
