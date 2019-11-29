@@ -52,7 +52,7 @@ public class Party {
   }
 
   public List<BattleCharacter> getBattleCharacters() {
-    if (this.battlers == null) {
+    if (this.battlers.isEmpty()) {
       this.generateBattleCharacters();
     }
     return this.battlers;
