@@ -22,7 +22,6 @@ public class MapBattleDefinitions {
   // Fields
   private final List<BattleCharacter> battlers;
   private final List<MapAIContext> aiContexts;
-  private final List<MapAITask> aiTasks;
   private World battleWorld;
   private final Battle battle;
   private int battlerCount;
@@ -35,7 +34,6 @@ public class MapBattleDefinitions {
     this.battlerCount = 0;
     this.battlers = new ArrayList<>();
     this.aiContexts = new ArrayList<>();
-    this.aiTasks = new ArrayList<>();
   }
 
   // Nested class
@@ -228,12 +226,8 @@ public class MapBattleDefinitions {
       this.battlerCount++;
       if (battler.getCreature().hasMapAI()) {
         this.aiContexts.add(new MapAIContext(battler, this.battleWorld));
-        MapAITask task = new MapAITask(this.battle);
-        this.aiTasks.add(task);
-        task.start();
       } else {
         this.aiContexts.add(null);
-        this.aiTasks.add(null);
       }
       return true;
     } else {
@@ -254,7 +248,7 @@ public class MapBattleDefinitions {
   }
 
   public MapAITask getActiveAITask() {
-    return this.aiTasks.get(this.activeID);
+    return new MapAITask(this.battle);
   }
 
   public MapAIContext getBattlerAI(final BattleCharacter bc) {

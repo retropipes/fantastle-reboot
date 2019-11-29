@@ -22,33 +22,23 @@ public class MapAITask extends Thread {
   @Override
   public void run() {
     try {
-      this.aiWait();
-      while (true) {
-        this.b.executeNextAIAction();
-        if (this.b.getLastAIActionResult()) {
-          // Delay, for animation purposes
-          try {
-            final int battleSpeed = Prefs.getBattleSpeed();
-            Thread.sleep(battleSpeed);
-          } catch (final InterruptedException i) {
-            // Ignore
+      boolean keepGoing = true;
+      while (keepGoing) {
+        keepGoing = this.b.executeNextAIAction();
+        if (keepGoing) {
+          if (this.b.getLastAIActionResult()) {
+            // Delay, for animation purposes
+            try {
+              final int battleSpeed = Prefs.getBattleSpeed();
+              Thread.sleep(battleSpeed);
+            } catch (final InterruptedException i) {
+              // Ignore
+            }
           }
         }
       }
     } catch (final Throwable t) {
       FantastleReboot.exception(t);
     }
-  }
-
-  public synchronized void aiWait() {
-    try {
-      this.wait();
-    } catch (final InterruptedException e) {
-      // Ignore
-    }
-  }
-
-  public synchronized void aiRun() {
-    this.notify();
   }
 }

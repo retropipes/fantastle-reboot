@@ -237,10 +237,6 @@ public class MapBattleLogic extends Battle {
           break;
         default:
           this.lastAIActionResult = true;
-          final MapAITask aiTask = this.mbd.getActiveAITask();
-          if (aiTask != null) {
-            aiTask.aiWait();
-          }
           this.endTurn();
           return false;
         }
@@ -450,10 +446,7 @@ public class MapBattleLogic extends Battle {
       if (this.mbd.getActiveCharacter().getCreature().hasMapAI()) {
         // Run AI
         this.waitForAI();
-        final MapAITask task = this.mbd.getActiveAITask();
-        if (task != null) {
-          task.aiRun();
-        }
+        this.mbd.getActiveAITask().start();
       } else {
         // No AI
         this.stopWaitingForAI();
