@@ -241,18 +241,21 @@ public class MapBattleDefinitions {
   boolean setNextActive() {
     int highestSpeed = Integer.MIN_VALUE;
     for (final BattleCharacter battler : this.battlers) {
-      if (battler != null && !battler.isMarked()) {
+      if (battler != null && battler.isActive()
+          && battler.getCreature().isAlive() && !battler.isMarked()) {
         Creature creature = battler.getCreature();
-        if (battler.isActive() && creature.isAlive()) {
-          int creatureSpeed = (int) creature
-              .getEffectedStat(StatConstants.STAT_AGILITY);
-          if (creatureSpeed > highestSpeed) {
-            highestSpeed = creatureSpeed;
-            this.active = battler;
-            battler.mark();
-          }
+        int creatureSpeed = (int) creature
+            .getEffectedStat(StatConstants.STAT_AGILITY);
+        if (creatureSpeed > highestSpeed) {
+          highestSpeed = creatureSpeed;
+          this.active = battler;
         }
       }
+    }
+    if (highestSpeed != Integer.MIN_VALUE) {
+      this.active.mark();
+    } else {
+      this.active = null;
     }
     return highestSpeed != Integer.MIN_VALUE;
   }
@@ -308,9 +311,7 @@ public class MapBattleDefinitions {
       battler.getCreature().loadCreature();
       this.battlers.add(battler);
       this.battlerCount++;
-      if (battler.getCreature().hasMapAI()) {
-        battler.setAIContext(new MapAIContext(battler, this.battleWorld));
-      }
+      battler.setAIContext(new MapAIContext(battler, this.battleWorld));
       return true;
     } else {
       return false;

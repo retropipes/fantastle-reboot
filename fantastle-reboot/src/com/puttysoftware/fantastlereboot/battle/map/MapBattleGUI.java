@@ -33,6 +33,7 @@ import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objects.Nothing;
+import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 import com.puttysoftware.images.BufferedImageIcon;
 
 class MapBattleGUI {
@@ -157,8 +158,11 @@ class MapBattleGUI {
   }
 
   void updateStatsAndEffects(final MapBattleDefinitions mbd) {
-    this.bs.updateStats(mbd.getActiveCharacter());
-    this.be.updateEffects(mbd.getActiveCharacter());
+    BattleCharacter activeCharacter = mbd.getActiveCharacter();
+    if (activeCharacter != null) {
+      this.bs.updateStats(activeCharacter);
+      this.be.updateEffects(activeCharacter);
+    }
   }
 
   private void setUpGUI() {

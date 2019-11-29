@@ -397,6 +397,13 @@ public class MapBattleLogic extends Battle {
       // Abort
       return false;
     }
+    // Check result
+    final BattleResults currResult = this.getResult();
+    if (currResult != BattleResults.IN_PROGRESS) {
+      // Battle Done
+      this.doResult(currResult);
+      return false;
+    }
     boolean res = this.mbd.setNextActive();
     if (res) {
       // AI Check
@@ -415,7 +422,6 @@ public class MapBattleLogic extends Battle {
       this.mbd.roundResetBattlers();
       // Maintain effects
       this.maintainEffects();
-      this.updateStatsAndEffects();
       // Perform new round actions
       this.performNewRoundActions();
       // Play new round sound
