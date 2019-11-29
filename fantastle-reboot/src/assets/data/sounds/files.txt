@@ -159,3 +159,4 @@ wear_off
 win_game
 wrong
 zap
+haunted

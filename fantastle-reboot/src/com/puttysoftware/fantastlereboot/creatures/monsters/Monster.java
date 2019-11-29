@@ -9,6 +9,8 @@ import com.puttysoftware.fantastlereboot.ai.map.AbstractMapAIRoutine;
 import com.puttysoftware.fantastlereboot.ai.map.MapAIRoutinePicker;
 import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.ai.window.WindowAIRoutinePicker;
+import com.puttysoftware.fantastlereboot.assets.SoundGroup;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.creatures.jobs.JobManager;
@@ -20,6 +22,7 @@ import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.loaders.MonsterImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.MonsterNames;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
 import com.puttysoftware.fantastlereboot.spells.SpellBookManager;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -88,12 +91,12 @@ public final class Monster extends Creature {
 
   @Override
   public void onGotKilled() {
-    // Do nothing
+    SoundPlayer.playSound(SoundIndex.DEATH, SoundGroup.BATTLE);
   }
 
   @Override
   public void onGotAnnihilated() {
-    // Do nothing
+    SoundPlayer.playSound(SoundIndex.DEATH, SoundGroup.BATTLE);
   }
 
   @Override

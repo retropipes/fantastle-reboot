@@ -5,6 +5,8 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.creatures.party;
 
+import com.puttysoftware.fantastlereboot.assets.SoundGroup;
+import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
@@ -16,6 +18,7 @@ import com.puttysoftware.fantastlereboot.game.Game;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.loaders.AvatarImageLoader;
+import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
 import com.puttysoftware.fantastlereboot.world.GenerateTask;
 import com.puttysoftware.images.BufferedImageIcon;
@@ -272,10 +275,12 @@ public class PartyMember extends Creature {
 
   @Override
   public void onGotKilled() {
+    SoundPlayer.playSound(SoundIndex.HAUNTED, SoundGroup.BATTLE);
   }
 
   @Override
   public void onGotAnnihilated() {
+    SoundPlayer.playSound(SoundIndex.HAUNTED, SoundGroup.BATTLE);
   }
 
   @Override

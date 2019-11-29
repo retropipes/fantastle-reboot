@@ -14,6 +14,8 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
+import com.puttysoftware.fantastlereboot.FantastleReboot;
+
 class OggPlayer {
   private AudioInputStream stream;
   private AudioInputStream decodedStream;
@@ -28,52 +30,46 @@ class OggPlayer {
 
   public void playLoop() {
     while (!this.stop) {
-      try {
-        // Get AudioInputStream from given file.
-        this.decodedStream = null;
-        if (this.stream != null) {
-          this.format = this.stream.getFormat();
-          this.decodedFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
-              this.format.getSampleRate(), 16, this.format.getChannels(),
-              this.format.getChannels() * 2, this.format.getSampleRate(),
-              false);
-          // Get AudioInputStream that will be decoded by underlying
-          // VorbisSPI
-          this.decodedStream = AudioSystem
-              .getAudioInputStream(this.decodedFormat, this.stream);
-        }
-      } catch (Exception e) {
-        // Do nothing
-      }
-      try (SourceDataLine line = OggPlayer.getLine(this.decodedFormat)) {
-        if (line != null) {
-          try {
-            byte[] data = new byte[4096];
-            // Start
-            line.start();
-            int nBytesRead = 0;
-            while (nBytesRead != -1) {
-              nBytesRead = this.decodedStream.read(data, 0, data.length);
-              if (nBytesRead != -1) {
-                line.write(data, 0, nBytesRead);
+      // Get AudioInputStream from given file.
+      if (this.stream != null) {
+        this.format = this.stream.getFormat();
+        this.decodedFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
+            this.format.getSampleRate(), 16, this.format.getChannels(),
+            this.format.getChannels() * 2, this.format.getSampleRate(), false);
+        // Get AudioInputStream that will be decoded by underlying
+        // VorbisSPI
+        this.decodedStream = AudioSystem.getAudioInputStream(this.decodedFormat,
+            this.stream);
+        try (SourceDataLine line = OggPlayer.getLine(this.decodedFormat)) {
+          if (line != null) {
+            try {
+              byte[] data = new byte[4096];
+              // Start
+              line.start();
+              int nBytesRead = 0;
+              while (nBytesRead != -1) {
+                nBytesRead = this.decodedStream.read(data, 0, data.length);
+                if (nBytesRead != -1) {
+                  line.write(data, 0, nBytesRead);
+                }
+                if (this.stop) {
+                  break;
+                }
               }
-              if (this.stop) {
-                break;
-              }
+              // Stop
+              line.drain();
+              line.stop();
+            } catch (IOException io) {
+              FantastleReboot.exception(io);
+            } finally {
+              // Stop
+              line.drain();
+              line.stop();
             }
-            // Stop
-            line.drain();
-            line.stop();
-          } catch (IOException io) {
-            // Do nothing
-          } finally {
-            // Stop
-            line.drain();
-            line.stop();
           }
+        } catch (LineUnavailableException lue) {
+          FantastleReboot.exception(lue);
         }
-      } catch (LineUnavailableException lue) {
-        // Do nothing
       }
     }
   }
