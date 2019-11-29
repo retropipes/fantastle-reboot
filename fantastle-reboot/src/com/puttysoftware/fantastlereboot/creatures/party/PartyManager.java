@@ -86,10 +86,10 @@ public class PartyManager {
           final int as = RandomRange.generate(0, 9);
           final int ah = RandomRange.generate(0, 9);
           pc = PartyManager.getNewPCInstance(ii, r, j, f, n, af, as, ah);
+          CharacterRegistration.autoregisterCharacter(pc.getName());
+          CharacterSaver.saveCharacter(pc);
+          regLen++;
         }
-        CharacterRegistration.autoregisterCharacter(pc.getName());
-        CharacterSaver.saveCharacter(pc);
-        regLen++;
         PartyManager.party.addPartyMember(pc);
         mem++;
       }
