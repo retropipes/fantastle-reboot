@@ -148,6 +148,7 @@ public class MapBattleDefinitions {
           }
           battler.setX(rx);
           battler.setY(ry);
+          this.battleWorld.setCell(battler, rx, ry, 0, Layers.OBJECT);
         }
       }
     }
