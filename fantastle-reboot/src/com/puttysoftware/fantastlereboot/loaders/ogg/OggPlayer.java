@@ -5,6 +5,8 @@ All support is handled via the GitHub repository: https://github.com/wrldwzrd89/
  */
 package com.puttysoftware.fantastlereboot.loaders.ogg;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import javax.sound.sampled.AudioFormat;
@@ -28,48 +30,66 @@ class OggPlayer {
     this.stop = false;
   }
 
-  public void playLoop() {
-    while (!this.stop) {
-      // Get AudioInputStream from given file.
-      if (this.stream != null) {
-        this.format = this.stream.getFormat();
-        this.decodedFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
-            this.format.getSampleRate(), 16, this.format.getChannels(),
-            this.format.getChannels() * 2, this.format.getSampleRate(), false);
-        // Get AudioInputStream that will be decoded by underlying
-        // VorbisSPI
-        this.decodedStream = AudioSystem.getAudioInputStream(this.decodedFormat,
-            this.stream);
-        try (SourceDataLine line = OggPlayer.getLine(this.decodedFormat)) {
-          if (line != null) {
-            try {
-              byte[] data = new byte[4096];
-              // Start
-              line.start();
+  public void playLoop() throws IOException {
+    byte[] oggData = null;
+    final byte[] buf = new byte[4096];
+    // Get AudioInputStream from given file.
+    if (this.stream != null) {
+      this.format = this.stream.getFormat();
+      this.decodedFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
+          this.format.getSampleRate(), 16, this.format.getChannels(),
+          this.format.getChannels() * 2, this.format.getSampleRate(), false);
+      // Get AudioInputStream that will be decoded by underlying
+      // VorbisSPI
+      this.decodedStream = AudioSystem.getAudioInputStream(this.decodedFormat,
+          this.stream);
+      try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+        // Start
+        int nBytesRead = 0;
+        while (nBytesRead != -1) {
+          nBytesRead = this.decodedStream.read(buf, 0, buf.length);
+          if (nBytesRead != -1) {
+            baos.write(buf, 0, nBytesRead);
+          }
+        }
+        oggData = baos.toByteArray();
+      }
+    }
+    if (oggData != null) {
+      try (SourceDataLine line = OggPlayer.getLine(this.decodedFormat)) {
+        if (line != null) {
+          // Start
+          line.start();
+          while (!this.stop) {
+            if (this.stop) {
+              break;
+            }
+            try (
+                ByteArrayInputStream bais = new ByteArrayInputStream(oggData)) {
               int nBytesRead = 0;
               while (nBytesRead != -1) {
-                nBytesRead = this.decodedStream.read(data, 0, data.length);
+                nBytesRead = bais.read(buf, 0, buf.length);
+                if (this.stop) {
+                  break;
+                }
                 if (nBytesRead != -1) {
-                  line.write(data, 0, nBytesRead);
+                  line.write(buf, 0, nBytesRead);
                 }
                 if (this.stop) {
                   break;
                 }
               }
-              // Stop
-              line.drain();
-              line.stop();
-            } catch (IOException io) {
-              FantastleReboot.exception(io);
-            } finally {
-              // Stop
-              line.drain();
-              line.stop();
+            }
+            if (this.stop) {
+              break;
             }
           }
-        } catch (LineUnavailableException lue) {
-          FantastleReboot.exception(lue);
+          // Stop
+          line.drain();
+          line.stop();
         }
+      } catch (LineUnavailableException lue) {
+        FantastleReboot.exception(lue);
       }
     }
   }
