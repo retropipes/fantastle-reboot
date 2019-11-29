@@ -168,7 +168,8 @@ public class MapBattleDefinitions {
   public void runNewRoundHooks() {
     for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {
-        if (battler.getCreature().isAlive()) {
+        Creature creature = battler.getCreature();
+        if (battler.isActive() && creature.isAlive() && creature.hasMapAI()) {
           battler.getCreature().getMapAI().newRoundHook();
         }
       }
@@ -253,7 +254,7 @@ public class MapBattleDefinitions {
 
   public MapAIContext getBattlerAI(final BattleCharacter bc) {
     for (final MapAIContext maic : this.aiContexts) {
-      if (maic.getCharacter().equals(bc)) {
+      if (maic != null && maic.getCharacter().equals(bc)) {
         return maic;
       }
     }
