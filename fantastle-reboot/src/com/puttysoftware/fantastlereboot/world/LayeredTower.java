@@ -626,8 +626,8 @@ final class LayeredTower implements Cloneable {
           for (y = 0; y < rows; y++) {
             final FantastleObjectModel placeObj = objectsWithoutPrerequisites[r
                 .generate()];
-            final boolean okay = placeObj.shouldGenerateObject(world, x, y, z, w,
-                e);
+            final boolean okay = placeObj.shouldGenerateObject(world, x, y, z,
+                w, e);
             if (okay) {
               this.setCell(
                   GameObjects.getNewInstanceByUniqueID(placeObj.getUniqueID()),
@@ -970,7 +970,8 @@ final class LayeredTower implements Cloneable {
     worldSizeX = reader.readInt();
     worldSizeY = reader.readInt();
     worldSizeZ = reader.readInt();
-    final LayeredTower lt = new LayeredTower(worldSizeX, worldSizeY, worldSizeZ);
+    final LayeredTower lt = new LayeredTower(worldSizeX, worldSizeY,
+        worldSizeZ);
     for (x = 0; x < lt.getColumns(); x++) {
       for (y = 0; y < lt.getRows(); y++) {
         for (z = 0; z < lt.getFloors(); z++) {

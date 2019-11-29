@@ -44,11 +44,12 @@ class EasyMapAIRoutine extends AbstractMapAIRoutine {
     } else {
       Point there = ac.isEnemyNearby();
       if (there != null) {
-        if (CommonMapAIRoutines.check(ac, EasyMapAIRoutine.STEAL_CHANCE, Battle.AP_STEAL)) {
+        if (CommonMapAIRoutines.check(ac, EasyMapAIRoutine.STEAL_CHANCE,
+            Battle.AP_STEAL)) {
           // Steal
           return AIRoutine.ACTION_STEAL;
-        } else if (CommonMapAIRoutines.check(ac,
-            EasyMapAIRoutine.DRAIN_CHANCE, Battle.AP_DRAIN)) {
+        } else if (CommonMapAIRoutines.check(ac, EasyMapAIRoutine.DRAIN_CHANCE,
+            Battle.AP_DRAIN)) {
           // Drain MP
           return AIRoutine.ACTION_DRAIN;
         } else {
@@ -63,7 +64,8 @@ class EasyMapAIRoutine extends AbstractMapAIRoutine {
           }
         }
       } else {
-        if (CommonMapAIRoutines.check(ac, EasyMapAIRoutine.FLEE_CHANCE, Battle.AP_MOVE)) {
+        if (CommonMapAIRoutines.check(ac, EasyMapAIRoutine.FLEE_CHANCE,
+            Battle.AP_MOVE)) {
           // Flee
           final Point awayDir = ac.runAway();
           if (awayDir == null) {

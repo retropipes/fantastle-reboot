@@ -101,12 +101,11 @@ class MapBattleGUI {
         xFix = x - xView;
         yFix = y - yView;
         if (mbd.getBattleWorld().cellRangeCheck(y, x, 0)) {
-          final FantastleObjectModel obj1 = mbd.getBattleWorld().getCell(y, x, 0,
-              Layers.GROUND);
-          final FantastleObjectModel obj2 = mbd.getBattleWorld().getCell(y, x, 0,
-              Layers.OBJECT);
-          final String cacheName = MapBattleGUI.generateCacheName(obj1,
-              obj2);
+          final FantastleObjectModel obj1 = mbd.getBattleWorld().getCell(y, x,
+              0, Layers.GROUND);
+          final FantastleObjectModel obj2 = mbd.getBattleWorld().getCell(y, x,
+              0, Layers.OBJECT);
+          final String cacheName = MapBattleGUI.generateCacheName(obj1, obj2);
           final BufferedImageIcon icon1 = obj1.getBattleImage();
           final BufferedImageIcon icon2 = obj2.getBattleImage();
           this.drawGrid.setImageCell(
@@ -134,8 +133,7 @@ class MapBattleGUI {
           Layers.GROUND);
       final FantastleObjectModel obj2 = mbd.getBattleWorld().getCell(y, x, 0,
           Layers.OBJECT);
-      final String cacheName = MapBattleGUI.generateCacheName(obj1, obj2,
-          obj3);
+      final String cacheName = MapBattleGUI.generateCacheName(obj1, obj2, obj3);
       final BufferedImageIcon icon1 = obj1.getBattleImage();
       final BufferedImageIcon icon2 = obj2.getBattleImage();
       final BufferedImageIcon icon3 = obj3.getBattleImage();

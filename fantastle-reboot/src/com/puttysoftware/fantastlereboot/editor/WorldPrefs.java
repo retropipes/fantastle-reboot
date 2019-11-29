@@ -186,8 +186,8 @@ public class WorldPrefs {
     WorldPrefs.globalExploreExpansionRadius.setLabelTable(
         WorldPrefs.globalExploreExpansionRadius.createStandardLabels(1));
     WorldPrefs.globalExploreExpansionRadius.setPaintLabels(true);
-    WorldPrefs.globalVisionModeNone = new JCheckBox("World-Wide Vision Mode: OFF",
-        false);
+    WorldPrefs.globalVisionModeNone = new JCheckBox(
+        "World-Wide Vision Mode: OFF", false);
     WorldPrefs.globalVisionModeExplore = new JCheckBox(
         "World-Wide Vision Mode: Exploring", true);
     WorldPrefs.globalVisionModeFieldOfView = new JCheckBox(
@@ -198,7 +198,8 @@ public class WorldPrefs {
     WorldPrefs.editorPane.setLayout(new GridLayout(WorldPrefs.GRID_LENGTH, 1));
     WorldPrefs.editorPane.add(new JLabel("World-Level Override Enablers"));
     WorldPrefs.editorPane.add(WorldPrefs.useGlobalVisionRadiusOverride);
-    WorldPrefs.editorPane.add(WorldPrefs.useGlobalExploreExpansionRadiusOverride);
+    WorldPrefs.editorPane
+        .add(WorldPrefs.useGlobalExploreExpansionRadiusOverride);
     WorldPrefs.editorPane.add(WorldPrefs.useGlobalVisionModeOverride);
     WorldPrefs.editorPane.add(new JLabel("World-Level Vision Radius"));
     WorldPrefs.editorPane.add(WorldPrefs.globalVisionRadius);
@@ -214,7 +215,8 @@ public class WorldPrefs {
     WorldPrefs.buttonPane.add(WorldPrefs.prefsCancel);
     WorldPrefs.mainPrefPane.add(WorldPrefs.editorPane, BorderLayout.CENTER);
     WorldPrefs.mainPrefPane.add(WorldPrefs.buttonPane, BorderLayout.SOUTH);
-    WorldPrefs.useGlobalVisionRadiusOverride.addItemListener(WorldPrefs.handler);
+    WorldPrefs.useGlobalVisionRadiusOverride
+        .addItemListener(WorldPrefs.handler);
     WorldPrefs.useGlobalExploreExpansionRadiusOverride
         .addItemListener(WorldPrefs.handler);
     WorldPrefs.useGlobalVisionModeOverride.addItemListener(WorldPrefs.handler);
@@ -265,7 +267,8 @@ public class WorldPrefs {
         } else if (o.getClass().equals(
             WorldPrefs.useGlobalExploreExpansionRadiusOverride.getClass())) {
           final JCheckBox check = (JCheckBox) o;
-          if (check.equals(WorldPrefs.useGlobalExploreExpansionRadiusOverride)) {
+          if (check
+              .equals(WorldPrefs.useGlobalExploreExpansionRadiusOverride)) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
               WorldPrefs.globalExploreExpansionRadius.setEnabled(true);
             } else if (e.getStateChange() == ItemEvent.DESELECTED) {

@@ -133,7 +133,8 @@ public class MapBattleDefinitions {
   }
 
   public void setLocations() {
-    final RandomRange randX = new RandomRange(0, this.battleWorld.getRows() - 1);
+    final RandomRange randX = new RandomRange(0,
+        this.battleWorld.getRows() - 1);
     final RandomRange randY = new RandomRange(0,
         this.battleWorld.getColumns() - 1);
     int rx, ry;

@@ -7,7 +7,7 @@ import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
-import com.puttysoftware.fantastlereboot.loaders.mod.ModuleLoader;
+import com.puttysoftware.fantastlereboot.loaders.ogg.OggLoader;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class MusicPlayer {
@@ -17,7 +17,7 @@ public class MusicPlayer {
 
   private static String[] allFilenames;
   private static Properties fileExtensions;
-  private static ModuleLoader MUSIC = new ModuleLoader();
+  private static OggLoader MUSIC;
 
   private static String getMusicFilename(final MusicIndex music) {
     if (MusicPlayer.allFilenames == null
@@ -47,14 +47,12 @@ public class MusicPlayer {
     if (Prefs.isMusicGroupEnabled(group)) {
       if (music != null && music != MusicIndex._NONE) {
         final String filename = MusicPlayer.getMusicFilename(music);
-        if (MusicPlayer.MUSIC.isPlaying()) {
+        if (MusicPlayer.MUSIC != null && MusicPlayer.MUSIC.isPlaying()) {
           MusicPlayer.MUSIC.stopLoop();
         }
-        try {
-          MusicPlayer.MUSIC.load("/assets/music/" + filename).play();
-        } catch (final IOException e) {
-          FantastleReboot.exception(e);
-        }
+        MusicPlayer.MUSIC = OggLoader.loadResource(
+            MusicPlayer.class.getResource("/assets/music/" + filename));
+        MusicPlayer.MUSIC.start();
       }
     }
   }
