@@ -59,11 +59,11 @@ final class GameErrorHandler implements ErrorHandler {
     SoundPlayer.playSound(SoundIndex.ALERT, SoundGroup.USER_INTERFACE);
     CommonDialogs.showErrorDialog(GameErrorHandler.WARNING_MESSAGE,
         GameErrorHandler.WARNING_TITLE);
-    this.logger.logNonFatalError(t);
+    this.logger.logWarning(t);
   }
 
   private void logWarningDirectly(final Throwable t) {
-    this.logger.logNonFatalError(t);
+    this.logger.logWarning(t);
   }
 
   void handleWithMessage(final Throwable inE, final String msg) {
@@ -93,6 +93,6 @@ final class GameErrorHandler implements ErrorHandler {
   private void logWarningWithMessage(final Throwable t, final String msg) {
     SoundPlayer.playSound(SoundIndex.ALERT, SoundGroup.USER_INTERFACE);
     CommonDialogs.showErrorDialog(msg, GameErrorHandler.WARNING_TITLE);
-    this.logger.logNonFatalError(t);
+    this.logger.logWarning(t);
   }
 }
