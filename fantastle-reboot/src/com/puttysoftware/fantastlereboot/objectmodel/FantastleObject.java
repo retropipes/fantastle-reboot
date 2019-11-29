@@ -310,7 +310,7 @@ public abstract class FantastleObject extends GameObject
     }
     final int cc = this.customCountersLength();
     for (int x = 0; x < cc; x++) {
-      final int cx = this.getCustomCounter(x + 1);
+      final int cx = this.getCustomCounter(x);
       writer.writeInt(cx);
     }
   }
@@ -327,7 +327,7 @@ public abstract class FantastleObject extends GameObject
       final int cc = this.customCountersLength();
       for (int x = 0; x < cc; x++) {
         final int cx = reader.readInt();
-        this.setCustomCounter(x + 1, cx);
+        this.setCustomCounter(x, cx);
       }
       return this;
     } else {
