@@ -15,35 +15,35 @@ import com.puttysoftware.fantastlereboot.world.World;
 import com.puttysoftware.randomrange.RandomRange;
 
 public class MonsterFactory {
-  private static final int MAX_MONSTERS = 50;
+	private static final double MAX_MONSTERS = 50;
 
-  private MonsterFactory() {
-    // Do nothing
-  }
+	private MonsterFactory() {
+		// Do nothing
+	}
 
-  public static ArrayList<BattleCharacter> generateMapMonsters() {
-    final int partyCount = PartyManager.getParty().getMembers();
-    final int monsterCount = Prefs.getMonsterCount(partyCount);
-    final int minTeamID = Creature.TEAM_ENEMY_FIRST;
-    final int maxTeamID = Creature.TEAM_ENEMY_LAST
-        - (monsterCount - MonsterFactory.MAX_MONSTERS) / 5;
-    final ArrayList<BattleCharacter> monsters = new ArrayList<>();
-    if (PartyManager.getParty().getMonsterLevel() == World.getMaxLevels() - 1) {
-      monsters.add(new BattleCharacter(new BossMonster()));
-    } else {
-      for (int m = 0; m < monsterCount; m++) {
-        final int teamID = RandomRange.generate(minTeamID, maxTeamID);
-        monsters.add(new BattleCharacter(new Monster(teamID)));
-      }
-    }
-    return monsters;
-  }
+	public static ArrayList<BattleCharacter> generateMapMonsters() {
+		final int partyCount = PartyManager.getParty().getMembers();
+		final int monsterCount = Prefs.getMonsterCount(partyCount);
+		final int minTeamID = Creature.TEAM_ENEMY_FIRST;
+		final int maxTeamID = (int) Math.round(Creature.TEAM_ENEMY_LAST
+				- (Creature.TEAM_ENEMY_LAST - Creature.TEAM_ENEMY_FIRST) * (monsterCount / MonsterFactory.MAX_MONSTERS));
+		final ArrayList<BattleCharacter> monsters = new ArrayList<>();
+		if (PartyManager.getParty().getMonsterLevel() == World.getMaxLevels() - 1) {
+			monsters.add(new BattleCharacter(new BossMonster()));
+		} else {
+			for (int m = 0; m < monsterCount; m++) {
+				final int teamID = RandomRange.generate(minTeamID, maxTeamID);
+				monsters.add(new BattleCharacter(new Monster(teamID)));
+			}
+		}
+		return monsters;
+	}
 
-  public static Creature generateMonster() {
-    if (PartyManager.getParty().getMonsterLevel() == World.getMaxLevels() - 1) {
-      return new BossMonster();
-    } else {
-      return new Monster(Creature.TEAM_ENEMY_FIRST);
-    }
-  }
+	public static Creature generateMonster() {
+		if (PartyManager.getParty().getMonsterLevel() == World.getMaxLevels() - 1) {
+			return new BossMonster();
+		} else {
+			return new Monster(Creature.TEAM_ENEMY_FIRST);
+		}
+	}
 }
