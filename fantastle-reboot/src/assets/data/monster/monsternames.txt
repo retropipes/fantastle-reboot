@@ -1,90 +1,150 @@
+Alarm
 Amoeba
-Bunny
-Drop
-Jelly
-Bat
-Goat
-Spike
-Turtle
-Anglebot
-Boxbot
-Curvebot
-Diamondbot
-Ellipsebot
-Fightbot
-Jetbot
-Super Diamond
-Sonicbot
-Tacklebot
-Beaker
-Bottle
-Flask
-Pipe
-Tube
-Vial
-Grabber
-Lander
-Medic
-Rover
-Scout
-Warship
-CPU
-GPU
-Motherboard
-Network
-RAM
-ROM
-Soundcard
+Amplified Artillery
+Angled Robot
+Apple
+Artillery
+Bad Board
 Banana
 Banana Peel
-Bush
-Mushroom
-Pear
-Tree
-Vine
-Artillery
+Barrel
+Bat
+Beaker
+Big Blaster
+Big Burger
+Blaster Tree
+Board
 Bomb
 Bomber
-Dropper
-Fighter
-Missile
-Super War
-Tank
-Alarm
-Burger
-Driller
-Healer
-Radio
-Solar
-Power Ten
-Top
-Barrel
+Boom Barrel
+Bottle
 Bowl
+Boxing Robot
+Bunny
+Burger
+Bush
 Can
-Discarded Note
-Garbage
-Jar
-Paper Wad
-Recycler
-Trash Can
-Blaster Tree
-Cross Vine
-Double Banana
-Gunk Ball
-Horned Mushroom
-Mega War
-Piped Tube
-Twin Claw
-Twin RAM
 Canned Can
+Caustin Barrel
+Caustic Beaker
+Caustic Boom Barrel
 Caustic Bottle
+Caustic Bowl
+Caustic Can
+Caustic Canned Can
 Caustic Flask
+Caustic Jar
+Caustic Pipe
+Caustic Piped Tube
+Caustic Triple Tube
 Caustic Tube
+Caustic Twin Tube
+Caustic Twin Vial
 Caustic Vial
+Central Processing Unit
+Cross Vine
+Cross Robot
+Curved Robot
+Cyborg
+Demon
+Diamond Robot
+Discarded Note
+Double Banana
+Driller
+Drop
+Dropper
+Dwarf
+Eagle
+Elf
+Ellipse Robot
+Fast Fighter
+Fast Network Card
+Fighting Robot
+Fighter
+Firmware
+Flask
+Floating Point Unit
+Garbage
+Ghost
 Giant Amoeba
 Giant Drop
+Gnome
+Goat
+Goblin
+Graphics Processing Unit
+Grabber
+Gunk Ball
+Healer
+Horned Mushroom
+Human
+Jar
+Jelly
+Jet Robot
+Lander
+Lizard
+Loud Sound Card
+Medic
+Mega Mine
+Mega War
+Mine
+Mirror Burger
+Missile
+Mush
+Mushroom
+Network Card
+Orange
+Orc
+Paper Wad
+Pear
+Penguin
+Pipe
+Piped Tube
+Pixie
+Power Bomb
+Power Fighter
+Power Ten
+Punching Robot
+Radio
+RAM
+Recycle Bin
+Robot
+ROM
+Rover
+Scout
+Shade
+Slime
+Solar
+Sonic Robot
+Sound Card
+Spike
 Spiked Bush
+Super Diamond
 Super Jelly
 Super Spike
+Tackle Robot
+Tall Lander
+Tank
+Top
+Trash Can
+Tree
+Triple Grabber
 Triple Tube
+Triple War
+Troll
+Tube
+Turbo CPU
+Turbo FPU
+Turbo GPU
+Turtle
+Twin Claw
+Twin RAM
+Twin Pipe
+Twin Vial
+UFO
+Vial
+Vine
+Warped Firmware
+Warped ROM
+Warship
 Winged Missile
+Wolf
