@@ -28,4 +28,4 @@ fantastle-reboot/target/
 
 # Exclusions
 !fantastle-reboot/lib/diane.jar
-!fantastle-reboot/lib/java-vorbis-support-1.2.1.jar
+!fantastle-reboot/lib/java-vorbis-support-1.3.0.jar
