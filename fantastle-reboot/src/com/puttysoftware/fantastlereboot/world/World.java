@@ -352,8 +352,8 @@ public class World {
       this.worldData.fillRandomlyPure(this, this.activeLevel);
     } else if (Prefs.isWorldGeneratorConstrainedRandom()) {
       this.worldData.fillRandomlyConstrained(this, this.activeLevel);
-      // } else if (Prefs.isWorldGeneratorTwister()) {
-      // this.worldData.fillRandomlyTwister(this, this.activeLevel);
+    } else if (Prefs.isWorldGeneratorTwister()) {
+      this.worldData.fillRandomlyTwister(this, this.activeLevel);
     } else {
       this.worldData.fillRandomlyConstrained(this, this.activeLevel);
     }

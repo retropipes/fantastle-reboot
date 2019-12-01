@@ -247,24 +247,23 @@ final class MovementTask extends Thread {
     final World m = WorldManager.getWorld();
     m.savePlayerLocation();
     GameView.saveViewingWindow();
-    if (m.cellRangeCheck(x, y, z)) {
-      if (!m.getCell(x, y, z, Layers.OBJECT).isSolid()) {
-        m.setPlayerLocationX(x);
-        m.setPlayerLocationY(y);
-        m.setPlayerLocationZ(z);
-        GameView.setViewingWindowLocationX(
-            m.getPlayerLocationY() - GameView.getOffsetFactorX());
-        GameView.setViewingWindowLocationY(
-            m.getPlayerLocationX() - GameView.getOffsetFactorY());
-        MovementTask.saved = m.getCell(m.getPlayerLocationX(),
-            m.getPlayerLocationY(), m.getPlayerLocationZ(), Layers.OBJECT);
-        FileStateManager.setDirty(true);
-        final int px = m.getPlayerLocationX();
-        final int py = m.getPlayerLocationY();
-        final int pz = m.getPlayerLocationZ();
-        m.updateExploredSquares(px, py, pz);
-        GameGUI.redrawWorld();
-      }
+    if (m.cellRangeCheck(x, y, z)
+        && !m.getCell(x, y, z, Layers.OBJECT).isSolid()) {
+      m.setPlayerLocationX(x);
+      m.setPlayerLocationY(y);
+      m.setPlayerLocationZ(z);
+      GameView.setViewingWindowLocationX(
+          m.getPlayerLocationY() - GameView.getOffsetFactorX());
+      GameView.setViewingWindowLocationY(
+          m.getPlayerLocationX() - GameView.getOffsetFactorY());
+      MovementTask.saved = m.getCell(m.getPlayerLocationX(),
+          m.getPlayerLocationY(), m.getPlayerLocationZ(), Layers.OBJECT);
+      FileStateManager.setDirty(true);
+      final int px = m.getPlayerLocationX();
+      final int py = m.getPlayerLocationY();
+      final int pz = m.getPlayerLocationZ();
+      m.updateExploredSquares(px, py, pz);
+      GameGUI.redrawWorld();
     } else {
       MovementTask.moveFailed();
     }

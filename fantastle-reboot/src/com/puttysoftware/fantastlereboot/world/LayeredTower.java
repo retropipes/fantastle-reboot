@@ -740,6 +740,8 @@ final class LayeredTower implements Cloneable {
     }
     // Finalize the dungeon
     cleanUp(z);
+    // Add monsters
+    this.addMonstersRandomly(z);
   }
 
   private void rectFill(int x, int y, int w, int h, String tile) {
