@@ -262,8 +262,6 @@ public class MapBattleLogic extends Battle {
     default:
       break;
     }
-    // Auto AI can cause death too
-    this.handleDeath(acting, null);
   }
 
   private void displayRoundResults(final Creature theEnemy,
@@ -497,8 +495,9 @@ public class MapBattleLogic extends Battle {
   }
 
   @Override
-  public void handleDeath(final BattleCharacter active,
+  public boolean handleDeath(final BattleCharacter active,
       final BattleCharacter enemy) {
+    boolean weDied = false;
     // Handle enemy death
     if (enemy != null && !enemy.getCreature().isAlive()) {
       if (enemy.getTeamID() != Creature.TEAM_PARTY) {
@@ -528,7 +527,9 @@ public class MapBattleLogic extends Battle {
           active.getY(), 0, Layers.OBJECT);
       // We're dead - end our turn
       this.endTurn();
+      weDied = true;
     }
+    return weDied;
   }
 
   private boolean updatePositionInternal(final int x, final int y,
@@ -592,6 +593,7 @@ public class MapBattleLogic extends Battle {
           if (this.mbd.getBattleWorld().cellRangeCheck(px + 1, py + 1, 0)) {
             obj9 = m.getCell(px + 1, py + 1, 0, Layers.OBJECT);
           }
+          boolean weDied = false;
           // Auto-attack check
           if (obj1 != null) {
             if (obj1 instanceof BattleCharacter) {
@@ -600,6 +602,7 @@ public class MapBattleLogic extends Battle {
                 final BattleCharacter bc1 = (BattleCharacter) obj1;
                 if (bc1.getTeamID() != active.getTeamID()) {
                   this.executeAutoAI(bc1);
+                  weDied = this.handleDeath(bc1, active);
                 }
               }
             }
@@ -610,6 +613,7 @@ public class MapBattleLogic extends Battle {
                 final BattleCharacter bc2 = (BattleCharacter) obj2;
                 if (bc2.getTeamID() != active.getTeamID()) {
                   this.executeAutoAI(bc2);
+                  weDied = this.handleDeath(bc2, active);
                 }
               }
             }
@@ -621,6 +625,7 @@ public class MapBattleLogic extends Battle {
                 final BattleCharacter bc3 = (BattleCharacter) obj3;
                 if (bc3.getTeamID() != active.getTeamID()) {
                   this.executeAutoAI(bc3);
+                  weDied = this.handleDeath(bc3, active);
                 }
               }
             }
@@ -631,6 +636,7 @@ public class MapBattleLogic extends Battle {
                 final BattleCharacter bc4 = (BattleCharacter) obj4;
                 if (bc4.getTeamID() != active.getTeamID()) {
                   this.executeAutoAI(bc4);
+                  weDied = this.handleDeath(bc4, active);
                 }
               }
             }
@@ -641,6 +647,7 @@ public class MapBattleLogic extends Battle {
                 final BattleCharacter bc6 = (BattleCharacter) obj6;
                 if (bc6.getTeamID() != active.getTeamID()) {
                   this.executeAutoAI(bc6);
+                  weDied = this.handleDeath(bc6, active);
                 }
               }
             }
@@ -652,6 +659,7 @@ public class MapBattleLogic extends Battle {
                 final BattleCharacter bc7 = (BattleCharacter) obj7;
                 if (bc7.getTeamID() != active.getTeamID()) {
                   this.executeAutoAI(bc7);
+                  weDied = this.handleDeath(bc7, active);
                 }
               }
             }
@@ -662,6 +670,7 @@ public class MapBattleLogic extends Battle {
                 final BattleCharacter bc8 = (BattleCharacter) obj8;
                 if (bc8.getTeamID() != active.getTeamID()) {
                   this.executeAutoAI(bc8);
+                  weDied = this.handleDeath(bc8, active);
                 }
               }
             }
@@ -672,9 +681,14 @@ public class MapBattleLogic extends Battle {
                 final BattleCharacter bc9 = (BattleCharacter) obj9;
                 if (bc9.getTeamID() != active.getTeamID()) {
                   this.executeAutoAI(bc9);
+                  weDied = this.handleDeath(bc9, active);
                 }
               }
             }
+          }
+          if (weDied) {
+            // Auto-attack killed us - abort
+            return false;
           }
           m.setCell(active.getSavedObject(), px, py, 0, Layers.OBJECT);
           active.offsetX(x);
