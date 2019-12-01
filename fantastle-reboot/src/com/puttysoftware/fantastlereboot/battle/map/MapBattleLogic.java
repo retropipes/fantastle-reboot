@@ -262,6 +262,8 @@ public class MapBattleLogic extends Battle {
     default:
       break;
     }
+    // Auto AI can cause death too
+    this.handleDeath(acting, null);
   }
 
   private void displayRoundResults(final Creature theEnemy,
@@ -494,6 +496,41 @@ public class MapBattleLogic extends Battle {
     }
   }
 
+  @Override
+  public void handleDeath(final BattleCharacter active,
+      final BattleCharacter enemy) {
+    // Handle enemy death
+    if (enemy != null && !enemy.getCreature().isAlive()) {
+      if (enemy.getTeamID() != Creature.TEAM_PARTY) {
+        // Update victory spoils
+        this.addSpoils(enemy.getCreature());
+      }
+      // Run death hook
+      enemy.getCreature().onGotKilled();
+      // Remove effects from dead character
+      enemy.getCreature().stripAllEffects();
+      // Set dead character to inactive
+      enemy.deactivate();
+      // Remove dead character from battle
+      this.mbd.getBattleWorld().setCell(new OpenSpace(), enemy.getX(),
+          enemy.getY(), 0, Layers.OBJECT);
+    }
+    // Handle self death
+    if (!active.getCreature().isAlive()) {
+      // Run death hook
+      active.getCreature().onGotKilled();
+      // Remove effects from dead character
+      active.getCreature().stripAllEffects();
+      // Set dead character to inactive
+      active.deactivate();
+      // Remove dead character from battle
+      this.mbd.getBattleWorld().setCell(new OpenSpace(), active.getX(),
+          active.getY(), 0, Layers.OBJECT);
+      // We're dead - end our turn
+      this.endTurn();
+    }
+  }
+
   private boolean updatePositionInternal(final int x, final int y,
       final boolean useAP, final BattleCharacter active,
       final AbstractDamageEngine activeDE) {
@@ -688,36 +725,8 @@ public class MapBattleLogic extends Battle {
                         / 10) {
               SoundPlayer.playSound(SoundIndex.LOW_HEALTH, SoundGroup.BATTLE);
             }
-            // Handle enemy death
-            if (!bc.getCreature().isAlive()) {
-              if (bc.getTeamID() != Creature.TEAM_PARTY) {
-                // Update victory spoils
-                this.addSpoils(bc.getCreature());
-              }
-              // Run death hook
-              bc.getCreature().onGotKilled();
-              // Remove effects from dead character
-              bc.getCreature().stripAllEffects();
-              // Set dead character to inactive
-              bc.deactivate();
-              // Remove dead character from battle
-              this.mbd.getBattleWorld().setCell(new OpenSpace(), bc.getX(),
-                  bc.getY(), 0, Layers.OBJECT);
-            }
-            // Handle self death
-            if (!active.getCreature().isAlive()) {
-              // Run death hook
-              active.getCreature().onGotKilled();
-              // Remove effects from dead character
-              active.getCreature().stripAllEffects();
-              // Set dead character to inactive
-              active.deactivate();
-              // Remove dead character from battle
-              this.mbd.getBattleWorld().setCell(new OpenSpace(), active.getX(),
-                  active.getY(), 0, Layers.OBJECT);
-              // We're dead - end our turn
-              this.endTurn();
-            }
+            // Check for death
+            this.handleDeath(active, bc);
           } else {
             // Deny attack - out of actions
             if (!this.mbd.getActiveCharacter().getCreature().hasMapAI()) {
@@ -741,12 +750,12 @@ public class MapBattleLogic extends Battle {
             .showConfirmDialog("Embrace Cowardice?", "Battle");
         if (confirm != JOptionPane.YES_OPTION) {
           this.battleGUI.getViewManager().restoreViewingWindow();
-          SoundPlayer.playSound(SoundIndex.RUN, SoundGroup.BATTLE);
           active.restoreLocation();
           return false;
         }
       }
       // Fled
+      SoundPlayer.playSound(SoundIndex.RUN, SoundGroup.BATTLE);
       this.battleGUI.getViewManager().restoreViewingWindow();
       active.restoreLocation();
       // Set fled character to inactive

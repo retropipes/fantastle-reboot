@@ -19,7 +19,6 @@ import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
-import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.temporary.BattleCharacter;
 import com.puttysoftware.fantastlereboot.world.World;
 import com.puttysoftware.randomrange.RandomRange;
@@ -204,25 +203,7 @@ public class MapBattleDefinitions {
         // Cull Inactive Effects
         creature.cullInactiveEffects();
         // Handle death caused by effects
-        if (!creature.isAlive()) {
-          if (battler.getTeamID() != Creature.TEAM_PARTY) {
-            // Update victory spoils
-            this.battle.addSpoils(creature);
-          }
-          // Run death hook
-          creature.onGotKilled();
-          // Set dead character to inactive
-          battler.deactivate();
-          // Remove effects from dead character
-          creature.stripAllEffects();
-          // Remove character from battle
-          this.getBattleWorld().setCell(new OpenSpace(), battler.getX(),
-              battler.getY(), 0, Layers.OBJECT);
-          if (this.getActiveCharacter().equals(battler)) {
-            // Active character died, end turn
-            this.battle.endTurn();
-          }
-        }
+        this.battle.handleDeath(battler, null);
       }
     }
   }

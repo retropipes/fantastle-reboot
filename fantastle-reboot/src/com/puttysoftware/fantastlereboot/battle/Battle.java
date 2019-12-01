@@ -35,6 +35,8 @@ public abstract class Battle {
 
   public abstract void setStatusMessage(final String msg);
 
+  public abstract void handleDeath(BattleCharacter active, BattleCharacter enemy);
+
   public abstract boolean executeNextAIAction();
 
   public abstract boolean getLastAIActionResult();
