@@ -109,6 +109,14 @@ final class MovementTask extends Thread {
     MovementTask.checkFloorChange(px, py, pz);
     MovementTask.checkLevelChange(px, py, pz);
     m.checkForBattle(px, py, pz);
+    // Handle objects that replace themselves and/or play a sound
+    FantastleObjectModel obj = m.getCell(px, py, pz, Layers.OBJECT);
+    if (GameObjects.replacesSelf(obj)) {
+      Game.morph(GameObjects.replacesSelfWith(obj));
+    }
+    if (GameObjects.playsSound(obj)) {
+      SoundPlayer.playSound(GameObjects.whichSound(obj), SoundGroup.GAME);
+    }
   }
 
   private static void decayEffects() {

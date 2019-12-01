@@ -5,8 +5,13 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.world;
 
+import java.awt.Dimension;
+import java.awt.Point;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 import com.puttysoftware.fantastlereboot.BagOStuff;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
@@ -18,9 +23,12 @@ import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.GameObjects;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objectmodel.RandomGenerationRule;
+import com.puttysoftware.fantastlereboot.objects.ClosedDoor;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
+import com.puttysoftware.fantastlereboot.objects.Wall;
 import com.puttysoftware.fantastlereboot.objects.WallOff;
 import com.puttysoftware.fantastlereboot.objects.WallOn;
+import com.puttysoftware.randomrange.RandomLongRange;
 import com.puttysoftware.randomrange.RandomRange;
 import com.puttysoftware.storage.FlagStorage;
 import com.puttysoftware.xio.XDataReader;
@@ -43,12 +51,23 @@ final class LayeredTower implements Cloneable {
   private int visionMode;
   private int visionModeExploreRadius;
   private int visionRadius;
+  private String[][] tiles;
+  private final Dimension size;
+  private final Random rand;
+  private final long seed;
+  private final int hallsize;
+  private final int roomsize;
   private static final int MAX_FLOORS = 16;
   private static final int MAX_COLUMNS = 64;
   private static final int MAX_ROWS = 64;
 
   // Constructors
   public LayeredTower(final int rows, final int cols, final int floors) {
+    this(rows, cols, floors, RandomLongRange.generateRaw());
+  }
+
+  public LayeredTower(final int rows, final int cols, final int floors,
+      final long randSeed) {
     this.data = new LowLevelWorldDataStore(cols, rows, floors, Layers.COUNT);
     this.monsterData = new FlagStorage(cols, rows, floors);
     this.savedTowerState = new LowLevelWorldDataStore(cols, rows, floors,
@@ -69,6 +88,15 @@ final class LayeredTower implements Cloneable {
     this.visionMode = VisionModes.EXPLORE | VisionModes.FIELD_OF_VIEW;
     this.visionModeExploreRadius = 2;
     this.visionRadius = World.MAX_VISION_RADIUS;
+    this.size = new Dimension(cols, rows);
+    this.seed = randSeed;
+    this.rand = new Random(this.seed);
+    int minHall = Prefs.getMinimumRandomHallSize();
+    int maxHall = Prefs.getMaximumRandomHallSize();
+    this.hallsize = this.rand.nextInt(maxHall - minHall) + minHall;
+    int minRoom = Prefs.getMinimumRandomRoomSize();
+    int maxRoom = Prefs.getMaximumRandomRoomSize();
+    this.roomsize = this.rand.nextInt(maxRoom - minRoom) + minRoom;
     this.fill();
   }
 
@@ -692,7 +720,412 @@ final class LayeredTower implements Cloneable {
   private void fillFloorRandomlyTwister(final World world, final int z,
       final int w) {
     // Fill the world with the "twister" algorithm
-    // TODO: Implement the "twister" world generator
+    this.tiles = new String[this.size.width][this.size.height];
+    // Fill the dungeon with wall tiles
+    rectFill(0, 0, this.size.width, this.size.height, "#");
+    // Create a starting room
+    startingRoom();
+    // Generate halls/rooms until no prospects remain
+    while (hasProspects()) {
+      hallsGenerate();
+      roomsGenerate();
+    }
+    // Finalize the dungeon
+    cleanUp(z);
+  }
+
+  private void rectFill(int x, int y, int w, int h, String tile) {
+    for (int ya = y; ya < y + h; ya++) {
+      for (int xa = x; xa < x + w; xa++) {
+        this.tiles[xa][ya] = tile;
+      }
+    }
+  }
+
+  private void startingRoom() {
+    int center = this.size.width / 2;
+    rectFill(center - 2, 1, 3, 3, "R");
+    placeIfWall(center - 1, 4, "P");
+  }
+
+  private boolean rectCheck(int x, int y, int w, int h) {
+    for (int ya = y; ya < y + h; ya++) {
+      for (int xa = x; xa < x + w; xa++) {
+        String tile;
+        try {
+          tile = this.tiles[xa][ya];
+        } catch (ArrayIndexOutOfBoundsException e) {
+          return false;
+        }
+        if (!"P".equals(tile) && !"#".equals(tile)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  private void placeIfWall(int x, int y, String tile) {
+    if ("#".equals(this.tiles[x][y])) {
+      this.tiles[x][y] = tile;
+    }
+  }
+
+  private void placeIfEmpty(int x, int y, String tile) {
+    if (isEmpty(this.tiles[x][y])) {
+      this.tiles[x][y] = tile;
+    }
+  }
+
+  private static boolean isEmpty(String string) {
+    if (" ".equals(string)) {
+      return true;
+    }
+    if ("H".equals(string)) {
+      return true;
+    }
+    return "R".equals(string);
+  }
+
+  private boolean hasProspects() {
+    for (int y = 0; y < this.size.height; y++) {
+      for (int x = 0; x < this.size.width; x++) {
+        if ("P".equals(this.tiles[x][y])) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  private List<Point> getProspects() {
+    ArrayList<Point> prospects = new ArrayList<>();
+    for (int y = 0; y < this.size.height; y++) {
+      for (int x = 0; x < this.size.width; x++) {
+        if ("P".equals(this.tiles[x][y])) {
+          prospects.add(new Point(x, y));
+        }
+      }
+    }
+    return prospects;
+  }
+
+  private void hallsGenerate() {
+    getProspects().stream().forEach((p) -> {
+      try {
+        hallMake(p.x, p.y);
+      } catch (ArrayIndexOutOfBoundsException e) {
+        this.tiles[p.x][p.y] = "#";
+      }
+    });
+  }
+
+  private void hallMake(int x, int y) {
+    if (isEmpty(this.tiles[x - 1][y]) && isEmpty(this.tiles[x + 1][y])) {
+      this.tiles[x][y] = "H";
+      return;
+    }
+    if (isEmpty(this.tiles[x][y - 1]) && isEmpty(this.tiles[x][y + 1])) {
+      this.tiles[x][y] = "H";
+      return;
+    }
+    if (isEmpty(this.tiles[x - 1][y])) {
+      hallMakeEastbound(x, y, this.rand.nextInt(this.hallsize));
+      return;
+    }
+    if (isEmpty(this.tiles[x + 1][y])) {
+      hallMakeWestbound(x, y, this.rand.nextInt(this.hallsize));
+      return;
+    }
+    if (isEmpty(this.tiles[x][y - 1])) {
+      hallMakeSouthbound(x, y, this.rand.nextInt(this.hallsize));
+      return;
+    }
+    if (isEmpty(this.tiles[x][y + 1])) {
+      hallMakeNorthbound(x, y, this.rand.nextInt(this.hallsize));
+      return;
+    }
+    this.tiles[x][y] = "R";
+  }
+
+  private void hallMakeEastbound(int x, int y, int length) {
+    if (rectCheck(x, y - 1, length, 3)) {
+      rectFill(x, y, length, 1, "H");
+      placeIfEmpty(x + (length - 1), y, "P");
+    } else {
+      this.tiles[x][y] = "#";
+    }
+  }
+
+  private void hallMakeWestbound(int x, int y, int length) {
+    if (rectCheck(x - length, y - 1, length, 3)) {
+      rectFill(x - (length - 1), y, length, 1, "H");
+      placeIfEmpty(x - (length - 1), y, "P");
+      if (length >= 3) {
+        int sbranch = this.rand.nextInt(this.hallsize);
+        if (sbranch > 1 && sbranch < length - 1) {
+          placeIfEmpty(x - sbranch, y + 1, "P");
+          hallMakeSouthbound(x - sbranch, y + 1,
+              this.rand.nextInt(this.hallsize));
+        }
+        int nbranch = this.rand.nextInt(this.hallsize);
+        if (nbranch > 1 && nbranch < length - 1) {
+          placeIfEmpty(x - nbranch, y - 1, "P");
+          hallMakeNorthbound(x - nbranch, y - 1,
+              this.rand.nextInt(this.hallsize));
+        }
+      }
+    } else {
+      if (length > 0) {
+        hallMakeWestbound(x, y, length - 1);
+      } else {
+        this.tiles[x][y] = "#";
+      }
+    }
+  }
+
+  private void hallMakeSouthbound(int x, int y, int length) {
+    if (rectCheck(x - 1, y, 3, length + 1)) {
+      rectFill(x, y, 1, length, "H");
+      this.tiles[x][y + (length - 1)] = "P";
+    } else {
+      this.tiles[x][y] = "#";
+    }
+  }
+
+  private void hallMakeNorthbound(int x, int y, int length) {
+    if (rectCheck(x - 1, y - length, 3, length + 1)) {
+      rectFill(x, y - (length - 1), 1, length, "H");
+      this.tiles[x][y - (length - 1)] = "P";
+    } else {
+      this.tiles[x][y] = "#";
+    }
+  }
+
+  private void roomsGenerate() {
+    getProspects().stream().forEach((p) -> {
+      try {
+        roomMake(p.x, p.y);
+      } catch (ArrayIndexOutOfBoundsException e) {
+      }
+    });
+  }
+
+  private void roomMake(int x, int y) {
+    if (isEmpty(this.tiles[x - 1][y]) && isEmpty(this.tiles[x + 1][y])) {
+      this.tiles[x][y] = "R";
+      return;
+    }
+    if (isEmpty(this.tiles[x][y - 1]) && isEmpty(this.tiles[x][y + 1])) {
+      this.tiles[x][y] = "R";
+      return;
+    }
+    int w = 3 + this.rand.nextInt(this.roomsize);
+    int h = 3 + this.rand.nextInt(this.roomsize);
+    if (isEmpty(this.tiles[x][y - 1])) {
+      roomMakeSouthbound(x, y, w, h);
+      return;
+    }
+    if (isEmpty(this.tiles[x - 1][y])) {
+      roomMakeEastbound(x, y, w, h);
+      return;
+    }
+    if (isEmpty(this.tiles[x + 1][y])) {
+      roomMakeWestbound(x, y, w, h);
+      return;
+    }
+    if (isEmpty(this.tiles[x][y + 1])) {
+      roomMakeNorthbound(x, y, w, h);
+      return;
+    }
+    this.tiles[x][y] = "#";
+  }
+
+  private void roomMakeSouthbound(int x, int y, int w, int h) {
+    int wc = w / 2;
+    int hc = h / 2;
+    int xorig = x - wc;
+    int yorig = y + 1;
+    if (rectCheck(xorig - 1, y, w + 1, h + 1)) {
+      this.tiles[x][y] = "H";
+      rectFill(xorig, yorig, w, h, "R");
+      placeIfWall(xorig + wc, yorig + h, "P");
+      placeIfWall(xorig - 1, yorig + hc, "P");
+      placeIfWall(xorig + w, yorig + hc, "P");
+    } else {
+      this.tiles[x][y] = "#";
+    }
+  }
+
+  private void roomMakeEastbound(int x, int y, int w, int h) {
+    int wc = w / 2;
+    int hc = h / 2;
+    int xorig = x + 1;
+    int yorig = y - hc;
+    if (rectCheck(xorig, yorig - 2, w + 1, h + 1)) {
+      this.tiles[x][y] = "H";
+      rectFill(xorig, yorig, w, h, "R");
+      placeIfWall(xorig + wc, yorig - 1, "P");
+      placeIfWall(xorig + wc, y + hc, "P");
+      placeIfWall(xorig + w, y, "P");
+    } else {
+      if (w > 3 && h > 3) {
+        roomMakeEastbound(x, y, w - 1, h - 1);
+      } else {
+        this.tiles[x][y] = "#";
+      }
+    }
+  }
+
+  private void roomMakeWestbound(int x, int y, int w, int h) {
+    int hc = h / 2;
+    int wc = w / 2;
+    int xorig = x - w;
+    int yorig = y - hc;
+    if (rectCheck(xorig - 1, yorig - 1, w + 1, h + 1)) {
+      this.tiles[x][y] = "H";
+      rectFill(xorig, yorig, w, h, "R");
+      placeIfWall(xorig + wc, yorig - 1, "P");
+      placeIfWall(xorig + wc, y + hc, "P");
+      placeIfWall(xorig - 1, y, "P");
+    } else {
+      this.tiles[x][y] = "#";
+    }
+  }
+
+  private void roomMakeNorthbound(int x, int y, int w, int h) {
+    int wc = w / 2;
+    int hc = h / 2;
+    int xorig = x - wc;
+    int yorig = y - h;
+    if (rectCheck(xorig - 1, yorig - 1, w + 1, h + 1)) {
+      this.tiles[x][y] = "H";
+      rectFill(xorig, yorig, w, h, "R");
+      placeIfWall(x, yorig - 1, "P");
+      placeIfWall(xorig - 1, y - hc, "P");
+      placeIfWall(xorig + w, y - hc, "P");
+    } else {
+      this.tiles[x][y] = "#";
+    }
+  }
+
+  private void cleanUp(final int z) {
+    getProspects().stream().forEach((p) -> {
+      this.tiles[p.x][p.y] = "#";
+    });
+    fixOneBlockDeadEnds();
+    fixOneBlockHalls();
+    makeDoors();
+    // Convert tiles to dungeon data
+    convertTilestoObjects(z);
+  }
+
+  private void fixOneBlockDeadEnds() {
+    for (int x = 0; x < this.size.width; x++) {
+      for (int y = 0; y < this.size.height; y++) {
+        String tile = this.tiles[x][y];
+        if ("H".equals(tile)) {
+          // Westbound
+          if ("R".equals(this.tiles[x + 1][y])
+              && "#".equals(this.tiles[x - 1][y])) {
+            this.tiles[x][y] = "#";
+          }
+          // Eastbound
+          if ("R".equals(this.tiles[x - 1][y])
+              && "#".equals(this.tiles[x + 1][y])) {
+            this.tiles[x][y] = "#";
+          }
+          // Southbound
+          if ("R".equals(this.tiles[x][y - 1])
+              && "#".equals(this.tiles[x][y + 1])) {
+            this.tiles[x][y] = "#";
+          }
+          // Northbound
+          if ("R".equals(this.tiles[x][y + 1])
+              && "#".equals(this.tiles[x][y - 1])) {
+            this.tiles[x][y] = "#";
+          }
+        }
+      }
+    }
+  }
+
+  private void fixOneBlockHalls() {
+    for (int x = 0; x < this.size.width; x++) {
+      for (int y = 0; y < this.size.height; y++) {
+        String tile = this.tiles[x][y];
+        if ("H".equals(tile)) {
+          // Westbound
+          if ("R".equals(this.tiles[x + 1][y])
+              && "R".equals(this.tiles[x - 1][y])) {
+            this.tiles[x][y] = "D";
+          }
+          // Eastbound
+          if ("R".equals(this.tiles[x - 1][y])
+              && "R".equals(this.tiles[x + 1][y])) {
+            this.tiles[x][y] = "D";
+          }
+          // Southbound
+          if ("R".equals(this.tiles[x][y - 1])
+              && "R".equals(this.tiles[x][y + 1])) {
+            this.tiles[x][y] = "D";
+          }
+          // Northbound
+          if ("R".equals(this.tiles[x][y + 1])
+              && "R".equals(this.tiles[x][y - 1])) {
+            this.tiles[x][y] = "D";
+          }
+        }
+      }
+    }
+  }
+
+  private void makeDoors() {
+    for (int x = 0; x < this.size.width; x++) {
+      for (int y = 0; y < this.size.height; y++) {
+        String tile = this.tiles[x][y];
+        if ("H".equals(tile)) {
+          // Southbound
+          if ("R".equals(this.tiles[x][y - 1])
+              && "H".equals(this.tiles[x][y + 1])) {
+            this.tiles[x][y] = "D";
+          }
+          // Northbound
+          if ("R".equals(this.tiles[x][y + 1])
+              && "H".equals(this.tiles[x][y - 1])) {
+            this.tiles[x][y] = "D";
+          }
+          // Westbound
+          if ("R".equals(this.tiles[x + 1][y])
+              && "H".equals(this.tiles[x - 1][y])) {
+            this.tiles[x][y] = "D";
+          }
+          // Eastbound
+          if ("R".equals(this.tiles[x - 1][y])
+              && "H".equals(this.tiles[x + 1][y])) {
+            this.tiles[x][y] = "D";
+          }
+        }
+      }
+    }
+  }
+
+  private void convertTilestoObjects(final int z) {
+    for (int x = 0; x < this.size.width; x++) {
+      for (int y = 0; y < this.size.height; y++) {
+        String tile = this.tiles[x][y];
+        if ("#".equals(tile)) {
+          // Convert # to wall
+          this.setCell(new Wall(), y, x, z, Layers.OBJECT);
+        } else if ("D".equals(tile)) {
+          // Convert D to closed door
+          this.setCell(new ClosedDoor(), y, x, z, Layers.OBJECT);
+        } else {
+          // Convert anything else to open space
+          this.setCell(new OpenSpace(), y, x, z, Layers.OBJECT);
+        }
+      }
+    }
   }
 
   private void addMonstersRandomly(final int z) {
