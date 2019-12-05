@@ -1270,6 +1270,10 @@ public class MapBattleLogic extends Battle {
         if (bossFlag) {
           rewardsFlag = true;
         }
+      } else if (result == BattleResults.FLED) {
+        CommonDialogs.showTitledDialog("The party fled!", "Party Fled");
+      } else if (result == BattleResults.ENEMY_FLED) {
+        CommonDialogs.showTitledDialog("The enemies fled!", "Enemies Fled");
       } else if (result == BattleResults.LOST) {
         CommonDialogs.showTitledDialog("The party has been defeated...",
             "Defeat...");
@@ -1278,10 +1282,6 @@ public class MapBattleLogic extends Battle {
             "Annihilation!");
       } else if (result == BattleResults.DRAW) {
         CommonDialogs.showTitledDialog("The battle was a draw.", "Draw");
-      } else if (result == BattleResults.FLED) {
-        CommonDialogs.showTitledDialog("The party fled!", "Party Fled");
-      } else if (result == BattleResults.ENEMY_FLED) {
-        CommonDialogs.showTitledDialog("The enemies fled!", "Enemies Fled");
       } else if (result == BattleResults.IN_PROGRESS) {
         CommonDialogs.showTitledDialog(
             "The battle isn't over, but somehow the game thinks it is.",
