@@ -37,6 +37,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 
 import com.puttysoftware.diane.gui.CommonDialogs;
@@ -59,7 +60,8 @@ public class Prefs {
   // Fields
   private static MainWindow prefFrame;
   private static JTabbedPane prefTabPane;
-  private static JPanel mainPrefPane;
+  private static JPanel mainPrefPane, pureRandomPane, constrainedRandomPane,
+      twisterPane;
   private static JButton prefsOK, prefsCancel;
   private static JButton prefsExport, prefsImport;
   private static JCheckBox[] sounds = new JCheckBox[Prefs.SOUNDS_LENGTH];
@@ -76,6 +78,10 @@ public class Prefs {
   private static JRadioButton generatorPureRandom;
   private static JRadioButton generatorConstrainedRandom;
   private static JRadioButton generatorTwister;
+  private static JSlider minRandomRoomSize;
+  private static JSlider maxRandomRoomSize;
+  private static JSlider minRandomHallSize;
+  private static JSlider maxRandomHallSize;
   private static EventHandler handler;
   private static final PrefsFileManager fileMgr = new PrefsFileManager();
   private static final ExportImportManager eiMgr = new ExportImportManager();
@@ -86,6 +92,10 @@ public class Prefs {
   private static int viewingWindowIndex;
   private static int editorWindowIndex;
   private static int updateCheckIntervalIndex;
+  private static int minRandomRoomSizeIndex;
+  private static int maxRandomRoomSizeIndex;
+  private static int minRandomHallSizeIndex;
+  private static int maxRandomHallSizeIndex;
   private static int worldGenerator;
   private static boolean[] soundsEnabled = new boolean[Prefs.SOUNDS_LENGTH];
   private static boolean[] musicEnabled = new boolean[Prefs.MUSIC_LENGTH];
@@ -95,6 +105,12 @@ public class Prefs {
   private static boolean guiSetUp = false;
   private static final int[] VIEWING_WINDOW_SIZES = new int[] { 7, 9, 11, 13,
       15, 17, 19, 21, 23, 25 };
+  private static final int MIN_ROOM_SIZE = 3;
+  private static final int DEFAULT_ROOM_SIZE = 8;
+  private static final int MAX_ROOM_SIZE = 15;
+  private static final int MIN_HALL_SIZE = 3;
+  private static final int DEFAULT_HALL_SIZE = 8;
+  private static final int MAX_HALL_SIZE = 15;
   private static final int[] MDM_MIN_TOP = new int[] { 5, 4, 3, 2, 1 };
   private static final int[] MDM_MIN_BOT = new int[] { 5, 5, 5, 5, 5 };
   private static final int[] MDM_MAX_TOP = new int[] { 5, 5, 5, 5, 5 };
@@ -134,6 +150,7 @@ public class Prefs {
   private static final int MUSIC_LENGTH = 5;
   private static final int SOUNDS_LENGTH = 5;
   private static final int GRID_LENGTH = 8;
+  private static final int TAB_TWEAKS = 2;
   private static final String DOC_TAG = "settings";
 
   // Constructors
@@ -165,6 +182,22 @@ public class Prefs {
 
   public static boolean isWorldGeneratorTwister() {
     return Prefs.worldGenerator == Prefs.GENERATOR_TWISTER;
+  }
+
+  public static int getMinimumRandomRoomSize() {
+    return Prefs.minRandomRoomSizeIndex;
+  }
+
+  public static int getMaximumRandomRoomSize() {
+    return Prefs.maxRandomRoomSizeIndex;
+  }
+
+  public static int getMinimumRandomHallSize() {
+    return Prefs.minRandomHallSizeIndex;
+  }
+
+  public static int getMaximumRandomHallSize() {
+    return Prefs.maxRandomHallSizeIndex;
   }
 
   public static int getBattleSpeed() {
@@ -349,6 +382,10 @@ public class Prefs {
     } else {
       Prefs.generatorConstrainedRandom.setSelected(true);
     }
+    Prefs.minRandomRoomSize.setValue(Prefs.minRandomRoomSizeIndex);
+    Prefs.maxRandomRoomSize.setValue(Prefs.maxRandomRoomSizeIndex);
+    Prefs.minRandomHallSize.setValue(Prefs.minRandomHallSizeIndex);
+    Prefs.maxRandomHallSize.setValue(Prefs.maxRandomHallSizeIndex);
   }
 
   private static void savePrefs() {
@@ -379,6 +416,10 @@ public class Prefs {
     } else {
       Prefs.worldGenerator = Prefs.GENERATOR_CONSTRAINED_RANDOM;
     }
+    Prefs.minRandomRoomSizeIndex = Prefs.minRandomRoomSize.getValue();
+    Prefs.maxRandomRoomSizeIndex = Prefs.maxRandomRoomSize.getValue();
+    Prefs.minRandomHallSizeIndex = Prefs.minRandomHallSize.getValue();
+    Prefs.maxRandomHallSizeIndex = Prefs.maxRandomHallSize.getValue();
   }
 
   public static void setDefaultPrefs() {
@@ -410,6 +451,14 @@ public class Prefs {
     Prefs.lastDirSave = "";
     Prefs.lastFilterUsed = Prefs.FILTER_WORLD_V5;
     Prefs.worldGenerator = Prefs.GENERATOR_CONSTRAINED_RANDOM;
+    Prefs.minRandomRoomSizeIndex = Prefs.DEFAULT_ROOM_SIZE;
+    Prefs.maxRandomRoomSizeIndex = Prefs.DEFAULT_ROOM_SIZE;
+    Prefs.minRandomHallSizeIndex = Prefs.DEFAULT_HALL_SIZE;
+    Prefs.maxRandomHallSizeIndex = Prefs.DEFAULT_HALL_SIZE;
+    Prefs.minRandomRoomSize.setValue(Prefs.DEFAULT_ROOM_SIZE);
+    Prefs.maxRandomRoomSize.setValue(Prefs.DEFAULT_ROOM_SIZE);
+    Prefs.minRandomHallSize.setValue(Prefs.DEFAULT_HALL_SIZE);
+    Prefs.maxRandomHallSize.setValue(Prefs.DEFAULT_HALL_SIZE);
     Prefs.loadPrefs();
   }
 
@@ -435,6 +484,9 @@ public class Prefs {
     Prefs.mainPrefPane = new JPanel();
     final JPanel editorPane = new JPanel();
     final JPanel generatorPane = new JPanel();
+    Prefs.pureRandomPane = new JPanel();
+    Prefs.constrainedRandomPane = new JPanel();
+    Prefs.twisterPane = new JPanel();
     final JPanel soundPane = new JPanel();
     final JPanel musicPane = new JPanel();
     final JPanel miscPane = new JPanel();
@@ -482,6 +534,26 @@ public class Prefs {
     generatorGroup.add(Prefs.generatorPureRandom);
     generatorGroup.add(Prefs.generatorConstrainedRandom);
     generatorGroup.add(Prefs.generatorTwister);
+    Prefs.minRandomRoomSize = new JSlider(Prefs.MIN_ROOM_SIZE,
+        Prefs.MAX_ROOM_SIZE);
+    Prefs.minRandomRoomSize
+        .setLabelTable(Prefs.minRandomRoomSize.createStandardLabels(1));
+    Prefs.minRandomRoomSize.setPaintLabels(true);
+    Prefs.maxRandomRoomSize = new JSlider(Prefs.MIN_ROOM_SIZE,
+        Prefs.MAX_ROOM_SIZE);
+    Prefs.maxRandomRoomSize
+        .setLabelTable(Prefs.maxRandomRoomSize.createStandardLabels(1));
+    Prefs.maxRandomRoomSize.setPaintLabels(true);
+    Prefs.minRandomHallSize = new JSlider(Prefs.MIN_HALL_SIZE,
+        Prefs.MAX_HALL_SIZE);
+    Prefs.minRandomHallSize
+        .setLabelTable(Prefs.minRandomHallSize.createStandardLabels(1));
+    Prefs.minRandomHallSize.setPaintLabels(true);
+    Prefs.maxRandomHallSize = new JSlider(Prefs.MIN_HALL_SIZE,
+        Prefs.MAX_HALL_SIZE);
+    Prefs.maxRandomHallSize
+        .setLabelTable(Prefs.maxRandomHallSize.createStandardLabels(1));
+    Prefs.maxRandomHallSize.setPaintLabels(true);
     Prefs.mainPrefPane.setLayout(new BorderLayout());
     editorPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     editorPane.add(new JLabel("Default fill for new worlds:"));
@@ -516,6 +588,19 @@ public class Prefs {
     generatorPane.add(Prefs.generatorPureRandom);
     generatorPane.add(Prefs.generatorConstrainedRandom);
     generatorPane.add(Prefs.generatorTwister);
+    Prefs.pureRandomPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
+    Prefs.pureRandomPane.add(new JLabel("Nothing to configure."));
+    Prefs.constrainedRandomPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
+    Prefs.constrainedRandomPane.add(new JLabel("Nothing to configure."));
+    Prefs.twisterPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
+    Prefs.twisterPane.add(new JLabel("Smallest Room Size"));
+    Prefs.twisterPane.add(Prefs.minRandomRoomSize);
+    Prefs.twisterPane.add(new JLabel("Largest Room Size"));
+    Prefs.twisterPane.add(Prefs.maxRandomRoomSize);
+    Prefs.twisterPane.add(new JLabel("Smallest Hall Size"));
+    Prefs.twisterPane.add(Prefs.minRandomHallSize);
+    Prefs.twisterPane.add(new JLabel("Largest Hall Size"));
+    Prefs.twisterPane.add(Prefs.maxRandomHallSize);
     buttonPane.setLayout(new FlowLayout());
     buttonPane.add(Prefs.prefsOK);
     buttonPane.add(Prefs.prefsCancel);
@@ -523,6 +608,8 @@ public class Prefs {
     buttonPane.add(Prefs.prefsImport);
     Prefs.prefTabPane.addTab("Editor", null, editorPane);
     Prefs.prefTabPane.addTab("Generator", null, generatorPane);
+    Prefs.prefTabPane.addTab("Generator Tweaks", null,
+        Prefs.constrainedRandomPane);
     Prefs.prefTabPane.addTab("Sounds", null, soundPane);
     Prefs.prefTabPane.addTab("Music", null, musicPane);
     Prefs.prefTabPane.addTab("Misc.", null, miscPane);
@@ -583,6 +670,10 @@ public class Prefs {
         }
         Prefs.editorWindowIndex = reader.readInt();
         Prefs.worldGenerator = reader.readInt();
+        Prefs.minRandomRoomSizeIndex = reader.readInt();
+        Prefs.maxRandomRoomSizeIndex = reader.readInt();
+        Prefs.minRandomHallSizeIndex = reader.readInt();
+        Prefs.maxRandomHallSizeIndex = reader.readInt();
         Prefs.loadPrefs();
         return true;
       } catch (final PrefsVersionException pe) {
@@ -600,7 +691,7 @@ public class Prefs {
       // Create the needed subdirectories, if they don't already exist
       final File prefsFile = CommonPaths.getPrefsFile();
       final File prefsParent = new File(prefsFile.getParent());
-      if (!prefsParent.exists()) {
+      if (!prefsFile.canWrite()) {
         prefsParent.mkdirs();
       }
       try (final XDataWriter writer = new XDataWriter(
@@ -624,6 +715,10 @@ public class Prefs {
         }
         writer.writeInt(Prefs.editorWindowIndex);
         writer.writeInt(Prefs.worldGenerator);
+        writer.writeInt(Prefs.minRandomRoomSizeIndex);
+        writer.writeInt(Prefs.maxRandomRoomSizeIndex);
+        writer.writeInt(Prefs.minRandomHallSizeIndex);
+        writer.writeInt(Prefs.maxRandomHallSizeIndex);
       } catch (final Throwable t) {
         FantastleReboot.exceptionWithMessage(t,
             "An error occurred while saving settings. Changes may have been lost. Details have been recorded.");
@@ -665,6 +760,10 @@ public class Prefs {
         }
         Prefs.editorWindowIndex = reader.readInt();
         Prefs.worldGenerator = reader.readInt();
+        Prefs.minRandomRoomSizeIndex = reader.readInt();
+        Prefs.maxRandomRoomSizeIndex = reader.readInt();
+        Prefs.minRandomHallSizeIndex = reader.readInt();
+        Prefs.maxRandomHallSizeIndex = reader.readInt();
         Prefs.loadPrefs();
         return true;
       } catch (final PrefsVersionException pe) {
@@ -699,6 +798,10 @@ public class Prefs {
         }
         writer.writeInt(Prefs.editorWindowIndex);
         writer.writeInt(Prefs.worldGenerator);
+        writer.writeInt(Prefs.minRandomRoomSizeIndex);
+        writer.writeInt(Prefs.maxRandomRoomSizeIndex);
+        writer.writeInt(Prefs.minRandomHallSizeIndex);
+        writer.writeInt(Prefs.maxRandomHallSizeIndex);
         return true;
       } catch (final Throwable t) {
         FantastleReboot.exceptionWithMessage(t,
@@ -778,6 +881,37 @@ public class Prefs {
               for (int x = 1; x < Prefs.MUSIC_LENGTH; x++) {
                 Prefs.music[x].setEnabled(false);
               }
+            }
+          }
+        } else if (o.getClass().equals(Prefs.generatorPureRandom.getClass())) {
+          final JRadioButton radio = (JRadioButton) o;
+          if (radio.equals(Prefs.generatorPureRandom)) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+              BagOStuff bag = FantastleReboot.getBagOStuff();
+              if (bag != null && Modes.inPrefs()) {
+                CommonDialogs.showTitledDialog(
+                    "Pure randomness can produce unsolvable levels! You have been warned!",
+                    "WARNING!");
+              }
+              Prefs.prefTabPane.setComponentAt(Prefs.TAB_TWEAKS,
+                  Prefs.pureRandomPane);
+            }
+          }
+        } else if (o.getClass()
+            .equals(Prefs.generatorConstrainedRandom.getClass())) {
+          final JRadioButton radio = (JRadioButton) o;
+          if (radio.equals(Prefs.generatorConstrainedRandom)) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+              Prefs.prefTabPane.setComponentAt(Prefs.TAB_TWEAKS,
+                  Prefs.constrainedRandomPane);
+            }
+          }
+        } else if (o.getClass().equals(Prefs.generatorTwister.getClass())) {
+          final JRadioButton radio = (JRadioButton) o;
+          if (radio.equals(Prefs.generatorTwister)) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+              Prefs.prefTabPane.setComponentAt(Prefs.TAB_TWEAKS,
+                  Prefs.twisterPane);
             }
           }
         }

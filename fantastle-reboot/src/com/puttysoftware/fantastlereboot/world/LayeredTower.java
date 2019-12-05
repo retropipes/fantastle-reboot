@@ -91,8 +91,20 @@ final class LayeredTower implements Cloneable {
     this.size = new Dimension(cols, rows);
     this.seed = randSeed;
     this.rand = new Random(this.seed);
-    this.hallsize = 8;
-    this.roomsize = 8;
+    int minHall = Prefs.getMinimumRandomHallSize();
+    int maxHall = Prefs.getMaximumRandomHallSize();
+    if (maxHall - minHall <= 0) {
+      this.hallsize = minHall;
+    } else {
+      this.hallsize = this.rand.nextInt(maxHall - minHall) + minHall;
+    }
+    int minRoom = Prefs.getMinimumRandomRoomSize();
+    int maxRoom = Prefs.getMaximumRandomRoomSize();
+    if (maxRoom - minRoom <= 0) {
+      this.roomsize = minRoom;
+    } else {
+      this.roomsize = this.rand.nextInt(maxRoom - minRoom) + minRoom;
+    }
     this.fill();
   }
 
