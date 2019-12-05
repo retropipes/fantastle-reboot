@@ -108,7 +108,7 @@ final class MovementTask extends Thread {
     MovementTask.checkGameOver();
     MovementTask.checkFloorChange(px, py, pz);
     MovementTask.checkLevelChange(px, py, pz);
-    //m.checkForBattle(px, py, pz);
+    m.checkForBattle(px, py, pz);
     // Handle objects that replace themselves and/or play a sound
     FantastleObjectModel obj = m.getCell(px, py, pz, Layers.OBJECT);
     if (GameObjects.replacesSelf(obj)) {
