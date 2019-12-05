@@ -148,7 +148,7 @@ public class Prefs {
   private static final int MUSIC_LENGTH = 5;
   private static final int SOUNDS_LENGTH = 5;
   private static final int GRID_LENGTH = 8;
-  private static final int TAB_TWEAKS = 2;
+  // private static final int TAB_TWEAKS = 2;
   private static final String DOC_TAG = "settings";
 
   // Constructors
@@ -595,8 +595,8 @@ public class Prefs {
     buttonPane.add(Prefs.prefsImport);
     Prefs.prefTabPane.addTab("Editor", null, editorPane);
     Prefs.prefTabPane.addTab("Generator", null, generatorPane);
-    Prefs.prefTabPane.addTab("Generator Tweaks", null,
-        Prefs.constrainedRandomPane);
+    // Prefs.prefTabPane.addTab("Generator Tweaks", null,
+    // Prefs.constrainedRandomPane);
     Prefs.prefTabPane.addTab("Sounds", null, soundPane);
     Prefs.prefTabPane.addTab("Music", null, musicPane);
     Prefs.prefTabPane.addTab("Misc.", null, miscPane);
@@ -605,8 +605,8 @@ public class Prefs {
     Prefs.mainPrefPane.add(buttonPane, BorderLayout.SOUTH);
     Prefs.sounds[Prefs.SOUNDS_ALL].addItemListener(Prefs.handler);
     Prefs.music[Prefs.MUSIC_ALL].addItemListener(Prefs.handler);
-    Prefs.generatorConstrainedRandom.addItemListener(Prefs.handler);
-    Prefs.generatorTwister.addItemListener(Prefs.handler);
+    // Prefs.generatorConstrainedRandom.addItemListener(Prefs.handler);
+    // Prefs.generatorTwister.addItemListener(Prefs.handler);
     Prefs.prefsOK.addActionListener(Prefs.handler);
     Prefs.prefsCancel.addActionListener(Prefs.handler);
     Prefs.prefsExport.addActionListener(Prefs.handler);
@@ -874,23 +874,24 @@ public class Prefs {
               }
             }
           }
-        } else if (o.getClass()
-            .equals(Prefs.generatorConstrainedRandom.getClass())) {
-          final JRadioButton radio = (JRadioButton) o;
-          if (radio.equals(Prefs.generatorConstrainedRandom)) {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-              Prefs.prefTabPane.setComponentAt(Prefs.TAB_TWEAKS,
-                  Prefs.constrainedRandomPane);
-            }
-          }
-        } else if (o.getClass().equals(Prefs.generatorTwister.getClass())) {
-          final JRadioButton radio = (JRadioButton) o;
-          if (radio.equals(Prefs.generatorTwister)) {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-              Prefs.prefTabPane.setComponentAt(Prefs.TAB_TWEAKS,
-                  Prefs.twisterPane);
-            }
-          }
+          // } else if (o.getClass()
+          // .equals(Prefs.generatorConstrainedRandom.getClass())) {
+          // final JRadioButton radio = (JRadioButton) o;
+          // if (radio.equals(Prefs.generatorConstrainedRandom)) {
+          // if (e.getStateChange() == ItemEvent.SELECTED) {
+          // Prefs.prefTabPane.setComponentAt(Prefs.TAB_TWEAKS,
+          // Prefs.constrainedRandomPane);
+          // }
+          // }
+          // } else if (o.getClass().equals(Prefs.generatorTwister.getClass()))
+          // {
+          // final JRadioButton radio = (JRadioButton) o;
+          // if (radio.equals(Prefs.generatorTwister)) {
+          // if (e.getStateChange() == ItemEvent.SELECTED) {
+          // Prefs.prefTabPane.setComponentAt(Prefs.TAB_TWEAKS,
+          // Prefs.twisterPane);
+          // }
+          // }
         }
       } catch (final Exception ex) {
         FantastleReboot.exception(ex);
