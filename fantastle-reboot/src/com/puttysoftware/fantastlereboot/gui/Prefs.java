@@ -590,7 +590,8 @@ public class Prefs {
             "Incompatible preferences version found; using defaults.");
         return false;
       } catch (final Throwable e) {
-        FantastleReboot.exception(e);
+        FantastleReboot.exceptionWithMessage(e,
+            "An error occurred while loading settings. Details have been recorded.");
         return false;
       }
     }
