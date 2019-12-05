@@ -606,37 +606,6 @@ final class LayeredTower implements Cloneable {
     }
   }
 
-  void fillRandomlyPure(final World world, final int w) {
-    for (int z = 0; z < this.getFloors(); z++) {
-      this.fillFloorRandomlyPure(world, z, w);
-    }
-  }
-
-  private void fillFloorRandomlyPure(final World world, final int z,
-      final int w) {
-    RandomRange r = null;
-    int x, y, e;
-    // Fill the world with the "pure" algorithm
-    final int columns = this.getColumns();
-    final int rows = this.getRows();
-    for (e = 0; e < Layers.COUNT; e++) {
-      final FantastleObjectModel[] objects = GameObjects
-          .getAllObjectsOnLayer(e);
-      if (objects != null) {
-        r = new RandomRange(0, objects.length - 1);
-        for (x = 0; x < columns; x++) {
-          for (y = 0; y < rows; y++) {
-            final FantastleObjectModel placeObj = objects[r.generate()];
-            this.setCell(
-                GameObjects.getNewInstanceByUniqueID(placeObj.getUniqueID()), y,
-                x, z, e);
-          }
-        }
-      }
-    }
-    this.addMonstersRandomly(z);
-  }
-
   void fillRandomlyConstrained(final World world, final int w) {
     for (int z = 0; z < this.getFloors(); z++) {
       this.fillFloorRandomlyConstrained(world, z, w);

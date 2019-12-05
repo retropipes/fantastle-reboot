@@ -75,7 +75,6 @@ public class Prefs {
   private static String[] updateCheckIntervalValues;
   private static JComboBox<String> viewingWindowChoices;
   private static JComboBox<String> editorWindowChoices;
-  private static JRadioButton generatorPureRandom;
   private static JRadioButton generatorConstrainedRandom;
   private static JRadioButton generatorTwister;
   private static JSlider minRandomRoomSize;
@@ -132,9 +131,8 @@ public class Prefs {
   private static final int MUSIC_GAME = 2;
   private static final int MUSIC_BATTLE = 3;
   private static final int MUSIC_SHOP = 4;
-  private static final int GENERATOR_PURE_RANDOM = 0;
-  private static final int GENERATOR_CONSTRAINED_RANDOM = 1;
-  private static final int GENERATOR_TWISTER = 2;
+  private static final int GENERATOR_CONSTRAINED_RANDOM = 0;
+  private static final int GENERATOR_TWISTER = 1;
   public static final int FILTER_WORLD_V2 = 1;
   public static final int FILTER_WORLD_V3 = 2;
   public static final int FILTER_WORLD_V4 = 3;
@@ -170,10 +168,6 @@ public class Prefs {
       max = 1;
     }
     return RandomRange.generate(min, max);
-  }
-
-  public static boolean isWorldGeneratorPureRandom() {
-    return Prefs.worldGenerator == Prefs.GENERATOR_PURE_RANDOM;
   }
 
   public static boolean isWorldGeneratorConstrainedRandom() {
@@ -373,9 +367,7 @@ public class Prefs {
     Prefs.moveOneAtATime.setSelected(Prefs.moveOneAtATimeEnabled);
     Prefs.viewingWindowChoices.setSelectedIndex(Prefs.viewingWindowIndex);
     Prefs.editorWindowChoices.setSelectedIndex(Prefs.editorWindowIndex);
-    if (Prefs.worldGenerator == Prefs.GENERATOR_PURE_RANDOM) {
-      Prefs.generatorPureRandom.setSelected(true);
-    } else if (Prefs.worldGenerator == Prefs.GENERATOR_CONSTRAINED_RANDOM) {
+    if (Prefs.worldGenerator == Prefs.GENERATOR_CONSTRAINED_RANDOM) {
       Prefs.generatorConstrainedRandom.setSelected(true);
     } else if (Prefs.worldGenerator == Prefs.GENERATOR_TWISTER) {
       Prefs.generatorTwister.setSelected(true);
@@ -407,9 +399,7 @@ public class Prefs {
     Prefs.moveOneAtATimeEnabled = Prefs.moveOneAtATime.isSelected();
     Prefs.viewingWindowIndex = Prefs.viewingWindowChoices.getSelectedIndex();
     Prefs.editorWindowIndex = Prefs.editorWindowChoices.getSelectedIndex();
-    if (Prefs.generatorPureRandom.isSelected()) {
-      Prefs.worldGenerator = Prefs.GENERATOR_PURE_RANDOM;
-    } else if (Prefs.generatorConstrainedRandom.isSelected()) {
+    if (Prefs.generatorConstrainedRandom.isSelected()) {
       Prefs.worldGenerator = Prefs.GENERATOR_CONSTRAINED_RANDOM;
     } else if (Prefs.generatorTwister.isSelected()) {
       Prefs.worldGenerator = Prefs.GENERATOR_TWISTER;
@@ -525,13 +515,11 @@ public class Prefs {
     Prefs.updateCheckInterval = new JComboBox<>(
         Prefs.updateCheckIntervalValues);
     Prefs.difficultyChoices = new JComboBox<>(Prefs.DIFFICULTY_CHOICE_NAMES);
-    Prefs.generatorPureRandom = new JRadioButton("Pure randomness", false);
     Prefs.generatorConstrainedRandom = new JRadioButton(
         "Randomness with limits", true);
     Prefs.generatorTwister = new JRadioButton("Twisted Hallways With Rooms",
         false);
     ButtonGroup generatorGroup = new ButtonGroup();
-    generatorGroup.add(Prefs.generatorPureRandom);
     generatorGroup.add(Prefs.generatorConstrainedRandom);
     generatorGroup.add(Prefs.generatorTwister);
     Prefs.minRandomRoomSize = new JSlider(Prefs.MIN_ROOM_SIZE,
@@ -585,7 +573,6 @@ public class Prefs {
     viewPane.add(Prefs.viewingWindowChoices);
     generatorPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     generatorPane.add(new JLabel("World Generation Method"));
-    generatorPane.add(Prefs.generatorPureRandom);
     generatorPane.add(Prefs.generatorConstrainedRandom);
     generatorPane.add(Prefs.generatorTwister);
     Prefs.pureRandomPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
@@ -618,7 +605,6 @@ public class Prefs {
     Prefs.mainPrefPane.add(buttonPane, BorderLayout.SOUTH);
     Prefs.sounds[Prefs.SOUNDS_ALL].addItemListener(Prefs.handler);
     Prefs.music[Prefs.MUSIC_ALL].addItemListener(Prefs.handler);
-    Prefs.generatorPureRandom.addItemListener(Prefs.handler);
     Prefs.generatorConstrainedRandom.addItemListener(Prefs.handler);
     Prefs.generatorTwister.addItemListener(Prefs.handler);
     Prefs.prefsOK.addActionListener(Prefs.handler);
@@ -670,6 +656,9 @@ public class Prefs {
         }
         Prefs.editorWindowIndex = reader.readInt();
         Prefs.worldGenerator = reader.readInt();
+        if (Prefs.worldGenerator == 2) {
+          Prefs.worldGenerator = 1;
+        }
         Prefs.minRandomRoomSizeIndex = reader.readInt();
         Prefs.maxRandomRoomSizeIndex = reader.readInt();
         Prefs.minRandomHallSizeIndex = reader.readInt();
@@ -881,20 +870,6 @@ public class Prefs {
               for (int x = 1; x < Prefs.MUSIC_LENGTH; x++) {
                 Prefs.music[x].setEnabled(false);
               }
-            }
-          }
-        } else if (o.getClass().equals(Prefs.generatorPureRandom.getClass())) {
-          final JRadioButton radio = (JRadioButton) o;
-          if (radio.equals(Prefs.generatorPureRandom)) {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-              BagOStuff bag = FantastleReboot.getBagOStuff();
-              if (bag != null && Modes.inPrefs()) {
-                CommonDialogs.showTitledDialog(
-                    "Pure randomness can produce unsolvable levels! You have been warned!",
-                    "WARNING!");
-              }
-              Prefs.prefTabPane.setComponentAt(Prefs.TAB_TWEAKS,
-                  Prefs.pureRandomPane);
             }
           }
         } else if (o.getClass()
