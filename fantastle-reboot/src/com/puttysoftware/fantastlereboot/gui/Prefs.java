@@ -656,9 +656,11 @@ public class Prefs {
         }
         Prefs.editorWindowIndex = reader.readInt();
         Prefs.worldGenerator = reader.readInt();
+        // BEGIN: Minor backwards incompatibility mitigation v0.4.0 to v0.5.0
         if (Prefs.worldGenerator == 2) {
-          Prefs.worldGenerator = 1;
+          Prefs.worldGenerator = Prefs.GENERATOR_TWISTER;
         }
+        // END: Minor backwards incompatibility mitigation v0.4.0 to v0.5.0
         Prefs.minRandomRoomSizeIndex = reader.readInt();
         Prefs.maxRandomRoomSizeIndex = reader.readInt();
         Prefs.minRandomHallSizeIndex = reader.readInt();
