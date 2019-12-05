@@ -131,8 +131,8 @@ public class Prefs {
   private static final int MUSIC_GAME = 2;
   private static final int MUSIC_BATTLE = 3;
   private static final int MUSIC_SHOP = 4;
-  private static final int GENERATOR_CONSTRAINED_RANDOM = 0;
-  private static final int GENERATOR_TWISTER = 1;
+  private static final int GENERATOR_CONSTRAINED_RANDOM = 1;
+  private static final int GENERATOR_TWISTER = 2;
   public static final int FILTER_WORLD_V2 = 1;
   public static final int FILTER_WORLD_V3 = 2;
   public static final int FILTER_WORLD_V4 = 3;
@@ -657,8 +657,8 @@ public class Prefs {
         Prefs.editorWindowIndex = reader.readInt();
         Prefs.worldGenerator = reader.readInt();
         // BEGIN: Minor backwards incompatibility mitigation v0.4.0 to v0.5.0
-        if (Prefs.worldGenerator == 2) {
-          Prefs.worldGenerator = Prefs.GENERATOR_TWISTER;
+        if (Prefs.worldGenerator == 0) {
+          Prefs.worldGenerator = Prefs.GENERATOR_CONSTRAINED_RANDOM;
         }
         // END: Minor backwards incompatibility mitigation v0.4.0 to v0.5.0
         Prefs.minRandomRoomSizeIndex = reader.readInt();
