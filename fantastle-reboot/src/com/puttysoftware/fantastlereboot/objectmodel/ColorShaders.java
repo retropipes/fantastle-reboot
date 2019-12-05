@@ -5,6 +5,7 @@ import java.awt.Color;
 import com.puttysoftware.diane.loaders.ColorShader;
 
 public final class ColorShaders {
+  private static ColorShader DOOR;
   private static ColorShader WOODEN;
   private static ColorShader SCORCH;
   private static ColorShader FREEZE;
@@ -18,6 +19,14 @@ public final class ColorShaders {
   private static ColorShader POISON;
   private static ColorShader PLASMA;
   private static ColorShader MAGNET;
+
+  public static ColorShader door() {
+    if (ColorShaders.DOOR == null) {
+      ColorShaders.DOOR = new ColorShader("door",
+          new Color(191, 95, 47, 255));
+    }
+    return ColorShaders.DOOR;
+  }
 
   public static ColorShader wooden() {
     if (ColorShaders.WOODEN == null) {
