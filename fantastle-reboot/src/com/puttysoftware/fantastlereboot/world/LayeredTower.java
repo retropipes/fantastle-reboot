@@ -754,8 +754,12 @@ final class LayeredTower implements Cloneable {
 
   private void endingRoom(final int w) {
     if (w != World.getMaxLevels() - 1) {
-      placeIfEmpty(this.lastRoomX + this.lastRoomW - 2,
-          this.lastRoomY + this.lastRoomH - 2, "S");
+      try {
+        placeIfEmpty(this.lastRoomX + this.lastRoomW - 2,
+            this.lastRoomY + this.lastRoomH - 2, "S");
+      } catch (ArrayIndexOutOfBoundsException e) {
+        placeIfEmpty(this.lastRoomX + 1, this.lastRoomY + 1, "S");
+      }
     }
   }
 
@@ -1144,7 +1148,9 @@ final class LayeredTower implements Cloneable {
         new HealShop(), new ItemShop(), new NecklaceShop(),
         new RegenerateShop(), new SpellShop(), new WeaponShop(), new Pit(),
         new SuperPit(), new Spring(), new SuperSpring(), open, open, open, open,
-        open, open, open, open, open, open, open, open, open, open };
+        open, open, open, open, open, open, open, open, open, open, open, open,
+        open, open, open, open, open, open, open, open, open, open, open,
+        open };
     for (int x = 0; x < this.size.width; x++) {
       for (int y = 0; y < this.size.height; y++) {
         String tile = this.tiles[x][y];
