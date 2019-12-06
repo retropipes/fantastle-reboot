@@ -44,6 +44,10 @@ final class GameErrorHandler implements ErrorHandler {
     }
   }
 
+  void silentlyLog(final Throwable inE) {
+    this.logger.logWarning(inE);
+  }
+
   private void logError(final Throwable t) {
     SoundPlayer.playSound(SoundIndex.FATAL, SoundGroup.USER_INTERFACE);
     CommonDialogs.showErrorDialog(GameErrorHandler.ERROR_MESSAGE,

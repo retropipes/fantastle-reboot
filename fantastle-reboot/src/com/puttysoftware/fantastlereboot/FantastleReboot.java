@@ -53,7 +53,7 @@ public class FantastleReboot {
 
   static void silentlyLog(final Throwable t) {
     RuntimeException re = new RuntimeException(t);
-    FantastleReboot.debug.handle(re);
+    FantastleReboot.debug.silentlyLog(re);
   }
 
   public static void exceptionWithMessage(final Throwable t,
