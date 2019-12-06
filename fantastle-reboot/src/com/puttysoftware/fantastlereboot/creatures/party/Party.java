@@ -132,6 +132,27 @@ public class Party {
     }
   }
 
+  public void distributeVictorySpoils(long exp, int gold) {
+    int numAlive = 0;
+    for (final PartyMember member : this.members) {
+      if (member.isAlive()) {
+        numAlive++;
+      }
+    }
+    long expPerMember = exp / numAlive;
+    long expLeftover = exp % numAlive;
+    int goldPerMember = gold / numAlive;
+    int goldLeftover = gold % numAlive;
+    for (final PartyMember member : this.members) {
+      if (member.isAlive()) {
+        member.offsetExperience(expPerMember);
+        member.offsetGold(goldPerMember);
+      }
+    }
+    this.getLeader().offsetExperience(expLeftover);
+    this.getLeader().offsetGold(goldLeftover);
+  }
+
   boolean addPartyMember(final PartyMember member) {
     if (this.members.size() < Party.MAX_SIZE) {
       this.members.add(member);

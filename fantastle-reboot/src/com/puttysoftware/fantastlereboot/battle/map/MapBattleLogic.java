@@ -30,6 +30,7 @@ import com.puttysoftware.fantastlereboot.creatures.monsters.MonsterFactory;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.game.Game;
+import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItem;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemChucker;
 import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
@@ -1255,8 +1256,8 @@ public class MapBattleLogic extends Battle {
       if (result == BattleResults.WON) {
         SoundPlayer.playSound(SoundIndex.VICTORY, SoundGroup.BATTLE);
         CommonDialogs.showTitledDialog("The party is victorious!", "Victory!");
-        PartyManager.getParty().getLeader().offsetGold(this.battleGold);
-        PartyManager.getParty().getLeader().offsetExperience(this.battleExp);
+        PartyManager.getParty().distributeVictorySpoils(this.battleExp,
+            this.battleGold);
         if (bossFlag) {
           rewardsFlag = true;
         }
@@ -1265,8 +1266,10 @@ public class MapBattleLogic extends Battle {
         CommonDialogs.showTitledDialog(
             "The party is victorious, and escaped unharmed!",
             "Perfect Victory!");
-        PartyManager.getParty().getLeader().offsetGold(this.battleGold);
-        PartyManager.getParty().getLeader().offsetExperience(this.battleExp);
+        long pBattleExp = Prefs.getPerfectBattleExp(this.battleExp);
+        int pBattleGold = Prefs.getPerfectBattleGold(this.battleGold);
+        PartyManager.getParty().distributeVictorySpoils(pBattleExp,
+            pBattleGold);
         if (bossFlag) {
           rewardsFlag = true;
         }

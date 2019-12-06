@@ -52,6 +52,7 @@ import com.puttysoftware.fantastlereboot.files.versions.PrefsVersionException;
 import com.puttysoftware.fantastlereboot.files.versions.PrefsVersions;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.Tile;
+import com.puttysoftware.randomrange.RandomLongRange;
 import com.puttysoftware.randomrange.RandomRange;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
@@ -114,6 +115,14 @@ public class Prefs {
   private static final int[] MDM_MIN_BOT = new int[] { 5, 5, 5, 5, 5 };
   private static final int[] MDM_MAX_TOP = new int[] { 5, 5, 5, 5, 5 };
   private static final int[] MDM_MAX_BOT = new int[] { 5, 4, 3, 2, 1 };
+  private static final int[] EXP_MIN_TOP = new int[] { 9, 9, 9, 9, 9 };
+  private static final int[] EXP_MIN_BOT = new int[] { 8, 7, 6, 5, 4 };
+  private static final int[] EXP_MAX_TOP = new int[] { 9, 9, 9, 9, 9 };
+  private static final int[] EXP_MAX_BOT = new int[] { 6, 5, 4, 3, 2 };
+  private static final int[] GLD_MIN_TOP = new int[] { 23, 23, 23, 23, 23 };
+  private static final int[] GLD_MIN_BOT = new int[] { 22, 20, 18, 16, 14 };
+  private static final int[] GLD_MAX_TOP = new int[] { 23, 23, 23, 23, 23 };
+  private static final int[] GLD_MAX_BOT = new int[] { 18, 16, 14, 12, 10 };
   private static final int DEFAULT_GAME_VIEW_SIZE_INDEX = 2;
   private static final int DEFAULT_EDITOR_VIEW_SIZE_INDEX = 2;
   private static final String[] VIEWING_WINDOW_SIZE_NAMES = new String[] {
@@ -168,6 +177,32 @@ public class Prefs {
       max = 1;
     }
     return RandomRange.generate(min, max);
+  }
+
+  public static int getPerfectBattleGold(final int battleGold) {
+    final int diff = Prefs.getGameDifficulty();
+    int min = battleGold * Prefs.GLD_MIN_TOP[diff] / Prefs.GLD_MIN_BOT[diff];
+    if (min < 1) {
+      min = 1;
+    }
+    int max = battleGold * Prefs.GLD_MAX_TOP[diff] / Prefs.GLD_MAX_BOT[diff];
+    if (max < 1) {
+      max = 1;
+    }
+    return RandomRange.generate(min, max);
+  }
+
+  public static long getPerfectBattleExp(final long battleExp) {
+    final int diff = Prefs.getGameDifficulty();
+    long min = battleExp * Prefs.EXP_MIN_TOP[diff] / Prefs.EXP_MIN_BOT[diff];
+    if (min < 1) {
+      min = 1;
+    }
+    long max = battleExp * Prefs.EXP_MAX_TOP[diff] / Prefs.EXP_MAX_BOT[diff];
+    if (max < 1) {
+      max = 1;
+    }
+    return new RandomLongRange(min, max).generate();
   }
 
   public static boolean isWorldGeneratorConstrainedRandom() {
