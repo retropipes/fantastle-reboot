@@ -108,6 +108,9 @@ public class Prefs {
   private static final int MIN_HALL_SIZE = 3;
   private static final int DEFAULT_HALL_SIZE = 8;
   private static final int MAX_HALL_SIZE = 15;
+  private static final int DEFAULT_UPDATE_CHECK_INTERVAL_INDEX = 2;
+  private static final long[] UPDATE_CHECK_INTERVAL_VALUES = new long[] {
+      86400L, 172800L, 604800L, 1209600L, 2592000L };
   private static final int[] MDM_MIN_TOP = new int[] { 5, 4, 3, 2, 1 };
   private static final int[] MDM_MIN_BOT = new int[] { 5, 5, 5, 5, 5 };
   private static final int[] MDM_MAX_TOP = new int[] { 5, 5, 5, 5, 5 };
@@ -156,7 +159,6 @@ public class Prefs {
   private static final int SOUNDS_LENGTH = 5;
   private static final int GRID_LENGTH = 8;
   private static final long DEFAULT_NEXT_UPDATE = -1L;
-  private static final long NEXT_UPDATE_DIFF = 604800L;
   private static final String DOC_TAG = "settings";
 
   // Constructors
@@ -274,7 +276,8 @@ public class Prefs {
     if (Prefs.lastUpdateCheck == Prefs.DEFAULT_NEXT_UPDATE) {
       return true;
     }
-    long nextUpdateCheck = Prefs.lastUpdateCheck + Prefs.NEXT_UPDATE_DIFF;
+    long nextUpdateCheck = Prefs.lastUpdateCheck
+        + Prefs.UPDATE_CHECK_INTERVAL_VALUES[Prefs.updateCheckIntervalIndex];
     long stamp = Clock.systemUTC().instant().getEpochSecond();
     if (stamp >= nextUpdateCheck) {
       Prefs.lastUpdateCheck = stamp;
@@ -470,7 +473,9 @@ public class Prefs {
     Prefs.viewingWindowChoices.setSelectedIndex(Prefs.viewingWindowIndex);
     Prefs.editorWindowIndex = Prefs.DEFAULT_EDITOR_VIEW_SIZE_INDEX;
     Prefs.editorWindowChoices.setSelectedIndex(Prefs.editorWindowIndex);
-    Prefs.updateCheckInterval.setSelectedIndex(0);
+    Prefs.updateCheckIntervalIndex = DEFAULT_UPDATE_CHECK_INTERVAL_INDEX;
+    Prefs.updateCheckInterval
+        .setSelectedIndex(Prefs.DEFAULT_UPDATE_CHECK_INTERVAL_INDEX);
     Prefs.lastDirOpen = "";
     Prefs.lastDirSave = "";
     Prefs.lastFilterUsed = Prefs.FILTER_WORLD_V5;
