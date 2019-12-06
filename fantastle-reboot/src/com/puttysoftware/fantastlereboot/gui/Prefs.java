@@ -62,8 +62,7 @@ public class Prefs {
   // Fields
   private static MainWindow prefFrame;
   private static JTabbedPane prefTabPane;
-  private static JPanel mainPrefPane, pureRandomPane, constrainedRandomPane,
-      twisterPane;
+  private static JPanel mainPrefPane, twisterPane;
   private static JButton prefsOK, prefsCancel;
   private static JButton prefsExport, prefsImport;
   private static JCheckBox[] sounds = new JCheckBox[Prefs.SOUNDS_LENGTH];
@@ -158,7 +157,6 @@ public class Prefs {
   private static final int GRID_LENGTH = 8;
   private static final long DEFAULT_NEXT_UPDATE = -1L;
   private static final long NEXT_UPDATE_DIFF = 604800L;
-  // private static final int TAB_TWEAKS = 2;
   private static final String DOC_TAG = "settings";
 
   // Constructors
@@ -507,8 +505,6 @@ public class Prefs {
     Prefs.mainPrefPane = new JPanel();
     final JPanel editorPane = new JPanel();
     final JPanel generatorPane = new JPanel();
-    Prefs.pureRandomPane = new JPanel();
-    Prefs.constrainedRandomPane = new JPanel();
     Prefs.twisterPane = new JPanel();
     final JPanel soundPane = new JPanel();
     final JPanel musicPane = new JPanel();
@@ -598,10 +594,6 @@ public class Prefs {
     generatorPane.add(new JLabel("World Generation Method"));
     generatorPane.add(Prefs.generatorConstrainedRandom);
     generatorPane.add(Prefs.generatorTwister);
-    Prefs.pureRandomPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
-    Prefs.pureRandomPane.add(new JLabel("Nothing to configure."));
-    Prefs.constrainedRandomPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
-    Prefs.constrainedRandomPane.add(new JLabel("Nothing to configure."));
     Prefs.twisterPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     Prefs.twisterPane.add(new JLabel("Room Size"));
     Prefs.twisterPane.add(Prefs.randomRoomSize);
@@ -614,8 +606,7 @@ public class Prefs {
     buttonPane.add(Prefs.prefsImport);
     Prefs.prefTabPane.addTab("Editor", null, editorPane);
     Prefs.prefTabPane.addTab("Generator", null, generatorPane);
-    // Prefs.prefTabPane.addTab("Generator Tweaks", null,
-    // Prefs.constrainedRandomPane);
+    Prefs.prefTabPane.addTab("Generator Tweaks", null, Prefs.twisterPane);
     Prefs.prefTabPane.addTab("Sounds", null, soundPane);
     Prefs.prefTabPane.addTab("Music", null, musicPane);
     Prefs.prefTabPane.addTab("Misc.", null, miscPane);
@@ -624,8 +615,6 @@ public class Prefs {
     Prefs.mainPrefPane.add(buttonPane, BorderLayout.SOUTH);
     Prefs.sounds[Prefs.SOUNDS_ALL].addItemListener(Prefs.handler);
     Prefs.music[Prefs.MUSIC_ALL].addItemListener(Prefs.handler);
-    // Prefs.generatorConstrainedRandom.addItemListener(Prefs.handler);
-    // Prefs.generatorTwister.addItemListener(Prefs.handler);
     Prefs.prefsOK.addActionListener(Prefs.handler);
     Prefs.prefsCancel.addActionListener(Prefs.handler);
     Prefs.prefsExport.addActionListener(Prefs.handler);
@@ -900,24 +889,6 @@ public class Prefs {
               }
             }
           }
-          // } else if (o.getClass()
-          // .equals(Prefs.generatorConstrainedRandom.getClass())) {
-          // final JRadioButton radio = (JRadioButton) o;
-          // if (radio.equals(Prefs.generatorConstrainedRandom)) {
-          // if (e.getStateChange() == ItemEvent.SELECTED) {
-          // Prefs.prefTabPane.setComponentAt(Prefs.TAB_TWEAKS,
-          // Prefs.constrainedRandomPane);
-          // }
-          // }
-          // } else if (o.getClass().equals(Prefs.generatorTwister.getClass()))
-          // {
-          // final JRadioButton radio = (JRadioButton) o;
-          // if (radio.equals(Prefs.generatorTwister)) {
-          // if (e.getStateChange() == ItemEvent.SELECTED) {
-          // Prefs.prefTabPane.setComponentAt(Prefs.TAB_TWEAKS,
-          // Prefs.twisterPane);
-          // }
-          // }
         }
       } catch (final Exception ex) {
         FantastleReboot.exception(ex);
