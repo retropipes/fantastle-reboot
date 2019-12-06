@@ -199,6 +199,10 @@ public class BagOStuff {
               "An error occurred while checking for updates. The details have been recorded.");
         }
       }
+    } else {
+      if (manual) {
+        CommonDialogs.showDialog("No updates are available.");
+      }
     }
   }
 
