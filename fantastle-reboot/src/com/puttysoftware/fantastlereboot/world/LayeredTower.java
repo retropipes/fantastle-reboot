@@ -23,11 +23,27 @@ import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.GameObjects;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
 import com.puttysoftware.fantastlereboot.objectmodel.RandomGenerationRule;
+import com.puttysoftware.fantastlereboot.objects.ArmorShop;
+import com.puttysoftware.fantastlereboot.objects.BankShop;
+import com.puttysoftware.fantastlereboot.objects.BonusShop;
 import com.puttysoftware.fantastlereboot.objects.ClosedDoor;
+import com.puttysoftware.fantastlereboot.objects.ElementalShop;
+import com.puttysoftware.fantastlereboot.objects.HealShop;
+import com.puttysoftware.fantastlereboot.objects.ItemShop;
+import com.puttysoftware.fantastlereboot.objects.NecklaceShop;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
+import com.puttysoftware.fantastlereboot.objects.Pit;
+import com.puttysoftware.fantastlereboot.objects.RegenerateShop;
+import com.puttysoftware.fantastlereboot.objects.SpellShop;
+import com.puttysoftware.fantastlereboot.objects.Spring;
+import com.puttysoftware.fantastlereboot.objects.StairsDown;
+import com.puttysoftware.fantastlereboot.objects.StairsUp;
+import com.puttysoftware.fantastlereboot.objects.SuperPit;
+import com.puttysoftware.fantastlereboot.objects.SuperSpring;
 import com.puttysoftware.fantastlereboot.objects.Wall;
 import com.puttysoftware.fantastlereboot.objects.WallOff;
 import com.puttysoftware.fantastlereboot.objects.WallOn;
+import com.puttysoftware.fantastlereboot.objects.WeaponShop;
 import com.puttysoftware.randomrange.RandomLongRange;
 import com.puttysoftware.randomrange.RandomRange;
 import com.puttysoftware.storage.FlagStorage;
@@ -57,6 +73,10 @@ final class LayeredTower implements Cloneable {
   private final long seed;
   private final int hallsize;
   private final int roomsize;
+  private int lastRoomX;
+  private int lastRoomY;
+  private int lastRoomW;
+  private int lastRoomH;
   private static final int MAX_FLOORS = 16;
   private static final int MAX_COLUMNS = 64;
   private static final int MAX_ROWS = 64;
@@ -701,12 +721,14 @@ final class LayeredTower implements Cloneable {
     // Fill the dungeon with wall tiles
     rectFill(0, 0, this.size.width, this.size.height, "#");
     // Create a starting room
-    startingRoom();
+    startingRoom(w);
     // Generate halls/rooms until no prospects remain
     while (hasProspects()) {
       hallsGenerate();
       roomsGenerate();
     }
+    // Do some extra work for the ending room
+    endingRoom(w);
     // Finalize the dungeon
     cleanUp(z);
     // Add monsters
@@ -721,10 +743,20 @@ final class LayeredTower implements Cloneable {
     }
   }
 
-  private void startingRoom() {
+  private void startingRoom(final int w) {
     int center = this.size.width / 2;
     rectFill(center - 2, 1, 3, 3, "R");
     placeIfWall(center - 1, 4, "P");
+    if (w != 0) {
+      placeIfEmpty(center, 2, "s");
+    }
+  }
+
+  private void endingRoom(final int w) {
+    if (w != World.getMaxLevels() - 1) {
+      placeIfEmpty(this.lastRoomX + this.lastRoomW - 2,
+          this.lastRoomY + this.lastRoomH - 2, "S");
+    }
   }
 
   private boolean rectCheck(int x, int y, int w, int h) {
@@ -903,18 +935,34 @@ final class LayeredTower implements Cloneable {
     int h = 3 + this.rand.nextInt(this.roomsize);
     if (isEmpty(this.tiles[x][y - 1])) {
       roomMakeSouthbound(x, y, w, h);
+      this.lastRoomX = x;
+      this.lastRoomY = y;
+      this.lastRoomW = w;
+      this.lastRoomH = h;
       return;
     }
     if (isEmpty(this.tiles[x - 1][y])) {
       roomMakeEastbound(x, y, w, h);
+      this.lastRoomX = x;
+      this.lastRoomY = y;
+      this.lastRoomW = w;
+      this.lastRoomH = h;
       return;
     }
     if (isEmpty(this.tiles[x + 1][y])) {
       roomMakeWestbound(x, y, w, h);
+      this.lastRoomX = x;
+      this.lastRoomY = y;
+      this.lastRoomW = w;
+      this.lastRoomH = h;
       return;
     }
     if (isEmpty(this.tiles[x][y + 1])) {
       roomMakeNorthbound(x, y, w, h);
+      this.lastRoomX = x;
+      this.lastRoomY = y;
+      this.lastRoomW = w;
+      this.lastRoomH = h;
       return;
     }
     this.tiles[x][y] = "#";
@@ -1090,18 +1138,35 @@ final class LayeredTower implements Cloneable {
   }
 
   private void convertTilestoObjects(final int z) {
+    OpenSpace open = new OpenSpace();
+    FantastleObjectModel[] roomReplacers = new FantastleObjectModel[] {
+        new ArmorShop(), new BankShop(), new BonusShop(), new ElementalShop(),
+        new HealShop(), new ItemShop(), new NecklaceShop(),
+        new RegenerateShop(), new SpellShop(), new WeaponShop(), new Pit(),
+        new SuperPit(), new Spring(), new SuperSpring(), open, open, open, open,
+        open, open, open, open, open, open, open, open, open, open };
     for (int x = 0; x < this.size.width; x++) {
       for (int y = 0; y < this.size.height; y++) {
         String tile = this.tiles[x][y];
         if ("#".equals(tile)) {
-          // Convert # to wall
+          // Convert # to walls
           this.setCell(new Wall(), y, x, z, Layers.OBJECT);
         } else if ("D".equals(tile)) {
-          // Convert D to closed door
+          // Convert D to closed doors
           this.setCell(new ClosedDoor(), y, x, z, Layers.OBJECT);
+        } else if ("s".equals(tile)) {
+          // Convert s to stairs up
+          this.setCell(new StairsUp(), y, x, z, Layers.OBJECT);
+        } else if ("S".equals(tile)) {
+          // Convert S to stairs down
+          this.setCell(new StairsDown(), y, x, z, Layers.OBJECT);
+        } else if ("R".equals(tile)) {
+          // Convert R to a random mixture
+          int rIndex = RandomRange.generate(0, roomReplacers.length - 1);
+          this.setCell(roomReplacers[rIndex], y, x, z, Layers.OBJECT);
         } else {
           // Convert anything else to open space
-          this.setCell(new OpenSpace(), y, x, z, Layers.OBJECT);
+          this.setCell(open, y, x, z, Layers.OBJECT);
         }
       }
     }
