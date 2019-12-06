@@ -35,7 +35,7 @@ import com.puttysoftware.integration.NativeIntegration;
 public class FantastleReboot {
   // Constants
   private static BagOStuff bag;
-  private static final String PROGRAM_NAME = "Fantastle Reboot";
+  static final String PROGRAM_NAME = "Fantastle Reboot";
   private static final GameErrorHandler debug = new GameErrorHandler();
   private static final NativeIntegration NATIVITY = new NativeIntegration();
   private static final int BATTLE_WORLD_SIZE = 16;
@@ -49,6 +49,11 @@ public class FantastleReboot {
 
   public static void exception(final Throwable t) {
     FantastleReboot.debug.handle(t);
+  }
+
+  static void silentlyLog(final Throwable t) {
+    RuntimeException re = new RuntimeException(t);
+    FantastleReboot.debug.handle(re);
   }
 
   public static void exceptionWithMessage(final Throwable t,

@@ -57,9 +57,10 @@ public class GUIManager {
     this.guiFrame.setTitle("Fantastle Reboot");
     this.guiFrame.attachContent(this.guiPane);
     this.guiFrame.pack();
-    final BagOStuff app = FantastleReboot.getBagOStuff();
+    final BagOStuff bag = FantastleReboot.getBagOStuff();
     Modes.setInGUI();
-    app.getMenuManager().setMainMenus();
-    app.getMenuManager().checkFlags();
+    bag.getMenuManager().setMainMenus();
+    bag.getMenuManager().checkFlags();
+    BagOStuff.checkForUpdates(false);
   }
 }

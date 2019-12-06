@@ -65,7 +65,7 @@ public class MenuManager {
   private JMenuItem gameEquipment, gameInventory, gameUse, gameReset,
       gameShowScore, gameShowTable, gameEditNote, gameViewStats,
       gameChangeLeader;
-  private JMenuItem debugResetPreferences;
+  private JMenuItem debugResetPreferences, debugCheckForUpdates;
   private JMenuItem helpAbout;
   private KeyStroke fileNewAccel, fileOpenAccel, fileCloseAccel, fileSaveAccel,
       fileSaveAsAccel;
@@ -195,16 +195,19 @@ public class MenuManager {
   }
 
   public void setMainMenus() {
+    // Always enabled commands
+    this.playRegisterCharacter.setEnabled(true);
+    this.playUnregisterCharacter.setEnabled(true);
+    this.playRemoveCharacter.setEnabled(true);
+    this.debugResetPreferences.setEnabled(true);
+    this.debugCheckForUpdates.setEnabled(true);
+    // Other commands
     this.fileClose.setEnabled(false);
     this.fileSave.setEnabled(false);
     this.fileSaveAs.setEnabled(false);
     this.playNewGame.setEnabled(true);
     this.playPlay.setEnabled(false);
     this.playEdit.setEnabled(false);
-    this.playRegisterCharacter.setEnabled(true);
-    this.playUnregisterCharacter.setEnabled(true);
-    this.playRemoveCharacter.setEnabled(true);
-    this.debugResetPreferences.setEnabled(true);
     this.helpAbout.setEnabled(true);
     this.fileNew.setEnabled(true);
     this.fileOpen.setEnabled(true);
@@ -509,6 +512,7 @@ public class MenuManager {
     this.gameViewStats = new JMenuItem("View Statistics...");
     this.gameChangeLeader = new JMenuItem("Change Party Leader...");
     this.debugResetPreferences = new JMenuItem("Reset Preferences");
+    this.debugCheckForUpdates = new JMenuItem("Check for Updates");
     this.helpAbout = new JMenuItem("About...");
     this.fileNew.addActionListener(this.handler);
     this.fileOpen.addActionListener(this.handler);
@@ -553,6 +557,7 @@ public class MenuManager {
     this.gameEditNote.addActionListener(this.handler);
     this.gameViewStats.addActionListener(this.handler);
     this.debugResetPreferences.addActionListener(this.handler);
+    this.debugCheckForUpdates.addActionListener(this.handler);
     this.helpAbout.addActionListener(this.handler);
     this.fileMenu.add(this.fileNew);
     this.fileMenu.add(this.fileOpen);
@@ -602,6 +607,7 @@ public class MenuManager {
     this.gameMenu.add(this.gameViewStats);
     this.gameMenu.add(this.gameChangeLeader);
     this.debugMenu.add(this.debugResetPreferences);
+    this.debugMenu.add(this.debugCheckForUpdates);
     this.mainMenuBar.add(this.fileMenu);
     this.mainMenuBar.add(this.editMenu);
     this.mainMenuBar.add(this.playMenu);
@@ -657,6 +663,7 @@ public class MenuManager {
     this.gameViewStats.setEnabled(false);
     this.gameChangeLeader.setEnabled(false);
     this.debugResetPreferences.setEnabled(false);
+    this.debugCheckForUpdates.setEnabled(false);
     this.helpAbout.setEnabled(false);
   }
 
@@ -819,6 +826,8 @@ public class MenuManager {
         } else if (cmd.equals("Reset Preferences")) {
           app.resetPreferences();
           CommonDialogs.showDialog("Preferences reset to defaults.");
+        } else if (cmd.equals("Check for Updates")) {
+          BagOStuff.checkForUpdates(true);
         } else if (cmd.equals("About Fantastle...")) {
           app.getAboutDialog().showAboutDialog();
         }

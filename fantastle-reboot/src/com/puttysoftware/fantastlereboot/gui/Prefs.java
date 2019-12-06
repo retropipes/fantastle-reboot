@@ -29,6 +29,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.time.Clock;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -78,10 +79,8 @@ public class Prefs {
   private static JComboBox<String> editorWindowChoices;
   private static JRadioButton generatorConstrainedRandom;
   private static JRadioButton generatorTwister;
-  private static JSlider minRandomRoomSize;
-  private static JSlider maxRandomRoomSize;
-  private static JSlider minRandomHallSize;
-  private static JSlider maxRandomHallSize;
+  private static JSlider randomRoomSize;
+  private static JSlider randomHallSize;
   private static EventHandler handler;
   private static final PrefsFileManager fileMgr = new PrefsFileManager();
   private static final ExportImportManager eiMgr = new ExportImportManager();
@@ -92,10 +91,9 @@ public class Prefs {
   private static int viewingWindowIndex;
   private static int editorWindowIndex;
   private static int updateCheckIntervalIndex;
-  private static int minRandomRoomSizeIndex;
-  private static int maxRandomRoomSizeIndex;
-  private static int minRandomHallSizeIndex;
-  private static int maxRandomHallSizeIndex;
+  private static int randomRoomSizeIndex;
+  private static int randomHallSizeIndex;
+  private static long lastUpdateCheck;
   private static int worldGenerator;
   private static boolean[] soundsEnabled = new boolean[Prefs.SOUNDS_LENGTH];
   private static boolean[] musicEnabled = new boolean[Prefs.MUSIC_LENGTH];
@@ -140,6 +138,7 @@ public class Prefs {
   private static final int MUSIC_GAME = 2;
   private static final int MUSIC_BATTLE = 3;
   private static final int MUSIC_SHOP = 4;
+  private static final int GENERATOR_OBSOLETE = 0;
   private static final int GENERATOR_CONSTRAINED_RANDOM = 1;
   private static final int GENERATOR_TWISTER = 2;
   public static final int FILTER_WORLD_V2 = 1;
@@ -157,6 +156,8 @@ public class Prefs {
   private static final int MUSIC_LENGTH = 5;
   private static final int SOUNDS_LENGTH = 5;
   private static final int GRID_LENGTH = 8;
+  private static final long DEFAULT_NEXT_UPDATE = -1L;
+  private static final long NEXT_UPDATE_DIFF = 604800L;
   // private static final int TAB_TWEAKS = 2;
   private static final String DOC_TAG = "settings";
 
@@ -206,27 +207,20 @@ public class Prefs {
   }
 
   public static boolean isWorldGeneratorConstrainedRandom() {
-    return Prefs.worldGenerator == Prefs.GENERATOR_CONSTRAINED_RANDOM;
+    return Prefs.worldGenerator == Prefs.GENERATOR_OBSOLETE
+        || Prefs.worldGenerator == Prefs.GENERATOR_CONSTRAINED_RANDOM;
   }
 
   public static boolean isWorldGeneratorTwister() {
     return Prefs.worldGenerator == Prefs.GENERATOR_TWISTER;
   }
 
-  public static int getMinimumRandomRoomSize() {
-    return Prefs.minRandomRoomSizeIndex;
+  public static int getRandomRoomSize() {
+    return Prefs.randomRoomSizeIndex;
   }
 
-  public static int getMaximumRandomRoomSize() {
-    return Prefs.maxRandomRoomSizeIndex;
-  }
-
-  public static int getMinimumRandomHallSize() {
-    return Prefs.minRandomHallSizeIndex;
-  }
-
-  public static int getMaximumRandomHallSize() {
-    return Prefs.maxRandomHallSizeIndex;
+  public static int getRandomHallSize() {
+    return Prefs.randomHallSizeIndex;
   }
 
   public static int getBattleSpeed() {
@@ -275,8 +269,19 @@ public class Prefs {
     Prefs.lastFilterUsed = value;
   }
 
-  public static boolean shouldCheckUpdatesAtStartup() {
-    return Prefs.checkUpdatesStartupEnabled;
+  public static boolean shouldCheckForUpdates() {
+    if (!Prefs.checkUpdatesStartupEnabled) {
+      return false;
+    }
+    if (Prefs.lastUpdateCheck == Prefs.DEFAULT_NEXT_UPDATE) {
+      return true;
+    }
+    long nextUpdateCheck = Prefs.lastUpdateCheck + Prefs.NEXT_UPDATE_DIFF;
+    long stamp = Clock.systemUTC().instant().getEpochSecond();
+    if (stamp >= nextUpdateCheck) {
+      Prefs.lastUpdateCheck = stamp;
+    }
+    return stamp >= nextUpdateCheck;
   }
 
   public static boolean oneMove() {
@@ -409,10 +414,8 @@ public class Prefs {
     } else {
       Prefs.generatorConstrainedRandom.setSelected(true);
     }
-    Prefs.minRandomRoomSize.setValue(Prefs.minRandomRoomSizeIndex);
-    Prefs.maxRandomRoomSize.setValue(Prefs.maxRandomRoomSizeIndex);
-    Prefs.minRandomHallSize.setValue(Prefs.minRandomHallSizeIndex);
-    Prefs.maxRandomHallSize.setValue(Prefs.maxRandomHallSizeIndex);
+    Prefs.randomRoomSize.setValue(Prefs.randomRoomSizeIndex);
+    Prefs.randomHallSize.setValue(Prefs.randomHallSizeIndex);
   }
 
   private static void savePrefs() {
@@ -441,10 +444,8 @@ public class Prefs {
     } else {
       Prefs.worldGenerator = Prefs.GENERATOR_CONSTRAINED_RANDOM;
     }
-    Prefs.minRandomRoomSizeIndex = Prefs.minRandomRoomSize.getValue();
-    Prefs.maxRandomRoomSizeIndex = Prefs.maxRandomRoomSize.getValue();
-    Prefs.minRandomHallSizeIndex = Prefs.minRandomHallSize.getValue();
-    Prefs.maxRandomHallSizeIndex = Prefs.maxRandomHallSize.getValue();
+    Prefs.randomRoomSizeIndex = Prefs.randomRoomSize.getValue();
+    Prefs.randomHallSizeIndex = Prefs.randomHallSize.getValue();
   }
 
   public static void setDefaultPrefs() {
@@ -461,8 +462,8 @@ public class Prefs {
     Prefs.editorFill = 0;
     Prefs.defaultEnableSoundGroups();
     Prefs.defaultEnableMusicGroups();
-    Prefs.checkUpdatesStartup.setSelected(true);
-    Prefs.checkUpdatesStartupEnabled = true;
+    Prefs.checkUpdatesStartup.setSelected(false);
+    Prefs.checkUpdatesStartupEnabled = false;
     Prefs.difficultySetting = Prefs.DEFAULT_DIFFICULTY;
     Prefs.difficultyChoices.setSelectedIndex(Prefs.difficultySetting);
     Prefs.moveOneAtATime.setSelected(true);
@@ -476,14 +477,11 @@ public class Prefs {
     Prefs.lastDirSave = "";
     Prefs.lastFilterUsed = Prefs.FILTER_WORLD_V5;
     Prefs.worldGenerator = Prefs.GENERATOR_CONSTRAINED_RANDOM;
-    Prefs.minRandomRoomSizeIndex = Prefs.DEFAULT_ROOM_SIZE;
-    Prefs.maxRandomRoomSizeIndex = Prefs.DEFAULT_ROOM_SIZE;
-    Prefs.minRandomHallSizeIndex = Prefs.DEFAULT_HALL_SIZE;
-    Prefs.maxRandomHallSizeIndex = Prefs.DEFAULT_HALL_SIZE;
-    Prefs.minRandomRoomSize.setValue(Prefs.DEFAULT_ROOM_SIZE);
-    Prefs.maxRandomRoomSize.setValue(Prefs.DEFAULT_ROOM_SIZE);
-    Prefs.minRandomHallSize.setValue(Prefs.DEFAULT_HALL_SIZE);
-    Prefs.maxRandomHallSize.setValue(Prefs.DEFAULT_HALL_SIZE);
+    Prefs.randomRoomSizeIndex = Prefs.DEFAULT_ROOM_SIZE;
+    Prefs.randomHallSizeIndex = Prefs.DEFAULT_HALL_SIZE;
+    Prefs.lastUpdateCheck = Prefs.DEFAULT_NEXT_UPDATE;
+    Prefs.randomRoomSize.setValue(Prefs.DEFAULT_ROOM_SIZE);
+    Prefs.randomHallSize.setValue(Prefs.DEFAULT_HALL_SIZE);
     Prefs.loadPrefs();
   }
 
@@ -557,26 +555,16 @@ public class Prefs {
     ButtonGroup generatorGroup = new ButtonGroup();
     generatorGroup.add(Prefs.generatorConstrainedRandom);
     generatorGroup.add(Prefs.generatorTwister);
-    Prefs.minRandomRoomSize = new JSlider(Prefs.MIN_ROOM_SIZE,
+    Prefs.randomRoomSize = new JSlider(Prefs.MIN_ROOM_SIZE,
         Prefs.MAX_ROOM_SIZE);
-    Prefs.minRandomRoomSize
-        .setLabelTable(Prefs.minRandomRoomSize.createStandardLabels(1));
-    Prefs.minRandomRoomSize.setPaintLabels(true);
-    Prefs.maxRandomRoomSize = new JSlider(Prefs.MIN_ROOM_SIZE,
-        Prefs.MAX_ROOM_SIZE);
-    Prefs.maxRandomRoomSize
-        .setLabelTable(Prefs.maxRandomRoomSize.createStandardLabels(1));
-    Prefs.maxRandomRoomSize.setPaintLabels(true);
-    Prefs.minRandomHallSize = new JSlider(Prefs.MIN_HALL_SIZE,
+    Prefs.randomRoomSize
+        .setLabelTable(Prefs.randomRoomSize.createStandardLabels(1));
+    Prefs.randomRoomSize.setPaintLabels(true);
+    Prefs.randomHallSize = new JSlider(Prefs.MIN_HALL_SIZE,
         Prefs.MAX_HALL_SIZE);
-    Prefs.minRandomHallSize
-        .setLabelTable(Prefs.minRandomHallSize.createStandardLabels(1));
-    Prefs.minRandomHallSize.setPaintLabels(true);
-    Prefs.maxRandomHallSize = new JSlider(Prefs.MIN_HALL_SIZE,
-        Prefs.MAX_HALL_SIZE);
-    Prefs.maxRandomHallSize
-        .setLabelTable(Prefs.maxRandomHallSize.createStandardLabels(1));
-    Prefs.maxRandomHallSize.setPaintLabels(true);
+    Prefs.randomHallSize
+        .setLabelTable(Prefs.randomHallSize.createStandardLabels(1));
+    Prefs.randomHallSize.setPaintLabels(true);
     Prefs.mainPrefPane.setLayout(new BorderLayout());
     editorPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     editorPane.add(new JLabel("Default fill for new worlds:"));
@@ -615,14 +603,10 @@ public class Prefs {
     Prefs.constrainedRandomPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
     Prefs.constrainedRandomPane.add(new JLabel("Nothing to configure."));
     Prefs.twisterPane.setLayout(new GridLayout(Prefs.GRID_LENGTH, 1));
-    Prefs.twisterPane.add(new JLabel("Smallest Room Size"));
-    Prefs.twisterPane.add(Prefs.minRandomRoomSize);
-    Prefs.twisterPane.add(new JLabel("Largest Room Size"));
-    Prefs.twisterPane.add(Prefs.maxRandomRoomSize);
-    Prefs.twisterPane.add(new JLabel("Smallest Hall Size"));
-    Prefs.twisterPane.add(Prefs.minRandomHallSize);
-    Prefs.twisterPane.add(new JLabel("Largest Hall Size"));
-    Prefs.twisterPane.add(Prefs.maxRandomHallSize);
+    Prefs.twisterPane.add(new JLabel("Room Size"));
+    Prefs.twisterPane.add(Prefs.randomRoomSize);
+    Prefs.twisterPane.add(new JLabel("Hall Size"));
+    Prefs.twisterPane.add(Prefs.randomHallSize);
     buttonPane.setLayout(new FlowLayout());
     buttonPane.add(Prefs.prefsOK);
     buttonPane.add(Prefs.prefsCancel);
@@ -691,15 +675,16 @@ public class Prefs {
         }
         Prefs.editorWindowIndex = reader.readInt();
         Prefs.worldGenerator = reader.readInt();
-        // BEGIN: Minor backwards incompatibility mitigation v0.4.0 to v0.5.0
-        if (Prefs.worldGenerator == 0) {
-          Prefs.worldGenerator = Prefs.GENERATOR_CONSTRAINED_RANDOM;
+        Prefs.randomRoomSizeIndex = reader.readInt();
+        int lastUpdateCheck1 = reader.readInt();
+        Prefs.randomHallSizeIndex = reader.readInt();
+        int lastUpdateCheck2 = reader.readInt();
+        if (version == 1) {
+          Prefs.lastUpdateCheck = Prefs.DEFAULT_NEXT_UPDATE;
+        } else {
+          Prefs.lastUpdateCheck = (long) lastUpdateCheck1 << 32
+              | lastUpdateCheck2 & 0xFFFFFFFFL;
         }
-        // END: Minor backwards incompatibility mitigation v0.4.0 to v0.5.0
-        Prefs.minRandomRoomSizeIndex = reader.readInt();
-        Prefs.maxRandomRoomSizeIndex = reader.readInt();
-        Prefs.minRandomHallSizeIndex = reader.readInt();
-        Prefs.maxRandomHallSizeIndex = reader.readInt();
         Prefs.loadPrefs();
         return true;
       } catch (final PrefsVersionException pe) {
@@ -741,10 +726,10 @@ public class Prefs {
         }
         writer.writeInt(Prefs.editorWindowIndex);
         writer.writeInt(Prefs.worldGenerator);
-        writer.writeInt(Prefs.minRandomRoomSizeIndex);
-        writer.writeInt(Prefs.maxRandomRoomSizeIndex);
-        writer.writeInt(Prefs.minRandomHallSizeIndex);
-        writer.writeInt(Prefs.maxRandomHallSizeIndex);
+        writer.writeInt(Prefs.randomRoomSizeIndex);
+        writer.writeInt((int) (Prefs.lastUpdateCheck >> 32));
+        writer.writeInt(Prefs.randomHallSizeIndex);
+        writer.writeInt((int) Prefs.lastUpdateCheck);
       } catch (final Throwable t) {
         FantastleReboot.exceptionWithMessage(t,
             "An error occurred while saving settings. Changes may have been lost. Details have been recorded.");
@@ -786,10 +771,16 @@ public class Prefs {
         }
         Prefs.editorWindowIndex = reader.readInt();
         Prefs.worldGenerator = reader.readInt();
-        Prefs.minRandomRoomSizeIndex = reader.readInt();
-        Prefs.maxRandomRoomSizeIndex = reader.readInt();
-        Prefs.minRandomHallSizeIndex = reader.readInt();
-        Prefs.maxRandomHallSizeIndex = reader.readInt();
+        Prefs.randomRoomSizeIndex = reader.readInt();
+        int lastUpdateCheck1 = reader.readInt();
+        Prefs.randomHallSizeIndex = reader.readInt();
+        int lastUpdateCheck2 = reader.readInt();
+        if (version == 1) {
+          Prefs.lastUpdateCheck = Prefs.DEFAULT_NEXT_UPDATE;
+        } else {
+          Prefs.lastUpdateCheck = (long) lastUpdateCheck1 << 32
+              | lastUpdateCheck2 & 0xFFFFFFFFL;
+        }
         Prefs.loadPrefs();
         return true;
       } catch (final PrefsVersionException pe) {
@@ -824,10 +815,10 @@ public class Prefs {
         }
         writer.writeInt(Prefs.editorWindowIndex);
         writer.writeInt(Prefs.worldGenerator);
-        writer.writeInt(Prefs.minRandomRoomSizeIndex);
-        writer.writeInt(Prefs.maxRandomRoomSizeIndex);
-        writer.writeInt(Prefs.minRandomHallSizeIndex);
-        writer.writeInt(Prefs.maxRandomHallSizeIndex);
+        writer.writeInt(Prefs.randomRoomSizeIndex);
+        writer.writeInt((int) (Prefs.lastUpdateCheck >> 32));
+        writer.writeInt(Prefs.randomHallSizeIndex);
+        writer.writeInt((int) Prefs.lastUpdateCheck);
         return true;
       } catch (final Throwable t) {
         FantastleReboot.exceptionWithMessage(t,

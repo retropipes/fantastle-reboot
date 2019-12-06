@@ -18,6 +18,8 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot;
 
+import java.net.MalformedURLException;
+
 import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
@@ -32,6 +34,7 @@ import com.puttysoftware.fantastlereboot.items.Shop;
 import com.puttysoftware.fantastlereboot.items.ShopTypes;
 import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
+import com.puttysoftware.updater.BrowserLauncher;
 import com.puttysoftware.updater.ProductData;
 
 public class BagOStuff {
@@ -42,17 +45,9 @@ public class BagOStuff {
   private Shop weapons, armor, healer, bank, regenerator, spells, items, socks,
       enhancements, faiths;
   private MapBattleLogic mapTurnBattle;
-  private static final String UPDATE_SITE = "https://puttysoftware.com/updater/fantastle-reboot/";
+  private static final String UPDATE_SITE = "https://autoupdate.puttysoftware.com/fantastle-reboot/";
   private static final String NEW_VERSION_SITE = "https://puttysoftware.github.com/fantastle-reboot/";
-  private static final String PRODUCT_NAME = "FantastleReboot";
-  private static final String COMPANY_NAME = "Putty Software";
-  private static final String RDNS_COMPANY_NAME = "com.puttysoftware.fantastlereboot";
-  private static final ProductData pd = new ProductData(BagOStuff.UPDATE_SITE,
-      BagOStuff.UPDATE_SITE, BagOStuff.NEW_VERSION_SITE,
-      BagOStuff.RDNS_COMPANY_NAME, BagOStuff.COMPANY_NAME,
-      BagOStuff.PRODUCT_NAME, BagOStuff.VERSION_MAJOR, BagOStuff.VERSION_MINOR,
-      BagOStuff.VERSION_BUGFIX, BagOStuff.VERSION_CODE,
-      BagOStuff.VERSION_PRERELEASE);
+  private static ProductData pd;
   private static final int VERSION_MAJOR = 0;
   private static final int VERSION_MINOR = 4;
   private static final int VERSION_BUGFIX = 0;
@@ -66,6 +61,14 @@ public class BagOStuff {
 
   // Methods
   void postConstruct() {
+    try {
+      pd = new ProductData(BagOStuff.UPDATE_SITE, BagOStuff.NEW_VERSION_SITE,
+          BagOStuff.VERSION_MAJOR, BagOStuff.VERSION_MINOR,
+          BagOStuff.VERSION_BUGFIX, BagOStuff.VERSION_CODE,
+          BagOStuff.VERSION_PRERELEASE);
+    } catch (MalformedURLException e) {
+      FantastleReboot.exception(e);
+    }
     this.about = new AboutDialog(BagOStuff.getVersionString());
     this.guiMgr = new GUIManager();
     this.mapTurnBattle = new MapBattleLogic();
@@ -171,6 +174,32 @@ public class BagOStuff {
 
   public void playStartSound() {
     SoundPlayer.playSound(SoundIndex.GET_READY, SoundGroup.USER_INTERFACE);
+  }
+
+  public static void checkForUpdates(final boolean manual) {
+    if (Prefs.shouldCheckForUpdates()) {
+      try {
+        if (BagOStuff.pd.checkForUpdates()) {
+          int resp = CommonDialogs.showConfirmDialog(
+              "An update is available. Do you want to download it?",
+              FantastleReboot.PROGRAM_NAME);
+          if (resp == CommonDialogs.YES_OPTION) {
+            BrowserLauncher.openURL(BagOStuff.NEW_VERSION_SITE);
+            System.exit(0);
+          }
+        } else {
+          if (manual) {
+            CommonDialogs.showDialog("No updates are available.");
+          }
+        }
+      } catch (Throwable t) {
+        FantastleReboot.silentlyLog(t);
+        if (manual) {
+          CommonDialogs.showDialog(
+              "An error occurred while checking for updates. The details have been recorded.");
+        }
+      }
+    }
   }
 
   private static String getVersionString() {
