@@ -177,7 +177,7 @@ public class BagOStuff {
   }
 
   public static void checkForUpdates(final boolean manual) {
-    if (Prefs.shouldCheckForUpdates()) {
+    if (Prefs.shouldCheckForUpdates(manual)) {
       try {
         if (BagOStuff.pd.checkForUpdates()) {
           int resp = CommonDialogs.showConfirmDialog(

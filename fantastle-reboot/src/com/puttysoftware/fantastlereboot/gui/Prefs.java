@@ -269,8 +269,8 @@ public class Prefs {
     Prefs.lastFilterUsed = value;
   }
 
-  public static boolean shouldCheckForUpdates() {
-    if (!Prefs.checkUpdatesStartupEnabled) {
+  public static boolean shouldCheckForUpdates(final boolean manual) {
+    if (!manual && !Prefs.checkUpdatesStartupEnabled) {
       return false;
     }
     if (Prefs.lastUpdateCheck == Prefs.DEFAULT_NEXT_UPDATE) {
