@@ -57,7 +57,11 @@ public class ObjectImageLoader {
     for (int i = 0; i <= ObjectImageLoader.MAX_INDEX; i++) {
       final String name = "/assets/images/objects/"
           + ObjectImageLoader.allFilenames[i] + imageExt;
-      ImageLoader.load(name, ObjectImageLoader.class.getResource(name));
+      try {
+        ImageLoader.load(name, ObjectImageLoader.class.getResource(name));
+      } catch (IllegalArgumentException iae) {
+        // Ignore - image unused
+      }
     }
   }
 }

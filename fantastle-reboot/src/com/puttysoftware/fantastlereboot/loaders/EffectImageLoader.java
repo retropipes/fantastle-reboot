@@ -57,7 +57,11 @@ public class EffectImageLoader {
     for (int i = 0; i <= EffectImageLoader.MAX_INDEX; i++) {
       final String name = "/assets/images/effects/"
           + EffectImageLoader.allFilenames[i] + imageExt;
-      ImageLoader.load(name, EffectImageLoader.class.getResource(name));
+      try {
+        ImageLoader.load(name, EffectImageLoader.class.getResource(name));
+      } catch (IllegalArgumentException iae) {
+        // Ignore - image unused
+      }
     }
   }
 }

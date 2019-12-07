@@ -29,7 +29,6 @@ import com.puttysoftware.diane.gui.MainWindow;
 import com.puttysoftware.fantastlereboot.assets.MusicGroup;
 import com.puttysoftware.fantastlereboot.assets.MusicIndex;
 import com.puttysoftware.fantastlereboot.assets.UserInterfaceImageIndex;
-import com.puttysoftware.fantastlereboot.loaders.AttributeImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.AvatarImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.BossImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.EffectImageLoader;
@@ -73,26 +72,22 @@ class Loader extends Thread {
       MusicPlayer.playMusic(MusicIndex.TITLE, MusicGroup.USER_INTERFACE);
       // Cache UI images
       UserInterfaceImageLoader.cacheAll();
-      this.updateWaitProgress(12);
+      this.updateWaitProgress(17);
       // Cache Boss images
       BossImageLoader.cacheAll();
-      this.updateWaitProgress(25);
+      this.updateWaitProgress(33);
       // Cache Effect images
       EffectImageLoader.cacheAll();
-      this.updateWaitProgress(37);
+      this.updateWaitProgress(50);
       // Cache Avatar images
       AvatarImageLoader.cacheAll();
-      this.updateWaitProgress(50);
-      // Cache Attribute images
-      AttributeImageLoader.cacheAll();
       this.updateWaitProgress(67);
       // Cache Object images
       ObjectImageLoader.cacheAll();
-      this.updateWaitProgress(75);
+      this.updateWaitProgress(83);
       // Final tasks
       final BagOStuff bag = FantastleReboot.getBagOStuff();
       GameObjects.initializeObjects();
-      this.updateWaitProgress(87);
       bag.postConstruct();
       FantastleReboot.doLateOSIntegration();
       this.updateWaitProgress(100);

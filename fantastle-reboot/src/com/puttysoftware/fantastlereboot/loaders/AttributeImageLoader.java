@@ -18,18 +18,16 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
  */
 package com.puttysoftware.fantastlereboot.loaders;
 
-import java.io.IOException;
 import java.util.Properties;
 
 import com.puttysoftware.diane.loaders.ImageLoader;
-import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.fantastlereboot.assets.AttributeImageIndex;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class AttributeImageLoader {
   private static String[] allFilenames;
   private static Properties fileExtensions;
-  private static final int MAX_INDEX = 69;
+  //private static final int MAX_INDEX = 69;
 
   public static BufferedImageIcon load(final AttributeImageIndex image) {
     if (image != AttributeImageIndex._NONE) {
@@ -41,24 +39,5 @@ public class AttributeImageLoader {
           AttributeImageLoader.class.getResource(name));
     }
     return null;
-  }
-
-  public static void cacheAll() {
-    AttributeImageLoader.allFilenames = DataLoader.loadAttributeImageData();
-    try {
-      AttributeImageLoader.fileExtensions = new Properties();
-      AttributeImageLoader.fileExtensions
-          .load(AttributeImageLoader.class.getResourceAsStream(
-              "/assets/data/extensions/extensions.properties"));
-    } catch (final IOException e) {
-      FantastleReboot.exception(e);
-    }
-    final String imageExt = AttributeImageLoader.fileExtensions
-        .getProperty("images");
-    for (int i = 0; i <= AttributeImageLoader.MAX_INDEX; i++) {
-      final String name = "/assets/images/attributes/"
-          + AttributeImageLoader.allFilenames[i] + imageExt;
-      ImageLoader.load(name, AttributeImageLoader.class.getResource(name));
-    }
   }
 }
