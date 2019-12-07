@@ -29,6 +29,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.IOException;
 import java.time.Clock;
 
 import javax.swing.ButtonGroup;
@@ -55,6 +56,8 @@ import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objects.Tile;
 import com.puttysoftware.randomrange.RandomLongRange;
 import com.puttysoftware.randomrange.RandomRange;
+import com.puttysoftware.updater.ProductData;
+import com.puttysoftware.updater.UpdateCheckResults;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
@@ -94,6 +97,11 @@ public class Prefs {
   private static int randomHallSizeIndex;
   private static long lastUpdateCheck;
   private static int worldGenerator;
+  private static int cachedMajorVersion;
+  private static int cachedMinorVersion;
+  private static int cachedBugfixVersion;
+  private static int cachedPrereleaseVersion;
+  private static boolean cachedHasUpdate;
   private static boolean[] soundsEnabled = new boolean[Prefs.SOUNDS_LENGTH];
   private static boolean[] musicEnabled = new boolean[Prefs.MUSIC_LENGTH];
   private static String lastDirOpen = "";
@@ -269,7 +277,7 @@ public class Prefs {
     Prefs.lastFilterUsed = value;
   }
 
-  public static boolean shouldCheckForUpdates(final boolean manual) {
+  private static boolean useCache(final boolean manual) {
     if (!manual && !Prefs.checkUpdatesStartupEnabled) {
       return false;
     }
@@ -283,6 +291,32 @@ public class Prefs {
       Prefs.lastUpdateCheck = stamp;
     }
     return stamp >= nextUpdateCheck;
+  }
+
+  public static UpdateCheckResults checkForUpdates(final boolean manual,
+      final ProductData pd) throws IOException {
+    UpdateCheckResults results;
+    if (Prefs.useCache(manual)) {
+      results = Prefs.getCachedResults();
+    } else {
+      results = pd.checkForUpdates();
+      Prefs.cacheResults(results);
+    }
+    return results;
+  }
+
+  private static UpdateCheckResults getCachedResults() {
+    return new UpdateCheckResults(Prefs.cachedHasUpdate,
+        Prefs.cachedMajorVersion, Prefs.cachedMinorVersion,
+        Prefs.cachedBugfixVersion, Prefs.cachedPrereleaseVersion);
+  }
+
+  private static void cacheResults(final UpdateCheckResults results) {
+    Prefs.cachedMajorVersion = results.getMajorVersion();
+    Prefs.cachedMinorVersion = results.getMinorVersion();
+    Prefs.cachedBugfixVersion = results.getBugfixVersion();
+    Prefs.cachedPrereleaseVersion = results.getPrereleaseVersion();
+    Prefs.cachedHasUpdate = results.hasUpdate();
   }
 
   public static boolean oneMove() {
@@ -670,14 +704,18 @@ public class Prefs {
         Prefs.editorWindowIndex = reader.readInt();
         Prefs.worldGenerator = reader.readInt();
         Prefs.randomRoomSizeIndex = reader.readInt();
-        int lastUpdateCheck1 = reader.readInt();
+        int cachedMajor = reader.readInt();
         Prefs.randomHallSizeIndex = reader.readInt();
-        int lastUpdateCheck2 = reader.readInt();
+        int cachedMinor = reader.readInt();
         if (version == 1) {
           Prefs.lastUpdateCheck = Prefs.DEFAULT_NEXT_UPDATE;
         } else {
-          Prefs.lastUpdateCheck = (long) lastUpdateCheck1 << 32
-              | lastUpdateCheck2 & 0xFFFFFFFFL;
+          Prefs.cachedMajorVersion = cachedMajor;
+          Prefs.cachedMinorVersion = cachedMinor;
+          Prefs.cachedBugfixVersion = reader.readInt();
+          Prefs.cachedPrereleaseVersion = reader.readInt();
+          Prefs.cachedHasUpdate = reader.readBoolean();
+          Prefs.lastUpdateCheck = reader.readLong();
         }
         Prefs.loadPrefs();
         return true;
@@ -721,9 +759,13 @@ public class Prefs {
         writer.writeInt(Prefs.editorWindowIndex);
         writer.writeInt(Prefs.worldGenerator);
         writer.writeInt(Prefs.randomRoomSizeIndex);
-        writer.writeInt((int) (Prefs.lastUpdateCheck >> 32));
+        writer.writeInt(Prefs.cachedMajorVersion);
         writer.writeInt(Prefs.randomHallSizeIndex);
-        writer.writeInt((int) Prefs.lastUpdateCheck);
+        writer.writeInt(Prefs.cachedMinorVersion);
+        writer.writeInt(Prefs.cachedBugfixVersion);
+        writer.writeInt(Prefs.cachedPrereleaseVersion);
+        writer.writeBoolean(Prefs.cachedHasUpdate);
+        writer.writeLong(Prefs.lastUpdateCheck);
       } catch (final Throwable t) {
         FantastleReboot.exceptionWithMessage(t,
             "An error occurred while saving settings. Changes may have been lost. Details have been recorded.");
@@ -766,14 +808,18 @@ public class Prefs {
         Prefs.editorWindowIndex = reader.readInt();
         Prefs.worldGenerator = reader.readInt();
         Prefs.randomRoomSizeIndex = reader.readInt();
-        int lastUpdateCheck1 = reader.readInt();
+        int cachedMajor = reader.readInt();
         Prefs.randomHallSizeIndex = reader.readInt();
-        int lastUpdateCheck2 = reader.readInt();
+        int cachedMinor = reader.readInt();
         if (version == 1) {
           Prefs.lastUpdateCheck = Prefs.DEFAULT_NEXT_UPDATE;
         } else {
-          Prefs.lastUpdateCheck = (long) lastUpdateCheck1 << 32
-              | lastUpdateCheck2 & 0xFFFFFFFFL;
+          Prefs.cachedMajorVersion = cachedMajor;
+          Prefs.cachedMinorVersion = cachedMinor;
+          Prefs.cachedBugfixVersion = reader.readInt();
+          Prefs.cachedPrereleaseVersion = reader.readInt();
+          Prefs.cachedHasUpdate = reader.readBoolean();
+          Prefs.lastUpdateCheck = reader.readLong();
         }
         Prefs.loadPrefs();
         return true;
@@ -810,9 +856,13 @@ public class Prefs {
         writer.writeInt(Prefs.editorWindowIndex);
         writer.writeInt(Prefs.worldGenerator);
         writer.writeInt(Prefs.randomRoomSizeIndex);
-        writer.writeInt((int) (Prefs.lastUpdateCheck >> 32));
+        writer.writeInt(Prefs.cachedMajorVersion);
         writer.writeInt(Prefs.randomHallSizeIndex);
-        writer.writeInt((int) Prefs.lastUpdateCheck);
+        writer.writeInt(Prefs.cachedMinorVersion);
+        writer.writeInt(Prefs.cachedBugfixVersion);
+        writer.writeInt(Prefs.cachedPrereleaseVersion);
+        writer.writeBoolean(Prefs.cachedHasUpdate);
+        writer.writeLong(Prefs.lastUpdateCheck);
         return true;
       } catch (final Throwable t) {
         FantastleReboot.exceptionWithMessage(t,

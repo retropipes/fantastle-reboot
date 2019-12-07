@@ -19,6 +19,7 @@ Any questions should be directed to the author via email at: fantastle@worldwiza
 package com.puttysoftware.fantastlereboot;
 
 import java.net.MalformedURLException;
+import java.net.UnknownHostException;
 
 import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
@@ -36,6 +37,7 @@ import com.puttysoftware.fantastlereboot.items.combat.CombatItemList;
 import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.updater.BrowserLauncher;
 import com.puttysoftware.updater.ProductData;
+import com.puttysoftware.updater.UpdateCheckResults;
 
 public class BagOStuff {
   // Fields
@@ -177,31 +179,33 @@ public class BagOStuff {
   }
 
   public static void checkForUpdates(final boolean manual) {
-    if (Prefs.shouldCheckForUpdates(manual)) {
-      try {
-        if (BagOStuff.pd.checkForUpdates()) {
-          int resp = CommonDialogs.showConfirmDialog(
-              "An update is available. Do you want to download it?",
-              FantastleReboot.PROGRAM_NAME);
-          if (resp == CommonDialogs.YES_OPTION) {
-            BrowserLauncher.openURL(BagOStuff.NEW_VERSION_SITE);
-            System.exit(0);
-          }
-        } else {
-          if (manual) {
-            CommonDialogs.showDialog("No updates are available.");
-          }
+    try {
+      UpdateCheckResults results = Prefs.checkForUpdates(manual, BagOStuff.pd);
+      if (results.hasUpdate()) {
+        int resp = CommonDialogs.showConfirmDialog(
+            "An update is available. Do you want to download it?",
+            FantastleReboot.PROGRAM_NAME);
+        if (resp == CommonDialogs.YES_OPTION) {
+          BrowserLauncher.openURL(BagOStuff.NEW_VERSION_SITE);
+          System.exit(0);
         }
-      } catch (Throwable t) {
-        FantastleReboot.silentlyLog(t);
+      } else {
         if (manual) {
-          CommonDialogs.showDialog(
-              "An error occurred while checking for updates. The details have been recorded.");
+          CommonDialogs.showDialog("No updates are available.");
         }
       }
-    } else {
+    } catch (UnknownHostException uhe) {
       if (manual) {
-        CommonDialogs.showDialog("No updates are available.");
+        CommonDialogs
+            .showDialog("The check for updates could not be completed,\n"
+                + "because you are not connected to the Internet.");
+      }
+    } catch (Throwable t) {
+      FantastleReboot.silentlyLog(t);
+      if (manual) {
+        CommonDialogs
+            .showDialog("An error occurred while checking for updates.\n"
+                + "The details have been recorded.");
       }
     }
   }
