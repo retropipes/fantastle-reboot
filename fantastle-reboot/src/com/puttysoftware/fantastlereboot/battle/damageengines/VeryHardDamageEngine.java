@@ -24,6 +24,7 @@ class VeryHardDamageEngine extends AbstractDamageEngine {
   private static final double FAITH_INCREMENT = 0.05;
   private static final double FAITH_INCREMENT_2H = 0.08;
   private static final double FAITH_DR_INCREMENT = 0.03;
+  private double lastMultiplier = 1.0;
   private boolean dodged = false;
   private boolean missed = false;
   private boolean crit = false;
@@ -128,12 +129,21 @@ class VeryHardDamageEngine extends AbstractDamageEngine {
               faithDR -= fpl * VeryHardDamageEngine.FAITH_DR_INCREMENT;
             }
           }
-          final int unadjustedDamage = (int) (rawDamage * multiplier
+          final double unadjustedDamage = (rawDamage * multiplier
               * faithMultiplier / CommonDamageEngineParts.MULTIPLIER_DIVIDE);
-          return (int) (unadjustedDamage * faithDR);
+          this.lastMultiplier = MultiplierValues.getRandomNormalValue();
+          final int adjustedDamage = (int) (unadjustedDamage * faithDR
+              * this.lastMultiplier);
+          return acting.getFaith().getFaithAdjustedDamage(
+              enemy.getFaith().getFaithID(), adjustedDamage);
         }
       }
     }
+  }
+
+  @Override
+  public String getDamageString() {
+    return MultiplierValues.getTextForValue(this.lastMultiplier);
   }
 
   @Override

@@ -7,8 +7,6 @@ package com.puttysoftware.fantastlereboot.creatures.monsters;
 
 import com.puttysoftware.fantastlereboot.ai.map.AbstractMapAIRoutine;
 import com.puttysoftware.fantastlereboot.ai.map.MapAIRoutinePicker;
-import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
-import com.puttysoftware.fantastlereboot.ai.window.WindowAIRoutinePicker;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
@@ -59,7 +57,6 @@ public final class Monster extends Creature {
   Monster(final int teamID) {
     super(new ItemInventory(), teamID, FaithManager.getRandomFaith(),
         JobManager.getRandomJob(), RaceManager.getRandomRace());
-    this.setWindowAI(Monster.getInitialWindowAI());
     this.setMapAI(Monster.getInitialMapAI());
     final SpellBook spells = SpellBookManager
         .getEnemySpellBookByID(Prefs.getGameDifficulty());
@@ -145,10 +142,6 @@ public final class Monster extends Creature {
         + this.getVitality() + this.getIntelligence() + this.getLuck();
   }
 
-  String getType() {
-    return this.name;
-  }
-
   void setType(final String newType) {
     this.name = newType;
   }
@@ -158,10 +151,6 @@ public final class Monster extends Creature {
   }
 
   // Helper Methods
-  private static AbstractWindowAIRoutine getInitialWindowAI() {
-    return WindowAIRoutinePicker.getNextRoutine();
-  }
-
   private static AbstractMapAIRoutine getInitialMapAI() {
     return MapAIRoutinePicker.getNextRoutine();
   }
@@ -188,13 +177,7 @@ public final class Monster extends Creature {
   public void loadCreature() {
     final int newLevel = PartyManager.getParty().getMonsterLevel() + 1;
     this.setLevel(newLevel);
-    this.setVitality(this.getInitialVitality());
-    this.setCurrentHP(this.getMaximumHP());
-    this.setIntelligence(this.getInitialIntelligence());
-    this.setCurrentMP(this.getMaximumMP());
-    this.setStrength(this.getInitialStrength());
-    this.setBlock(this.getInitialBlock());
-    this.setAgility(this.getInitialAgility());
+    this.setInitialStats();
     this.setLuck(this.getInitialLuck());
     this.setGold(this.getInitialGold());
     this.setExperience(
@@ -202,16 +185,17 @@ public final class Monster extends Creature {
     this.setAttacksPerRound(1);
     this.setSpellsPerRound(1);
     this.image = this.getInitialImage();
-    this.healAndRegenerateFully();
   }
 
-  private int getInitialStrength() {
+  @Override
+  protected int getInitialStrength() {
     final RandomRange r = new RandomRange(1, Math
         .max(this.getLevel() * Monster.getStatMultiplierForDifficulty(), 1));
     return r.generate();
   }
 
-  private int getInitialBlock() {
+  @Override
+  protected int getInitialBlock() {
     final RandomRange r = new RandomRange(0,
         this.getLevel() * Monster.getStatMultiplierForDifficulty());
     return r.generate();
@@ -243,25 +227,29 @@ public final class Monster extends Creature {
         * Monster.getGoldMultiplierForDifficulty());
   }
 
-  private int getInitialAgility() {
+  @Override
+  protected int getInitialAgility() {
     final RandomRange r = new RandomRange(1, Math
         .max(this.getLevel() * Monster.getStatMultiplierForDifficulty(), 1));
     return r.generate();
   }
 
-  private int getInitialVitality() {
+  @Override
+  protected int getInitialVitality() {
     final RandomRange r = new RandomRange(1, Math
         .max(this.getLevel() * Monster.getStatMultiplierForDifficulty(), 1));
     return r.generate();
   }
 
-  private int getInitialIntelligence() {
+  @Override
+  protected int getInitialIntelligence() {
     final RandomRange r = new RandomRange(0,
         this.getLevel() * Monster.getStatMultiplierForDifficulty());
     return r.generate();
   }
 
-  private int getInitialLuck() {
+  @Override
+  protected int getInitialLuck() {
     final RandomRange r = new RandomRange(0,
         this.getLevel() * Monster.getStatMultiplierForDifficulty());
     return r.generate();

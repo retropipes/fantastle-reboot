@@ -11,6 +11,10 @@ public class Modes {
     super();
   }
 
+  static {
+    Modes.current = Modes.NULL;
+    Modes.former = Modes.NULL;
+  }
   private static final int NULL = 0;
   private static final int GAME = 1;
   private static final int EDITOR = 2;
@@ -64,10 +68,6 @@ public class Modes {
     return Modes.current == Modes.GUI;
   }
 
-  public static boolean inPrefs() {
-    return Modes.current == Modes.PREFS;
-  }
-
   public static boolean inGame() {
     return Modes.current == Modes.GAME;
   }
@@ -78,22 +78,6 @@ public class Modes {
 
   public static boolean inBattle() {
     return Modes.current == Modes.BATTLE;
-  }
-
-  public static boolean inAbout() {
-    return Modes.current == Modes.ABOUT;
-  }
-
-  public static boolean inWorldPrefs() {
-    return Modes.current == Modes.WORLD_PREFS;
-  }
-
-  public static boolean inLevelPrefs() {
-    return Modes.current == Modes.LEVEL_PREFS;
-  }
-
-  public static boolean inUnknown() {
-    return Modes.current == Modes.NULL;
   }
 
   private static void save() {

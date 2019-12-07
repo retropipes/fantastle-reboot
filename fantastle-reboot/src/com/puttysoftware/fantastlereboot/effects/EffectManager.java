@@ -31,7 +31,6 @@ public class EffectManager {
   private static Effect[] activeEffects;
   private static JPanel activeEffectMessageJPanel;
   private static JLabel[] activeEffectMessages;
-  private static int newEffectIndex;
   private static int[] activeEffectIndices;
   private static final int NUM_EFFECTS = 9;
   private static final int MAX_ACTIVE_EFFECTS = 3;
@@ -73,7 +72,6 @@ public class EffectManager {
     for (int z = 0; z < EffectManager.MAX_ACTIVE_EFFECTS; z++) {
       EffectManager.activeEffectIndices[z] = -1;
     }
-    EffectManager.newEffectIndex = -1;
   }
 
   // Methods
@@ -97,29 +95,6 @@ public class EffectManager {
     }
   }
 
-  public static void activateEffect(final int effectID, final int duration) {
-    EffectManager.activeEffects[effectID].extendEffect(duration);
-    EffectManager.handleMutualExclusiveEffects(effectID);
-    final boolean active = EffectManager.activeEffects[effectID].isActive();
-    // Update effect grid
-    if (active) {
-      EffectManager.updateGridEntry(effectID);
-    } else {
-      EffectManager.addGridEntry(effectID);
-    }
-  }
-
-  private static void addGridEntry(final int effectID) {
-    if (EffectManager.newEffectIndex < EffectManager.MAX_ACTIVE_EFFECTS - 1) {
-      EffectManager.newEffectIndex++;
-      EffectManager.activeEffectIndices[EffectManager.newEffectIndex] = effectID;
-      final String effectString = EffectManager.activeEffects[effectID]
-          .getEffectString();
-      EffectManager.activeEffectMessages[EffectManager.newEffectIndex]
-          .setText(effectString);
-    }
-  }
-
   private static void clearGridEntry(final int effectID) {
     final int index = EffectManager.lookupEffect(effectID);
     if (index != -1) {
@@ -133,7 +108,6 @@ public class EffectManager {
       }
       // Clear last entry
       EffectManager.clearGridEntryText(EffectManager.MAX_ACTIVE_EFFECTS - 1);
-      EffectManager.newEffectIndex--;
     }
   }
 
@@ -149,11 +123,6 @@ public class EffectManager {
           .getEffectString();
       EffectManager.activeEffectMessages[index].setText(effectString);
     }
-  }
-
-  private static void deactivateEffect(final int effectID) {
-    EffectManager.activeEffects[effectID].deactivateEffect();
-    EffectManager.clearGridEntry(effectID);
   }
 
   public static void deactivateAllEffects() {
@@ -174,39 +143,6 @@ public class EffectManager {
       }
     }
     return -1;
-  }
-
-  private static void handleMutualExclusiveEffects(final int effectID) {
-    if (effectID == EffectConstants.EFFECT_ROTATED_CLOCKWISE) {
-      EffectManager
-          .deactivateEffect(EffectConstants.EFFECT_ROTATED_COUNTERCLOCKWISE);
-      EffectManager.deactivateEffect(EffectConstants.EFFECT_U_TURNED);
-    } else if (effectID == EffectConstants.EFFECT_ROTATED_COUNTERCLOCKWISE) {
-      EffectManager.deactivateEffect(EffectConstants.EFFECT_ROTATED_CLOCKWISE);
-      EffectManager.deactivateEffect(EffectConstants.EFFECT_U_TURNED);
-    } else if (effectID == EffectConstants.EFFECT_U_TURNED) {
-      EffectManager.deactivateEffect(EffectConstants.EFFECT_ROTATED_CLOCKWISE);
-      EffectManager
-          .deactivateEffect(EffectConstants.EFFECT_ROTATED_COUNTERCLOCKWISE);
-    } else if (effectID == EffectConstants.EFFECT_CONFUSED) {
-      EffectManager.deactivateEffect(EffectConstants.EFFECT_DIZZY);
-      EffectManager.deactivateEffect(EffectConstants.EFFECT_DRUNK);
-    } else if (effectID == EffectConstants.EFFECT_DIZZY) {
-      EffectManager.deactivateEffect(EffectConstants.EFFECT_CONFUSED);
-      EffectManager.deactivateEffect(EffectConstants.EFFECT_DRUNK);
-    } else if (effectID == EffectConstants.EFFECT_DRUNK) {
-      EffectManager.deactivateEffect(EffectConstants.EFFECT_CONFUSED);
-      EffectManager.deactivateEffect(EffectConstants.EFFECT_DIZZY);
-    } else if (effectID == EffectConstants.EFFECT_STICKY) {
-      EffectManager.deactivateEffect(EffectConstants.EFFECT_POWER_GATHER);
-      EffectManager.deactivateEffect(EffectConstants.EFFECT_POWER_WITHER);
-    } else if (effectID == EffectConstants.EFFECT_POWER_GATHER) {
-      EffectManager.deactivateEffect(EffectConstants.EFFECT_STICKY);
-      EffectManager.deactivateEffect(EffectConstants.EFFECT_POWER_WITHER);
-    } else if (effectID == EffectConstants.EFFECT_POWER_WITHER) {
-      EffectManager.deactivateEffect(EffectConstants.EFFECT_STICKY);
-      EffectManager.deactivateEffect(EffectConstants.EFFECT_POWER_GATHER);
-    }
   }
 
   public static int[] doEffects(final int x, final int y) {

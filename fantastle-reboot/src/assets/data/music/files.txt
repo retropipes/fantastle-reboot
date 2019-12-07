@@ -1,9 +1,6 @@
-final-window-battle
 final-map-battle
 normal-map-battle
 boss-map-battle
-normal-window-battle
-boss-window-battle
 title
 dungeon-random-1
 dungeon-random-2

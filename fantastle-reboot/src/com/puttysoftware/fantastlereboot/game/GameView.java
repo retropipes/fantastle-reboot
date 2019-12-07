@@ -25,14 +25,6 @@ public final class GameView {
     return GameView.locY;
   }
 
-  public static int getUpperLeftViewingWindowLocationX() {
-    return GameView.locX;
-  }
-
-  public static int getUpperLeftViewingWindowLocationY() {
-    return GameView.locY;
-  }
-
   public static int getLowerRightViewingWindowLocationX() {
     return GameView.locX + Prefs.getViewingWindowSize() - 1;
   }
@@ -65,14 +57,6 @@ public final class GameView {
   public static void restoreViewingWindow() {
     GameView.locX = GameView.oldLocX;
     GameView.locY = GameView.oldLocY;
-  }
-
-  public static int getViewingWindowSizeX() {
-    return Prefs.getViewingWindowSize();
-  }
-
-  public static int getViewingWindowSizeY() {
-    return Prefs.getViewingWindowSize();
   }
 
   public static int getOffsetFactorX() {

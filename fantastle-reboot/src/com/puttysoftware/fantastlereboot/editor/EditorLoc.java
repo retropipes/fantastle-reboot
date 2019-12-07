@@ -23,12 +23,8 @@ import com.puttysoftware.fantastlereboot.world.World;
 
 class EditorLoc {
   // Fields
-  private static int oldLocX, oldLocY, oldLocZ;
-  private static int oldLocW, oldLocE;
   private static int locX, locY, locZ;
   private static int locW, locE;
-  private static int cameFromW, oldCameFromW;
-  private static int cameFromZ, oldCameFromZ;
   private static int minX, minY, minZ, minW, minE;
   private static int maxW, maxE;
   private static int maxX, maxY, maxZ;
@@ -59,14 +55,6 @@ class EditorLoc {
     return EditorLoc.locE;
   }
 
-  public static int getMaxLocX() {
-    return EditorLoc.maxX;
-  }
-
-  public static int getMaxLocY() {
-    return EditorLoc.maxY;
-  }
-
   public static int getMaxLocZ() {
     return EditorLoc.maxZ;
   }
@@ -75,36 +63,12 @@ class EditorLoc {
     return EditorLoc.maxW;
   }
 
-  public static int getMaxLocE() {
-    return EditorLoc.maxE;
-  }
-
-  public static int getMinLocX() {
-    return EditorLoc.minX;
-  }
-
-  public static int getMinLocY() {
-    return EditorLoc.minY;
-  }
-
   public static int getMinLocZ() {
     return EditorLoc.minZ;
   }
 
   public static int getMinLocW() {
     return EditorLoc.minW;
-  }
-
-  public static int getMinLocE() {
-    return EditorLoc.minE;
-  }
-
-  public static int getCameFromZ() {
-    return EditorLoc.cameFromZ;
-  }
-
-  public static int getCameFromW() {
-    return EditorLoc.cameFromW;
   }
 
   public static void setLocX(final int val) {
@@ -132,56 +96,6 @@ class EditorLoc {
     EditorLoc.checkLimits();
   }
 
-  public static void setCameFromZ(final int val) {
-    EditorLoc.cameFromZ = val;
-  }
-
-  public static void setCameFromW(final int val) {
-    EditorLoc.cameFromW = val;
-  }
-
-  public static void setLoc(final int valX, final int valY, final int valZ,
-      final int valW, final int valE) {
-    EditorLoc.locW = valW;
-    EditorLoc.locE = valE;
-    EditorLoc.locX = valX;
-    EditorLoc.locY = valY;
-    EditorLoc.locZ = valZ;
-    EditorLoc.checkLimits();
-  }
-
-  public static void offsetLoc(final int valX, final int valY, final int valZ,
-      final int valW, final int valE) {
-    EditorLoc.locW += valW;
-    EditorLoc.locE += valE;
-    EditorLoc.locX += valX;
-    EditorLoc.locY += valY;
-    EditorLoc.locZ += valZ;
-    EditorLoc.checkLimits();
-  }
-
-  public static void setCameFrom(final int valZ, final int valW) {
-    EditorLoc.cameFromW = valW;
-    EditorLoc.cameFromZ = valZ;
-    EditorLoc.checkLimits();
-  }
-
-  public static void offsetCameFrom(final int valZ, final int valW) {
-    EditorLoc.cameFromW += valW;
-    EditorLoc.cameFromZ += valZ;
-    EditorLoc.checkLimits();
-  }
-
-  public static void offsetLocX(final int val) {
-    EditorLoc.locX += val;
-    EditorLoc.checkLimits();
-  }
-
-  public static void offsetLocY(final int val) {
-    EditorLoc.locY += val;
-    EditorLoc.checkLimits();
-  }
-
   public static void offsetLocZ(final int val) {
     EditorLoc.locZ += val;
     EditorLoc.checkLimits();
@@ -190,19 +104,6 @@ class EditorLoc {
   public static void offsetLocW(final int val) {
     EditorLoc.locW += val;
     EditorLoc.checkLimits();
-  }
-
-  public static void offsetLocE(final int val) {
-    EditorLoc.locE += val;
-    EditorLoc.checkLimits();
-  }
-
-  public static void offsetCameFromZ(final int val) {
-    EditorLoc.cameFromZ += val;
-  }
-
-  public static void offsetCameFromW(final int val) {
-    EditorLoc.cameFromW += val;
   }
 
   public static void setLimitsFromWorld(final World m) {
@@ -224,15 +125,6 @@ class EditorLoc {
     EditorLoc.locZ = 0;
     EditorLoc.locW = 0;
     EditorLoc.locE = 0;
-    EditorLoc.oldLocX = 0;
-    EditorLoc.oldLocY = 0;
-    EditorLoc.oldLocZ = 0;
-    EditorLoc.oldLocW = 0;
-    EditorLoc.oldLocE = 0;
-    EditorLoc.cameFromZ = 0;
-    EditorLoc.cameFromW = 0;
-    EditorLoc.oldCameFromZ = 0;
-    EditorLoc.oldCameFromW = 0;
     EditorLoc.maxX = 0;
     EditorLoc.maxY = 0;
     EditorLoc.maxZ = 0;
@@ -277,31 +169,5 @@ class EditorLoc {
     if (EditorLoc.locE > EditorLoc.maxE) {
       EditorLoc.locE = EditorLoc.maxE;
     }
-  }
-
-  public void save() {
-    EditorLoc.oldLocX = EditorLoc.locX;
-    EditorLoc.oldLocY = EditorLoc.locY;
-    EditorLoc.oldLocZ = EditorLoc.locZ;
-    EditorLoc.oldLocW = EditorLoc.locW;
-    EditorLoc.oldLocE = EditorLoc.locE;
-  }
-
-  public void restore() {
-    EditorLoc.locX = EditorLoc.oldLocX;
-    EditorLoc.locY = EditorLoc.oldLocY;
-    EditorLoc.locZ = EditorLoc.oldLocZ;
-    EditorLoc.locW = EditorLoc.oldLocW;
-    EditorLoc.locE = EditorLoc.oldLocE;
-  }
-
-  public void saveCameFrom() {
-    EditorLoc.oldCameFromZ = EditorLoc.cameFromZ;
-    EditorLoc.oldCameFromW = EditorLoc.cameFromW;
-  }
-
-  public void restoreCameFrom() {
-    EditorLoc.cameFromZ = EditorLoc.oldCameFromZ;
-    EditorLoc.cameFromW = EditorLoc.oldCameFromW;
   }
 }

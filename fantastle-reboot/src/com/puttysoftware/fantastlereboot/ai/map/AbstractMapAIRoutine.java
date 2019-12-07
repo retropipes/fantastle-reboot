@@ -14,7 +14,6 @@ public abstract class AbstractMapAIRoutine extends AIRoutine {
   protected int moveX;
   protected int moveY;
   protected boolean lastResult;
-  static final int ACTION_END_TURN = 6;
 
   // Constructor
   protected AbstractMapAIRoutine() {

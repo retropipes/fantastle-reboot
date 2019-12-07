@@ -327,26 +327,6 @@ public class DataLoader {
     }
   }
 
-  public static String[] loadItemImageData() {
-    try (final ResourceStreamReader rsr = new ResourceStreamReader(
-        DataLoader.class.getResourceAsStream("/assets/data/images/items"
-            + FileExtensions.getInternalDataExtensionWithPeriod()))) {
-      // Fetch data
-      final ArrayList<String> data = new ArrayList<>();
-      String raw = "0";
-      while (raw != null) {
-        raw = rsr.readString();
-        if (raw != null) {
-          data.add(raw);
-        }
-      }
-      return data.toArray(new String[data.size()]);
-    } catch (final IOException e) {
-      FantastleReboot.exception(e);
-      return null;
-    }
-  }
-
   public static String[] loadObjectImageData() {
     try (final ResourceStreamReader rsr = new ResourceStreamReader(
         DataLoader.class.getResourceAsStream("/assets/data/images/objects"

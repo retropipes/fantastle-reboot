@@ -21,7 +21,7 @@ import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 
 public class StatisticsViewer {
   // Fields
-  static MainWindow statisticsFrame;
+  private static MainWindow statisticsFrame;
   private static JPanel statisticsPane;
   private static JPanel contentPane;
   private static JPanel buttonPane;

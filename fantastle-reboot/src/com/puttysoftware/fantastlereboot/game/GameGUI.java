@@ -23,7 +23,6 @@ import com.puttysoftware.fantastlereboot.files.FileStateManager;
 import com.puttysoftware.fantastlereboot.files.GameFileManager;
 import com.puttysoftware.fantastlereboot.gui.Prefs;
 import com.puttysoftware.fantastlereboot.loaders.ImageConstants;
-import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 
 class GameGUI {
   // Fields
@@ -94,18 +93,6 @@ class GameGUI {
   }
 
   public static void redrawWorld() {
-    // Draw the world
-    GameGUI.outputPane.repaint();
-    if (GameGUI.knm) {
-      GameGUI.knm = false;
-    } else {
-      GameGUI.setStatusMessage(" ");
-    }
-    GameGUI.outputFrame.pack();
-  }
-
-  public static void redrawOneSquare(final int inX, final int inY,
-      final FantastleObjectModel obj5) {
     // Draw the world
     GameGUI.outputPane.repaint();
     if (GameGUI.knm) {

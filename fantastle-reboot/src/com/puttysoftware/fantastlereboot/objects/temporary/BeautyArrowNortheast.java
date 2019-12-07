@@ -8,6 +8,6 @@ class BeautyArrowNortheast extends FantastleObject {
   // Constructors
   public BeautyArrowNortheast() {
     super(-1, "arrow_northeast", ObjectImageIndex.ARROW_NORTHEAST,
-        ColorShaders.wooden());
+        ColorShaders.beauty());
   }
 }

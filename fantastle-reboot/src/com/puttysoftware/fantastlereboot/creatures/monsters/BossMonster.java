@@ -6,8 +6,6 @@ Any questions should be directed to the author via email at: products@puttysoftw
 package com.puttysoftware.fantastlereboot.creatures.monsters;
 
 import com.puttysoftware.fantastlereboot.ai.map.MapAIRoutinePicker;
-import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
-import com.puttysoftware.fantastlereboot.ai.window.VeryHardWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
@@ -46,7 +44,6 @@ public class BossMonster extends Creature {
         FaithManager.getFaith(BossMonster.FAITH_ID),
         JobManager.getJob(BossMonster.JOB_ID),
         RaceManager.getRace(BossMonster.RACE_ID));
-    this.setWindowAI(BossMonster.getInitialWindowAI());
     this.setMapAI(MapAIRoutinePicker.getNextRoutine());
     final SpellBook spells = new BossSpellBook();
     spells.learnAllSpells();
@@ -132,14 +129,7 @@ public class BossMonster extends Creature {
   public void loadCreature() {
     final int newLevel = PartyManager.getParty().getMonsterLevel() + 6;
     this.setLevel(newLevel);
-    this.setVitality(this.getInitialVitality());
-    this.setCurrentHP(this.getMaximumHP());
-    this.setIntelligence(this.getInitialIntelligence());
-    this.setCurrentMP(this.getMaximumMP());
-    this.setStrength(this.getInitialStrength());
-    this.setBlock(this.getInitialBlock());
-    this.setAgility(this.getInitialAgility());
-    this.setLuck(this.getInitialLuck());
+    this.setInitialStats();
     this.setGold(0);
     this.setExperience(0);
     this.setAttacksPerRound(1);
@@ -148,50 +138,52 @@ public class BossMonster extends Creature {
     this.healAndRegenerateFully();
   }
 
-  private int getInitialStrength() {
+  @Override
+  protected int getInitialStrength() {
     final int min = BossMonster.getMinimumStatForDifficulty();
     final RandomRange r = new RandomRange(min, Math.max(
         this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
     return r.generate();
   }
 
-  private int getInitialBlock() {
+  @Override
+  protected int getInitialBlock() {
     final int min = BossMonster.getMinimumStatForDifficulty();
     final RandomRange r = new RandomRange(min, Math.max(
         this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
     return r.generate();
   }
 
-  private int getInitialAgility() {
+  @Override
+  protected int getInitialAgility() {
     final int min = BossMonster.getMinimumStatForDifficulty();
     final RandomRange r = new RandomRange(min, Math.max(
         this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
     return r.generate();
   }
 
-  private int getInitialVitality() {
+  @Override
+  protected int getInitialVitality() {
     final int min = BossMonster.getMinimumStatForDifficulty();
     final RandomRange r = new RandomRange(min, Math.max(
         this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
     return r.generate();
   }
 
-  private int getInitialIntelligence() {
+  @Override
+  protected int getInitialIntelligence() {
     final int min = BossMonster.getMinimumStatForDifficulty();
     final RandomRange r = new RandomRange(min, Math.max(
         this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
     return r.generate();
   }
 
-  private int getInitialLuck() {
+  @Override
+  protected int getInitialLuck() {
     final int min = BossMonster.getMinimumStatForDifficulty();
     final RandomRange r = new RandomRange(min, Math.max(
         this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
     return r.generate();
-  }
-
-  private static AbstractWindowAIRoutine getInitialWindowAI() {
-    return new VeryHardWindowAIRoutine();
   }
 
   private static int getStatMultiplierForDifficulty() {

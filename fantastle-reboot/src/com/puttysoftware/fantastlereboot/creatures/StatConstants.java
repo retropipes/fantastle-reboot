@@ -32,8 +32,8 @@ public class StatConstants {
   static final int STAT_MAX_LEVEL = 21;
   public static final int STAT_FUMBLE_CHANCE = 22;
   static final int MAX_STORED_STATS = 13;
-  public static final int MAX_DISPLAY_STATS = 21;
-  public static final int MAX_STATS = 23;
+  public static final int MAX_DISPLAY_STATS = 21; // NO_UCD
+  public static final int MAX_STATS = 23; // NO_UCD
   // Factors
   static final double FACTOR_STRENGTH_ATTACK = 10.0;
   static final double FACTOR_POWER_ATTACK = 1.0;
@@ -54,9 +54,6 @@ public class StatConstants {
   static final double FACTOR_AGILITY_CAPACITY = 2.0;
   static final double FACTOR_LUCK_FUMBLE = 0.5;
   static final double FACTOR_AGILITY_FUMBLE = 0.5;
-  static final double FACTOR_AGILITY_ACTIONS_PER_ROUND = 0.04;
-  static final double FACTOR_WEIGHT_SPEED = 1.0;
-  public static final double FACTOR_DIFFERENTIAL_DAMAGE = 0.5;
   // Base Gains Per Level
   public static final int GAIN_STRENGTH = 5;
   public static final int GAIN_BLOCK = 5;
@@ -80,7 +77,7 @@ public class StatConstants {
       "Vitality", "Intelligence", "Luck", "Current HP", "Current MP", "Gold",
       "Level", "Attacks Per Round", "Spells Per Round", "Load", "Maximum HP",
       "Maximum MP", "Attack", "Defense", "Speed", "Hit", "Evade", "Capacity",
-      "Maximum Level", "Fumble Chance" };
+      "Maximum Level", "Fumble Chance" }; // NO_UCD
 
   private StatConstants() {
     super();

@@ -19,14 +19,4 @@ public final class InventoryViewer {
           equipString[0]);
     }
   }
-
-  public static void showItemInventoryDialog() {
-    final String title = "Items";
-    final PartyMember member = PartyManager.getParty().getLeader();
-    if (member != null) {
-      final String[] invString = member.getItems()
-          .generateInventoryStringArray(0);
-      CommonDialogs.showInputDialog("Items", title, invString, invString[0]);
-    }
-  }
 }

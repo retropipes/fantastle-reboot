@@ -26,6 +26,7 @@ import com.puttysoftware.fantastlereboot.battle.BossRewards;
 import com.puttysoftware.fantastlereboot.battle.damageengines.AbstractDamageEngine;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
+import com.puttysoftware.fantastlereboot.creatures.jobs.JobConstants;
 import com.puttysoftware.fantastlereboot.creatures.monsters.MonsterFactory;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
@@ -951,7 +952,8 @@ public class MapBattleLogic extends Battle {
     // Check Action Counter
     if (activeBC.canAct(Battle.AP_STEAL)) {
       int stealAmount = 0;
-      final int stealChance = StatConstants.CHANCE_STEAL;
+      final int stealChance = StatConstants.CHANCE_STEAL + active.getJob()
+          .getAttribute(JobConstants.ATTRIBUTE_STEAL_SUCCESS_MODIFIER);
       activeBC.act(Battle.AP_STEAL);
       BattleCharacter anyEnemy = this.mbd
           .getFirstBattlerNotOnTeam(activeBC.getTeamID());
@@ -1014,7 +1016,8 @@ public class MapBattleLogic extends Battle {
     if (activeBC.canAct(Battle.AP_DRAIN)) {
       int drainChance;
       int drainAmount = 0;
-      drainChance = StatConstants.CHANCE_DRAIN;
+      drainChance = StatConstants.CHANCE_DRAIN + active.getJob()
+          .getAttribute(JobConstants.ATTRIBUTE_DRAIN_SUCCESS_MODIFIER);
       activeBC.act(Battle.AP_DRAIN);
       BattleCharacter anyEnemy = this.mbd
           .getFirstBattlerNotOnTeam(activeBC.getTeamID());
@@ -1233,8 +1236,10 @@ public class MapBattleLogic extends Battle {
     case AIRoutine.ACTION_USE_ITEM:
       this.useItem();
       break;
-    default:
+    case AIRoutine.ACTION_END_TURN:
       this.endTurn();
+      break;
+    default:
       break;
     }
     return true;

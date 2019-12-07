@@ -9,7 +9,6 @@ import java.net.URL;
 
 public abstract class OggLoader extends Thread {
   // Constants
-  protected static final int EXTERNAL_BUFFER_SIZE = 4096; // 4Kb
   private static int ACTIVE_MEDIA_COUNT = 0;
   private static int MAX_MEDIA_ACTIVE = 5;
   private static OggLoader[] ACTIVE_MEDIA = new OggLoader[OggLoader.MAX_MEDIA_ACTIVE];
@@ -31,11 +30,6 @@ public abstract class OggLoader extends Thread {
   abstract int getNumber();
 
   // Factories
-  public static OggLoader loadFile(final String file) {
-    return OggLoader.provisionMedia(new OggFile(OggLoader.MEDIA_GROUP, file,
-        OggLoader.ACTIVE_MEDIA_COUNT));
-  }
-
   public static OggLoader loadResource(final URL resource) {
     return OggLoader.provisionMedia(new OggResource(OggLoader.MEDIA_GROUP,
         resource, OggLoader.ACTIVE_MEDIA_COUNT));

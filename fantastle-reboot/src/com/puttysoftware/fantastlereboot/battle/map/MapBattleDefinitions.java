@@ -324,17 +324,6 @@ public class MapBattleDefinitions {
     this.battleWorld = bWorld;
   }
 
-  public BattleCharacter getBattler(final String name) {
-    for (final BattleCharacter battler : this.battlers) {
-      if (battler != null) {
-        if (battler.getName().equals(name)) {
-          return battler;
-        }
-      }
-    }
-    return null;
-  }
-
   public BattleCharacter getFirstBattlerOnTeam(final int teamID) {
     for (final BattleCharacter battler : this.battlers) {
       if (battler != null) {

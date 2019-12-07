@@ -33,7 +33,6 @@ import com.puttysoftware.fantastlereboot.loaders.AttributeImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.AvatarImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.BossImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.EffectImageLoader;
-import com.puttysoftware.fantastlereboot.loaders.ItemImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.MusicPlayer;
 import com.puttysoftware.fantastlereboot.loaders.ObjectImageLoader;
 import com.puttysoftware.fantastlereboot.loaders.UserInterfaceImageLoader;
@@ -78,24 +77,22 @@ class Loader extends Thread {
       // Cache Boss images
       BossImageLoader.cacheAll();
       this.updateWaitProgress(25);
-      // Cache Item images
-      ItemImageLoader.cacheAll();
-      this.updateWaitProgress(37);
       // Cache Effect images
       EffectImageLoader.cacheAll();
-      this.updateWaitProgress(50);
+      this.updateWaitProgress(37);
       // Cache Avatar images
       AvatarImageLoader.cacheAll();
-      this.updateWaitProgress(62);
+      this.updateWaitProgress(50);
       // Cache Attribute images
       AttributeImageLoader.cacheAll();
-      this.updateWaitProgress(75);
+      this.updateWaitProgress(67);
       // Cache Object images
       ObjectImageLoader.cacheAll();
-      this.updateWaitProgress(87);
+      this.updateWaitProgress(75);
       // Final tasks
       final BagOStuff bag = FantastleReboot.getBagOStuff();
       GameObjects.initializeObjects();
+      this.updateWaitProgress(87);
       bag.postConstruct();
       FantastleReboot.doLateOSIntegration();
       this.updateWaitProgress(100);

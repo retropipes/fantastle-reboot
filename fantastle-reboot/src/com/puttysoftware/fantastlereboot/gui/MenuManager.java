@@ -63,8 +63,7 @@ public class MenuManager {
   private JMenuItem playNewGame, playPlay, playEdit, playSuspend, playResume,
       playRegisterCharacter, playUnregisterCharacter, playRemoveCharacter;
   private JMenuItem gameEquipment, gameInventory, gameUse, gameReset,
-      gameShowScore, gameShowTable, gameEditNote, gameViewStats,
-      gameChangeLeader;
+      gameEditNote, gameViewStats, gameChangeLeader;
   private JMenuItem debugResetPreferences, debugCheckForUpdates;
   private JMenuItem helpAbout;
   private KeyStroke fileNewAccel, fileOpenAccel, fileCloseAccel, fileSaveAccel,
@@ -76,7 +75,7 @@ public class MenuManager {
       editDownOneLevelAccel, editToggleLayerAccel;
   private KeyStroke playPlayWorldAccel, playEditWorldAccel;
   private KeyStroke gameNewGameAccel, gameInventoryAccel, gameUseAccel,
-      gameResetAccel, gameShowScoreAccel, gameShowTableAccel;
+      gameResetAccel;
   private final EventHandler handler;
 
   // Constructors
@@ -89,10 +88,6 @@ public class MenuManager {
   }
 
   // Methods
-  public void appendNewMenu(final JMenu newMenu) {
-    this.mainMenuBar.add(newMenu);
-  }
-
   public void setGameMenus() {
     this.fileNew.setEnabled(false);
     this.fileOpen.setEnabled(false);
@@ -121,8 +116,6 @@ public class MenuManager {
     this.gameInventory.setEnabled(true);
     this.gameUse.setEnabled(true);
     this.gameReset.setEnabled(true);
-    this.gameShowScore.setEnabled(true);
-    this.gameShowTable.setEnabled(true);
     this.gameEditNote.setEnabled(true);
     this.gameViewStats.setEnabled(true);
     this.gameChangeLeader.setEnabled(true);
@@ -148,8 +141,6 @@ public class MenuManager {
     this.gameInventory.setEnabled(false);
     this.gameUse.setEnabled(false);
     this.gameReset.setEnabled(false);
-    this.gameShowScore.setEnabled(false);
-    this.gameShowTable.setEnabled(false);
     this.gameEditNote.setEnabled(false);
     this.gameViewStats.setEnabled(false);
     this.gameChangeLeader.setEnabled(false);
@@ -187,8 +178,6 @@ public class MenuManager {
     this.gameInventory.setEnabled(false);
     this.gameUse.setEnabled(false);
     this.gameReset.setEnabled(false);
-    this.gameShowScore.setEnabled(false);
-    this.gameShowTable.setEnabled(false);
     this.gameEditNote.setEnabled(false);
     this.gameViewStats.setEnabled(false);
     this.gameChangeLeader.setEnabled(false);
@@ -236,8 +225,6 @@ public class MenuManager {
     this.gameInventory.setEnabled(false);
     this.gameUse.setEnabled(false);
     this.gameReset.setEnabled(false);
-    this.gameShowScore.setEnabled(false);
-    this.gameShowTable.setEnabled(false);
     this.gameEditNote.setEnabled(false);
     this.gameViewStats.setEnabled(false);
     this.gameChangeLeader.setEnabled(false);
@@ -276,22 +263,6 @@ public class MenuManager {
     this.editDownOneLevel.setEnabled(false);
   }
 
-  public void enableAddLevel() {
-    this.editAddLevel.setEnabled(true);
-  }
-
-  public void disableAddLevel() {
-    this.editAddLevel.setEnabled(false);
-  }
-
-  public void enableRemoveLevel() {
-    this.editRemoveLevel.setEnabled(true);
-  }
-
-  public void disableRemoveLevel() {
-    this.editRemoveLevel.setEnabled(false);
-  }
-
   public void enableUndo() {
     this.editUndo.setEnabled(true);
   }
@@ -314,30 +285,6 @@ public class MenuManager {
 
   public void disableClearHistory() {
     this.editClearHistory.setEnabled(false);
-  }
-
-  public void enableCutLevel() {
-    this.editCutLevel.setEnabled(true);
-  }
-
-  public void disableCutLevel() {
-    this.editCutLevel.setEnabled(false);
-  }
-
-  public void enablePasteLevel() {
-    this.editPasteLevel.setEnabled(true);
-  }
-
-  public void disablePasteLevel() {
-    this.editPasteLevel.setEnabled(false);
-  }
-
-  public void enableInsertLevelFromClipboard() {
-    this.editInsertLevelFromClipboard.setEnabled(true);
-  }
-
-  public void disableInsertLevelFromClipboard() {
-    this.editInsertLevelFromClipboard.setEnabled(false);
   }
 
   public void checkFlags() {
@@ -421,8 +368,6 @@ public class MenuManager {
     this.gameInventoryAccel = KeyStroke.getKeyStroke(KeyEvent.VK_I, modKey);
     this.gameUseAccel = KeyStroke.getKeyStroke(KeyEvent.VK_U, modKey);
     this.gameResetAccel = KeyStroke.getKeyStroke(KeyEvent.VK_R, modKey);
-    this.gameShowScoreAccel = KeyStroke.getKeyStroke(KeyEvent.VK_G, modKey);
-    this.gameShowTableAccel = KeyStroke.getKeyStroke(KeyEvent.VK_T, modKey);
     this.editUpOneFloorAccel = KeyStroke.getKeyStroke(KeyEvent.VK_UP, modKey);
     this.editDownOneFloorAccel = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,
         modKey);
@@ -504,10 +449,6 @@ public class MenuManager {
     this.gameUse.setAccelerator(this.gameUseAccel);
     this.gameReset = new JMenuItem("Reset Current Level");
     this.gameReset.setAccelerator(this.gameResetAccel);
-    this.gameShowScore = new JMenuItem("Show Current Score");
-    this.gameShowScore.setAccelerator(this.gameShowScoreAccel);
-    this.gameShowTable = new JMenuItem("Show Score Table");
-    this.gameShowTable.setAccelerator(this.gameShowTableAccel);
     this.gameEditNote = new JMenuItem("Edit Note...");
     this.gameViewStats = new JMenuItem("View Statistics...");
     this.gameChangeLeader = new JMenuItem("Change Party Leader...");
@@ -547,8 +488,6 @@ public class MenuManager {
     this.gameInventory.addActionListener(this.handler);
     this.gameUse.addActionListener(this.handler);
     this.gameReset.addActionListener(this.handler);
-    this.gameShowScore.addActionListener(this.handler);
-    this.gameShowTable.addActionListener(this.handler);
     this.gameChangeLeader.addActionListener(this.handler);
     this.playNewGame.addActionListener(this.handler);
     this.playRegisterCharacter.addActionListener(this.handler);
@@ -601,8 +540,6 @@ public class MenuManager {
     this.gameMenu.add(this.gameInventory);
     this.gameMenu.add(this.gameUse);
     this.gameMenu.add(this.gameReset);
-    this.gameMenu.add(this.gameShowScore);
-    this.gameMenu.add(this.gameShowTable);
     this.gameMenu.add(this.gameEditNote);
     this.gameMenu.add(this.gameViewStats);
     this.gameMenu.add(this.gameChangeLeader);
@@ -657,8 +594,6 @@ public class MenuManager {
     this.gameInventory.setEnabled(false);
     this.gameUse.setEnabled(false);
     this.gameReset.setEnabled(false);
-    this.gameShowScore.setEnabled(false);
-    this.gameShowTable.setEnabled(false);
     this.gameEditNote.setEnabled(false);
     this.gameViewStats.setEnabled(false);
     this.gameChangeLeader.setEnabled(false);
@@ -794,10 +729,6 @@ public class MenuManager {
               Game.resetCurrentLevel();
             }
           }
-        } else if (cmd.equals("Show Current Score")) {
-          Game.showCurrentScore();
-        } else if (cmd.equals("Show Score Table")) {
-          Game.showScoreTable();
         } else if (cmd.equals("Register Character...")) {
           // Register Character
           CharacterRegistration.registerCharacter();

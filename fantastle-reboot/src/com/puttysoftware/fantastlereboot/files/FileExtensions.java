@@ -13,7 +13,6 @@ public class FileExtensions {
   private static final String CHARACTER_EXTENSION = "partymember.xml";
   private static final String REGISTRY_EXTENSION = "registry.xml";
   private static final String PREFS_EXTENSION = "prefs.xml";
-  private static final String SCORES_EXTENSION = "scores.xml";
   private static final String INTERNAL_DATA_EXTENSION = "txt";
 
   // Methods
@@ -47,10 +46,6 @@ public class FileExtensions {
 
   public static String getCharacterExtensionWithPeriod() {
     return "." + FileExtensions.CHARACTER_EXTENSION;
-  }
-
-  public static String getScoresExtensionWithPeriod() {
-    return "." + FileExtensions.SCORES_EXTENSION;
   }
 
   public static String getRegistryExtensionWithPeriod() {

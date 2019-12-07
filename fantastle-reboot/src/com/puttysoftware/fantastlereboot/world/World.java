@@ -67,15 +67,6 @@ public class World {
   }
 
   // Static methods
-  public static String getWorldTempFolder() {
-    return System.getProperty("java.io.tmpdir") + File.separator
-        + "FantastleReboot";
-  }
-
-  public static int getMinLevels() {
-    return World.MIN_LEVELS;
-  }
-
   public static int getMaxLevels() {
     return World.MAX_LEVELS;
   }
@@ -98,18 +89,6 @@ public class World {
     temp.addLevel(FantastleReboot.getBattleWorldSize(),
         FantastleReboot.getBattleWorldSize(), 1);
     return temp;
-  }
-
-  public boolean hasMonster(final int x, final int y, final int z) {
-    return this.worldData.hasMonster(x, y, z);
-  }
-
-  public void addMonster(final int x, final int y, final int z) {
-    this.worldData.addMonster(x, y, z);
-  }
-
-  public void removeMonster(final int x, final int y, final int z) {
-    this.worldData.removeMonster(x, y, z);
   }
 
   public boolean checkForBattle(final int px, final int py, final int pz) {
@@ -339,10 +318,6 @@ public class World {
     this.worldData.offsetPlayerColumn(newPlayerColumn);
   }
 
-  public void offsetPlayerLocationZ(final int newPlayerFloor) {
-    this.worldData.offsetPlayerFloor(newPlayerFloor);
-  }
-
   public void offsetPlayerLocationW(final int newPlayerLevel) {
     this.locW += newPlayerLevel;
   }
@@ -355,10 +330,6 @@ public class World {
     } else {
       this.worldData.fillRandomlyConstrained(this, this.activeLevel);
     }
-  }
-
-  public void fullScanButton(final int l) {
-    this.worldData.fullScanButton(l);
   }
 
   public void save() {

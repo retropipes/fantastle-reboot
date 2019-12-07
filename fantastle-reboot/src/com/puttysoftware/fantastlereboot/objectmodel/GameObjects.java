@@ -180,16 +180,6 @@ public final class GameObjects {
         .get(FantastleObjectActions.PREVIOUS_LEVEL);
   }
 
-  public static boolean movesRandomly(final FantastleObjectModel obj) {
-    return GameObjects.allActionList[obj.getUniqueID()]
-        .get(FantastleObjectActions.MOVE_SELF);
-  }
-
-  public static boolean startsBattle(final FantastleObjectModel obj) {
-    return GameObjects.allActionList[obj.getUniqueID()]
-        .get(FantastleObjectActions.BATTLE);
-  }
-
   public static boolean sendsToShop(final FantastleObjectModel obj) {
     return GameObjects.allActionList[obj.getUniqueID()]
         .get(FantastleObjectActions.SHOP);
@@ -202,37 +192,6 @@ public final class GameObjects {
   public static FantastleObjectModel[] getAllObjects() {
     return GameObjects.allObjectList
         .toArray(new FantastleObjectModel[GameObjects.allObjectList.size()]);
-  }
-
-  public static BufferedImageIcon[] getAllEditorAppearances() {
-    final FantastleObjectModel[] objects = GameObjects.getAllObjects();
-    final BufferedImageIcon[] allEditorAppearances = new BufferedImageIcon[objects.length];
-    for (int x = 0; x < allEditorAppearances.length; x++) {
-      allEditorAppearances[x] = objects[x].getEditorImage();
-    }
-    return allEditorAppearances;
-  }
-
-  public static FantastleObjectModel[] getAllObjectsOnLayer(final int layer) {
-    final FantastleObjectModel[] objects = GameObjects.getAllObjects();
-    final FantastleObjectModel[] tempAll = new FantastleObjectModel[objects.length];
-    int x;
-    int count = 0;
-    for (x = 0; x < objects.length; x++) {
-      if (objects[x].getLayer() == layer) {
-        tempAll[count] = objects[x];
-        count++;
-      }
-    }
-    if (count == 0) {
-      return new FantastleObjectModel[0];
-    } else {
-      final FantastleObjectModel[] all = new FantastleObjectModel[count];
-      for (x = 0; x < count; x++) {
-        all[x] = tempAll[x];
-      }
-      return all;
-    }
   }
 
   public static FantastleObjectModel[] getAllGroundLayerObjects() {
@@ -320,28 +279,6 @@ public final class GameObjects {
         all[x] = tempAll[x];
       }
       return all;
-    }
-  }
-
-  public static int[] getAllCarryableUIDs() {
-    final FantastleObjectModel[] objects = GameObjects.getAllObjects();
-    final int[] tempAllCarryableUIDs = new int[objects.length];
-    int x;
-    int count = 0;
-    for (x = 0; x < objects.length; x++) {
-      if (objects[x].isCarryable()) {
-        tempAllCarryableUIDs[count] = objects[x].getUniqueID();
-        count++;
-      }
-    }
-    if (count == 0) {
-      return new int[0];
-    } else {
-      final int[] allCarryableUIDs = new int[count];
-      for (x = 0; x < count; x++) {
-        allCarryableUIDs[x] = tempAllCarryableUIDs[x];
-      }
-      return allCarryableUIDs;
     }
   }
 

@@ -72,11 +72,11 @@ public class GameLoader extends Thread {
       FileStateManager.setLoaded(true);
       CommonDialogs.showDialog(sg + " loaded.");
       Game.playWorld();
-      WorldFileManager.handleDeferredSuccess(true, false, null);
+      GameFileManager.handleDeferredSuccess(true, false, null);
     } catch (final VersionException ve) {
       CommonDialogs.showDialog("Loading the " + sg.toLowerCase()
           + " failed, due to the format version being unsupported.");
-      WorldFileManager.handleDeferredSuccess(false, true, worldFile);
+      GameFileManager.handleDeferredSuccess(false, true, worldFile);
     } catch (final Exception ex) {
       FantastleReboot.exception(ex);
     }

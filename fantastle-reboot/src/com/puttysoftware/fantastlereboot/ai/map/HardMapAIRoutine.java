@@ -60,7 +60,7 @@ class HardMapAIRoutine extends AbstractMapAIRoutine {
             return AIRoutine.ACTION_MOVE;
           } else {
             this.failedMoveAttempts = 0;
-            return AbstractMapAIRoutine.ACTION_END_TURN;
+            return AIRoutine.ACTION_END_TURN;
           }
         }
       } else {
@@ -94,7 +94,7 @@ class HardMapAIRoutine extends AbstractMapAIRoutine {
                 if (this.failedMoveAttempts >= CommonMapAIRoutines.STUCK_THRESHOLD) {
                   // We're stuck!
                   this.failedMoveAttempts = 0;
-                  return AbstractMapAIRoutine.ACTION_END_TURN;
+                  return AIRoutine.ACTION_END_TURN;
                 }
                 // Last move failed, try to move around object
                 final RandomRange randTurn = new RandomRange(0, 1);
@@ -130,7 +130,7 @@ class HardMapAIRoutine extends AbstractMapAIRoutine {
           return AIRoutine.ACTION_MOVE;
         } else {
           this.failedMoveAttempts = 0;
-          return AbstractMapAIRoutine.ACTION_END_TURN;
+          return AIRoutine.ACTION_END_TURN;
         }
       }
     }

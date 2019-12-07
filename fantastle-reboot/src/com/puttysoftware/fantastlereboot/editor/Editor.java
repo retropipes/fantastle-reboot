@@ -48,7 +48,6 @@ import com.puttysoftware.fantastlereboot.loaders.ImageConstants;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.GameObjects;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
-import com.puttysoftware.fantastlereboot.objects.Nothing;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.StairsDown;
 import com.puttysoftware.fantastlereboot.objects.StairsUp;
@@ -76,7 +75,6 @@ public class Editor {
   private static FantastleObjectModel savedObject;
   public static final int STAIRS_UP = 0;
   public static final int STAIRS_DOWN = 1;
-  public static final FantastleObjectModel NOTHING = new Nothing();
 
   private Editor() {
     super();
@@ -84,6 +82,7 @@ public class Editor {
 
   static {
     Game.initialize();
+    EditorLoc.reset();
     Editor.mhandler = new EventHandler();
     Editor.engine = new UndoRedoEngine();
     Editor.groundObjects = GameObjects.getAllGroundLayerObjects();
@@ -110,15 +109,6 @@ public class Editor {
       Editor.fixLimits();
       Editor.setUpGUI();
     }
-    Editor.checkMenus();
-    Editor.redrawEditor();
-  }
-
-  public static void updateEditorLevelAbsolute(final int w) {
-    EditorLoc.setLocW(w);
-    // Level Change
-    Editor.fixLimits();
-    Editor.setUpGUI();
     Editor.checkMenus();
     Editor.redrawEditor();
   }
@@ -283,29 +273,6 @@ public class Editor {
     }
   }
 
-  public static void pairStairs(final int type) {
-    final World world = WorldManager.getWorld();
-    final int locX = EditorLoc.getLocX();
-    final int locY = EditorLoc.getLocY();
-    final int locZ = EditorLoc.getLocZ();
-    switch (type) {
-    case STAIRS_UP:
-      if (world.cellRangeCheck(locX, locY, locZ + 1)) {
-        WorldManager.getWorld().setCell(new StairsDown(), locX, locY, locZ + 1,
-            Layers.OBJECT);
-      }
-      break;
-    case STAIRS_DOWN:
-      if (world.cellRangeCheck(locX, locY, locZ - 1)) {
-        WorldManager.getWorld().setCell(new StairsUp(), locX, locY, locZ - 1,
-            Layers.OBJECT);
-      }
-      break;
-    default:
-      break;
-    }
-  }
-
   private static void pairStairs(final int type, final int z, final int w) {
     final World world = WorldManager.getWorld();
     final int locX = EditorLoc.getLocX();
@@ -344,12 +311,6 @@ public class Editor {
     default:
       break;
     }
-  }
-
-  public static void setPlayerLocation() {
-    WorldManager.getWorld().setStartRow(EditorLoc.getLocY());
-    WorldManager.getWorld().setStartColumn(EditorLoc.getLocX());
-    WorldManager.getWorld().setStartFloor(EditorLoc.getLocZ());
   }
 
   public static void editWorld() {
@@ -404,7 +365,6 @@ public class Editor {
       success = Editor.addLevelInternal(true);
       if (success) {
         Editor.clearHistory();
-        Game.invalidateScore();
       }
     } else {
       success = false;
@@ -540,15 +500,6 @@ public class Editor {
     Editor.outputFrame.removeWindowListener(Editor.mhandler);
   }
 
-  static void disableOutput() {
-    Editor.outputPane.setEnabled(false);
-  }
-
-  static void enableOutput() {
-    Editor.outputPane.setEnabled(true);
-    Editor.checkMenus();
-  }
-
   public static void exitEditor() {
     // Hide the editor
     Editor.hideOutput();
@@ -614,8 +565,6 @@ public class Editor {
     final int e = Editor.engine.getE();
     EditorLoc.setLocX(x);
     EditorLoc.setLocY(y);
-    EditorLoc.setCameFromZ(z);
-    EditorLoc.setCameFromW(w);
     if (Editor.engine.isDataValid() && world.cellRangeCheck(x, y, z, w, e)) {
       final FantastleObjectModel oldObj = world.getCell(x, y, z, e);
       world.setCell(obj, x, y, z, e);
@@ -643,8 +592,6 @@ public class Editor {
     final int e = Editor.engine.getE();
     EditorLoc.setLocX(x);
     EditorLoc.setLocY(y);
-    EditorLoc.setCameFromZ(z);
-    EditorLoc.setCameFromW(w);
     if (Editor.engine.isDataValid() && world.cellRangeCheck(x, y, z, w, e)) {
       final FantastleObjectModel oldObj = world.getCell(x, y, z, e);
       world.setCell(obj, x, y, z, e);

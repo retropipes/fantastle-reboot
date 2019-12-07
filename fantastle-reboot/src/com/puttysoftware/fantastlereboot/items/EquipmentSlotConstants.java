@@ -15,29 +15,8 @@ public class EquipmentSlotConstants {
   private static final String[] SLOT_NAMES = { "Helmet", "Necklace",
       "Main Hand", "Off-Hand", "Robe", "Cape", "Shirt", "Bracers", "Gloves",
       "Ring", "Belt", "Pants", "Boots" };
-  private static String[] ARMOR_SLOT_NAMES = null;
 
   static synchronized String[] getSlotNames() {
     return EquipmentSlotConstants.SLOT_NAMES;
-  }
-
-  static synchronized String[] getArmorSlotNames() {
-    if (EquipmentSlotConstants.ARMOR_SLOT_NAMES == null) {
-      if (EquipmentSlotConstants.SLOT_NAMES == null) {
-        EquipmentSlotConstants.getSlotNames();
-      }
-      final String[] temp = EquipmentSlotConstants.SLOT_NAMES;
-      final String[] temp2 = new String[temp.length - 1];
-      int offset = 0;
-      for (int x = 0; x < temp.length; x++) {
-        if (x == EquipmentSlotConstants.SLOT_MAINHAND) {
-          offset++;
-        } else {
-          temp2[x - offset] = temp[x];
-        }
-      }
-      EquipmentSlotConstants.ARMOR_SLOT_NAMES = temp2;
-    }
-    return EquipmentSlotConstants.ARMOR_SLOT_NAMES;
   }
 }

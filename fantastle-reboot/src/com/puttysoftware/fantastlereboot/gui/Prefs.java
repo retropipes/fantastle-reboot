@@ -104,9 +104,6 @@ public class Prefs {
   private static boolean cachedHasUpdate;
   private static boolean[] soundsEnabled = new boolean[Prefs.SOUNDS_LENGTH];
   private static boolean[] musicEnabled = new boolean[Prefs.MUSIC_LENGTH];
-  private static String lastDirOpen = "";
-  private static String lastDirSave = "";
-  private static int lastFilterUsed;
   private static boolean guiSetUp = false;
   private static final int[] VIEWING_WINDOW_SIZES = new int[] { 7, 9, 11, 13,
       15, 17, 19, 21, 23, 25 };
@@ -151,11 +148,6 @@ public class Prefs {
   private static final int GENERATOR_OBSOLETE = 0;
   private static final int GENERATOR_CONSTRAINED_RANDOM = 1;
   private static final int GENERATOR_TWISTER = 2;
-  public static final int FILTER_WORLD_V2 = 1;
-  public static final int FILTER_WORLD_V3 = 2;
-  public static final int FILTER_WORLD_V4 = 3;
-  public static final int FILTER_GAME = 4;
-  public static final int FILTER_WORLD_V5 = 5;
   public static final int DIFFICULTY_VERY_EASY = 0;
   public static final int DIFFICULTY_EASY = 1;
   public static final int DIFFICULTY_NORMAL = 2;
@@ -237,44 +229,6 @@ public class Prefs {
 
   public static int getGameDifficulty() {
     return Prefs.difficultySetting;
-  }
-
-  public static String getLastDirOpen() {
-    if (Prefs.lastDirOpen == null) {
-      Prefs.lastDirOpen = "";
-    }
-    return Prefs.lastDirOpen;
-  }
-
-  public static void setLastDirOpen(final String value) {
-    if (value == null) {
-      Prefs.lastDirOpen = "";
-    } else {
-      Prefs.lastDirOpen = value;
-    }
-  }
-
-  public static String getLastDirSave() {
-    if (Prefs.lastDirSave == null) {
-      Prefs.lastDirSave = "";
-    }
-    return Prefs.lastDirSave;
-  }
-
-  public static void setLastDirSave(final String value) {
-    if (value == null) {
-      Prefs.lastDirSave = "";
-    } else {
-      Prefs.lastDirSave = value;
-    }
-  }
-
-  public static int getLastFilterUsedIndex() {
-    return Prefs.lastFilterUsed;
-  }
-
-  public static void setLastFilterUsedIndex(final int value) {
-    Prefs.lastFilterUsed = value;
   }
 
   private static boolean useCache(final boolean manual) {
@@ -510,9 +464,6 @@ public class Prefs {
     Prefs.updateCheckIntervalIndex = DEFAULT_UPDATE_CHECK_INTERVAL_INDEX;
     Prefs.updateCheckInterval
         .setSelectedIndex(Prefs.DEFAULT_UPDATE_CHECK_INTERVAL_INDEX);
-    Prefs.lastDirOpen = "";
-    Prefs.lastDirSave = "";
-    Prefs.lastFilterUsed = Prefs.FILTER_WORLD_V5;
     Prefs.worldGenerator = Prefs.GENERATOR_CONSTRAINED_RANDOM;
     Prefs.randomRoomSizeIndex = Prefs.DEFAULT_ROOM_SIZE;
     Prefs.randomHallSizeIndex = Prefs.DEFAULT_HALL_SIZE;
@@ -693,9 +644,14 @@ public class Prefs {
           Prefs.soundsEnabled[x] = reader.readBoolean();
         }
         Prefs.updateCheckIntervalIndex = reader.readInt();
-        Prefs.lastDirOpen = reader.readString();
-        Prefs.lastDirSave = reader.readString();
-        Prefs.lastFilterUsed = reader.readInt();
+        int cachedBugfix = -1;
+        if (version == 1) {
+          reader.readString();
+          reader.readString();
+          reader.readInt();
+        } else {
+          cachedBugfix = reader.readInt();
+        }
         Prefs.difficultySetting = reader.readInt();
         Prefs.viewingWindowIndex = reader.readInt();
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
@@ -712,7 +668,7 @@ public class Prefs {
         } else {
           Prefs.cachedMajorVersion = cachedMajor;
           Prefs.cachedMinorVersion = cachedMinor;
-          Prefs.cachedBugfixVersion = reader.readInt();
+          Prefs.cachedBugfixVersion = cachedBugfix;
           Prefs.cachedPrereleaseVersion = reader.readInt();
           Prefs.cachedHasUpdate = reader.readBoolean();
           Prefs.lastUpdateCheck = reader.readLong();
@@ -748,9 +704,7 @@ public class Prefs {
           writer.writeBoolean(Prefs.soundsEnabled[x]);
         }
         writer.writeInt(Prefs.updateCheckIntervalIndex);
-        writer.writeString(Prefs.lastDirOpen);
-        writer.writeString(Prefs.lastDirSave);
-        writer.writeInt(Prefs.lastFilterUsed);
+        writer.writeInt(Prefs.cachedBugfixVersion);
         writer.writeInt(Prefs.difficultySetting);
         writer.writeInt(Prefs.viewingWindowIndex);
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
@@ -762,7 +716,6 @@ public class Prefs {
         writer.writeInt(Prefs.cachedMajorVersion);
         writer.writeInt(Prefs.randomHallSizeIndex);
         writer.writeInt(Prefs.cachedMinorVersion);
-        writer.writeInt(Prefs.cachedBugfixVersion);
         writer.writeInt(Prefs.cachedPrereleaseVersion);
         writer.writeBoolean(Prefs.cachedHasUpdate);
         writer.writeLong(Prefs.lastUpdateCheck);
@@ -797,9 +750,14 @@ public class Prefs {
           Prefs.soundsEnabled[x] = reader.readBoolean();
         }
         Prefs.updateCheckIntervalIndex = reader.readInt();
-        Prefs.lastDirOpen = reader.readString();
-        Prefs.lastDirSave = reader.readString();
-        Prefs.lastFilterUsed = reader.readInt();
+        int cachedBugfix = -1;
+        if (version == 1) {
+          reader.readString();
+          reader.readString();
+          reader.readInt();
+        } else {
+          cachedBugfix = reader.readInt();
+        }
         Prefs.difficultySetting = reader.readInt();
         Prefs.viewingWindowIndex = reader.readInt();
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
@@ -816,7 +774,7 @@ public class Prefs {
         } else {
           Prefs.cachedMajorVersion = cachedMajor;
           Prefs.cachedMinorVersion = cachedMinor;
-          Prefs.cachedBugfixVersion = reader.readInt();
+          Prefs.cachedBugfixVersion = cachedBugfix;
           Prefs.cachedPrereleaseVersion = reader.readInt();
           Prefs.cachedHasUpdate = reader.readBoolean();
           Prefs.lastUpdateCheck = reader.readLong();
@@ -845,9 +803,7 @@ public class Prefs {
           writer.writeBoolean(Prefs.soundsEnabled[x]);
         }
         writer.writeInt(Prefs.updateCheckIntervalIndex);
-        writer.writeString(Prefs.lastDirOpen);
-        writer.writeString(Prefs.lastDirSave);
-        writer.writeInt(Prefs.lastFilterUsed);
+        writer.writeInt(Prefs.cachedBugfixVersion);
         writer.writeInt(Prefs.difficultySetting);
         writer.writeInt(Prefs.viewingWindowIndex);
         for (int x = 0; x < Prefs.MUSIC_LENGTH; x++) {
@@ -859,7 +815,6 @@ public class Prefs {
         writer.writeInt(Prefs.cachedMajorVersion);
         writer.writeInt(Prefs.randomHallSizeIndex);
         writer.writeInt(Prefs.cachedMinorVersion);
-        writer.writeInt(Prefs.cachedBugfixVersion);
         writer.writeInt(Prefs.cachedPrereleaseVersion);
         writer.writeBoolean(Prefs.cachedHasUpdate);
         writer.writeLong(Prefs.lastUpdateCheck);

@@ -189,10 +189,6 @@ public class Item {
     return this.uses;
   }
 
-  public boolean shouldAutoDropAtZeroUses() {
-    return this.autoDropAtZeroUses;
-  }
-
   private final boolean isUsable() {
     return this.uses > 0;
   }

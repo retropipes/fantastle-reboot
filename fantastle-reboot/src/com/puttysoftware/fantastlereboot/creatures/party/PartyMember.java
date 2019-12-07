@@ -11,6 +11,7 @@ import com.puttysoftware.fantastlereboot.creatures.Creature;
 import com.puttysoftware.fantastlereboot.creatures.StatConstants;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.jobs.Job;
+import com.puttysoftware.fantastlereboot.creatures.jobs.JobConstants;
 import com.puttysoftware.fantastlereboot.creatures.jobs.JobManager;
 import com.puttysoftware.fantastlereboot.creatures.races.Race;
 import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
@@ -52,18 +53,7 @@ public class PartyMember extends Creature {
     this.avatarSkinID = as;
     this.avatarHairID = ah;
     this.setLevel(1);
-    this.setStrength(StatConstants.GAIN_STRENGTH
-        + r.getAttribute(RaceConstants.ATTRIBUTE_STRENGTH_PER_LEVEL));
-    this.setBlock(StatConstants.GAIN_BLOCK
-        + r.getAttribute(RaceConstants.ATTRIBUTE_BLOCK_PER_LEVEL));
-    this.setVitality(StatConstants.GAIN_VITALITY
-        + r.getAttribute(RaceConstants.ATTRIBUTE_VITALITY_PER_LEVEL));
-    this.setIntelligence(StatConstants.GAIN_INTELLIGENCE
-        + r.getAttribute(RaceConstants.ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
-    this.setAgility(StatConstants.GAIN_AGILITY
-        + r.getAttribute(RaceConstants.ATTRIBUTE_AGILITY_PER_LEVEL));
-    this.setLuck(StatConstants.GAIN_LUCK
-        + r.getAttribute(RaceConstants.ATTRIBUTE_LUCK_PER_LEVEL));
+    this.setInitialStats();
     this.setAttacksPerRound(1);
     this.setSpellsPerRound(1);
     this.healAndRegenerateFully();
@@ -167,18 +157,7 @@ public class PartyMember extends Creature {
     this.setJob(j);
     this.setFaith(f);
     this.setLevel(1);
-    this.setStrength(StatConstants.GAIN_STRENGTH
-        + r.getAttribute(RaceConstants.ATTRIBUTE_STRENGTH_PER_LEVEL));
-    this.setBlock(StatConstants.GAIN_BLOCK
-        + r.getAttribute(RaceConstants.ATTRIBUTE_BLOCK_PER_LEVEL));
-    this.setVitality(StatConstants.GAIN_VITALITY
-        + r.getAttribute(RaceConstants.ATTRIBUTE_VITALITY_PER_LEVEL));
-    this.setIntelligence(StatConstants.GAIN_INTELLIGENCE
-        + r.getAttribute(RaceConstants.ATTRIBUTE_INTELLIGENCE_PER_LEVEL));
-    this.setAgility(StatConstants.GAIN_AGILITY
-        + r.getAttribute(RaceConstants.ATTRIBUTE_AGILITY_PER_LEVEL));
-    this.setLuck(StatConstants.GAIN_LUCK
-        + r.getAttribute(RaceConstants.ATTRIBUTE_LUCK_PER_LEVEL));
+    this.setInitialStats();
     this.setAttacksPerRound(1);
     this.setSpellsPerRound(1);
     this.healAndRegenerateFully();
@@ -209,12 +188,12 @@ public class PartyMember extends Creature {
 
   @Override
   public int getMaximumHP() {
-    return super.getMaximumHP() + this.getPermanentHPPoints();
+    return super.getMaximumHP() + this.getPermanentHP();
   }
 
   @Override
   public int getMaximumMP() {
-    return super.getMaximumMP() + this.getPermanentMPPoints();
+    return super.getMaximumMP() + this.getPermanentMP();
   }
 
   public int getAvatarFamilyID() {
@@ -235,6 +214,16 @@ public class PartyMember extends Creature {
 
   public int getPermanentDefensePoints() {
     return this.permanentDefense;
+  }
+
+  public int getPermanentHP() {
+    return this.permanentHP * this.getJob()
+        .getAttribute(JobConstants.ATTRIBUTE_PERMANENT_HP_PER_POINT);
+  }
+
+  public int getPermanentMP() {
+    return this.permanentMP * this.getJob()
+        .getAttribute(JobConstants.ATTRIBUTE_PERMANENT_MP_PER_POINT);
   }
 
   public int getPermanentHPPoints() {

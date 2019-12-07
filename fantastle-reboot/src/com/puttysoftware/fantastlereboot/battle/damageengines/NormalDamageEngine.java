@@ -24,6 +24,7 @@ class NormalDamageEngine extends AbstractDamageEngine {
   private static final double FAITH_INCREMENT = 0.1;
   private static final double FAITH_INCREMENT_2H = 0.15;
   private static final double FAITH_DR_INCREMENT = 0.05;
+  private double lastMultiplier = 1.0;
   private boolean dodged = false;
   private boolean missed = false;
   private boolean crit = false;
@@ -128,12 +129,19 @@ class NormalDamageEngine extends AbstractDamageEngine {
               faithDR -= fpl * NormalDamageEngine.FAITH_DR_INCREMENT;
             }
           }
-          final int unadjustedDamage = (int) (rawDamage * multiplier
+          final double unadjustedDamage = (rawDamage * multiplier
               * faithMultiplier / CommonDamageEngineParts.MULTIPLIER_DIVIDE);
-          return (int) (unadjustedDamage * faithDR);
+          this.lastMultiplier = MultiplierValues.getRandomNormalValue();
+          final int adjustedDamage = (int) (unadjustedDamage * faithDR * this.lastMultiplier);
+          return acting.getFaith().getFaithAdjustedDamage(enemy.getFaith().getFaithID(), adjustedDamage);
         }
       }
     }
+  }
+
+  @Override
+  public String getDamageString() {
+    return MultiplierValues.getTextForValue(this.lastMultiplier);
   }
 
   @Override

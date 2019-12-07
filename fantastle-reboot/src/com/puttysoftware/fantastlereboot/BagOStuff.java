@@ -162,20 +162,8 @@ public class BagOStuff {
     return this.mapTurnBattle;
   }
 
-  public void resetBattleGUI() {
-    this.mapTurnBattle.resetGUI();
-  }
-
-  public void playHighScoreSound() {
-    SoundPlayer.playSound(SoundIndex.HIGH_SCORE, SoundGroup.USER_INTERFACE);
-  }
-
   public void playLogoSound() {
     SoundPlayer.playSound(SoundIndex.LOGO, SoundGroup.USER_INTERFACE);
-  }
-
-  public void playStartSound() {
-    SoundPlayer.playSound(SoundIndex.GET_READY, SoundGroup.USER_INTERFACE);
   }
 
   public static void checkForUpdates(final boolean manual) {

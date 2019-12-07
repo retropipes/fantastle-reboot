@@ -1,8 +1,0 @@
-armor_bracers
-armor_cap
-armor_gloves
-armor_torso
-weapon_dagger
-weapon_hammer
-weapon_staff
-weapon_sword

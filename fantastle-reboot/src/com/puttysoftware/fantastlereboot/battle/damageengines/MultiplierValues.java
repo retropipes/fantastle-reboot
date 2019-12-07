@@ -1,11 +1,11 @@
-package com.puttysoftware.fantastlereboot.battle;
+package com.puttysoftware.fantastlereboot.battle.damageengines;
 
 import com.puttysoftware.randomrange.RandomRange;
 
-public class MultiplierValues {
+class MultiplierValues {
   private static final double tolerance = 0.001;
-  private static final double[] values = { 0.25, 1.0 / 3.0, 0.5, 2.0 / 3.0,
-      0.75, 1.0, 4.0 / 3.0, 1.5, 2.0, 3.0, 4.0 };
+  private static final double[] values = { 0.1, 0.25, 0.33, 0.5, 0.67, 0.75,
+      1.0, 1.33, 1.5, 2.0, 3.0, 4.0, 10.0 };
   private static final int[] bellCurve = { 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2,
       2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
       4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6,
@@ -21,9 +21,8 @@ public class MultiplierValues {
   }
 
   public static double getRandomNormalValue() {
-    final RandomRange r = new RandomRange(0,
+    final int index = RandomRange.generate(0,
         MultiplierValues.bellCurve.length - 1);
-    final int index = r.generate();
     return MultiplierValues.getValue(MultiplierValues.bellCurve[index]);
   }
 
@@ -37,29 +36,33 @@ public class MultiplierValues {
     }
     switch (index) {
     case 0:
-      return "pathetic ";
+      return " (minimal 0.1x)";
     case 1:
-      return "one-third normal ";
+      return " (tiny 0.25x)";
     case 2:
-      return "one-half normal ";
+      return " (small 0.33x)";
     case 3:
-      return "below normal ";
+      return " (weak 0.5x)";
     case 4:
-      return "slightly below normal ";
+      return " (lowered 0.67x)";
     case 5:
-      return "";
+      return " (reduced 0.75x)";
     case 6:
-      return "slightly above normal ";
+      return " (normal 1x)";
     case 7:
-      return "above normal ";
+      return " (increased 1.33x)";
     case 8:
-      return "double ";
+      return " (raised 1.5x)";
     case 9:
-      return "triple ";
+      return " (strong 2x)";
     case 10:
-      return "brutal ";
+      return " (large 3x)";
+    case 11:
+      return " (huge 4x)";
+    case 12:
+      return " (brutal 10x)";
     default:
-      return "an unknown percentage of normal ";
+      return " (unknown ??x)";
     }
   }
 }

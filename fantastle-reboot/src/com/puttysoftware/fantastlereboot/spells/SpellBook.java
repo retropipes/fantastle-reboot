@@ -18,12 +18,6 @@ public abstract class SpellBook {
     this.pages = new ArrayList<>();
   }
 
-  protected final SpellBookPage addSpell(final Spell sp) {
-    final SpellBookPage sbp = new SpellBookPage(sp);
-    this.pages.add(sbp);
-    return sbp;
-  }
-
   protected final void addKnownSpell(final Spell sp) {
     this.pages.add(new SpellBookPage(sp).learn());
   }
@@ -108,13 +102,6 @@ public abstract class SpellBook {
     final int spellSize = this.pages.size();
     for (int x = 0; x < spellSize; x++) {
       this.pages.get(x).learn();
-    }
-  }
-
-  public final void forgetAllSpells() {
-    final int spellSize = this.pages.size();
-    for (int x = 0; x < spellSize; x++) {
-      this.pages.get(x).forget();
     }
   }
 

@@ -26,6 +26,6 @@ public class AutoMapAI extends AbstractMapAIRoutine {
       this.moveY = there.y;
       return AIRoutine.ACTION_MOVE;
     }
-    return AbstractMapAIRoutine.ACTION_END_TURN;
+    return AIRoutine.ACTION_END_TURN;
   }
 }

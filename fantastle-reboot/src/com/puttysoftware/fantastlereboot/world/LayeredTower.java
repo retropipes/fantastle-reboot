@@ -41,8 +41,6 @@ import com.puttysoftware.fantastlereboot.objects.StairsUp;
 import com.puttysoftware.fantastlereboot.objects.SuperPit;
 import com.puttysoftware.fantastlereboot.objects.SuperSpring;
 import com.puttysoftware.fantastlereboot.objects.Wall;
-import com.puttysoftware.fantastlereboot.objects.WallOff;
-import com.puttysoftware.fantastlereboot.objects.WallOn;
 import com.puttysoftware.fantastlereboot.objects.WeaponShop;
 import com.puttysoftware.randomrange.RandomLongRange;
 import com.puttysoftware.randomrange.RandomRange;
@@ -578,10 +576,6 @@ final class LayeredTower implements Cloneable {
 
   public void offsetPlayerColumn(final int newPlayerColumn) {
     this.playerLocationData[0] += newPlayerColumn;
-  }
-
-  public void offsetPlayerFloor(final int newPlayerFloor) {
-    this.playerLocationData[2] += newPlayerFloor;
   }
 
   private final void fill() {
@@ -1283,22 +1277,6 @@ final class LayeredTower implements Cloneable {
   public static boolean radialScan(final int cx, final int cy, final int r,
       final int tx, final int ty) {
     return Math.abs(tx - cx) <= r && Math.abs(ty - cy) <= r;
-  }
-
-  public void fullScanButton(final int l) {
-    int u, v, z;
-    z = LayeredTower.MAX_FLOORS - 1;
-    // Perform the scan
-    for (u = 0; u < this.getColumns(); u++) {
-      for (v = 0; v < this.getRows(); v++) {
-        final FantastleObjectModel testObj = this.getCell(v, u, z, l);
-        if (testObj instanceof WallOff) {
-          this.setCell(new WallOn(), v, u, z, l);
-        } else if (testObj instanceof WallOn) {
-          this.setCell(new WallOff(), v, u, z, l);
-        }
-      }
-    }
   }
 
   // Settings

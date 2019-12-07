@@ -23,7 +23,7 @@ public class AssassinSpellBook extends SpellBook {
         "The enemy is no longer poisoned!");
     final Spell spell0 = new Spell(spell0Effect, 1, BattleTarget.ENEMY,
         SoundIndex.SLIME);
-    this.addKnownSpell(spell0);
+    this.addUnknownSpell(spell0);
     final Effect spell1Effect = new Effect("Turtle Shell", 5);
     spell1Effect.setAffectedStat(StatConstants.STAT_DEFENSE);
     spell1Effect.setEffect(Effect.EFFECT_MULTIPLY, 1.5,
@@ -36,7 +36,7 @@ public class AssassinSpellBook extends SpellBook {
         "The shell has dissipated!");
     final Spell spell1 = new Spell(spell1Effect, 1, BattleTarget.SELF,
         SoundIndex.BUFF_1);
-    this.addKnownSpell(spell1);
+    this.addUnknownSpell(spell1);
     final Effect spell2Effect = new Effect("Charged Up", 5);
     spell2Effect.setAffectedStat(StatConstants.STAT_ATTACK);
     spell2Effect.setEffect(Effect.EFFECT_MULTIPLY, 3,
@@ -48,7 +48,7 @@ public class AssassinSpellBook extends SpellBook {
         "The charge has dissipated!");
     final Spell spell2 = new Spell(spell2Effect, 2, BattleTarget.SELF,
         SoundIndex.BUFF_2);
-    this.addKnownSpell(spell2);
+    this.addUnknownSpell(spell2);
     final DamageEffect spell3Effect = new DamageEffect("Ghostly Axe", 20, 5,
         Effect.DEFAULT_SCALE_FACTOR, StatConstants.STAT_NONE, 4.0);
     spell3Effect.setMessage(Effect.MESSAGE_INITIAL,
@@ -58,7 +58,7 @@ public class AssassinSpellBook extends SpellBook {
     spell3Effect.setMessage(Effect.MESSAGE_WEAR_OFF, "The axe disappears!");
     final Spell spell3 = new Spell(spell3Effect, 4, BattleTarget.ENEMY,
         SoundIndex.PUNCH);
-    this.addKnownSpell(spell3);
+    this.addUnknownSpell(spell3);
     final Effect spell4Effect = new Effect("Armor Bind", 5);
     spell4Effect.setAffectedStat(StatConstants.STAT_DEFENSE);
     spell4Effect.setEffect(Effect.EFFECT_MULTIPLY, 0,
@@ -70,7 +70,7 @@ public class AssassinSpellBook extends SpellBook {
     spell4Effect.setMessage(Effect.MESSAGE_WEAR_OFF, "The binding breaks!");
     final Spell spell4 = new Spell(spell4Effect, 7, BattleTarget.ENEMY,
         SoundIndex.DEBUFF_1);
-    this.addKnownSpell(spell4);
+    this.addUnknownSpell(spell4);
     final Effect spell5Effect = new Effect("Supercharged", 10);
     spell5Effect.setAffectedStat(StatConstants.STAT_ATTACK);
     spell5Effect.setEffect(Effect.EFFECT_MULTIPLY, 10,
@@ -83,7 +83,7 @@ public class AssassinSpellBook extends SpellBook {
         "The supercharge has dissipated!");
     final Spell spell5 = new Spell(spell5Effect, 10, BattleTarget.SELF,
         SoundIndex.BUFF_2);
-    this.addKnownSpell(spell5);
+    this.addUnknownSpell(spell5);
   }
 
   @Override

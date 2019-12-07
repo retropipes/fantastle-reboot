@@ -11,6 +11,8 @@ import com.puttysoftware.fantastlereboot.gui.Prefs;
 public abstract class AbstractDamageEngine {
   // Methods
   public abstract int computeDamage(Creature enemy, Creature acting);
+  
+  public abstract String getDamageString();
 
   public abstract boolean enemyDodged();
 

@@ -46,7 +46,7 @@ public class GameSaver extends Thread {
     } catch (final Exception ex) {
       FantastleReboot.exception(ex);
     }
-    WorldFileManager.handleDeferredSuccess(success, false, null);
+    GameFileManager.handleDeferredSuccess(success, false, null);
   }
 
   private static boolean hasExtension(final String s) {

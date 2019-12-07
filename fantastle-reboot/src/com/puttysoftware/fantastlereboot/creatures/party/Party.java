@@ -81,14 +81,6 @@ public class Party {
     this.monsterLevel = 0;
   }
 
-  public void decrementMonsterLevel() {
-    this.offsetMonsterLevel(-1);
-  }
-
-  public void incrementMonsterLevel() {
-    this.offsetMonsterLevel(1);
-  }
-
   public void offsetMonsterLevel(final int offset) {
     if (this.monsterLevel + offset > World.getMaxLevels()
         || this.monsterLevel + offset < 0) {

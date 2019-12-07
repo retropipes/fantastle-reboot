@@ -227,16 +227,8 @@ public class Effect {
     return msg;
   }
 
-  public String getMessage(final int which) {
-    return this.messages[which];
-  }
-
   public void setMessage(final int which, final String newMessage) {
     this.messages[which] = newMessage;
-  }
-
-  public static String getNullEffectString() {
-    return "";
   }
 
   public static String getNullMessage() {

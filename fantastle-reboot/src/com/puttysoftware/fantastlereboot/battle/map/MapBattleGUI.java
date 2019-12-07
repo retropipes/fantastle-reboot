@@ -281,7 +281,7 @@ class MapBattleGUI {
           b.doPlayerActions(AIRoutine.ACTION_USE_ITEM);
         } else if (cmd.equals("End Turn") || cmd.equals("e")) {
           // End Turn
-          b.endTurn();
+          b.doPlayerActions(AIRoutine.ACTION_END_TURN);
         }
       } catch (final Throwable t) {
         FantastleReboot.exception(t);

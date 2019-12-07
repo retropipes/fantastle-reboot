@@ -10,7 +10,7 @@ import com.puttysoftware.fantastlereboot.world.World;
 
 final class EditorView {
   // Fields
-  private static int oldLocX = 0, oldLocY = 0, locX = 0, locY = 0;
+  private static int locX = 0, locY = 0;
   private static int MAX_X;
   private static int MAX_Y;
 
@@ -25,14 +25,6 @@ final class EditorView {
   }
 
   public static int getLocY() {
-    return EditorView.locY;
-  }
-
-  public static int getUpperLeftLocX() {
-    return EditorView.locX;
-  }
-
-  public static int getUpperLeftLocY() {
     return EditorView.locY;
   }
 
@@ -58,16 +50,6 @@ final class EditorView {
 
   public static void offsetLocY(final int val) {
     EditorView.locY += val;
-  }
-
-  public static void save() {
-    EditorView.oldLocX = EditorView.locX;
-    EditorView.oldLocY = EditorView.locY;
-  }
-
-  public static void restore() {
-    EditorView.locX = EditorView.oldLocX;
-    EditorView.locY = EditorView.oldLocY;
   }
 
   public static int getSizeX() {
@@ -102,16 +84,6 @@ final class EditorView {
     return EditorView.MAX_Y;
   }
 
-  public static void offsetMaxX(final int value) {
-    EditorView.MAX_X += value;
-    EditorView.checkViewingWindow();
-  }
-
-  public static void offsetMaxY(final int value) {
-    EditorView.MAX_Y += value;
-    EditorView.checkViewingWindow();
-  }
-
   public static void setMaxX(final int value) {
     EditorView.MAX_X = value;
     EditorView.checkViewingWindow();
@@ -130,16 +102,6 @@ final class EditorView {
   public static void halfOffsetMax(final int valueX, final int valueY) {
     EditorView.setMaxX(valueX + EditorView.getOffsetFactorX());
     EditorView.setMaxY(valueY + EditorView.getOffsetFactorY());
-    EditorView.checkViewingWindow();
-  }
-
-  public static void halfOffsetMaxX(final int value) {
-    EditorView.setMaxX(value + EditorView.getOffsetFactorX());
-    EditorView.checkViewingWindow();
-  }
-
-  public static void halfOffsetMaxY(final int value) {
-    EditorView.setMaxY(value + EditorView.getOffsetFactorY());
     EditorView.checkViewingWindow();
   }
 

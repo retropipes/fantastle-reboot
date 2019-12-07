@@ -28,7 +28,6 @@ final class MovementTask extends Thread {
   // Fields
   private static FantastleObjectModel saved;
   private static boolean proceed;
-  private static boolean relative;
   private static int moveX, moveY, moveZ;
 
   // Constructors
@@ -43,14 +42,8 @@ final class MovementTask extends Thread {
     try {
       while (true) {
         this.waitForWork();
-        if (MovementTask.relative) {
-          MovementTask.updatePositionRelative(MovementTask.moveX,
-              MovementTask.moveY, MovementTask.moveZ);
-        }
-        if (!MovementTask.relative) {
-          MovementTask.updatePositionAbsolute(MovementTask.moveX,
-              MovementTask.moveY, MovementTask.moveZ);
-        }
+        MovementTask.updatePositionRelative(MovementTask.moveX,
+            MovementTask.moveY, MovementTask.moveZ);
       }
     } catch (final Throwable t) {
       FantastleReboot.exception(t);
@@ -69,29 +62,7 @@ final class MovementTask extends Thread {
     MovementTask.moveX = x;
     MovementTask.moveY = y;
     MovementTask.moveZ = z;
-    MovementTask.relative = true;
     this.notify();
-  }
-
-  public synchronized void moveAbsolute(final int x, final int y, final int z) {
-    MovementTask.moveX = x;
-    MovementTask.moveY = y;
-    MovementTask.moveZ = z;
-    MovementTask.relative = false;
-    this.notify();
-  }
-
-  public static boolean tryAbsolute(final int x, final int y, final int z) {
-    final World m = WorldManager.getWorld();
-    if (m.cellRangeCheck(x, y, z)) {
-      final FantastleObjectModel below = m.getCell(m.getPlayerLocationX(),
-          m.getPlayerLocationY(), m.getPlayerLocationZ(), Layers.GROUND);
-      final FantastleObjectModel nextBelow = m.getCell(x, y, z, Layers.GROUND);
-      final FantastleObjectModel nextAbove = m.getCell(x, y, z, Layers.OBJECT);
-      return MovementTask.checkSolidAbsolute(MovementTask.saved, below,
-          nextBelow, nextAbove);
-    }
-    return false;
   }
 
   public static void stopMovement() {
@@ -125,20 +96,6 @@ final class MovementTask extends Thread {
 
   private static int[] doEffects(final int x, final int y) {
     return EffectManager.doEffects(x, y);
-  }
-
-  private static boolean checkSolidAbsolute(final FantastleObjectModel inside,
-      final FantastleObjectModel below, final FantastleObjectModel nextBelow,
-      final FantastleObjectModel nextAbove) {
-    final boolean insideSolid = inside.isSolid();
-    final boolean belowSolid = below.isSolid();
-    final boolean nextBelowSolid = nextBelow.isSolid();
-    final boolean nextAboveSolid = nextAbove.isSolid();
-    if (insideSolid || belowSolid || nextBelowSolid || nextAboveSolid) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   private static void updatePositionRelative(final int dirX, final int dirY,

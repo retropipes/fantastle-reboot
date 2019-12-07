@@ -9,11 +9,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.puttysoftware.fantastlereboot.ai.map.AbstractMapAIRoutine;
-import com.puttysoftware.fantastlereboot.ai.window.AbstractWindowAIRoutine;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.jobs.Job;
+import com.puttysoftware.fantastlereboot.creatures.jobs.JobConstants;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.races.Race;
+import com.puttysoftware.fantastlereboot.creatures.races.RaceConstants;
 import com.puttysoftware.fantastlereboot.effects.Effect;
 import com.puttysoftware.fantastlereboot.items.ItemInventory;
 import com.puttysoftware.fantastlereboot.spells.SpellBook;
@@ -29,7 +30,6 @@ public abstract class Creature {
   private final ArrayList<Effect> effectList;
   private SpellBook spellsKnown;
   private AbstractMapAIRoutine mapAI;
-  private AbstractWindowAIRoutine windowAI;
   private ItemInventory items;
   private Page toNextLevel;
   private final int teamID;
@@ -84,7 +84,6 @@ public abstract class Creature {
     this.stats[StatConstants.STAT_AGILITY].setValue(1);
     this.effectList = new ArrayList<>(Creature.MAX_EFFECTS);
     this.spellsKnown = null;
-    this.windowAI = null;
     this.items = ii;
     this.toNextLevel = null;
     this.perfectBonusGold = this.getInitialPerfectBonusGold();
@@ -180,18 +179,8 @@ public abstract class Creature {
     this.fixStatValue(StatConstants.STAT_CURRENT_HP);
   }
 
-  public final void doDamageMultiply(final double damage, final boolean max) {
-    this.offsetCurrentHPMultiply(damage, max);
-    this.fixStatValue(StatConstants.STAT_CURRENT_HP);
-  }
-
   public final void drain(final int cost) {
     this.offsetCurrentMP(-cost);
-    this.fixStatValue(StatConstants.STAT_CURRENT_MP);
-  }
-
-  public final void drainMultiply(final double cost, final boolean max) {
-    this.offsetCurrentMPMultiply(cost, max);
     this.fixStatValue(StatConstants.STAT_CURRENT_MP);
   }
 
@@ -253,10 +242,6 @@ public abstract class Creature {
     return this.mapAI;
   }
 
-  public AbstractWindowAIRoutine getWindowAI() {
-    return this.windowAI;
-  }
-
   public final String getAllCurrentEffectMessages() {
     final StringBuilder sb = new StringBuilder(Effect.getNullMessage());
     for (final Effect e : this.effectList) {
@@ -273,7 +258,8 @@ public abstract class Creature {
 
   public int getAttack() {
     return (int) (this.getStrength() * StatConstants.FACTOR_STRENGTH_ATTACK
-        + this.getItems().getTotalPower() * StatConstants.FACTOR_POWER_ATTACK);
+        + this.getItems().getTotalPower() * StatConstants.FACTOR_POWER_ATTACK)
+        + this.job.getAttribute(JobConstants.ATTRIBUTE_BONUS_ATTACK);
   }
 
   public final int getAttacksPerRound() {
@@ -336,7 +322,8 @@ public abstract class Creature {
   public int getDefense() {
     return (int) (this.getBlock() * StatConstants.FACTOR_BLOCK_DEFENSE
         + this.getItems().getTotalAbsorb()
-            * StatConstants.FACTOR_ABSORB_DEFENSE);
+            * StatConstants.FACTOR_ABSORB_DEFENSE)
+        + this.job.getAttribute(JobConstants.ATTRIBUTE_BONUS_DEFENSE);
   }
 
   public final double getEffectedStat(final int stat) {
@@ -598,11 +585,6 @@ public abstract class Creature {
     this.fixStatValue(StatConstants.STAT_CURRENT_HP);
   }
 
-  public final void healMultiply(final double amount, final boolean max) {
-    this.offsetCurrentHPMultiply(amount, max);
-    this.fixStatValue(StatConstants.STAT_CURRENT_HP);
-  }
-
   public final void healAndRegenerateFully() {
     this.healFully();
     this.regenerateFully();
@@ -661,22 +643,8 @@ public abstract class Creature {
     this.fixStatValue(StatConstants.STAT_CURRENT_HP);
   }
 
-  private final void offsetCurrentHPMultiply(final double value,
-      final boolean max) {
-    this.stats[StatConstants.STAT_CURRENT_HP].offsetValueMultiply(value, max,
-        this.getStat(StatConstants.STAT_MAXIMUM_HP));
-    this.fixStatValue(StatConstants.STAT_CURRENT_HP);
-  }
-
   public final void offsetCurrentMP(final int value) {
     this.stats[StatConstants.STAT_CURRENT_MP].offsetValue(value);
-    this.fixStatValue(StatConstants.STAT_CURRENT_MP);
-  }
-
-  private final void offsetCurrentMPMultiply(final double value,
-      final boolean max) {
-    this.stats[StatConstants.STAT_CURRENT_MP].offsetValueMultiply(value, max,
-        this.getStat(StatConstants.STAT_MAXIMUM_MP));
     this.fixStatValue(StatConstants.STAT_CURRENT_MP);
   }
 
@@ -687,22 +655,6 @@ public abstract class Creature {
       this.experience = 0;
     } else {
       this.experience += value;
-    }
-  }
-
-  public final void offsetExperiencePercentage(final int percentage) {
-    int fixedPercentage = percentage;
-    if (fixedPercentage > 100) {
-      fixedPercentage = 100;
-    } else if (fixedPercentage < -100) {
-      fixedPercentage = -100;
-    }
-    if (fixedPercentage > 0) {
-      final long adjustment = this.experience * fixedPercentage / 100;
-      this.offsetExperience(adjustment);
-    } else if (fixedPercentage < 0) {
-      final long adjustment = this.experience * -fixedPercentage / 100;
-      this.offsetExperience(-adjustment);
     }
   }
 
@@ -754,11 +706,6 @@ public abstract class Creature {
     this.fixStatValue(StatConstants.STAT_CURRENT_MP);
   }
 
-  public final void regenerateMultiply(final double amount, final boolean max) {
-    this.offsetCurrentMPMultiply(amount, max);
-    this.fixStatValue(StatConstants.STAT_CURRENT_MP);
-  }
-
   private final void regenerateFully() {
     this.setCurrentMP(this.getMaximumMP());
   }
@@ -783,10 +730,6 @@ public abstract class Creature {
 
   public final void setAgility(final int value) {
     this.setStat(StatConstants.STAT_AGILITY, value);
-  }
-
-  public final void setWindowAI(final AbstractWindowAIRoutine newAI) {
-    this.windowAI = newAI;
   }
 
   public final void setMapAI(final AbstractMapAIRoutine newAI) {
@@ -831,6 +774,95 @@ public abstract class Creature {
 
   public final void setLevel(final int value) {
     this.setStat(StatConstants.STAT_LEVEL, value);
+  }
+
+  protected final void setInitialStats() {
+    this.setStrength(this.getInitialStrength());
+    this.setBlock(this.getInitialBlock());
+    this.setVitality(this.getInitialVitality());
+    this.setIntelligence(this.getInitialIntelligence());
+    this.setAgility(this.getInitialAgility());
+    this.setLuck(this.getInitialLuck());
+    this.setCurrentHP(this.getMaximumHP());
+    this.setCurrentMP(this.getMaximumMP());
+  }
+
+  protected int getInitialStrength() {
+    int level = this.getLevel();
+    Race r = this.getRace();
+    Job j = this.getJob();
+    int base = StatConstants.GAIN_STRENGTH * level;
+    int raceFixed = r.getAttribute(RaceConstants.ATTRIBUTE_STRENGTH_PER_LEVEL)
+        * level;
+    int jobFixed = j.getAttribute(JobConstants.ATTRIBUTE_STRENGTH_MODIFIER);
+    double raceMult = RaceConstants.getLookupTableEntry(
+        r.getAttribute(RaceConstants.ATTRIBUTE_RANDOM_STRENGTH));
+    return (int) Math.round((base + raceFixed + jobFixed) * raceMult);
+  }
+
+  protected int getInitialBlock() {
+    int level = this.getLevel();
+    Race r = this.getRace();
+    Job j = this.getJob();
+    int base = StatConstants.GAIN_BLOCK * level;
+    int raceFixed = r.getAttribute(RaceConstants.ATTRIBUTE_BLOCK_PER_LEVEL)
+        * level;
+    int jobFixed = j.getAttribute(JobConstants.ATTRIBUTE_BLOCK_MODIFIER);
+    double raceMult = RaceConstants.getLookupTableEntry(
+        r.getAttribute(RaceConstants.ATTRIBUTE_RANDOM_BLOCK));
+    return (int) Math.round((base + raceFixed + jobFixed) * raceMult);
+  }
+
+  protected int getInitialVitality() {
+    int level = this.getLevel();
+    Race r = this.getRace();
+    Job j = this.getJob();
+    int base = StatConstants.GAIN_VITALITY * level;
+    int raceFixed = r.getAttribute(RaceConstants.ATTRIBUTE_VITALITY_PER_LEVEL)
+        * level;
+    int jobFixed = j.getAttribute(JobConstants.ATTRIBUTE_VITALITY_MODIFIER);
+    double raceMult = RaceConstants.getLookupTableEntry(
+        r.getAttribute(RaceConstants.ATTRIBUTE_RANDOM_VITALITY));
+    return (int) Math.round((base + raceFixed + jobFixed) * raceMult);
+  }
+
+  protected int getInitialIntelligence() {
+    int level = this.getLevel();
+    Race r = this.getRace();
+    Job j = this.getJob();
+    int base = StatConstants.GAIN_INTELLIGENCE * level;
+    int raceFixed = r
+        .getAttribute(RaceConstants.ATTRIBUTE_INTELLIGENCE_PER_LEVEL) * level;
+    int jobFixed = j.getAttribute(JobConstants.ATTRIBUTE_INTELLIGENCE_MODIFIER);
+    double raceMult = RaceConstants.getLookupTableEntry(
+        r.getAttribute(RaceConstants.ATTRIBUTE_RANDOM_INTELLIGENCE));
+    return (int) Math.round((base + raceFixed + jobFixed) * raceMult);
+  }
+
+  protected int getInitialAgility() {
+    int level = this.getLevel();
+    Race r = this.getRace();
+    Job j = this.getJob();
+    int base = StatConstants.GAIN_AGILITY * level;
+    int raceFixed = r.getAttribute(RaceConstants.ATTRIBUTE_AGILITY_PER_LEVEL)
+        * level;
+    int jobFixed = j.getAttribute(JobConstants.ATTRIBUTE_AGILITY_MODIFIER);
+    double raceMult = RaceConstants.getLookupTableEntry(
+        r.getAttribute(RaceConstants.ATTRIBUTE_RANDOM_AGILITY));
+    return (int) Math.round((base + raceFixed + jobFixed) * raceMult);
+  }
+
+  protected int getInitialLuck() {
+    int level = this.getLevel();
+    Race r = this.getRace();
+    Job j = this.getJob();
+    int base = StatConstants.GAIN_LUCK * level;
+    int raceFixed = r.getAttribute(RaceConstants.ATTRIBUTE_LUCK_PER_LEVEL)
+        * level;
+    int jobFixed = j.getAttribute(JobConstants.ATTRIBUTE_LUCK_MODIFIER);
+    double raceMult = RaceConstants.getLookupTableEntry(
+        r.getAttribute(RaceConstants.ATTRIBUTE_RANDOM_LUCK));
+    return (int) Math.round((base + raceFixed + jobFixed) * raceMult);
   }
 
   public final void setLuck(final int value) {
@@ -979,98 +1011,6 @@ public abstract class Creature {
     return true;
   }
 
-  public void doDamagePercentage(final int percent) {
-    int fP = percent;
-    if (fP > Creature.FULL_HEAL_PERCENTAGE) {
-      fP = Creature.FULL_HEAL_PERCENTAGE;
-    }
-    if (fP < 0) {
-      fP = 0;
-    }
-    final double fPMultiplier = fP / (double) Creature.FULL_HEAL_PERCENTAGE;
-    int modValue = (int) (this.getEffectedMaximumHP() * fPMultiplier);
-    if (modValue <= 0) {
-      modValue = 1;
-    }
-    this.offsetCurrentHP(-modValue);
-    this.fixStatValue(StatConstants.STAT_CURRENT_HP);
-  }
-
-  public void drainPercentage(final int percent) {
-    int fP = percent;
-    if (fP > Creature.FULL_HEAL_PERCENTAGE) {
-      fP = Creature.FULL_HEAL_PERCENTAGE;
-    }
-    if (fP < 0) {
-      fP = 0;
-    }
-    final double fPMultiplier = fP / (double) Creature.FULL_HEAL_PERCENTAGE;
-    int modValue = (int) (this.getMaximumMP() * fPMultiplier);
-    if (modValue <= 0) {
-      modValue = 1;
-    }
-    this.offsetCurrentMP(-modValue);
-    this.fixStatValue(StatConstants.STAT_CURRENT_MP);
-  }
-
-  public int getActionsPerRound() {
-    return (int) Math.ceil(this.getEffectedStat(StatConstants.STAT_AGILITY)
-        * StatConstants.FACTOR_AGILITY_ACTIONS_PER_ROUND);
-  }
-
-  public String getAllEffectMessages(final int which) {
-    String s = "";
-    for (final Effect e : this.effectList) {
-      s += e.getMessage(which) + "\n";
-    }
-    // Strip final newline character, if it exists
-    if (!s.equals(Effect.getNullMessage())) {
-      s = s.substring(0, s.length() - 1);
-    }
-    return s;
-  }
-
-  public int getArmorBlock() {
-    return (int) (this.getItems().getTotalAbsorb()
-        * StatConstants.FACTOR_ABSORB_DEFENSE);
-  }
-
-  public String getEffectMessage(final Effect ie, final int which) {
-    final Effect e = this.get(ie);
-    if (e != null) {
-      return e.getMessage(which);
-    } else {
-      return Effect.getNullMessage();
-    }
-  }
-
-  public String getEffectName(final Effect ie) {
-    final Effect e = this.get(ie);
-    if (e != null) {
-      return e.getName();
-    } else {
-      return "";
-    }
-  }
-
-  public int getEffectRounds(final Effect ie) {
-    final Effect e = this.get(ie);
-    if (e != null) {
-      return e.getRounds();
-    } else {
-      return 0;
-    }
-  }
-
-  public String getEffectString(final Effect ie) {
-    final Effect e = this.get(ie);
-    if (e != null) {
-      return e.getEffectString();
-    } else {
-      return Effect.getNullEffectString();
-    }
-  }
-
   public String getEffectedHPString() {
     return this.getCurrentHP() + "/" + this.getEffectedMaximumHP();
   }
@@ -1082,12 +1022,5 @@ public abstract class Creature {
   public int getWeaponPower() {
     return (int) (this.getItems().getTotalPower()
         * StatConstants.FACTOR_POWER_ATTACK);
-  }
-
-  public void stripEffect(final Effect ie) {
-    final Effect e = this.get(ie);
-    if (e != null) {
-      e.deactivateEffect();
-    }
   }
 }

@@ -57,20 +57,6 @@ final class EditorPicturePicker {
     return this.pickerJPanel;
   }
 
-  public void disablePicker() {
-    this.pickerJPanel.setEnabled(false);
-    for (final JRadioButton radioButton : this.radioButtons) {
-      radioButton.setEnabled(false);
-    }
-  }
-
-  public void enablePicker() {
-    this.pickerJPanel.setEnabled(true);
-    for (final JRadioButton radioButton : this.radioButtons) {
-      radioButton.setEnabled(true);
-    }
-  }
-
   public void updatePicker(final BufferedImageIcon[] newImages) {
     this.choices = newImages;
     this.choiceJPanel.removeAll();
@@ -101,10 +87,6 @@ final class EditorPicturePicker {
         .getLayout().preferredLayoutSize(this.pickerJPanel).height);
     this.pickerJPanel
         .setPreferredSize(new Dimension(newPreferredWidth, newPreferredHeight));
-  }
-
-  public void selectLastPickedChoice(final int lastPicked) {
-    this.radioButtons[lastPicked].setSelected(true);
   }
 
   /**

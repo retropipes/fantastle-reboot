@@ -129,18 +129,8 @@ public final class BattleCharacter extends FantastleObject {
     }
   }
 
-  public void actExact(final int cost) {
-    if (this.getCustomCounter(BattleCharacter.COUNTER_ACTIONS) >= cost) {
-      this.offsetCustomCounter(BattleCharacter.COUNTER_ACTIONS, -cost);
-    }
-  }
-
   public boolean canAct(final int cost) {
     return this.getCustomCounter(BattleCharacter.COUNTER_ACTIONS) > 0;
-  }
-
-  public boolean canActExact(final int cost) {
-    return this.getCustomCounter(BattleCharacter.COUNTER_ACTIONS) >= cost;
   }
 
   public int getCurrentActions() {
