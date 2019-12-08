@@ -51,9 +51,9 @@ public class BagOStuff {
   private static final String NEW_VERSION_SITE = "https://puttysoftware.github.com/fantastle-reboot/";
   private static ProductData pd;
   private static final int VERSION_MAJOR = 0;
-  private static final int VERSION_MINOR = 4;
+  private static final int VERSION_MINOR = 5;
   private static final int VERSION_BUGFIX = 0;
-  private static final int VERSION_CODE = ProductData.CODE_ALPHA;
+  private static final int VERSION_CODE = ProductData.CODE_BETA;
   private static final int VERSION_PRERELEASE = 0;
 
   // Constructors
