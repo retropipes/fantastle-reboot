@@ -352,7 +352,8 @@ public class MapBattleLogic extends Battle {
           }
         }
         displayDamageString = displayDamagePrefix + activeName + " hits "
-            + enemyName + " for " + damageString + " damage!";
+            + enemyName + " for " + damageString + " damage!"
+            + activeDE.getDamageString();
         if (isParty) {
           SoundPlayer.playSound(SoundIndex.PARTY_HIT, SoundGroup.BATTLE);
         } else {
