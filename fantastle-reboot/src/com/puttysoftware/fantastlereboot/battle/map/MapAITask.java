@@ -26,13 +26,18 @@ public class MapAITask extends Thread {
       while (keepGoing) {
         keepGoing = this.b.executeNextAIAction();
         if (keepGoing) {
-          if (this.b.getLastAIActionResult()) {
-            // Delay, for animation purposes
-            try {
-              final int battleSpeed = Prefs.getBattleSpeed();
-              Thread.sleep(battleSpeed);
-            } catch (final InterruptedException i) {
-              // Ignore
+          if (!this.b.getActive().isAlive()) {
+            this.b.endTurn();
+            keepGoing = false;
+          } else {
+            if (this.b.getLastAIActionResult()) {
+              // Delay, for animation purposes
+              try {
+                final int battleSpeed = Prefs.getBattleSpeed();
+                Thread.sleep(battleSpeed);
+              } catch (final InterruptedException i) {
+                // Ignore
+              }
             }
           }
         }
