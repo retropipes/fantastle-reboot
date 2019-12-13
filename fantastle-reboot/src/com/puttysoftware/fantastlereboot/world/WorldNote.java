@@ -7,11 +7,10 @@ package com.puttysoftware.fantastlereboot.world;
 
 import java.io.IOException;
 
-import com.puttysoftware.storage.CloneableObject;
 import com.puttysoftware.xio.XDataReader;
 import com.puttysoftware.xio.XDataWriter;
 
-class WorldNote extends CloneableObject {
+class WorldNote {
   // Fields
   private String contents;
 
