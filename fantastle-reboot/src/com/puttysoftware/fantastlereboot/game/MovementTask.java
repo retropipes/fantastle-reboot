@@ -18,6 +18,7 @@ import com.puttysoftware.fantastlereboot.loaders.SoundPlayer;
 import com.puttysoftware.fantastlereboot.objectmodel.FantastleObjectModel;
 import com.puttysoftware.fantastlereboot.objectmodel.GameObjects;
 import com.puttysoftware.fantastlereboot.objectmodel.Layers;
+import com.puttysoftware.fantastlereboot.objects.ClosedDoor;
 import com.puttysoftware.fantastlereboot.objects.OpenSpace;
 import com.puttysoftware.fantastlereboot.objects.Wall;
 import com.puttysoftware.fantastlereboot.world.GenerateTask;
@@ -85,8 +86,8 @@ final class MovementTask extends Thread {
     if (GameObjects.replacesSelf(obj)) {
       Game.morph(GameObjects.replacesSelfWith(obj));
     }
-    if (GameObjects.playsSound(obj)) {
-      SoundPlayer.playSound(GameObjects.whichSound(obj), SoundGroup.GAME);
+    if (obj instanceof ClosedDoor) {
+      SoundPlayer.playSound(SoundIndex.DOOR_OPENS, SoundGroup.GAME);
     }
   }
 

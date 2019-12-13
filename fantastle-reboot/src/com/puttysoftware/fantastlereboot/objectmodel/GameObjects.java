@@ -10,7 +10,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
-import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.files.versions.WorldVersions;
 import com.puttysoftware.fantastlereboot.loaders.DataLoader;
 import com.puttysoftware.fantastlereboot.objects.ArmorShop;
@@ -46,60 +45,6 @@ public final class GameObjects {
   private static FantastleObjectActions[] allActionList;
   private static int[] allSelfReplacementActionList;
   private static int[] allShopActionList;
-  private static int[] allSoundActionList;
-  private static final SoundIndex[] SOUND_MAP = new SoundIndex[] {
-      SoundIndex.ACTION_FAILED, SoundIndex.ALERT, SoundIndex.ARROW_DIE,
-      SoundIndex.ARROW_HIT, SoundIndex.ARROW_SHOOT, SoundIndex.AXE_CRIT,
-      SoundIndex.AXE_HIT, SoundIndex.BARRIER, SoundIndex.BITE,
-      SoundIndex.BLOCKED, SoundIndex.BOLT, SoundIndex.BOSS_DIE,
-      SoundIndex.BREAK, SoundIndex.BUBBLE, SoundIndex.BUFF_1, SoundIndex.BUFF_2,
-      SoundIndex.BUFF_3, SoundIndex.BUFF_4, SoundIndex.BUFF_5,
-      SoundIndex.BUTTON, SoundIndex.CHANGE, SoundIndex.CLAW, SoundIndex.CLICK,
-      SoundIndex.CLUB_CRIT, SoundIndex.CLUB_HIT, SoundIndex.CONFUSED,
-      SoundIndex.COOL_OFF, SoundIndex.CRACK, SoundIndex.CREATE,
-      SoundIndex.CRITICAL, SoundIndex.CRUSH, SoundIndex.DARK_STONE,
-      SoundIndex.DARKNESS, SoundIndex.DEATH, SoundIndex.DEBUFF_1,
-      SoundIndex.DEBUFF_2, SoundIndex.DEBUFF_3, SoundIndex.DEBUFF_4,
-      SoundIndex.DEBUFF_5, SoundIndex.DESTROY, SoundIndex.DISPEL,
-      SoundIndex.DIZZY, SoundIndex.DOOR_CLOSES, SoundIndex.DOOR_OPENS,
-      SoundIndex.DOWN, SoundIndex.DRAIN, SoundIndex.DRAW_SWORD,
-      SoundIndex.DRUNK, SoundIndex.EASIER, SoundIndex.EQUIP,
-      SoundIndex.ERA_CHANGE, SoundIndex.ERAS_ENABLED, SoundIndex.ERROR,
-      SoundIndex.EXPLODE, SoundIndex.FAILED, SoundIndex.FALLING,
-      SoundIndex.FATAL, SoundIndex.FINISH, SoundIndex.FIREBALL,
-      SoundIndex.FOCUS, SoundIndex.FREEZE, SoundIndex.FUMBLE,
-      SoundIndex.GAME_OVER, SoundIndex.GENERATE, SoundIndex.GET_READY,
-      SoundIndex.GRAB, SoundIndex.HAMMER_CRIT, SoundIndex.HAMMER_HIT,
-      SoundIndex.HARDER, SoundIndex.HEAL, SoundIndex.HIGH_SCORE,
-      SoundIndex.HURT, SoundIndex.IDENTIFY, SoundIndex.INTO,
-      SoundIndex.INTO_PIT, SoundIndex.KABOOM, SoundIndex.KICK, SoundIndex.LASER,
-      SoundIndex.LEVEL_UP, SoundIndex.LIGHT, SoundIndex.LIGHT_FUSE,
-      SoundIndex.LIGHT_STONE, SoundIndex.LOGO, SoundIndex.LOSE,
-      SoundIndex.LOW_HEALTH, SoundIndex.MACE_CRIT, SoundIndex.MACE_HIT,
-      SoundIndex.MAGNET, SoundIndex.MELT, SoundIndex.MISSED, SoundIndex.MISSILE,
-      SoundIndex.MONSTER_ACTION, SoundIndex.MONSTER_COUNTER,
-      SoundIndex.MONSTER_HIT, SoundIndex.MONSTER_SPELL, SoundIndex.MOON_STONE,
-      SoundIndex.NEXT_ROUND, SoundIndex.ON_WHO, SoundIndex.OOF, SoundIndex.OUT,
-      SoundIndex.OW, SoundIndex.PARALYSIS, SoundIndex.PARTY_ACTION,
-      SoundIndex.PARTY_COUNTER, SoundIndex.PARTY_DEAD, SoundIndex.PARTY_HIT,
-      SoundIndex.PARTY_SPELL, SoundIndex.PICK_LOCK, SoundIndex.PLAYER_UP,
-      SoundIndex.POP, SoundIndex.PULL, SoundIndex.PUNCH, SoundIndex.PUSH,
-      SoundIndex.PUSH_PULL_FAILED, SoundIndex.RETURN, SoundIndex.ROTATED,
-      SoundIndex.RUN, SoundIndex.SHOCKED, SoundIndex.SHOP, SoundIndex.SINK,
-      SoundIndex.SLICE, SoundIndex.SLIDE, SoundIndex.SLIME, SoundIndex.SONAR,
-      SoundIndex.SPARK, SoundIndex.SPEAR_CRIT, SoundIndex.SPEAR_HIT,
-      SoundIndex.SPECIAL, SoundIndex.SPINNER, SoundIndex.SPRING,
-      SoundIndex.STAR_STONE, SoundIndex.SUMMON, SoundIndex.SUN_STONE,
-      SoundIndex.SWORD_CRIT, SoundIndex.SWORD_HIT, SoundIndex.TELEPORT,
-      SoundIndex.TRANSACT, SoundIndex.TRAP, SoundIndex.U_TURNED,
-      SoundIndex.UNLOCK, SoundIndex.UP, SoundIndex.USE_FAILED,
-      SoundIndex.VICTORY, SoundIndex.WALK, SoundIndex.WALK_2, SoundIndex.WALK_3,
-      SoundIndex.WALK_4, SoundIndex.WALK_5, SoundIndex.WALK_6,
-      SoundIndex.WALK_FAILED, SoundIndex.WALK_ICE, SoundIndex.WALK_LAVA,
-      SoundIndex.WALK_SLIME, SoundIndex.WALK_WATER, SoundIndex.WAND,
-      SoundIndex.WEAKNESS, SoundIndex.WEAPON_TOO_WEAK, SoundIndex.WEAR_OFF,
-      SoundIndex.WIN_GAME, SoundIndex.WRONG, SoundIndex.ZAP,
-      SoundIndex.HAUNTED };
 
   // Constructor
   private GameObjects() {
@@ -125,8 +70,6 @@ public final class GameObjects {
         .loadObjectActionAddonData(FantastleObjectActions.SHOP);
     GameObjects.allSelfReplacementActionList = DataLoader
         .loadObjectActionAddonData(FantastleObjectActions.REPLACE_SELF);
-    GameObjects.allSoundActionList = DataLoader
-        .loadObjectActionAddonData(FantastleObjectActions.SOUND);
   }
 
   public static boolean replacesSelf(final FantastleObjectModel obj) {
@@ -138,16 +81,6 @@ public final class GameObjects {
       final FantastleObjectModel obj) {
     return GameObjects.getNewInstanceByUniqueID(
         GameObjects.allSelfReplacementActionList[obj.getUniqueID()]);
-  }
-
-  public static boolean playsSound(final FantastleObjectModel obj) {
-    return GameObjects.allActionList[obj.getUniqueID()]
-        .get(FantastleObjectActions.SOUND);
-  }
-
-  public static SoundIndex whichSound(final FantastleObjectModel obj) {
-    return GameObjects.SOUND_MAP[GameObjects.allSoundActionList[obj
-        .getUniqueID()]];
   }
 
   public static boolean sendsDown(final FantastleObjectModel obj) {
