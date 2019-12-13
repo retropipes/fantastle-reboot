@@ -10,6 +10,7 @@
 
 ### Other Notes
 * Removed unused sound effects.
+* The character file version is now 2. Version 1 characters will be auto-upgraded with no loss of fidelity.
 
 ## v0.5.1-beta (2019-12-09)
 ### Bug Fixes
