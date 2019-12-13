@@ -24,16 +24,16 @@ import com.puttysoftware.randomrange.RandomRange;
 
 public class BossMonster extends Creature {
   // Fields
-  private static final int MINIMUM_STAT_VALUE_VERY_EASY = 100;
-  private static final int MINIMUM_STAT_VALUE_EASY = 200;
-  private static final int MINIMUM_STAT_VALUE_NORMAL = 400;
+  private static final int MINIMUM_STAT_VALUE_VERY_EASY = 200;
+  private static final int MINIMUM_STAT_VALUE_EASY = 400;
+  private static final int MINIMUM_STAT_VALUE_NORMAL = 500;
   private static final int MINIMUM_STAT_VALUE_HARD = 600;
-  private static final int MINIMUM_STAT_VALUE_VERY_HARD = 900;
+  private static final int MINIMUM_STAT_VALUE_VERY_HARD = 800;
   private static final int STAT_MULT_VERY_EASY = 3;
-  private static final int STAT_MULT_EASY = 4;
-  private static final int STAT_MULT_NORMAL = 5;
-  private static final int STAT_MULT_HARD = 8;
-  private static final int STAT_MULT_VERY_HARD = 12;
+  private static final int STAT_MULT_EASY = 5;
+  private static final int STAT_MULT_NORMAL = 6;
+  private static final int STAT_MULT_HARD = 7;
+  private static final int STAT_MULT_VERY_HARD = 9;
   private static final int FAITH_ID = 9;
   private static final int JOB_ID = 3;
   private static final int RACE_ID = 1;
@@ -132,10 +132,59 @@ public class BossMonster extends Creature {
     this.setInitialStats();
     this.setGold(0);
     this.setExperience(0);
-    this.setAttacksPerRound(1);
-    this.setSpellsPerRound(1);
+    this.setAttacksPerRound(BossMonster.getInitialAttacksPerRound());
+    this.setSpellsPerRound(BossMonster.getInitialSpellsPerRound());
     this.image = this.getInitialImage();
-    this.healAndRegenerateFully();
+  }
+
+  private static int getInitialAttacksPerRound() {
+    final int difficulty = Prefs.getGameDifficulty();
+    if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
+      return 1;
+    } else {
+      if (difficulty == Prefs.DIFFICULTY_EASY) {
+        return 1;
+      } else {
+        if (difficulty == Prefs.DIFFICULTY_NORMAL) {
+          return 2;
+        } else {
+          if (difficulty == Prefs.DIFFICULTY_HARD) {
+            return 2;
+          } else {
+            if (difficulty == Prefs.DIFFICULTY_VERY_HARD) {
+              return 3;
+            } else {
+              return 2;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  private static int getInitialSpellsPerRound() {
+    final int difficulty = Prefs.getGameDifficulty();
+    if (difficulty == Prefs.DIFFICULTY_VERY_EASY) {
+      return 1;
+    } else {
+      if (difficulty == Prefs.DIFFICULTY_EASY) {
+        return 2;
+      } else {
+        if (difficulty == Prefs.DIFFICULTY_NORMAL) {
+          return 2;
+        } else {
+          if (difficulty == Prefs.DIFFICULTY_HARD) {
+            return 3;
+          } else {
+            if (difficulty == Prefs.DIFFICULTY_VERY_HARD) {
+              return 3;
+            } else {
+              return 2;
+            }
+          }
+        }
+      }
+    }
   }
 
   @Override
@@ -143,7 +192,7 @@ public class BossMonster extends Creature {
     final int min = BossMonster.getMinimumStatForDifficulty();
     final RandomRange r = new RandomRange(min, Math.max(
         this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
-    return r.generate();
+    return r.generate() + super.getInitialStrength();
   }
 
   @Override
@@ -151,7 +200,7 @@ public class BossMonster extends Creature {
     final int min = BossMonster.getMinimumStatForDifficulty();
     final RandomRange r = new RandomRange(min, Math.max(
         this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
-    return r.generate();
+    return r.generate() + super.getInitialBlock();
   }
 
   @Override
@@ -159,7 +208,7 @@ public class BossMonster extends Creature {
     final int min = BossMonster.getMinimumStatForDifficulty();
     final RandomRange r = new RandomRange(min, Math.max(
         this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
-    return r.generate();
+    return r.generate() + super.getInitialAgility();
   }
 
   @Override
@@ -167,7 +216,7 @@ public class BossMonster extends Creature {
     final int min = BossMonster.getMinimumStatForDifficulty();
     final RandomRange r = new RandomRange(min, Math.max(
         this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
-    return r.generate();
+    return r.generate() + super.getInitialVitality();
   }
 
   @Override
@@ -175,7 +224,7 @@ public class BossMonster extends Creature {
     final int min = BossMonster.getMinimumStatForDifficulty();
     final RandomRange r = new RandomRange(min, Math.max(
         this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
-    return r.generate();
+    return r.generate() + super.getInitialIntelligence();
   }
 
   @Override
@@ -183,7 +232,7 @@ public class BossMonster extends Creature {
     final int min = BossMonster.getMinimumStatForDifficulty();
     final RandomRange r = new RandomRange(min, Math.max(
         this.getLevel() * BossMonster.getStatMultiplierForDifficulty(), min));
-    return r.generate();
+    return r.generate() + super.getInitialLuck();
   }
 
   private static int getStatMultiplierForDifficulty() {

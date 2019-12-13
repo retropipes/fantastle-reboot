@@ -31,22 +31,22 @@ public final class Monster extends Creature {
   // Fields
   private String name;
   // Constants
-  protected static final double MINIMUM_EXPERIENCE_RANDOM_VARIANCE = -5.0 / 2.0;
-  protected static final double MAXIMUM_EXPERIENCE_RANDOM_VARIANCE = 5.0 / 2.0;
+  protected static final double MINIMUM_EXPERIENCE_RANDOM_VARIANCE = -3.0 / 2.0;
+  protected static final double MAXIMUM_EXPERIENCE_RANDOM_VARIANCE = 3.0 / 2.0;
   protected static final int PERFECT_GOLD_MIN = 1;
   protected static final int PERFECT_GOLD_MAX = 3;
-  private static final int BATTLES_SCALE_FACTOR = 2;
-  private static final int BATTLES_START = 2;
+  private static final int BATTLES_SCALE_FACTOR = 5;
+  private static final int BATTLES_START = 10;
   private static final int STAT_MULT_VERY_EASY = 2;
-  private static final int STAT_MULT_EASY = 3;
+  private static final int STAT_MULT_EASY = 4;
   private static final int STAT_MULT_NORMAL = 5;
-  private static final int STAT_MULT_HARD = 7;
-  private static final int STAT_MULT_VERY_HARD = 9;
-  private static final double GOLD_MULT_VERY_EASY = 2.0;
-  private static final double GOLD_MULT_EASY = 1.5;
+  private static final int STAT_MULT_HARD = 6;
+  private static final int STAT_MULT_VERY_HARD = 8;
+  private static final double GOLD_MULT_VERY_EASY = 1.4;
+  private static final double GOLD_MULT_EASY = 1.25;
   private static final double GOLD_MULT_NORMAL = 1.0;
   private static final double GOLD_MULT_HARD = 0.75;
-  private static final double GOLD_MULT_VERY_HARD = 0.5;
+  private static final double GOLD_MULT_VERY_HARD = 0.6;
   private static final double EXP_MULT_VERY_EASY = 1.2;
   private static final double EXP_MULT_EASY = 1.1;
   private static final double EXP_MULT_NORMAL = 1.0;
@@ -191,14 +191,14 @@ public final class Monster extends Creature {
   protected int getInitialStrength() {
     final RandomRange r = new RandomRange(1, Math
         .max(this.getLevel() * Monster.getStatMultiplierForDifficulty(), 1));
-    return r.generate();
+    return r.generate() + super.getInitialStrength();
   }
 
   @Override
   protected int getInitialBlock() {
     final RandomRange r = new RandomRange(0,
         this.getLevel() * Monster.getStatMultiplierForDifficulty());
-    return r.generate();
+    return r.generate() + super.getInitialBlock();
   }
 
   private long getInitialExperience() {
@@ -231,28 +231,28 @@ public final class Monster extends Creature {
   protected int getInitialAgility() {
     final RandomRange r = new RandomRange(1, Math
         .max(this.getLevel() * Monster.getStatMultiplierForDifficulty(), 1));
-    return r.generate();
+    return r.generate() + super.getInitialAgility();
   }
 
   @Override
   protected int getInitialVitality() {
     final RandomRange r = new RandomRange(1, Math
         .max(this.getLevel() * Monster.getStatMultiplierForDifficulty(), 1));
-    return r.generate();
+    return r.generate() + super.getInitialVitality();
   }
 
   @Override
   protected int getInitialIntelligence() {
     final RandomRange r = new RandomRange(0,
         this.getLevel() * Monster.getStatMultiplierForDifficulty());
-    return r.generate();
+    return r.generate() + super.getInitialIntelligence();
   }
 
   @Override
   protected int getInitialLuck() {
     final RandomRange r = new RandomRange(0,
         this.getLevel() * Monster.getStatMultiplierForDifficulty());
-    return r.generate();
+    return r.generate() + super.getInitialLuck();
   }
 
   private static int getStatMultiplierForDifficulty() {
