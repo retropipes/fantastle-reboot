@@ -5,6 +5,8 @@ Any questions should be directed to the author via email at: products@puttysoftw
  */
 package com.puttysoftware.fantastlereboot.creatures.party;
 
+import com.puttysoftware.diane.loaders.ColorReplaceRules;
+import com.puttysoftware.fantastlereboot.assets.AvatarImageModel;
 import com.puttysoftware.fantastlereboot.assets.SoundGroup;
 import com.puttysoftware.fantastlereboot.assets.SoundIndex;
 import com.puttysoftware.fantastlereboot.creatures.Creature;
@@ -34,14 +36,13 @@ public class PartyMember extends Creature {
   private int permanentMP;
   private int kills;
   private final int avatarFamilyID;
-  private final int avatarHairID;
-  private final int avatarSkinID;
+  private final AvatarImageModel imageModel;
   private static final int START_GOLD = 0;
   private static final double BASE_COEFF = 10.0;
 
   // Constructors
   PartyMember(final ItemInventory ii, final Race r, final Job j, final Faith f,
-      final String n, final int af, final int as, final int ah) {
+      final String n, final int af, final AvatarImageModel model) {
     super(ii, Creature.TEAM_PARTY, f, j, r);
     this.name = n;
     this.permanentAttack = 0;
@@ -50,8 +51,7 @@ public class PartyMember extends Creature {
     this.permanentMP = 0;
     this.kills = 0;
     this.avatarFamilyID = af;
-    this.avatarSkinID = as;
-    this.avatarHairID = ah;
+    this.imageModel = model;
     this.setLevel(1);
     this.setInitialStats();
     this.setAttacksPerRound(1);
@@ -201,11 +201,31 @@ public class PartyMember extends Creature {
   }
 
   public int getAvatarSkinID() {
-    return this.avatarSkinID;
+    return this.imageModel.getAvatarSkinID();
   }
 
   public int getAvatarHairID() {
-    return this.avatarHairID;
+    return this.imageModel.getAvatarHairID();
+  }
+
+  public int getAvatarBodyID() {
+    return this.imageModel.getAvatarBodyID();
+  }
+
+  public int getAvatarPantsID() {
+    return this.imageModel.getAvatarPantsID();
+  }
+
+  public int getAvatarShoesID() {
+    return this.imageModel.getAvatarShoesID();
+  }
+
+  public int getAvatarEyesID() {
+    return this.imageModel.getAvatarEyesID();
+  }
+  
+  public ColorReplaceRules getAvatarRules() {
+    return this.imageModel.getRules();
   }
 
   public int getPermanentAttackPoints() {
@@ -274,8 +294,8 @@ public class PartyMember extends Creature {
 
   @Override
   protected BufferedImageIcon getInitialImage() {
-    return AvatarImageLoader.load(this.avatarFamilyID, this.avatarSkinID,
-        this.avatarHairID);
+    return AvatarImageLoader.load(this.avatarFamilyID,
+        this.imageModel.getRules());
   }
 
   @Override

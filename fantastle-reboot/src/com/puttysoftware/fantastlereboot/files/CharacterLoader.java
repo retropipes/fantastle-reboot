@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 import com.puttysoftware.fantastlereboot.FantastleReboot;
+import com.puttysoftware.fantastlereboot.assets.AvatarImageModel;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyManager;
 import com.puttysoftware.fantastlereboot.creatures.party.PartyMember;
 import com.puttysoftware.fantastlereboot.files.versions.CharacterVersionException;
@@ -36,10 +37,6 @@ public class CharacterLoader {
   public static PartyMember readCharacter(final XDataReader reader)
       throws IOException {
     final int version = reader.readInt();
-    // if (version < CharacterVersions.FORMAT_1) {
-    // throw new VersionException("Invalid character version found: " +
-    // version);
-    // }
     if (!CharacterVersions.isCompatible(version)) {
       throw new CharacterVersionException(version);
     }
@@ -71,12 +68,30 @@ public class CharacterLoader {
       known[x] = reader.readBoolean();
     }
     final String n = reader.readString();
-    final int af = reader.readInt();
-    final int as = reader.readInt();
-    final int ah = reader.readInt();
+    final int avatarLegacyFamily = reader.readInt();
+    final int avatarSkin = reader.readInt();
+    final int avatarHair = reader.readInt();
     final ItemInventory ii = ItemInventory.readItemInventory(reader, version);
-    final PartyMember pm = PartyManager.getNewPCInstance(ii, r, j, f, n, af, as,
-        ah);
+    AvatarImageModel avatarModel;
+    PartyMember pm;
+    if (version >= CharacterVersions.V2) {
+      // Version 2+
+      final int avatarBody = avatarLegacyFamily;
+      final int avatarFamily = reader.readInt();
+      final int avatarPants = reader.readInt();
+      final int avatarShoes = reader.readInt();
+      final int avatarEyes = reader.readInt();
+      avatarModel = new AvatarImageModel(avatarFamily, avatarHair, avatarSkin,
+          avatarBody, avatarPants, avatarShoes, avatarEyes);
+      pm = PartyManager.getNewPCInstance(ii, r, j, f, n, avatarFamily,
+          avatarModel);
+    } else {
+      // Version 1
+      avatarModel = new AvatarImageModel(avatarLegacyFamily, avatarHair,
+          avatarSkin);
+      pm = PartyManager.getNewPCInstance(ii, r, j, f, n, avatarLegacyFamily,
+          avatarModel);
+    }
     pm.setStrength(strength);
     pm.setBlock(block);
     pm.setAgility(agility);

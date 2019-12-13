@@ -21,18 +21,17 @@ package com.puttysoftware.fantastlereboot.loaders;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.puttysoftware.diane.loaders.ColorReplaceRules;
 import com.puttysoftware.diane.loaders.ImageLoader;
 import com.puttysoftware.fantastlereboot.FantastleReboot;
 import com.puttysoftware.images.BufferedImageIcon;
 
 public class AvatarImageLoader {
   private static Properties fileExtensions;
-  private static final int MAX_FAMILY_INDEX = 5;
-  private static final int MAX_HAIR_INDEX = 9;
-  private static final int MAX_SKIN_INDEX = 9;
+  private static final int MAX_FAMILY_INDEX = 7;
 
-  public static BufferedImageIcon load(final int familyID, final int skinID,
-      final int hairID) {
+  public static BufferedImageIcon load(final int familyID,
+      final ColorReplaceRules rules) {
     if (AvatarImageLoader.fileExtensions == null) {
       try {
         AvatarImageLoader.fileExtensions = new Properties();
@@ -46,8 +45,9 @@ public class AvatarImageLoader {
     final String imageExt = AvatarImageLoader.fileExtensions
         .getProperty("images");
     final String name = "/assets/images/avatars/" + Integer.toString(familyID)
-        + Integer.toString(skinID) + Integer.toString(hairID) + imageExt;
-    return ImageLoader.load(name, AvatarImageLoader.class.getResource(name));
+        + imageExt;
+    return rules.applyAll(
+        ImageLoader.load(name, AvatarImageLoader.class.getResource(name)));
   }
 
   public static void cacheAll() {
@@ -62,14 +62,9 @@ public class AvatarImageLoader {
     final String imageExt = AvatarImageLoader.fileExtensions
         .getProperty("images");
     for (int familyID = 0; familyID <= AvatarImageLoader.MAX_FAMILY_INDEX; familyID++) {
-      for (int skinID = 0; skinID <= AvatarImageLoader.MAX_SKIN_INDEX; skinID++) {
-        for (int hairID = 0; hairID <= AvatarImageLoader.MAX_HAIR_INDEX; hairID++) {
-          final String name = "/assets/images/avatars/"
-              + Integer.toString(familyID) + Integer.toString(skinID)
-              + Integer.toString(hairID) + imageExt;
-          ImageLoader.load(name, AvatarImageLoader.class.getResource(name));
-        }
-      }
+      final String name = "/assets/images/avatars/" + Integer.toString(familyID)
+          + imageExt;
+      ImageLoader.load(name, AvatarImageLoader.class.getResource(name));
     }
   }
 }

@@ -149,8 +149,7 @@ public class Party {
     if (this.members.size() < Party.MAX_SIZE) {
       this.members.add(member);
       this.activePCs++;
-      Player.setAvatar(member.getAvatarFamilyID(), member.getAvatarSkinID(),
-          member.getAvatarHairID());
+      Player.setAvatar(member.getAvatarFamilyID(), member.getAvatarRules());
       return true;
     }
     return false;
@@ -165,8 +164,7 @@ public class Party {
       for (final PartyMember member : this.members) {
         if (member.getName().equals(response)) {
           this.leaderID = x;
-          Player.setAvatar(member.getAvatarFamilyID(), member.getAvatarSkinID(),
-              member.getAvatarHairID());
+          Player.setAvatar(member.getAvatarFamilyID(), member.getAvatarRules());
           break;
         }
         x++;

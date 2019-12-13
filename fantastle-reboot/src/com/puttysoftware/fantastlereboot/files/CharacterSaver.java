@@ -58,10 +58,14 @@ public class CharacterSaver {
       writer.writeBoolean(character.getSpellBook().isSpellKnown(x));
     }
     writer.writeString(character.getName());
-    writer.writeInt(character.getAvatarFamilyID());
+    writer.writeInt(character.getAvatarBodyID());
     writer.writeInt(character.getAvatarSkinID());
     writer.writeInt(character.getAvatarHairID());
     character.getItems().writeItemInventory(writer);
+    writer.writeInt(character.getAvatarFamilyID());
+    writer.writeInt(character.getAvatarPantsID());
+    writer.writeInt(character.getAvatarShoesID());
+    writer.writeInt(character.getAvatarEyesID());
   }
 
   static void deleteCharacter(final String name, final boolean showResults) {

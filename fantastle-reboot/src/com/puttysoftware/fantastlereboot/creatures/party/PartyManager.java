@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import com.puttysoftware.diane.gui.CommonDialogs;
 import com.puttysoftware.diane.gui.ImageListWithDescDialog;
+import com.puttysoftware.fantastlereboot.assets.AvatarImageModel;
 import com.puttysoftware.fantastlereboot.creatures.faiths.Faith;
 import com.puttysoftware.fantastlereboot.creatures.faiths.FaithManager;
 import com.puttysoftware.fantastlereboot.creatures.jobs.Job;
@@ -85,7 +86,8 @@ public class PartyManager {
           final int af = RandomRange.generate(0, 5);
           final int as = RandomRange.generate(0, 9);
           final int ah = RandomRange.generate(0, 9);
-          pc = PartyManager.getNewPCInstance(ii, r, j, f, n, af, as, ah);
+          pc = PartyManager.getNewPCInstance(ii, r, j, f, n, af,
+              new AvatarImageModel(af, as, ah));
           CharacterRegistration.autoregisterCharacter(pc.getName());
           CharacterSaver.saveCharacter(pc);
           regLen++;
@@ -194,11 +196,11 @@ public class PartyManager {
 
   public static PartyMember getNewPCInstance(final ItemInventory ii,
       final int r, final int j, final int f, final String n, final int af,
-      final int as, final int ah) {
+      final AvatarImageModel model) {
     final Race race = RaceManager.getRace(r);
     final Job job = JobManager.getJob(j);
     final Faith faith = FaithManager.getFaith(f);
-    return new PartyMember(ii, race, job, faith, n, af, as, ah);
+    return new PartyMember(ii, race, job, faith, n, af, model);
   }
 
   public static void updatePostKill() {
@@ -230,7 +232,8 @@ public class PartyManager {
                 if (avatarHair != ImageListWithDescDialog.CANCEL) {
                   final ItemInventory ii = new ItemInventory();
                   return new PartyMember(ii, race, caste, faith, name,
-                      avatarFamily, avatarSkin, avatarHair);
+                      avatarFamily, new AvatarImageModel(avatarFamily,
+                          avatarSkin, avatarHair));
                 }
               }
             }
@@ -246,12 +249,18 @@ public class PartyManager {
     final String labelText = "Avatar Families";
     final String title = "Pick Avatar Family";
     final BufferedImageIcon[] input = new BufferedImageIcon[] {
-        AvatarImageLoader.load(0, randomSkinID, randomHairID),
-        AvatarImageLoader.load(1, randomSkinID, randomHairID),
-        AvatarImageLoader.load(2, randomSkinID, randomHairID),
-        AvatarImageLoader.load(3, randomSkinID, randomHairID),
-        AvatarImageLoader.load(4, randomSkinID, randomHairID),
-        AvatarImageLoader.load(5, randomSkinID, randomHairID) };
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(0, randomSkinID, randomHairID).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(1, randomSkinID, randomHairID).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(2, randomSkinID, randomHairID).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(3, randomSkinID, randomHairID).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(4, randomSkinID, randomHairID).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(5, randomSkinID, randomHairID).getRules()) };
     final String[] descriptions = new String[] { "Green", "Red", "Yellow",
         "Cyan", "Pink", "Blue" };
     return ImageListWithDescDialog.showDialog(null, labelText, title, input, 0,
@@ -263,16 +272,26 @@ public class PartyManager {
     final String labelText = "Avatar Skin Colors";
     final String title = "Pick Avatar Skin Color";
     final BufferedImageIcon[] input = new BufferedImageIcon[] {
-        AvatarImageLoader.load(familyID, 0, randomHairID),
-        AvatarImageLoader.load(familyID, 1, randomHairID),
-        AvatarImageLoader.load(familyID, 2, randomHairID),
-        AvatarImageLoader.load(familyID, 3, randomHairID),
-        AvatarImageLoader.load(familyID, 4, randomHairID),
-        AvatarImageLoader.load(familyID, 5, randomHairID),
-        AvatarImageLoader.load(familyID, 6, randomHairID),
-        AvatarImageLoader.load(familyID, 7, randomHairID),
-        AvatarImageLoader.load(familyID, 8, randomHairID),
-        AvatarImageLoader.load(familyID, 9, randomHairID) };
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, 0, randomHairID).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, 1, randomHairID).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, 2, randomHairID).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, 3, randomHairID).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, 4, randomHairID).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, 5, randomHairID).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, 6, randomHairID).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, 7, randomHairID).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, 8, randomHairID).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, 9, randomHairID).getRules()) };
     final String[] descriptions = new String[] { "Darkest", "Darker", "Dark",
         "Mildly Dark", "Slightly Dark", "Slightly Light", "Mildly Light",
         "Light", "Lighter", "Lightest" };
@@ -284,16 +303,26 @@ public class PartyManager {
     final String labelText = "Avatar Hair Colors";
     final String title = "Pick Avatar Hair Color";
     final BufferedImageIcon[] input = new BufferedImageIcon[] {
-        AvatarImageLoader.load(familyID, skinID, 0),
-        AvatarImageLoader.load(familyID, skinID, 1),
-        AvatarImageLoader.load(familyID, skinID, 2),
-        AvatarImageLoader.load(familyID, skinID, 3),
-        AvatarImageLoader.load(familyID, skinID, 4),
-        AvatarImageLoader.load(familyID, skinID, 5),
-        AvatarImageLoader.load(familyID, skinID, 6),
-        AvatarImageLoader.load(familyID, skinID, 7),
-        AvatarImageLoader.load(familyID, skinID, 8),
-        AvatarImageLoader.load(familyID, skinID, 9) };
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, skinID, 0).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, skinID, 1).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, skinID, 2).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, skinID, 3).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, skinID, 4).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, skinID, 5).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, skinID, 6).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, skinID, 7).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, skinID, 8).getRules()),
+        AvatarImageLoader.load(0,
+            new AvatarImageModel(familyID, skinID, 9).getRules()) };
     final String[] descriptions = new String[] { "Black", "Dark Gray",
         "Dark Brown", "Light Brown", "Red", "Light Gray", "Dark Yellow",
         "Yellow", "Tan", "Bright Yellow" };
@@ -321,8 +350,8 @@ public class PartyManager {
     return names;
   }
 
-  private static PartyMember
-      pickOnePartyMemberCreate(final PartyMember[] members) {
+  private static PartyMember pickOnePartyMemberCreate(
+      final PartyMember[] members) {
     final String[] pickNames = PartyManager.buildNameList(members);
     final String response = CommonDialogs.showInputDialog("Pick 1 Party Member",
         "Create Party", pickNames, pickNames[0]);
