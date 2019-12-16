@@ -13,7 +13,7 @@ Beaker
 Big Blaster
 Big Burger
 Blaster Tree
-Board
+Black Hole
 Bomb
 Bomber
 Boom Barrel
@@ -115,9 +115,9 @@ Shade
 Slime
 Solar
 Sonic Robot
-Sound Card
 Spike
 Spiked Bush
+Suction
 Super Diamond
 Super Jelly
 Super Spike
@@ -141,9 +141,9 @@ Twin RAM
 Twin Pipe
 Twin Vial
 UFO
+Vacuum
 Vial
 Vine
-Warped Firmware
 Warped ROM
 Warship
 Winged Missile
