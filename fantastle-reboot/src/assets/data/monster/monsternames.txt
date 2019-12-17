@@ -25,7 +25,7 @@ Burger
 Bush
 Can
 Canned Can
-Caustin Barrel
+Caustic Barrel
 Caustic Beaker
 Caustic Boom Barrel
 Caustic Bottle
