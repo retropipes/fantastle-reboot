@@ -1,4 +1,4 @@
-local push = require "push"
+local push = require "lib/push"
 
 function love.load()
     -- Set up screen
