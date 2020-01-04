@@ -4,7 +4,11 @@ function love.load()
     -- Set up screen
     local gameWidth, gameHeight = 1080, 720
     local windowWidth, windowHeight = love.window.getDesktopDimensions()
-    push:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {fullscreen = true, resizable = true, highdpi = true, pixelperfect = true, canvas = false, stretched = false})
+    push:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {fullscreen = true, resizable = true, highdpi = true, pixelperfect = false, canvas = false, stretched = true})
+    -- Cache UI assets
+    ui_images = {
+        logo = love.graphics.newImage("assets/images/ui/logo.png")
+    }
     -- Cache the music for later
     musics = {
         title = love.audio.newSource("assets/music/title.ogg", "stream")
@@ -23,9 +27,10 @@ end
 
 function love.draw()
     push:start()
-    love.graphics.print("Press ESCAPE to quit", 400, 300)
+    love.graphics.draw(ui_images.logo)
+    love.graphics.print({{0, 0, 0, 1}, "Press ESCAPE to quit"}, 400, 340)
     if joystick then
-        love.graphics.print("Joystick detected; button 9 also quits", 400, 350)
+        love.graphics.print({{0, 0, 0, 1}, "Joystick detected; button 9 also quits"}, 400, 360)
     end
     push:finish()
 end
