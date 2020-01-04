@@ -9,6 +9,8 @@ function love.load()
     musics = {
         title = love.audio.newSource("assets/music/title.ogg", "stream")
     }
+    -- Set music options
+    musics.title:setLooping(true)
     -- Set up joysticks
     local joysticks = love.joystick.getJoysticks()
     local joycount = love.joystick.getJoystickCount()
