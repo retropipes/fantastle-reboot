@@ -1,7 +1,3 @@
--- libraries
-local push = require "lib/push"
-local Gamestate = require "lib/hump/gamestate"
-
 -- assets
 local assets = {
     images = {
@@ -16,12 +12,10 @@ local assets = {
     sounds = {}
 }
 
--- game states
-local states = {
-    loader = {}
-}
-
 function love.load()
+    -- load libraries
+    push = require "lib.push"
+    loveframes = require "lib.loveframes"
     -- Set up screen
     local gameWidth, gameHeight = 1080, 720
     local windowWidth, windowHeight = love.window.getDesktopDimensions()
@@ -32,17 +26,6 @@ function love.load()
     if joycount >= 1 then
         joystick = joysticks[1]
     end
-    -- Game state setup
-    Gamestate.registerEvents()
-    Gamestate.switch(states.loader)
-end
-
-function love.resize(w, h)
-    return push:resize(w, h)
-end
-
--- Loader state
-function states.loader:init()
     -- Cache logo image
     assets.images.ui.logo = love.graphics.newImage("assets/images/ui/logo.png")
     -- Cache title screen music
@@ -53,17 +36,22 @@ function states.loader:init()
     love.audio.play(assets.music.title)
 end
 
-function states.loader:draw()
+function love.resize(w, h)
+    return push:resize(w, h)
+end
+
+function love.draw()
     push:start()
     love.graphics.draw(assets.images.ui.logo)
     love.graphics.print({{0, 0, 0, 1}, "Press ESCAPE to quit"}, 400, 340)
     if joystick then
         love.graphics.print({{0, 0, 0, 1}, "Joystick detected; button 9 also quits"}, 400, 360)
     end
+    loveframes.draw()
     push:finish()
 end
 
-function states.loader:update(dt)
+function love.update(dt)
     if love.keyboard.isScancodeDown("escape") then
         love.audio.stop()
         love.event.quit(0)
@@ -74,4 +62,21 @@ function states.loader:update(dt)
             love.event.quit(0)
         end
     end
+    loveframes.update(dt)
+end
+
+function love.mousepressed(x, y, button)
+    loveframes.mousepressed(x, y, button)
+end
+ 
+function love.mousereleased(x, y, button)
+    loveframes.mousereleased(x, y, button)
+end
+ 
+function love.keypressed(key, unicode)
+    loveframes.keypressed(key, unicode)
+end
+ 
+function love.keyreleased(key)
+    loveframes.keyreleased(key)
 end
