@@ -1,0 +1,4 @@
+loading
+logo
+micrologo
+minilogo
